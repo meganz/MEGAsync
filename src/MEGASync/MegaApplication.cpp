@@ -1809,7 +1809,6 @@ void MegaApplication::start()
                        preferences->privatePw().toUtf8().constData());
         }
 
-        initLocalServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -3487,7 +3486,6 @@ void MegaApplication::renewLocalSSLcert()
 {
     if (!updatingSSLcert)
     {
-        updatingSSLcert = true;
         lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
         megaApi->getLocalSSLCertificate();
     }
@@ -6949,6 +6947,10 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
     {
         connectivityTimer->start();
     }
+    else if (request->getType() == MegaRequest::TYPE_GET_LOCAL_SSL_CERT)
+    {
+        updatingSSLcert = true;
+    }
 }
 
 //Called when a request has finished
@@ -7102,6 +7104,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         connectivityTimer->stop();
 
+        // We do this after login to ensure the request to get the local SSL certs is not in the queue
+        // while login request is being processed. This way, the local SSL certs request is not aborted.
+        initLocalServer();
+
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
@@ -7243,37 +7249,45 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
     {
         updatingSSLcert = false;
+        bool retry=false;
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaStringMap *data = request->getMegaStringMap();
-            preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
-            preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
-
-            QString intermediates;
-            QString key = QString::fromUtf8("intermediate_");
-            const char *value;
-            int i = 1;
-            while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
+            if (data)
             {
-                if (i != 1)
-                {
-                    intermediates.append(QString::fromUtf8(";"));
-                }
-                intermediates.append(QString::fromUtf8(value));
-                i++;
-            }
+                preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
+                preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
 
-            preferences->setHttpsCertIntermediate(intermediates);
-            preferences->setHttpsCertExpiration(request->getNumber());
-            megaApi->sendEvent(99517, "Local SSL certificate renewed");
-            delete httpsServer;
-            httpsServer = NULL;
-            startHttpsServer();
-            break;
+                QString intermediates;
+                QString key = QString::fromUtf8("intermediate_");
+                const char *value;
+                int i = 1;
+                while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
+                {
+                    if (i != 1)
+                    {
+                        intermediates.append(QString::fromUtf8(";"));
+                    }
+                    intermediates.append(QString::fromUtf8(value));
+                    i++;
+                }
+
+                preferences->setHttpsCertIntermediate(intermediates);
+                preferences->setHttpsCertExpiration(request->getNumber());
+                megaApi->sendEvent(99517, "Local SSL certificate renewed");
+                delete httpsServer;
+                httpsServer = NULL;
+                startHttpsServer();
+                break;
+            }
+            else
+            {
+                retry=true;
+            }
         }
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error renewing the local SSL certificate");
-        if (e->getErrorCode() == MegaError::API_EACCESS)
+        if (e->getErrorCode() == MegaError::API_EACCESS || retry)
         {
             static bool retried = false;
             if (!retried)
