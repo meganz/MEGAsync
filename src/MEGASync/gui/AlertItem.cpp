@@ -192,7 +192,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
 
             if (notificationHeading.isEmpty())
             {
-                notificationHeading = tr("(unknown shared folder)");
+                notificationHeading = tr("Shared Folder Activity");
             }
 
             if (node)
