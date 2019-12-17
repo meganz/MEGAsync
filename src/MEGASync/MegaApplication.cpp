@@ -7249,7 +7249,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
     {
         updatingSSLcert = false;
-        bool retry=false;
+        bool retry = false;
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaStringMap *data = request->getMegaStringMap();
@@ -7280,7 +7280,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 startHttpsServer();
                 break;
             }
-            else
+            else // Request aborted
             {
                 retry=true;
             }
