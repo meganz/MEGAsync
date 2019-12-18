@@ -5150,7 +5150,7 @@ void MegaApplication::createTrayIcon()
     }
 
     createTrayMenu();
-    createGuestMenu();
+    createTrayGuestMenu();
 
     if (!trayIcon)
     {
@@ -5280,7 +5280,7 @@ void MegaApplication::processUploads()
         preferences->setUploadFolder(nodeHandle);
         if (settingsDialog)
         {
-            settingsDialog->loadSettings();
+            settingsDialog->updateUploadFolder(); //this could be done via observer
         }
         processUploadQueue(nodeHandle);
     }
@@ -5358,7 +5358,7 @@ void MegaApplication::processDownloads()
         preferences->setDownloadFolder(path);
         if (settingsDialog)
         {
-            settingsDialog->loadSettings();
+            settingsDialog->updateDownloadFolder(); // this could use observer pattern
         }
 
         HTTPServer *webCom = qobject_cast<HTTPServer *>(sender());
@@ -5848,7 +5848,7 @@ void MegaApplication::onUpdateCompleted()
 
     if (trayGuestMenu)
     {
-        createGuestMenu();
+        createTrayGuestMenu();
     }
 
     rebootApplication();
@@ -5870,7 +5870,7 @@ void MegaApplication::onUpdateAvailable(bool requested)
 
     if (trayGuestMenu)
     {
-        createGuestMenu();
+        createTrayGuestMenu();
     }
 
     if (settingsDialog)
@@ -6119,7 +6119,6 @@ void MegaApplication::openSettings(int tab)
                 settingsDialog->setOverQuotaMode(false);
                 settingsDialog->openSettingsTab(tab);
             }
-            settingsDialog->loadSettings(); //TODO: do we need this here? -> this overrides unsaved changes
             settingsDialog->activateWindow();
             settingsDialog->raise();
             return;
@@ -6141,7 +6140,7 @@ void MegaApplication::openSettings(int tab)
     {
         if (!megaApi->isFilesystemAvailable() || !preferences->logged())
         {
-            changeProxy();
+            openSettingsFromTrayMenu();
             return;
         }
         settingsDialog->setOverQuotaMode(false);
@@ -6149,6 +6148,7 @@ void MegaApplication::openSettings(int tab)
     }
     settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
+    settingsDialog->loadSettings();
     settingsDialog->show();
 }
 
@@ -6203,7 +6203,8 @@ void MegaApplication::openBwOverquotaDialog()
     bwOverquotaDialog->refreshAccountDetails();
 }
 
-void MegaApplication::changeProxy()
+//called from tray icon menu,....
+void MegaApplication::openSettingsFromTrayMenu()
 {
     if (appfinished)
     {
@@ -6264,7 +6265,6 @@ void MegaApplication::changeProxy()
             }
 
             //and visible -> show it
-            settingsDialog->loadSettings();
             settingsDialog->activateWindow();
             settingsDialog->raise();
             return;
@@ -6290,6 +6290,7 @@ void MegaApplication::changeProxy()
         }
     }
     settingsDialog->setModal(false);
+    settingsDialog->loadSettings();
     settingsDialog->show();
 }
 
@@ -6325,7 +6326,7 @@ void MegaApplication::createTrayMenu()
         changeProxyAction = NULL;
     }
     changeProxyAction = new QAction(tr("Settings"), this);
-    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
+    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(openSettingsFromTrayMenu()));
 
     if (initialExitAction)
     {
@@ -6699,7 +6700,7 @@ void MegaApplication::createTrayMenu()
 
 }
 
-void MegaApplication::createGuestMenu()
+void MegaApplication::createTrayGuestMenu()
 {
     if (appfinished)
     {
@@ -6767,7 +6768,7 @@ void MegaApplication::createGuestMenu()
 #else
     settingsActionGuest = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
 #endif
-    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(changeProxy()));
+    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettingsFromTrayMenu()));
 
     trayGuestMenu->addAction(updateActionGuest);
     trayGuestMenu->addSeparator();
@@ -6790,10 +6791,7 @@ void MegaApplication::refreshStorageUIs()
         infoDialog->setUsage();
     }
 
-    if (settingsDialog)
-    {
-        settingsDialog->refreshAccountDetails();
-    }
+    notifyStorageObservers(); //Ideally this should be the only call here
 
     if (bwOverquotaDialog)
     {
@@ -6845,6 +6843,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             preferences->setUsedStorage(receivedStorageSum);
         }
         preferences->sync();
+
         refreshStorageUIs();
     }
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
@@ -7623,7 +7622,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                     if (settingsDialog)
                     {
-                        settingsDialog->loadSettings();
+                        settingsDialog->loadSyncSettings();
                     }
                 }
                 else
@@ -7672,7 +7671,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (settingsDialog)
         {
-            settingsDialog->loadSettings();
+            settingsDialog->loadSyncSettings();
         }
 
         break;
@@ -7695,7 +7694,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (settingsDialog)
         {
-            settingsDialog->loadSettings();
+            settingsDialog->loadSyncSettings();
         }
 
         onGlobalSyncStateChanged(megaApi);

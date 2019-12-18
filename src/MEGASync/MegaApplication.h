@@ -182,7 +182,7 @@ public slots:
     void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
     void openInfoWizard();
     void openBwOverquotaDialog();
-    void changeProxy();
+    void openSettingsFromTrayMenu();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -270,7 +270,7 @@ private slots:
 
 protected:
     void createTrayIcon();
-    void createGuestMenu();
+    void createTrayGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn(bool fromWizard);
     void startSyncs();

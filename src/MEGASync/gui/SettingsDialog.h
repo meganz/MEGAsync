@@ -178,7 +178,6 @@ private:
     QParallelAnimationGroup *animationGroup;
 #endif
 
-    void loadSyncSettings();
     void loadSizeLimits();
     int saveSettings();
     void onCacheSizeAvailable();
@@ -188,6 +187,9 @@ public:
     void updateStorageElements();
     void updateBandwidthElements();
     void updateAccountElements();
+    void loadSyncSettings();
+    void updateUploadFolder();
+    void updateDownloadFolder();
 };
 
 #endif // SETTINGSDIALOG_H

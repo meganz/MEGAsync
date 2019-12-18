@@ -313,7 +313,7 @@ SettingsDialog::~SettingsDialog()
 void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     this->proxyOnly = proxyOnly;
-    loadSettings();
+
     if (proxyOnly)
     {
         ui->bAccount->setEnabled(false);
@@ -960,6 +960,44 @@ void SettingsDialog::on_cProxyRequiresPassword_clicked()
     }
 }
 
+void SettingsDialog::updateUploadFolder()
+{
+    MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
+    if (!node)
+    {
+        hasDefaultUploadOption = false;
+        ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+    }
+    else
+    {
+        const char *nPath = megaApi->getNodePath(node);
+        if (!nPath)
+        {
+            hasDefaultUploadOption = false;
+            ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+        }
+        else
+        {
+            hasDefaultUploadOption = preferences->hasDefaultUploadFolder();
+            ui->eUploadFolder->setText(QString::fromUtf8(nPath));
+            delete [] nPath;
+        }
+    }
+    delete node;
+}
+
+void SettingsDialog::updateDownloadFolder()
+{
+    QString downloadPath = preferences->downloadFolder();
+    if (!downloadPath.size())
+    {
+        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
+    }
+    downloadPath = QDir::toNativeSeparators(downloadPath);
+    ui->eDownloadFolder->setText(downloadPath);
+    hasDefaultDownloadOption = preferences->hasDefaultDownloadFolder();
+}
+
 void SettingsDialog::loadSettings()
 {
     modifyingSettings++;
@@ -1066,37 +1104,14 @@ void SettingsDialog::loadSettings()
         // account type and details
         updateAccountElements();
 
-        MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
-        if (!node)
+        if (accountDetailsDialog)
         {
-            hasDefaultUploadOption = false;
-            ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+            accountDetailsDialog->refresh(preferences);
         }
-        else
-        {
-            const char *nPath = megaApi->getNodePath(node);
-            if (!nPath)
-            {
-                hasDefaultUploadOption = false;
-                ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
-            }
-            else
-            {
-                hasDefaultUploadOption = preferences->hasDefaultUploadFolder();
-                ui->eUploadFolder->setText(QString::fromUtf8(nPath));
-                delete [] nPath;
-            }
-        }
-        delete node;
 
-        QString downloadPath = preferences->downloadFolder();
-        if (!downloadPath.size())
-        {
-            downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
-        }
-        downloadPath = QDir::toNativeSeparators(downloadPath);
-        ui->eDownloadFolder->setText(downloadPath);
-        hasDefaultDownloadOption = preferences->hasDefaultDownloadFolder();
+        updateUploadFolder();
+
+        updateDownloadFolder();
 
         //Syncs
         loadSyncSettings();
@@ -1225,33 +1240,48 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
         }
     }
 
-    if (preferences->totalBandwidth() == 0)
+    int accType = preferences->accountType();
+    if (accType == Preferences::ACCOUNT_TYPE_FREE) //Free user
     {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        ui->pUsedBandwidth->show();
         ui->pUsedBandwidth->setValue(0);
-        ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+        ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
+                .arg(preferences->bandwidthInterval())
+                .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+    }
+    else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        ui->pUsedBandwidth->hide();
+        ui->lBandwidth->setText(tr("%1 used")
+              .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
     {
-        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+        double totalBandwidth = preferences->totalBandwidth();
+        if (totalBandwidth == 0)
         {
-            ui->lBandwidth->setText(tr("%1 used")
-                  .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+            ui->gBandwidthQuota->hide();
+            ui->bSeparatorBandwidth->hide();
+            ui->pUsedBandwidth->show();
+            ui->pUsedBandwidth->setValue(0);
+            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
         }
         else
         {
-            int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-            ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
+            ui->gBandwidthQuota->show();
+            ui->bSeparatorBandwidth->show();
+            int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+            ui->pUsedBandwidth->show();
+            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-                  .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                  .arg(QString::number(percentage > 100 ? 100 : percentage))
-                  .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+                    .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+                    .arg(QString::number(bandwidthPercentage))
+                    .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
-    }
-
-    //TODO: once all events leading to storage modifications call notifyStorageObservers, we won't need this
-    if (accountDetailsDialog)
-    {
-        accountDetailsDialog->refresh(preferences);
     }
 }
 
@@ -2413,81 +2443,37 @@ void SettingsDialog::updateAccountElements()
     switch(accType)
     {
         case Preferences::ACCOUNT_TYPE_FREE:
-            icon.addFile(QString::fromUtf8(":/images/Free.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Free.png"));
             ui->lAccountType->setText(tr("FREE"));
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
-            icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
             ui->lAccountType->setText(tr("PRO I"));
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
-            icon.addFile(QString::fromUtf8(":/images/Pro_II.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_II.png"));
             ui->lAccountType->setText(tr("PRO II"));
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
-            icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_III.png"));
             ui->lAccountType->setText(tr("PRO III"));
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
-            icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Lite.png"));
             ui->lAccountType->setText(tr("PRO Lite"));
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
-            icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/business.png"));
             ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
             break;
         default:
-            icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
             ui->lAccountType->setText(QString());
             break;
     }
 
     ui->lAccountImage->setIcon(icon);
     ui->lAccountImage->setIconSize(QSize(32, 32));
-
-
-    if (accType == Preferences::ACCOUNT_TYPE_FREE) //Free user
-    {
-        ui->gBandwidthQuota->show();
-        ui->bSeparatorBandwidth->show();
-        ui->pUsedBandwidth->show();
-        ui->pUsedBandwidth->setValue(0);
-        ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
-                .arg(preferences->bandwidthInterval())
-                .arg(Utilities::getSizeString(preferences->usedBandwidth())));
-    }
-    else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        ui->gBandwidthQuota->show();
-        ui->bSeparatorBandwidth->show();
-        ui->pUsedBandwidth->hide();
-        ui->lBandwidth->setText(tr("%1 used")
-              .arg(Utilities::getSizeString(preferences->usedBandwidth())));
-    }
-    else
-    {
-        double totalBandwidth = preferences->totalBandwidth();
-        if (totalBandwidth == 0)
-        {
-            ui->gBandwidthQuota->hide();
-            ui->bSeparatorBandwidth->hide();
-            ui->pUsedBandwidth->show();
-            ui->pUsedBandwidth->setValue(0);
-            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
-        }
-        else
-        {
-            ui->gBandwidthQuota->show();
-            ui->bSeparatorBandwidth->show();
-            int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-            ui->pUsedBandwidth->show();
-            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
-            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-                    .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                    .arg(QString::number(bandwidthPercentage))
-                    .arg(Utilities::getSizeString(preferences->totalBandwidth())));
-        }
-    }
 }
 
 void SettingsDialog::onProxyTestError()
@@ -2542,7 +2528,10 @@ void SettingsDialog::onProxyTestSuccess()
         shouldClose = false;
         this->close();
     }
-    else loadSettings();
+    else
+    {
+        loadSettings();
+    }
 }
 
 void SettingsDialog::on_bUpdate_clicked()
