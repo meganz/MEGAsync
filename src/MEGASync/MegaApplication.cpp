@@ -1745,6 +1745,7 @@ void MegaApplication::start()
                 }
             }
             createTrayMenu();
+            createTrayIcon();  // make sure the new OS-style menu is attached to the tray icon, after we recreated it.
         }
 
 
