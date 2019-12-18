@@ -107,7 +107,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     }
 }
 
-void AccountDetailsDialog::update()
+void AccountDetailsDialog::updateStorageElements()
 {
     refresh(Preferences::instance());
 }

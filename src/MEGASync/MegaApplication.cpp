@@ -6119,7 +6119,7 @@ void MegaApplication::openSettings(int tab)
                 settingsDialog->setOverQuotaMode(false);
                 settingsDialog->openSettingsTab(tab);
             }
-            settingsDialog->loadSettings();
+            settingsDialog->loadSettings(); //TODO: do we need this here? -> this overrides unsaved changes
             settingsDialog->activateWindow();
             settingsDialog->raise();
             return;
@@ -7374,6 +7374,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setProExpirityTime(0);
                 proExpirityTimer.stop();
             }
+
+            notifyAccountObservers();
         }
 
         if (storage)
@@ -7463,6 +7465,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
             preferences->setTemporalBandwidth(details->getTemporalBandwidth());
             preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+
+            notifyBandwidthObservers();
         }
 
         preferences->sync();
@@ -7471,11 +7475,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             infoDialog->setUsage();
             infoDialog->setAccountType(preferences->accountType());
-        }
-
-        if (settingsDialog)
-        {
-            settingsDialog->loadSettings();
         }
 
         if (bwOverquotaDialog)

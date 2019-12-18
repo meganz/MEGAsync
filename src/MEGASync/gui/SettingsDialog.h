@@ -25,7 +25,7 @@ class SettingsDialog;
 }
 
 class MegaApplication;
-class SettingsDialog : public QDialog
+class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
     Q_OBJECT
     
@@ -183,6 +183,11 @@ private:
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
+
+public:
+    void updateStorageElements();
+    void updateBandwidthElements();
+    void updateAccountElements();
 };
 
 #endif // SETTINGSDIALOG_H

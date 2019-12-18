@@ -296,10 +296,17 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->wOQError->hide();
 
     highDpiResize.init(this);
+    ((MegaApplication*)qApp)->attachStorageObserver(*this);
+    ((MegaApplication*)qApp)->attachBandwidthObserver(*this);
+    ((MegaApplication*)qApp)->attachAccountObserver(*this);
 }
 
 SettingsDialog::~SettingsDialog()
 {
+    ((MegaApplication*)qApp)->dettachStorageObserver(*this);
+    ((MegaApplication*)qApp)->dettachBandwidthObserver(*this);
+    ((MegaApplication*)qApp)->dettachAccountObserver(*this);
+
     delete ui;
 }
 
@@ -1043,17 +1050,6 @@ void SettingsDialog::loadSettings()
             ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
         }
 
-        // Disable Upgrade buttons for business accounts
-        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            ui->bUpgrade->hide();
-            ui->bUpgradeBandwidth->hide();
-        }
-        else
-        {
-            ui->bUpgrade->show();
-            ui->bUpgradeBandwidth->show();
-        }
 
         //Account
         char *email = megaApi->getMyEmail();
@@ -1066,44 +1062,9 @@ void SettingsDialog::loadSettings()
         {
             ui->lEmail->setText(preferences->email());
         }
-        refreshAccountDetails();
 
-        QIcon icon;
-        int accType = preferences->accountType();
-        switch(accType)
-        {
-            case Preferences::ACCOUNT_TYPE_FREE:
-                icon.addFile(QString::fromUtf8(":/images/Free.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("FREE"));
-                break;
-            case Preferences::ACCOUNT_TYPE_PROI:
-                icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO I"));
-                break;
-            case Preferences::ACCOUNT_TYPE_PROII:
-                icon.addFile(QString::fromUtf8(":/images/Pro_II.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO II"));
-                break;
-            case Preferences::ACCOUNT_TYPE_PROIII:
-                icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO III"));
-                break;
-            case Preferences::ACCOUNT_TYPE_LITE:
-                icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO Lite"));
-                break;
-            case Preferences::ACCOUNT_TYPE_BUSINESS:
-                icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
-                break;
-            default:
-                icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(QString());
-                break;
-        }
-
-        ui->lAccountImage->setIcon(icon);
-        ui->lAccountImage->setIconSize(QSize(32, 32));
+        // account type and details
+        updateAccountElements();
 
         MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
         if (!node)
@@ -1159,49 +1120,6 @@ void SettingsDialog::loadSettings()
         ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
 
         ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
-
-        if (accType == Preferences::ACCOUNT_TYPE_FREE) //Free user
-        {
-            ui->gBandwidthQuota->show();
-            ui->bSeparatorBandwidth->show();
-            ui->pUsedBandwidth->show();
-            ui->pUsedBandwidth->setValue(0);
-            ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
-                    .arg(preferences->bandwidthInterval())
-                    .arg(Utilities::getSizeString(preferences->usedBandwidth())));
-        }
-        else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            ui->gBandwidthQuota->show();
-            ui->bSeparatorBandwidth->show();
-            ui->pUsedBandwidth->hide();
-            ui->lBandwidth->setText(tr("%1 used")
-                  .arg(Utilities::getSizeString(preferences->usedBandwidth())));
-        }
-        else
-        {
-            double totalBandwidth = preferences->totalBandwidth();
-            if (totalBandwidth == 0)
-            {
-                ui->gBandwidthQuota->hide();
-                ui->bSeparatorBandwidth->hide();
-                ui->pUsedBandwidth->show();
-                ui->pUsedBandwidth->setValue(0);
-                ui->lBandwidth->setText(tr("Data temporarily unavailable"));
-            }
-            else
-            {
-                ui->gBandwidthQuota->show();
-                ui->bSeparatorBandwidth->show();
-                int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-                ui->pUsedBandwidth->show();
-                ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
-                ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-                        .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                        .arg(QString::number(bandwidthPercentage))
-                        .arg(Utilities::getSizeString(preferences->totalBandwidth())));
-            }
-        }
 
         //Advanced
         ui->lExcludedNames->clear();
@@ -1268,9 +1186,8 @@ void SettingsDialog::loadSettings()
     modifyingSettings--;
 }
 
-void SettingsDialog::refreshAccountDetails()
+void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandwidth
 {
-
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->pStorage->hide();
@@ -1331,6 +1248,7 @@ void SettingsDialog::refreshAccountDetails()
         }
     }
 
+    //TODO: once all events leading to storage modifications call notifyStorageObservers, we won't need this
     if (accountDetailsDialog)
     {
         accountDetailsDialog->refresh(preferences);
@@ -2463,6 +2381,115 @@ void SettingsDialog::onClearCache()
     #endif
     }
 }
+
+void SettingsDialog::updateStorageElements()
+{
+    refreshAccountDetails();
+}
+
+void SettingsDialog::updateBandwidthElements()
+{
+    refreshAccountDetails();
+}
+
+void SettingsDialog::updateAccountElements()
+{
+    refreshAccountDetails(); //all those are affected by account type
+
+    // Disable Upgrade buttons for business accounts
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->bUpgrade->hide();
+        ui->bUpgradeBandwidth->hide();
+    }
+    else
+    {
+        ui->bUpgrade->show();
+        ui->bUpgradeBandwidth->show();
+    }
+
+    QIcon icon;
+    int accType = preferences->accountType();
+    switch(accType)
+    {
+        case Preferences::ACCOUNT_TYPE_FREE:
+            icon.addFile(QString::fromUtf8(":/images/Free.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->lAccountType->setText(tr("FREE"));
+            break;
+        case Preferences::ACCOUNT_TYPE_PROI:
+            icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->lAccountType->setText(tr("PRO I"));
+            break;
+        case Preferences::ACCOUNT_TYPE_PROII:
+            icon.addFile(QString::fromUtf8(":/images/Pro_II.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->lAccountType->setText(tr("PRO II"));
+            break;
+        case Preferences::ACCOUNT_TYPE_PROIII:
+            icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->lAccountType->setText(tr("PRO III"));
+            break;
+        case Preferences::ACCOUNT_TYPE_LITE:
+            icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->lAccountType->setText(tr("PRO Lite"));
+            break;
+        case Preferences::ACCOUNT_TYPE_BUSINESS:
+            icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
+            break;
+        default:
+            icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->lAccountType->setText(QString());
+            break;
+    }
+
+    ui->lAccountImage->setIcon(icon);
+    ui->lAccountImage->setIconSize(QSize(32, 32));
+
+
+    if (accType == Preferences::ACCOUNT_TYPE_FREE) //Free user
+    {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        ui->pUsedBandwidth->show();
+        ui->pUsedBandwidth->setValue(0);
+        ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
+                .arg(preferences->bandwidthInterval())
+                .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+    }
+    else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        ui->pUsedBandwidth->hide();
+        ui->lBandwidth->setText(tr("%1 used")
+              .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+    }
+    else
+    {
+        double totalBandwidth = preferences->totalBandwidth();
+        if (totalBandwidth == 0)
+        {
+            ui->gBandwidthQuota->hide();
+            ui->bSeparatorBandwidth->hide();
+            ui->pUsedBandwidth->show();
+            ui->pUsedBandwidth->setValue(0);
+            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+        }
+        else
+        {
+            ui->gBandwidthQuota->show();
+            ui->bSeparatorBandwidth->show();
+            int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+            ui->pUsedBandwidth->show();
+            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
+            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+                    .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+                    .arg(QString::number(bandwidthPercentage))
+                    .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        }
+    }
+}
+
 void SettingsDialog::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
