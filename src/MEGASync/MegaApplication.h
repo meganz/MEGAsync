@@ -150,7 +150,7 @@ public:
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
-    void createTrayMenu();
+    void createAppMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
@@ -270,7 +270,7 @@ private slots:
 
 protected:
     void createTrayIcon();
-    void createTrayGuestMenu();
+    void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn(bool fromWizard);
     void startSyncs();
@@ -311,8 +311,8 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    std::unique_ptr<QMenu> trayMenu;
-    std::unique_ptr<QMenu> trayGuestMenu;
+    std::unique_ptr<QMenu> infoDialogMenu;
+    std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
     QSignalMapper *menuSignalMapper;

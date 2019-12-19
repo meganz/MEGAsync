@@ -911,8 +911,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     activeTransferTag[MegaTransfer::TYPE_DOWNLOAD] = 0;
     activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
-    trayMenu = NULL;
-    trayGuestMenu = NULL;
+    infoDialogMenu = NULL;
+    guestMenu = NULL;
     syncsMenu = NULL;
     menuSignalMapper = NULL;
     megaApi = NULL;
@@ -1744,7 +1744,7 @@ void MegaApplication::start()
                     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
                 }
             }
-            createTrayMenu();
+            createAppMenus();
         }
 
 
@@ -1922,7 +1922,7 @@ void MegaApplication::loggedIn(bool fromWizard)
     infoDialog->setUsage();
     infoDialog->setAccountType(preferences->accountType());
 
-    createTrayMenu();
+    createAppMenus();
 
     //Set the upload limit
     if (preferences->uploadLimitKB() > 0)
@@ -2021,7 +2021,7 @@ void MegaApplication::startSyncs()
 
     if (syncsModified)
     {
-        createTrayMenu();
+        createAppMenus();
     }
 }
 
@@ -2057,9 +2057,9 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                 {
                     infoOverQuota = true;
 
-                    if (trayMenu && trayMenu->isVisible())
+                    if (infoDialogMenu && infoDialogMenu->isVisible())
                     {
-                        trayMenu->close();
+                        infoDialogMenu->close();
                     }
                     if (infoDialog && infoDialog->isVisible())
                     {
@@ -2093,9 +2093,9 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                     }
                     infoOverQuota = false;
 
-                    if (trayMenu && trayMenu->isVisible())
+                    if (infoDialogMenu && infoDialogMenu->isVisible())
                     {
-                        trayMenu->close();
+                        infoDialogMenu->close();
                     }
 
                     restoreSyncs();
@@ -2238,7 +2238,7 @@ void MegaApplication::disableSyncs()
 
     if (syncsModified)
     {
-        createTrayMenu();
+        createAppMenus();
         showErrorMessage(tr("Your syncs have been temporarily disabled"));
     }
 }
@@ -2284,7 +2284,7 @@ void MegaApplication::restoreSyncs()
 
     if (syncsModified)
     {
-        createTrayMenu();
+        createAppMenus();
     }
 }
 
@@ -2930,9 +2930,9 @@ void MegaApplication::cleanAll()
 
     // Delete menus and menu items
     deleteMenu(initialMenu.release());
-    deleteMenu(trayMenu.release());
+    deleteMenu(infoDialogMenu.release());
     deleteMenu(syncsMenu.release());
-    deleteMenu(trayGuestMenu.release());
+    deleteMenu(guestMenu.release());
 #ifdef _WIN32
     deleteMenu(windowsMenu.release());
 #endif
@@ -3151,13 +3151,13 @@ void MegaApplication::showInfoDialog()
         else
         {
             infoDialog->closeSyncsMenu();
-            if (trayMenu && trayMenu->isVisible())
+            if (infoDialogMenu && infoDialogMenu->isVisible())
             {
-                trayMenu->close();
+                infoDialogMenu->close();
             }
-            if (trayGuestMenu && trayGuestMenu->isVisible())
+            if (guestMenu && guestMenu->isVisible())
             {
-                trayGuestMenu->close();
+                guestMenu->close();
             }
 
             infoDialog->hide();
@@ -3456,7 +3456,7 @@ void MegaApplication::sendBusinessWarningNotification()
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == trayMenu.get())
+    if (obj == infoDialogMenu.get())
     {
         if (e->type() == QEvent::Leave)
         {
@@ -4626,36 +4626,36 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (trayGuestMenu && !preferences->logged())
+    if (guestMenu && !preferences->logged())
     {
-        if (trayGuestMenu->isVisible())
+        if (guestMenu->isVisible())
         {
-            trayGuestMenu->close();
+            guestMenu->close();
         }
 
-        menuWidthInitialPopup = trayGuestMenu->sizeHint().width();
-        QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
+        menuWidthInitialPopup = guestMenu->sizeHint().width();
+        QPoint p = point ? (*point) - QPoint(guestMenu->sizeHint().width(), 0)
                          : QCursor::pos();
 
-        trayGuestMenu->update();
-        trayGuestMenu->popup(p);
-        displayedMenu = trayGuestMenu.get();
+        guestMenu->update();
+        guestMenu->popup(p);
+        displayedMenu = guestMenu.get();
 
     }
-    else if (trayMenu)
+    else if (infoDialogMenu)
     {
-        if (trayMenu->isVisible())
+        if (infoDialogMenu->isVisible())
         {
-            trayMenu->close();
+            infoDialogMenu->close();
         }
 
 
-        menuWidthInitialPopup = trayMenu->sizeHint().width();
-        QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
+        menuWidthInitialPopup = infoDialogMenu->sizeHint().width();
+        QPoint p = point ? (*point) - QPoint(infoDialogMenu->sizeHint().width(), 0)
                                  : QCursor::pos();
-        trayMenu->update();
-        trayMenu->popup(p);
-        displayedMenu = trayMenu.get();
+        infoDialogMenu->update();
+        infoDialogMenu->popup(p);
+        displayedMenu = infoDialogMenu.get();
     }
 
     // Menu width might be incorrect the first time it's shown. This works around that and repositions the menu at the expected position afterwards
@@ -5149,8 +5149,8 @@ void MegaApplication::createTrayIcon()
         return;
     }
 
-    createTrayMenu();
-    createTrayGuestMenu();
+    createAppMenus();
+    createGuestMenu();
 
     if (!trayIcon)
     {
@@ -5841,14 +5841,14 @@ void MegaApplication::onUpdateCompleted()
 
     updateAvailable = false;
 
-    if (trayMenu)
+    if (infoDialogMenu)
     {
         createTrayIcon();
     }
 
-    if (trayGuestMenu)
+    if (guestMenu)
     {
-        createTrayGuestMenu();
+        createGuestMenu();
     }
 
     rebootApplication();
@@ -5863,14 +5863,14 @@ void MegaApplication::onUpdateAvailable(bool requested)
 
     updateAvailable = true;
 
-    if (trayMenu)
+    if (infoDialogMenu)
     {
         createTrayIcon();
     }
 
-    if (trayGuestMenu)
+    if (guestMenu)
     {
-        createTrayGuestMenu();
+        createGuestMenu();
     }
 
     if (settingsDialog)
@@ -6004,9 +6004,9 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifndef __APPLE__
         if (isLinux)
         {
-            if (trayMenu && trayMenu->isVisible())
+            if (infoDialogMenu && infoDialogMenu->isVisible())
             {
-                trayMenu->close();
+                infoDialogMenu->close();
             }
         }
 #ifdef _WIN32
@@ -6294,8 +6294,7 @@ void MegaApplication::openSettingsFromTrayMenu()
     settingsDialog->show();
 }
 
-//This function creates the tray icon
-void MegaApplication::createTrayMenu()
+void MegaApplication::createAppMenus()
 {
     if (appfinished)
     {
@@ -6472,30 +6471,30 @@ void MegaApplication::createTrayMenu()
     windowsMenu->hide();
 #endif
 
-    if (trayMenu)
+    if (infoDialogMenu)
     {
-        QList<QAction *> actions = trayMenu->actions();
+        QList<QAction *> actions = infoDialogMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
-            trayMenu->removeAction(actions[i]);
+            infoDialogMenu->removeAction(actions[i]);
         }
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
 #endif
     {
-        trayMenu.reset(new QMenu());
+        infoDialogMenu.reset(new QMenu());
 #ifdef __APPLE__
-        trayMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        infoDialogMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
-        trayMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
+        infoDialogMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
 
         //Highlight menu entry on mouse over
-        connect(trayMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+        connect(infoDialogMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
 
         //Hide highlighted menu entry when mouse over
-        trayMenu->installEventFilter(this);
+        infoDialogMenu->installEventFilter(this);
     }
 
     if (exitAction)
@@ -6680,49 +6679,49 @@ void MegaApplication::createTrayMenu()
     }
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()), Qt::QueuedConnection);
 
-    trayMenu->addAction(updateAction);
-    trayMenu->addAction(myCloudAction);
-    trayMenu->addSeparator();
-    trayMenu->addAction(addSyncAction);
-    trayMenu->addAction(importLinksAction);
-    trayMenu->addAction(uploadAction);
-    trayMenu->addAction(downloadAction);
-    trayMenu->addAction(streamAction);
-    trayMenu->addAction(settingsAction);
-    trayMenu->addSeparator();
-    trayMenu->addAction(exitAction);
+    infoDialogMenu->addAction(updateAction);
+    infoDialogMenu->addAction(myCloudAction);
+    infoDialogMenu->addSeparator();
+    infoDialogMenu->addAction(addSyncAction);
+    infoDialogMenu->addAction(importLinksAction);
+    infoDialogMenu->addAction(uploadAction);
+    infoDialogMenu->addAction(downloadAction);
+    infoDialogMenu->addAction(streamAction);
+    infoDialogMenu->addAction(settingsAction);
+    infoDialogMenu->addSeparator();
+    infoDialogMenu->addAction(exitAction);
 #ifdef _WIN32
     //The following should not be required, but
     //prevents it from being truncated on the first display
-    trayMenu->show();
-    trayMenu->hide();
+    infoDialogMenu->show();
+    infoDialogMenu->hide();
 #endif
 
 }
 
-void MegaApplication::createTrayGuestMenu()
+void MegaApplication::createGuestMenu()
 {
     if (appfinished)
     {
         return;
     }
 
-    if (trayGuestMenu)
+    if (guestMenu)
     {
-        QList<QAction *> actions = trayGuestMenu->actions();
+        QList<QAction *> actions = guestMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
-            trayGuestMenu->removeAction(actions[i]);
+            guestMenu->removeAction(actions[i]);
         }
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
 #endif
     {
-        trayGuestMenu.reset(new QMenu());
+        guestMenu.reset(new QMenu());
 
 #ifdef __APPLE__
-        trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        guestMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
         trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
@@ -6770,11 +6769,11 @@ void MegaApplication::createTrayGuestMenu()
 #endif
     connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettingsFromTrayMenu()));
 
-    trayGuestMenu->addAction(updateActionGuest);
-    trayGuestMenu->addSeparator();
-    trayGuestMenu->addAction(settingsActionGuest);
-    trayGuestMenu->addSeparator();
-    trayGuestMenu->addAction(exitActionGuest);
+    guestMenu->addAction(updateActionGuest);
+    guestMenu->addSeparator();
+    guestMenu->addAction(settingsActionGuest);
+    guestMenu->addSeparator();
+    guestMenu->addAction(exitActionGuest);
 
 #ifdef _WIN32
     //The following should not be required, but
@@ -7617,7 +7616,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     if (preferences->isFolderActive(i))
                     {
                         preferences->setSyncState(i, false);
-                        createTrayMenu();
+                        createAppMenus();
                     }
 
                     if (settingsDialog)
@@ -8369,7 +8368,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                     delete node;
                     preferences->setSyncState(i, false);
                     openSettings(SettingsDialog::SYNCS_TAB);
-                    createTrayMenu();
+                    createAppMenus();
                 }
 
                 delete nodeByHandle;

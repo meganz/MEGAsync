@@ -1473,7 +1473,7 @@ int SettingsDialog::saveSettings()
                 delete node;
             }
 
-            app->createTrayMenu();
+            app->createAppMenus();
             syncsChanged = false;
         }
 #ifdef _WIN32
