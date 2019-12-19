@@ -1744,7 +1744,6 @@ void MegaApplication::start()
                     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
                 }
             }
-            createTrayMenu();
             createTrayIcon();  // make sure the new OS-style menu is attached to the tray icon, after we recreated it.
         }
 
