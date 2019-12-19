@@ -3013,6 +3013,35 @@ void MegaApplication::onInstallUpdateClicked()
     }
 }
 
+/**
+ * @brief MegaApplication::checkOverquotaBandwidth
+ * This also resets bwOverquotaTimestamp if not opening. why?
+ * @return true if OverquotaDialog is opened
+ */
+bool MegaApplication::checkOverquotaBandwidth()
+{
+    if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+    {
+        openBwOverquotaDialog();
+        return true;
+    }
+    else if (bwOverquotaTimestamp)
+    {
+        bwOverquotaTimestamp = 0;
+        preferences->clearTemporalBandwidth();
+        if (bwOverquotaDialog)
+        {
+            bwOverquotaDialog->refreshAccountDetails();
+        }
+#ifdef __MACH__
+        trayIcon->setContextMenu(&emptyMenu);
+#elif defined(_WIN32)
+        trayIcon->setContextMenu(windowsMenu.get());
+#endif
+    }
+    return false;
+}
+
 void MegaApplication::showInfoDialog()
 {
     if (appfinished)
@@ -3045,25 +3074,14 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+        if (bwOverquotaTimestamp && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
         {
-            openBwOverquotaDialog();
-            return;
-        }
-        else if (bwOverquotaTimestamp)
-        {
-            bwOverquotaTimestamp = 0;
-            preferences->clearTemporalBandwidth();
-            if (bwOverquotaDialog)
-            {
-                bwOverquotaDialog->refreshAccountDetails();
-            }
-    #ifdef __MACH__
-            trayIcon->setContextMenu(&emptyMenu);
-    #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu.get());
-    #endif
             updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
+        }
+
+        if (checkOverquotaBandwidth())
+        {
+            return;
         }
     }
 
@@ -6091,67 +6109,6 @@ void MegaApplication::onMessageClicked()
     }
 }
 
-//Called when the user wants to open the settings dialog
-void MegaApplication::openSettings(int tab)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    if (preferences->logged())
-    {
-        updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);  // update all info for up to date data (expecially account status & storage of versions on advanced tab)
-    }
-
-    if (settingsDialog)
-    {
-        //If the dialog is active
-        if (settingsDialog->isVisible())
-        {
-            //and visible -> show it
-            if (infoOverQuota)
-            {
-                settingsDialog->setOverQuotaMode(true);
-            }
-            else
-            {
-                settingsDialog->setOverQuotaMode(false);
-                settingsDialog->openSettingsTab(tab);
-            }
-            settingsDialog->activateWindow();
-            settingsDialog->raise();
-            return;
-        }
-
-        //Otherwise, delete it
-        delete settingsDialog;
-        settingsDialog = NULL;
-    }
-
-    //Show a new settings dialog
-    settingsDialog = new SettingsDialog(this);
-    connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-    if (infoOverQuota)
-    {
-        settingsDialog->setOverQuotaMode(true);
-    }
-    else
-    {
-        if (!megaApi->isFilesystemAvailable() || !preferences->logged())
-        {
-            openSettingsFromTrayMenu();
-            return;
-        }
-        settingsDialog->setOverQuotaMode(false);
-        settingsDialog->openSettingsTab(tab);
-    }
-    settingsDialog->setUpdateAvailable(updateAvailable);
-    settingsDialog->setModal(false);
-    settingsDialog->loadSettings();
-    settingsDialog->show();
-}
-
 void MegaApplication::openInfoWizard()
 {
     if (appfinished)
@@ -6203,8 +6160,7 @@ void MegaApplication::openBwOverquotaDialog()
     bwOverquotaDialog->refreshAccountDetails();
 }
 
-//called from tray icon menu,....
-void MegaApplication::openSettingsFromTrayMenu()
+void MegaApplication::openSettings(int tab)
 {
     if (appfinished)
     {
@@ -6222,25 +6178,11 @@ void MegaApplication::openSettingsFromTrayMenu()
 #ifndef __MACH__
     if (preferences && !proxyOnly)
     {
-        updateUserStats(true, true, true, true, USERSTATS_CHANGEPROXY);
-        if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+        updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);
+
+        if (checkOverquotaBandwidth())
         {
-            openBwOverquotaDialog();
             return;
-        }
-        else if (bwOverquotaTimestamp)
-        {
-            bwOverquotaTimestamp = 0;
-            preferences->clearTemporalBandwidth();
-            if (bwOverquotaDialog)
-            {
-                bwOverquotaDialog->refreshAccountDetails();
-            }
-    #ifdef __MACH__
-            trayIcon->setContextMenu(&emptyMenu);
-    #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu.get());
-    #endif
         }
     }
 #endif
@@ -6252,17 +6194,12 @@ void MegaApplication::openSettingsFromTrayMenu()
         //If the dialog is active
         if (settingsDialog->isVisible())
         {
-            if (isLinux && !proxyOnly)
+            if (!proxyOnly)
             {
-                if (infoOverQuota)
-                {
-                    settingsDialog->setOverQuotaMode(true);
-                }
-                else
-                {
-                    settingsDialog->setOverQuotaMode(false);
-                }
+                settingsDialog->setOverQuotaMode(infoOverQuota); //TODO: use observer pattern for this!
             }
+
+            settingsDialog->openSettingsTab(tab);
 
             //and visible -> show it
             settingsDialog->activateWindow();
@@ -6278,17 +6215,14 @@ void MegaApplication::openSettingsFromTrayMenu()
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this, proxyOnly);
     connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-    if (isLinux && !proxyOnly)
+
+    if (!proxyOnly)
     {
-        if (infoOverQuota)
-        {
-            settingsDialog->setOverQuotaMode(true);
-        }
-        else
-        {
-            settingsDialog->setOverQuotaMode(false);
-        }
+        settingsDialog->setOverQuotaMode(infoOverQuota);
+        settingsDialog->openSettingsTab(tab);
     }
+
+    settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
     settingsDialog->loadSettings();
     settingsDialog->show();
@@ -6325,7 +6259,7 @@ void MegaApplication::createAppMenus()
         changeProxyAction = NULL;
     }
     changeProxyAction = new QAction(tr("Settings"), this);
-    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(openSettingsFromTrayMenu()));
+    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
     if (initialExitAction)
     {
@@ -6767,7 +6701,7 @@ void MegaApplication::createGuestMenu()
 #else
     settingsActionGuest = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
 #endif
-    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettingsFromTrayMenu()));
+    connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettings()));
 
     guestMenu->addAction(updateActionGuest);
     guestMenu->addSeparator();

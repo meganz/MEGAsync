@@ -179,10 +179,9 @@ public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
-    void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
+    void openSettings(int tab = -1);
     void openInfoWizard();
     void openBwOverquotaDialog();
-    void openSettingsFromTrayMenu();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -269,6 +268,7 @@ private slots:
     void PSAseen(int id);
 
 protected:
+    bool checkOverquotaBandwidth();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
