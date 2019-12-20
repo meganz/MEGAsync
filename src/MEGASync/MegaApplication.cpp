@@ -3038,7 +3038,7 @@ bool MegaApplication::checkOverquotaBandwidth()
         trayIcon->setContextMenu(windowsMenu.get());
 #endif
     }
-    else if (QDateTime::currentMSecsSinceEpoch() / 1000 <= bwOverquotaTimestamp) //still OQ
+    else //still OQ
     {
         openBwOverquotaDialog();
         return true;
