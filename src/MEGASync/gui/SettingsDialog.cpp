@@ -1279,7 +1279,7 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
             ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                     .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                    .arg(QString::number(bandwidthPercentage))
+                    .arg(QString::number((bandwidthPercentage < 100) ? bandwidthPercentage : 100))
                     .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }
