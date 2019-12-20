@@ -58,6 +58,8 @@ include_directories( "${MEGAsyncDir}/gui/win" )
 
 set (FORMS
     ${MEGAsyncDir}/gui/win/AlertItem.ui
+    ${MEGAsyncDir}/gui/win/AlertFilterType.ui
+    ${MEGAsyncDir}/gui/win/BugReportDialog.ui
     ${MEGAsyncDir}/gui/win/FilterAlertWidget.ui
     ${MEGAsyncDir}/gui/win/TransfersStatusWidget.ui
     ${MEGAsyncDir}/gui/win/TransfersSummaryWidget.ui
@@ -97,7 +99,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/win/StatusInfo.ui
     ${MEGAsyncDir}/gui/win/PSAwidget.ui
     ${MEGAsyncDir}/gui/win/UpgradeOverStorage.ui
-    ${MEGAsyncDir}/gui/win/UpgradeWidget.ui
+#    ${MEGAsyncDir}/gui/win/UpgradeWidget.ui
     ${MEGAsyncDir}/gui/win/ChangePassword.ui
     ${MEGAsyncDir}/gui/win/Login2FA.ui
     ${MEGAsyncDir}/gui/win/TransfersStatusWidget.ui )
@@ -132,6 +134,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/Preferences.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/gui/AlertItem.h
+    ${MEGAsyncDir}/gui/AlertFilterType.h
+    ${MEGAsyncDir}/gui/BugReportDialog.h
     ${MEGAsyncDir}/gui/CircularUsageProgressBar.h
     ${MEGAsyncDir}/gui/FilterAlertWidget.h
     ${MEGAsyncDir}/gui/MegaAlertDelegate.h
@@ -196,7 +200,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/TransfersWidget.h
     ${MEGAsyncDir}/gui/UpgradeDialog.h
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
-    ${MEGAsyncDir}/gui/UpgradeWidget.h
+#    ${MEGAsyncDir}/gui/UpgradeWidget.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
@@ -252,6 +256,8 @@ set (SRCS
     ${RCC_OUTPUT}
     
     ${MEGAsyncDir}/gui/AlertItem.cpp
+    ${MEGAsyncDir}/gui/AlertFilterType.cpp
+    ${MEGAsyncDir}/gui/BugReportDialog.cpp
     ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
     ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
     ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
@@ -314,7 +320,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/PSAwidget.cpp
     ${MEGAsyncDir}/gui/ElidedLabel.cpp
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
-    ${MEGAsyncDir}/gui/UpgradeWidget.cpp
+#    ${MEGAsyncDir}/gui/UpgradeWidget.cpp
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
 
@@ -373,7 +379,7 @@ target_link_libraries(MEGAsync Mega
             optimized "${QT_DIR}/lib/Qt5WinExtras.lib" 
             ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
 
-set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG" )
+set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
 
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
