@@ -6202,9 +6202,8 @@ void MegaApplication::openSettings(int tab)
             if (!proxyOnly)
             {
                 settingsDialog->setOverQuotaMode(infoOverQuota); //TODO: use observer pattern for this!
+                settingsDialog->openSettingsTab(tab);
             }
-
-            settingsDialog->openSettingsTab(tab);
 
             //and visible -> show it
             settingsDialog->activateWindow();
