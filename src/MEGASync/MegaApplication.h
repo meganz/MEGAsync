@@ -255,6 +255,7 @@ public slots:
     void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
+    void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
 #ifdef __APPLE__
@@ -359,6 +360,7 @@ protected:
 
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
+    long long lastTsConnectionError = 0;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
