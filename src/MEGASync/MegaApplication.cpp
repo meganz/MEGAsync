@@ -3015,17 +3015,16 @@ void MegaApplication::onInstallUpdateClicked()
 
 /**
  * @brief MegaApplication::checkOverquotaBandwidth
- * This also resets bwOverquotaTimestamp if not opening. why?
  * @return true if OverquotaDialog is opened
  */
 bool MegaApplication::checkOverquotaBandwidth()
 {
-    if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+    if (!bwOverquotaTimestamp)
     {
-        openBwOverquotaDialog();
-        return true;
+        return false;
     }
-    else if (bwOverquotaTimestamp)
+
+    if (QDateTime::currentMSecsSinceEpoch() / 1000 > bwOverquotaTimestamp) //we have waited enough
     {
         bwOverquotaTimestamp = 0;
         preferences->clearTemporalBandwidth();
@@ -3039,6 +3038,12 @@ bool MegaApplication::checkOverquotaBandwidth()
         trayIcon->setContextMenu(windowsMenu.get());
 #endif
     }
+    else if (QDateTime::currentMSecsSinceEpoch() / 1000 <= bwOverquotaTimestamp) //still OQ
+    {
+        openBwOverquotaDialog();
+        return true;
+    }
+
     return false;
 }
 
