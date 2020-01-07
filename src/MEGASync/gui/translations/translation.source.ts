@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -276,7 +276,7 @@
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact request denied</translation>
+        <translation type="unfinished">Contact request declined</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="obsolete">New shared folder from [A]</translation>
+        <translation type="obsolete">New shared folder from [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">Your publicly shared [A] ([B]) has been taken down.</translation>
+        <translation type="obsolete">Your publicly shared %1 (%2) has been taken down.</translation>
     </message>
     <message>
         <source>file</source>
@@ -471,7 +471,7 @@
     <message>
         <source>New Shared folder from [X]</source>
         <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">New Shared folder from [X]</translation>
+        <translation type="unfinished">New shared folder from [X]</translation>
     </message>
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
@@ -3314,9 +3314,9 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
-- Improved GUI performance during addition of many downloads
-- Restyling of initial information wizard, new icons and interface improvements
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
+- Improved GUI performance during the addition of many downloads
+- Restyled initial information wizard, with new icons and interface improvements
 - Support for business accounts
 - Other minor bug fixes and improvements</translation>
     </message>
@@ -3328,10 +3328,10 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
-- Enable thumbnail support for PDF
-- Improved GUI performance during addition of many downloads
-- Restyling of initial information wizard, new icons and interface improvements
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
+- Enabled thumbnail support for PDF files
+- Improved GUI performance during the addition of many downloads
+- Restyled initial information wizard, with new icons and interface improvements
 - Support for business accounts
 - Other minor bug fixes and improvements</translation>
     </message>
@@ -3373,9 +3373,9 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
         <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from settings dialog.
+- Support to send bug reports from the settings dialog.
 - New restyling of main dialog.
-- Performance improvements when dealing with huge amount of syncs and transfers.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
 - Improved support for business accounts.
 - Support links to files and folders inside a public folder link.
 - Improvements for synchronization with FAT32 filesystems.
