@@ -1,3 +1,21 @@
+
+
+win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_20200107
+win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
+win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
+
+message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
+message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
+
+THIRDPARTY_VCPKG_PATH = $$THIRDPARTY_VCPKG_BASE_PATH/vcpkg/installed/$$VCPKG_TRIPLET
+exists($$THIRDPARTY_VCPKG_PATH) {
+   CONFIG += vcpkg
+}
+vcpkg:debug:message("Building DEBUG with VCPKG 3rdparty at $$THIRDPARTY_VCPKG_PATH")
+vcpkg:release:message("Building RELEASE with VCPKG 3rdparty at $$THIRDPARTY_VCPKG_PATH")
+!vcpkg:message("vcpkg not used")
+
+
 CONFIG -= qt
 MEGASDK_BASE_PATH = $$PWD/../MEGASync/mega
 
@@ -20,7 +38,10 @@ HEADERS += UpdateTask.h \
 SOURCES += MegaUpdater.cpp \
     UpdateTask.cpp
 
-INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
+vcpkg:INCLUDEPATH += $$THIRDPARTY_VCPKG_PATH/include
+else:INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
+
+message("INCLUDEPATH: $$INCLUDEPATH")
 
 macx {    
     OBJECTIVE_SOURCES +=  MacUtils.mm
@@ -35,34 +56,47 @@ macx {
 win32 {
     contains(CONFIG, BUILDX64) {
        release {
-            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64"
+            vcpkg:LIBS += -L"$$THIRDPARTY_VCPKG_PATH/lib"
+            else:LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64"
         }
         else {
-            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64d"
+            vcpkg:LIBS += -L"$$THIRDPARTY_VCPKG_PATH/debug/lib"
+            else:LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64d"
         }
     }
 
     !contains(CONFIG, BUILDX64) {
         release {
-            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32"
+            vcpkg:LIBS += -L"$$THIRDPARTY_VCPKG_PATH/lib"
+            else:LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32"
         }
         else {
-            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32d"
+            vcpkg:LIBS += -L"$$THIRDPARTY_VCPKG_PATH/debug/lib"
+            else:LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32d"
         }
     }
 
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
-    LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptoppmt
+    vcpkg:LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptopp-static
+    else:LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptoppmt
 
     QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
     QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
 
-    QMAKE_CXXFLAGS_RELEASE += -MT
-    QMAKE_CXXFLAGS_DEBUG += -MTd
+    !vcpkg {
+        QMAKE_CXXFLAGS_RELEASE += -MT
+        QMAKE_CXXFLAGS_DEBUG += -MTd
 
-    QMAKE_CXXFLAGS_RELEASE -= -MD
-    QMAKE_CXXFLAGS_DEBUG -= -MDd
+        QMAKE_CXXFLAGS_RELEASE -= -MD
+        QMAKE_CXXFLAGS_DEBUG -= -MDd
+    }
+    else {
+        QMAKE_CXXFLAGS_RELEASE += -MD
+        QMAKE_CXXFLAGS_DEBUG += -MDd
 
+        QMAKE_CXXFLAGS_RELEASE -= -MT
+        QMAKE_CXXFLAGS_DEBUG -= -MTd
+    }
     RC_FILE = icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01

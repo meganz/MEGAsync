@@ -6,7 +6,7 @@ Unicode true
 
 
 #!define BUILD_UNINSTALLER
-#!define BUILD_X64_VERSION
+!define BUILD_X64_VERSION
 #!define BUILD_WITH_LOGGER
 #!define ENABLE_DEBUG_MESSAGES
 !define ENABLE_QT5
@@ -45,13 +45,17 @@ VIAddVersionKey "ProductVersion" "4.3.0.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH "C:\Qt\Qt5.6.3_x64\5.6.3\msvc2015_64"
+!define QT_PATH "C:\Qt\Qt5.6.3-64\5.6.3\msvc2015_64"
 !else
 !ifndef ENABLE_QT5
 !define QT_PATH "C:\Qt\4.8.6.0\"
 !else
 !define QT_PATH "C:\Qt\Qt5.6.3\5.6.3\msvc2015"
 !endif
+!endif
+
+!ifdef BUILD_X64_VERSION
+!define VCPKG
 !endif
 
 !define BUILDPATH_X86 "build-MEGA-Desktop_Qt_5_6_3_MSVC2015_32bit-Release"
@@ -802,14 +806,17 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\cares.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\cares.dll" "$USERNAME" "GenericRead + GenericWrite"
 
+!ifndef VCPKG
   File "${SRCDIR_MEGASYNC}\libsodium.dll"
   AccessControl::SetFileOwner "$INSTDIR\libsodium.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\libsodium.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
 
   File "installer\qt.conf"
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
 
+!ifndef VCPKG
   File "${SRCDIR_MEGASYNC}\avcodec-57.dll"
   AccessControl::SetFileOwner "$INSTDIR\avcodec-57.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\avcodec-57.dll" "$USERNAME" "GenericRead + GenericWrite"
@@ -829,10 +836,44 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\swresample-2.dll"
   AccessControl::SetFileOwner "$INSTDIR\swresample-2.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-2.dll" "$USERNAME" "GenericRead + GenericWrite"
+!else
+  File "${SRCDIR_MEGASYNC}\avcodec-58.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avcodec-58.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avcodec-58.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\avformat-58.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avformat-58.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avformat-58.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\avutil-56.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avutil-56.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avutil-56.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\swscale-5.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swscale-5.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swscale-5.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\swresample-3.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
 
+!ifndef VCPKG
   File "${SRCDIR_MEGASYNC}\pdfium.dll"
   AccessControl::SetFileOwner "$INSTDIR\pdfium.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\pdfium.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
+
+!ifdef VCPKG
+  ;remove old DLLs that we no longer use (some became static; some have later version number)
+  Delete "$INSTDIR\avcodec-57.dll"
+  Delete "$INSTDIR\avformat-57.dll"
+  Delete "$INSTDIR\avutil-55.dll"
+  Delete "$INSTDIR\swscale-4.dll"
+  Delete "$INSTDIR\swresample-2.dll"
+  Delete "$INSTDIR\libsodium.dll"
+  Delete "$INSTDIR\pdfium.dll"
+!endif
 
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
@@ -840,6 +881,7 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME" "GenericRead + GenericWrite"
 !endif
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
+
 
   IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
         GetTempFileName $0
@@ -850,16 +892,18 @@ modeselected:
 
   !insertmacro DEBUG_MSG "Registering DLLs"
   
-  ; Register shell extension 1 (x86_32)
-  !define LIBRARY_COM
-  !define LIBRARY_SHELL_EXTENSION
-  !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-  !undef LIBRARY_COM
-  !undef LIBRARY_SHELL_EXTENSION
+  !ifndef BUILD_X64_VERSION
+        ; Register shell extension 1 (x86_32)
+        !define LIBRARY_COM
+        !define LIBRARY_SHELL_EXTENSION
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+        !undef LIBRARY_COM
+        !undef LIBRARY_SHELL_EXTENSION
 
-  AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+        AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+        AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  !endif
+
   ${If} ${RunningX64}
         IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
                 GetTempFileName $0
@@ -1097,14 +1141,21 @@ Section Uninstall
   Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
-  Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\qt.conf"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
+  Delete "$INSTDIR\avcodec-58.dll"
+  Delete "$INSTDIR\avformat-58.dll"
+  Delete "$INSTDIR\avutil-56.dll"
+  Delete "$INSTDIR\swscale-5.dll"
+  Delete "$INSTDIR\swresample-3.dll"
+
+  ;Still remove old DLLs though we no longer produce them (non-VCPKG may still produce them)
   Delete "$INSTDIR\avcodec-57.dll"
   Delete "$INSTDIR\avformat-57.dll"
   Delete "$INSTDIR\avutil-55.dll"
   Delete "$INSTDIR\swscale-4.dll"
   Delete "$INSTDIR\swresample-2.dll"
+  Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
 
   !define LIBRARY_COM
