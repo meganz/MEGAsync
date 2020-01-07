@@ -209,17 +209,6 @@ https://github.com/LibRaw/LibRaw/blob/master/LICENSE.LGPL
 https://github.com/LibRaw/LibRaw/blob/master/LICENSE.CDDL
 
 #### PDFium
-This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://www.ffmpeg.org/download.html>here</a>
-
-FFmpeg is a library for working with many video formats, we use it to generate thumbnails and preview images for relevant files.
-
-https://www.ffmpeg.org/about.html
-
-License: LGPLv2.1
-
-http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-
-#### FFmpeg
 Copyright 2014 PDFium Authors. All rights reserved.
 
 PDF generation and rendering library.
@@ -229,6 +218,17 @@ https://opensource.google.com/projects/pdfium
 License: BSD 3-clause
 
 https://pdfium.googlesource.com/pdfium/+/master/LICENSE
+
+#### FFmpeg
+This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://www.ffmpeg.org/download.html>here</a>
+
+FFmpeg is a library for working with many video formats, we use it to generate thumbnails and preview images for relevant files.
+
+https://www.ffmpeg.org/about.html
+
+License: LGPLv2.1
+
+http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
 --------------------------------------------------------------------
 
