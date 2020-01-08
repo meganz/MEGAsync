@@ -26,7 +26,12 @@
    <string>Setup Assistant - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#SetupWizard
+   <string notr="true">QPushButton, QLabel, QLineEdit
+{
+font-size: 11px;
+}
+
+#SetupWizard
 {
 	background-color: #f1f1f1;
 }
