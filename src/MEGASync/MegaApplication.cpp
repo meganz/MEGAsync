@@ -4656,7 +4656,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
     }
 #ifdef _WIN32
     // recreate menus to fix some qt scaling issues in windows
-    createTrayMenu();
+    createAppMenus();
     createGuestMenu();
 #endif
     QMenu *displayedMenu = nullptr;
@@ -6728,8 +6728,8 @@ void MegaApplication::createGuestMenu()
 #ifdef _WIN32
     //The following should not be required, but
     //prevents it from being truncated on the first display
-    trayGuestMenu->show();
-    trayGuestMenu->hide();
+    guestMenu->show();
+    guestMenu->hide();
 #endif
 }
 
