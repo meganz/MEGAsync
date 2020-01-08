@@ -38,6 +38,11 @@
  border-radius: 16px;
 }
 
+QPushButton, QLabel
+{
+font-size: 13px;
+}
+
 #wHeader
 {
  background-color:  #FAFAFA;
