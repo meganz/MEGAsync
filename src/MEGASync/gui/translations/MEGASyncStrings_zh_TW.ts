@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">（未知的共享資料夾）</translation>
+        <translation type="obsolete">（未知的共享資料夾）</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">您公開分享的[%1] ([%2])已被移除</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">共享資料夾活動</translation>
     </message>
 </context>
 <context>
@@ -735,7 +740,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">請輸入一組較強的密碼</translation>
+        <translation type="unfinished">請輸入一組高強度的密碼</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -3046,7 +3051,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">資料夾無法同步。請確定您的資料夾名稱中沒有 ‘\’, ‘/’ 或 ‘:’ 等字符。</translation>
+        <translation type="unfinished">資料夾無法同步。請確定您的資料夾名稱中沒有 \、/、或 : 等字元。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3098,7 +3103,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">無效的資料夾名稱。
-請確定您的資料夾名稱中沒有使用 \、/ 或 : 等字元</translation>
+請確定您的資料夾名稱中沒有使用 \、/ 或 : 等字元。</translation>
     </message>
 </context>
 <context>
@@ -3263,7 +3268,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">每個用戶%1</translation>
     </message>
 </context>
 <context>
@@ -4007,12 +4012,12 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">在你電腦中已同步的檔案之備份版本將被永久刪除。請檢查您的備份資料夾，並確定在繼續進行此動作前，是否需要先備份或救回任何檔案。</translation>
+        <translation type="unfinished">在您電腦已同步檔案的先前版本的備份將被永久刪除。請檢查您的備份資料夾以查看在繼續此動作前，是否需要先救回一些檔案。</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">在MEGA中已同步的檔案之備份版本將被永久刪除。請檢查您於MEGA帳戶之垃圾桶中的 [A] 資料夾，並確定在繼續進行此動作前，是否需要先備份或救回任何檔案。</translation>
+        <translation type="unfinished">在MEGA中您的已同步檔案的先前版本的備份將被永久刪除。請檢查您MEGA帳戶的垃圾桶中的[A]資料夾，以查看在繼續此動作前，是否需要先救回一些檔案。</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -4377,7 +4382,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>請輸入一組較強的密碼</translation>
+        <translation>請輸入一組高強度的密碼</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -5225,7 +5230,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>請選擇欲上傳檔案之目的地資料夾:</translation>
+        <translation>請選擇檔案上傳的資料夾：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

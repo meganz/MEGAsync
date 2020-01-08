@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(unknown shared folder)</translation>
+        <translation type="obsolete">(unknown shared folder)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Shared Folder Activity</translation>
     </message>
 </context>
 <context>
@@ -1897,7 +1902,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">ขอขอบคุณสำหรับการทดสอบ MEGAsync&lt;br&gt;เวอร์ชันเบต้านี้จะไม่มีให้ทดสอบและหมดอายุแล้ว&lt;br&gt;กรุณาติดตามข่าวสารการอัปเดตได้ที่ทวิตเตอร์ &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; ของเรา</translation>
+        <translation type="obsolete">ขอบคุณสำหรับการทดสอบ MEGAsync&lt;br&gt;เวอร์ชันเบต้านี้ไม่มีให้ทดสอบและหมดอายุแล้ว&lt;br&gt;กรุณาติดตามข่าวสารการอัปเดตได้ที่ทวิตเตอร์ &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; ของเรา</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -3098,7 +3103,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">Invalid folder name.
-Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -5152,12 +5157,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
         <translatorcomment>Label to indicate that current account has reached transfer limit and need to wait %1 time or upgrade the account to continue.</translatorcomment>
-        <translation type="unfinished">กรุณาอัปเกรดเป็นบัญชี PRO เพื่อให้ดำเนินการต่อได้ทันที หรือจะรอ %1 เพื่อดำเนินการต่อได้ฟรี</translation>
+        <translation type="unfinished">กรุณาอัปเกรดเป็นบัญชีของคุณ เพื่อดำเนินการต่อทันที หรือจะรอ %1 เพื่อดำเนินการต่อได้ฟรี</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
-        <translation type="unfinished">IP ที่คุณใช้มีการถ่ายโอนข้อมูล %1 ในช่วง 6 ชั่วโมงที่ผ่านมาซึ่งทำให้คุณถึงขีดจำกัดการใช้งานปัจจุบันของเราแล้ว เพื่อหลีกเลี่ยงปัญหานี้ คุณสามารถ[A]อัปเกรดบัญชี PRO[/A] จะช่วยให้คุณมีแบนด์วิดธ์และพื้นที่จัดเก็บข้อมูลเพิ่มมากขึ้น</translation>
+        <translation type="unfinished">IP ที่คุณใช้มีการถ่ายโอนข้อมูล %1 ในช่วง 6 ชั่วโมงที่ผ่านมาซึ่งทำให้คุณถึงขีดจำกัดการใช้งานปัจจุบันของเราแล้ว เพื่อหลีกเลี่ยงปัญหานี้ คุณสามารถ[A]อัปเกรดบัญชีของคุณ[/A] จะช่วยให้คุณมีแบนด์วิดธ์และพื้นที่จัดเก็บข้อมูลเพิ่มมากขึ้น</translation>
     </message>
 </context>
 <context>

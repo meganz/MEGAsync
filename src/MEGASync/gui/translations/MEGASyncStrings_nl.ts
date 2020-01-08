@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(onbekende gedeelde map)</translation>
+        <translation type="obsolete">(onbekende gedeelde map)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -476,7 +476,12 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+        <translation type="unfinished">Uw publieke gedeelde [%1] ([%2]) is neer gehaald</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Shared Folder Activity</translation>
     </message>
 </context>
 <context>
@@ -1898,7 +1903,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Bedankt voor het testen van MEGAsync. &lt;br&gt;Deze beta versie is niet meer actueel en is verlopen. &lt;br&gt;Volg &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy &lt;/a&gt; op Twitter voor updates.</translation>
+        <translation type="obsolete">Dank u voor het testen van MEGAsync. &lt;br&gt;Deze beta versie is niet langer huidig en is verlopen. &lt;br&gt; volg&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; op Twitter voor updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -3264,7 +3269,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">per gebruiker %1</translation>
     </message>
 </context>
 <context>
@@ -3368,15 +3373,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
-- Other UI fixes and adjustments.
-- Other performance improvements, UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Ondersteuning voor gebruikersmeldingen 
+ - Ondersteuning voor het verzenden van bugrapporten vanuit het instellingendialoogvenster 
+ - Nieuwe restyling van hoofddialoogvenster 
+ - Prestatieverbeteringen bij het omgaan met een groot aantal synchronisaties en overdrachten 
+ - Verbeterde ondersteuning voor zakelijke accounts. 
+ - Ondersteuning van koppelingen naar bestanden en mappen in een openbare mapkoppeling. 
+ - Verbeteringen voor synchronisatie met FAT32-bestandssystemen. 
+ - Andere UI-fixes en aanpassingen. 
+ - Andere prestaties verbeteringen, UI fixes en aanpassingen.</translation>
     </message>
 </context>
 <context>

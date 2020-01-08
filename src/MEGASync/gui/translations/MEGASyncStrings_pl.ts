@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(nieznany folder współdzielony)</translation>
+        <translation type="obsolete">(nieznany folder współdzielony)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">Twój publicznie udostępniony [%1] ([%2]) został usunięty</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Aktywność folderu współdzielonego</translation>
     </message>
 </context>
 <context>
@@ -543,7 +548,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Folder lokalny jest zbyt duży (ta wersja jest ograniczona do folderów %1 lub plików %2). Proszę wybrać inny folder.</translation>
+        <translation type="obsolete">Folder lokalny jest zbyt duży (ta wersja jest ograniczona do folderów %1 lub %2 plików). Wybierz inny folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -735,7 +740,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">Wprowadź bezpieczniejsze hasło</translation>
+        <translation type="unfinished">Wprowadź silniejsze hasło</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1154,12 +1159,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Wprowadź adres e-mail</translation>
+        <translation type="unfinished">Wprowadź swój adres e-mail</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation type="unfinished">Wprowadź poprawny adres e-mail</translation>
+        <translation type="unfinished">Proszę wpisać poprawny adres e-mail</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -1897,7 +1902,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Dziękujemy za przeprowadzone testy MEGAsync.&lt;br&gt;Wersja beta nie jest już dostępną.&lt;br/&gt;Obserwuj as na Twitter &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; .</translation>
+        <translation type="obsolete">Dziękujemy za przetestowanie MEGAsync.&lt;br&gt;Ta wersja beta nie jest już aktualna i wygasła.&lt;br&gt;Postępuj zgodnie z &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; na Twitterze dla aktualizacje.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -3030,7 +3035,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">Folder główny nie może zostać zsynchronizowany. Proszę wybrać podfolder.</translation>
+        <translation type="obsolete">Nie można zsynchronizować folderu głównego. Wybierz podfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3046,7 +3051,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Nieprawidłowy folder do synchronizacji. Upewnij się, że w nazwach folderów nie używasz znaków takich jak &quot;\&quot;, &quot;/&quot; lub &quot;:&quot;.</translation>
+        <translation type="unfinished">Nieprawidłowy folder do synchronizacji. Upewnij się, że w nazwach folderów nie używasz znaków takich jak „\”, „/” lub „:”.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3098,7 +3103,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">Nieprawidłowa nazwa folderu. 
- Upewnij się, że w nazwach folderów nie używasz znaków takich jak „\”, „” lub „:”.</translation>
+ Upewnij się, że w nazwach folderów nie używasz znaków takich jak „\” „/” lub „:”.</translation>
     </message>
 </context>
 <context>
@@ -3263,7 +3268,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">na użytkownika %1</translation>
     </message>
 </context>
 <context>
@@ -3367,15 +3372,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
-- Other UI fixes and adjustments.
-- Other performance improvements, UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Wsparcie dla powiadomień użytkowników.
+- Wsparcie dla wysyłania raportów o błędach z okna dialogowego ustawień.
+- Nowa zmiana stylu głównego okna dialogowego.
+- Poprawa wydajności w przypadku ogromnej liczby synchronizacji i transferów.
+- Ulepszona obsługa kont biznesowych.
+- Obsługa łączy do plików i folderów w łączu folderu publicznego.
+- Ulepszenia synchronizacji z systemami plików FAT32.
+- Inne poprawki i dostosowania interfejsu użytkownika.
+- Inna wydajność ulepszenia, poprawki i poprawki interfejsu użytkownika.</translation>
     </message>
 </context>
 <context>
@@ -4008,12 +4013,12 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Kopia zapasowa wcześniej zachowanych plików na komputerze zostanie usunięta. Upewnij się czy nie chcesz czegoś zachować zanim będziesz kontynuować.</translation>
+        <translation type="unfinished">Kopie zapasowe poprzednich wersji zsynchronizowanych plików na komputerze zostaną trwale usunięte. Przed kontynuowaniem sprawdź foldery kopii zapasowych, aby sprawdzić, czy musisz coś uratować:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Kopia zapasowa wcześniej zachowanych plików na komputerze zostanie usunięta. Sprawdź [A] katalog w koszu na swoim koncie MEGA czy nie chcesz czegoś zachować zanim będziesz kontynuować.</translation>
+        <translation type="unfinished">Kopie zapasowe poprzednich wersji zsynchronizowanych plików w MEGA zostaną trwale usunięte. Sprawdź folder [A] w Koszu na śmieci na swoim koncie MEGA, aby przed kontynuowaniem sprawdzić, czy musisz coś uratować.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -4358,12 +4363,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Wprowadź adres e-mail</translation>
+        <translation>Wprowadź swój adres e-mail</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Wprowadź poprawny adres e-mail</translation>
+        <translation>Proszę wpisać poprawny adres e-mail</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -4373,12 +4378,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Wprowadź imię i nazwisko</translation>
+        <translation>Proszę wpisać swoje imię</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Wprowadź bezpieczniejsze hasło</translation>
+        <translation>Wprowadź silniejsze hasło</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -4412,17 +4417,17 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Wybierz katalog</translation>
+        <translation>Wybierz lokalny folder</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Wybierz katalog MEGA</translation>
+        <translation>Wybierz folder MEGA</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Folder lokalny jest zbyt duży (ta wersja jest ograniczona do folderów %1 lub plików %2). Proszę wybrać inny folder.</translation>
+        <translation type="obsolete">Folder lokalny jest zbyt duży (ta wersja jest ograniczona do folderów %1 lub %2 plików). Wybierz inny folder.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -5226,7 +5231,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Wybierz katalog do wgrania plików:</translation>
+        <translation>Wybierz folder przesyłania plików:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
