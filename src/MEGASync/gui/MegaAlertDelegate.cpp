@@ -92,6 +92,11 @@ QSize MegaAlertDelegate::sizeHint(const QStyleOptionViewItem &option, const QMod
 
 bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
+    if (!index.isValid())
+    {
+        return true;
+    }
+
     if (QEvent::MouseButtonPress ==  event->type())
     {
         MegaUserAlert *alert = NULL;
@@ -206,6 +211,11 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
 
 bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
+    if (!index.isValid())
+    {
+        return true;
+    }
+
     if (event->type() == QEvent::ToolTip)
     {
         MegaUserAlert *alert = NULL;
