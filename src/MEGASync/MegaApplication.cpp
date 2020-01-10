@@ -6806,6 +6806,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     QMessageBox msgBox;
                     HighDpiResize hDpiResizer(&msgBox);
                     msgBox.setIcon(QMessageBox::Warning);
+                    // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
+                    #ifdef __APPLE__
+                        msgBox.setWindowModality(Qt::WindowModal);
+                    #endif
                     msgBox.setText(tr("Payment Failed"));
                     msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
                     msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
@@ -6832,6 +6836,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 QMessageBox msgBox;
                 HighDpiResize hDpiResizer(&msgBox);
                 msgBox.setIcon(QMessageBox::Warning);
+                // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
+                #ifdef __APPLE__
+                    msgBox.setWindowModality(Qt::WindowModal);
+                #endif
 
                 if (megaApi->isMasterBusinessAccount())
                 {
