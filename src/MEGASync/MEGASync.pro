@@ -8,6 +8,9 @@ win32:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty-v140
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 
+macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+macx:VCPKG_TRIPLET = x64-osx
+
 message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
 message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
 

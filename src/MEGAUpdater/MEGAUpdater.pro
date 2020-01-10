@@ -4,6 +4,9 @@ win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_2
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 
+macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+macx:VCPKG_TRIPLET = x64-osx
+
 message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
 message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
 
@@ -47,7 +50,9 @@ macx {
     OBJECTIVE_SOURCES +=  MacUtils.mm
     DEFINES += _DARWIN_FEATURE_64_BIT_INODE USE_OPENSSL CRYPTOPP_DISABLE_ASM
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
-    LIBS += -L$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/
+    !vcpkg:LIBS += -L$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/
+    vcpkg:debug:LIBS += -L$$THIRDPARTY_VCPKG_PATH/debug/lib/
+    vcpkg:release:LIBS += -L$$THIRDPARTY_VCPKG_PATH/lib/
     LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
     QMAKE_CXXFLAGS += -g
     LIBS += -lcryptopp
