@@ -2,9 +2,9 @@
 #define UPGRADEOVERSTORAGE_H
 
 #include <QDialog>
-#include "gui/UpgradeWidget.h"
 #include <QHBoxLayout>
 #include <megaapi.h>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class UpgradeOverStorage;
@@ -23,6 +23,7 @@ public:
 private:
     Ui::UpgradeOverStorage *ui;
     QHBoxLayout* plansLayout;
+    HighDpiResize highDpiResize;
 
     void updatePlans();
     void checkAchievementsEnabled();

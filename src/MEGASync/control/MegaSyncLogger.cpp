@@ -18,27 +18,41 @@
 
 #include <zlib.h>
 
+#if !defined(__clang__) && defined(__GNUC__) && __GNUC__ < 5
+// There's no std::atomic_load/share on GCC below version 5
+#define MEGA_NO_ATOMIC_LOAD_SHARE
+#endif
+
 #define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
 #define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
 
 namespace {
 
-static bool awaiting_rotation = false;
-MegaSyncLogger *megaSyncLogger = nullptr;
-
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%f %t %l %v";
 
-void onAllRotated()
+#ifdef MEGA_NO_ATOMIC_LOAD_SHARE
+std::mutex gLoggerMutex;
+#endif
+
+std::shared_ptr<spdlog::logger> atomicLoadLogger(const std::shared_ptr<spdlog::logger>* logger)
 {
-    if (awaiting_rotation)
-    {
-        if (megaSyncLogger)
-        {
-            emit megaSyncLogger->logReadyForReporting();
-        }
-        awaiting_rotation = false;
-    }
+#ifndef MEGA_NO_ATOMIC_LOAD_SHARE
+    return std::atomic_load(logger);
+#else
+    std::lock_guard<std::mutex> lock(gLoggerMutex);
+    return *logger;
+#endif
+}
+
+void atomicStoreLogger(std::shared_ptr<spdlog::logger>* logger, std::shared_ptr<spdlog::logger> new_logger)
+{
+#ifndef MEGA_NO_ATOMIC_LOAD_SHARE
+    std::atomic_store(logger, std::move(new_logger));
+#else
+    std::lock_guard<std::mutex> lock(gLoggerMutex);
+    *logger = std::move(new_logger);
+#endif
 }
 
 bool isGzipCompressed(const spdlog::filename_t& filename)
@@ -155,11 +169,11 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     try
     {
 #ifdef _WIN32
-        rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                    logPath.toStdWString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate, onAllRotated);
+        mRotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+                    logPath.toStdWString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate, [this]{ onAllRotated(); });
 #else
-        rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                    logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate, onAllRotated);
+        mRotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+                    logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate, [this]{ onAllRotated(); });
 #endif
     }
     catch (const std::exception& e)
@@ -167,9 +181,9 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
         std::cerr << "Exception constructing rotating file sink: " << e.what() << std::endl;
     }
 
-    if (rotatingFileSink)
+    if (mRotatingFileSink)
     {
-        sinks.push_back(rotatingFileSink);
+        sinks.push_back(mRotatingFileSink);
     }
 
     if (logToStdout)
@@ -193,14 +207,24 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 
 MegaSyncLogger::~MegaSyncLogger()
 {
-    mega::MegaApi::removeLoggerObject(this);
+    mega::MegaApi::removeLoggerObject(this); // after this no more calls to MegaSyncLogger::log
 
     mLogger->flush();
-    if (auto logger = std::atomic_load(&mDebugLogger))
+    if (mDebugLogger)
     {
-        logger->flush();
+        mDebugLogger->flush();
     }
-    spdlog::shutdown();
+
+    spdlog::shutdown(); // resets all loggers
+
+    mLogger.reset();
+    if (mDebugLogger)
+    {
+        mDebugLogger.reset();
+    }
+    mRotatingFileSink.reset();
+
+    mThreadPool.reset(); // after this no more queued log messages are processed
 
     disconnected();
 
@@ -208,7 +232,6 @@ MegaSyncLogger::~MegaSyncLogger()
     {
         delete mMegaServer;
     }
-    megaSyncLogger = nullptr;
 }
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
@@ -242,7 +265,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
         case mega::MegaApi::LOG_LEVEL_MAX: mLogger->trace(message); break;
     }
 
-    if (auto logger = std::atomic_load(&mDebugLogger))
+    if (auto logger = atomicLoadLogger(&mDebugLogger))
     {
         switch (loglevel)
         {
@@ -260,7 +283,7 @@ void MegaSyncLogger::setDebug(const bool enable)
 {
     if (enable)
     {
-        if (!std::atomic_load(&mDebugLogger))
+        if (!atomicLoadLogger(&mDebugLogger))
         {
             const QDir desktopDir{mDesktopPath};
             const auto logPath = desktopDir.filePath(QString::fromUtf8("MEGAsync.log"));
@@ -280,41 +303,40 @@ void MegaSyncLogger::setDebug(const bool enable)
             logger->flush_on(spdlog::level::err);
 
             spdlog::register_logger(logger);
-            std::atomic_store(&mDebugLogger, logger);
+            atomicStoreLogger(&mDebugLogger, logger);
         }
     }
     else
     {
-        if (auto logger = std::atomic_load(&mDebugLogger))
+        if (auto logger = atomicLoadLogger(&mDebugLogger))
         {
             logger->flush();
 
             spdlog::drop(logger->name());
-            std::atomic_store(&mDebugLogger, std::shared_ptr<spdlog::logger>{});
+            atomicStoreLogger(&mDebugLogger, std::shared_ptr<spdlog::logger>{});
         }
     }
 }
 
 bool MegaSyncLogger::isDebug() const
 {
-    return std::atomic_load(&mDebugLogger) != nullptr;
+    return atomicLoadLogger(&mDebugLogger) != nullptr;
 }
 
 bool MegaSyncLogger::prepareForReporting()
 {
-    if (!rotatingFileSink)
+    if (!mRotatingFileSink)
     {
         return false;
     }
     // The order here is important. We want spdlog to stop rotating,
     // and then force one last rotation, so as to have all the logs compressed so far
     // and we need to be notified when that last rotation finishes
-    rotatingFileSink->pauseRotation = true; // this will prevent regular rotations from now on.
-    megaSyncLogger = this;
-    awaiting_rotation = true; //flag that we will use to emit a signal whenever there's a rotation from this moment on. i.e. the forced last rotation
+    mRotatingFileSink->pauseRotation = true; // this will prevent regular rotations from now on.
+    mAwaitingRotation = true; //flag that we will use to emit a signal whenever there's a rotation from this moment on. i.e. the forced last rotation
 
-    rotatingFileSink->forcerotation = true; //to make sure spdlog rotates on the next logged message
-    mLogger->error("Preparing logger to send bug repport"); //To ensure rotation is performed!
+    mRotatingFileSink->forcerotation = true; //to make sure spdlog rotates on the next logged message
+    mLogger->debug("Preparing logger to send bug repport"); //To ensure rotation is performed!
     mLogger->flush(); //to ensure the above log is flushed and hence, the rotation takes place
 
     return true;
@@ -322,11 +344,11 @@ bool MegaSyncLogger::prepareForReporting()
 
 void MegaSyncLogger::resumeAfterReporting()
 {
-    if (!rotatingFileSink)
+    if (!mRotatingFileSink)
     {
         return;
     }
-    rotatingFileSink->pauseRotation = false;
+    mRotatingFileSink->pauseRotation = false;
 }
 
 void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
@@ -424,5 +446,14 @@ void MegaSyncLogger::disconnected()
     {
         mClient->deleteLater();
         mClient = NULL;
+    }
+}
+
+void MegaSyncLogger::onAllRotated()
+{
+    if (mAwaitingRotation)
+    {
+        emit logReadyForReporting();
+        mAwaitingRotation = false;
     }
 }

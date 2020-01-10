@@ -13,6 +13,7 @@ class ElidedLabel : public QFrame
 
     Q_PROPERTY(QString text READ text WRITE setText)
     Q_PROPERTY(bool isElided READ isElided)
+    Q_PROPERTY(bool singleline READ getSingleline WRITE setSingleline)
 
 public:
     explicit ElidedLabel(QWidget *parent = 0);
@@ -21,6 +22,9 @@ public:
     const QString & text() const { return content; }
     bool isElided() const { return elided; }
 
+    bool getSingleline() const;
+    void setSingleline(bool value);
+
 protected:
 
     void paintEvent(QPaintEvent *event);
@@ -28,6 +32,8 @@ protected:
 signals:
     void elisionChanged(bool elided);
 
+private:
+    bool singleline = false;
 private:
     bool elided;
     QString content;

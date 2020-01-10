@@ -83,17 +83,11 @@ void MenuItemAction::setHighlight(bool highlight)
 {
     if (highlight)
     {
-        container->setStyleSheet(QString::fromUtf8("#wContainer { border: 2px solid #aaaaaa; border-radius: 2px; margin: 0px 8px 0px 8px; padding: 0px; background-color: #aaaaaa; }"));
-        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
-        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
-        hoverIcon ? iconButton->setIcon(*hoverIcon) : iconButton->setIcon(*icon);
+        title->setStyleSheet(QString::fromAscii("font-family: Lato; font-size: 14px; color: #000000;"));
     }
     else
     {
-        container->setStyleSheet(QString::fromUtf8("#wContainer { border: none; margin: 0px 0px 0px 0px; padding: 0px; background-color: #ffffff; }"));
-        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
-        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
-        iconButton->setIcon(*icon);
+        title->setStyleSheet(QString::fromAscii("font-family: Lato; font-size: 14px; color: #777777;"));
     }
 }
 
@@ -127,7 +121,7 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
     iconButton->setIcon(*icon);
     iconButton->setFlat(true);
 
-    title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+    title->setStyleSheet(QString::fromAscii("font-family: Lato; font-size: 14px; color: #777777;"));
 
     layout = new QHBoxLayout();
     layout->setContentsMargins(QMargins(16, 0, 8, 0));
@@ -138,7 +132,7 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
 
     if (value)
     {
-        value->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777; padding-right: 6px;"));
+        value->setStyleSheet(QString::fromAscii("font-family: Lato; font-size: 14px; color: #777777; padding-right: 6px;"));
         layout->addWidget(value);
     }
     container->setLayout(layout);
@@ -150,18 +144,12 @@ bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
     {
         if (event->type() == QEvent::Enter)
         {
-            container->setStyleSheet(QString::fromUtf8("#wContainer { border: 2px solid #aaaaaa; border-radius: 2px; margin: 0px 8px 0px 8px; padding: 0px; background-color: #aaaaaa; }"));
-            title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
-            iconButton->setStyleSheet(QString::fromAscii("border: none;"));
-            hoverIcon ? iconButton->setIcon(*hoverIcon) : iconButton->setIcon(*icon);
+            title->setStyleSheet(QString::fromAscii("font-family: Lato; font-size: 14px; color: #000000;"));
         }
 
         if (event->type() == QEvent::Leave)
         {
-            container->setStyleSheet(QString::fromUtf8("#wContainer { border: none; margin: 0px 0px 0px 0px; padding: 0px; background-color: #ffffff; }"));
-            title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
-            iconButton->setStyleSheet(QString::fromAscii("border: none;"));
-            iconButton->setIcon(*icon);
+            title->setStyleSheet(QString::fromAscii("font-family: Lato; font-size: 14px; color: #777777;"));
         }
     }
 

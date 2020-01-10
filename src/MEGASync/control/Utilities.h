@@ -20,8 +20,8 @@ struct PlanInfo
 {
     int amount;
     QString currency;
-    int gbStorage;
-    int gbTransfer;
+    long long gbStorage;
+    long long gbTransfer;
     int level;
 };
 
@@ -59,6 +59,104 @@ struct PSA_info
         urlClick = QString();
     }
 };
+
+class IStorageObserver
+{
+public:
+    virtual ~IStorageObserver() = default;
+    virtual void updateStorageElements() = 0;
+};
+
+class IBandwidthObserver
+{
+public:
+    virtual ~IBandwidthObserver() = default;
+    virtual void updateBandwidthElements() = 0;
+};
+
+class IAccountObserver
+{
+public:
+    virtual ~IAccountObserver() = default;
+    virtual void updateAccountElements() = 0;
+};
+
+class StorageDetailsObserved
+{
+public:
+    virtual ~StorageDetailsObserved() = default;
+    void attachStorageObserver(IStorageObserver& obs)
+    {
+        storageObservers.push_back(&obs);
+    }
+    void dettachStorageObserver(IStorageObserver& obs)
+    {
+        storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs));
+    }
+
+    void notifyStorageObservers()
+    {
+        for (IStorageObserver* o : storageObservers)
+        {
+            o->updateStorageElements();
+        }
+    }
+
+private:
+    std::vector<IStorageObserver*> storageObservers;
+};
+
+class BandwidthDetailsObserved
+{
+public:
+    virtual ~BandwidthDetailsObserved() = default;
+    void attachBandwidthObserver(IBandwidthObserver& obs)
+    {
+        bandwidthObservers.push_back(&obs);
+    }
+    void dettachBandwidthObserver(IBandwidthObserver& obs)
+    {
+        bandwidthObservers.erase(std::remove(bandwidthObservers.begin(), bandwidthObservers.end(), &obs));
+    }
+
+    void notifyBandwidthObservers()
+    {
+        for (IBandwidthObserver* o : bandwidthObservers)
+        {
+            o->updateBandwidthElements();
+        }
+    }
+
+private:
+    std::vector<IBandwidthObserver*> bandwidthObservers;
+};
+
+
+class AccountDetailsObserved
+{
+public:
+    virtual ~AccountDetailsObserved() = default;
+    void attachAccountObserver(IAccountObserver& obs)
+    {
+        accountObservers.push_back(&obs);
+    }
+    void dettachAccountObserver(IAccountObserver& obs)
+    {
+        accountObservers.erase(std::remove(accountObservers.begin(), accountObservers.end(), &obs));
+    }
+
+    void notifyAccountObservers()
+    {
+        for (IAccountObserver* o : accountObservers)
+        {
+            o->updateAccountElements();
+        }
+    }
+
+private:
+    std::vector<IAccountObserver*> accountObservers;
+};
+
 
 class Utilities
 {

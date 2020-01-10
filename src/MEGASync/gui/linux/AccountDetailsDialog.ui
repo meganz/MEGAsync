@@ -34,14 +34,14 @@ background-color: white;
 #lCloudDrive, #lInbox, #lShares, #lRubbish, #lAvailable
 {
 color: #333333;	
-font-family: &quot;Source Sans Pro&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 14px;	
 }
 
 #lUsedCloudDrive, #lUsedInbox, #lUsedShares, #lUsedRubbish, #lSpaceAvailable, #lUsedByVersions
 {
 color: #777777;	
-font-family: &quot;Source Sans Pro&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 18px;	
 }
 
@@ -82,7 +82,7 @@ border-radius: 2px;
 
 #lPercentageUsedStorage, #lTotalUsedStorage
 {
-font-family: &quot;Source Sans Pro&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 13px;
 font-weight: normal;
 border: none;
@@ -99,14 +99,14 @@ margin-right: 24px;
 #lVersions
 {
 color: #777777;	
-font-family: &quot;Source Sans Pro&quot;;	
+font-family: &quot;Lato&quot;;	
 font-size: 14px;
 font-style: italic;
 }
 #lLoading
 {
 color: #666666;	
-font-family: &quot;Source Sans Pro&quot;;	
+font-family: &quot;Lato&quot;;	
 font-size: 13px;
 }
 </string>
