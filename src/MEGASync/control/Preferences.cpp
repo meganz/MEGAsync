@@ -343,6 +343,7 @@ const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsC
 const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
 const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
+const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -2674,12 +2675,22 @@ MegaHandle Preferences::lastPublicHandle()
     return value;
 }
 
-void Preferences::setLastPublicHandle(MegaHandle handle)
+int Preferences::lastPublicHandleType()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(lastPublicHandleTypeKey, MegaApi::AFFILIATE_TYPE_INVALID).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastPublicHandle(MegaHandle handle, int type)
 {
     mutex.lock();
     assert(logged());
     settings->setValue(lastPublicHandleKey, (unsigned long long) handle);
     settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    settings->setValue(lastPublicHandleTypeKey, type);
     settings->sync();
     mutex.unlock();
 }
