@@ -741,7 +741,7 @@ void InfoDialog::updateState()
 void InfoDialog::addSync()
 {
     addSync(INVALID_HANDLE);
-    app->createTrayMenu();
+    app->createAppMenus();
 }
 
 void InfoDialog::onAllUploadsFinished()

@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(알려지지 않은 공유된 폴더)</translation>
+        <translation type="obsolete">(알려지지 않은 공유된 폴더)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">당신의 공개 공유 [%1] ([%2])가 게시 중단 되었습니다</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">공유된 폴더 활동</translation>
     </message>
 </context>
 <context>
@@ -735,7 +740,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">더 강한 비밀번호를 입력하세요</translation>
+        <translation type="unfinished">더 강력한 비밀번호를 입력하세요</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -3264,7 +3269,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">이용자당 %1</translation>
     </message>
 </context>
 <context>
@@ -4009,7 +4014,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">당신의 컴퓨터에 이전에 동기화된 파일의 백업 버전이 영구적으로 삭제될 것입니다. 진행하기 전에 건질 것이 없는지 백업 폴더를 확인하시기 바랍니다.</translation>
+        <translation type="unfinished">당신의 컴퓨터에 이전에 동기화된 파일의 백업 버전이 영구적으로 삭제될 것입니다. 진행하기 전에 건질 것이 없는지 백업 폴더를 확인하시기 바랍니다:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -4379,7 +4384,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>더 강한 비밀번호를 입력하세요</translation>
+        <translation>더 강력한 비밀번호를 입력하세요</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>

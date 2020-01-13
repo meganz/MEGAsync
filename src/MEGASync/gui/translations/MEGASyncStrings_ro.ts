@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Introdu un nume, o cale absolută (caracterele wildcard * și? sunt permise) sau alege care fișier sau folder dorești să-l excluzi de la sincronizare</translation>
+        <translation type="unfinished">Introdu un nume, o cale absolută (caracterele wildcard * și? sunt permise) sau alege care fișier sau folder vrei să-l excluzi de la sincronizare</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -180,17 +180,17 @@
     <message>
         <source>Select the file or folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Selectează fișierul sau folderul pe care dorești să-l excluzi</translation>
+        <translation type="unfinished">Selectează fișierul sau folderul pe care vrei să-l excluzi</translation>
     </message>
     <message>
         <source>Select the folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Selectează folderul pe care dorești să-l excluzi</translation>
+        <translation type="unfinished">Selectează folderul pe care vrei să-l excluzi</translation>
     </message>
     <message>
         <source>Select the file you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Selectează fișierul pe care dorești să-l excluzi</translation>
+        <translation type="unfinished">Selectează fișierul pe care vrei să-l excluzi</translation>
     </message>
 </context>
 <context>
@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Contact request updated</translation>
+        <translation type="unfinished">Cerere de contact actualizată</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Contact request accepted</translation>
+        <translation type="unfinished">Cerere de contact acceptată</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact request declined</translation>
+        <translation type="unfinished">Cerere de contact respinsă</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -441,7 +441,7 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">Your public share has been taken down.</translation>
+        <translation type="unfinished">Partajarea ta publică a fost eliminată.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
@@ -451,7 +451,7 @@
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">Your public share has been reinstated.</translation>
+        <translation type="unfinished">Partajarea ta publică a fost restabilită.</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(unknown shared folder)</translation>
+        <translation type="obsolete">(folder partajat necunoscut)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -476,7 +476,12 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+        <translation type="unfinished">Partajarea ta publică [%1] ([%2]) a fost eliminată.</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Shared Folder Activity</translation>
     </message>
 </context>
 <context>
@@ -567,17 +572,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Title</source>
         <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
-        <translation type="unfinished">Title</translation>
+        <translation type="unfinished">Titlu</translation>
     </message>
     <message>
         <source>Describe the problem</source>
         <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
-        <translation type="unfinished">Describe the issue</translation>
+        <translation type="unfinished">Descrie problema</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging</translation>
+        <translation type="unfinished">Atașează fișiere log de diagnosticare pentru a ajuta la depanare</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -597,22 +602,22 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
+        <translation type="unfinished">Problema raportată se încarcă, poate dura câteva minute.</translation>
     </message>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished">Your issue has been reported successfully.</translation>
+        <translation type="unfinished">Problema ta a fost raportată cu succes.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation type="unfinished">Your issue has been submitted, a confirmation email will be sent to you.</translation>
+        <translation type="unfinished">Problema ta a fost trimisă, îți va fi trimis un e-mail de confirmare.</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Error while uploading reported issue.</translation>
+        <translation type="unfinished">Eroare la încărcarea problemei raportate.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
@@ -1624,12 +1629,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open downloads</translation>
+        <translation type="unfinished">Deschide descărcările</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open uploads</translation>
+        <translation type="unfinished">Deschide încărcările</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -1897,7 +1902,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Îți mulțumim pentru testarea MEGAsync.&lt;br&gt;Această versiune beta nu mai este de actualitate și a expirat.&lt;br&gt;Te rugăm să urmărești &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; pe Twitter pentru noutăți.</translation>
+        <translation type="obsolete">Îți mulțumim pentru că ai testat MEGAsync.&lt;br&gt;Această versiune beta nu mai este de actualitate și a expirat.&lt;br&gt;Te rugăm să urmărești &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; pe Twitter pentru noutăți.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2310,7 +2315,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">Nu se poate găsi o bară de sistem pentru a plasa pictograma MEGAsync în bara de sistem nu a putut fi găsită. MEGAsync este destinat să fie folosit cu o pictogramă în bara de sistem, însă poate funcționa bine și fără aceasta. Dacă dorești să deschizi interfața, încearcă să deschizi pur și simplu MEGAsync din nou.</translation>
+        <translation type="unfinished">Nu se poate găsi o bară de sistem pentru a plasa pictograma MEGAsync în bara de sistem nu a putut fi găsită. MEGAsync este destinat să fie folosit cu o pictogramă în bara de sistem, însă poate funcționa bine și fără aceasta. Dacă vrei să deschizi interfața, încearcă să deschizi pur și simplu MEGAsync din nou.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -2558,7 +2563,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">Please access MEGA using a desktop browser for more information.</translation>
+        <translation type="obsolete">Te rugăm să accesezi MEGA folosind un browser desktop pentru mai multe informații.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2573,7 +2578,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Your account is expired as read only until you proceed with the needed payments.</translation>
+        <translation type="unfinished">Contul tău este expirat în modul citire până când vei efectua plățile necesare.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2583,7 +2588,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">There was a problem with your last payment. Please access MEGA using a desktop browser for more information.</translation>
+        <translation type="obsolete">A fost o problemă cu ultima plată. Te rugăm să accesezi MEGA folosind un browser desktop pentru mai multe informații.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2628,7 +2633,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation type="unfinished">Account Suspended</translation>
+        <translation type="unfinished">Cont suspendat</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -2638,7 +2643,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation type="unfinished">Your upload(s) cannot proceed because %1’s account is full.</translation>
+        <translation type="unfinished">Încărcarea(ările) nu poate(pot) continua deoarece contul utilizatorului %1 este plin.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -3253,7 +3258,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
     <message>
         <source>Storage and transfers</source>
         <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
-        <translation type="unfinished">Storage and Transfer</translation>
+        <translation type="unfinished">Stocare și transferuri</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -3263,7 +3268,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">per utilizator %1</translation>
     </message>
 </context>
 <context>
@@ -4048,7 +4053,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Do you want to delete your local backups now?</translation>
+        <translation type="unfinished">Vrei să-ți ștergi backupurile locale acum?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -4174,7 +4179,7 @@ when the application starts again</source>
     <message>
         <source>Please let us know if you find a bug</source>
         <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
-        <translation type="unfinished">Please let us know if you find an issue.</translation>
+        <translation type="unfinished">Te rugăm să ne dai de veste dacă găsești o problemă.</translation>
     </message>
     <message>
         <source>Bug report</source>

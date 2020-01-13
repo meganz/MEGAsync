@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">（不明な共有フォルダ）</translation>
+        <translation type="obsolete">（不明な共有フォルダ）</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">あなたの公開共有された[%1]（[%2]）は削除されました</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">共有フォルダの利用状況</translation>
     </message>
 </context>
 <context>
@@ -735,7 +740,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">もっと難しいパスワードを入れて下さい。</translation>
+        <translation type="unfinished">より強力なパスワードを入力してください</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1154,17 +1159,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">あなたのメールアドレスを入力して下さい。</translation>
+        <translation type="unfinished">あなたのメールアドレスを入力してください</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation type="unfinished">正しいメールアドレスを入力して下さい。</translation>
+        <translation type="unfinished">有効なメールアドレスを入力してください</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation type="unfinished">パスワードを入力して下さい。</translation>
+        <translation type="unfinished">あなたのパスワードを入力してください</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -4354,27 +4359,27 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>あなたのメールアドレスを入力して下さい。</translation>
+        <translation>あなたのメールアドレスを入力してください</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>正しいメールアドレスを入力して下さい。</translation>
+        <translation>有効なメールアドレスを入力してください</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>パスワードを入力して下さい。</translation>
+        <translation>あなたのパスワードを入力してください</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>お名前を入力して下さい</translation>
+        <translation>あなたの名前を入力してください</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>もっと難しいパスワードを入れて下さい。</translation>
+        <translation>より強力なパスワードを入力してください</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -4408,12 +4413,12 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>ローカルフォルダを選択して下さい。</translation>
+        <translation>ローカルフォルダを選択してください</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>MEGAフォルダを選んで下さい。</translation>
+        <translation>MEGAフォルダを選択してください</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
@@ -5222,7 +5227,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>ファイルのためのアップロードフォルダを選択して下さい。</translation>
+        <translation>ファイルのアップロードフォルダを選択してください：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

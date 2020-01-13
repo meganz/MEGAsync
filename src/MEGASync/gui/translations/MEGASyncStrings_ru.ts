@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(неизвестная общая папка)</translation>
+        <translation type="obsolete">(неизвестная общая папка)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">Ваш элемент с общим доступом [%1] ([%2]) убран.</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Активность общик папок</translation>
     </message>
 </context>
 <context>
@@ -3046,7 +3051,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Недействительная папка для синхронизации.Убедитесь, что вы не используете символы ‘\’, ‘/’ или ‘:’ в именах папок.</translation>
+        <translation type="unfinished">Недействительная папка для синхронизации.Убедитесь, что вы не используете символы «\», «/» или «:» в именах папок.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>

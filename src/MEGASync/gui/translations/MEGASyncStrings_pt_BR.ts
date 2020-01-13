@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(pasta compartilhada desconhecida)</translation>
+        <translation type="obsolete">(pasta compartilhada desconhecida)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">O seu compartilhamento público [%1] ([%2]) foi removido</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Shared Folder Activity</translation>
     </message>
 </context>
 <context>

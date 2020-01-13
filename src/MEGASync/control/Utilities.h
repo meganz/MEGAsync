@@ -60,36 +60,101 @@ struct PSA_info
     }
 };
 
-class IObserver
+class IStorageObserver
 {
 public:
-    virtual ~IObserver() = default;
-    virtual void update() = 0;
+    virtual ~IStorageObserver() = default;
+    virtual void updateStorageElements() = 0;
+};
+
+class IBandwidthObserver
+{
+public:
+    virtual ~IBandwidthObserver() = default;
+    virtual void updateBandwidthElements() = 0;
+};
+
+class IAccountObserver
+{
+public:
+    virtual ~IAccountObserver() = default;
+    virtual void updateAccountElements() = 0;
 };
 
 class StorageDetailsObserved
 {
 public:
     virtual ~StorageDetailsObserved() = default;
-    void attachStorageObserver(IObserver& obs)
+    void attachStorageObserver(IStorageObserver& obs)
     {
         storageObservers.push_back(&obs);
     }
-    void dettachStorageObserver(IObserver& obs)
+    void dettachStorageObserver(IStorageObserver& obs)
     {
         storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs));
     }
 
     void notifyStorageObservers()
     {
-        for (IObserver* o : storageObservers)
+        for (IStorageObserver* o : storageObservers)
         {
-            o->update();
+            o->updateStorageElements();
         }
     }
 
 private:
-    std::vector<IObserver*> storageObservers;
+    std::vector<IStorageObserver*> storageObservers;
+};
+
+class BandwidthDetailsObserved
+{
+public:
+    virtual ~BandwidthDetailsObserved() = default;
+    void attachBandwidthObserver(IBandwidthObserver& obs)
+    {
+        bandwidthObservers.push_back(&obs);
+    }
+    void dettachBandwidthObserver(IBandwidthObserver& obs)
+    {
+        bandwidthObservers.erase(std::remove(bandwidthObservers.begin(), bandwidthObservers.end(), &obs));
+    }
+
+    void notifyBandwidthObservers()
+    {
+        for (IBandwidthObserver* o : bandwidthObservers)
+        {
+            o->updateBandwidthElements();
+        }
+    }
+
+private:
+    std::vector<IBandwidthObserver*> bandwidthObservers;
+};
+
+
+class AccountDetailsObserved
+{
+public:
+    virtual ~AccountDetailsObserved() = default;
+    void attachAccountObserver(IAccountObserver& obs)
+    {
+        accountObservers.push_back(&obs);
+    }
+    void dettachAccountObserver(IAccountObserver& obs)
+    {
+        accountObservers.erase(std::remove(accountObservers.begin(), accountObservers.end(), &obs));
+    }
+
+    void notifyAccountObservers()
+    {
+        for (IAccountObserver* o : accountObservers)
+        {
+            o->updateAccountElements();
+        }
+    }
+
+private:
+    std::vector<IAccountObserver*> accountObservers;
 };
 
 

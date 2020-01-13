@@ -25,7 +25,7 @@ class SettingsDialog;
 }
 
 class MegaApplication;
-class SettingsDialog : public QDialog
+class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
     Q_OBJECT
     
@@ -178,11 +178,18 @@ private:
     QParallelAnimationGroup *animationGroup;
 #endif
 
-    void loadSyncSettings();
     void loadSizeLimits();
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
+
+public:
+    void updateStorageElements();
+    void updateBandwidthElements();
+    void updateAccountElements();
+    void loadSyncSettings();
+    void updateUploadFolder();
+    void updateDownloadFolder();
 };
 
 #endif // SETTINGSDIALOG_H

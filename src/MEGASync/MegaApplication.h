@@ -89,7 +89,7 @@ enum GetUserStatsReason {
     USERSTATS_SHOWMAINDIALOG,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved
+class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved
 {
     Q_OBJECT
 
@@ -150,7 +150,7 @@ public:
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
-    void createTrayMenu();
+    void createAppMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
@@ -179,10 +179,9 @@ public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
-    void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
+    void openSettings(int tab = -1);
     void openInfoWizard();
     void openBwOverquotaDialog();
-    void changeProxy();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -255,6 +254,7 @@ public slots:
     void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
+    void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
 #ifdef __APPLE__
@@ -269,6 +269,7 @@ private slots:
     void PSAseen(int id);
 
 protected:
+    bool checkOverquotaBandwidth();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -311,8 +312,8 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    std::unique_ptr<QMenu> trayMenu;
-    std::unique_ptr<QMenu> trayGuestMenu;
+    std::unique_ptr<QMenu> infoDialogMenu;
+    std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
     QSignalMapper *menuSignalMapper;
@@ -359,6 +360,7 @@ protected:
 
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
+    long long lastTsConnectionError = 0;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;

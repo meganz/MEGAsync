@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(unknown shared folder)</translation>
+        <translation type="obsolete">(unknown shared folder)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Shared Folder Activity</translation>
     </message>
 </context>
 <context>
@@ -3098,7 +3103,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">Invalid folder name.
-Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
     </message>
 </context>
 <context>

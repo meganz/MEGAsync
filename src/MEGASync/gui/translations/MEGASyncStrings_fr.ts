@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(dossier partagé inconnu)</translation>
+        <translation type="obsolete">(dossier partagé inconnu)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -477,6 +477,11 @@
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
         <translation type="unfinished">Votre [%1] ([%2]) partagé publiquement a été retiré</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Shared Folder Activity</translation>
     </message>
 </context>
 <context>
@@ -3046,7 +3051,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Le dossier est invalide pour la synchronisation. Veuillez vous assurer de ne pas utiliser des caractères tels que « \ », « / » ou « : »  dans vos noms de dossiers.</translation>
+        <translation type="unfinished">Le dossier est invalide pour la synchronisation. Veuillez vous assurer de ne pas utiliser des caractères tels que « \ », « / » ou « : » dans vos noms de dossiers.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3098,7 +3103,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">Le nom de dossier est invalide.
- veuillez vous assurer de ne pas utiliser des caractères tels que « \ » « / » ou « : » dans vos noms de dossier.</translation>
+Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « / » ou « : » dans vos noms de dossier.</translation>
     </message>
 </context>
 <context>
@@ -3674,7 +3679,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy Settings</source>
         <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
-        <translation>Paramètres de serveur mandataire</translation>
+        <translation>Paramètres de mandataire</translation>
     </message>
     <message>
         <source>No proxy</source>
@@ -3812,7 +3817,7 @@ when the application starts again.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Vos paramètres de serveur mandataire sont invalides, ou le mandataire ne répond pas</translation>
+        <translation>Vos paramètres de mandataire sont invalides ou le mandataire ne répond pas</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -4080,7 +4085,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">PRO léger</translation>
+        <translation type="unfinished">PRO Léger</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -5226,7 +5231,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Veuillez sélectionner le dossier de téléversement pour vos fichiers :</translation>
+        <translation>Veuillez sélectionner le dossier de téléversement pour vos fichiers :</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
