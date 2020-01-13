@@ -88,7 +88,6 @@ private slots:
     void on_bUpgrade_clicked();
     void on_bSyncFolder_clicked();
     void openFolder(QString path);
-    void on_bChats_clicked();
     void onOverlayClicked();
     void on_bTransferManager_clicked();
     void onUserAction(int action);

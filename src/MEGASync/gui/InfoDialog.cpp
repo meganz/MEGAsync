@@ -985,13 +985,6 @@ void InfoDialog::moveArrow(QPoint p)
 }
 #endif
 
-void InfoDialog::on_bChats_clicked()
-{
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("").arg(userAgent);
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
-}
-
 void InfoDialog::onOverlayClicked()
 {
     app->uploadActionClicked();
