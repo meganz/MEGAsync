@@ -210,7 +210,7 @@ QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
 
 #ifdef WIN32
     #ifdef _WIN64
-        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v64.txt");
+        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync64/v.txt");
     #else
         const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
     #endif
