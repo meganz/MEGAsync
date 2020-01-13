@@ -4,8 +4,8 @@ FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 19.10\|Ubuntu [2-9][0-9]" >/d
 EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2357]\|Debian.* 7\|Ubuntu 1[46].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
 export PATH := /opt/mega/bin:$(PATH)
-QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 16.04\|Debian.* 8" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
-QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 16.04\|Debian.* 8" >/dev/null && echo "installqt" || echo "")
+QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
+QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "installqt" || echo "")
 export $(QMAKESPEC) := /opt/mega/mkspecs/linux-g++
 
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
@@ -40,7 +40,7 @@ installqt:
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/iconengines/
 	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
-	install -p /opt/mega/lib/libQt5XcbQpa.so.5.9.7 $(CURDIR)/debian/megasync/opt/mega/lib/libQt5XcbQpa.so.5
+	install -p /opt/mega/lib/libQt5XcbQpa.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5XcbQpa.so.5 || :
 	install /opt/mega/plugins/platforms/libqxcb.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
 	install /opt/mega/plugins/platforms/libqvnc.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
 	install /opt/mega/plugins/platforms/libqoffscreen.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
