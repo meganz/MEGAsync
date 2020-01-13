@@ -7380,7 +7380,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             node = request->getPublicMegaNode();
             if (node)
             {
-                preferences->setLastPublicHandle(node->getHandle());
+                preferences->setLastPublicHandle(node->getHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
             }
         }
 
