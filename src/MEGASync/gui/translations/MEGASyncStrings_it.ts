@@ -481,7 +481,12 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Activity</translation>
+        <translation type="unfinished">Attività delle Cartelle condivise</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">L&apos;accesso alla cartella condivisa è stato rimosso</translation>
     </message>
 </context>
 <context>
@@ -740,7 +745,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">Si prega di inserire una password più forte</translation>
+        <translation type="unfinished">Per favore inserisci una password più resistente</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1159,17 +1164,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Inserisci il tuo indirizzo e-mail</translation>
+        <translation type="unfinished">Inserisci il tuo indirizzo email</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation type="unfinished">Per favore inserisci un indirizzo email valido</translation>
+        <translation type="unfinished">Per favore inserisci un indirizzo e-mail valido</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation type="unfinished">Inserisci la tua password</translation>
+        <translation type="unfinished">Per favore inserisci la tua password</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3035,7 +3040,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">La cartella root non può essere sincronizzata. Per favore, seleziona una sottocartella.</translation>
+        <translation type="obsolete">La cartella di root non può essere sincronizzata. Per favore, seleziona una sottocartella.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3051,7 +3056,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Cartella invalida per sincronizzazione.Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:’ nei nomi delle tue cartelle.</translation>
+        <translation type="unfinished">Cartella invalida per sincronizzazione. Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:’ nei nomi delle tue cartelle.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -4363,27 +4368,27 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Inserisci il tuo indirizzo e-mail</translation>
+        <translation>Inserisci il tuo indirizzo email</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Per favore inserisci un indirizzo email valido</translation>
+        <translation>Per favore inserisci un indirizzo e-mail valido</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Inserisci la tua password</translation>
+        <translation>Per favore inserisci la tua password</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Inserisci il tuo nome</translation>
+        <translation>Per favore inserisci il tuo nome</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Si prega di inserire una password più forte</translation>
+        <translation>Per favore inserisci una password più resistente</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -4417,12 +4422,12 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Scegli una cartella locale</translation>
+        <translation>Per favore scegli una cartella locale</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Scegli una cartella MEGA</translation>
+        <translation>Per favore scegli una cartella MEGA</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
@@ -5231,7 +5236,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Si prega di selezionare la cartella di upload per i tuoi file:</translation>
+        <translation>Per favore seleziona la cartella in cui caricare i tuoi file:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

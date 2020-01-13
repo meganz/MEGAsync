@@ -483,6 +483,11 @@
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation type="unfinished">Shared Folder Activity</translation>
     </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">การเข้าถึงโฟลเดอร์ที่แชร์ถูกนำออกแล้ว</translation>
+    </message>
 </context>
 <context>
     <name>BindFolderDialog</name>
@@ -1159,7 +1164,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">กรุณากรอกอีเมลของคุณ</translation>
+        <translation type="unfinished">กรุณากรอกที่อยู่อีเมลของคุณ</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -4363,7 +4368,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>กรุณากรอกอีเมลของคุณ</translation>
+        <translation>กรุณากรอกที่อยู่อีเมลของคุณ</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>

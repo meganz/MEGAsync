@@ -481,7 +481,12 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Activity</translation>
+        <translation type="unfinished">Gedeelde Map Activiteit</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">Toegang tot de gedeelde map was verwijderd</translation>
     </message>
 </context>
 <context>
@@ -548,7 +553,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Lokale map te groot (deze versie is gelimiteerd tot %1 mappen of %2 bestanden). Selecteer een andere map.</translation>
+        <translation type="obsolete">Lokale map te groot (deze versie is beperkt tot %1 mappen of %2 bestanden). Selecteer een andere map.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -740,7 +745,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">Gelieve een sterker wachtwoord invoeren</translation>
+        <translation type="unfinished">Gebruik een sterker wachtwoord</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1155,22 +1160,22 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">Niet in staat om het bestandssysteem te krijgen. Probeer nogmaals. Als het probleem aanhoud neem contact met ons op bij bug@mega.nz</translation>
+        <translation type="unfinished">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Voer alstublieft uw e-mail adres in.</translation>
+        <translation type="unfinished">Vul uw e-mailadres in</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation type="unfinished">Gelieve een geldig e-mailadres invoeren</translation>
+        <translation type="unfinished">Voer een geldig e-mailadres in</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation type="unfinished">Voer alstublieft uw wachtwoord in.</translation>
+        <translation type="unfinished">Voer uw wachtwoord in</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -2123,7 +2128,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Niet in staat om het bestandssysteem te krijgen. Probeer nogmaals. Als het probleem aanhoud neem contact met ons op bij bug@mega.nz</translation>
+        <translation type="obsolete">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -3036,7 +3041,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">De hoofdmap kan niet gesynchroniseerd worden. Selecteer een sub-map.</translation>
+        <translation type="obsolete">De hoofdmap kan niet worden gesynchroniseerd. Selecteer een sub map.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3052,7 +3057,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Ongeldige map voor synchronisatie. Zorg ervoor dat u geen karakters gebruikt zoals ‘\’, ‘/’ of ‘:’ in uw map namen.</translation>
+        <translation type="unfinished">Ongeldige map voor synchronisatie. Zorg ervoor dat u geen tekens zoals ‘\’, ‘/’ of ‘:’ gebruikt in uw map namen.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3103,8 +3108,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Ongeldige mapnaam.
- Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw mapnamen gebruikt.</translation>
+        <translation type="unfinished">Ongeldige map naam. 
+Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen gebruikt.</translation>
     </message>
 </context>
 <context>
@@ -4014,12 +4019,12 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup-versies van eerder gesynchroniseerde bestanden op uw computer zullen permanent worden verwijderd. Controleer alstublieft uw backup mappen om te zien of het nodig is dat u iets redt voordat u verder gaat.</translation>
+        <translation type="unfinished">Back-ups van de vorige versies van uw gesynchroniseerde bestanden op uw computer worden permanent verwijderd. Controleer uw back-up mappen om te zien of u iets moet redden voordat u doorgaat:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup-versies van eerder gesynchroniseerde bestanden in MEGA zullen permanent worden verwijderd. Controleer alstublieft uw [A] map in de Prullenbak van uw MEGA-account om te zien of het nodig is dat u iets redt voordat u verder gaat.</translation>
+        <translation type="unfinished">Back-ups van de vorige versies van uw gesynchroniseerde bestanden in MEGA worden permanent verwijderd. Controleer uw map [A] in de prullenbak van uw MEGA-account om te zien of u iets moet redden voordat u doorgaat.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -4364,27 +4369,27 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Voer alstublieft uw e-mail adres in.</translation>
+        <translation>Vul uw e-mailadres in</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Gelieve een geldig e-mailadres invoeren</translation>
+        <translation>Voer een geldig e-mailadres in</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Voer alstublieft uw wachtwoord in.</translation>
+        <translation>Voer uw wachtwoord in</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Voer alstublieft uw naam in.</translation>
+        <translation>Voer uw naam in</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Gelieve een sterker wachtwoord invoeren</translation>
+        <translation>Gebruik een sterker wachtwoord</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -4418,17 +4423,17 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>Selecteer alstublieft een lokale folder.</translation>
+        <translation>Selecteer een lokale map</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
         <translatorcomment>Label displayed when the user has not select a MEGA folder.</translatorcomment>
-        <translation>Selecteer alstublieft een MEGA folder.</translation>
+        <translation>Selekteer een MEGA map</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Lokale map te groot (deze versie is gelimiteerd tot %1 mappen of %2 bestanden). Selecteer een andere map.</translation>
+        <translation type="obsolete">Lokale map te groot (deze versie is beperkt tot %1 mappen of %2 bestanden). Selecteer een andere map.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -4451,7 +4456,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Niet in staat om het bestandssysteem te krijgen. Probeer nogmaals. Als het probleem aanhoud neem contact met ons op bij bug@mega.nz</translation>
+        <translation>Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -5233,7 +5238,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Selecteer alstublieft een folder voor uw bestanden:</translation>
+        <translation>Selecteer de upload map voor uw bestanden:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
