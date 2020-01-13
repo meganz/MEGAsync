@@ -70,6 +70,7 @@ public:
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
+    static void getPROurlWithParameters(QString &url);
 
 private:
     Utilities() {}
