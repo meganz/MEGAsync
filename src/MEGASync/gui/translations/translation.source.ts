@@ -483,6 +483,11 @@
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation type="unfinished">Shared Folder Activity</translation>
     </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">Access to shared folder was removed</translation>
+    </message>
 </context>
 <context>
     <name>BindFolderDialog</name>

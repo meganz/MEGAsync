@@ -111,14 +111,14 @@
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 22px;
 }
 #bAll::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>
@@ -265,14 +265,14 @@ border-radius: 4px;
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 22px;
 }
 #bContacts::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>
@@ -387,14 +387,14 @@ border-radius: 4px;
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 22px;
 }
 #bShares::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>
@@ -509,14 +509,14 @@ border-radius: 4px;
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 22px;
 }
 #bPayment::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>

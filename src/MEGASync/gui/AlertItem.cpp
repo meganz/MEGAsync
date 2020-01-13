@@ -286,7 +286,8 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 }
                 else //Access for the user was removed by share owner
                 {
-                    notificationContent = tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                    notificationContent = alert->getEmail() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())))
+                                                            : tr("Access to shared folder was removed");
                 }
                 break;
             }
