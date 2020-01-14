@@ -305,6 +305,12 @@ FunctionEnd
 
 Section "Principal" SEC01
 
+  ${If} ${RunningX64}
+  ${Else}
+    MessageBox MB_OK "This installer is for 64 Bit, but Windows is 32 Bit."
+    Quit
+  ${EndIf}
+
   !insertmacro DEBUG_MSG "Getting needed information"
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
   strCpy $ALL_USERS_INSTDIR $1
