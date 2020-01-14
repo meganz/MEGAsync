@@ -694,7 +694,7 @@ void Utilities::getPROurlWithParameters(QString &url)
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     url.append(QString::fromUtf8("/uao=%1").arg(userAgent));
 
-    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+    if (preferences->lastPublicHandleTimestamp()) //Always send aff parameters regardless time
     {
         MegaHandle aff = preferences->lastPublicHandle();
         if (aff != INVALID_HANDLE)
