@@ -6174,7 +6174,7 @@ void MegaApplication::createTrayMenu()
         windowsImportLinksAction = NULL;
     }
 
-    windowsImportLinksAction = new QAction(tr("Import links"), this);
+    windowsImportLinksAction = new QAction(tr("Open links"), this);
     connect(windowsImportLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if (windowsUploadAction)
@@ -6405,7 +6405,7 @@ void MegaApplication::createTrayMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links_out.png")), QIcon(QString::fromAscii("://images/ico_Import_links_over.png")), true);
+    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromAscii("://images/ico_Import_links_out.png")), QIcon(QString::fromAscii("://images/ico_Import_links_over.png")), true);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
