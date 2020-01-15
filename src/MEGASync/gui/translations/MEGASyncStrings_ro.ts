@@ -1666,6 +1666,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">Nicio notificare pentru plăți</translation>
     </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 folosiți</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -3107,7 +3112,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Nume nevalid pentru folder.
+        <translation type="unfinished">Nume nevalid al folderului.
 Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau ‘:’ în numele folderelor.</translation>
     </message>
 </context>
@@ -3346,7 +3351,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
-        <translation type="obsolete">- Remedierea unei defecțiuni în timpul procesării unor fișiere PDF
+        <translation type="obsolete">- Remedierea unei defecțiuni în timpul procesării anumitor fișiere PDF
 - Se reiau transferurile în așteptare după o defecțiune la următoarea pornire
 - Include opțiunea de a adăuga sincronizări din dialogul principal
 - Alte remedieri minore de erori și îmbunătățiri</translation>
@@ -3359,12 +3364,12 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="obsolete">- Fix sync issues on macOS 10.15
-- Fix transfer resumption issues for webclient and public links downloads
-- Fix a crash during processing of some PDF files
-- Resume pending transfers after a crash on next startup
-- Include option to add synchronizations from the main dialog
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Remedierea unor probleme de sincronizare pe macOS 10.15
+- Remedierea unor probleme de reluare a transferurilor în cazul descărcărilor prin clientul web și a linkurilor publice
+- Remedierea unei defecțiuni în timpul procesării anumitor fișiere PDF
+- Se reiau transferurile în așteptare după o defecțiune la următoarea pornire
+- Include opțiunea de a adăuga sincronizări din dialogul principal
+ - Alte remedieri minore de erori și îmbunătățiri</translation>
     </message>
     <message>
         <source>- Support for user notifications.
@@ -3377,15 +3382,15 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
-- Other UI fixes and adjustments.
-- Other performance improvements, UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Suport pentru notificări destinate utilizatorului.
+- Suport pentru a trimite rapoarte de erori din dialogul de setări.
+- Noua restilizare a dialogului principal.
+- Îmbunătățiri de performanță atunci când aplicația are de-a face cu o cantitate imensă de sincronizări și transferuri.
+- Suport îmbunătățit pentru conturile business.
+- Suport pentru linkurile către fișiere și foldere în interiorul unui link al unui folder public.
+- Îmbunătățiri pentru sincronizarea cu sistemele de fișiere FAT32.
+- Alte remedieri și ajustări ale interfeței de utilizator.
+- Alte îmbunătățiri de performanță, remedieri și ajustări ale interfeței de utilizator.</translation>
     </message>
 </context>
 <context>

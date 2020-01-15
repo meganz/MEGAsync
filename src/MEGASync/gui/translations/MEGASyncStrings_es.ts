@@ -1667,6 +1667,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">No hay notificaciones de pagos</translation>
     </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 en uso</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -4604,7 +4609,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation type="unfinished">Por favor, escribe tu(s) apellido(s)</translation>
+        <translation type="unfinished">Escribe tu(s) apellido(s)</translation>
     </message>
     <message>
         <source>Setup selective sync</source>

@@ -553,7 +553,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">本地文件夹太大（此版本仅限于%1个文件夹或%2个文件）。请选择另一个文件夹。</translation>
+        <translation type="obsolete">本地文件夹太大（此版本仅限于%1个文件夹或%2个文件）。请选择其他文件夹。</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -745,7 +745,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">请输入一组较强的密码</translation>
+        <translation type="unfinished">请输入一个较强的密码</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1159,7 +1159,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">无法获取文件系统。请再试一次。如果问题仍然存在，请通过bug@mega.nz与我们联系</translation>
+        <translation type="unfinished">无法获取文件系统，请重试。如问题仍然存在，请与我们联系bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1169,12 +1169,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation type="unfinished">请输入一个有效的e-mail</translation>
+        <translation type="unfinished">请输入一个有效的电子邮件地址</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation type="unfinished">请输入您的密码</translation>
+        <translation type="unfinished">请输入密码</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -1666,6 +1666,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">无付款通知</translation>
     </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">已使用%1</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -2127,7 +2132,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">无法获取文件系统。请再试一次。如果问题仍然存在，请通过bug@mega.nz与我们联系</translation>
+        <translation type="obsolete">无法获取文件系统，请重试。如问题仍然存在，请与我们联系bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -3040,7 +3045,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">根文件夹无法同步。请选择一个子文件夹</translation>
+        <translation type="obsolete">无法同步根文件夹，请选择一个子文件夹。</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3056,7 +3061,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">同步文件夹无效。请确认您的文件夹名称中没有使用例如‘\’‘/’或‘:’ 等字符。</translation>
+        <translation type="unfinished">无法同步文件夹。请确认您的文件夹名称中没有使用例如‘\’， ‘/’或‘:’等字符。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -4018,12 +4023,12 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">该操作将永久删除您的MEGA账户中同步文件的历史版本备份。继续下一步之前，请前往MEGA账户之垃圾箱检查是否需要保留某些文件。</translation>
+        <translation type="unfinished">该操作将永久删除您的MEGA帐户中同步文件的历史版本备份。继续下一步之前，请检查您的备份文件夹，确认是否需要保留某些文件：</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">该操作将永久删除您的MEGA账户中同步文件的历史版本备份。继续下一步之前，请检查MEGA账户垃圾箱中的[A]文件夹，确认是否需要保留某些文件。</translation>
+        <translation type="unfinished">该操作将永久删除您的MEGA账户中同步文件的历史版本备份。继续下一步之前，请检查垃圾箱中的[A]文件夹，确认是否需要保留某些文件。</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -4373,12 +4378,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>请输入一个有效的e-mail</translation>
+        <translation>请输入一个有效的电子邮件地址</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>请输入您的密码</translation>
+        <translation>请输入密码</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
@@ -4388,7 +4393,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>请输入一组较强的密码</translation>
+        <translation>请输入一个较强的密码</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -4422,7 +4427,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Please, select a local folder</source>
         <translatorcomment>Label displayed when the user has not select a local folder.</translatorcomment>
-        <translation>请选择一个本机文件夹</translation>
+        <translation>请选择一个本地文件夹</translation>
     </message>
     <message>
         <source>Please, select a MEGA folder</source>
@@ -4432,7 +4437,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">本地文件夹太大（此版本仅限于%1个文件夹或%2个文件）。请选择另一个文件夹。</translation>
+        <translation type="obsolete">本地文件夹太大（此版本仅限于%1个文件夹或%2个文件）。请选择其他文件夹。</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -4455,7 +4460,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>无法获取文件系统。请再试一次。如果问题仍然存在，请通过bug@mega.nz与我们联系</translation>
+        <translation>无法获取文件系统，请重试。如问题仍然存在，请与我们联系bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -5236,7 +5241,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>请选择文件的上传文件夹：</translation>
+        <translation>请选择您要上传的文件夹：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
