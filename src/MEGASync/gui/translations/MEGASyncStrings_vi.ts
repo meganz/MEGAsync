@@ -1666,6 +1666,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">No notifications for payments</translation>
     </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">Đang dùng %1</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>

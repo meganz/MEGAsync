@@ -1159,7 +1159,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">ไม่สามารถรับไฟล์ระบบได้ กรุณาลองอีกครั้ง หากปัญหายังคงมีอยู่ กรุณาติดต่อเราที่ bug@mega.nz</translation>
+        <translation type="unfinished">ไม่สามารถรับระบบไฟล์ได้ กรุณาลองอีกครั้ง หากปัญหายังคงมีอยู่ กรุณาติดต่อเราที่ bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1559,7 +1559,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation type="unfinished">อัปเกรดเป็นบัญชี PRO ตอนนี้ ก่อนที่พื้นที่บัญชีของคุณจะเต็มและการอัปโหลดไปที่ MEGA จะไม่สามารถดำเนินการได้</translation>
+        <translation type="unfinished">อัปเกรดทันที ก่อนที่พื้นที่บัญชีของคุณจะเต็มและการอัปโหลดไปที่ MEGA จะไม่สามารถดำเนินการได้</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
@@ -1569,7 +1569,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="obsolete">การอัปโหลดไฟล์ทั้งหมดถูกปิดใช้งานอยู่ในขณะนี้ กรุณาอัปเกรดเป็นบัญชี PRO</translation>
+        <translation type="obsolete">การอัปโหลดไฟล์ทั้งหมดถูกปิดใช้งานในขณะนี้ กรุณาอัปเกรดบัญชีของคุณ</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1579,7 +1579,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation type="unfinished">กรุณาอัปเกรดเป็นบัญชี PRO</translation>
+        <translation type="unfinished">กรุณาอัปเกรดบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1665,6 +1665,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">No notifications for payments</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">ใช้ไปแล้ว %1</translation>
     </message>
 </context>
 <context>
@@ -2127,7 +2132,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">ไม่สามารถรับไฟล์ระบบได้ กรุณาลองอีกครั้ง หากปัญหายังคงมีอยู่ กรุณาติดต่อเราที่ bug@mega.nz</translation>
+        <translation type="obsolete">ไม่สามารถรับระบบไฟล์ได้ กรุณาลองอีกครั้ง หากปัญหายังคงมีอยู่ กรุณาติดต่อเราที่ bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2543,7 +2548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
         <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation type="unfinished">MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.</translation>
+        <translation type="unfinished">MEGA ไม่สามารถเชื่อมต่ออย่างปลอดภัยผ่าน SSL ได้ คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -2803,12 +2808,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation type="unfinished">Terms of Service breached</translation>
+        <translation type="unfinished">ละเมิดข้อกำหนดในการให้บริการ</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+        <translation type="unfinished">ไม่สามารถเข้าถึงได้เนื่องจากการละเมิด ToS/AUP</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -3056,7 +3061,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้องกรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเหล่านี้ ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
+        <translation type="unfinished">โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้อง กรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเช่น ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3319,11 +3324,11 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
-- Improved GUI performance during the addition of many downloads
-- Restyled initial information wizard, with new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- ปรับปรุงลักษณะการแสดงผลของหน้าจอความละเอียดสูงบน Windows และ Linux
+- ปรับปรุงประสิทธิภาพ GUI ในระหว่างการดาวน์โหลดเพิ่มเติม
+- ปรับข้อมูลวิซาร์ดเริ่มต้นใหม่ ทั้งไอคอนใหม่และการปรับปรุงอินเทอร์เฟสอื่น ๆ
+- รองรับบัญชีธุรกิจ
+- แก้ไขข้อผิดพลาดเล็กน้อยและการปรับปรุงอื่น ๆ</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3333,12 +3338,12 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
-- Enabled thumbnail support for PDF files
-- Improved GUI performance during the addition of many downloads
-- Restyled initial information wizard, with new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- ปรับปรุงลักษณะการแสดงผลของหน้าจอความละเอียดสูงบน Windows และ Linux
+- รองรับภาพขนาดย่อที่เปิดใช้งานสำหรับไฟล์ PDF
+- ปรับปรุงประสิทธิภาพ GUI ในระหว่างการดาวน์โหลดเพิ่มเติม
+- ปรับข้อมูลวิซาร์ดเริ่มต้นใหม่ ทั้งไอคอนใหม่และการปรับปรุงอินเทอร์เฟสอื่น ๆ
+- รองรับบัญชีธุรกิจ
+- แก้ไขข้อผิดพลาดเล็กน้อยและการปรับปรุงอื่น ๆ</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -4018,12 +4023,12 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">การสำรองข้อมูลของไฟล์ที่ซิงค์บนคอมพิวเตอร์ก่อนหน้านี้จะถูกลบอย่างถาวร กรุณาตรวจสอบโฟลเดอร์สำรองข้อมูลของคุณเพื่อดูว่าคุณต้องการความช่วยเหลือบางอย่างก่อนที่จะดำเนินการต่อ:</translation>
+        <translation type="unfinished">การสำรองข้อมูลของไฟล์ที่ซิงค์บนคอมพิวเตอร์ก่อนหน้านี้จะถูกลบอย่างถาวร กรุณาตรวจสอบโฟลเดอร์สำรองข้อมูลของคุณเพื่อดูว่าคุณต้องการความช่วยเหลือบางอย่างก่อนที่จะดำเนินการต่อหรือไม่:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">การสำรองข้อมูลของไฟล์ที่ซิงค์บน MEGA ก่อนหน้านี้จะถูกลบอย่างถาวร กรุณาตรวจสอบ [A] โฟลเดอร์ในถังขยะของบัญชี MEGA เพื่อดูว่าคุณต้องการความช่วยเหลือบางอย่างก่อนที่จะดำเนินการต่อ</translation>
+        <translation type="unfinished">การสำรองข้อมูลของไฟล์ที่ซิงค์บน MEGA ก่อนหน้านี้จะถูกลบอย่างถาวร กรุณาตรวจสอบโฟลเดอร์ [A] ในถังขยะของบัญชี MEGA เพื่อดูว่าคุณต้องการความช่วยเหลือบางอย่างก่อนที่จะดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -4058,7 +4063,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Do you want to delete your local backups now?</translation>
+        <translation type="unfinished">คุณต้องการลบข้อมูลสำรองในเครื่องของคุณตอนนี้หรือไม่</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -4174,7 +4179,7 @@ when the application starts again</source>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation type="unfinished">%1 used</translation>
+        <translation type="unfinished">ใช้ไปแล้ว %1</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -4455,7 +4460,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>ไม่สามารถรับไฟล์ระบบได้ กรุณาลองอีกครั้ง หากปัญหายังคงมีอยู่ กรุณาติดต่อเราที่ bug@mega.nz</translation>
+        <translation>ไม่สามารถรับระบบไฟล์ได้ กรุณาลองอีกครั้ง หากปัญหายังคงมีอยู่ กรุณาติดต่อเราที่ bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -5185,7 +5190,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">กรุณาอัปเกรดเป็นบัญชี PRO เพื่อให้มีพื้นที่เก็บข้อมูลมากขึ้น (การอัปโหลดของคุณจะกลับมาทำงานใหม่โดยอัตโนมัติ)</translation>
+        <translation type="unfinished">กรุณาอัปเกรดบัญชีของคุณ เพื่อให้มีพื้นที่เก็บข้อมูลมากขึ้น (การอัปโหลดของคุณจะกลับมาทำงานต่อโดยอัตโนมัติ)</translation>
     </message>
     <message>
         <source>Earn more storage quota with [A]Achievements[/A].</source>
@@ -5236,7 +5241,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>กรุณาเลือกโฟลเดอร์สำหรับการอัปโหลดไฟล์ของคุณ:</translation>
+        <translation>กรุณาเลือกโฟลเดอร์อัปโหลดสำหรับไฟล์ของคุณ:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

@@ -854,7 +854,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation type="unfinished">Ajouté il y a [A]</translation>
+        <translation type="unfinished">Ajouté [A]</translation>
     </message>
     <message>
         <source>Out of storage space</source>
@@ -1665,6 +1665,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">Il n’y a aucune notification pour les paiements</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 utilisés</translation>
     </message>
 </context>
 <context>

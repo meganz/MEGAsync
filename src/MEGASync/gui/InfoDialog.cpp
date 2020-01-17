@@ -416,7 +416,7 @@ void InfoDialog::setUsage()
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         ui->wCircularQuota->setValue(0, true);
-        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style='color:#666666; font-family: Lato; text-decoration:none;'>%1</span>")
+        usedQuota = tr("%1 used").arg(QString::fromUtf8("<span style='color:#666666; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
