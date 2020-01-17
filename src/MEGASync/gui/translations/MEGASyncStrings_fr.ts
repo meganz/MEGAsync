@@ -854,7 +854,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation type="unfinished">Ajouté il y a [A]</translation>
+        <translation type="unfinished">Ajouté [A]</translation>
     </message>
     <message>
         <source>Out of storage space</source>
