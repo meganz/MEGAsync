@@ -4552,7 +4552,8 @@ void MegaApplication::redirectToPayBusiness(int activationButton)
         #endif
             )
     {
-        QString url = QString::fromUtf8("/repay");
+        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
         megaApi->getSessionTransferURL(url.toUtf8().constData());
     }
 }
@@ -6818,7 +6819,8 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
                     {
-                        QString url = QString::fromUtf8("/repay");
+                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
                         megaApi->getSessionTransferURL(url.toUtf8().constData());
                     }
                 }
@@ -6851,7 +6853,8 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
                     {
-                        QString url = QString::fromUtf8("/repay");
+                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
                         megaApi->getSessionTransferURL(url.toUtf8().constData());
                     }
                 }
