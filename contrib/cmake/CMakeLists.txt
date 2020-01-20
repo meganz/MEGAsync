@@ -371,7 +371,7 @@ target_link_libraries(MEGAsync Mega
             debug "${QT_DIR}/lib/Qt5Guid.lib"
             debug "${QT_DIR}/lib/Qt5Networkd.lib" 
             debug "${QT_DIR}/lib/Qt5Widgetsd.lib" 
-            debug "${QT_DIR}/lib/Qt5WinExtrasd.lib" 
+            debug "${QT_DIR}/lib/Qt5WinExtrasd.lib"
             optimized "${QT_DIR}/lib/Qt5Core.lib" 
             optimized "${QT_DIR}/lib/Qt5Gui.lib"
             optimized "${QT_DIR}/lib/Qt5Network.lib" 
@@ -379,8 +379,8 @@ target_link_libraries(MEGAsync Mega
             optimized "${QT_DIR}/lib/Qt5WinExtras.lib" 
             ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
 
-set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
-
+set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
+#/DELAYLOAD:pdfium.dll
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
