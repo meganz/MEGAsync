@@ -158,11 +158,14 @@ std::mutex logMutex;
 std::deque<std::string> logMessages;
 bool logExit = false;
 bool flushLog = false;
+bool forceRotation = false;
 int flushOnLevel = mega::MegaApi::LOG_LEVEL_WARNING;
 std::chrono::seconds logFlushTime = std::chrono::seconds(10);
 time_t lastLogFlush = std::time(nullptr);
 long long rotateOverSize = 100000;
 int rotateMaxLogs = 100;
+
+MegaSyncLogger *megaSyncLogger = nullptr;
 
 void logThreadFunction(std::string filename) //TODO: we probably want to use QString all allong to prevent utf16 issues in Windows
 {
@@ -171,7 +174,7 @@ void logThreadFunction(std::string filename) //TODO: we probably want to use QSt
     while (!logExit)
     {
         long long outFileSize = outputFile.tellp();
-        if (outFileSize > rotateOverSize)
+        if (forceRotation || outFileSize > rotateOverSize)
         {
             for (int i = 99; i>0;i--)
             {
@@ -203,6 +206,13 @@ void logThreadFunction(std::string filename) //TODO: we probably want to use QSt
             auto qFileName = QString::fromStdString(filename.c_str());
             QFile(qFileName).rename(newName); //TODO: compress the file here
             outputFile.open(filename);
+
+            if (forceRotation && megaSyncLogger)
+            {
+                emit megaSyncLogger->logReadyForReporting();
+            }
+
+            forceRotation = false;
         }
 
         bool doFlush = false;
@@ -218,7 +228,7 @@ void logThreadFunction(std::string filename) //TODO: we probably want to use QSt
             }
             else
             {
-                doFlush = flushLog;
+                doFlush = flushLog || forceRotation;
             }
 
             flushLog = false;
@@ -234,6 +244,10 @@ void logThreadFunction(std::string filename) //TODO: we probably want to use QSt
             }
         }
     }
+    if (outputFile)
+    {
+        outputFile.close();
+    }
 }
 
 
@@ -242,6 +256,7 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 , mDesktopPath{desktopPath}
 //, mThreadPool{std::make_shared<spdlog::details::thread_pool>(8192, 1, []{})} // Queue size of 8192 and 1 thread in pool
 {
+    megaSyncLogger = this;
 //#ifdef LOG_TO_LOGGER
 //    QLocalServer::removeServer(ENABLE_MEGASYNC_LOGS);
 //    mClient = new QLocalSocket();
@@ -316,6 +331,14 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 
 MegaSyncLogger::~MegaSyncLogger()
 {
+
+    {
+        std::lock_guard<std::mutex> g(logMutex);
+        logConditionVariable.notify_one();
+        logExit = true;
+    }
+    megaSyncLogger = nullptr;
+
     mega::MegaApi::removeLoggerObject(this); // after this no more calls to MegaSyncLogger::log
 
     //mLogger->flush();
@@ -456,6 +479,10 @@ bool MegaSyncLogger::isDebug() const
 
 bool MegaSyncLogger::prepareForReporting()
 {
+    std::lock_guard<std::mutex> g(logMutex);
+    forceRotation = true;
+    logConditionVariable.notify_one();
+
     //if (!mRotatingFileSink)
     //{
     //    return false;
