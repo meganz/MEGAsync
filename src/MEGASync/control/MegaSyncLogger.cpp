@@ -149,6 +149,9 @@ void gzipCompressOnRotate(const std::string& filename)
 
 }
 
+
+#include <QFile>
+
 std::thread* logThread;
 std::condition_variable logConditionVariable;
 std::mutex logMutex;
@@ -158,12 +161,50 @@ bool flushLog = false;
 int flushOnLevel = mega::MegaApi::LOG_LEVEL_WARNING;
 std::chrono::seconds logFlushTime = std::chrono::seconds(10);
 time_t lastLogFlush = std::time(nullptr);
-void logThreadFunction(std::string filename)
+long long rotateOverSize = 100000;
+int rotateMaxLogs = 100;
+
+void logThreadFunction(std::string filename) //TODO: we probably want to use QString all allong to prevent utf16 issues in Windows
 {
-    std::ofstream outputFile(filename);
+    std::ofstream outputFile(filename, std::ofstream::out | std::ofstream::app);
     
     while (!logExit)
     {
+        long long outFileSize = outputFile.tellp();
+        if (outFileSize > rotateOverSize)
+        {
+            for (int i = 99; i>0;i--)
+            {
+                std::stringstream ss;
+                ss << filename.substr(0, filename.find_last_of('.')) << "." << i << ".log";
+                auto torename = QString::fromUtf8(ss.str().c_str());
+
+                if (QFile::exists(torename))
+                {
+                    if (i+1 > rotateMaxLogs)
+                    {
+                        QFile::remove(torename);
+                    }
+                    else
+                    {
+                        std::stringstream ss2;
+                        ss2 << filename.substr(0, filename.find_last_of('.')) << "." << i + 1 << ".log";
+                        auto newName = QString::fromUtf8(ss2.str().c_str());
+
+                        QFile(torename).rename(newName);
+                    }
+                }
+            }
+            std::stringstream ss2;
+            ss2 << filename.substr(0, filename.find_last_of('.')) << ".1.log";
+            auto newName = QString::fromStdString(ss2.str().c_str());
+
+            outputFile.close();
+            auto qFileName = QString::fromStdString(filename.c_str());
+            QFile(qFileName).rename(newName); //TODO: compress the file here
+            outputFile.open(filename);
+        }
+
         bool doFlush = false;
         std::deque<std::string> newMessages;
 
