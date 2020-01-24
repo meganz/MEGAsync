@@ -19,6 +19,10 @@
 //#include <spdlog/sinks/stdout_sinks.h>
 //#include <spdlog/async.h>
 
+#include <chrono>
+#include <thread>
+#include <condition_variable>
+
 #include <zlib.h>
 
 #include <megaapi.h>
@@ -149,23 +153,44 @@ std::thread* logThread;
 std::condition_variable logConditionVariable;
 std::mutex logMutex;
 std::deque<std::string> logMessages;
-bool logExit;
-
+bool logExit = false;
+bool flushLog = false;
+int flushOnLevel = mega::MegaApi::LOG_LEVEL_WARNING;
+std::chrono::seconds logFlushTime = std::chrono::seconds(10);
+time_t lastLogFlush = std::time(nullptr);
 void logThreadFunction(std::string filename)
 {
     std::ofstream outputFile(filename);
     
     while (!logExit)
     {
+        bool doFlush = false;
         std::deque<std::string> newMessages;
+
         {
             std::unique_lock<std::mutex> lock(logMutex);
-            logConditionVariable.wait(lock, [&newMessages]() { newMessages.swap(logMessages); return !newMessages.empty() || logExit; });
+            time_t timeleft = std::time(nullptr) - lastLogFlush;
+            std::chrono::seconds maxWait = logFlushTime - std::chrono::seconds(timeleft);
+            if (!logConditionVariable.wait_for(lock, maxWait, [&newMessages]() { newMessages.swap(logMessages); return !newMessages.empty() || logExit; }) )
+            {//timed out
+                doFlush = true;
+            }
+            else
+            {
+                doFlush = flushLog;
+            }
+
+            flushLog = false;
         }
+
         if (outputFile)
         {
             for (auto& m : newMessages) outputFile << m << '\n';
-            outputFile.flush();
+            if (doFlush)
+            {
+                outputFile.flush();
+                lastLogFlush = std::time(nullptr);
+            }
         }
     }
 }
@@ -279,6 +304,8 @@ MegaSyncLogger::~MegaSyncLogger()
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
 {
+    std::ostringstream loglinestream;
+
 #ifdef LOG_TO_LOGGER
     //if (mConnected)
     {
@@ -290,7 +317,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 
         auto t = std::time(NULL);
         char ts[50];
-        if (!std::strftime(ts, sizeof(ts), "%H:%M:%S", std::gmtime(&t)))
+        if (!std::strftime(ts, sizeof(ts), "%H:%M:%S.%f", std::gmtime(&t)))
         {
             ts[0] = '\0';
         }
@@ -298,7 +325,15 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
     }
 #endif
 
-    std::ostringstream loglinestream;
+
+    char time[26];
+    auto now = std::chrono::high_resolution_clock::now();
+    std::chrono::nanoseconds ns = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch());
+    time_t t = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count();
+    size_t offset = 0;
+    offset = std::strftime(time, sizeof(time), "%m-%dT%H:%M:%S", std::gmtime(&t));
+    sprintf(time+offset, ".%ld", ns.count()%1000000);
+    loglinestream << time << " ";
 
     switch (loglevel)
     {
@@ -313,6 +348,10 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 
     std::lock_guard<std::mutex> g(logMutex);
     logMessages.emplace_back(loglinestream.str());
+    if (loglevel <= flushOnLevel)
+    {
+        flushLog = true;
+    }
     logConditionVariable.notify_one();
 
     //if (auto logger = atomicLoadLogger(&mDebugLogger))
