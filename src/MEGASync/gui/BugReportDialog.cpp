@@ -228,7 +228,7 @@ void BugReportDialog::onReadyForReporting()
     //If send log file is enabled
     if (ui->cbAttachLogs->isChecked())
     {
-        QDir logDir{MegaApplication::applicationDataPath().append(QString::fromUtf8("/logs"))};
+        QDir logDir{MegaApplication::applicationDataPath().append(QString::fromUtf8("/") + LOGS_FOLDER_LEAFNAME_QSTRING)};
         if (logDir.exists())
         {
             QString fileFormat{QDir::separator() + QString::fromUtf8("%1_%2").arg(QDateTime::currentDateTimeUtc().toString(QString::fromAscii("yyMMdd_hhmmss")))
