@@ -32,7 +32,7 @@
 
 
 #ifdef _WIN32
-    #define CERRQSTRING(filename) std::wcerr << filename.toStdU16String()
+    #define CERRQSTRING(filename) std::wcerr << filename.toStdWString()
 #else
     #define CERRQSTRING(filename) std::cerr << filename.toUtf8().constData()
 #endif
@@ -41,7 +41,7 @@
 void gzipCompressOnRotate(const QString filename, const QString destinationFilename)
 {
 #ifdef WIN32
-    std::ifstream file((wchar_t*)filename.toStdU16String().data(), std::ofstream::out);
+    std::ifstream file(filename.toStdWString().data(), std::ofstream::out);
 #else
     std::ifstream file(filename.toUtf8().data(), std::ofstream::out);
 #endif
@@ -54,7 +54,7 @@ void gzipCompressOnRotate(const QString filename, const QString destinationFilen
     auto gzdeleter = [](gzFile_s* f) { if (f) gzclose(f); };
 
 #ifdef _WIN32
-    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen_w((wchar_t*)destinationFilename.toStdU16String().data(), "wb"), gzdeleter};
+    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen_w(destinationFilename.toStdWString().data(), "wb"), gzdeleter};
 #else
     std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen(destinationFilename.toUtf8().data(), "wb"), gzdeleter };
 #endif
@@ -148,11 +148,11 @@ QString numberedLogFilename(QString baseName, int logNumber)
 void logThreadFunction(QString filename, QString desktopFilename)
 {
 #ifdef WIN32
-    std::ofstream outputFile((wchar_t*)filename.toStdU16String().data(), std::ofstream::out | std::ofstream::app);
+    std::ofstream outputFile(filename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
 #else
     std::ofstream outputFile(filename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
 #endif
-    outputFile << "----------------------------- program start -----------------------------" << endl;
+    outputFile << "----------------------------- program start -----------------------------\n";
     long long outFileSize = outputFile.tellp();
     std::ofstream logDesktopFile;
 
@@ -205,7 +205,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
             t.detach();
 
 #ifdef WIN32
-            outputFile.open((wchar_t*)filename.toStdU16String().data(), std::ofstream::out);
+            outputFile.open(filename.toStdWString().data(), std::ofstream::out);
 #else
             outputFile.open(filename.toUtf8().data(), std::ofstream::out);
 #endif
@@ -269,7 +269,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
             if (logToDesktop && !logDesktopFile)
             {
 #ifdef WIN32
-                logDesktopFile.open((wchar_t*)desktopFilename.toStdU16String().data(), std::ofstream::out | std::ofstream::app);
+                logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
 #else
                 logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
 #endif
