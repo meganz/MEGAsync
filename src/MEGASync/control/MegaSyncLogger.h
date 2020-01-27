@@ -37,7 +37,5 @@ signals:
     void logReadyForReporting();
 
 private:
-    void onAllRotated();
-
     QString mDesktopPath;
 };

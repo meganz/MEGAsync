@@ -4,9 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <array>
 #include <ctime>
-#include <deque>
 #include <assert.h>
 
 #include <QFileInfo>
@@ -20,7 +18,7 @@
 #include <thread>
 #include <condition_variable>
 
-#include <zlib.h>
+#include <zlib/zlib.h>
 
 #include <megaapi.h>
 
@@ -110,7 +108,7 @@ struct LogLinkedList
 };
 
 
-std::thread* logThread;
+std::unique_ptr<std::thread> logThread;
 std::condition_variable logConditionVariable;
 std::mutex logMutex;
 LogLinkedList logListFirst;
@@ -180,7 +178,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
 
             std::thread t([=]() {
                 gzipCompressOnRotate(newNameZipping, newNameDone); 
-                if (report)
+                if (report && megaSyncLogger)
                 {
                     emit megaSyncLogger->logReadyForReporting();
                 }
@@ -269,9 +267,9 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 
     if (!logThread)
     {
-        logThread = new std::thread([logPath, desktopLogPath]() {
+        logThread.reset(new std::thread([logPath, desktopLogPath]() {
             logThreadFunction(logPath, desktopLogPath);
-        });
+        }));
     }
 
     mega::MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_MAX);
@@ -288,6 +286,8 @@ MegaSyncLogger::~MegaSyncLogger()
         logConditionVariable.notify_one();
     }
     megaSyncLogger = nullptr;
+    logThread->join();
+    logThread.reset();
 }
 
 inline void twodigit(char*& s, int n)
