@@ -30,6 +30,9 @@
 //#define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
 
+#define LOG_TIME_CHARS 22
+#define LOG_LEVEL_CHARS 5
+
 #define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection) 
 #define MAX_ROTATE_LOGS 50   // So we expect to keep 42MB or so in compressed logs
 #define MAX_ROTATE_LOGS_TODELETE 50   // If ever reducing the number of logs, we should remove the older ones anyway. This number should be the historical maximum of that value
@@ -115,9 +118,9 @@ struct LogLinkedList
         return used + size + 2 < allocated;
     }
 
-    void append(const char* s)
+    void append(const char* s, unsigned int n = 0)
     {
-        unsigned n = unsigned(strlen(s));
+        n = n ? n : unsigned(strlen(s));
         assert(used + n + 1 < allocated);
         strcpy(message + used, s);
         used += n;
@@ -469,7 +472,7 @@ void LoggingThread::log(int loglevel, const char *message)
 //#endif
 
 
-    char timebuf[24];
+    char timebuf[LOG_TIME_CHARS + 1];
     auto now = std::chrono::system_clock::now();
     time_t t = std::chrono::system_clock::to_time_t(now);
 
@@ -492,7 +495,8 @@ void LoggingThread::log(int loglevel, const char *message)
     }
     
     auto messageLen = strlen(message);
-    auto lineLen = 23 + strlen(threadname) + 5 + messageLen;
+    auto threadnameLen = strlen(threadname);
+    auto lineLen = LOG_TIME_CHARS + threadnameLen + LOG_LEVEL_CHARS + messageLen;
     bool notify = false;
 
     {
@@ -530,15 +534,15 @@ void LoggingThread::log(int loglevel, const char *message)
                 if (reportRepeats)
                 {
                     char repeatbuf[31]; // this one can occur very frequently with many in a row: cURL DEBUG: schannel: failed to decrypt data, need more data
-                    snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
-                    logListLast->append(repeatbuf);
+                    int n = snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
+                    logListLast->append(repeatbuf, n);
                 }
-                logListLast->append(timebuf);
-                logListLast->append(threadname);
-                logListLast->append(loglevelstring);
+                logListLast->append(timebuf, LOG_TIME_CHARS);
+                logListLast->append(threadname, threadnameLen);
+                logListLast->append(loglevelstring, LOG_LEVEL_CHARS);
                 logListLast->lastmessage = logListLast->used;
-                logListLast->append(message); 
-                logListLast->append("\n");
+                logListLast->append(message, messageLen);
+                logListLast->append("\n", 1);
                 notify = logListLast->used + 1024 > logListLast->allocated;
             }
         }
