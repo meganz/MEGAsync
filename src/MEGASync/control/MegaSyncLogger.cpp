@@ -28,30 +28,39 @@
 
 #define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection) 
 #define MAX_ROTATE_LOGS 50   // So we expect to keep 42MB or so in compressed logs
+#define MAX_ROTATE_LOGS_TODELETE 50   // If ever reducing the number of logs, we should remove the older ones anyway. This number should be the historical maximum of that value
+
+
+#ifdef _WIN32
+    #define CERRQSTRING(filename) std::wcerr << filename.toStdWString()
+#else
+    #define CERRQSTRING(filename) std::cerr << filename.toUtf8().constData()
+#endif
+
 
 void gzipCompressOnRotate(const QString filename, const QString destinationFilename)
 {
 #ifdef WIN32
-    std::ifstream file((wchar_t*)filename.toStdU16String().data(), std::ofstream::out);
+    std::ifstream file(filename.toStdWString().data(), std::ofstream::out);
 #else
     std::ifstream file(filename.toUtf8().data(), std::ofstream::out);
 #endif
     if (!file.is_open())
     {
-        std::cerr << "Unable to open log file for reading: " << filename.toStdString() << std::endl;
+        std::cerr << "Unable to open log file for reading: "; CERRQSTRING(filename) << std::endl;
         return;
     }
 
     auto gzdeleter = [](gzFile_s* f) { if (f) gzclose(f); };
 
 #ifdef _WIN32
-    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen_w((wchar_t*)destinationFilename.toStdU16String().data(), "wb"), gzdeleter};
+    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen_w(destinationFilename.toStdWString().data(), "wb"), gzdeleter};
 #else
-    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen(fidestinationFilenamelename.utf8().data(), "wb"), gzdeleter };
+    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen(destinationFilename.toUtf8().data(), "wb"), gzdeleter };
 #endif
     if (!gzfile)
     {
-        std::cerr << "Unable to open gzfile for writing: " << filename.toStdString() << std::endl;
+        std::cerr << "Unable to open gzfile for writing: "; CERRQSTRING(filename) << std::endl;
         return;
     }
 
@@ -61,7 +70,7 @@ void gzipCompressOnRotate(const QString filename, const QString destinationFilen
         line.push_back('\n');
         if (gzputs(gzfile.get(), line.c_str()) == -1)
         {
-            std::cerr << "Unable to compress log file: " << filename.toStdString() << std::endl;
+            std::cerr << "Unable to compress log file: "; CERRQSTRING(filename) << std::endl;
             return;
         }
     }
@@ -111,6 +120,7 @@ struct LogLinkedList
 std::unique_ptr<std::thread> logThread;
 std::condition_variable logConditionVariable;
 std::mutex logMutex;
+std::mutex logRotationMutex;
 LogLinkedList logListFirst;
 LogLinkedList* logListLast = &logListFirst;
 bool logExit = false;
@@ -138,11 +148,11 @@ QString numberedLogFilename(QString baseName, int logNumber)
 void logThreadFunction(QString filename, QString desktopFilename)
 {
 #ifdef WIN32
-    std::ofstream outputFile((wchar_t*)filename.toStdU16String().data(), std::ofstream::out | std::ofstream::app);
+    std::ofstream outputFile(filename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
 #else
     std::ofstream outputFile(filename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
 #endif
-    outputFile << "----------------------------- program start -----------------------------" << endl;
+    outputFile << "----------------------------- program start -----------------------------\n";
     long long outFileSize = outputFile.tellp();
     std::ofstream logDesktopFile;
 
@@ -150,7 +160,8 @@ void logThreadFunction(QString filename, QString desktopFilename)
     {
         if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
         {
-            for (int i = MAX_ROTATE_LOGS; i--; )
+            logRotationMutex.lock();
+            for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
             {
                 QString toRename = numberedLogFilename(filename, i);
 
@@ -158,15 +169,22 @@ void logThreadFunction(QString filename, QString desktopFilename)
                 {
                     if (i + 1 >= MAX_ROTATE_LOGS)
                     {
-                        QFile::remove(toRename);
+                        if (!QFile::remove(toRename))
+                        {
+                            std::cerr << "Error removing log file " << i << std::endl;
+                        }
+
                     }
                     else
                     {
-                        QFile(toRename).rename(numberedLogFilename(filename, i + 1));
+                        if (!QFile(toRename).rename(numberedLogFilename(filename, i + 1)))
+                        {
+                            std::cerr << "Error renaming log file " << i << std::endl;
+                        }
                     }
                 }
             }
-            auto newNameDone = numberedLogFilename(filename, 1);
+            auto newNameDone = numberedLogFilename(filename, 0);
             auto newNameZipping = newNameDone + QString::fromUtf8(".zipping");
 
             outputFile.close();
@@ -178,6 +196,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
 
             std::thread t([=]() {
                 gzipCompressOnRotate(newNameZipping, newNameDone); 
+                logRotationMutex.unlock();
                 if (report && megaSyncLogger)
                 {
                     emit megaSyncLogger->logReadyForReporting();
@@ -186,7 +205,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
             t.detach();
 
 #ifdef WIN32
-            outputFile.open((wchar_t*)filename.toStdU16String().data(), std::ofstream::out);
+            outputFile.open(filename.toStdWString().data(), std::ofstream::out);
 #else
             outputFile.open(filename.toUtf8().data(), std::ofstream::out);
 #endif
@@ -222,12 +241,25 @@ void logThreadFunction(QString filename, QString desktopFilename)
             {
                 logDesktopFile << p->message;
             }
+
+#ifdef LOG_TO_STDOUT
+            std::cout << p->message;
+#endif
             free(p);
         }
         if (flushLog || forceRotationForReporting || nextFlushTime <= std::chrono::steady_clock::now())
         {
             flushLog = false;
             outputFile.flush();
+            if (logDesktopFile)
+            {
+                logDesktopFile.flush();
+            }
+#ifdef LOG_TO_STDOUT
+            std::cout << std::flush;
+#endif
+
+
             nextFlushTime = std::chrono::steady_clock::now() + logFlushPeriod;
         }
 
@@ -237,7 +269,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
             if (logToDesktop && !logDesktopFile)
             {
 #ifdef WIN32
-                logDesktopFile.open((wchar_t*)desktopFilename.toStdU16String().data(), std::ofstream::out | std::ofstream::app);
+                logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
 #else
                 logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
 #endif
@@ -296,7 +328,7 @@ inline void twodigit(char*& s, int n)
     *s++ = n % 10 + '0';
 }
 
-char* filltime(char* s, struct tm*  gmt, int millisec)
+char* filltime(char* s, struct tm*  gmt, int microsec)
 {
     // strftime was seen in 1.27% of profiler stack samples with constant logging, try manual
     // this version only seen in 0.06% of profiler stack samples
@@ -310,9 +342,14 @@ char* filltime(char* s, struct tm*  gmt, int millisec)
     *s++ = ':';
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
-    *s++ = millisec / 100 + '0';
-    *s++ = (millisec / 10) % 10 + '0';
-    *s++ = millisec % 10 + '0';
+    char snsec[7];
+    sprintf(snsec, "%06d", microsec % 1000000);
+    *s++ = snsec[0];
+    *s++ = snsec[1];
+    *s++ = snsec[2];
+    *s++ = snsec[3];
+    *s++ = snsec[4];
+    *s++ = snsec[5];
     *s++ = ' ';
     *s = 0;
     return s;
@@ -378,7 +415,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 //#endif
 
 
-    char timebuf[30];
+    char timebuf[24];
     auto now = std::chrono::system_clock::now();
     time_t t = std::chrono::system_clock::to_time_t(now);
 
@@ -386,8 +423,8 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
     const char* threadname;
     cacheThreadNameAndTimeT(t, gmt, threadname);
 
-    auto millisec = std::chrono::duration_cast<std::chrono::milliseconds>(now - std::chrono::system_clock::from_time_t(t));
-    filltime(timebuf, &gmt, (int)millisec.count());
+    auto microsec = std::chrono::duration_cast<std::chrono::microseconds>(now - std::chrono::system_clock::from_time_t(t));
+    filltime(timebuf, &gmt, (int)microsec.count() % 1000000);
 
     const char* loglevelstring = "     ";
     switch (loglevel) // keeping these at 4 chars makes nice columns, easy to read
@@ -401,7 +438,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
     }
     
     auto messageLen = strlen(message);
-    auto lineLen = strlen(timebuf) + strlen(threadname) + strlen(loglevelstring) + messageLen;
+    auto lineLen = 23 + strlen(threadname) + 5 + messageLen;
     bool notify = false;
 
     {
