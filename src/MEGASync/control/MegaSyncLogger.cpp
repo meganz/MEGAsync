@@ -319,7 +319,7 @@ inline void twodigit(char*& s, int n)
     *s++ = n % 10 + '0';
 }
 
-char* filltime(char* s, struct tm*  gmt, int nanosec)
+char* filltime(char* s, struct tm*  gmt, int microsec)
 {
     // strftime was seen in 1.27% of profiler stack samples with constant logging, try manual
     // this version only seen in 0.06% of profiler stack samples
@@ -334,7 +334,7 @@ char* filltime(char* s, struct tm*  gmt, int nanosec)
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
     char snsec[7];
-    sprintf(snsec, "%06d", nanosec % 1000000);
+    sprintf(snsec, "%06d", microsec % 1000000);
     *s++ = snsec[0];
     *s++ = snsec[1];
     *s++ = snsec[2];
@@ -414,8 +414,8 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
     const char* threadname;
     cacheThreadNameAndTimeT(t, gmt, threadname);
 
-    auto nanosec = std::chrono::duration_cast<std::chrono::nanoseconds>(now - std::chrono::system_clock::from_time_t(t));
-    filltime(timebuf, &gmt, (int)nanosec.count() % 1000000);
+    auto microsec = std::chrono::duration_cast<std::chrono::microseconds>(now - std::chrono::system_clock::from_time_t(t));
+    filltime(timebuf, &gmt, (int)microsec.count() % 1000000);
 
     const char* loglevelstring = "     ";
     switch (loglevel) // keeping these at 4 chars makes nice columns, easy to read
