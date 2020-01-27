@@ -241,6 +241,10 @@ void logThreadFunction(QString filename, QString desktopFilename)
             {
                 logDesktopFile << p->message;
             }
+
+#ifdef LOG_TO_STDOUT
+            std::cout << p->message << std::endl;
+#endif
             free(p);
         }
         if (flushLog || forceRotationForReporting || nextFlushTime <= std::chrono::steady_clock::now())
@@ -315,7 +319,7 @@ inline void twodigit(char*& s, int n)
     *s++ = n % 10 + '0';
 }
 
-char* filltime(char* s, struct tm*  gmt, int millisec)
+char* filltime(char* s, struct tm*  gmt, int nanosec)
 {
     // strftime was seen in 1.27% of profiler stack samples with constant logging, try manual
     // this version only seen in 0.06% of profiler stack samples
@@ -329,9 +333,14 @@ char* filltime(char* s, struct tm*  gmt, int millisec)
     *s++ = ':';
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
-    *s++ = millisec / 100 + '0';
-    *s++ = (millisec / 10) % 10 + '0';
-    *s++ = millisec % 10 + '0';
+    char snsec[7];
+    sprintf(snsec, "%06d", nanosec % 1000000);
+    *s++ = snsec[0];
+    *s++ = snsec[1];
+    *s++ = snsec[2];
+    *s++ = snsec[3];
+    *s++ = snsec[4];
+    *s++ = snsec[5];
     *s++ = ' ';
     *s = 0;
     return s;
@@ -397,7 +406,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 //#endif
 
 
-    char timebuf[30];
+    char timebuf[24];
     auto now = std::chrono::system_clock::now();
     time_t t = std::chrono::system_clock::to_time_t(now);
 
@@ -405,8 +414,8 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
     const char* threadname;
     cacheThreadNameAndTimeT(t, gmt, threadname);
 
-    auto millisec = std::chrono::duration_cast<std::chrono::milliseconds>(now - std::chrono::system_clock::from_time_t(t));
-    filltime(timebuf, &gmt, (int)millisec.count());
+    auto nanosec = std::chrono::duration_cast<std::chrono::nanoseconds>(now - std::chrono::system_clock::from_time_t(t));
+    filltime(timebuf, &gmt, (int)nanosec.count() % 1000000);
 
     const char* loglevelstring = "     ";
     switch (loglevel) // keeping these at 4 chars makes nice columns, easy to read
@@ -420,7 +429,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
     }
     
     auto messageLen = strlen(message);
-    auto lineLen = strlen(timebuf) + strlen(threadname) + strlen(loglevelstring) + messageLen;
+    auto lineLen = 23 + strlen(threadname) + 5 + messageLen;
     bool notify = false;
 
     {
