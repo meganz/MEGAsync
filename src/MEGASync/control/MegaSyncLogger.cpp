@@ -243,7 +243,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
             }
 
 #ifdef LOG_TO_STDOUT
-            std::cout << p->message << std::endl;
+            std::cout << p->message;
 #endif
             free(p);
         }
@@ -251,6 +251,15 @@ void logThreadFunction(QString filename, QString desktopFilename)
         {
             flushLog = false;
             outputFile.flush();
+            if (logDesktopFile)
+            {
+                logDesktopFile.flush();
+            }
+#ifdef LOG_TO_STDOUT
+            std::cout << std::flush;
+#endif
+
+
             nextFlushTime = std::chrono::steady_clock::now() + logFlushPeriod;
         }
 
