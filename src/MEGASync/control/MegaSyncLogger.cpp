@@ -30,6 +30,14 @@
 #define MAX_ROTATE_LOGS 50   // So we expect to keep 42MB or so in compressed logs
 #define MAX_ROTATE_LOGS_TODELETE 50   // If ever reducing the number of logs, we should remove the older ones anyway. This number should be the historical maximum of that value
 
+
+#ifdef _WIN32
+    #define CERRQSTRING(filename) std::wcerr << filename.toStdU16String()
+#else
+    #define CERRQSTRING(filename) std::cerr << filename.toUtf8().constData()
+#endif
+
+
 void gzipCompressOnRotate(const QString filename, const QString destinationFilename)
 {
 #ifdef WIN32
@@ -39,7 +47,7 @@ void gzipCompressOnRotate(const QString filename, const QString destinationFilen
 #endif
     if (!file.is_open())
     {
-        std::cerr << "Unable to open log file for reading: " << filename.toStdString() << std::endl;
+        std::cerr << "Unable to open log file for reading: "; CERRQSTRING(filename) << std::endl;
         return;
     }
 
@@ -48,11 +56,11 @@ void gzipCompressOnRotate(const QString filename, const QString destinationFilen
 #ifdef _WIN32
     std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen_w((wchar_t*)destinationFilename.toStdU16String().data(), "wb"), gzdeleter};
 #else
-    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen(fidestinationFilenamelename.utf8().data(), "wb"), gzdeleter };
+    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{ gzopen(destinationFilename.toUtf8().data(), "wb"), gzdeleter };
 #endif
     if (!gzfile)
     {
-        std::cerr << "Unable to open gzfile for writing: " << filename.toStdString() << std::endl;
+        std::cerr << "Unable to open gzfile for writing: "; CERRQSTRING(filename) << std::endl;
         return;
     }
 
@@ -62,7 +70,7 @@ void gzipCompressOnRotate(const QString filename, const QString destinationFilen
         line.push_back('\n');
         if (gzputs(gzfile.get(), line.c_str()) == -1)
         {
-            std::cerr << "Unable to compress log file: " << filename.toStdString() << std::endl;
+            std::cerr << "Unable to compress log file: "; CERRQSTRING(filename) << std::endl;
             return;
         }
     }
@@ -112,6 +120,7 @@ struct LogLinkedList
 std::unique_ptr<std::thread> logThread;
 std::condition_variable logConditionVariable;
 std::mutex logMutex;
+std::mutex logRotationMutex;
 LogLinkedList logListFirst;
 LogLinkedList* logListLast = &logListFirst;
 bool logExit = false;
@@ -151,6 +160,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
     {
         if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
         {
+            logRotationMutex.lock();
             for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
             {
                 QString toRename = numberedLogFilename(filename, i);
@@ -174,7 +184,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
                     }
                 }
             }
-            auto newNameDone = numberedLogFilename(filename, 1);
+            auto newNameDone = numberedLogFilename(filename, 0);
             auto newNameZipping = newNameDone + QString::fromUtf8(".zipping");
 
             outputFile.close();
@@ -186,6 +196,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
 
             std::thread t([=]() {
                 gzipCompressOnRotate(newNameZipping, newNameDone); 
+                logRotationMutex.unlock();
                 if (report && megaSyncLogger)
                 {
                     emit megaSyncLogger->logReadyForReporting();
