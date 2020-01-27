@@ -65,7 +65,7 @@
 #include <sstream>
 #define GZJOIN_PATH_CHAR_T const wchar_t
 #endif
-#include <zlib/zlib.h>
+#include "zlib.h"
     /* crc32(), crc32_combine(), inflateInit2(), inflate(), inflateEnd() */
 
 #define local static
