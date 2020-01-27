@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 4300;
 const int Preferences::BUILD_ID = 4;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.0");
-QString Preferences::SDK_ID = QString::fromAscii("a9ffaa0");
+QString Preferences::SDK_ID = QString::fromAscii("04dd0fe");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Support for user notifications.\n"
     "- Support to send bug reports from settings dialog.\n"
