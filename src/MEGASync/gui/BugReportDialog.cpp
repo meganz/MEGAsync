@@ -246,7 +246,7 @@ void BugReportDialog::onReadyForReporting()
             }
 
 #else
-            FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toStdString().c_str(), "a+b");
+            FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toUtf8().constData(), "a+b");
 #endif
             if (!pFile)
             {
@@ -275,7 +275,7 @@ void BugReportDialog::onReadyForReporting()
 #ifdef _WIN32
                     gzcopy(i.absoluteFilePath().toStdWString().c_str(), --nLogFiles, &crc, &tot, pFile);
 #else
-                    gzcopy(i.absoluteFilePath().toStdString().c_str(), --nLogFiles, &crc, &tot, pFile);
+                    gzcopy(i.absoluteFilePath().toUtf8().constData(), --nLogFiles, &crc, &tot, pFile);
 #endif
                 }
                 catch (const std::exception& e)
