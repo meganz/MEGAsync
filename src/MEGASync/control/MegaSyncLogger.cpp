@@ -28,6 +28,7 @@
 
 #define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection) 
 #define MAX_ROTATE_LOGS 50   // So we expect to keep 42MB or so in compressed logs
+#define MAX_ROTATE_LOGS_TODELETE 50   // If ever reducing the number of logs, we should remove the older ones anyway. This number should be the historical maximum of that value
 
 void gzipCompressOnRotate(const QString filename, const QString destinationFilename)
 {
@@ -150,7 +151,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
     {
         if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
         {
-            for (int i = MAX_ROTATE_LOGS; i--; )
+            for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
             {
                 QString toRename = numberedLogFilename(filename, i);
 
@@ -158,11 +159,18 @@ void logThreadFunction(QString filename, QString desktopFilename)
                 {
                     if (i + 1 >= MAX_ROTATE_LOGS)
                     {
-                        QFile::remove(toRename);
+                        if (!QFile::remove(toRename))
+                        {
+                            std::cerr << "Error removing log file " << i << std::endl;
+                        }
+
                     }
                     else
                     {
-                        QFile(toRename).rename(numberedLogFilename(filename, i + 1));
+                        if (!QFile(toRename).rename(numberedLogFilename(filename, i + 1)))
+                        {
+                            std::cerr << "Error renaming log file " << i << std::endl;
+                        }
                     }
                 }
             }
