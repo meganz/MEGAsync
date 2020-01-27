@@ -18,7 +18,7 @@
 #include <thread>
 #include <condition_variable>
 
-#include <zlib/zlib.h>
+#include <zlib.h>
 
 #include <megaapi.h>
 
