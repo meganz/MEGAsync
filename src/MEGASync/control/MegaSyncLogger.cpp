@@ -22,6 +22,10 @@
 
 #include <megaapi.h>
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 //#define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
 //#define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
@@ -87,17 +91,22 @@ struct LogLinkedList
     unsigned used = 0;
     int lastmessage = -1;
     int lastmessageRepeats = 0;
+    bool oomGap = false;
     char message[1];
 
     static LogLinkedList* create(LogLinkedList* prev, size_t size)
     {
         LogLinkedList* entry = (LogLinkedList*)malloc(size);
-        entry->next = nullptr;
-        entry->allocated = unsigned(size - sizeof(LogLinkedList));
-        entry->used = 0;
-        entry->lastmessage = -1;
-        entry->lastmessageRepeats = 0;
-        prev->next = entry;
+        if (entry) 
+        {
+            entry->next = nullptr;
+            entry->allocated = unsigned(size - sizeof(LogLinkedList));
+            entry->used = 0;
+            entry->lastmessage = -1;
+            entry->lastmessageRepeats = 0;
+            entry->oomGap = false;
+            prev->next = entry;
+        }
         return entry;
     }
 
@@ -116,179 +125,225 @@ struct LogLinkedList
 
 };
 
+MegaSyncLogger *g_megaSyncLogger = nullptr;
 
-std::unique_ptr<std::thread> logThread;
-std::condition_variable logConditionVariable;
-std::mutex logMutex;
-std::mutex logRotationMutex;
-LogLinkedList logListFirst;
-LogLinkedList* logListLast = &logListFirst;
-bool logExit = false;
-bool flushLog = false;
-bool forceRotationForReporting = false;
-bool logToDesktop = false;
-bool logToDesktopChanged = false;
-int flushOnLevel = mega::MegaApi::LOG_LEVEL_WARNING;
-std::chrono::seconds logFlushPeriod = std::chrono::seconds(10);
-std::chrono::steady_clock::time_point nextFlushTime = std::chrono::steady_clock::now() + logFlushPeriod;
-
-MegaSyncLogger *megaSyncLogger = nullptr;
-
-QString numberedLogFilename(QString baseName, int logNumber)
+struct LoggingThread
 {
-    QString newName = baseName;
-    auto index = newName.lastIndexOf(QString::fromUtf8("."));
-    if (index > 0) newName = newName.left(index + 1);
-    newName += QString::number(logNumber) + QString::fromUtf8(".log");
-    return newName;
-}
+    std::unique_ptr<std::thread> logThread;
+    std::condition_variable logConditionVariable;
+    std::mutex logMutex;
+    std::mutex logRotationMutex;
+    LogLinkedList logListFirst;
+    LogLinkedList* logListLast = &logListFirst;
+    bool logExit = false;
+    bool flushLog = false;
+    bool closeLog = false;
+    bool forceRotationForReporting = false;
+    bool logToDesktop = false;
+    bool logToDesktopChanged = false;
+    int flushOnLevel = mega::MegaApi::LOG_LEVEL_WARNING;
+    std::chrono::seconds logFlushPeriod = std::chrono::seconds(10);
+    std::chrono::steady_clock::time_point nextFlushTime = std::chrono::steady_clock::now() + logFlushPeriod;
 
-
-
-void logThreadFunction(QString filename, QString desktopFilename)
-{
-#ifdef WIN32
-    std::ofstream outputFile(filename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
-#else
-    std::ofstream outputFile(filename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
-#endif
-    outputFile << "----------------------------- program start -----------------------------\n";
-    long long outFileSize = outputFile.tellp();
-    std::ofstream logDesktopFile;
-
-    while (!logExit)
+    void startLoggingThread(QString filename, QString desktopFilename)
     {
-        if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
+        if (!logThread)
         {
-            std::lock_guard g(logRotationMutex);
-            for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
-            {
-                QString toRename = numberedLogFilename(filename, i);
-
-                if (QFile::exists(toRename))
-                {
-                    if (i + 1 >= MAX_ROTATE_LOGS)
-                    {
-                        if (!QFile::remove(toRename))
-                        {
-                            std::cerr << "Error removing log file " << i << std::endl;
-                        }
-
-                    }
-                    else
-                    {
-                        if (!QFile(toRename).rename(numberedLogFilename(filename, i + 1)))
-                        {
-                            std::cerr << "Error renaming log file " << i << std::endl;
-                        }
-                    }
-                }
-            }
-            auto newNameDone = numberedLogFilename(filename, 0);
-            auto newNameZipping = newNameDone + QString::fromUtf8(".zipping");
-
-            outputFile.close();
-            QFile::remove(newNameZipping);
-            QFile(filename).rename(newNameZipping);
-
-            bool report = forceRotationForReporting;
-            forceRotationForReporting = false;
-
-            std::thread t([=]() {
-                std::lock_guard g(logRotationMutex); // prevent another rotation while we work on this file (in case of unfortunate timing with bug report etc)
-                gzipCompressOnRotate(newNameZipping, newNameDone); 
-                if (report && megaSyncLogger)
-                {
-                    emit megaSyncLogger->logReadyForReporting();
-                }
-            });
-            t.detach();
-
-#ifdef WIN32
-            outputFile.open(filename.toStdWString().data(), std::ofstream::out);
-#else
-            outputFile.open(filename.toUtf8().data(), std::ofstream::out);
-#endif
-            outFileSize = 0;
+            logThread.reset(new std::thread([this, filename, desktopFilename]() {
+                logThreadFunction(filename, desktopFilename);
+            }));
         }
-
-        LogLinkedList* newMessages = nullptr;
-
-        {
-            std::unique_lock<std::mutex> lock(logMutex);
-            logConditionVariable.wait_for(lock, std::chrono::milliseconds(500), [&newMessages]() { 
-                    if (logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged)
-                    {
-                        newMessages = logListFirst.next;
-                        logListFirst.next = nullptr;
-                        logListLast = &logListFirst;
-                        return true;
-                    }
-                    else return false;
-            });
-        }
-
-        while (newMessages)
-        {
-            auto p = newMessages;
-            newMessages = newMessages->next;
-            if (outputFile)
-            {
-                outputFile << p->message;
-                outFileSize += p->used;
-            }
-            if (logDesktopFile)
-            {
-                logDesktopFile << p->message;
-            }
-
-#ifdef LOG_TO_STDOUT
-            std::cout << p->message;
-#endif
-            free(p);
-        }
-        if (flushLog || forceRotationForReporting || nextFlushTime <= std::chrono::steady_clock::now())
-        {
-            flushLog = false;
-            outputFile.flush();
-            if (logDesktopFile)
-            {
-                logDesktopFile.flush();
-            }
-#ifdef LOG_TO_STDOUT
-            std::cout << std::flush;
-#endif
-
-
-            nextFlushTime = std::chrono::steady_clock::now() + logFlushPeriod;
-        }
-
-        if (logToDesktopChanged)
-        {
-            logToDesktopChanged = false;
-            if (logToDesktop && !logDesktopFile)
-            {
-#ifdef WIN32
-                logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
-#else
-                logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
-#endif
-            }
-            else if (!logToDesktop && logDesktopFile)
-            {
-                logDesktopFile.close();
-            }
-        }
-
     }
-}
+
+    void log(int loglevel, const char *message);
+
+private:
+    QString numberedLogFilename(QString baseName, int logNumber)
+    {
+        QString newName = baseName;
+        auto index = newName.lastIndexOf(QString::fromUtf8("."));
+        if (index > 0) newName = newName.left(index + 1);
+        newName += QString::number(logNumber) + QString::fromUtf8(".log");
+        return newName;
+    }
+
+    void logThreadFunction(QString filename, QString desktopFilename)
+    {
+    #ifdef WIN32
+        std::ofstream outputFile(filename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
+    #else
+        std::ofstream outputFile(filename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
+    #endif
+        outputFile << "----------------------------- program start -----------------------------\n";
+        long long outFileSize = outputFile.tellp();
+        std::ofstream logDesktopFile;
+
+        while (!logExit)
+        {
+            if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
+            {
+                std::lock_guard g(logRotationMutex);
+                for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
+                {
+                    QString toRename = numberedLogFilename(filename, i);
+
+                    if (QFile::exists(toRename))
+                    {
+                        if (i + 1 >= MAX_ROTATE_LOGS)
+                        {
+                            if (!QFile::remove(toRename))
+                            {
+                                std::cerr << "Error removing log file " << i << std::endl;
+                            }
+
+                        }
+                        else
+                        {
+                            if (!QFile(toRename).rename(numberedLogFilename(filename, i + 1)))
+                            {
+                                std::cerr << "Error renaming log file " << i << std::endl;
+                            }
+                        }
+                    }
+                }
+                auto newNameDone = numberedLogFilename(filename, 0);
+                auto newNameZipping = newNameDone + QString::fromUtf8(".zipping");
+
+                outputFile.close();
+                QFile::remove(newNameZipping);
+                QFile(filename).rename(newNameZipping);
+
+                bool report = forceRotationForReporting;
+                forceRotationForReporting = false;
+
+                std::thread t([=]() {
+                    std::lock_guard g(logRotationMutex); // prevent another rotation while we work on this file (in case of unfortunate timing with bug report etc)
+                    gzipCompressOnRotate(newNameZipping, newNameDone); 
+                    if (report && g_megaSyncLogger)
+                    {
+                        emit g_megaSyncLogger->logReadyForReporting();
+                    }
+                });
+                t.detach();
+
+    #ifdef WIN32
+                outputFile.open(filename.toStdWString().data(), std::ofstream::out);
+    #else
+                outputFile.open(filename.toUtf8().data(), std::ofstream::out);
+    #endif
+                outFileSize = 0;
+            }
+
+            LogLinkedList* newMessages = nullptr;
+            bool topLevelMemoryGap = false;
+            {
+                std::unique_lock<std::mutex> lock(logMutex);
+                logConditionVariable.wait_for(lock, std::chrono::milliseconds(500), [this, &newMessages, &topLevelMemoryGap]() { 
+                        if (logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog)
+                        {
+                            newMessages = logListFirst.next;
+                            logListFirst.next = nullptr;
+                            logListLast = &logListFirst;
+                            topLevelMemoryGap = logListFirst.oomGap;
+                            logListFirst.oomGap = false;
+                            return true;
+                        }
+                        else return false;
+                });
+            }
+
+            if (topLevelMemoryGap)
+            {
+                if (outputFile)
+                {
+                    outputFile << "<log gap - out of logging memory at this point>\n";
+                }
+                if (logDesktopFile)
+                {
+                    logDesktopFile << "<log gap - out of logging memory at this point>\n";
+                }
+            }
+
+            while (newMessages)
+            {
+                auto p = newMessages;
+                newMessages = newMessages->next;
+                if (outputFile)
+                {
+                    outputFile << p->message;
+                    outFileSize += p->used;
+                    if (p->oomGap)
+                    {
+                        outputFile << "<log gap - out of logging memory at this point>\n";
+                    }
+                }
+                if (logDesktopFile)
+                {
+                    logDesktopFile << p->message;
+                    if (p->oomGap)
+                    {
+                        logDesktopFile << "<log gap - out of logging memory at this point>\n";
+                    }
+                }
+
+    #ifdef LOG_TO_STDOUT
+                std::cout << p->message;
+    #endif
+                free(p);
+            }
+            if (flushLog || forceRotationForReporting || nextFlushTime <= std::chrono::steady_clock::now())
+            {
+                flushLog = false;
+                outputFile.flush();
+                if (logDesktopFile)
+                {
+                    logDesktopFile.flush();
+                }
+    #ifdef LOG_TO_STDOUT
+                std::cout << std::flush;
+    #endif
+                nextFlushTime = std::chrono::steady_clock::now() + logFlushPeriod;
+            }
+
+            if (closeLog)
+            {
+                outputFile.close();
+                if (logDesktopFile)
+                {
+                    logDesktopFile.close();
+                }
+                return;  // This request means we have received a termination signal; close and exit the thread as quick & clean as possible
+            }
+
+            if (logToDesktopChanged)
+            {
+                logToDesktopChanged = false;
+                if (logToDesktop && !logDesktopFile)
+                {
+    #ifdef WIN32
+                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
+    #else
+                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
+    #endif
+                }
+                else if (!logToDesktop && logDesktopFile)
+                {
+                    logDesktopFile.close();
+                }
+            }
+
+        }
+    }
+
+} g_loggingThread;
 
 
 MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& desktopPath, bool logToStdout)
 : QObject{parent}
 , mDesktopPath{desktopPath}
 {
-    megaSyncLogger = this;
+    assert(!g_megaSyncLogger);
+    g_megaSyncLogger = this;
 
     const QDir dataDir{dataPath};
     dataDir.mkdir(LOGS_FOLDER_LEAFNAME_QSTRING);
@@ -297,12 +352,7 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     const QDir desktopDir{mDesktopPath};
     const auto desktopLogPath = desktopDir.filePath(QString::fromUtf8("MEGAsync.log"));
 
-    if (!logThread)
-    {
-        logThread.reset(new std::thread([logPath, desktopLogPath]() {
-            logThreadFunction(logPath, desktopLogPath);
-        }));
-    }
+    g_loggingThread.startLoggingThread(logPath, desktopLogPath);
 
     mega::MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_MAX);
     mega::MegaApi::addLoggerObject(this);
@@ -313,13 +363,14 @@ MegaSyncLogger::~MegaSyncLogger()
     mega::MegaApi::removeLoggerObject(this); // after this no more calls to MegaSyncLogger::log
 
     {
-        std::lock_guard<std::mutex> g(logMutex);
-        logExit = true;
-        logConditionVariable.notify_one();
+        std::lock_guard<std::mutex> g(g_loggingThread.logMutex);
+        g_loggingThread.logExit = true;
+        g_loggingThread.logConditionVariable.notify_one();
     }
-    megaSyncLogger = nullptr;
-    logThread->join();
-    logThread.reset();
+    assert(g_megaSyncLogger == this);
+    g_megaSyncLogger = nullptr;
+    g_loggingThread.logThread->join();
+    g_loggingThread.logThread.reset();
 }
 
 inline void twodigit(char*& s, int n)
@@ -391,7 +442,11 @@ void cacheThreadNameAndTimeT(time_t t, struct tm& gmt, const char*& threadname)
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
 {
+    g_loggingThread.log(loglevel, message);
+}
 
+void LoggingThread::log(int loglevel, const char *message)
+{
 
 // todo: do we need this xml logger?
 //#ifdef LOG_TO_LOGGER
@@ -459,23 +514,33 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
                 lineLen += 30;
                 logListLast->lastmessageRepeats = 0;
             }
-            if (logListLast == &logListFirst || !logListLast->messageFits(lineLen))
+            if (logListLast == &logListFirst || logListLast->oomGap || !logListLast->messageFits(lineLen))
             {
-                logListLast = LogLinkedList::create(logListLast, std::max<size_t>(lineLen, 8192) + sizeof(LogLinkedList) + 10);
+                if (LogLinkedList* newentry = LogLinkedList::create(logListLast, std::max<size_t>(lineLen, 8192) + sizeof(LogLinkedList) + 10))
+                {
+                    logListLast = newentry;
+                }
+                else
+                {
+                    logListLast->oomGap = true;
+                }
             }
-            if (reportRepeats)
+            if (!logListLast->oomGap)
             {
-                char repeatbuf[31]; // this one can occur very frequently with many in a row: cURL DEBUG: schannel: failed to decrypt data, need more data
-                snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
-                logListLast->append(repeatbuf);
+                if (reportRepeats)
+                {
+                    char repeatbuf[31]; // this one can occur very frequently with many in a row: cURL DEBUG: schannel: failed to decrypt data, need more data
+                    snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
+                    logListLast->append(repeatbuf);
+                }
+                logListLast->append(timebuf);
+                logListLast->append(threadname);
+                logListLast->append(loglevelstring);
+                logListLast->lastmessage = logListLast->used;
+                logListLast->append(message); 
+                logListLast->append("\n");
+                notify = logListLast->used + 1024 > logListLast->allocated;
             }
-            logListLast->append(timebuf);
-            logListLast->append(threadname);
-            logListLast->append(loglevelstring);
-            logListLast->lastmessage = logListLast->used;
-            logListLast->append(message); 
-            logListLast->append("\n");
-            notify = logListLast->used + 1024 > logListLast->allocated;
         }
 
         if (loglevel <= flushOnLevel)
@@ -497,24 +562,39 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 
 void MegaSyncLogger::setDebug(const bool enable)
 {
-    logToDesktop = enable;
-    logToDesktopChanged = true;
+    g_loggingThread.logToDesktop = enable;
+    g_loggingThread.logToDesktopChanged = true;
 }
 
 bool MegaSyncLogger::isDebug() const
 {
-    return logToDesktop;
+    return g_loggingThread.logToDesktop;
 }
 
 bool MegaSyncLogger::prepareForReporting()
 {
-    std::lock_guard<std::mutex> g(logMutex);
-    forceRotationForReporting = true;
-    logConditionVariable.notify_one();
+    std::lock_guard<std::mutex> g(g_loggingThread.logMutex);
+    g_loggingThread.forceRotationForReporting = true;
+    g_loggingThread.logConditionVariable.notify_one();
     return true;
 }
 
 void MegaSyncLogger::resumeAfterReporting()
 {
 }
+
+void MegaSyncLogger::flushAndClose()
+{
+    g_loggingThread.flushLog = true;
+    g_loggingThread.closeLog = true;
+    g_loggingThread.logConditionVariable.notify_one();
+    // This is called on crash so the app may be unstable. Don't assume the thread is working properly.
+    // It might be the one that crashed.  Just give it 1 second to complete
+#ifdef WIN32
+    Sleep(1000);
+#else
+    usleep(1000000);
+#endif
+}
+
 

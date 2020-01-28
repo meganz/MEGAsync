@@ -23,6 +23,9 @@ public:
     void setDebug(bool enable);
     bool isDebug() const;
 
+    // this one is called on signal (flush log before crash report)
+    void flushAndClose();
+
     /**
      * @brief prepareForReporting
      * Prepare for reporting. Will pause logs and force a rotation.
@@ -39,3 +42,5 @@ signals:
 private:
     QString mDesktopPath;
 };
+
+extern MegaSyncLogger *g_megaSyncLogger;   // for crash report flush
