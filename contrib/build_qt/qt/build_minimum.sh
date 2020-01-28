@@ -45,7 +45,7 @@ echo "#### Qt build ####"
 #cd $BUILD_DIR
 
 ver=5.12.6
-mainver=`echo $ver | awk -F"." '{$NF="";print $0}'`
+mainver=`echo $ver | awk -F"." '{print $1"."$2}'`
 
 #download and extract package
 if [ ! -f qt-everywhere-src-$ver.tar.xz ]; then
