@@ -22,6 +22,7 @@ public:
     void log(const char *time, int loglevel, const char *source, const char *message) override;
     void setDebug(bool enable);
     bool isDebug() const;
+    bool mLogToStdout = false;
 
     // this one is called on signal (flush log before crash report)
     void flushAndClose();

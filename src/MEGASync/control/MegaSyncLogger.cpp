@@ -289,9 +289,10 @@ private:
                     }
                 }
 
-    #ifdef LOG_TO_STDOUT
-                std::cout << p->message;
-    #endif
+                if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
+                {
+                    std::cout << p->message;
+                }
                 free(p);
             }
             if (flushLog || forceRotationForReporting || nextFlushTime <= std::chrono::steady_clock::now())
@@ -302,9 +303,10 @@ private:
                 {
                     logDesktopFile.flush();
                 }
-    #ifdef LOG_TO_STDOUT
-                std::cout << std::flush;
-    #endif
+                if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
+                {
+                    std::cout << std::flush;
+                }
                 nextFlushTime = std::chrono::steady_clock::now() + logFlushPeriod;
             }
 
@@ -347,6 +349,7 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 {
     assert(!g_megaSyncLogger);
     g_megaSyncLogger = this;
+    mLogToStdout = logToStdout;
 
     const QDir dataDir{dataPath};
     dataDir.mkdir(LOGS_FOLDER_LEAFNAME_QSTRING);
