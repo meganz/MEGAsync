@@ -22,8 +22,8 @@
 
 #include <megaapi.h>
 
-#define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
-#define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
+//#define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
+//#define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
 
 #define MAX_FILESIZE_MB 10    // 10MB of log usually compresses to about 850KB (was 450 before duplicate line detection) 
@@ -160,7 +160,7 @@ void logThreadFunction(QString filename, QString desktopFilename)
     {
         if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
         {
-            logRotationMutex.lock();
+            std::lock_guard g(logRotationMutex);
             for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
             {
                 QString toRename = numberedLogFilename(filename, i);
@@ -195,8 +195,8 @@ void logThreadFunction(QString filename, QString desktopFilename)
             forceRotationForReporting = false;
 
             std::thread t([=]() {
+                std::lock_guard g(logRotationMutex); // prevent another rotation while we work on this file (in case of unfortunate timing with bug report etc)
                 gzipCompressOnRotate(newNameZipping, newNameDone); 
-                logRotationMutex.unlock();
                 if (report && megaSyncLogger)
                 {
                     emit megaSyncLogger->logReadyForReporting();
@@ -342,14 +342,13 @@ char* filltime(char* s, struct tm*  gmt, int microsec)
     *s++ = ':';
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
-    char snsec[7];
-    sprintf(snsec, "%06d", microsec % 1000000);
-    *s++ = snsec[0];
-    *s++ = snsec[1];
-    *s++ = snsec[2];
-    *s++ = snsec[3];
-    *s++ = snsec[4];
-    *s++ = snsec[5];
+    s[5] = microsec % 10 + '0';
+    s[4] = (microsec /= 10) % 10 + '0';
+    s[3] = (microsec /= 10) % 10 + '0';
+    s[2] = (microsec /= 10) % 10 + '0';
+    s[1] = (microsec /= 10) % 10 + '0';
+    s[0] = (microsec /= 10) % 10 + '0';
+    s += 6;
     *s++ = ' ';
     *s = 0;
     return s;
