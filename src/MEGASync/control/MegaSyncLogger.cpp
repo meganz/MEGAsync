@@ -242,7 +242,7 @@ private:
             {
                 std::unique_lock<std::mutex> lock(logMutex);
                 logConditionVariable.wait_for(lock, std::chrono::milliseconds(500), [this, &newMessages, &topLevelMemoryGap]() { 
-                        if (logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog)
+                        if (logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog || closeLog)
                         {
                             newMessages = logListFirst.next;
                             logListFirst.next = nullptr;
