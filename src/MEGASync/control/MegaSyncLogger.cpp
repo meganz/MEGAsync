@@ -585,6 +585,7 @@ void MegaSyncLogger::resumeAfterReporting()
 
 void MegaSyncLogger::flushAndClose()
 {
+    g_loggingThread.log(mega::MegaApi::LOG_LEVEL_FATAL, "***CRASH DETECTED: FLUSHING AND CLOSING***");
     g_loggingThread.flushLog = true;
     g_loggingThread.closeLog = true;
     g_loggingThread.logConditionVariable.notify_one();
