@@ -182,7 +182,7 @@ private:
         {
             if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
             {
-                std::lock_guard g(logRotationMutex);
+                std::lock_guard<std::mutex> g(logRotationMutex);
                 for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
                 {
                     QString toRename = numberedLogFilename(filename, i);
@@ -217,7 +217,7 @@ private:
                 forceRotationForReporting = false;
 
                 std::thread t([=]() {
-                    std::lock_guard g(logRotationMutex); // prevent another rotation while we work on this file (in case of unfortunate timing with bug report etc)
+                    std::lock_guard<std::mutex> g(logRotationMutex); // prevent another rotation while we work on this file (in case of unfortunate timing with bug report etc)
                     gzipCompressOnRotate(newNameZipping, newNameDone); 
                     if (report && g_megaSyncLogger)
                     {
