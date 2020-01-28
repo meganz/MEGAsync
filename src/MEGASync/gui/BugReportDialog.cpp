@@ -228,7 +228,7 @@ void BugReportDialog::onReadyForReporting()
     //If send log file is enabled
     if (ui->cbAttachLogs->isChecked())
     {
-        QDir logDir{MegaApplication::applicationDataPath().append(QString::fromUtf8("/logs"))};
+        QDir logDir{MegaApplication::applicationDataPath().append(QString::fromUtf8("/") + LOGS_FOLDER_LEAFNAME_QSTRING)};
         if (logDir.exists())
         {
             QString fileFormat{QDir::separator() + QString::fromUtf8("%1_%2").arg(QDateTime::currentDateTimeUtc().toString(QString::fromAscii("yyMMdd_hhmmss")))
@@ -246,7 +246,7 @@ void BugReportDialog::onReadyForReporting()
             }
 
 #else
-            FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toStdString().c_str(), "a+b");
+            FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toUtf8().constData(), "a+b");
 #endif
             if (!pFile)
             {
@@ -275,7 +275,7 @@ void BugReportDialog::onReadyForReporting()
 #ifdef _WIN32
                     gzcopy(i.absoluteFilePath().toStdWString().c_str(), --nLogFiles, &crc, &tot, pFile);
 #else
-                    gzcopy(i.absoluteFilePath().toStdString().c_str(), --nLogFiles, &crc, &tot, pFile);
+                    gzcopy(i.absoluteFilePath().toUtf8().constData(), --nLogFiles, &crc, &tot, pFile);
 #endif
                 }
                 catch (const std::exception& e)

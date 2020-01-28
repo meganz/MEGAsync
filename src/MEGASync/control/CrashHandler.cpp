@@ -6,8 +6,6 @@
 #include <sstream>
 #include "MegaApplication.h"
 
-#include <spdlog/spdlog.h>
-
 using namespace mega;
 using namespace std;
 
@@ -142,15 +140,10 @@ string getDistroVersion()
     // signal handler
     void signal_handler(int sig, siginfo_t *info, void *secret)
     {
-        if (auto logger = spdlog::get("logger"))
+        if (g_megaSyncLogger)
         {
-            logger->flush();
+            g_megaSyncLogger->flushAndClose();
         }
-        if (auto logger = spdlog::get("debug_logger"))
-        {
-            logger->flush();
-        }
-        spdlog::shutdown();
 
         int dump_file = open(dump_path.c_str(),  O_WRONLY | O_CREAT, 0400);
         if (dump_file<0)
@@ -327,6 +320,10 @@ bool DumpCallback(const char* _dump_dir,const char* _minidump_id,void *context, 
     Q_UNUSED(exinfo);
 #endif
 
+    if (g_megaSyncLogger)
+    {
+        g_megaSyncLogger->flushAndClose();
+    }
     CrashHandler::tryReboot();
     return CrashHandlerPrivate::bReportCrashesToSystem ? success : false;
 }
