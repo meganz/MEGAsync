@@ -433,15 +433,14 @@ sleep 2
 [ "$1" == "0" ] && killall megasync 2> /dev/null || true
 
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
     /bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
-
-    # to restore dormant MEGAsync upon updates
-    killall -s SIGUSR2 megasync 2> /dev/null || true
 %endif
+# to restore dormant MEGAsync upon updates
+killall -s SIGUSR2 megasync 2> /dev/null || true
 
 
 %clean
