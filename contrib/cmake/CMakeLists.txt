@@ -35,11 +35,21 @@ message("CONFIG: ${CONFIG}")
 include(${MEGAsyncDir}/mega/contrib/cmake/CMakeLists.txt)
 
 
-if (build_64_bit)
-    SET (QT_DIR "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015_64" CACHE STRING "")
+if (WIN32)
+    if (build_64_bit)
+        SET (QT_DIR "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015_64" CACHE STRING "")
+    else()
+        SET (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE STRING "")
+    ENDIF()
+    set (UIC_EXEC "${QT_DIR}/bin/uic.exe")
+    set (RCC_EXEC "${QT_DIR}/bin/rcc.exe")
+    set (MOC_EXEC "${QT_DIR}/bin/moc.exe")
 else()
-    SET (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE STRING "")
+    set (UIC_EXEC "${QT_DIR}/bin/uic")
+    set (RCC_EXEC "${QT_DIR}/bin/rcc")
+    set (MOC_EXEC "${QT_DIR}/bin/moc")
 ENDIF()
+
 
 
 set(AUTOMOC ON)
@@ -51,70 +61,100 @@ include_directories( "${QT_DIR}/include/QtNetwork" )
 include_directories( "${QT_DIR}/include/QtWidgets" )
 include_directories( "${QT_DIR}/include/QtWinExtras" )
 
+if (NOT WIN32)
+    include_directories( "${QT_DIR}/include/QtSvg" )
+endif()
+
 include_directories( "${MEGAsyncDir}/mega/bindings/qt" )
 include_directories( "${MEGAsyncDir}/control" )
 include_directories( "${MEGAsyncDir}/gui" )
-include_directories( "${MEGAsyncDir}/gui/win" )
+
+
+if (WIN32)
+    set (UiDir "win")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set (UiDir "linux")
+else()
+    set (UiDir "macx")
+endif()
+
+include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
+
 
 set (FORMS
-    ${MEGAsyncDir}/gui/win/AlertItem.ui
-    ${MEGAsyncDir}/gui/win/AlertFilterType.ui
-    ${MEGAsyncDir}/gui/win/BugReportDialog.ui
-    ${MEGAsyncDir}/gui/win/FilterAlertWidget.ui
-    ${MEGAsyncDir}/gui/win/TransfersStatusWidget.ui
-    ${MEGAsyncDir}/gui/win/TransfersSummaryWidget.ui
-    ${MEGAsyncDir}/gui/win/InfoDialog.ui
-    ${MEGAsyncDir}/gui/win/CustomTransferItem.ui
-    ${MEGAsyncDir}/gui/win/NodeSelector.ui
-    ${MEGAsyncDir}/gui/win/FolderBinder.ui
-    ${MEGAsyncDir}/gui/win/BindFolderDialog.ui
-    ${MEGAsyncDir}/gui/win/UploadToMegaDialog.ui
-    ${MEGAsyncDir}/gui/win/PasteMegaLinksDialog.ui
-    ${MEGAsyncDir}/gui/win/ImportMegaLinksDialog.ui
-    ${MEGAsyncDir}/gui/win/ImportListWidgetItem.ui
-    ${MEGAsyncDir}/gui/win/CrashReportDialog.ui
-    ${MEGAsyncDir}/gui/win/SetupWizard.ui
-    ${MEGAsyncDir}/gui/win/SettingsDialog.ui
-    ${MEGAsyncDir}/gui/win/AccountDetailsDialog.ui
-    ${MEGAsyncDir}/gui/win/DownloadFromMegaDialog.ui
-    ${MEGAsyncDir}/gui/win/SizeLimitDialog.ui
-    ${MEGAsyncDir}/gui/win/MessageBox.ui
-    ${MEGAsyncDir}/gui/win/ChangeLogDialog.ui
-    ${MEGAsyncDir}/gui/win/GuestWidget.ui
-    ${MEGAsyncDir}/gui/win/StreamingFromMegaDialog.ui
-    ${MEGAsyncDir}/gui/win/MegaProgressCustomDialog.ui
-    ${MEGAsyncDir}/gui/win/ConfirmSSLexception.ui
-    ${MEGAsyncDir}/gui/win/PlanWidget.ui
-    ${MEGAsyncDir}/gui/win/UpgradeDialog.ui
-    ${MEGAsyncDir}/gui/win/InfoWizard.ui
-    ${MEGAsyncDir}/gui/win/TransferManagerItem.ui
-    ${MEGAsyncDir}/gui/win/TransferManager.ui
-    ${MEGAsyncDir}/gui/win/TransfersWidget.ui
-    ${MEGAsyncDir}/gui/win/TransfersStateInfoWidget.ui
-    ${MEGAsyncDir}/gui/win/MegaSpeedGraph.ui
-    ${MEGAsyncDir}/gui/win/ActiveTransfersWidget.ui
-    ${MEGAsyncDir}/gui/win/AddExclusionDialog.ui
-    ${MEGAsyncDir}/gui/win/LocalCleanScheduler.ui
-    ${MEGAsyncDir}/gui/win/InfoDialogTransfersWidget.ui
-    ${MEGAsyncDir}/gui/win/StatusInfo.ui
-    ${MEGAsyncDir}/gui/win/PSAwidget.ui
-    ${MEGAsyncDir}/gui/win/UpgradeOverStorage.ui
-#    ${MEGAsyncDir}/gui/win/UpgradeWidget.ui
-    ${MEGAsyncDir}/gui/win/ChangePassword.ui
-    ${MEGAsyncDir}/gui/win/Login2FA.ui
-    ${MEGAsyncDir}/gui/win/TransfersStatusWidget.ui )
+    ${MEGAsyncDir}/gui/${UiDir}/AlertItem.ui
+    ${MEGAsyncDir}/gui/${UiDir}/AlertFilterType.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BugReportDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/FilterAlertWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/TransfersSummaryWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/InfoDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/CustomTransferItem.ui
+    ${MEGAsyncDir}/gui/${UiDir}/NodeSelector.ui
+    ${MEGAsyncDir}/gui/${UiDir}/FolderBinder.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BindFolderDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/UploadToMegaDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/PasteMegaLinksDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ImportMegaLinksDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ImportListWidgetItem.ui
+    ${MEGAsyncDir}/gui/${UiDir}/CrashReportDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/SetupWizard.ui
+    ${MEGAsyncDir}/gui/${UiDir}/SettingsDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/AccountDetailsDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/DownloadFromMegaDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/SizeLimitDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/MessageBox.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ChangeLogDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/MegaProgressCustomDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ConfirmSSLexception.ui
+    ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
+    ${MEGAsyncDir}/gui/${UiDir}/TransferManagerItem.ui
+    ${MEGAsyncDir}/gui/${UiDir}/TransferManager.ui
+    ${MEGAsyncDir}/gui/${UiDir}/TransfersWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/TransfersStateInfoWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/MegaSpeedGraph.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ActiveTransfersWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/LocalCleanScheduler.ui
+    ${MEGAsyncDir}/gui/${UiDir}/InfoDialogTransfersWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
+    ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
+#    ${MEGAsyncDir}/gui/${UiDir}/UpgradeWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
+    ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
+    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui )
 
+
+if (WIN32)
+    set (FORMS ${FORMS} )
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set (FORMS ${FORMS}
+        ${MEGAsyncDir}/gui/${UiDir}/PermissionsDialog.ui
+        ${MEGAsyncDir}/gui/${UiDir}/PermissionsWidget.ui
+        )
+else()
+    set (FORMS ${FORMS}
+        ${MEGAsyncDir}/gui/${UiDir}/PermissionsDialog.ui
+        ${MEGAsyncDir}/gui/${UiDir}/PermissionsWidget.ui
+        )
+endif()
 
 set(FORMS_HEADERS "")
+
 foreach(F ${FORMS})
     get_filename_component(D ${F} PATH)
     get_filename_component(N ${F} NAME_WE)
     set (T ${D}/ui_${N}.h)
     add_custom_command(
         OUTPUT ${T}
-        COMMAND "${QT_DIR}/bin/uic.exe" -o ${T} ${F}
+        COMMAND "${UIC_EXEC}" -o ${T} ${F}
         DEPENDS ${F}
-        WORKING_DIRECTORY ${MEGAsyncDir}/gui/win
+        WORKING_DIRECTORY ${MEGAsyncDir}/gui/${UiDir}
     )
     SET(FORMS_HEADERS ${FORMS_HEADERS} ${T} )
 endforeach(F)
@@ -150,7 +190,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BindFolderDialog.h
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
-#    ${MEGAsyncDir}/gui/CocoaHelpButton.h
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
     ${MEGAsyncDir}/gui/ConfirmSSLexception.h
     ${MEGAsyncDir}/gui/CrashReportDialog.h
@@ -170,15 +209,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
     ${MEGAsyncDir}/gui/MegaSpeedGraph.h
-    ${MEGAsyncDir}/gui/MegaSystemTrayIcon.h
     ${MEGAsyncDir}/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/gui/MegaTransferView.h
     ${MEGAsyncDir}/gui/MessageBox.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
     ${MEGAsyncDir}/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.h
-#    ${MEGAsyncDir}/gui/PermissionsDialog.h
-#    ${MEGAsyncDir}/gui/PermissionsWidget.h
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
     ${MEGAsyncDir}/gui/PlanWidget.h
     ${MEGAsyncDir}/gui/PSAwidget.h
@@ -209,15 +245,49 @@ set (MOC_INPUT
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
     ${MEGAsyncDir}/platform/notificator.h
-#    ${MEGAsyncDir}/platform/linux/ExtServer.h
-#    ${MEGAsyncDir}/platform/linux/NotifyServer.h
-#    ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
-#    ${MEGAsyncDir}/platform/macx/MacXExtServer.h
-#    ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
-#    ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
-#    ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
-    ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h  
 )
+
+if (WIN32)
+    set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h
+        )
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/gui/PermissionsDialog.h
+        ${MEGAsyncDir}/gui/PermissionsWidget.h
+
+
+        ${MEGAsyncDir}/platform/linux/LinuxPlatform.h
+        ${MEGAsyncDir}/platform/linux/ExtServer.h
+        ${MEGAsyncDir}/platform/linux/NotifyServer.h
+
+
+        )
+else()
+    set (MOC_INPUT ${MOC_INPUT}
+
+        ${MEGAsyncDir}/gui/CocoaHelpButton.h
+        ${MEGAsyncDir}/gui/MegaSystemTrayIcon.h
+
+        ${MEGAsyncDir}/gui/PermissionsDialog.h
+        ${MEGAsyncDir}/gui/PermissionsWidget.h
+
+        ${MEGAsyncDir}/platform/macx/MacXPlatform.h
+            ${MEGAsyncDir}/platform/macx/MacXFunctions.h
+            ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
+            ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
+            ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
+            ${MEGAsyncDir}/platform/macx/MEGAService.h
+            ${MEGAsyncDir}/platform/macx/ClientSide.h
+            ${MEGAsyncDir}/platform/macx/ServerSide.h
+            ${MEGAsyncDir}/platform/macx/MacXExtServer.h
+            ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
+            ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
+            ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
+            ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+            ${MEGAsyncDir}/platform/macx/Protocol.h
+        )
+endif()
 
 set(MOC_OUTPUT "")
 foreach(F ${MOC_INPUT})
@@ -226,7 +296,7 @@ foreach(F ${MOC_INPUT})
     set (T ${D}/moc_${N}.cpp)
     add_custom_command(
         OUTPUT ${T}
-        COMMAND "${QT_DIR}/bin/moc.exe" -DWIN32 -DENABLE_SYNC -o ${T} ${F}
+        COMMAND "${MOC_EXEC}" -DWIN32 -DENABLE_SYNC -o ${T} ${F}
         DEPENDS ${F}
         WORKING_DIRECTORY ${MEGAsyncDir}/gui
     )
@@ -241,7 +311,7 @@ foreach(F ${RCC_INPUT})
     set (T ${D}/qrc_${N}.cpp)
     add_custom_command(
         OUTPUT ${T}
-        COMMAND "${QT_DIR}/bin/rcc.exe" -o ${T} ${F}
+        COMMAND "${RCC_EXEC}" -o ${T} ${F}
         DEPENDS ${F}
         WORKING_DIRECTORY ${MEGAsyncDir}/gui
     )
@@ -301,7 +371,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/QFinishedTransfersModel.cpp
     ${MEGAsyncDir}/gui/MegaTransferDelegate.cpp
     ${MEGAsyncDir}/gui/MegaTransferView.cpp
-#    ${MEGAsyncDir}/gui/PermissionsDialog.cpp
     ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
     ${MEGAsyncDir}/gui/TransfersStateInfoWidget.cpp
     ${MEGAsyncDir}/gui/MegaSpeedGraph.cpp
@@ -345,19 +414,111 @@ set (SRCS
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
 
     ${MEGAsyncDir}/platform/notificator.cpp
-    ${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
-    ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
-    ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
-    ${MEGAsyncDir}/platform/win/wintoastlib.cpp
-
-    ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
-    ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc
-    ${MEGAsyncDir}/google_breakpad/common/windows/guid_string.cc
-    ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
-    ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
+
 )
+
+
+if (WIN32)
+    set (SRCS ${SRCS}
+
+        ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
+
+
+        ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
+        ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc
+        ${MEGAsyncDir}/google_breakpad/common/windows/guid_string.cc
+        ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
+
+
+
+        ${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
+        ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
+        ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
+        ${MEGAsyncDir}/platform/win/wintoastlib.cpp
+        )
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set (SRCS ${SRCS}
+
+        ${MEGAsyncDir}/gui/PermissionsDialog.cpp
+        ${MEGAsyncDir}/gui/PermissionsWidget.cpp
+
+        ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
+
+
+        ${MEGAsyncDir}/google_breakpad/client/linux/crash_generation/crash_generation_client.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/handler/exception_handler.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/handler/minidump_descriptor.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/minidump_writer/minidump_writer.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/minidump_writer/linux_dumper.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/minidump_writer/linux_ptrace_dumper.cc
+        ${MEGAsyncDir}/google_breakpad/client/linux/log/log.cc
+        ${MEGAsyncDir}/google_breakpad/client/minidump_file_writer.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/linux_libc_support.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/file_id.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/memory_mapped_file.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/safe_readlink.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/guid_creator.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/elfutils.cc
+        ${MEGAsyncDir}/google_breakpad/common/string_conversion.cc
+        ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
+
+        ${MEGAsyncDir}/platform/linux/LinuxPlatform.cpp
+        ${MEGAsyncDir}/platform/linux/ExtServer.cpp
+        ${MEGAsyncDir}/platform/linux/NotifyServer.cpp
+        )
+else()
+    set (SRCS ${SRCS}
+
+        ${MEGAsyncDir}/gui/PermissionsDialog.cpp
+        ${MEGAsyncDir}/gui/PermissionsWidget.cpp
+
+        ${MEGAsyncDir}/gui/CocoaHelpButton.mm
+        ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
+
+        ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
+
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/exception_handler.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/crash_generation/crash_generation_client.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/crash_generation/crash_generation_server.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/minidump_generator.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/dynamic_images.cc
+        ${MEGAsyncDir}/google_breakpad/client/mac/handler/breakpad_nlist_64.cc
+        ${MEGAsyncDir}/google_breakpad/client/minidump_file_writer.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/macho_id.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/macho_walker.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/macho_utilities.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/string_utilities.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/file_id.cc
+        ${MEGAsyncDir}/google_breakpad/common/mac/bootstrap_compat.cc
+        ${MEGAsyncDir}/google_breakpad/common/md5.cc
+        ${MEGAsyncDir}/google_breakpad/common/string_conversion.cc
+        ${MEGAsyncDir}/google_breakpad/common/linux/linux_libc_support.cc
+        ${MEGAsyncDir}/google_breakpad/common/convert_UTF.c
+
+        ${MEGAsyncDir}/google_breakpad/common/mac/MachIPC.mm
+
+
+
+
+        ${MEGAsyncDir}/platform/macx/MacXFunctions.h
+        ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
+        ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
+        ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
+        ${MEGAsyncDir}/platform/macx/MEGAService.h
+        ${MEGAsyncDir}/platform/macx/ClientSide.h
+        ${MEGAsyncDir}/platform/macx/ServerSide.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServer.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/Protocol.h
+        )
+endif()
+
+
 
 add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -D_UNICODE -DNTDDI_VERSION=0x05010000 -D_WIN32_WINNT=0x0501 -DQT_WIDGETS_LIB )
 add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO_CAST_FROM_ASCII -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB )
@@ -367,6 +528,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMP
 
 add_executable(MEGAsync ${SRCS})
 target_include_directories(MEGAsync PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
+
+if (WIN32)
 target_link_libraries(MEGAsync Mega
             debug "${QT_DIR}/lib/Qt5Cored.lib" 
             debug "${QT_DIR}/lib/Qt5Guid.lib"
@@ -381,7 +544,22 @@ target_link_libraries(MEGAsync Mega
             ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
 
 set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
+else()
+    target_link_libraries(MEGAsync Mega
+    debug "${QT_DIR}/lib/libQt5Core.so"
+    debug "${QT_DIR}/lib/libQt5Gui.so"
+    debug "${QT_DIR}/lib/libQt5Network.so"
+    debug "${QT_DIR}/lib/libQt5Widgets.so"
+    debug "${QT_DIR}/lib/libQt5Svg.so"
+    optimized "${QT_DIR}/lib/libQt5Core.so"
+    optimized "${QT_DIR}/lib/libQt5Gui.so"
+    optimized "${QT_DIR}/lib/libQt5Network.so"
+    optimized "${QT_DIR}/lib/libQt5Widgets.so"
+    optimized "${QT_DIR}/lib/libQt5Svg.so"
+    )
 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+endif()
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
