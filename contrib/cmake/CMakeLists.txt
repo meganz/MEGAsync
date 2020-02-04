@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will declare and append 32/64")
 
+set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
+
 PROJECT(${MEGA_PROJECT_NAME})
 
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
@@ -322,6 +324,8 @@ set (SRCS
     ${MEGAsyncDir}/MegaApplication.cpp
 
     ${FORMS_HEADERS}
+    ${MOC_INPUT}
+    ${RCC_INPUT}
     ${MOC_OUTPUT}
     ${RCC_OUTPUT}
     
