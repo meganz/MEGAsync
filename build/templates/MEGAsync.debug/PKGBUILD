@@ -1,6 +1,6 @@
 pkgname=megasync-debug
 pkgver=MEGASYNC_VERSION
-pkgrel=1
+pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 arch=('any')
 url="https://mega.nz/#sync"
 license=('Freeware')
