@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will declare and append 32/64")
-
 set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
+
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
 
 PROJECT(${MEGA_PROJECT_NAME})
 
@@ -25,10 +26,10 @@ set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
 
-set(prebuilt_dir "${MEGAsyncDir}/mega/third_party/3rdparty")
+set(prebuilt_dir "${MEGAsyncDir}/mega/bindings/qt/3rdparty")
 
 #specify where 3rd party libraries are available
-set(Mega3rdPartyDir "${RepoDir}/../3rdParty_sdk"  CACHE STRING "")
+set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
 
 
 message("CONFIG: ${CONFIG}")
@@ -37,7 +38,7 @@ message("CONFIG: ${CONFIG}")
 include(${MEGAsyncDir}/mega/contrib/cmake/CMakeLists.txt)
 
 
-if (WIN32)
+if (CMAKE_HOST_WIN32)
     if (build_64_bit)
         SET (QT_DIR "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015_64" CACHE STRING "")
     else()
@@ -47,14 +48,29 @@ if (WIN32)
     set (RCC_EXEC "${QT_DIR}/bin/rcc.exe")
     set (MOC_EXEC "${QT_DIR}/bin/moc.exe")
 else()
+    if (CMAKE_HOST_APPLE)
+        SET (QT_DIR "/QT/qt5/qtbase" CACHE STRING "")
+        set(NATIVE_ICON "${MEGAsyncDir}/app.icns")
+    ENDIF()
     set (UIC_EXEC "${QT_DIR}/bin/uic")
     set (RCC_EXEC "${QT_DIR}/bin/rcc")
     set (MOC_EXEC "${QT_DIR}/bin/moc")
 ENDIF()
 
+if (CMAKE_HOST_WIN32)
+    set (UiDir "win")
+elseif (CMAKE_HOST_APPLE)
+    set (UiDir "macx")
+else()
+    set (UiDir "linux")
+endif()
 
-
-set(AUTOMOC ON)
+find_package(Qt5 5.6.3 COMPONENTS Core Network MacExtras Gui Widgets REQUIRED)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}")
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOMOC_MOC_OPTIONS -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__)
 
 include_directories( "${QT_DIR}/include" )
 include_directories( "${QT_DIR}/include/QtCore" )
@@ -62,26 +78,18 @@ include_directories( "${QT_DIR}/include/QtGui" )
 include_directories( "${QT_DIR}/include/QtNetwork" )
 include_directories( "${QT_DIR}/include/QtWidgets" )
 include_directories( "${QT_DIR}/include/QtWinExtras" )
+include_directories( "${QT_DIR}/include/QtMacExtras" )
 
-if (NOT WIN32)
+
+if (NOT CMAKE_HOST_WIN32)
     include_directories( "${QT_DIR}/include/QtSvg" )
 endif()
 
 include_directories( "${MEGAsyncDir}/mega/bindings/qt" )
 include_directories( "${MEGAsyncDir}/control" )
 include_directories( "${MEGAsyncDir}/gui" )
-
-
-if (WIN32)
-    set (UiDir "win")
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    set (UiDir "linux")
-else()
-    set (UiDir "macx")
-endif()
-
+include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
-
 
 set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/AlertItem.ui
@@ -132,7 +140,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui )
 
 
-if (WIN32)
+if (CMAKE_HOST_WIN32)
     set (FORMS ${FORMS} )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set (FORMS ${FORMS}
@@ -146,22 +154,6 @@ else()
         )
 endif()
 
-set(FORMS_HEADERS "")
-
-foreach(F ${FORMS})
-    get_filename_component(D ${F} PATH)
-    get_filename_component(N ${F} NAME_WE)
-    set (T ${D}/ui_${N}.h)
-    add_custom_command(
-        OUTPUT ${T}
-        COMMAND "${UIC_EXEC}" -o ${T} ${F}
-        DEPENDS ${F}
-        WORKING_DIRECTORY ${MEGAsyncDir}/gui/${UiDir}
-    )
-    SET(FORMS_HEADERS ${FORMS_HEADERS} ${T} )
-endforeach(F)
-    
-    
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
@@ -241,15 +233,15 @@ set (MOC_INPUT
 #    ${MEGAsyncDir}/gui/UpgradeWidget.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
     ${MEGAsyncDir}/gui/UsageWidget.h
+    ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
-    ${MEGAsyncDir}/platform/notificator.h
 )
 
-if (WIN32)
+if (CMAKE_HOST_WIN32)
     set (MOC_INPUT ${MOC_INPUT}
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.h
         )
@@ -262,8 +254,6 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         ${MEGAsyncDir}/platform/linux/LinuxPlatform.h
         ${MEGAsyncDir}/platform/linux/ExtServer.h
         ${MEGAsyncDir}/platform/linux/NotifyServer.h
-
-
         )
 else()
     set (MOC_INPUT ${MOC_INPUT}
@@ -275,60 +265,29 @@ else()
         ${MEGAsyncDir}/gui/PermissionsWidget.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.h
-            ${MEGAsyncDir}/platform/macx/MacXFunctions.h
-            ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
-            ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
-            ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
-            ${MEGAsyncDir}/platform/macx/MEGAService.h
-            ${MEGAsyncDir}/platform/macx/ClientSide.h
-            ${MEGAsyncDir}/platform/macx/ServerSide.h
-            ${MEGAsyncDir}/platform/macx/MacXExtServer.h
-            ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
-            ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
-            ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
-            ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
-            ${MEGAsyncDir}/platform/macx/Protocol.h
+        ${MEGAsyncDir}/platform/macx/MacXFunctions.h
+        ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
+        ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
+        ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
+        ${MEGAsyncDir}/platform/macx/MEGAService.h
+        ${MEGAsyncDir}/platform/macx/ClientSide.h
+        ${MEGAsyncDir}/platform/macx/ServerSide.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServer.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/Protocol.h
         )
 endif()
-
-set(MOC_OUTPUT "")
-foreach(F ${MOC_INPUT})
-    get_filename_component(D ${F} PATH)
-    get_filename_component(N ${F} NAME_WE)
-    set (T ${D}/moc_${N}.cpp)
-    add_custom_command(
-        OUTPUT ${T}
-        COMMAND "${MOC_EXEC}" -DWIN32 -DENABLE_SYNC -o ${T} ${F}
-        DEPENDS ${F}
-        WORKING_DIRECTORY ${MEGAsyncDir}/gui
-    )
-    SET(MOC_OUTPUT ${MOC_OUTPUT} ${T} )
-endforeach(F)
-
-set (RCC_INPUT ${MEGAsyncDir}/gui/Resources_win.qrc)
-set(RCC_OUTPUT "")
-foreach(F ${RCC_INPUT})
-    get_filename_component(D ${F} PATH)
-    get_filename_component(N ${F} NAME_WE)
-    set (T ${D}/qrc_${N}.cpp)
-    add_custom_command(
-        OUTPUT ${T}
-        COMMAND "${RCC_EXEC}" -o ${T} ${F}
-        DEPENDS ${F}
-        WORKING_DIRECTORY ${MEGAsyncDir}/gui
-    )
-    SET(RCC_OUTPUT ${RCC_OUTPUT} ${T} )
-endforeach(F)
 
 set (SRCS 
     ${MEGAsyncDir}/MegaApplication.cpp
 
-    ${FORMS_HEADERS}
+    ${FORMS}
     ${MOC_INPUT}
     ${RCC_INPUT}
-    ${MOC_OUTPUT}
-    ${RCC_OUTPUT}
-    
+
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
     ${MEGAsyncDir}/gui/BugReportDialog.cpp
@@ -424,7 +383,7 @@ set (SRCS
 )
 
 
-if (WIN32)
+if (CMAKE_HOST_WIN32)
     set (SRCS ${SRCS}
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
@@ -504,8 +463,6 @@ else()
         ${MEGAsyncDir}/google_breakpad/common/mac/MachIPC.mm
 
 
-
-
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
         ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
         ${MEGAsyncDir}/platform/macx/NotificationDelegate.h
@@ -519,6 +476,22 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
+
+        ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
+        ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
+        ${MEGAsyncDir}/platform/macx/macnotificationhandler.mm
+        ${MEGAsyncDir}/platform/macx/NotificationDelegate.mm
+        ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.mm
+        ${MEGAsyncDir}/platform/macx/MEGAService.mm
+        ${MEGAsyncDir}/platform/macx/ClientSide.mm
+        ${MEGAsyncDir}/platform/macx/ServerSide.mm
+        ${MEGAsyncDir}/platform/macx/MacXExtServer.mm
+        ${MEGAsyncDir}/platform/macx/MacXLocalServer.mm
+        ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.mm
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocket.mm
+        ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
+
+        ${MEGAsyncDir}/gui/Resources_macx.qrc
         )
 endif()
 
@@ -530,10 +503,20 @@ add_definitions( -DENABLE_LOG_PERFORMANCE )
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_STDOUT -DLOG_TO_LOGGER")
 
-add_executable(MEGAsync ${SRCS})
+if(CMAKE_HOST_APPLE)
+  set_source_files_properties(${NATIVE_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+  add_executable(MEGAsync MACOSX_BUNDLE ${NATIVE_ICON} ${SRCS})
+  set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
+elseif(CMAKE_HOST_WIN32)
+    add_executable(MEGAsync WIN32 ${SRCS})
+else()
+    add_executable(MEGAsync ${SRCS})
+endif()
+
+
 target_include_directories(MEGAsync PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
 
-if (WIN32)
+if (CMAKE_HOST_WIN32)
 target_link_libraries(MEGAsync Mega
             debug "${QT_DIR}/lib/Qt5Cored.lib" 
             debug "${QT_DIR}/lib/Qt5Guid.lib"
@@ -549,18 +532,10 @@ target_link_libraries(MEGAsync Mega
 
 set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
 else()
+
+    set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     target_link_libraries(MEGAsync Mega
-    debug "${QT_DIR}/lib/libQt5Core.so"
-    debug "${QT_DIR}/lib/libQt5Gui.so"
-    debug "${QT_DIR}/lib/libQt5Network.so"
-    debug "${QT_DIR}/lib/libQt5Widgets.so"
-    debug "${QT_DIR}/lib/libQt5Svg.so"
-    optimized "${QT_DIR}/lib/libQt5Core.so"
-    optimized "${QT_DIR}/lib/libQt5Gui.so"
-    optimized "${QT_DIR}/lib/libQt5Network.so"
-    optimized "${QT_DIR}/lib/libQt5Widgets.so"
-    optimized "${QT_DIR}/lib/libQt5Svg.so"
-    )
+    "-F${QT_DIR}/lib -framework QtCore -framework QtGui -framework QtMacExtras -framework QtNetwork -framework QtPrintSupport -framework QtWidgets")
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
@@ -575,6 +550,6 @@ IF (MSVC)
     )
 ENDIF(MSVC)
 
-if (WIN32)
+if (CMAKE_HOST_WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4127")  # 4127: conditional expression is constant  (occurs in QT headers)
 endif()
