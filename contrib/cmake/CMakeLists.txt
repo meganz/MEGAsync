@@ -1,10 +1,46 @@
 cmake_minimum_required(VERSION 3.0)
+
 set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will declare and append 32/64")
 set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
 
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
+#add a target to have all files within qtcreator projects view
+FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui")
+add_custom_target(ui_assets SOURCES ${ui_files})
 
 PROJECT(${MEGA_PROJECT_NAME})
+
+#Qt settings
+if (CMAKE_HOST_WIN32)
+    set (UiDir "win")
+    set (QTCOMPONENS_REQUIRED_PLATFORM WinExtras)
+    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::WinExtras)
+    set(CMAKE_AUTOMOC_MOC_OPTIONS -DWIN32)
+elseif (CMAKE_HOST_APPLE)
+    set (UiDir "macx")
+    set (QTCOMPONENS_REQUIRED_PLATFORM MacExtras)
+    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::MacExtras)
+    set(CMAKE_AUTOMOC_MOC_OPTIONS -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__)
+else()
+    set (UiDir "linux")
+    set (QTCOMPONENS_REQUIRED_PLATFORM Svg)
+    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg)
+endif()
+
+#For convenience, added some default qt paths if none is specified by CMAKE_PREFIX_PATH
+if (CMAKE_HOST_WIN32 AND (NOT DEFINED CMAKE_PREFIX_PATH) )
+    if (build_64_bit)
+        set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015_64;${CMAKE_PREFIX_PATH}")
+    else()
+        set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015;${CMAKE_PREFIX_PATH}")
+    ENDIF()
+ENDIF()
+
+find_package(Qt5 COMPONENTS Core Network Gui Widgets ${QTCOMPONENS_REQUIRED_PLATFORM} REQUIRED)
+
+# get qt version
+execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_VERSION OUTPUT_VARIABLE QT_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
+message(STATUS "Using QT ${QT_VERSION} from ${Qt5_DIR} ${QT_DIR}")
+
 
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
 
@@ -18,7 +54,6 @@ set (HAVE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1)
 
-
 set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
 
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
@@ -31,58 +66,21 @@ set(prebuilt_dir "${MEGAsyncDir}/mega/bindings/qt/3rdparty")
 #specify where 3rd party libraries are available
 set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
 
-
-message("CONFIG: ${CONFIG}")
-
 # this line points to the MEGA SDK repo that you want to build MEGAsync against
 include(${MEGAsyncDir}/mega/contrib/cmake/CMakeLists.txt)
 
-
-if (CMAKE_HOST_WIN32)
-    if (build_64_bit)
-        SET (QT_DIR "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015_64" CACHE STRING "")
-    else()
-        SET (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE STRING "")
-    ENDIF()
-    set (UIC_EXEC "${QT_DIR}/bin/uic.exe")
-    set (RCC_EXEC "${QT_DIR}/bin/rcc.exe")
-    set (MOC_EXEC "${QT_DIR}/bin/moc.exe")
-else()
-    if (CMAKE_HOST_APPLE)
-        SET (QT_DIR "/QT/qt5/qtbase" CACHE STRING "")
-        set(NATIVE_ICON "${MEGAsyncDir}/app.icns")
-    ENDIF()
-    set (UIC_EXEC "${QT_DIR}/bin/uic")
-    set (RCC_EXEC "${QT_DIR}/bin/rcc")
-    set (MOC_EXEC "${QT_DIR}/bin/moc")
-ENDIF()
-
-if (CMAKE_HOST_WIN32)
-    set (UiDir "win")
-elseif (CMAKE_HOST_APPLE)
-    set (UiDir "macx")
-else()
-    set (UiDir "linux")
-endif()
-
-find_package(Qt5 5.6.3 COMPONENTS Core Network MacExtras Gui Widgets REQUIRED)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}")
+
+#AUTOMOC
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOMOC_MOC_OPTIONS -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__)
-
-include_directories( "${QT_DIR}/include" )
-include_directories( "${QT_DIR}/include/QtCore" )
-include_directories( "${QT_DIR}/include/QtGui" )
-include_directories( "${QT_DIR}/include/QtNetwork" )
-include_directories( "${QT_DIR}/include/QtWidgets" )
-include_directories( "${QT_DIR}/include/QtWinExtras" )
-include_directories( "${QT_DIR}/include/QtMacExtras" )
-
-
-if (NOT CMAKE_HOST_WIN32)
-    include_directories( "${QT_DIR}/include/QtSvg" )
+if (QT_VERSION VERSION_GREATER 5.7.99)
+    message(STATUS "Enabling automoc predefines and including config.h")
+    set(AUTOMOC_COMPILER_PREDEFINES ON)
+    set (CMAKE_AUTOMOC_MOC_OPTIONS ${CMAKE_AUTOMOC_MOC_OPTIONS} --include "${MEGAsyncDir}/mega/include/config.h" )
+else()
+    message(STATUS "Disabling automoc predefines and including config.h. Qt version = ${QT_VERSION}")
 endif()
 
 include_directories( "${MEGAsyncDir}/mega/bindings/qt" )
@@ -134,7 +132,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
-#    ${MEGAsyncDir}/gui/${UiDir}/UpgradeWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
     ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui )
@@ -230,7 +227,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/TransfersWidget.h
     ${MEGAsyncDir}/gui/UpgradeDialog.h
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
-#    ${MEGAsyncDir}/gui/UpgradeWidget.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/platform/notificator.h
@@ -286,7 +282,7 @@ set (SRCS
 
     ${FORMS}
     ${MOC_INPUT}
-    ${RCC_INPUT}
+    ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
@@ -352,7 +348,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/PSAwidget.cpp
     ${MEGAsyncDir}/gui/ElidedLabel.cpp
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
-#    ${MEGAsyncDir}/gui/UpgradeWidget.cpp
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
 
@@ -491,22 +486,25 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.mm
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
 
-        ${MEGAsyncDir}/gui/Resources_macx.qrc
         )
 endif()
 
 
-
-add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -D_UNICODE -DNTDDI_VERSION=0x05010000 -D_WIN32_WINNT=0x0501 -DQT_WIDGETS_LIB )
+add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -DNTDDI_VERSION=0x05010000 -D_WIN32_WINNT=0x0501 -DQT_WIDGETS_LIB )
 add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO_CAST_FROM_ASCII -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB )
+ #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
+
 add_definitions( -DENABLE_LOG_PERFORMANCE )
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_STDOUT -DLOG_TO_LOGGER")
 
 if(CMAKE_HOST_APPLE)
-  set_source_files_properties(${NATIVE_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-  add_executable(MEGAsync MACOSX_BUNDLE ${NATIVE_ICON} ${SRCS})
-  set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
+
+    set(NATIVE_ICON "${MEGAsyncDir}/app.icns")
+    set_source_files_properties(${NATIVE_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    add_executable(MEGAsync MACOSX_BUNDLE ${NATIVE_ICON} ${SRCS})
+    set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAsync WIN32 ${SRCS})
 else()
@@ -517,28 +515,18 @@ endif()
 target_include_directories(MEGAsync PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
 
 if (CMAKE_HOST_WIN32)
-target_link_libraries(MEGAsync Mega
-            debug "${QT_DIR}/lib/Qt5Cored.lib" 
-            debug "${QT_DIR}/lib/Qt5Guid.lib"
-            debug "${QT_DIR}/lib/Qt5Networkd.lib" 
-            debug "${QT_DIR}/lib/Qt5Widgetsd.lib" 
-            debug "${QT_DIR}/lib/Qt5WinExtrasd.lib" 
-            optimized "${QT_DIR}/lib/Qt5Core.lib" 
-            optimized "${QT_DIR}/lib/Qt5Gui.lib"
-            optimized "${QT_DIR}/lib/Qt5Network.lib" 
-            optimized "${QT_DIR}/lib/Qt5Widgets.lib" 
-            optimized "${QT_DIR}/lib/Qt5WinExtras.lib" 
-            ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
-
-set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
+    set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
+    set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
 else()
 
+    if (CMAKE_HOST_APPLE)
     set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    target_link_libraries(MEGAsync Mega
-    "-F${QT_DIR}/lib -framework QtCore -framework QtGui -framework QtMacExtras -framework QtNetwork -framework QtPrintSupport -framework QtWidgets")
+    endif()
 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
+
+target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
