@@ -500,10 +500,10 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMP
 
 if(CMAKE_HOST_APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
+    set(MAC_RESOURCES "${MEGAsyncDir}/app.icns" "${MEGAsyncDir}/folder.icns" "${MEGAsyncDir}/folder_yosemite.icns" "${MEGAsyncDir}/appicon32.tiff")
 
-    set(NATIVE_ICON "${MEGAsyncDir}/app.icns")
-    set_source_files_properties(${NATIVE_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    add_executable(MEGAsync MACOSX_BUNDLE ${NATIVE_ICON} ${SRCS})
+    set_source_files_properties(${MAC_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${SRCS})
     set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAsync WIN32 ${SRCS})
