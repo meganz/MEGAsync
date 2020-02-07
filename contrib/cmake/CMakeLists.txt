@@ -541,3 +541,19 @@ ENDIF(MSVC)
 if (CMAKE_HOST_WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4127")  # 4127: conditional expression is constant  (occurs in QT headers)
 endif()
+
+# Place empty.lproj and PkgInfo files, needed to translate strings in native dialogs according system locale and identify the bundle as an application within Finder.
+if (CMAKE_HOST_APPLE)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND touch \"$<TARGET_FILE_DIR:MEGAsync>/../Resources/empty.lproj\"
+            COMMENT "Adding empty.lproj file to Resources..."
+            )
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND echo "APPL????" > \"$<TARGET_FILE_DIR:MEGAsync>/../PkgInfo\"
+            COMMENT "Adding PkgInfo file to app bundle..."
+            )
+endif()
