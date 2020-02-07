@@ -52,7 +52,7 @@ set (USE_SODIUM 1 CACHE STRING "")
 set (USE_FFMPEG 1 CACHE STRING "")
 set (HAVE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
-set (USE_QT 1)
+set (USE_QT 1 CACHE STRING "")
 
 set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
 
