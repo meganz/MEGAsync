@@ -584,4 +584,17 @@ if (CMAKE_HOST_APPLE)
             COMMAND echo "APPL????" > \"$<TARGET_FILE_DIR:MEGAsync>/../PkgInfo\"
             COMMENT "Adding PkgInfo file to app bundle..."
             )
+
+    execute_process(
+        COMMAND bash "-c" "grep \"const QString Preferences::VERSION_STRING\" ${MEGAsyncDir}/control/Preferences.cpp | awk -F '\"' '{print $2}'"
+        OUTPUT_VARIABLE MEGASYNC_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+    message("MEGAsync version = ${MEGASYNC_VERSION}")
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${MEGASYNC_VERSION}\" \"$<TARGET_FILE_DIR:MEGAsync>/../Info.plist\"
+            COMMENT "Setting version to Info.plist..."
+            )
 endif()
