@@ -4,7 +4,7 @@ set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will d
 set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
 
 #add a target to have all files within qtcreator projects view
-FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui")
+FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui" "${RepoDir}/src/MEGASync/gui/*.qrc")
 add_custom_target(ui_assets SOURCES ${ui_files})
 
 PROJECT(${MEGA_PROJECT_NAME})
@@ -35,7 +35,7 @@ if (CMAKE_HOST_WIN32 AND (NOT DEFINED CMAKE_PREFIX_PATH) )
     ENDIF()
 ENDIF()
 
-find_package(Qt5 COMPONENTS Core Network Gui Widgets ${QTCOMPONENS_REQUIRED_PLATFORM} REQUIRED)
+find_package(Qt5 COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM} REQUIRED)
 
 # get qt version
 execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_VERSION OUTPUT_VARIABLE QT_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -88,6 +88,34 @@ include_directories( "${MEGAsyncDir}/control" )
 include_directories( "${MEGAsyncDir}/gui" )
 include_directories( "${MEGAsyncDir}/platform" )
 include_directories( "${MEGAsyncDir}/gui/${UiDir}" )
+
+
+set (TS_FILES
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ar.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_de.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_en.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_es.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_fa.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_fr.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_id.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_it.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ja.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ko.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_nl.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_pl.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_pt.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_pt_BR.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ro.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ru.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_th.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_tl.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_uk.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_vi.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_zh_CN.ts
+    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_zh_TW.ts )
+
+set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION "${MEGAsyncDir}/gui/translations/")
+qt5_add_translation(QM_FILES ${TS_FILES})
 
 set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/AlertItem.ui
@@ -503,12 +531,12 @@ if(CMAKE_HOST_APPLE)
     set(MAC_RESOURCES "${MEGAsyncDir}/app.icns" "${MEGAsyncDir}/folder.icns" "${MEGAsyncDir}/folder_yosemite.icns" "${MEGAsyncDir}/appicon32.tiff")
 
     set_source_files_properties(${MAC_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${SRCS})
+    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${SRCS} ${QM_FILES})
     set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
 elseif(CMAKE_HOST_WIN32)
-    add_executable(MEGAsync WIN32 ${SRCS})
+    add_executable(MEGAsync WIN32 ${SRCS} ${QM_FILES})
 else()
-    add_executable(MEGAsync ${SRCS})
+    add_executable(MEGAsync ${SRCS} ${QM_FILES})
 endif()
 
 
