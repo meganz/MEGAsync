@@ -60,6 +60,8 @@ set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
 
+get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
+
 ## Use prebuild 3rdparties
 set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
 set(prebuilt_dir "${MEGAsyncDir}/mega/bindings/qt/3rdparty")
@@ -553,7 +555,7 @@ if (CMAKE_HOST_WIN32)
     set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
 else()
 
-    if (CMAKE_HOST_APPLE)
+if (CMAKE_HOST_APPLE)
     set_source_files_properties(app.icns folder.icns folder_yosemite.icns appicon32.tiff PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     endif()
 
@@ -568,7 +570,7 @@ IF (MSVC)
         TARGET MEGAsync
         POST_BUILD
         COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
-        COMMENT "Adding display aware manifest..." 
+        COMMENT "Adding display aware manifest..."
     )
 ENDIF(MSVC)
 
@@ -624,7 +626,7 @@ if(FULLREQUIREMENTS)
         )
 
     if (CMAKE_HOST_WIN32 OR CMAKE_HOST_APPLE OR build_64_bit)
-       # add_definitions( -DREQUIRE_HAVE_PDFIUM )
+        add_definitions( -DREQUIRE_HAVE_PDFIUM )
     endif()
 
 endif(FULLREQUIREMENTS)
