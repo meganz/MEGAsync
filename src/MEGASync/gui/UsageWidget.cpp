@@ -117,7 +117,7 @@ void UsageWidget::paintEvent(QPaintEvent *)
     QPainter painter(this);
     QFont font;
     font.setPixelSize(20);
-    font.setFamily(QString::fromUtf8("Helvetica"));
+    font.setFamily(QString::fromUtf8("Lato"));
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing);
     painter.setFont(font);
     painter.translate(68,68);

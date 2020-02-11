@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>189</width>
-    <height>380</height>
+    <width>162</width>
+    <height>242</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>189</width>
-    <height>380</height>
+    <width>162</width>
+    <height>242</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>189</width>
-    <height>380</height>
+    <width>162</width>
+    <height>242</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,61 +34,33 @@
   background-color: #ffffff;
 
 }
-#wPrice
-{
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 rgba(249,249,249,0.3), stop: 1 rgba(238,238,238,0.3));
- border-top: 1px solid;
- border-top-color: rgba(0, 0, 0, 0.1);
- border-bottom: 1px solid;
- border-bottom-color: rgba(0, 0, 0, 0.1);
-}
 
 QPushButton
 {
   border: none;
 }
 
-#lTip
-{
-  font-family: HelveticaNeue;
-  font-size: 13px;
-  color: #fe2229;	
-}
-
 #lProPlan
 {
-  font-family: HelveticaNeue;
-  font-size: 18px;
-  color: #666666;
+  font-family: Lato;
+  font-size: 16px;
+  color: #333333;
+  font-weight: bold;
 }
 
 #lPeriod
 {
-  font-family: HelveticaNeue;
-  font-size: 18px;
-  color: #ff333a;
+	color: #333333;
+	font-family: Lato;
+	font-size: 15px;
+	font-weight: bold;
 }
 
 #lPrice
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   color: #333333;
 }
-
-#lStorageInfo, #lBandWidthInfo
-{
-  font-family: HelveticaNeue;
-  font-size: 14px;
-  color: #333333;
-}
-#lStorage, #lBandWidth
-{
-  font-family: HelveticaNeue;
-  font-size: 12px;
-  color: #999999; 
-}
-
 </string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -111,14 +83,14 @@ QPushButton
     <widget class="QWidget" name="wContainer" native="true">
      <property name="minimumSize">
       <size>
-       <width>181</width>
-       <height>372</height>
+       <width>162</width>
+       <height>242</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>181</width>
-       <height>372</height>
+       <width>162</width>
+       <height>242</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -140,117 +112,6 @@ QPushButton
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item>
-       <widget class="QWidget" name="wCrest" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lTip">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>18</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <property name="topMargin">
-            <number>5</number>
-           </property>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>13</width>
-               <height>17</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="bcrest">
-             <property name="minimumSize">
-              <size>
-               <width>64</width>
-               <height>64</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>64</width>
-               <height>64</height>
-              </size>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/proicrest.png</normaloff>:/images/proicrest.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>64</width>
-               <height>64</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>13</width>
-               <height>17</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item>
        <widget class="QLabel" name="lProPlan">
         <property name="minimumSize">
@@ -304,7 +165,7 @@ QPushButton
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>22</number>
+          <number>8</number>
          </property>
          <item>
           <widget class="QLabel" name="lPrice">
@@ -364,13 +225,13 @@ QPushButton
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>136</height>
+          <height>66</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>136</height>
+          <height>16777215</height>
          </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -392,99 +253,60 @@ QPushButton
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <property name="spacing">
-            <number>17</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
-            <number>15</number>
+            <number>0</number>
            </property>
-           <item>
-            <widget class="QPushButton" name="bStorage">
-             <property name="minimumSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/storage.png</normaloff>:/images/storage.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
            <item>
             <widget class="QWidget" name="widget_3" native="true">
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>56</height>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>56</height>
+               <height>16777215</height>
               </size>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
               <property name="spacing">
                <number>0</number>
               </property>
               <property name="leftMargin">
-               <number>0</number>
+               <number>7</number>
               </property>
               <property name="topMargin">
-               <number>12</number>
+               <number>15</number>
               </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>7</number>
               </property>
               <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
                <widget class="QLabel" name="lStorageInfo">
-                <property name="text">
-                 <string notr="true">200 GB</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lStorage">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>36</height>
+                  <height>30</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>36</height>
+                  <height>16777215</height>
                  </size>
                 </property>
-                <property name="lineWidth">
-                 <number>2</number>
-                </property>
                 <property name="text">
-                 <string>Storage</string>
+                 <string notr="true">200 GB</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 <set>Qt::AlignCenter</set>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
@@ -499,99 +321,60 @@ QPushButton
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <property name="spacing">
-            <number>17</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
-            <number>15</number>
+            <number>0</number>
            </property>
-           <item>
-            <widget class="QPushButton" name="bBandwidth">
-             <property name="minimumSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/bwupgrade.png</normaloff>:/images/bwupgrade.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>32</width>
-               <height>32</height>
-              </size>
-             </property>
-            </widget>
-           </item>
            <item>
             <widget class="QWidget" name="widget_4" native="true">
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>56</height>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>56</height>
+               <height>16777215</height>
               </size>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
               <property name="spacing">
                <number>0</number>
               </property>
               <property name="leftMargin">
-               <number>0</number>
+               <number>7</number>
               </property>
               <property name="topMargin">
-               <number>12</number>
+               <number>0</number>
               </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>7</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>20</number>
               </property>
               <item>
                <widget class="QLabel" name="lBandWidthInfo">
-                <property name="text">
-                 <string notr="true">1 TB</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lBandWidth">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>36</height>
+                  <height>30</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>36</height>
+                  <height>16777215</height>
                  </size>
                 </property>
-                <property name="lineWidth">
-                 <number>2</number>
-                </property>
                 <property name="text">
-                 <string>Bandwidth</string>
+                 <string notr="true">1 TB</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 <set>Qt::AlignCenter</set>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
@@ -611,8 +394,6 @@ QPushButton
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

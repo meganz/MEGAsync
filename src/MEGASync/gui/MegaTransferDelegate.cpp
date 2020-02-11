@@ -194,6 +194,31 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     }
 }
 
+void MegaTransferDelegate::processCancel(int tag)
+{
+    if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+    {
+        model->removeTransferByTag(tag);
+    }
+    else
+    {
+        QMessageBox warning;
+        HighDpiResize hDpiResizer(&warning);
+        warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
+        warning.setText(tr("Are you sure you want to cancel this transfer?"));
+        warning.setIcon(QMessageBox::Warning);
+        warning.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
+                                                                           : QString::fromUtf8(":/images/mbox-warning@2x.png")));
+        warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        warning.setDefaultButton(QMessageBox::No);
+        int result = warning.exec();
+        if (result == QMessageBox::Yes)
+        {
+            model->megaApi->cancelTransferByTag(tag);
+        }
+    }
+}
+
 bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
     if (QEvent::MouseButtonPress ==  event->type())
@@ -207,42 +232,27 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
 
         if (item->cancelButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
         {
-            if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
-            {
-                model->removeTransferByTag(tag);
-            }
-            else
-            {
-                QMessageBox warning;
-                warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
-                warning.setText(tr("Are you sure you want to cancel this transfer?"));
-                warning.setIcon(QMessageBox::Warning);
-                warning.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                                                   : QString::fromUtf8(":/images/mbox-warning@2x.png")));
-                warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                warning.setDefaultButton(QMessageBox::No);
-                int result = warning.exec();
-                if (result == QMessageBox::Yes)
-                {
-                    model->megaApi->cancelTransferByTag(tag);
-                }
-            }
+            processCancel(tag);
             return true; // click consumed
         }
-        else if (item && item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
+        else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
         {
-            QList<MegaHandle> exportList;
-            QStringList linkList;
-
             int modelType = model->getModelType();
             if (modelType == QTransfersModel::TYPE_FINISHED
                     || modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
-                MegaTransfer *transfer = model->getTransferByTag(tag);
-                if (transfer)
+                const auto &ti = model->transferItems[tag];
+                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS && !ti->getIsLinkAvailable() && !ti->getTransferError())
+                {
+                    processShowInFolder(tag);
+                }
+                else if (MegaTransfer *transfer = model->getTransferByTag(tag) )
                 {
                     if (!transfer->getLastError().getErrorCode())
                     {
+                        QList<MegaHandle> exportList;
+                        QStringList linkList;
+
                         MegaNode *node = transfer->getPublicMegaNode();
                         if (!node || !node->isPublic())
                         {
@@ -278,46 +288,20 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
              }
              return true; // click consumed
         }
-        else if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+        else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
         {
-            MegaTransfer *transfer = NULL;
-            transfer = model->getTransferByTag(tag);
-            if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
-                         && transfer->getPath())
+            if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
-                QString localPath = QString::fromUtf8(transfer->getPath());
-                #ifdef WIN32
-                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-                {
-                    localPath = localPath.mid(4);
-                }
-                #endif
-                Platform::showInFolder(localPath);
+                processShowInFolder(tag);
+                return true; // click consumed
             }
-            delete transfer;
-            return true; // click consumed
+            // we are not consuming the click; fall through to do the usual thing (of selecting the clicked row)
         }
-        // we are not consuming the click; fall through to do the usual thing (of selecting the clicked row)
     }
     else if (QEvent::MouseButtonDblClick == event->type() && model->getModelType() == QTransfersModel::TYPE_FINISHED)
     {
-        MegaTransfer *transfer = NULL;
         int tag = index.internalId();
-        transfer = model->getTransferByTag(tag);
-
-        if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
-                     && transfer->getPath())
-        {
-            QString localPath = QString::fromUtf8(transfer->getPath());
-            #ifdef WIN32
-            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-            {
-                localPath = localPath.mid(4);
-            }
-            #endif
-            Platform::showInFolder(localPath);
-        }
-        delete transfer;
+        processShowInFolder(tag);
         return true; // double-click consumed
     }
 
@@ -332,13 +316,19 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
         TransferItem *item = model->transferItems[tag];
         if (item)
         {
-            if (item->getLinkButtonClicked(event->pos() - option.rect.topLeft()))
+            if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
             {
                 int modelType = model->getModelType();
+
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                 {
-                    MegaTransfer *transfer = model->getTransferByTag(tag);
-                    if (transfer)
+                    const auto &ti = model->transferItems[tag];
+
+                    if (!ti->getIsLinkAvailable() && !ti->getTransferError())
+                    {
+                        QToolTip::showText(event->globalPos(), tr("Show in folder"));
+                    }
+                    else if (MegaTransfer *transfer = model->getTransferByTag(tag) )
                     {
                         if (!transfer->getLastError().getErrorCode())
                         {
@@ -353,6 +343,15 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                     }
                 }
             }
+            else if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
+            {
+                int modelType = model->getModelType();
+                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+                {
+                    QToolTip::showText(event->globalPos(), tr("Show in folder"));
+                    return true;
+                }
+            }
 
             QString fileName = item->getFileName();
             if (fileName != item->getTransferName())
@@ -363,4 +362,23 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
         }
     }
     return QStyledItemDelegate::helpEvent(event, view, option, index);
+}
+
+void MegaTransferDelegate::processShowInFolder(int tag)
+{
+    MegaTransfer *transfer = NULL;
+    transfer = model->getTransferByTag(tag);
+    if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
+                 && transfer->getPath())
+    {
+        QString localPath = QString::fromUtf8(transfer->getPath());
+        #ifdef WIN32
+        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            localPath = localPath.mid(4);
+        }
+        #endif
+        Platform::showInFolder(localPath);
+    }
+    delete transfer;
 }
