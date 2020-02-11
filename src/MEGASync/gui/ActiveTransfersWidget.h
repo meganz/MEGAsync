@@ -61,6 +61,8 @@ private:
     QMovie *animationDown, *animationUp;
     QPixmap loadIconResourceDown, loadIconResourceUp;
 
+    int mWhichGraphsStyleSheet = 0;
+
     void setType(TransferData *td, int type, bool isSyncTransfer);
     void setTotalSize(TransferData *td, long long size);
     void setSpeed(TransferData *td, long long transferSpeed);

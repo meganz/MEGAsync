@@ -11,48 +11,52 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.0.2.0";
-const int Preferences::VERSION_CODE = 4002;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.0.0";
+const int Preferences::VERSION_CODE = 4300;
+const int Preferences::BUILD_ID = 8;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.2");
-QString Preferences::SDK_ID = QString::fromAscii("4dea1c");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.0");
+QString Preferences::SDK_ID = QString::fromAscii("1c1afc1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-            "- Fix bug with selection of transfer manager items\n"
-            "- Fix bug of context menu not shown over transfer manager items\n"
-            "- New design for the main dialog\n"
-            "- Improved setup assistant\n"
-            "- Support to show Public Service Announcements\n"
-            "- Modern notifications\n"
-            "- Updated third-party libraries\n"
-            "- Other minor bug fixes and improvements"));
+    "- Support for user notifications.\n"
+    "- Support to send bug reports from settings dialog.\n"
+    "- New restyling of main dialog.\n"
+    "- Performance improvements when dealing with huge amount of syncs and transfers.\n"
+    "- Improved support for business accounts.\n"
+    "- Support links to files and folders inside a public folder link.\n"
+    "- Improvements for synchronization with FAT32 filesystems.\n"
+    "- Other UI fixes and adjustments.\n"
+    "- Other performance improvements, UI fixes and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
-const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
-const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
+int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
+int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
-const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
-const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
-const long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
-const long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
-const long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
+int Preferences::MAX_FIRST_SYNC_DELAY_S = 120; // Max delay time to wait for local paths before trying to restore syncs
+int Preferences::MIN_FIRST_SYNC_DELAY_S = 40; // Min delay time to wait for local paths before trying to restore syncs
 
-const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
-const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
-const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
-const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
-const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
-const long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
+long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
+long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
+long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
+long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
-const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
-const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
-const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
-const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
-const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
-const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
-const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
+long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
+long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
+long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
+long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
+long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
+long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
+
+unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
+unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
+unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
+unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
+unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
+unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
+unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
 const qint16 Preferences::HTTP_PORT  = 6341;
 const qint16 Preferences::HTTPS_PORT = 6342;
@@ -202,6 +206,8 @@ const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.ME
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
 bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 
+QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
+
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
 #else
@@ -245,8 +251,10 @@ const QString Preferences::overStorageNotificationExecutionKey = QString::fromAs
 const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
+const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLight");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
+const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
 const QString Preferences::languageKey              = QString::fromAscii("language");
@@ -382,7 +390,7 @@ Preferences *Preferences::instance()
 {
     if (!preferences)
     {
-        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.nz"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(Preferences::BASE_URL);
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.co.nz"));
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://*"));
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("moz-extension://*"));
@@ -1021,6 +1029,24 @@ void Preferences::setOverStorageDismissExecution(long long timestamp)
     mutex.unlock();
 }
 
+
+int Preferences::getStorageState()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(storageStateQKey, MegaApi::STORAGE_STATE_UNKNOWN).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setStorageState(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(storageStateQKey, value);
+    mutex.unlock();
+}
+
 void Preferences::setTemporalBandwidthValid(bool value)
 {
     this->isTempBandwidthValid = value;
@@ -1077,6 +1103,23 @@ void Preferences::setAccountType(int value)
     mutex.lock();
     assert(logged());
     settings->setValue(accountTypeKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::proExpirityTime()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(proExpirityTimeKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setProExpirityTime(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(proExpirityTimeKey, value);
     mutex.unlock();
 }
 
@@ -2875,8 +2918,26 @@ void Preferences::clearAll()
 
 void Preferences::sync()
 {
+    mutex.lock();
     settings->sync();
+    mutex.unlock();
 }
+
+void Preferences::deferSyncs(bool b)
+{
+    mutex.lock();
+    settings->deferSyncs(b);
+    mutex.unlock();
+}
+
+bool Preferences::needsDeferredSync()
+{
+    mutex.lock();
+    bool b = settings->needsDeferredSync();
+    mutex.unlock();
+    return b;
+}
+
 
 void Preferences::login(QString account)
 {
@@ -3062,4 +3123,49 @@ void Preferences::writeFolders()
     settings->endGroup();
     settings->sync();
     mutex.unlock();
+}
+
+void Preferences::setBaseUrl(const QString &value)
+{
+    BASE_URL = value;
+}
+
+template<typename T>
+void Preferences::overridePreference(const QSettings &settings, QString &&name, T &value)
+{
+    T previous = value;
+    QVariant variant = settings.value(name, previous);
+    value = variant.value<T>();
+    if (previous != value)
+    {
+        qDebug() << "Preference " << name << " overridden: " << value;
+    }
+}
+
+void Preferences::overridePreferences(const QSettings &settings)
+{
+    overridePreference(settings, QString::fromUtf8("OQ_DIALOG_INTERVAL_MS"), Preferences::OQ_DIALOG_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("OQ_NOTIFICATION_INTERVAL_MS"), Preferences::OQ_NOTIFICATION_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
+    overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
+
+    overridePreference(settings, QString::fromUtf8("MIN_UPDATE_STATS_INTERVAL"), Preferences::MIN_UPDATE_STATS_INTERVAL);
+    overridePreference(settings, QString::fromUtf8("MIN_UPDATE_CLEANING_INTERVAL_MS"), Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_UPDATE_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_REBOOT_INTERVAL_MS"), Preferences::MIN_REBOOT_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS);
+
+    overridePreference(settings, QString::fromUtf8("MAX_FIRST_SYNC_DELAY_S"), Preferences::MAX_FIRST_SYNC_DELAY_S);
+    overridePreference(settings, QString::fromUtf8("MIN_FIRST_SYNC_DELAY_S"), Preferences::MIN_FIRST_SYNC_DELAY_S);
+
+    overridePreference(settings, QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS);
+    overridePreference(settings, QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS);
+    overridePreference(settings, QString::fromUtf8("UPDATE_TIMEOUT_SECS"), Preferences::UPDATE_TIMEOUT_SECS);
+    overridePreference(settings, QString::fromUtf8("MAX_LOGIN_TIME_MS"), Preferences::MAX_LOGIN_TIME_MS);
+    overridePreference(settings, QString::fromUtf8("PROXY_TEST_TIMEOUT_MS"), Preferences::PROXY_TEST_TIMEOUT_MS);
+    overridePreference(settings, QString::fromUtf8("MAX_IDLE_TIME_MS"), Preferences::MAX_IDLE_TIME_MS);
+    overridePreference(settings, QString::fromUtf8("MAX_COMPLETED_ITEMS"), Preferences::MAX_COMPLETED_ITEMS);
 }

@@ -51,9 +51,10 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
-#bLocalFolder, #bMegaFolder
+QPushButton
 {
-    border: none;
+    padding-right: 12px;
+    padding-left: 12px;
 }
 </string>
   </property>
@@ -133,14 +134,20 @@ height: 16px;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_2" native="true">
+       <widget class="QWidget" name="wDownload" native="true">
         <property name="enabled">
          <bool>true</bool>
         </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>22</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -154,7 +161,7 @@ height: 16px;
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>6</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -182,19 +189,15 @@ height: 16px;
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
+            <string>Choose</string>
            </property>
            <property name="iconSize">
             <size>
@@ -203,7 +206,7 @@ height: 16px;
             </size>
            </property>
            <property name="flat">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -225,7 +228,7 @@ height: 16px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>26</height>
+          <height>0</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -239,7 +242,7 @@ height: 16px;
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>6</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>6</number>
@@ -264,16 +267,12 @@ height: 16px;
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
+            <string>Choose</string>
            </property>
            <property name="iconSize">
             <size>
@@ -282,7 +281,7 @@ height: 16px;
             </size>
            </property>
            <property name="flat">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -368,9 +367,7 @@ height: 16px;
   <tabstop>bCancel</tabstop>
   <tabstop>linkList</tabstop>
  </tabstops>
- <resources>
-  <include location="../Resources_win.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>bCancel</sender>

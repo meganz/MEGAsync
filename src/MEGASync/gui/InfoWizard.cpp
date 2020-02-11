@@ -1,5 +1,6 @@
 #include "InfoWizard.h"
 #include "ui_InfoWizard.h"
+#include "Preferences.h"
 
 InfoWizard::InfoWizard(QWidget *parent) :
     QDialog(parent),
@@ -82,23 +83,11 @@ void InfoWizard::changeEvent(QEvent *event)
 
 void InfoWizard::tweakStrings()
 {
-    ui->lFlexibleDesc->setText(ui->lFlexibleDesc->text()
-                               .replace(QString::fromUtf8("[S]"),
-                                        QString::fromUtf8("<font color=\"#d90007\"> "))
-                               .replace(QString::fromUtf8("[/S]"),
-                                        QString::fromUtf8(" </font>")));
-
-    ui->lAdvantagesDesc->setText(ui->lAdvantagesDesc->text()
+    ui->lDesckKnowMore->setText(ui->lDesckKnowMore->text()
                                  .replace(QString::fromUtf8("[A]"),
-                                          QString::fromUtf8("<font color=\"#d90007\"> "))
+                                          QString::fromUtf8("&nbsp;&nbsp;<a href=\"") + Preferences::BASE_URL + QString::fromUtf8("/sync\"><span style=\"color:#df4843;\">"))
                                  .replace(QString::fromUtf8("[/A]"),
-                                          QString::fromUtf8("</font>")));
-
-    ui->lMegasyncDesc->setText(ui->lMegasyncDesc->text()
-                               .replace(QString::fromUtf8("[S]"),
-                                        QString::fromUtf8("<font color=\"#d90007\">"))
-                               .replace(QString::fromUtf8("[/S]"),
-                                        QString::fromUtf8("</font>")));
+                                          QString::fromUtf8("</span></a>")));
 }
 
 void InfoWizard::goToPage(int page)
@@ -110,7 +99,6 @@ void InfoWizard::goToPage(int page)
             ui->bRightArrow->setVisible(true);
             selectedBullet(ui->bFirstBullet);
             ui->sPages->setCurrentWidget(ui->page_1);
-            ui->sHeaders->setCurrentWidget(ui->pHeader1);
             break;
 
         case SECOND_PAGE:
@@ -118,7 +106,6 @@ void InfoWizard::goToPage(int page)
             ui->bRightArrow->setVisible(true);
             selectedBullet(ui->bSecondBullet);
             ui->sPages->setCurrentWidget(ui->page_2);
-            ui->sHeaders->setCurrentWidget(ui->pHeader2);
             break;
 
         case THIRD_PAGE:
@@ -126,7 +113,6 @@ void InfoWizard::goToPage(int page)
             ui->bRightArrow->setVisible(false);
             selectedBullet(ui->bThirdBullet);
             ui->sPages->setCurrentWidget(ui->page_3);
-            ui->sHeaders->setCurrentWidget(ui->pHeader3);
             break;
 
         default:
@@ -136,13 +122,13 @@ void InfoWizard::goToPage(int page)
 
 void InfoWizard::selectedBullet(QPushButton *b)
 {
-    ui->bFirstBullet->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
-    ui->bFirstBullet->setIconSize(QSize(16,16));
-    ui->bSecondBullet->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
-    ui->bSecondBullet->setIconSize(QSize(16,16));
-    ui->bThirdBullet->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
-    ui->bThirdBullet->setIconSize(QSize(16,16));
+    ui->bFirstBullet->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot.png")));
+    ui->bFirstBullet->setIconSize(QSize(6,6));
+    ui->bSecondBullet->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot.png")));
+    ui->bSecondBullet->setIconSize(QSize(6,6));
+    ui->bThirdBullet->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot.png")));
+    ui->bThirdBullet->setIconSize(QSize(6,6));
 
-    b->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
-    b->setIconSize(QSize(16,16));
+    b->setIcon(QIcon(QString::fromAscii("://images/icon_slice_dot_selected.png")));
+    b->setIconSize(QSize(6,6));
 }

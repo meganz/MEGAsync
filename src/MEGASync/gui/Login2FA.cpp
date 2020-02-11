@@ -1,5 +1,7 @@
 #include "Login2FA.h"
 #include "ui_Login2FA.h"
+#include "Preferences.h"
+
 #include <QRegExp>
 #include <QDesktopServices>
 #include <QUrl>
@@ -27,7 +29,7 @@ Login2FA::Login2FA(QWidget *parent) :
     ui->leCode->setFocus();
 
     ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
-                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style=\"color:#666666; text-decoration:none; font-size:11px; font-family: \"SF UI Text\"\">"))
+                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style='color:#666666; text-decoration:none; font-size:11px; font-family: \"Lato\"'>"))
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 }
 
@@ -79,7 +81,7 @@ void Login2FA::inputCodeChanged()
 
 void Login2FA::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/recovery");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 

@@ -3,6 +3,7 @@
 
 #include "control/Preferences.h"
 #include <QDialog>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class ChangeLogDialog;
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::ChangeLogDialog *ui;
+    HighDpiResize highDpiResize;
 
     void setChangeLogNotes(QString notes);
 

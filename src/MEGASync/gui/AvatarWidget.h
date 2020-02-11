@@ -19,12 +19,16 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 private:
+    QPixmap backgroundPixmapOriginal;
+    QPixmap backgroundPixmap;
     QChar letter;
     QString pathToFile;
     QString color;
 
+    int lastloadedwidth;
 };
 
 #endif // AVATARWIDGET_H

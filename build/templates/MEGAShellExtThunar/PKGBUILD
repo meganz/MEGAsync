@@ -21,15 +21,15 @@
 
 pkgname=thunar-megasync
 pkgver=EXT_VERSION
-pkgrel=1
+pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="Extension for Thunar to interact with Megasync"
 arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 depends=('thunar' 'megasync>=3.5')
-makedepends=( 'ca-certificates' 'qt4' 'thunar')
-provides=("nautilus-megasync=${pkgver}")
+makedepends=( 'ca-certificates' 'qt5-tools' 'thunar')
+provides=("thunar-megasync=${pkgver}")
 conflicts=()
 replaces=()
 backup=()
@@ -57,6 +57,6 @@ check() {
 
 package() {
 	cd "$pkgname-$pkgver"
-	for i in libMEGAShellExtThunar.so*; do install -D $i $pkgdir`pkg-config --variable=extensionsdir thunarx-2`/$i; done
+	for i in libMEGAShellExtThunar.so*; do install -D $i $pkgdir`pkg-config --variable=extensionsdir thunarx-3`/$i; done
 }
 

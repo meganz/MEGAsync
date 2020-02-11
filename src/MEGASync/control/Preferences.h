@@ -100,6 +100,9 @@ public:
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
 
+    int getStorageState();
+    void setStorageState(int value);
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -109,6 +112,8 @@ public:
     void setUsedBandwidth(long long value);
     int accountType();
     void setAccountType(int value);
+    long long proExpirityTime();
+    void setProExpirityTime(long long value);
     bool showNotifications();
     void setShowNotifications(bool value);
     bool startOnStartup();
@@ -295,6 +300,9 @@ public:
     void clearAll();
     void sync();
 
+    void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
+    bool needsDeferredSync();
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
@@ -318,7 +326,8 @@ public:
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3,
-        ACCOUNT_TYPE_LITE = 4
+        ACCOUNT_TYPE_LITE = 4,
+        ACCOUNT_TYPE_BUSINESS = 100
     };
 
     enum {
@@ -339,34 +348,45 @@ public:
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
-    static const long long MIN_UPDATE_STATS_INTERVAL;
-    static const long long OQ_DIALOG_INTERVAL_MS;
-    static const long long OQ_NOTIFICATION_INTERVAL_MS;
-    static const long long ALMOST_OS_INTERVAL_MS;
-    static const long long OS_INTERVAL_MS;
-    static const long long USER_INACTIVITY_MS;
-    static const long long MIN_UPDATE_CLEANING_INTERVAL_MS;
-    static const int STATE_REFRESH_INTERVAL_MS;
-    static const int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
-    static const long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
-    static const unsigned int UPDATE_INITIAL_DELAY_SECS;
-    static const unsigned int UPDATE_RETRY_INTERVAL_SECS;
-    static const unsigned int UPDATE_TIMEOUT_SECS;
-    static const unsigned int MAX_LOGIN_TIME_MS;
+
+    static long long MIN_UPDATE_STATS_INTERVAL;
+    static long long OQ_DIALOG_INTERVAL_MS;
+    static long long OQ_NOTIFICATION_INTERVAL_MS;
+    static long long ALMOST_OS_INTERVAL_MS;
+    static long long OS_INTERVAL_MS;
+    static long long USER_INACTIVITY_MS;
+    static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
+
+    static int STATE_REFRESH_INTERVAL_MS;
+    static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
+
+    static int MAX_FIRST_SYNC_DELAY_S;
+    static int MIN_FIRST_SYNC_DELAY_S;
+
+    static long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
+    static unsigned int UPDATE_INITIAL_DELAY_SECS;
+    static unsigned int UPDATE_RETRY_INTERVAL_SECS;
+    static unsigned int UPDATE_TIMEOUT_SECS;
+    static unsigned int MAX_LOGIN_TIME_MS;
+
+    static long long MIN_REBOOT_INTERVAL_MS;
+    static long long MIN_EXTERNAL_NODES_WARNING_MS;
+    static long long MIN_TRANSFER_NOTIFICATION_INTERVAL_MS;
+
+    static unsigned int PROXY_TEST_TIMEOUT_MS;
+    static unsigned int MAX_IDLE_TIME_MS;
+    static unsigned int MAX_COMPLETED_ITEMS;
+
     static const QString UPDATE_CHECK_URL;
     static const QString CRASH_REPORT_URL;
     static const QString UPDATE_FOLDER_NAME;
     static const QString UPDATE_BACKUP_FOLDER_NAME;
     static const QString PROXY_TEST_URL;
     static const QString PROXY_TEST_SUBSTRING;
-    static const unsigned int PROXY_TEST_TIMEOUT_MS;
     static const long long LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS;
     static const long long LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS;
-    static const unsigned int MAX_IDLE_TIME_MS;
     static const char UPDATE_PUBLIC_KEY[];
-    static const long long MIN_REBOOT_INTERVAL_MS;
-    static const long long MIN_EXTERNAL_NODES_WARNING_MS;
-    static const long long MIN_TRANSFER_NOTIFICATION_INTERVAL_MS;
+
     static const char CLIENT_KEY[];
     static const char USER_AGENT[];
     static const int VERSION_CODE;
@@ -381,8 +401,13 @@ public:
 
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
-    static const unsigned int MAX_COMPLETED_ITEMS;
     static const QString FINDER_EXT_BUNDLE_ID;
+    static QString BASE_URL;
+
+    static void setBaseUrl(const QString &value);
+    template<typename T>
+    static void overridePreference(const QSettings &settings, QString &&name, T &value);
+    static void overridePreferences(const QSettings &settings);
 
 protected:
     QMutex mutex;
@@ -447,7 +472,9 @@ protected:
     static const QString almostOverStorageNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
+    static const QString storageStateQKey;
     static const QString accountTypeKey;
+    static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
     static const QString startOnStartupKey;

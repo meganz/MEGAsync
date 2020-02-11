@@ -21,7 +21,6 @@ PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
     this->userAgent = userAgent;
 
     ui->setupUi(this);
-    ui->lTip->setText(QString::fromUtf8(""));
 
     //Create the overlay widget with transparent background
     //that will be shown over the Plans to manage clicked() events
@@ -34,9 +33,6 @@ PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
 
     overlay->setCursor(Qt::PointingHandCursor);
     overlay->resize(this->size());
-    ui->lBandWidth->setText(ui->lBandWidth->text().toUpper());
-    ui->lStorage->setText(ui->lStorage->text().toUpper());
-    ui->lPeriod->setText(QString::fromUtf8("/%1").arg(ui->lPeriod->text()));
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
 
     updatePlanInfo();
@@ -59,6 +55,9 @@ void PlanWidget::onOverlayClicked()
             break;
         case PRO_III:
             url = QString::fromUtf8("mega://#propay_3/uao=%1").arg(escapedUserAgent);
+            break;
+        case BUSINESS:
+            url = QString::fromUtf8("mega://#registerb/uao=%1").arg(escapedUserAgent);
             break;
         default:
             url = QString::fromUtf8("mega://#pro/uao=%1").arg(escapedUserAgent);
@@ -87,50 +86,77 @@ PlanWidget::~PlanWidget()
 
 void PlanWidget::updatePlanInfo()
 {
+    QString colorPrice;
+    ui->lPeriod->setText(QString::fromUtf8("/%1").arg(tr("month")));
+
     switch (details.level)
     {
         case PRO_LITE:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/litecrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
             ui->lProPlan->setText(QString::fromUtf8("PRO LITE"));
-            ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
+            colorPrice = QString::fromUtf8("color: #ffa500;");
             break;
         case PRO_I:
-            ui->lTip->setText(tr("popular!"));
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proicrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
             ui->lProPlan->setText(QString::fromUtf8("PRO I"));
-            ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
+            colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case PRO_II:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proiicrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
             ui->lProPlan->setText(QString::fromUtf8("PRO II"));
-            ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
+            colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case PRO_III:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proiiicrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
             ui->lProPlan->setText(QString::fromUtf8("PRO III"));
-            ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
+            colorPrice = QString::fromUtf8("color: #ff333a;");
+            break;
+        case BUSINESS:
+            ui->lProPlan->setText(QString::fromUtf8("BUSINESS"));
+            colorPrice = QString::fromUtf8("color: #2BA6DE;");
+            ui->lPeriod->setText(tr("per user %1").arg(ui->lPeriod->text()));
             break;
         default:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/litecrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
             ui->lProPlan->setText(QString::fromUtf8("PRO"));
-            ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
+            colorPrice = QString::fromUtf8("color: #2BA6DE;");
             break;
     }
-    ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"HelveticaNeue\"; font-size:44px;'>%1</span><span style='font-family:\"HelveticaNeue\"; font-size: 33px;'>.%2 %3</span>")
+
+    ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"Lato\"; font-size:48px; %1'>%2</span><span style='font-family:\"Lato\"; font-size: 26px; %1'>%3</span>")
+                        .arg(colorPrice)
                         .arg(details.amount / 100)
-                        .arg(details.amount % 100)
-                        .arg(details.currency));
-    ui->lStorageInfo->setText(Utilities::getSizeString(details.gbStorage * TOBYTES));
-    ui->lBandWidthInfo->setText(Utilities::getSizeString(details.gbTransfer * TOBYTES));
+                        .arg(details.amount % 100 ? QString::fromUtf8(".%3 %4").arg(details.amount % 100).arg(details.currency) : details.currency));
+
+    if (details.gbStorage == -1) //UNLIMITED
+    {
+        ui->lStorageInfo->setText(QString::fromUtf8("<span style=\'color:#333333; font-family: Lato; font-size: 15px; font-weight: 600; text-decoration:none;\'>")
+                                  + tr("UNLIMITED") + QString::fromUtf8("</span>"));
+        ui->lBandWidthInfo->setText(QString::fromUtf8("<span style='color:#666666; font-family: Lato; font-size: 13px; text-decoration:none;'>")
+                                    + tr("Storage and transfers") + QString::fromUtf8("</span>"));
+    }
+    else
+    {
+        ui->lStorageInfo->setText(formatRichString(Utilities::getSizeString(details.gbStorage * TOBYTES), STORAGE));
+        ui->lBandWidthInfo->setText(formatRichString(Utilities::getSizeString(details.gbTransfer * TOBYTES), BANDWIDTH));
+    }
 }
 
 void PlanWidget::setPlanInfo(PlanInfo data)
 {
     details = data;
     updatePlanInfo();
+}
+
+QString PlanWidget::formatRichString(QString str, int type)
+{
+    return QString::fromUtf8("<span style='color:#333333; font-family: Lato; font-size: 15px; font-weight: 600; text-decoration:none;'>%1 </span>"
+                             "<span style='color:#666666; font-family: Lato; font-size: 13px; text-decoration:none;'>%2</span>")
+            .arg(str)
+            .arg(type == STORAGE ? tr("Storage") : tr("Transfer"));
+}
+
+void PlanWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        updatePlanInfo();
+    }
+    QWidget::changeEvent(event);
 }

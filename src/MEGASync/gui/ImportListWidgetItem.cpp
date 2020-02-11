@@ -45,12 +45,10 @@ void ImportListWidgetItem::updateGui()
         name = fileName;
     }
 
-    QFont f = ui->lName->font();
-    QFontMetrics fm = QFontMetrics(f);
-    ui->lName->setText(fm.elidedText(name, Qt::ElideMiddle,ui->lName->width()));
+    ui->lName->ensurePolished();
+    ui->lName->setText(ui->lName->fontMetrics().elidedText(name, Qt::ElideMiddle,ui->lName->width()));
 
-    QIcon typeIcon;
-    typeIcon.addFile(Utilities::getExtensionPixmapSmall(isFolder ? fileName.append(QString::fromUtf8(".folder")): fileName), QSize(), QIcon::Normal, QIcon::Off);
+    QIcon typeIcon = Utilities::getExtensionPixmapSmall(isFolder ? fileName.append(QString::fromUtf8(".folder")): fileName);
 
 #ifdef __APPLE__
     ui->lImage->setIcon(typeIcon);

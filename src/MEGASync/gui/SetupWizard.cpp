@@ -7,6 +7,8 @@
 #include "gui/Login2FA.h"
 #include "platform/Platform.h"
 
+#include <QKeyEvent>
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -179,7 +181,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
                     QPointer<SetupWizard> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    QPointer<Login2FA> verification = new Login2FA();
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
@@ -216,7 +218,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
                     QPointer<SetupWizard> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    QPointer<Login2FA> verification = new Login2FA();
                     verification->invalidCode(true);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
@@ -652,11 +654,6 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        if (selectedMegaFolderHandle == rootNode->getHandle())
-        {
-            syncName = QString::fromUtf8("MEGA");
-        }
-
         delete rootNode;
 
         preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
@@ -773,6 +770,9 @@ void SetupWizard::on_bLocalFolder_clicked()
 void SetupWizard::on_bMegaFolder_clicked()
 {
     QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::SYNC_SELECT, this);
+#ifdef Q_OS_LINUX
+    nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
+#endif
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {
@@ -990,6 +990,11 @@ void SetupWizard::closeEvent(QCloseEvent *event)
             done(QDialog::Rejected);
         }
     }
+}
+
+void SetupWizard::reject()
+{
+
 }
 
 void SetupWizard::page_login()
@@ -1218,9 +1223,14 @@ void SetupWizard::lTermsLink_clicked()
     ui->cAgreeWithTerms->toggle();
 }
 
+void SetupWizard::on_lTermsLink_linkActivated(const QString &link)
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
+}
+
 void SetupWizard::on_bLearMore_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\\");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\\");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 

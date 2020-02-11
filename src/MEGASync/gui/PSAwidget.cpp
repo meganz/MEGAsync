@@ -16,7 +16,6 @@ PSAwidget::PSAwidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->idPSA = -1;
     this->reply = NULL;
     this->ready = false;
     this->shown = false;
@@ -44,24 +43,22 @@ PSAwidget::PSAwidget(QWidget *parent) :
 
 PSAwidget::~PSAwidget()
 {
-    delete ui;
-    delete minHeightAnimation;
-    delete maxHeightAnimation;
     delete animationGroup;
     delete networkAccess;
     delete timer;
+    delete ui;
 }
 
 void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImage, QString textButton, QString urlClick)
 {
     removeAnnounce();
 
-    this->idPSA = id;
-    this->title = title;
-    this->desc = desc;
-    this->urlImage = urlImage;
-    this->textButton = textButton;
-    this->urlClick = urlClick;
+    info.idPSA = id;
+    info.title = title;
+    info.desc = desc;
+    info.urlImage = urlImage;
+    info.textButton = textButton;
+    info.urlClick = urlClick;
 
     if (Utilities::getDevicePixelRatio() >= 2)
     {
@@ -84,19 +81,23 @@ bool PSAwidget::isPSAready()
     return ready;
 }
 
+bool PSAwidget::isPSAshown()
+{
+    return shown;
+}
+
 void PSAwidget::setPSAImage(QImage image)
 {
-    QFont f = ui->lTitle->font();
-    QFontMetrics fm = QFontMetrics(f);
+    ui->lTitle->ensurePolished();
     int width = ui->lTitle->width();
-    ui->lTitle->setText(fm.elidedText(title, Qt::ElideRight, width));
+    ui->lTitle->setText(ui->lTitle->fontMetrics().elidedText(info.title, Qt::ElideRight, width));
 
     ui->lDesc->setFrameStyle(QFrame::Box);
-    ui->lDesc->setText(desc);
+    ui->lDesc->setText(info.desc);
 
-    if (!textButton.isEmpty())
+    if (!info.textButton.isEmpty())
     {
-        ui->bMore->setText(textButton);
+        ui->bMore->setText(info.textButton);
         ui->bMore->show();
     }
 
@@ -133,6 +134,11 @@ void PSAwidget::showPSA()
     shown = true;
 }
 
+PSA_info PSAwidget::getPSAdata()
+{
+    return info;
+}
+
 void PSAwidget::hidePSA(bool animated)
 {
     if (!shown)
@@ -157,12 +163,7 @@ void PSAwidget::hidePSA(bool animated)
 
 void PSAwidget::removeAnnounce()
 {
-    this->idPSA = -1;
-    this->title = QString();
-    this->desc = QString();
-    this->urlImage = QString();
-    this->textButton = QString();
-    this->urlClick = QString();
+    info.clear();
 
     if (reply)
     {
@@ -187,14 +188,14 @@ void PSAwidget::removeAnnounce()
 
 void PSAwidget::on_bMore_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(urlClick));
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(info.urlClick));
     on_bDismiss_clicked();
 }
 
 void PSAwidget::on_bDismiss_clicked()
 {
     hidePSA(true);
-    emit PSAseen(idPSA);
+    emit PSAseen(info.idPSA);
     removeAnnounce();
 }
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>313</width>
-    <height>32</height>
+    <width>121</width>
+    <height>31</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>32</height>
+    <height>31</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -28,15 +28,18 @@
     <height>16777215</height>
    </size>
   </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
   <property name="styleSheet">
    <string notr="true">#lStatusDesc
 {
-color: #666666;	
-font-family: &quot;Source Sans Pro&quot;;	
-font-size: 13px;	
+color: #666666;
+font-family: &quot;Lato&quot;;
+font-size: 13px;
 }
 #bIconState
 {
@@ -73,6 +76,14 @@ border: none;
        <height>24</height>
       </size>
      </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#bIconState {
+margin-top: 4px;
+}</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -90,27 +101,40 @@ border: none;
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="lStatusDesc">
-     <property name="text">
+    <widget class="ElidedLabel" name="lStatusDesc">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="singleline" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="text" stdset="0">
       <string>Starting</string>
      </property>
     </widget>
    </item>
-   <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ElidedLabel</class>
+   <extends>QFrame</extends>
+   <header location="global">ElidedLabel.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

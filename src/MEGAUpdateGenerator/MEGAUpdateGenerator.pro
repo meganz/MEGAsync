@@ -10,6 +10,7 @@ CONFIG(release, debug|release) {
 TARGET = MEGAUpdateGenerator
 TEMPLATE = app
 CONFIG += console
+CONFIG -= qt
 
 SOURCES += ../MEGASync/mega/src/crypto/cryptopp.cpp \
             ../MEGASync/mega/src/base64.cpp \

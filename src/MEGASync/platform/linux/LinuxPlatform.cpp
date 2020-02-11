@@ -88,7 +88,8 @@ bool LinuxPlatform::isStartOnStartupActive()
 
 void LinuxPlatform::showInFolder(QString pathIn)
 {
-    QProcess::startDetached(QString::fromAscii("nautilus \"") + pathIn + QString::fromUtf8("\""));
+    QString filebrowser = getDefaultFileBrowserApp();
+    QProcess::startDetached(filebrowser + QString::fromAscii(" \"") + pathIn + QString::fromUtf8("\""));
 }
 
 void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
@@ -183,6 +184,11 @@ QByteArray LinuxPlatform::getLocalStorageKey()
     return QByteArray(128, 0);
 }
 
+QString LinuxPlatform::getDefaultFileBrowserApp()
+{
+    return getDefaultOpenAppByMimeType(QString::fromUtf8("inode/directory"));
+}
+
 QString LinuxPlatform::getDefaultOpenApp(QString extension)
 {
     char *mimeType = MegaApi::getMimeType(extension.toUtf8().constData());
@@ -190,9 +196,14 @@ QString LinuxPlatform::getDefaultOpenApp(QString extension)
     {
         return QString();
     }
-
-    QString getDefaultAppDesktopFileName = QString::fromUtf8("xdg-mime query default ") + QString::fromUtf8(mimeType);
+    QString qsMimeType(QString::fromUtf8(mimeType));
     delete mimeType;
+    return getDefaultOpenAppByMimeType(qsMimeType);
+}
+
+QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
+{
+    QString getDefaultAppDesktopFileName = QString::fromUtf8("xdg-mime query default ") + mimeType;
 
     QProcess process;
     process.start(getDefaultAppDesktopFileName,

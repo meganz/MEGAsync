@@ -33,13 +33,13 @@ font-size: 11px;
 
 #lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc 
 {
-  font-family: &quot;HelveticaNeue-Light&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #000000;
 }
 #lFileSize
 {
-  font-family: &quot;HelveticaNeue-Light&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #666666;
 }
@@ -65,7 +65,13 @@ font-size: 11px;
     border-radius: 4px;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 rgba(246,247,250,30), stop: 1 rgba(232,233,235,30));
-}</string>
+}
+QPushButton
+{
+	padding-right: 12px;
+	padding-left: 12px;
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <property name="spacing">
@@ -170,6 +176,12 @@ font-size: 11px;
          </property>
          <item>
           <widget class="QPushButton" name="bFromCloud">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
            <property name="text">
             <string>Cloud Drive</string>
            </property>
@@ -177,6 +189,12 @@ font-size: 11px;
          </item>
          <item>
           <widget class="QPushButton" name="bFromPublicLink">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
            <property name="text">
             <string>Public link</string>
            </property>
@@ -587,8 +605,14 @@ padding-left: -16px;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_macx.qrc">
+                  <iconset resource="../Resources_win.qrc">
                    <normaloff>:/images/streaming_link.png</normaloff>:/images/streaming_link.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
                  </property>
                 </widget>
                </item>
@@ -658,6 +682,12 @@ padding-left: -16px;</string>
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
               <property name="text">
                <string>Default application</string>
               </property>
@@ -671,7 +701,7 @@ padding-left: -16px;</string>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>0</height>
+                <height>22</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -742,7 +772,7 @@ padding-left: -16px;</string>
         <property name="minimumSize">
          <size>
           <width>92</width>
-          <height>0</height>
+          <height>22</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -773,7 +803,7 @@ padding-left: -16px;</string>
   <tabstop>bClose</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

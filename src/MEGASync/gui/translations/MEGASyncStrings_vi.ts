@@ -155,7 +155,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -170,7 +170,7 @@
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Please enter a valid file name or absolute path.</source>
@@ -191,6 +191,302 @@
         <source>Select the file you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
         <translation type="unfinished">Chọn tệp tin muốn khai trừ khỏi quá trình đồng bộ</translation>
+    </message>
+</context>
+<context>
+    <name>AlertFilterType</name>
+    <message>
+        <source>All notifications</source>
+        <translatorcomment>Label to indicate that the application is showing all types of notifications</translatorcomment>
+        <translation type="unfinished">All notifications</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label to indicate that the application is showing only contact notifications</translatorcomment>
+        <translation type="unfinished">Danh Bạ</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
+        <translation type="unfinished">Payment</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
+        <translation type="unfinished">Mục Chia Sẻ Nhận Được</translation>
+    </message>
+</context>
+<context>
+    <name>AlertItem</name>
+    <message>
+        <source>NEW</source>
+        <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
+        <translation type="unfinished">MỚI</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label title for Contacts category of a notification</translatorcomment>
+        <translation type="unfinished">Danh Bạ</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
+        <translation type="unfinished">Mục Chia Sẻ Nhận Được</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label title for Payment category of a notification</translatorcomment>
+        <translation type="unfinished">Payment</translation>
+    </message>
+    <message>
+        <source>Takedown notice</source>
+        <translatorcomment>Label title for Takedown category of a notification</translatorcomment>
+        <translation type="unfinished">Thông báo tranh chấp</translation>
+    </message>
+    <message>
+        <source>New Contact Request</source>
+        <translatorcomment>Notification label that indicates the user has a new contact request </translatorcomment>
+        <translation type="unfinished">Lời mời thêm danh bạ mới</translation>
+    </message>
+    <message>
+        <source>Contact Deleted</source>
+        <translatorcomment>Notification label that indicates the user has removed a contact</translatorcomment>
+        <translation type="unfinished">Tên liên lạc bị xóa</translation>
+    </message>
+    <message>
+        <source>Contact Established</source>
+        <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
+        <translation type="unfinished">Hai bạn có tên danh bạ của nhau</translation>
+    </message>
+    <message>
+        <source>Contact Blocked</source>
+        <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
+        <translation type="unfinished">Tên liên lạc bị chặn</translation>
+    </message>
+    <message>
+        <source>Contact Updated</source>
+        <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
+        <translation type="unfinished">Contact request updated</translation>
+    </message>
+    <message>
+        <source>Contact Accepted</source>
+        <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
+        <translation type="unfinished">Contact request accepted</translation>
+    </message>
+    <message>
+        <source>Contact Denied</source>
+        <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
+        <translation type="unfinished">Contact request declined</translation>
+    </message>
+    <message>
+        <source>Payment Info</source>
+        <translatorcomment>Notification label related to a payment.</translatorcomment>
+        <translation type="unfinished">Thông tin thanh toán</translation>
+    </message>
+    <message>
+        <source>Takedown Notice</source>
+        <translatorcomment>Notification label related to takedown notice</translatorcomment>
+        <translation type="unfinished">Thông báo tranh chấp</translation>
+    </message>
+    <message>
+        <source>Notification</source>
+        <translatorcomment>Title label for notification item.</translatorcomment>
+        <translation type="unfinished">Thông Báo</translation>
+    </message>
+    <message>
+        <source>[A] sent you a contact request</source>
+        <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
+        <translation type="unfinished">[A] sent you a contact request</translation>
+    </message>
+    <message>
+        <source>[A] cancelled their contact request</source>
+        <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
+        <translation type="unfinished">[A] cancelled their contact request</translation>
+    </message>
+    <message>
+        <source>You have a contact request</source>
+        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
+        <translation type="unfinished">You have a contact request</translation>
+    </message>
+    <message>
+        <source>[A] deleted you as a contact</source>
+        <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
+        <translation type="unfinished">[A] deleted you as a contact</translation>
+    </message>
+    <message>
+        <source>[A] has been deleted/deactivated</source>
+        <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
+        <translation type="unfinished">[A] has been deleted/deactivated</translation>
+    </message>
+    <message>
+        <source>[A] established you as a contact</source>
+        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
+        <translation type="unfinished">[A] established you as a contact</translation>
+    </message>
+    <message>
+        <source>[A] blocked you as contact</source>
+        <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
+        <translation type="unfinished">[A] blocked you as contact</translation>
+    </message>
+    <message>
+        <source>You ignored a contact request</source>
+        <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
+        <translation type="unfinished">Đã bỏ qua yêu cầu danh bạ</translation>
+    </message>
+    <message>
+        <source>You accepted a contact request</source>
+        <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
+        <translation type="unfinished">Bạn vừa chấp nhận yêu cầu liên lạc này</translation>
+    </message>
+    <message>
+        <source>You denied a contact request</source>
+        <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
+        <translation type="unfinished">Bạn vừa từ chối yêu cầu liên lạc này</translation>
+    </message>
+    <message>
+        <source>[A] accepted your contact request</source>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translation type="unfinished">[A] accepted your contact request</translation>
+    </message>
+    <message>
+        <source>[A] denied your contact request</source>
+        <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
+        <translation type="unfinished">[A] denied your contact request</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="obsolete">Thư mục chia sẻ mới từ [X]</translation>
+    </message>
+    <message>
+        <source>[A] has left the shared folder</source>
+        <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
+        <translation type="unfinished">[A] has left the shared folder</translation>
+    </message>
+    <message>
+        <source>Access to folders shared was removed</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
+        <translation type="obsolete">Quyền truy cập vào thư mục chia sẻ đã bị tước bỏ</translation>
+    </message>
+    <message>
+        <source>[A] added 1 item</source>
+        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
+        <translation type="unfinished">[A] added 1 item</translation>
+    </message>
+    <message>
+        <source>[A] added [B] items</source>
+        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
+        <translation type="unfinished">[A] added [B] items</translation>
+    </message>
+    <message>
+        <source>[A] removed 1 item</source>
+        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
+        <translation type="unfinished">[A] removed 1 item</translation>
+    </message>
+    <message>
+        <source>[A] removed [B] items</source>
+        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
+        <translation type="unfinished">[A] removed [B] items</translation>
+    </message>
+    <message>
+        <source>Your payment for the [A] plan was received</source>
+        <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
+        <translation type="unfinished">Your payment for the [A] plan was received</translation>
+    </message>
+    <message>
+        <source>Your payment for the [A] plan was unsuccessful</source>
+        <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
+        <translation type="unfinished">Your payment for the [A] plan was unsuccessful</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in 1 day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
+        <translation type="unfinished">Your PRO membership plan will expire in 1 day</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in [A] days</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation type="unfinished">Your PRO membership plan will expire in [A] days</translation>
+    </message>
+    <message>
+        <source>PRO membership plan expiring soon</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
+        <translation type="unfinished">Gói thành viện hạng PRO sắp hết hạn</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired 1 day ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
+        <translation type="unfinished">Your PRO membership plan expired 1 day ago</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired [A] days ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
+        <translation type="unfinished">Your PRO membership plan expired [A] days ago</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [A] ([B]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
+        <translation type="obsolete">Một %1 của bạn (tên %2) đã bị tháo bỏ do vi phạm bản quyền.</translation>
+    </message>
+    <message>
+        <source>file</source>
+        <translatorcomment>Label to indicate a file</translatorcomment>
+        <translation type="unfinished">tệp</translation>
+    </message>
+    <message>
+        <source>folder</source>
+        <translatorcomment>Label to indicate a folder</translatorcomment>
+        <translation type="unfinished">thư mục</translation>
+    </message>
+    <message>
+        <source>Your publicly shared has been taken down</source>
+        <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
+        <translation type="unfinished">Your public share has been taken down.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [A] ([B]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared [A] ([B]) has been reinstated</translation>
+    </message>
+    <message>
+        <source>Your taken down has been reinstated</source>
+        <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
+        <translation type="unfinished">Your public share has been reinstated.</translation>
+    </message>
+    <message>
+        <source>Reminder</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation type="unfinished">Reminder</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed by [A]</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
+        <translation type="unfinished">Access to a shared folder was removed by [A]</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="obsolete">(unknown shared folder)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Thư mục chia sẻ mới từ [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Shared Folder Activity</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">Quyền truy cập vào thư mục chia sẻ đã bị tước bỏ</translation>
     </message>
 </context>
 <context>
@@ -226,7 +522,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Cảnh báo</translation>
+        <translation type="obsolete">Chú Ý</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -247,7 +543,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Error</source>
@@ -264,6 +560,109 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation type="obsolete">Thư mục này có kích thước vô cùng lớn. Lỗi có thể xảy ra khi cố thử đồng bộ dung lượng lớn dữ liệu, gây ra chậm chạp và hư hỏng, chúng tôi khuyên bạn nên chọn một thư mục nhỏ hơn và từ từ thêm vào dữ liệu khi MEGAsync đang hoạt động.</translation>
+    </message>
+</context>
+<context>
+    <name>BugReportDialog</name>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
+        <translation type="unfinished">Report issue</translation>
+    </message>
+    <message>
+        <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
+        <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
+        <translation type="unfinished">Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
+        <translation type="unfinished">Title</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
+        <translation type="unfinished">Describe the issue</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
+        <translation type="unfinished">Attach diagnostic log files to assist with debugging</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the dialog.</translatorcomment>
+        <translation type="unfinished">Hủy</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Button label to confirm and submit bug report and log files to support team.</translatorcomment>
+        <translation type="unfinished">Nhập</translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
+        <translation type="unfinished">Tùy chọn</translation>
+    </message>
+    <message>
+        <source>Bug report is uploading, it may take a few minutes</source>
+        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
+        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
+    </message>
+    <message>
+        <source>Bug report success!</source>
+        <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
+        <translation type="unfinished">Your issue has been reported successfully.</translation>
+    </message>
+    <message>
+        <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
+        <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
+        <translation type="unfinished">Your issue has been submitted, a confirmation email will be sent to you.</translation>
+    </message>
+    <message>
+        <source>Error on submitting bug report</source>
+        <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">Error while uploading reported issue.</translation>
+    </message>
+    <message>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">Your issue cannot be uploaded due to an error. Please try again or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to exit uploading?</source>
+        <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
+        <translation type="unfinished">Are you sure you want to cancel uploading your reported issue?</translation>
+    </message>
+    <message>
+        <source>The bug report will not be submitted if you exit uploading.</source>
+        <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
+        <translation type="unfinished">The issue will not be reported if you cancel uploading it.</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translatorcomment>Button label to continue the upload of bug report.</translatorcomment>
+        <translation type="unfinished">Tiếp tục</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translatorcomment>Button label to confirm a message box.</translatorcomment>
+        <translation type="unfinished">Có</translation>
+    </message>
+    <message>
+        <source>There is an ongoing report being uploaded.</source>
+        <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
+        <translation type="unfinished">There is currently another reported issue being uploaded.</translation>
+    </message>
+    <message>
+        <source>Please wait until the current upload is completed.</source>
+        <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
+        <translation type="unfinished">Please wait until the current upload is completed.</translation>
     </message>
 </context>
 <context>
@@ -298,7 +697,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Đổi Mật Khẩu</translation>
+        <translation type="unfinished">Đổi mật khẩu</translation>
     </message>
     <message>
         <source>New password</source>
@@ -306,11 +705,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation type="unfinished">Xác nhận mật khẩu</translation>
+        <translation type="unfinished">Nhập lại mật khẩu mới</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -334,7 +733,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Cảnh báo</translation>
+        <translation type="obsolete">Chú Ý</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -359,7 +758,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Are you sure you want to continue?</source>
@@ -407,7 +806,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -420,17 +819,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>failed:</source>
         <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
-        <translation type="unfinished">failed:</translation>
+        <translation type="unfinished">thất bại:</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
-        <translation type="unfinished">%1 trong tổng %2</translation>
+        <translation type="obsolete">%1 trong tổng %2</translation>
     </message>
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation type="unfinished">starting…</translation>
+        <translation type="unfinished">đang bắt đầu…</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -445,22 +844,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation type="unfinished">retrying…</translation>
+        <translation type="unfinished">đang thử lại…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation type="unfinished">completing…</translation>
+        <translation type="unfinished">đang hoàn tất…</translation>
     </message>
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation type="unfinished">Added [A]</translation>
+        <translation type="unfinished">Thêm vào [A]</translation>
     </message>
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">Hết không gian để lưu trữ</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Quá hạn mức truyền tải</translation>
     </message>
 </context>
 <context>
@@ -493,7 +897,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -514,6 +918,29 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Bạn không có quyền hạn ghi dữ liệu vào thư mục này.</translation>
+    </message>
+</context>
+<context>
+    <name>FilterAlertWidget</name>
+    <message>
+        <source>All notifications</source>
+        <translatorcomment>Label to indicate that all types of notifications will be shown.</translatorcomment>
+        <translation type="unfinished">All notifications</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label to indicate that only contact notifications will be shown.</translatorcomment>
+        <translation type="unfinished">Danh Bạ</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate that only Incoming Shares notifications will be shown.</translatorcomment>
+        <translation type="unfinished">Mục Chia Sẻ Nhận Được</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
+        <translation type="unfinished">Payment</translation>
     </message>
 </context>
 <context>
@@ -588,7 +1015,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
@@ -661,12 +1088,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login to MEGA</source>
         <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation type="unfinished">Login to MEGA</translation>
+        <translation type="unfinished">Đăng nhập vào MEGA</translation>
     </message>
     <message>
         <source>Email address</source>
         <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation type="unfinished">Email address</translation>
+        <translation type="unfinished">Địa chỉ email</translation>
     </message>
     <message>
         <source>Password</source>
@@ -681,12 +1108,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation type="unfinished">Setting up your account…</translation>
+        <translation type="unfinished">Đang thiết lập tài khoản…</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -737,7 +1164,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Xin nhập địa chỉ email của bạn</translation>
+        <translation type="unfinished">Xin nhập địa chỉ email</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -796,7 +1223,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -815,7 +1242,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Giải mã sai</translation>
+        <translation>Lỗi giải mã</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -825,7 +1252,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation type="vanished">Cảnh báo</translation>
+        <translation type="vanished">Chú Ý</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -862,7 +1289,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Đồng bộ</translation>
+        <translation>Đồng bộ</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -872,7 +1299,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 trong tổng %2</translation>
+        <translation type="vanished">%1 trong tổng %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
@@ -927,7 +1354,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Thêm đồng bộ</translation>
+        <translation>Thêm đồng bộ</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -952,7 +1379,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Đang tải</translation>
+        <translation type="vanished">Đang tải về</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -975,7 +1402,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translation type="obsolete">Thiết Đặt</translation>
+        <translation type="unfinished">Thiết Đặt</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -1029,7 +1456,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Nâng cấp lên PRO</translation>
+        <translation type="unfinished">Nâng cấp tài khoản</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1039,12 +1466,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>USED STORAGE %1</source>
         <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
-        <translation type="unfinished">KHÔNG GIAN SỬ DỤNG %1</translation>
+        <translation type="obsolete">KHÔNG GIAN SỬ DỤNG %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
-        <translation type="unfinished">Số liệu tạm thời không khả dụng</translation>
+        <translation type="obsolete">Số liệu tạm thời không khả dụng</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -1074,22 +1501,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Ổ Mây</translation>
+        <translation type="obsolete">Ổ Mây</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Hộp Thư</translation>
+        <translation type="obsolete">Hộp Thư</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Mục Chia Sẻ Nhận Được</translation>
+        <translation type="obsolete">Mục Chia Sẻ Nhận Được</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Thùng rác</translation>
+        <translation type="obsolete">Thùng rác</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1107,7 +1534,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
-        <translation type="unfinished">Upload to MEGA now</translation>
+        <translation type="unfinished">Tài lên MEGA ngay bây giờ</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -1117,12 +1544,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Buy more space</source>
         <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
-        <translation type="unfinished">Buy more space</translation>
+        <translation type="unfinished">Mua thêm không gian</translation>
     </message>
     <message>
         <source>TRANSFER QUOTA %1</source>
         <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
-        <translation type="unfinished">TRANSFER QUOTA %1</translation>
+        <translation type="obsolete">BĂNG THÔNG TRUYỀN TẢI %1</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
@@ -1132,27 +1559,117 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation type="unfinished">Upgrade to PRO now before your account becomes full and your uploads to MEGA stop.</translation>
+        <translation type="unfinished">Nâng cấp lên hạng PRO ngay bây giờ trước khi tài khoản bị đầy và phiên truyền tải bị dừng lại.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full.</translation>
+        <translation type="unfinished">Tài khoản MEGA đã bị đầy.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="obsolete">All file uploads are currently disabled. Please upgrade to PRO.</translation>
+        <translation type="obsolete">Tất cả các mục tải lên đã bị ngưng lại. Xin nâng cấp lên hạng PRO.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="unfinished">All file uploads are currently disabled.</translation>
+        <translation type="unfinished">Tất cả phiên tải lên đang bị ngưng hoạt động.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
         <translation type="unfinished">Xin nâng cấp lên hạng PRO.</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Label to indicate an upload.</translatorcomment>
+        <translation type="unfinished">Tải lên</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Label to indicate a download.</translatorcomment>
+        <translation type="unfinished">Tải xuống</translation>
+    </message>
+    <message>
+        <source>Transfers</source>
+        <translatorcomment>Label to open transfer section at main dialog</translatorcomment>
+        <translation type="unfinished">Các Phiên Truyền Tải</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Label to open notifications section at main dialog</translatorcomment>
+        <translation type="unfinished">Thông Báo</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translatorcomment>Label to indicate the storage section of current account</translatorcomment>
+        <translation type="unfinished">Lưu trữ</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label to indicate the transfer quota section of current account</translatorcomment>
+        <translation type="unfinished">Truyền Tải</translation>
+    </message>
+    <message>
+        <source>All notifications</source>
+        <translatorcomment>Label to indicate that all notifications will be shown.</translatorcomment>
+        <translation type="obsolete">All notifications</translation>
+    </message>
+    <message>
+        <source>Open notification settings</source>
+        <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
+        <translation type="unfinished">Open notification settings</translation>
+    </message>
+    <message>
+        <source>No notifications</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
+        <translation type="unfinished">Không có thông báo mới</translation>
+    </message>
+    <message>
+        <source>Pause/Resume</source>
+        <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
+        <translation type="unfinished">Pause/Resume</translation>
+    </message>
+    <message>
+        <source>Open Downloads</source>
+        <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
+        <translation type="unfinished">Open downloads</translation>
+    </message>
+    <message>
+        <source>Open Uploads</source>
+        <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
+        <translation type="unfinished">Open uploads</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label to filter notifications  by contact type</translatorcomment>
+        <translation type="obsolete">Danh Bạ</translation>
+    </message>
+    <message>
+        <source>No notifications for contacts</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
+        <translation type="unfinished">No notifications for contacts</translation>
+    </message>
+    <message>
+        <source>No notifications for incoming shares</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
+        <translation type="unfinished">No notifications for incoming shares</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label to filter notifications  by payment type</translatorcomment>
+        <translation type="obsolete">Payment</translation>
+    </message>
+    <message>
+        <source>No notifications for payments</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
+        <translation type="unfinished">No notifications for payments</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">Đang dùng %1</translation>
     </message>
 </context>
 <context>
@@ -1205,35 +1722,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Dễ dàng và tự động hóa khâu đồng bộ giữa các máy tính và ổ mây MEGA của bạn</translation>
+        <translation type="obsolete">[S]MEGAsync:[/S] Dễ dàng tự động hóa việc đồng bộ giữa máy tính PC và Ổ Mây MEGA của bạn</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Linh Động:[/S] Đồng bộ bất kì thư mục nào từ PC của bạn đến thư mục trong ổ mây. Đồng bộ tất cả số lượng thư mục đồng loạt cùng một lúc.</translation>
+        <translation type="obsolete">[S]Linh Động:[/S] Đồng bộ bất kì thư mục nào từ PC của bạn đến thư mục trong ổ mây. Đồng bộ tất cả số lượng thư mục đồng loạt cùng một lúc.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">Vận tốc tải nhanh hơn</translation>
+        <translation type="obsolete">Vận tốc tải nhanh hơn</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">Trình MEGAsync sử dụng toàn lực từ hệ thống cơ sở hạ tầng năng lượng cao từ máy chủ MEGA, cùng với truyền tải đa kết nối.</translation>
+        <translation type="obsolete">Trình MEGAsync sử dụng toàn lực từ hệ thống cơ sở hạ tầng năng lượng cao từ máy chủ MEGA, cùng với truyền tải đa kết nối.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">Lean &amp; mean resource usage</translation>
+        <translation type="obsolete">Lean &amp; mean resource usage</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Sử dụng hệ thống mã hóa số bảo mật đầu-cuối mạnh mẽ từ MEGA ngay trên máy của bạn mà không hề ảnh hưởng đến tốc độ của trình duyệt web.</translation>
+        <translation type="obsolete">Sử dụng hệ thống mã hóa số bảo mật đầu-cuối mạnh mẽ từ MEGA ngay trên máy của bạn mà không hề ảnh hưởng đến tốc độ của trình duyệt web.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">Không giới hạn kích thước</translation>
+        <translation type="obsolete">Không giới hạn kích thước</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">Các trình duyệt web hiện nay có thể giới hạn độ lớn của dữ liệu khi truyền tải, mọi cản trở sẽ được loại bỏ khi bạn dùng trình MEGAsync.</translation>
+        <translation type="obsolete">Các trình duyệt web hiện nay có thể giới hạn độ lớn của dữ liệu khi truyền tải, mọi cản trở sẽ được loại bỏ khi bạn dùng trình MEGAsync.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1245,7 +1762,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">Hưởng quyền lợi từ 50 GB không gian lưu trữ trên mây với thuật toán bảo mật người dùng cuối và dễ dàng làm chủ, đăng ký ngay để nhận ngay một tài khoản MIỄN PHÍ hay chọn một [A]gói PRO[/A] bạn thích.</translation>
+        <translation type="obsolete">Hưởng quyền lợi từ 50 GB không gian lưu trữ trên mây với thuật toán bảo mật người dùng cuối và dễ dàng làm chủ, đăng ký ngay để nhận ngay một tài khoản MIỄN PHÍ hay chọn một [A]gói PRO[/A] bạn thích.</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
+        <translation type="unfinished">App MEGA cho Máy Tính</translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
+        <translation type="unfinished">Đăng nhập hoặc tạo một tài khoản để bắt đầu sử dụng app MEGA cho Máy Tính.</translation>
+    </message>
+    <message>
+        <source>You need to login MEGA account to run MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished">Cần phải đăng nhập vào tài khoản MEGA để sử dụng app MEGA cho Máy Tính.</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
+        <translation type="unfinished">Tạo tài khoản</translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
+        <translation type="unfinished">Tạo một tài khoản để tham gia cộng đồng kết nối và cộng tác cùng nhau với MEGA.</translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
+        <translation type="unfinished">Tìm hiểu thêm về app MEGA cho Máy Tính. [A]Đọc thêm[/A]</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1828,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 clearing scheduler</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1296,7 +1843,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1306,7 +1853,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Please enter a valid value</source>
@@ -1316,7 +1863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 clearing scheduler</translation>
+        <translation type="unfinished">Lên lịch tự dọc %1 rác</translation>
     </message>
 </context>
 <context>
@@ -1329,7 +1876,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation type="unfinished">Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.</translation>
+        <translation type="unfinished">Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Minh.</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -1339,12 +1886,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">Kế tiếp</translation>
+        <translation type="unfinished">Tiếp</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1354,7 +1901,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your Authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Mất thiết bị có app Lập Xác Minh?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1375,7 +1922,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGAsync hiện đang chạy. Click vào đây để theo dõi trạng thái.</translation>
+        <translation>MEGAsync hiện đang chạy. Clíck vào đây để theo dõi trạng thái.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1385,7 +1932,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Đồng bộ &quot;%1&quot; của bạn đã bị ngắt do thư mục bạn chọn đang nằm trong thùng rác</translation>
+        <translation type="obsolete">Đồng bộ cho &quot;%1&quot; đã bị tắtvì thư mục đã bị chuyển vào thùng rác ở nơi khác</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1493,7 +2040,7 @@ Exit anyway?</source>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>Bạn có các tệp tin mới và được cập nhật trong tài khoản</translation>
+        <translation type="vanished">Bạn có các tệp tin mới và được cập nhật trong tài khoản</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -1679,7 +2226,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Đồng bộ &quot;%1&quot; của bạn đã bị ngắt do thư mục bạn chọn đang nằm trong thùng rác</translation>
+        <translation type="unfinished">Đồng bộ cho &quot;%1&quot; đã bị tắtvì thư mục đã bị chuyển vào thùng rác ở nơi khác</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1803,7 +2350,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Tải về</translation>
+        <translation type="unfinished">Tải xuống</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -1836,7 +2383,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Trang web MEGA</translation>
+        <translation type="obsolete">Trang web MEGA</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -1861,37 +2408,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation type="unfinished">Your account is almost full.</translation>
+        <translation type="unfinished">Tài khoản sắp bị đầy.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+        <translation type="unfinished">Nâng cấp ngay lên tài khoản PRO.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation type="unfinished">Your account is full.</translation>
+        <translation type="unfinished">Tài khoản bị đầy.</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">1 tệp tin và 1 thư mục đã được tải lên thành công</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">%1 tệp tin và 1 thư mục đã được tải lên thành công</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully uploaded</translation>
+        <translation type="unfinished">1 tệp tin và %1 thư mục đã được tải lên thành công</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully uploaded</translation>
+        <translation type="unfinished">%1 tệp tin và %2 thư mục đã được tải lên thành công</translation>
     </message>
     <message>
         <source>Folder Upload</source>
@@ -1901,12 +2448,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully uploaded</translation>
+        <translation type="unfinished">1 thư mục đã được tải lên thành công</translation>
     </message>
     <message>
         <source>%1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully uploaded</translation>
+        <translation type="unfinished">%1 thư mục đã được tải lên thành công</translation>
     </message>
     <message>
         <source>File Upload</source>
@@ -1916,62 +2463,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully uploaded</translation>
+        <translation type="unfinished">1 tệp tin đã được tải lên thành công</translation>
     </message>
     <message>
         <source>%1 files were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully uploaded</translation>
+        <translation type="unfinished">%1 tệp tin đã được tải lên thành công</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">1 tệp tin và 1 thư mục đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">%1 tệp tin và 1 thư mục đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully downloaded</translation>
+        <translation type="unfinished">1 tệp tin và %1 thư mục đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully downloaded</translation>
+        <translation type="unfinished">%1 tệp tin và %2 thư mục đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>Folder Download</source>
         <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation type="unfinished">Folder Download</translation>
+        <translation type="unfinished">Tải Xuống Thư Mục</translation>
     </message>
     <message>
         <source>1 folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully downloaded</translation>
+        <translation type="unfinished">1 thư mục đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>%1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully downloaded</translation>
+        <translation type="unfinished">%1 thư mục đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>File Download</source>
         <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation type="unfinished">File Download</translation>
+        <translation type="unfinished">Tải Xuống Tệp Tin</translation>
     </message>
     <message>
         <source>1 file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully downloaded</translation>
+        <translation type="unfinished">1 tệp tin đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>%1 files were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully downloaded</translation>
+        <translation type="unfinished">%1 tệp tin đã được tải xuống thành công</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1986,17 +2533,132 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
+        <translation type="unfinished">Bạn đang muốn đồng bộ một thư mục đồng bộ chung với VMWare. Thư mục này không có hỗ trợ dạng tệp tin hệ thống gửi cập nhật và sẽ khiến MEGAsync liên tục phải quét dữ liệu để tìm kiếm thay đổi có trong tệp tin và thư mục. Xin chọn một thư mục khác nếu được để giảm tải mức sử dụng CPU.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Lên hạng PRO</translation>
+        <translation type="unfinished">Lấy hạng PRO</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">Mở thư mục chứa tệp này</translation>
+    </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
+        <translation type="unfinished">Ổ Mây</translation>
+    </message>
+    <message>
+        <source>Error transferring folder: </source>
+        <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
+        <translation type="unfinished">Error transferring folder:</translation>
+    </message>
+    <message>
+        <source>Your syncs have been temporarily disabled</source>
+        <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
+        <translation type="unfinished">Your syncs have been temporarily disabled</translation>
+    </message>
+    <message>
+        <source>Something went wrong</source>
+        <translatorcomment>Notification title shown to the user to inform that the current action has failed because the current business account is in grace period.</translatorcomment>
+        <translation type="obsolete">Có vấn đề xảy ra</translation>
+    </message>
+    <message>
+        <source>Please access MEGA in a desktop browser for more information.</source>
+        <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
+        <translation type="obsolete">Please access MEGA using a desktop browser for more information.</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
+        <translation type="unfinished">Pay Now</translation>
+    </message>
+    <message>
+        <source>Your Business account is expired</source>
+        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
+        <translation type="unfinished">Tài khoản doanh nghiệp của quý khách đã hết hạn</translation>
+    </message>
+    <message>
+        <source>Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
+        <translation type="unfinished">Your account is expired as read only until you proceed with the needed payments.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator.</source>
+        <translatorcomment>Notification message show to non-admin users for business accounts when there are issues that needs to be addressed by the business account admin.</translatorcomment>
+        <translation type="obsolete">Contact your business account administrator.</translation>
+    </message>
+    <message>
+        <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
+        <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
+        <translation type="obsolete">There was a problem with your last payment. Please access MEGA using a desktop browser for more information.</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button text to discard a notification or message box</translatorcomment>
+        <translation type="unfinished">Đã đọc xong</translation>
+    </message>
+    <message>
+        <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
+        <translation type="unfinished">It seems the payment for your business account has failed. Your account is expired as read only until you proceed with the needed payments.</translation>
+    </message>
+    <message>
+        <source>Your account is on [A]suspended status[/A].</source>
+        <translatorcomment>Message shown when the current business account is suspended. Keep placeholders, will be replaced at runtime.</translatorcomment>
+        <translation type="obsolete">Your account status is [A]expired[/A].</translation>
+    </message>
+    <message>
+        <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
+        <translation type="unfinished">[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</translation>
+    </message>
+    <message>
+        <source>Payment Failed</source>
+        <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">Thanh Toán Thất Bại</translation>
+    </message>
+    <message>
+        <source>Please resolve your payment issue to avoid suspension of your account.</source>
+        <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
+        <translation type="unfinished">Please resolve your payment issue to avoid suspension of your business account.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
+        <translation type="unfinished">Liên hệ với ban tổng quản lý tài khoản doanh nghiệp để giải quyết và khôi phục tài khoản của bạn.</translation>
+    </message>
+    <message>
+        <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
+        <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">This month’s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</translation>
+    </message>
+    <message>
+        <source>Account Suspended</source>
+        <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
+        <translation type="unfinished">Account Suspended</translation>
+    </message>
+    <message>
+        <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
+        <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
+        <translation type="unfinished">Your account is currently [A]suspended[/A]. You can only browse your data.</translation>
+    </message>
+    <message>
+        <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
+        <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
+        <translation type="unfinished">Your upload(s) cannot proceed because %1’s account is full.</translation>
+    </message>
+    <message>
+        <source>contact</source>
+        <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
+        <translation type="unfinished">tên liên lạc</translation>
     </message>
 </context>
 <context>
@@ -2009,7 +2671,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Lỗi nội bộ</translation>
+        <translation>Nỗi nội bộ</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2044,7 +2706,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>Hết thời hạn</translation>
+        <translation>Hết</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2136,12 +2798,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
-        <translation type="unfinished">SSL verification failed</translation>
+        <translation type="unfinished">Xác thực SSL bị thất bại</translation>
     </message>
     <message>
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
-        <translation type="unfinished">Not enough quota</translation>
+        <translation type="unfinished">Không đủ băng thông</translation>
+    </message>
+    <message>
+        <source>Terms of Service breached</source>
+        <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
+        <translation type="unfinished">Phát hiện vi phạm Điều Khoản Dịch Vụ</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">Không truy cập được do vi phạm Điều Khoản Sử Dụng và Dịch Vụ</translation>
+    </message>
+    <message>
+        <source>Upload produces recursivity</source>
+        <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
+        <translation type="unfinished">Transfer failed due to a recursive directory structure</translation>
     </message>
 </context>
 <context>
@@ -2150,6 +2827,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
         <translation type="unfinished">Ổ Mây</translation>
+    </message>
+</context>
+<context>
+    <name>MegaProgressCustomDialog</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
+        <translation type="unfinished">Vui lòng chớ...</translation>
     </message>
 </context>
 <context>
@@ -2178,6 +2868,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
         <translation type="unfinished">Thử lại</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Show in folder&quot; button related to a transfer</translatorcomment>
+        <translation type="unfinished">Mở thư mục chứa tệp này</translation>
     </message>
 </context>
 <context>
@@ -2210,7 +2905,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2256,7 +2951,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Cảnh báo</translation>
+        <translation type="obsolete">Chú Ý</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file
@@ -2266,12 +2961,17 @@ Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
         <translation type="obsolete">Thư mục đích vừa chọn đã được đồng bộ rồi và ở trong đã có một tệp tin mang tên giống như tệp tin bạn có (%1). Nếu vẫn muốn tiếp tục việc, tệp tin đang có sẵn sẽ bị ghi đè bằng với tệp tin bạn muốn tải lên. Bạn có chắc không?</translation>
     </message>
+    <message>
+        <source>Upload failed</source>
+        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
+        <translation type="unfinished">Tải lên thất bại</translation>
+    </message>
 </context>
 <context>
     <name>MessageBox</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Do not ask me again</source>
@@ -2281,7 +2981,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2324,7 +3024,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2350,7 +3050,7 @@ Please, select a subfolder.</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You have %1 in this folder.
@@ -2361,7 +3061,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Invalid folder for synchronization. Please, ensure that you don’t use characters like ‘\’, ‘/’ or ‘:’ in your folder names.</translation>
+        <translation type="unfinished">Thư mục cho việc đồng bộ hóa không hợp lệ. Xin chắc chắn là bạn không có sử dụng các ký tự như ‘\’, ‘/’ hoặc ‘:’ trong tên của thư mục.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2381,7 +3081,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Xin đặt tên cho thư mục một cách đàng hoàng</translation>
+        <translation type="obsolete">Xin đặt tên cho thư mục một cách đàng hoàng</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -2408,6 +3108,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Get MEGA link</source>
         <translation type="unfinished">Lấy đường liên kết MEGA</translation>
     </message>
+    <message>
+        <source>Invalid folder name.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
+        <translation type="unfinished">Invalid folder name.
+Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+    </message>
 </context>
 <context>
     <name>Notificator</name>
@@ -2422,7 +3129,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="obsolete">Know More</translation>
+        <translation type="obsolete">Tìm Hiểu Thêm</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2450,12 +3157,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -2546,12 +3253,32 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation type="unfinished">Băng thông</translation>
+        <translation type="obsolete">Băng thông</translation>
     </message>
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">ưa chuộng!</translation>
+        <translation type="obsolete">Ưa chuộng!</translation>
+    </message>
+    <message>
+        <source>UNLIMITED</source>
+        <translatorcomment>Label to indicate that business pro plan has unlimited storage and transfers quota.</translatorcomment>
+        <translation type="unfinished">KHÔNG GIỚI HẠN</translation>
+    </message>
+    <message>
+        <source>Storage and transfers</source>
+        <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
+        <translation type="unfinished">Storage and Transfer</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label to indicate transfer quota.</translatorcomment>
+        <translation type="unfinished">Truyền Tải</translation>
+    </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">per user %1</translation>
     </message>
 </context>
 <context>
@@ -2564,12 +3291,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="obsolete">- New design for the main dialog
-- Improved setup assistant
+        <translation type="obsolete">- Hộp thoại giao diện được thiết kế mới
+- Trình trợ giúp cài đặt được cải tiến hơn
 - Support to show Public Service Announcements
-- Modern notifications
-- Updated third-party libraries
-- Other minor bug fixes and improvements</translation>
+- Các thông báo được hiện đại hơn
+- Nâng cấp thêm thư viện từ bên thứ ba
+- Sửa lại các lỗi nhỏ và hoàn thiện thêm</translation>
     </message>
     <message>
         <source>- Fix bug with selection of transfer manager items
@@ -2581,14 +3308,89 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- Fix bug with selection of transfer manager items
-- Fix bug of context menu not shown over transfer manager items
-- New design for the main dialog
-- Improved setup assistant
+        <translation type="obsolete">- Sửa lỗi phát sinh khi lựa chọn trong bộ quản lý truyền tải
+- Sưa lỗi phát sinh khi menu không hiện ra mục truyền tải
+- Hộp thoại giao diện được thiết kế mới
+- Trình trợ giúp cài đặt được cải tiến hơn
 - Support to show Public Service Announcements
-- Modern notifications
-- Updated third-party libraries
+- Các thông báo được hiện đại hơn
+- Nâng cấp thêm thư viện từ bên thứ ba
+- Sửa lại các lỗi nhỏ và hoàn thiện thêm</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="obsolete">- Cải thiện giao diện và cảm giác sử dụng trên các màn hình có độ phân giải cao sử dụng Windows
+- Cải thiện hiệu suất GUI trong quá trình thực hiện thêm nhiều các phiên truyền tải
+- Thay đổi kiểu cách yêu cầu thông tin khi thiết lập việc sử dụng lần đầu, thêm icons mới và giao diện tốt hơn
+- Hỗ trợ tài khoản doanh nghiệp
+- Sửa lại các lỗi nhỏ và hoàn thiện thêm</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="obsolete">- Cải thiện giao diện và cảm giác sử dụng trên các màn hình có độ phân giải cao sử dụng Linux
+- Hiển thị ảnh nhỏ nội dung xem trước cho các tài liệu PDF
+- Cải thiện hiệu suất GUI trong quá trình thực hiện thêm nhiều các phiên truyền tải
+- Thay đổi kiểu cách yêu cầu thông tin khi thiết lập việc sử dụng lần đầu, thêm icons mới và giao diện tốt hơn
+- Hỗ trợ tài khoản doanh nghiệp
+- Sửa lại các lỗi nhỏ và hoàn thiện thêmts</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="obsolete">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Fix sync issues on macOS 10.15
+- Fix transfer resumption issues for webclient and public links downloads
+- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
+        <translation type="obsolete">- Fix sync issues on macOS 10.15
+- Fix transfer resumption issues for webclient and public links downloads
+- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Support for user notifications.
+- Support to send bug reports from the settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -2630,7 +3432,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
 </context>
 <context>
@@ -2755,7 +3557,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2967,7 +3769,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
@@ -3030,7 +3832,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Vui lòng chớ...</translation>
+        <translation type="vanished">Vui lòng chớ...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3261,7 +4063,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Bạn có muốn dọn sao lưu nội bộ ngay bay giờ không?</translation>
+        <translation type="unfinished">Do you want to delete your local backups now?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -3298,7 +4100,7 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">Băng thông truyền tải</translation>
+        <translation type="unfinished">Transfer quota</translation>
     </message>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
@@ -3318,12 +4120,12 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 clearing scheduler</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
         <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
-        <translation type="unfinished">Tắt chức năng lập lịch sử phiên bản</translation>
+        <translation type="unfinished">Tắt tính năng ghi nhớ phiên bản tệp tin</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -3338,7 +4140,7 @@ when the application starts again</source>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
-        <translation type="unfinished">Tắt tính năng lập lịch sử phiên bản sẽ chấm dứt việc chiếm dụng không gian bởi việc ghi nhớ nội dung cũ. Tiếp tục tiến hành?</translation>
+        <translation type="unfinished">Tắt tính năng ghi nhớ lịch sử phiên bản sẽ chấm dứt việc chiếm dụng không gian bởi việc ghi nhớ nội dung cũ. Tiếp tục tiến hành?</translation>
     </message>
     <message>
         <source>Remove files older than %1 days</source>
@@ -3358,21 +4160,41 @@ when the application starts again</source>
     <message>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished">Phiên bản ghi nhớ: %1</translation>
+        <translation type="unfinished">Tổng phiên bản ghi nhớ: %1</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Đổi Mật Khẩu</translation>
+        <translation type="unfinished">Đổi mật khẩu</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</translation>
+        <translation type="unfinished">Tài khoản MEGA đã bị đầy. Tất cả phiên tải lên bị ngưng lại và làm gián đoạn các thư mục đồng bộ.  [A]Mua thêm không gian[/A]</translation>
     </message>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 clearing scheduler</translation>
+        <translation type="unfinished">Lên lịch tự dọc %1 rác</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">Đang dùng %1</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MAPHUCHOI-MEGA</translation>
+    </message>
+    <message>
+        <source>Please let us know if you find a bug</source>
+        <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
+        <translation type="unfinished">Please let us know if you find an issue.</translation>
+    </message>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Button label to show the bug report form.</translatorcomment>
+        <translation type="unfinished">Report issue</translation>
     </message>
 </context>
 <context>
@@ -3506,12 +4328,12 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Kế tiếp</translation>
+        <translation>Tiếp</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3551,7 +4373,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Xin nhập địa chỉ email của bạn</translation>
+        <translation>Xin nhập địa chỉ email</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -3591,7 +4413,7 @@ when the application starts again</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You have %1 in your Cloud Drive.
@@ -3755,17 +4577,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>First name:</source>
         <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation type="unfinished">First name:</translation>
+        <translation type="unfinished">Tên:</translation>
     </message>
     <message>
         <source>Last name:</source>
         <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation type="unfinished">Last name:</translation>
+        <translation type="unfinished">Họ:</translation>
     </message>
     <message>
         <source>Check your inbox</source>
         <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation type="unfinished">Check your inbox</translation>
+        <translation type="unfinished">Xin kiểm tra hộp thư email</translation>
     </message>
     <message>
         <source>Sync specific folders in your cloud drive</source>
@@ -3780,22 +4602,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync!</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation type="unfinished">Enjoy MEGAsync!</translation>
+        <translation type="unfinished">Xin tận hưởng sử dụng MEGAsync!</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation type="unfinished">Please, enter your last name</translation>
+        <translation type="unfinished">Xin điền họ</translation>
     </message>
     <message>
         <source>Setup selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup selective sync</translation>
+        <translation type="unfinished">Cài đặt đồng bộ thư mục tự chọn</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Specific folders in your Cloud Drive will be synchronised with matching local folders.</translation>
+        <translation type="unfinished">Các thư mục riêng rẽ được chọn ra trong Ổ Mây sẽ được đồng bộ vào từng thư mục tương ứng trong máy.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3805,7 +4627,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup full sync</translation>
+        <translation type="unfinished">Cài đặt đồng bộ toàn bộ</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -3815,12 +4637,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Your entire Cloud Drive will be synchronized with a local folder.</translation>
+        <translation type="unfinished">Toàn bộ Ổ mây của bạn sẽ được đồng bộ hóa vào một thư mục nội bộ trong máy tính.</translation>
     </message>
     <message>
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation type="unfinished">We are all done!</translation>
+        <translation type="unfinished">Mọi thứ đã hoàn tất!</translation>
     </message>
     <message>
         <source>Login</source>
@@ -3916,7 +4738,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy bỏ</translation>
+        <translation type="unfinished">Hủy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -3926,7 +4748,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Size limits cannot be zero</source>
@@ -3974,12 +4796,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning...</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Đang quét...</translation>
+        <translation type="obsolete">Đang quét...</translation>
     </message>
     <message>
         <source>Account full</source>
         <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
-        <translation type="unfinished">Account full</translation>
+        <translation type="unfinished">Tài khoản đầy</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -3989,12 +4811,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
-        <translation type="unfinished">Tiếp Tục Các Truyền Tải</translation>
+        <translation type="obsolete">Tiếp Tục Các Truyền Tải</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
-        <translation type="unfinished">Dừng Tất Cả Truyền Tải</translation>
+        <translation type="obsolete">Dừng Tất Cả Truyền Tải</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">Đang kiểm tra</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
+        <translation type="unfinished">Đang đồng bộ</translation>
     </message>
 </context>
 <context>
@@ -4087,7 +4919,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Giải mã sai</translation>
+        <translation type="unfinished">Lỗi giải mã</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4263,7 +5095,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Tải về</translation>
+        <translation type="unfinished">Tải xuống</translation>
     </message>
 </context>
 <context>
@@ -4296,7 +5128,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">Hết không gian để lưu trữ</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Quá hạn mức truyền tải</translation>
     </message>
 </context>
 <context>
@@ -4329,10 +5166,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <translatorcomment>Label to indicate that current account has reached transfer limit and need to wait %1 time or upgrade the account to continue.</translatorcomment>
         <translation type="unfinished">Là người dùng miễn phí bạn sẽ phải chờ %1 để tiếp tục. Bạn có thể nâng cấp lên hạng PRO để không bị giới hạn.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
+        <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
         <translation type="unfinished">Địa chỉ IP đang sử dụng đã tiêu hao %1 băng thông truyền tải trong vòng 6 giờ qua, đồng nghĩa là bạn đã vượt quá giới hạn cho phép đối với hạng tài khoản của bạn. [A]Nâng cấp lên hạng PRO[/A], để lấy thêm băng thông riêng và thêm không gian để lưu trữ.</translation>
     </message>
 </context>
@@ -4346,22 +5185,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
         <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
-        <translation type="obsolete">Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</translation>
+        <translation type="obsolete">Tài khoản đã bị đầy ([A] / [B]). Tất cả các phiên tải lên đã bị ngưng lại.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</translation>
+        <translation type="unfinished">Xin nâng cấp lên hạng PRO để tận hưởng thêm không gian lưu trữ (các phiên tải lên sẽ được tự tiếp tục).</translation>
     </message>
     <message>
         <source>Earn more storage quota with [A]Achievements[/A].</source>
         <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
-        <translation type="unfinished">Earn more storage quota with [A]Achievements[/A].</translation>
+        <translation type="unfinished">Nhận thêm không gian khi thực hiện [A]Phần Thưởng Thành Tích[/A].</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full.</translation>
+        <translation type="unfinished">Tài khoản MEGA đã bị đầy.</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -4379,17 +5218,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">tháng</translation>
+        <translation type="obsolete">tháng</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Lưu trữ</translation>
+        <translation type="obsolete">Lưu trữ</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Truyền Tải</translation>
+        <translation type="obsolete">Truyền Tải</translation>
     </message>
 </context>
 <context>
@@ -4432,7 +5271,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy bỏ</translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4444,19 +5283,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Hộp Thư</translation>
+        <translation type="obsolete">Hộp Thư</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Mục Chia Sẻ Nhận Được</translation>
+        <translation type="obsolete">Mục Chia Sẻ Nhận Được</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Ổ Mây</translation>
+        <translation type="obsolete">Ổ Mây</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Thùng rác</translation>
+        <translation type="obsolete">Thùng rác</translation>
     </message>
 </context>
 <context>

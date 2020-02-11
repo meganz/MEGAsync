@@ -29,5 +29,5 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/MegaDownloader.h \
     $$PWD/MegaSyncLogger.h \
     $$PWD/ConnectivityChecker.h \
-    $$PWD/qrcodegen.h
-
+    $$PWD/qrcodegen.h \
+    $$PWD/gzjoin.h

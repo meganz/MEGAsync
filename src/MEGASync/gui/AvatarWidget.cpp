@@ -1,11 +1,14 @@
 #include "AvatarWidget.h"
 #include "control/Utilities.h"
 #include <QPainter>
+#include <QMouseEvent>
 #include <math.h>
+#include "MegaApplication.h"
 
 AvatarWidget::AvatarWidget(QWidget *parent) :
     QWidget(parent)
 {
+    lastloadedwidth = 0;
     clearData();
 }
 
@@ -52,19 +55,42 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
                            | QPainter::HighQualityAntialiasing);
-    QPixmap buffer;
-#if QT_VERSION >= 0x050000
-    buffer.setDevicePixelRatio(Utilities::getDevicePixelRatio());
-#endif
-    buffer.load(QString::fromUtf8(":/images/avatar_frame.png"));
 
-    painter.drawPixmap(QRectF(0.0, 0.0, 36.0, 36.0), buffer,  QRectF(0.0, 0.0, 36.0, 36.0));
+    qreal factor = width() / 36.0;
+    int backgroundUnscaledWidth = qFloor(36.0 * factor/2) * 2;
+    int backgroundUnscaledHeight = qFloor(36.0 * factor/2) * 2;
+
+    if (!lastloadedwidth || lastloadedwidth != width())
+    {
+        if (!lastloadedwidth)
+        {
+            backgroundPixmapOriginal = QIcon(QString::fromUtf8(":/images/avatar_frame.png")).pixmap(36.0, 36.0);
+        }
+
+    #if QT_VERSION >= 0x050000
+        if (width() != 36.0 )
+        {
+            backgroundPixmap = backgroundPixmapOriginal.scaled(backgroundUnscaledWidth*qApp->devicePixelRatio(), backgroundUnscaledHeight*qApp->devicePixelRatio());
+            backgroundPixmap.setDevicePixelRatio(QCoreApplication::testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0);
+        }
+        else
+    #endif
+        {
+            backgroundPixmap = backgroundPixmapOriginal;
+        }
+
+        lastloadedwidth = width();
+    }
+
+    int innercirclediam = qFloor(24.0 * factor / 2) * 2;
+
     painter.translate(width() / 2, height() / 2);
+    painter.drawPixmap(- qRound(backgroundUnscaledWidth / 2.0 ), - qRound(backgroundUnscaledHeight / 2.0), backgroundPixmap);
 
     if (QFileInfo(pathToFile).exists())
     {
         // Draw circular mask
-        QImage imageMask(36.0, 36.0, QImage::Format_ARGB32_Premultiplied);
+        QImage imageMask(36.0 * factor, 36.0 * factor, QImage::Format_ARGB32_Premultiplied);
         imageMask.fill(Qt::transparent);
         QPainter mask(&imageMask);
         mask.setRenderHints(QPainter::Antialiasing
@@ -72,7 +98,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
                         | QPainter::HighQualityAntialiasing);
         mask.setPen(Qt::NoPen);
         mask.setBrush(Qt::white);
-        mask.drawEllipse(QRectF(0, 0, 36, 36));
+        mask.drawEllipse(QRectF(0, 0, 36 * factor, 36 * factor));
 
         // Composite mask and avatar
         QImage avatar(imageMask.size(), imageMask.format());
@@ -85,23 +111,34 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
         p.setCompositionMode(QPainter::CompositionMode_DestinationIn);
         p.drawImage(0, 0, imageMask);
 
+
         //Apply avatar
-        painter.drawPixmap(QRect(-12, -12, 24, 24), QPixmap::fromImage(avatar));
+        painter.drawPixmap(QRect(-innercirclediam / 2, -innercirclediam / 2 , innercirclediam, innercirclediam), QPixmap::fromImage(avatar));
     }
     else
     {
         QFont font;
-        font.setPixelSize(18);
-        font.setFamily(QString::fromUtf8("Source Sans Pro"));
+        font.setPixelSize(18.0 * factor);
+        font.setFamily(QString::fromUtf8("Lato"));
         painter.setFont(font);
         painter.setPen(Qt::NoPen);
         painter.setBrush(QBrush(QColor(color.size() ? color : QString::fromUtf8("#D90007"))));
-        painter.drawEllipse(QRect(-12, -12, 24, 24));
+        painter.drawEllipse(QRect(-innercirclediam / 2, -innercirclediam / 2, innercirclediam, innercirclediam));
+
         painter.setPen(QPen(QColor("#ffffff")));
-        painter.drawText(QRect(-12, -12, 24, 24), Qt::AlignCenter, letter);
+        painter.drawText(QRect(-innercirclediam / 2, -innercirclediam / 2, innercirclediam, innercirclediam), Qt::AlignCenter, letter);
+    }
+}
+
+void AvatarWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        ((MegaApplication *)qApp)->openSettings(SettingsDialog::ACCOUNT_TAB);
     }
 }
 
 AvatarWidget::~AvatarWidget()
 {
+
 }

@@ -33,15 +33,15 @@ void TransferManagerItem::setFileName(QString fileName)
 {
     TransferItem::setFileName(fileName);
 
-    QFont f = ui->lTransferName->font();
-    QFontMetrics fm = QFontMetrics(f);
-    ui->lTransferNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lTransferNameCompleted->width()));
+    ui->lTransferNameCompleted->ensurePolished();
+    ui->lTransferNameCompleted->setText(ui->lTransferNameCompleted->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lTransferNameCompleted->width()));
     ui->lTransferNameCompleted->setToolTip(fileName);
-    ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lTransferName->width()));
+
+    ui->lTransferName->ensurePolished();
+    ui->lTransferName->setText(ui->lTransferName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lTransferName->width()));
     ui->lTransferName->setToolTip(fileName);
 
-    QIcon icon;
-    icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    QIcon icon = Utilities::getExtensionPixmapSmall(fileName);
     ui->lFileType->setIcon(icon);
     ui->lFileType->setIconSize(QSize(24, 24));
     ui->lFileTypeCompleted->setIcon(icon);
@@ -105,7 +105,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
-            icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
@@ -119,7 +119,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
-            icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
@@ -228,7 +228,14 @@ void TransferManagerItem::updateTransfer()
         case MegaTransfer::STATE_RETRYING:
             if (transferError == MegaError::API_EOVERQUOTA)
             {
-                ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+                if (transferErrorValue)
+                {
+                    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Transfer quota exceeded")));
+                }
+                else
+                {
+                    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+                }
             }
             else
             {
@@ -314,7 +321,7 @@ bool TransferManagerItem::mouseHoverRetryingLabel(QPoint pos)
     return false;
 }
 
-void TransferManagerItem::mouseHoverTransfer(bool isHover)
+void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
     if (isHover)
     {

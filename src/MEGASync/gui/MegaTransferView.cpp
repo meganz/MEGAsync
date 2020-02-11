@@ -100,10 +100,10 @@ void MegaTransferView::createContextMenu()
 #endif
 
 #if QT_VERSION < 0x050000
-                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 16px 5px 8px;} "
+                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 16px 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 15px 4px 7px;}"
 #else
-                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
+                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 7px;}"
 #endif
                                    "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"
@@ -200,10 +200,10 @@ void MegaTransferView::createCompletedContextMenu()
         contextCompleted->setStyleSheet(QString::fromAscii(
                                    "QMenu {background: #ffffff;}"
 #if QT_VERSION < 0x050000
-                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
+                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 4px 15px 4px 7px;}"
 #else
-                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
+                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 5px 8px;}"
 #endif
                                    ));
@@ -309,27 +309,24 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
         if (index.isValid())
         {
             int tag = index.internalId();
-            if (tag != lastItemHoveredTag)
+            if (lastItemHoveredTag)
             {
-                if (lastItemHoveredTag)
+                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+                if (lastItemHovered)
                 {
-                    TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-                    if (lastItemHovered)
-                    {
-                        lastItemHovered->mouseHoverTransfer(false);
-                    }
+                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
                 }
+            }
 
-                TransferItem *item = model->transferItems[tag];
-                if (item)
-                {
-                    lastItemHoveredTag = item->getTransferTag();
-                    item->mouseHoverTransfer(true);
-                }
-                else
-                {
-                    lastItemHoveredTag = 0;
-                }
+            TransferItem *item = model->transferItems[tag];
+            if (item)
+            {
+                lastItemHoveredTag = item->getTransferTag();
+                item->mouseHoverTransfer(true, event->pos() - visualRect(index).topLeft());
+            }
+            else
+            {
+                lastItemHoveredTag = 0;
             }
         }
         else
@@ -339,7 +336,7 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
                 TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
                 if (lastItemHovered)
                 {
-                    lastItemHovered->mouseHoverTransfer(false);
+                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
                     update();
                 }
                 lastItemHoveredTag = 0;
@@ -361,6 +358,7 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
     {
         emit showContextMenu(QPoint(event->x(), event->y()));
     }
+    QTreeView::mouseReleaseEvent(event);
 }
 
 void MegaTransferView::leaveEvent(QEvent *event)
@@ -373,7 +371,7 @@ void MegaTransferView::leaveEvent(QEvent *event)
             TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
             if (lastItemHovered)
             {
-                lastItemHovered->mouseHoverTransfer(false);
+                lastItemHovered->mouseHoverTransfer(false, QPoint(-1,-1));
                 update();
             }
             lastItemHoveredTag = 0;
@@ -390,6 +388,14 @@ void MegaTransferView::changeEvent(QEvent *event)
         createCompletedContextMenu();
     }
     QWidget::changeEvent(event);
+}
+
+void MegaTransferView::paintEvent(QPaintEvent * e)
+{
+    auto app = static_cast<MegaApplication*>(qApp);
+    app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
+    QTreeView::paintEvent(e);
+    app->megaApiLock.reset();
 }
 
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
@@ -451,6 +457,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
             {
                 bool failed = false;
                 bool linkAvailable = true;
+                bool showInMega = true;
+
                 MegaTransfer *transfer = NULL;
                 QTransfersModel *model = (QTransfersModel*)this->model();
                 if (model)
@@ -469,9 +477,16 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                             failed = true;
                         }
 
-                        if (!model->transferItems[transferTagSelected[i]]->getIsLinkAvailable())
+                        TransferItem *item = model->transferItems[transferTagSelected[i]];
+
+                        if (!item || !item->getIsLinkAvailable())
                         {
-                             linkAvailable = false;
+                            linkAvailable = false;
+                        }
+
+                        if (!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
+                        {
+                            showInMega = false;
                         }
 
                         delete transfer;
@@ -482,13 +497,9 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 {
                     customizeCompletedContextMenu(false, false, false, false);
                 }
-                else if (!linkAvailable)
-                {
-                    customizeCompletedContextMenu(false, true, true, false);
-                }
                 else
                 {
-                    customizeCompletedContextMenu();
+                    customizeCompletedContextMenu(linkAvailable, true, true, showInMega);
                 }
                 contextCompleted->exec(mapToGlobal(point));
             }
@@ -628,7 +639,7 @@ void MegaTransferView::getLinkClicked()
                     char *key = node->getBase64Key();
                     if (handle && key)
                     {
-                        QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
+                        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
                                 .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
                         linkList.append(link);
                     }
@@ -705,7 +716,7 @@ void MegaTransferView::showInMEGAClicked()
                 if (handle != INVALID_HANDLE)
                 {
                     const char *b64handle = MegaApi::handleToBase64(handle);
-                    QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromUtf8(b64handle);
+                    QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromUtf8(b64handle);
                     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     delete [] b64handle;
                 }

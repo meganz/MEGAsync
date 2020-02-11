@@ -17,6 +17,8 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 #include "gui/AddExclusionDialog.h"
+#include "gui/BugReportDialog.h"
+#include <assert.h>
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -96,6 +98,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     remoteCacheSize = -1;
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
 
+    reloadUIpage = false;
     hasUpperLimit = false;
     hasLowerLimit = false;
     upperLimit = 0;
@@ -105,12 +108,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     debugCounter = 0;
     hasDaysLimit = false;
     daysLimit = 0;
-
-    ui->lStorageSpace->setText(ui->lStorageSpace->text().append(QString::fromUtf8(":")));
-    ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
-    ui->lUploadRateLimit->setText(ui->lUploadRateLimit->text().append(QString::fromUtf8(":")));
-    ui->lDownloadRateLimit->setText(ui->lDownloadRateLimit->text().append(QString::fromUtf8(":")));
-    ui->lProxySettings->setText(ui->lProxySettings->text().append(QString::fromUtf8(":")));
 
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
@@ -229,7 +226,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
 
         ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-        ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
         ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
         ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
         ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -240,7 +236,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header@2x.png\"); }"));
 
         ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
-        ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
         ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
         ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
         ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
@@ -251,7 +246,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -280,26 +274,46 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     if (!proxyOnly)
     {
+        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            setMinimumHeight(522);
+            setMaximumHeight(522);
+            ui->gStorageSpace->setMinimumHeight(83);
+        }
+        else
+        {
+            setMinimumHeight(542);
+            setMaximumHeight(542);
+            ui->gStorageSpace->setMinimumHeight(103);
+        }
+
         ui->pProxies->hide();
-        setMinimumHeight(485);
-        setMaximumHeight(485);
         ui->bApply->hide();
     }
 #endif
 
     ui->lOQWarning->setText(QString::fromUtf8(""));
     ui->wOQError->hide();
+
+    highDpiResize.init(this);
+    ((MegaApplication*)qApp)->attachStorageObserver(*this);
+    ((MegaApplication*)qApp)->attachBandwidthObserver(*this);
+    ((MegaApplication*)qApp)->attachAccountObserver(*this);
 }
 
 SettingsDialog::~SettingsDialog()
 {
+    ((MegaApplication*)qApp)->dettachStorageObserver(*this);
+    ((MegaApplication*)qApp)->dettachBandwidthObserver(*this);
+    ((MegaApplication*)qApp)->dettachAccountObserver(*this);
+
     delete ui;
 }
 
 void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     this->proxyOnly = proxyOnly;
-    loadSettings();
+
     if (proxyOnly)
     {
         ui->bAccount->setEnabled(false);
@@ -456,6 +470,10 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
+void SettingsDialog::storageChanged()
+{
+    onCacheSizeAvailable();
+}
 
 void SettingsDialog::onCacheSizeAvailable()
 {
@@ -468,27 +486,37 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (cacheSize)
         {
-            ui->lLocalCacheSizeDesc->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(":"));
-            ui->lCacheLocalSize->setText(Utilities::getSizeString(cacheSize));
+            ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
             ui->gCache->setVisible(true);
-            ui->wLocalCache->show();
         }
         else
         {
-            ui->wLocalCache->hide();
+            //Hide and remove from layout to avoid  uneeded space
+            ui->lCacheSize->hide();
+            ui->bClearCache->hide();
+
+            // Move remote SyncDebris widget to left side
+            ui->gCache->layout()->removeWidget(ui->wLocalCache);
+            ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
+#ifndef __APPLE__
+            ui->lRemoteCacheSize->setMargin(2);
+#endif
+            ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
         }
 
         if (remoteCacheSize)
         {
-            ui->lRemoteCacheSizeDesc->setText(QString::fromUtf8("SyncDebris:"));
-            ui->lCacheRemoteSize->setText(Utilities::getSizeString(remoteCacheSize));
+            ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
             ui->gCache->setVisible(true);
         }
         else
         {
-            ui->wRemoteCache->hide();
+            //Hide and remove from layout to avoid  uneeded space
+            ui->lRemoteCacheSize->hide();
+            ui->bClearRemoteCache->hide();
         }
 
+        fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
         if (fileVersionsSize)
         {
             ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
@@ -524,18 +552,19 @@ void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
 
-    if (ui->wStack->currentWidget() == ui->pAccount)
+    if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
         ui->bAccount->setChecked(true);
         return;
     }
+
+    reloadUIpage = false;
 
 #ifdef __APPLE__
     ui->bApply->hide();
 #endif
 
     ui->bAccount->setChecked(true);
-    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
@@ -543,11 +572,8 @@ void SettingsDialog::on_bAccount_clicked()
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
 
-    ui->bUnlink->show();
-
 #ifdef __APPLE__
     ui->pAccount->hide();
-    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -559,59 +585,24 @@ void SettingsDialog::on_bAccount_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(485);
-    maxHeightAnimation->setEndValue(485);
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
-#endif
-}
-
-void SettingsDialog::on_bSecurity_clicked()
-{
-    emit userActivity();
-
-    if (ui->wStack->currentWidget() == ui->pSecurity)
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        ui->bSecurity->setChecked(true);
-        return;
+        minHeightAnimation->setEndValue(522);
+        maxHeightAnimation->setEndValue(522);
+
+        ui->gStorageSpace->setMinimumHeight(83);
     }
+    else
+    {
+        minHeightAnimation->setEndValue(542);
+        maxHeightAnimation->setEndValue(542);
 
-#ifdef __APPLE__
-    ui->bApply->hide();
-#endif
-
-    ui->bAccount->setChecked(false);
-    ui->bSecurity->setChecked(true);
-    ui->bSyncs->setChecked(false);
-    ui->bBandwidth->setChecked(false);
-    ui->bAdvanced->setChecked(false);
-    ui->bProxies->setChecked(false);
-    ui->wStack->setCurrentWidget(ui->pSecurity);
-
-    ui->bUnlink->hide();
-
-#ifdef __APPLE__
-    ui->pAccount->hide();
-    ui->pSecurity->hide();
-    ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
-    ui->pProxies->hide();
-    ui->pSyncs->hide();
-
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(600);
-    maxHeightAnimation->setEndValue(600);
+        ui->gStorageSpace->setMinimumHeight(103);
+    }
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
 #endif
-
 }
 
 void SettingsDialog::on_bSyncs_clicked()
@@ -629,7 +620,6 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
-    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(true);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
@@ -638,11 +628,8 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->tSyncs->horizontalHeader()->setVisible( true );
     ui->bOk->setFocus();
 
-    ui->bUnlink->hide();
-
 #ifdef __APPLE__
     ui->pAccount->hide();
-    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -678,7 +665,6 @@ void SettingsDialog::on_bBandwidth_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
-    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(true);
     ui->bAdvanced->setChecked(false);
@@ -686,11 +672,8 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
 
-    ui->bUnlink->hide();
-
 #ifdef __APPLE__
     ui->pAccount->hide();
-    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -698,8 +681,7 @@ void SettingsDialog::on_bBandwidth_clicked()
 
     int bwHeight;
     ui->gBandwidthQuota->show();
-    ui->wSeparatorTransferQuota->show();
-    bwHeight = 540;
+    ui->bSeparatorBandwidth->show();
 
     minHeightAnimation->setTargetObject(this);
     maxHeightAnimation->setTargetObject(this);
@@ -707,8 +689,20 @@ void SettingsDialog::on_bBandwidth_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(bwHeight);
-    maxHeightAnimation->setEndValue(bwHeight);
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        minHeightAnimation->setEndValue(520);
+        maxHeightAnimation->setEndValue(520);
+
+        ui->gBandwidthQuota->setMinimumHeight(59);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(540);
+        maxHeightAnimation->setEndValue(540);
+
+        ui->gBandwidthQuota->setMinimumHeight(79);
+    }
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -730,7 +724,6 @@ void SettingsDialog::on_bAdvanced_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
-    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(true);
@@ -738,11 +731,8 @@ void SettingsDialog::on_bAdvanced_clicked()
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
 
-    ui->bUnlink->hide();
-
 #ifdef __APPLE__
     ui->pAccount->hide();
-    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -759,17 +749,17 @@ void SettingsDialog::on_bAdvanced_clicked()
 
     if (!cacheSize && !remoteCacheSize)
     {
-        minHeightAnimation->setEndValue(610);
-        maxHeightAnimation->setEndValue(610);
+        minHeightAnimation->setEndValue(595);
+        maxHeightAnimation->setEndValue(595);
     }
     else
     {
-        minHeightAnimation->setEndValue(655);
-        maxHeightAnimation->setEndValue(655);
+        minHeightAnimation->setEndValue(640);
+        maxHeightAnimation->setEndValue(640);
     }
 
-    minHeightAnimation->setDuration(165);
-    maxHeightAnimation->setDuration(165);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
     animationGroup->start();
 #endif
 }
@@ -790,7 +780,6 @@ void SettingsDialog::on_bProxies_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
-    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
@@ -798,11 +787,8 @@ void SettingsDialog::on_bProxies_clicked()
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
 
-    ui->bUnlink->hide();
-
 #ifdef __APPLE__
     ui->pAccount->hide();
-    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -848,9 +834,16 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
+
+#ifndef __APPLE__
+void SettingsDialog::on_bHelpIco_clicked()
+{
+    on_bHelp_clicked();
+}
+#endif
 
 void SettingsDialog::on_rProxyManual_clicked()
 {
@@ -967,6 +960,44 @@ void SettingsDialog::on_cProxyRequiresPassword_clicked()
     }
 }
 
+void SettingsDialog::updateUploadFolder()
+{
+    MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
+    if (!node)
+    {
+        hasDefaultUploadOption = false;
+        ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+    }
+    else
+    {
+        const char *nPath = megaApi->getNodePath(node);
+        if (!nPath)
+        {
+            hasDefaultUploadOption = false;
+            ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
+        }
+        else
+        {
+            hasDefaultUploadOption = preferences->hasDefaultUploadFolder();
+            ui->eUploadFolder->setText(QString::fromUtf8(nPath));
+            delete [] nPath;
+        }
+    }
+    delete node;
+}
+
+void SettingsDialog::updateDownloadFolder()
+{
+    QString downloadPath = preferences->downloadFolder();
+    if (!downloadPath.size())
+    {
+        downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
+    }
+    downloadPath = QDir::toNativeSeparators(downloadPath);
+    ui->eDownloadFolder->setText(downloadPath);
+    hasDefaultDownloadOption = preferences->hasDefaultDownloadFolder();
+}
+
 void SettingsDialog::loadSettings()
 {
     modifyingSettings++;
@@ -974,9 +1005,7 @@ void SettingsDialog::loadSettings()
     if (!proxyOnly)
     {
         //General
-        ui->lName->setText(preferences->firstName() + QString::fromUtf8(" ") + preferences->lastName());
         ui->cShowNotifications->setChecked(preferences->showNotifications());
-        drawAvatar(preferences->email());
 
         if (!preferences->canUpdate(MegaApplication::applicationFilePath()))
         {
@@ -1059,6 +1088,7 @@ void SettingsDialog::loadSettings()
             ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
         }
 
+
         //Account
         char *email = megaApi->getMyEmail();
         if (email)
@@ -1070,71 +1100,18 @@ void SettingsDialog::loadSettings()
         {
             ui->lEmail->setText(preferences->email());
         }
-        refreshAccountDetails();
 
-        QIcon icon;
-        switch(preferences->accountType())
+        // account type and details
+        updateAccountElements();
+
+        if (accountDetailsDialog)
         {
-            case Preferences::ACCOUNT_TYPE_FREE:
-                icon.addFile(QString::fromUtf8(":/images/Free.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("FREE"));
-                break;
-            case Preferences::ACCOUNT_TYPE_PROI:
-                icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO I"));
-                break;
-            case Preferences::ACCOUNT_TYPE_PROII:
-                icon.addFile(QString::fromUtf8(":/images/Pro_II.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO II"));
-                break;
-            case Preferences::ACCOUNT_TYPE_PROIII:
-                icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO III"));
-                break;
-            case Preferences::ACCOUNT_TYPE_LITE:
-                icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO Lite"));
-                break;
-            default:
-                icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(QString());
-                break;
+            accountDetailsDialog->refresh(preferences);
         }
 
-        ui->lAccountImage->setIcon(icon);
-        ui->lAccountImage->setIconSize(QSize(32, 32));
+        updateUploadFolder();
 
-        MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
-        if (!node)
-        {
-            hasDefaultUploadOption = false;
-            ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
-        }
-        else
-        {
-            const char *nPath = megaApi->getNodePath(node);
-            if (!nPath)
-            {
-                hasDefaultUploadOption = false;
-                ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
-            }
-            else
-            {
-                hasDefaultUploadOption = preferences->hasDefaultUploadFolder();
-                ui->eUploadFolder->setText(QString::fromUtf8(nPath));
-                delete [] nPath;
-            }
-        }
-        delete node;
-
-        QString downloadPath = preferences->downloadFolder();
-        if (!downloadPath.size())
-        {
-            downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
-        }
-        downloadPath = QDir::toNativeSeparators(downloadPath);
-        ui->eDownloadFolder->setText(downloadPath);
-        hasDefaultDownloadOption = preferences->hasDefaultDownloadFolder();
+        updateDownloadFolder();
 
         //Syncs
         loadSyncSettings();
@@ -1158,38 +1135,6 @@ void SettingsDialog::loadSettings()
         ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
 
         ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
-
-        if (preferences->accountType() == 0) //Free user
-        {
-            ui->gBandwidthQuota->show();
-            ui->wSeparatorTransferQuota->show();
-            ui->pUsedBandwidth->setValue(0);
-            ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
-                    .arg(preferences->bandwidthInterval())
-                    .arg(Utilities::getSizeString(preferences->usedBandwidth())));
-        }
-        else
-        {
-            double totalBandwidth = preferences->totalBandwidth();
-            if (totalBandwidth == 0)
-            {
-                ui->gBandwidthQuota->hide();
-                ui->wSeparatorTransferQuota->hide();
-                ui->pUsedBandwidth->setValue(0);
-                ui->lBandwidth->setText(tr("Data temporarily unavailable"));
-            }
-            else
-            {
-                ui->gBandwidthQuota->show();
-                ui->wSeparatorTransferQuota->show();
-                int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-                ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
-                ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-                        .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                        .arg(QString::number(bandwidthPercentage))
-                        .arg(Utilities::getSizeString(preferences->totalBandwidth())));
-            }
-        }
 
         //Advanced
         ui->lExcludedNames->clear();
@@ -1256,8 +1201,19 @@ void SettingsDialog::loadSettings()
     modifyingSettings--;
 }
 
-void SettingsDialog::refreshAccountDetails()
+void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandwidth
 {
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->pStorage->hide();
+        ui->pUsedBandwidth->hide();
+    }
+    else
+    {
+        ui->pStorage->show();
+        ui->pUsedBandwidth->show();
+    }
+
     if (preferences->totalStorage() == 0)
     {
         ui->pStorage->setValue(0);
@@ -1267,32 +1223,65 @@ void SettingsDialog::refreshAccountDetails()
     else
     {
         ui->bStorageDetails->setEnabled(true);
-        int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
-        ui->pStorage->setValue((percentage < 100) ? percentage : 100);
-        ui->lStorage->setText(tr("%1 (%2%) of %3 used")
-              .arg(Utilities::getSizeString(preferences->usedStorage()))
-              .arg(QString::number(percentage))
-              .arg(Utilities::getSizeString(preferences->totalStorage())));
+
+        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            ui->lStorage->setText(tr("%1 used")
+                  .arg(Utilities::getSizeString(preferences->usedStorage())));
+        }
+        else
+        {
+            int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
+            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
+            ui->lStorage->setText(tr("%1 (%2%) of %3 used")
+                  .arg(Utilities::getSizeString(preferences->usedStorage()))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(Utilities::getSizeString(preferences->totalStorage())));
+        }
     }
 
-    if (preferences->totalBandwidth() == 0)
+    int accType = preferences->accountType();
+    if (accType == Preferences::ACCOUNT_TYPE_FREE) //Free user
     {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        ui->pUsedBandwidth->show();
         ui->pUsedBandwidth->setValue(0);
-        ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+        ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
+                .arg(preferences->bandwidthInterval())
+                .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+    }
+    else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        ui->pUsedBandwidth->hide();
+        ui->lBandwidth->setText(tr("%1 used")
+              .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
     {
-        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-        ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
-        ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-              .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-              .arg(QString::number(percentage))
-              .arg(Utilities::getSizeString(preferences->totalBandwidth())));
-    }
-
-    if (accountDetailsDialog)
-    {
-        accountDetailsDialog->refresh(preferences);
+        double totalBandwidth = preferences->totalBandwidth();
+        if (totalBandwidth == 0)
+        {
+            ui->gBandwidthQuota->hide();
+            ui->bSeparatorBandwidth->hide();
+            ui->pUsedBandwidth->show();
+            ui->pUsedBandwidth->setValue(0);
+            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+        }
+        else
+        {
+            ui->gBandwidthQuota->show();
+            ui->bSeparatorBandwidth->show();
+            int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+            ui->pUsedBandwidth->show();
+            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
+            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+                    .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+                    .arg(QString::number((bandwidthPercentage < 100) ? bandwidthPercentage : 100))
+                    .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        }
     }
 }
 
@@ -1484,7 +1473,7 @@ int SettingsDialog::saveSettings()
                 delete node;
             }
 
-            app->createTrayMenu();
+            app->createAppMenus();
             syncsChanged = false;
         }
 #ifdef _WIN32
@@ -1679,7 +1668,7 @@ int SettingsDialog::saveSettings()
             delete proxySettings;
         }
 
-        proxyTestProgressDialog = new MegaProgressDialog(tr("Please wait..."), QString(), 0, 0, this, Qt::CustomizeWindowHint|Qt::WindowTitleHint);
+        proxyTestProgressDialog = new MegaProgressCustomDialog(this, 0, 0);
         proxyTestProgressDialog->setWindowModality(Qt::WindowModal);
         proxyTestProgressDialog->show();
 
@@ -1737,7 +1726,11 @@ int SettingsDialog::saveSettings()
         if (result == QMessageBox::Yes)
         {
             // Restart MEGAsync
+#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
             ((MegaApplication*)qApp)->rebootApplication(false);
+#else
+            QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
+#endif
             return 2;
         }
 
@@ -1775,9 +1768,7 @@ void SettingsDialog::loadSyncSettings()
     ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(3);
-    ui->tSyncs->setColumnWidth(0, 292);
-    ui->tSyncs->setColumnWidth(1, 244);
-    ui->tSyncs->setColumnWidth(2, 27);
+    ui->tSyncs->setColumnWidth(2, 21);
 
     for (int i = 0; i < numFolders; i++)
     {
@@ -1941,7 +1932,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     QDir dir(defaultPath);
     QString fileName = QFileDialog::getSaveFileName(0,
-             tr("Export Master key"), dir.filePath(QString::fromUtf8("MEGA-RECOVERYKEY")),
+             tr("Export Master key"), dir.filePath(tr("MEGA-RECOVERYKEY")),
              QString::fromUtf8("Txt file (*.txt)"), NULL, QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
 
@@ -1985,7 +1976,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromAscii(handle);
+            QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
@@ -2061,6 +2052,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
         if (!test.open())
         {
             QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
+            delete dialog;
             return;
         }
 
@@ -2197,11 +2189,6 @@ void SettingsDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        ui->lStorageSpace->setText(ui->lStorageSpace->text().append(QString::fromUtf8(":")));
-        ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
-        ui->lUploadRateLimit->setText(ui->lUploadRateLimit->text().append(QString::fromUtf8(":")));
-        ui->lDownloadRateLimit->setText(ui->lDownloadRateLimit->text().append(QString::fromUtf8(":")));
-        ui->lProxySettings->setText(ui->lProxySettings->text().append(QString::fromUtf8(":")));
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
@@ -2315,7 +2302,17 @@ void SettingsDialog::on_bClearCache_clicked()
 
     cacheSize = 0;
 
-    ui->wLocalCache->hide();
+    ui->bClearCache->hide();
+    ui->lCacheSize->hide();
+
+    // Move remote SyncDebris widget to left side
+    ui->gCache->layout()->removeWidget(ui->wLocalCache);
+    ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
+#ifndef __APPLE__
+    ui->lRemoteCacheSize->setMargin(2);
+#endif
+    ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
+
     onClearCache();
 }
 
@@ -2325,7 +2322,8 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     if (!syncDebris)
     {
         remoteCacheSize = 0;
-        ui->wRemoteCache->hide();
+        ui->bClearRemoteCache->hide();
+        ui->lRemoteCacheSize->hide();
         onClearCache();
         return;
     }
@@ -2363,7 +2361,9 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     QtConcurrent::run(deleteRemoteCache, megaApi);
     remoteCacheSize = 0;
 
-    ui->wRemoteCache->hide();
+    ui->bClearRemoteCache->hide();
+    ui->lRemoteCacheSize->hide();
+
     onClearCache();
 }
 
@@ -2412,50 +2412,70 @@ void SettingsDialog::onClearCache()
     }
 }
 
-void SettingsDialog::drawAvatar(QString email)
+void SettingsDialog::updateStorageElements()
 {
-    QString avatarsPath = Utilities::getAvatarPath(email);
-    QFileInfo avatar(avatarsPath);
-    if (avatar.exists())
+    refreshAccountDetails();
+}
+
+void SettingsDialog::updateBandwidthElements()
+{
+    refreshAccountDetails();
+}
+
+void SettingsDialog::updateAccountElements()
+{
+    refreshAccountDetails(); //all those are affected by account type
+
+    // Disable Upgrade buttons for business accounts
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        ui->wAvatar->setAvatarImage(Utilities::getAvatarPath(email));
+        ui->bUpgrade->hide();
+        ui->bUpgradeBandwidth->hide();
     }
     else
     {
-        QString color;
-        const char* userHandle = megaApi->getMyUserHandle();
-        const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
-        if (avatarColor)
-        {
-            color = QString::fromUtf8(avatarColor);
-            delete [] avatarColor;
-        }
-
-        Preferences *preferences = Preferences::instance();
-        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
-        if (fullname.isEmpty())
-        {
-            char *email = megaApi->getMyEmail();
-            if (email)
-            {
-                fullname = QString::fromUtf8(email);
-                delete [] email;
-            }
-            else
-            {
-                fullname = preferences->email();
-            }
-
-            if (fullname.isEmpty())
-            {
-                fullname = QString::fromUtf8(" ");
-            }
-        }
-
-        ui->wAvatar->setAvatarLetter(fullname.at(0).toUpper(), color);
-        delete [] userHandle;
+        ui->bUpgrade->show();
+        ui->bUpgradeBandwidth->show();
     }
+
+    QIcon icon;
+    int accType = preferences->accountType();
+    switch(accType)
+    {
+        case Preferences::ACCOUNT_TYPE_FREE:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Free.png"));
+            ui->lAccountType->setText(tr("FREE"));
+            break;
+        case Preferences::ACCOUNT_TYPE_PROI:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
+            ui->lAccountType->setText(tr("PRO I"));
+            break;
+        case Preferences::ACCOUNT_TYPE_PROII:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_II.png"));
+            ui->lAccountType->setText(tr("PRO II"));
+            break;
+        case Preferences::ACCOUNT_TYPE_PROIII:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_III.png"));
+            ui->lAccountType->setText(tr("PRO III"));
+            break;
+        case Preferences::ACCOUNT_TYPE_LITE:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Lite.png"));
+            ui->lAccountType->setText(tr("PRO Lite"));
+            break;
+        case Preferences::ACCOUNT_TYPE_BUSINESS:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/business.png"));
+            ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
+            break;
+        default:
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
+            ui->lAccountType->setText(QString());
+            break;
+    }
+
+    ui->lAccountImage->setIcon(icon);
+    ui->lAccountImage->setIconSize(QSize(32, 32));
 }
+
 void SettingsDialog::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
@@ -2508,7 +2528,10 @@ void SettingsDialog::onProxyTestSuccess()
         shouldClose = false;
         this->close();
     }
-    else loadSettings();
+    else
+    {
+        loadSettings();
+    }
 }
 
 void SettingsDialog::on_bUpdate_clicked()
@@ -2543,10 +2566,6 @@ void SettingsDialog::onAnimationFinished()
     {
         ui->pAccount->show();
     }
-    else if (ui->wStack->currentWidget() == ui->pSecurity)
-    {
-        ui->pSecurity->show();
-    }
     else if (ui->wStack->currentWidget() == ui->pSyncs)
     {
         ui->pSyncs->show();
@@ -2568,7 +2587,7 @@ void SettingsDialog::onAnimationFinished()
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
-    app->updateUserStats(true);
+    app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
     if (!dialog)
@@ -2597,6 +2616,7 @@ void SettingsDialog::openSettingsTab(int tab)
     switch (tab)
     {
     case ACCOUNT_TAB:
+        reloadUIpage = true;
         on_bAccount_clicked();
         break;
 
@@ -2644,12 +2664,15 @@ void SettingsDialog::on_bChangePassword_clicked()
     delete cPassword;
 }
 
-MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText,
-                                       int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :
-    QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, f) {}
-
-void MegaProgressDialog::reject() {}
-void MegaProgressDialog::closeEvent(QCloseEvent * event)
+void SettingsDialog::on_bSendBug_clicked()
 {
-    event->ignore();
+    QPointer<BugReportDialog> dialog = new BugReportDialog(this, app->getLogger());
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
+        return;
+    }
+
+    delete dialog;
 }

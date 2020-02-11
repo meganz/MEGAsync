@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Bandeja de entrada</translation>
+        <translation type="unfinished">Buzón de entrada</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -41,7 +41,7 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation type="vanished">Actualizar</translation>
+        <translation type="vanished">Recargar</translation>
     </message>
     <message>
         <source>OK</source>
@@ -194,6 +194,302 @@
     </message>
 </context>
 <context>
+    <name>AlertFilterType</name>
+    <message>
+        <source>All notifications</source>
+        <translatorcomment>Label to indicate that the application is showing all types of notifications</translatorcomment>
+        <translation type="unfinished">Todas las notificaciones</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label to indicate that the application is showing only contact notifications</translatorcomment>
+        <translation type="unfinished">Contactos</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
+        <translation type="unfinished">Pago</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
+        <translation type="unfinished">Compartido conmigo</translation>
+    </message>
+</context>
+<context>
+    <name>AlertItem</name>
+    <message>
+        <source>NEW</source>
+        <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
+        <translation type="unfinished">NUEVA</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label title for Contacts category of a notification</translatorcomment>
+        <translation type="unfinished">Contactos</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
+        <translation type="unfinished">Compartido conmigo</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label title for Payment category of a notification</translatorcomment>
+        <translation type="unfinished">Pago</translation>
+    </message>
+    <message>
+        <source>Takedown notice</source>
+        <translatorcomment>Label title for Takedown category of a notification</translatorcomment>
+        <translation type="unfinished">Notificación y retirada</translation>
+    </message>
+    <message>
+        <source>New Contact Request</source>
+        <translatorcomment>Notification label that indicates the user has a new contact request </translatorcomment>
+        <translation type="unfinished">Nueva solicitud de contacto</translation>
+    </message>
+    <message>
+        <source>Contact Deleted</source>
+        <translatorcomment>Notification label that indicates the user has removed a contact</translatorcomment>
+        <translation type="unfinished">Contacto eliminado</translation>
+    </message>
+    <message>
+        <source>Contact Established</source>
+        <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
+        <translation type="unfinished">Ahora ambos sois contactos</translation>
+    </message>
+    <message>
+        <source>Contact Blocked</source>
+        <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
+        <translation type="unfinished">Contacto bloqueado</translation>
+    </message>
+    <message>
+        <source>Contact Updated</source>
+        <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
+        <translation type="unfinished">Contacto actualizado</translation>
+    </message>
+    <message>
+        <source>Contact Accepted</source>
+        <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
+        <translation type="unfinished">Solicitud de contacto aceptada</translation>
+    </message>
+    <message>
+        <source>Contact Denied</source>
+        <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
+        <translation type="unfinished">Solicitud de contacto rechazada</translation>
+    </message>
+    <message>
+        <source>Payment Info</source>
+        <translatorcomment>Notification label related to a payment.</translatorcomment>
+        <translation type="unfinished">Información de pago</translation>
+    </message>
+    <message>
+        <source>Takedown Notice</source>
+        <translatorcomment>Notification label related to takedown notice</translatorcomment>
+        <translation type="unfinished">Notificación y retirada</translation>
+    </message>
+    <message>
+        <source>Notification</source>
+        <translatorcomment>Title label for notification item.</translatorcomment>
+        <translation type="unfinished">Notificación</translation>
+    </message>
+    <message>
+        <source>[A] sent you a contact request</source>
+        <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
+        <translation type="unfinished">[A] te ha enviado una solicitud de contacto.</translation>
+    </message>
+    <message>
+        <source>[A] cancelled their contact request</source>
+        <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
+        <translation type="unfinished">[A] ha cancelado la solicitud de contacto.</translation>
+    </message>
+    <message>
+        <source>You have a contact request</source>
+        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
+        <translation type="unfinished">Tienes una solicitud de contacto.</translation>
+    </message>
+    <message>
+        <source>[A] deleted you as a contact</source>
+        <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
+        <translation type="unfinished">[A] te ha eliminado como contacto.</translation>
+    </message>
+    <message>
+        <source>[A] has been deleted/deactivated</source>
+        <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
+        <translation type="unfinished">[A] ha sido eliminado como contacto.</translation>
+    </message>
+    <message>
+        <source>[A] established you as a contact</source>
+        <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
+        <translation type="unfinished">[A] te ha añadido como contacto.</translation>
+    </message>
+    <message>
+        <source>[A] blocked you as contact</source>
+        <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
+        <translation type="unfinished">[A] te ha bloqueado como contacto.</translation>
+    </message>
+    <message>
+        <source>You ignored a contact request</source>
+        <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
+        <translation type="unfinished">Has ignorado una solicitud de contacto</translation>
+    </message>
+    <message>
+        <source>You accepted a contact request</source>
+        <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
+        <translation type="unfinished">Has aceptado una solicitud de contacto</translation>
+    </message>
+    <message>
+        <source>You denied a contact request</source>
+        <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
+        <translation type="unfinished">Has denegado una solicitud de contacto</translation>
+    </message>
+    <message>
+        <source>[A] accepted your contact request</source>
+        <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
+        <translation type="unfinished">[A] ha aceptado tu solicitud de contacto.</translation>
+    </message>
+    <message>
+        <source>[A] denied your contact request</source>
+        <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
+        <translation type="unfinished">[A] ha rechazado tu solicitud de contacto.</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [A]</source>
+        <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="obsolete">Nueva carpeta compartida de [X]</translation>
+    </message>
+    <message>
+        <source>[A] has left the shared folder</source>
+        <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
+        <translation type="unfinished">[A] ha abandonado la carpeta compartida.</translation>
+    </message>
+    <message>
+        <source>Access to folders shared was removed</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
+        <translation type="obsolete">Se ha eliminado el acceso a una carpeta compartida</translation>
+    </message>
+    <message>
+        <source>[A] added 1 item</source>
+        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
+        <translation type="unfinished">[A] añadió 1 elemento.</translation>
+    </message>
+    <message>
+        <source>[A] added [B] items</source>
+        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
+        <translation type="unfinished">[A] añadió [B] elementos.</translation>
+    </message>
+    <message>
+        <source>[A] removed 1 item</source>
+        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
+        <translation type="unfinished">[A] eliminó 1 elemento.</translation>
+    </message>
+    <message>
+        <source>[A] removed [B] items</source>
+        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
+        <translation type="unfinished">[A] eliminó [B] elementos.</translation>
+    </message>
+    <message>
+        <source>Your payment for the [A] plan was received</source>
+        <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
+        <translation type="unfinished">Tu pago para el plan [A] ha sido recibido.</translation>
+    </message>
+    <message>
+        <source>Your payment for the [A] plan was unsuccessful</source>
+        <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
+        <translation type="unfinished">Tu pago para el plan [A] no se ha completado.</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in 1 day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
+        <translation type="unfinished">Tu plan PRO caducará en 1 día.</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in [A] days</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation type="unfinished">Tu plan PRO caducará en [A] días.</translation>
+    </message>
+    <message>
+        <source>PRO membership plan expiring soon</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
+        <translation type="unfinished">Tu plan PRO caducará en breve</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired 1 day ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
+        <translation type="unfinished">Tu plan PRO caducó hace un 1 día.</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired [A] days ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
+        <translation type="unfinished">Tu plan PRO caducó hace [A] días.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [A] ([B]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
+        <translation type="obsolete">Tu  %1 (%2) que has compartido públicamente ha sido retirado/a.</translation>
+    </message>
+    <message>
+        <source>file</source>
+        <translatorcomment>Label to indicate a file</translatorcomment>
+        <translation type="unfinished">archivo</translation>
+    </message>
+    <message>
+        <source>folder</source>
+        <translatorcomment>Label to indicate a folder</translatorcomment>
+        <translation type="unfinished">carpeta</translation>
+    </message>
+    <message>
+        <source>Your publicly shared has been taken down</source>
+        <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
+        <translation type="unfinished">La carpeta que has compartido públicamente ha sido retirada.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [A] ([B]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">La carpeta que has compartido públicamente [A] ([B]) ha sido restaurada.</translation>
+    </message>
+    <message>
+        <source>Your taken down has been reinstated</source>
+        <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
+        <translation type="unfinished">La carpeta que has compartido públicamente ha sido restaurada.</translation>
+    </message>
+    <message>
+        <source>Reminder</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation type="unfinished">Recordatorio</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed by [A]</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
+        <translation type="unfinished">El acceso a la carpeta compartida fue eliminado por [A]</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="obsolete">(carpeta compartida desconocida)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Nueva carpeta compartida de [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Tu [%1] ([%2]) que has compartido públicamente ha sido retirado/a.</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Actividad de Carpeta Compartida</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">Se ha eliminado el acceso a una carpeta compartida</translation>
+    </message>
+</context>
+<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
@@ -264,6 +560,109 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation type="obsolete">Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos después. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
+    </message>
+</context>
+<context>
+    <name>BugReportDialog</name>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
+        <translation type="unfinished">Informe de fallo</translation>
+    </message>
+    <message>
+        <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
+        <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
+        <translation type="unfinished">Por favor describa claramente el problema que encontró. Cuantos más detalles proporcione, más fácil será para nosotros resolverlo. Su informe será revisado por nuestro equipo de desarrollo.</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
+        <translation type="unfinished">Título</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
+        <translation type="unfinished">Describa el problema</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
+        <translation type="unfinished">Incluir archivo de diagnóstico para ayudar a depurar el problema.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the dialog.</translatorcomment>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Button label to confirm and submit bug report and log files to support team.</translatorcomment>
+        <translation type="unfinished">Aceptar</translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
+        <translation type="unfinished">Opcional</translation>
+    </message>
+    <message>
+        <source>Bug report is uploading, it may take a few minutes</source>
+        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
+        <translation type="unfinished">Su informe de fallo está siendo enviado, éste proceso puede tardar varios minutos.</translation>
+    </message>
+    <message>
+        <source>Bug report success!</source>
+        <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
+        <translation type="unfinished">Su informe de fallo ha sido enviado con éxito.</translation>
+    </message>
+    <message>
+        <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
+        <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
+        <translation type="unfinished">Tu informe de fallo ha sido enviado, recibirá un correo electrónico de confirmación en su cuenta.</translation>
+    </message>
+    <message>
+        <source>Error on submitting bug report</source>
+        <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">Error durante la subida del informe de fallo.</translation>
+    </message>
+    <message>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">El informe de fallo no ha podido ser enviado debido a un error. Por favor, vuelva a intentarlo o póngase en contacto con nuestro equipo de soporte a través de [A]support@mega.nz[/A] si el problema persiste.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
+        <translation type="unfinished">Aceptar</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to exit uploading?</source>
+        <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
+        <translation type="unfinished">¿Seguro que quieres cancelar la subida del informe de fallo?</translation>
+    </message>
+    <message>
+        <source>The bug report will not be submitted if you exit uploading.</source>
+        <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
+        <translation type="unfinished">El informe de fallo no será enviado si cancela la subida.</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translatorcomment>Button label to continue the upload of bug report.</translatorcomment>
+        <translation type="unfinished">Continuar</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translatorcomment>Button label to confirm a message box.</translatorcomment>
+        <translation type="unfinished">Sí</translation>
+    </message>
+    <message>
+        <source>There is an ongoing report being uploaded.</source>
+        <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
+        <translation type="unfinished">Actualmente existe otro informe de fallo que está siendo subido.</translation>
+    </message>
+    <message>
+        <source>Please wait until the current upload is completed.</source>
+        <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
+        <translation type="unfinished">Por favor espere hasta que se complete la subida actual.</translation>
     </message>
 </context>
 <context>
@@ -425,7 +824,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
-        <translation type="unfinished">%1 de %2</translation>
+        <translation type="obsolete">%1 de %2</translation>
     </message>
     <message>
         <source>starting...</source>
@@ -461,6 +860,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Almacenamiento agotado</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cuota de transferencia excedida</translation>
     </message>
 </context>
 <context>
@@ -514,6 +918,29 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>No tienes permisos de escritura en esta carpeta local.</translation>
+    </message>
+</context>
+<context>
+    <name>FilterAlertWidget</name>
+    <message>
+        <source>All notifications</source>
+        <translatorcomment>Label to indicate that all types of notifications will be shown.</translatorcomment>
+        <translation type="unfinished">Todas las notificaciones</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label to indicate that only contact notifications will be shown.</translatorcomment>
+        <translation type="unfinished">Contactos</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate that only Incoming Shares notifications will be shown.</translatorcomment>
+        <translation type="unfinished">Compartido conmigo</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
+        <translation type="unfinished">Pago</translation>
     </message>
 </context>
 <context>
@@ -636,7 +1063,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Iniciar Sesión</translation>
+        <translation type="unfinished">Iniciar sesión</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -738,7 +1165,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Por favor, introduce tu email</translation>
+        <translation type="unfinished">Por favor, escribe tu correo electrónico</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -816,7 +1243,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Error al descifrar</translation>
+        <translation>Error de descifrado</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -863,7 +1290,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Sincronizaciones</translation>
+        <translation>Sincronizaciones</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -873,7 +1300,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 de %2</translation>
+        <translation type="vanished">%1 de %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
@@ -928,7 +1355,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Añadir Sincronización</translation>
+        <translation>Añadir Sincronización</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -976,7 +1403,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translation type="obsolete">Ajustes</translation>
+        <translation type="unfinished">Ajustes</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -1025,12 +1452,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
-        <translation type="obsolete">Has excedido tu cuota de almacenamiento. [A]Hazte PRO[/A] y continua disfrutando de nuestro almacenamiento seguro con cifrado punto a punto.</translation>
+        <translation type="obsolete">Has agotado tu cuota de almacenamiento. [A]Amplía tu cuenta[/A] y continua disfrutando de nuestro almacenamiento seguro con cifrado punto a punto.</translation>
     </message>
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Hazte PRO</translation>
+        <translation type="unfinished">Ampliar cuenta</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1040,12 +1467,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>USED STORAGE %1</source>
         <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
-        <translation type="unfinished">ALMACENAMIENTO USADO %1</translation>
+        <translation type="obsolete">ALMACENAMIENTO USADO %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
-        <translation type="unfinished">Datos no disponibles temporalmente</translation>
+        <translation type="obsolete">Datos no disponibles temporalmente</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -1075,22 +1502,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Mi nube</translation>
+        <translation type="obsolete">Mi nube</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Bandeja de entrada</translation>
+        <translation type="obsolete">Buzón de entrada</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Compartido conmigo</translation>
+        <translation type="obsolete">Compartido conmigo</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Papelera</translation>
+        <translation type="obsolete">Papelera</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1123,7 +1550,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>TRANSFER QUOTA %1</source>
         <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
-        <translation type="unfinished">CUOTA DE TRANSFERENCIA %1</translation>
+        <translation type="obsolete">CUOTA DE TRANSFERENCIA %1</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
@@ -1133,7 +1560,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation type="unfinished">Hazte PRO ahora antes que tu espacio de almacenamiento se agote y tus subidas a MEGA se detengan.</translation>
+        <translation type="unfinished">Amplía tu cuenta ahora antes que tu espacio de almacenamiento se agote y tus subidas a MEGA se detengan.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
@@ -1143,7 +1570,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="obsolete">Todas las subidas de archivos están actualmente deshabilitadas. Por favor, hazte PRO.</translation>
+        <translation type="obsolete">Las subidas de archivos están deshabilitadas. Por favor, amplía tu cuenta.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1153,7 +1580,97 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation type="unfinished">Por favor hazte PRO.</translation>
+        <translation type="unfinished">Por favor amplía tu cuenta.</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Label to indicate an upload.</translatorcomment>
+        <translation type="unfinished">Subir</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Label to indicate a download.</translatorcomment>
+        <translation type="unfinished">Descargar</translation>
+    </message>
+    <message>
+        <source>Transfers</source>
+        <translatorcomment>Label to open transfer section at main dialog</translatorcomment>
+        <translation type="unfinished">Transferencias</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translatorcomment>Label to open notifications section at main dialog</translatorcomment>
+        <translation type="unfinished">Notificaciones</translation>
+    </message>
+    <message>
+        <source>Storage</source>
+        <translatorcomment>Label to indicate the storage section of current account</translatorcomment>
+        <translation type="unfinished">Almacenamiento</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label to indicate the transfer quota section of current account</translatorcomment>
+        <translation type="unfinished">Transferencia</translation>
+    </message>
+    <message>
+        <source>All notifications</source>
+        <translatorcomment>Label to indicate that all notifications will be shown.</translatorcomment>
+        <translation type="obsolete">Todas las notificaciones</translation>
+    </message>
+    <message>
+        <source>Open notification settings</source>
+        <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
+        <translation type="unfinished">Abrir configuración de notificaciones</translation>
+    </message>
+    <message>
+        <source>No notifications</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
+        <translation type="unfinished">Sin notificaciones</translation>
+    </message>
+    <message>
+        <source>Pause/Resume</source>
+        <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
+        <translation type="unfinished">Pausar/Reanudar</translation>
+    </message>
+    <message>
+        <source>Open Downloads</source>
+        <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
+        <translation type="unfinished">Abrir descargas</translation>
+    </message>
+    <message>
+        <source>Open Uploads</source>
+        <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
+        <translation type="unfinished">Abrir subidas</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label to filter notifications  by contact type</translatorcomment>
+        <translation type="obsolete">Contactos</translation>
+    </message>
+    <message>
+        <source>No notifications for contacts</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
+        <translation type="unfinished">No hay notificaciones de contactos</translation>
+    </message>
+    <message>
+        <source>No notifications for incoming shares</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
+        <translation type="unfinished">No hay notificaciones de carpetas compartidas entrantes</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label to filter notifications  by payment type</translatorcomment>
+        <translation type="obsolete">Pago</translation>
+    </message>
+    <message>
+        <source>No notifications for payments</source>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
+        <translation type="unfinished">No hay notificaciones de pagos</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 en uso</translation>
     </message>
 </context>
 <context>
@@ -1166,7 +1683,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Has excedido tu cuota de almacenamiento. [A]Hazte PRO[/A] y continua disfrutando de nuestro almacenamiento seguro con cifrado punto a punto.</translation>
+        <translation type="obsolete">Has agotado tu cuota de almacenamiento. [A]Amplía tu cuenta[/A] y continua disfrutando de nuestro almacenamiento seguro con cifrado punto a punto.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -1206,39 +1723,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Sincronización automática y fácil entre tus ordenadores y tu nube MEGA</translation>
+        <translation type="obsolete">[S]MEGAsync:[/S] Sincronización automática y fácil entre tus ordenadores y tu nube MEGA</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Flexible:[/S] Sincroniza las carpetas que quieras de tu PC con las carpetas en la nube. Sincroniza todas las carpetas que quieras al mismo tiempo.</translation>
+        <translation type="obsolete">[S]Flexible:[/S] Sincroniza las carpetas que quieras de tu PC con las carpetas en la nube. Sincroniza todas las carpetas que quieras al mismo tiempo.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">Transferencias más rápidas</translation>
+        <translation type="obsolete">Transferencias más rápidas</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync aprovecha al máximo la potente infraestructura de MEGA y las transferencias multi-conexión.</translation>
+        <translation type="obsolete">MEGAsync aprovecha al máximo la potente infraestructura de MEGA y las transferencias multi-conexión.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">Uso de recursos optimizado</translation>
+        <translation type="obsolete">Uso de recursos optimizado</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Ejecuta los algoritmos de encriptación de MEGA directamente en tu ordenador sin depender de navegadores lentos.</translation>
+        <translation type="obsolete">Ejecuta los algoritmos de encriptación de MEGA directamente en tu ordenador sin depender de navegadores lentos.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">Archivos sin límite de tamaño</translation>
+        <translation type="obsolete">Archivos sin límite de tamaño</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">La tecnología del navegador limita las transferencias por el tamaño de los archivos, mientras que MEGAsync te permite subir y bajar datos sin problemas.</translation>
+        <translation type="obsolete">La tecnología del navegador limita las transferencias por el tamaño de los archivos, mientras que MEGAsync te permite subir y bajar datos sin problemas.</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">Iniciar Sesión</translation>
+        <translation type="unfinished">Iniciar sesión</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -1246,7 +1763,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">Aprovecha los 50 GB de almacenamiento cifrado con tecnología punto a punto controlada por el usuario y crea una cuenta GRATIS o adquiere uno de nuestros [A]Planes PRO[/A].</translation>
+        <translation type="obsolete">Aprovecha los 50 GB de almacenamiento cifrado con tecnología punto a punto controlada por el usuario y crea una cuenta GRATIS o adquiere uno de nuestros [A]Planes PRO[/A].</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
+        <translation type="unfinished">Aplicación de escritorio MEGA</translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
+        <translation type="unfinished">Inicia sesión o crea una cuenta para empezar a utilizar la Aplicación de escritorio MEGA.</translation>
+    </message>
+    <message>
+        <source>You need to login MEGA account to run MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished">Necesitas iniciar sesión en tu cuenta para utilizar la Aplicación de escritorio MEGA.</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
+        <translation type="unfinished">Crear cuenta</translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
+        <translation type="unfinished">Crea una cuenta para unirte a la plataforma de colaboración de MEGA</translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
+        <translation type="unfinished">Conozca más sobre la Aplicación de escritorio MEGA. [A]Más información[/A]</translation>
     </message>
 </context>
 <context>
@@ -1282,7 +1829,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Autolimpieza de %1</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1386,7 +1933,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation type="obsolete">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota está en la Papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1494,7 +2041,7 @@ Exit anyway?</source>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>Tienes archivos nuevos o actualizados en tu cuenta</translation>
+        <translation type="vanished">Tienes archivos nuevos o actualizados en tu cuenta</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -1680,7 +2227,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation type="unfinished">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota está en la Papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1695,7 +2242,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation type="unfinished">Límite de cuenta excedido</translation>
+        <translation type="unfinished">Límite excedido</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -1837,7 +2384,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Sitio web de MEGA</translation>
+        <translation type="obsolete">Sitio web de MEGA</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -1867,7 +2414,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Actualiza ahora a una cuenta PRO.</translation>
+        <translation type="unfinished">Amplía ahora tu cuenta.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
@@ -1912,7 +2459,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation type="unfinished">Subir archivo</translation>
+        <translation type="unfinished">Subir archivos</translation>
     </message>
     <message>
         <source>1 file was successfully uploaded</source>
@@ -1992,12 +2539,127 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Hazte PRO</translation>
+        <translation type="unfinished">Ampliar cuenta</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">Ver carpeta contenedora</translation>
+    </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">MEGA no puede conectarse de forma segura a través de SSL. Es posible que estés conectado a una Wi-Fi pública con requisitos adicionales.</translation>
+    </message>
+    <message>
+        <source>Cloud drive</source>
+        <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
+        <translation type="unfinished">Mi nube</translation>
+    </message>
+    <message>
+        <source>Error transferring folder: </source>
+        <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
+        <translation type="unfinished">Error en la transferencia de carpeta:</translation>
+    </message>
+    <message>
+        <source>Your syncs have been temporarily disabled</source>
+        <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
+        <translation type="unfinished">Tus sincronizaciones han sido temporalmente deshabilitadas.</translation>
+    </message>
+    <message>
+        <source>Something went wrong</source>
+        <translatorcomment>Notification title shown to the user to inform that the current action has failed because the current business account is in grace period.</translatorcomment>
+        <translation type="obsolete">Algo ha ido mal</translation>
+    </message>
+    <message>
+        <source>Please access MEGA in a desktop browser for more information.</source>
+        <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
+        <translation type="obsolete">Por favor, acceda a su cuenta MEGA desde el navegador para obtener más información.</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
+        <translation type="unfinished">Pagar ahora</translation>
+    </message>
+    <message>
+        <source>Your Business account is expired</source>
+        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
+        <translation type="unfinished">Tu cuenta Business ha caducado</translation>
+    </message>
+    <message>
+        <source>Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
+        <translation type="unfinished">Tu cuenta se quedará suspendida hasta que procedas con el pago.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator.</source>
+        <translatorcomment>Notification message show to non-admin users for business accounts when there are issues that needs to be addressed by the business account admin.</translatorcomment>
+        <translation type="obsolete">Ponte en contacto con el administrador de tu cuenta Business.</translation>
+    </message>
+    <message>
+        <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
+        <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
+        <translation type="obsolete">Ha habido un problem con su pago. Por favor, acceda a su cuenta MEGA desde el navegador para obtener más información.</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button text to discard a notification or message box</translatorcomment>
+        <translation type="unfinished">Descartar</translation>
+    </message>
+    <message>
+        <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
+        <translation type="unfinished">Parece que el pago de tu suscripción Business no se ha podido efectuar. Por lo tanto, tu cuenta se quedará suspendida hasta que procedas con el pago.</translation>
+    </message>
+    <message>
+        <source>Your account is on [A]suspended status[/A].</source>
+        <translatorcomment>Message shown when the current business account is suspended. Keep placeholders, will be replaced at runtime.</translatorcomment>
+        <translation type="obsolete">Tu cuenta ha [A]caducado[/A].</translation>
+    </message>
+    <message>
+        <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
+        <translation type="unfinished">[A]Importante:[/A] Ponte en contacto con el administrador de tu cuenta Business para resolver el probleme y activar tu cuenta.</translation>
+    </message>
+    <message>
+        <source>Payment Failed</source>
+        <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">Pago fallido</translation>
+    </message>
+    <message>
+        <source>Please resolve your payment issue to avoid suspension of your account.</source>
+        <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
+        <translation type="unfinished">Por favor, resuelva el problema con su pago para evitar la suspensión de su cuenta Business.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
+        <translation type="unfinished">Ponte en contacto con el administrador de tu cuenta Business para resolver el problema y activar tu cuenta.</translation>
+    </message>
+    <message>
+        <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
+        <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">El pago de este mes ha fallado. Por favor, resuelva el problema con su pago tan pronto como sea posible para evitar la suspensión de su cuenta Business.</translation>
+    </message>
+    <message>
+        <source>Account Suspended</source>
+        <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
+        <translation type="unfinished">Cuenta Suspendida</translation>
+    </message>
+    <message>
+        <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
+        <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
+        <translation type="unfinished">Tu cuenta está [A]suspendida[/A]. Solo puedes ver tus datos.</translation>
+    </message>
+    <message>
+        <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
+        <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
+        <translation type="unfinished">Tu subida(s) no puede continuar porque la cuenta de %1 está llena.</translation>
+    </message>
+    <message>
+        <source>contact</source>
+        <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
+        <translation type="unfinished">contacto</translation>
     </message>
 </context>
 <context>
@@ -2030,7 +2692,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed permanently</source>
         <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
-        <translation>Archivo no disponible temporalmente</translation>
+        <translation>Fallo permanente</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -2090,7 +2752,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
-        <translation>Límite de cuenta excedido</translation>
+        <translation>Límite excedido</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -2144,6 +2806,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
         <translation type="unfinished">Cuota insuficiente</translation>
     </message>
+    <message>
+        <source>Terms of Service breached</source>
+        <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
+        <translation type="unfinished">Términos de uso incumplidos</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">No accesible por infringir los Términos de uso</translation>
+    </message>
+    <message>
+        <source>Upload produces recursivity</source>
+        <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
+        <translation type="unfinished">Transferencia fallida debido a una estructura de carpetas recursiva</translation>
+    </message>
 </context>
 <context>
     <name>MegaNodeNames</name>
@@ -2151,6 +2828,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
         <translation type="unfinished">Mi nube</translation>
+    </message>
+</context>
+<context>
+    <name>MegaProgressCustomDialog</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
+        <translation type="unfinished">Por favor espera...</translation>
     </message>
 </context>
 <context>
@@ -2179,6 +2869,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
         <translation type="unfinished">Reintentar</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Show in folder&quot; button related to a transfer</translatorcomment>
+        <translation type="unfinished">Ver carpeta contenedora</translation>
     </message>
 </context>
 <context>
@@ -2266,6 +2961,11 @@ If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
         <translation type="obsolete">La carpeta de destino está sincronizada y ya tienes un archivo dentro de ella con el mismo nombre (%1). Si continúas la subida, el archivo anterior se sobreescribirá. ¿Estás seguro?</translation>
+    </message>
+    <message>
+        <source>Upload failed</source>
+        <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
+        <translation type="unfinished">Subida fallida</translation>
     </message>
 </context>
 <context>
@@ -2382,7 +3082,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Por favor, introduce un nombre de carpeta válido</translation>
+        <translation type="obsolete">Por favor, introduce un nombre de carpeta válido</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -2408,6 +3108,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translation type="unfinished">Obtener enlace de MEGA</translation>
+    </message>
+    <message>
+        <source>Invalid folder name.
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
+        <translation type="unfinished">Nombre de carpeta no permitido.
+Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o ‘:’ en los nombres de sus carpetas.</translation>
     </message>
 </context>
 <context>
@@ -2547,12 +3254,32 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation type="unfinished">Ancho de banda</translation>
+        <translation type="obsolete">Ancho de banda</translation>
     </message>
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">popular!</translation>
+        <translation type="obsolete">¡Popular!</translation>
+    </message>
+    <message>
+        <source>UNLIMITED</source>
+        <translatorcomment>Label to indicate that business pro plan has unlimited storage and transfers quota.</translatorcomment>
+        <translation type="unfinished">ILIMITADO</translation>
+    </message>
+    <message>
+        <source>Storage and transfers</source>
+        <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
+        <translation type="unfinished">Almacenamiento y Transferencia</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label to indicate transfer quota.</translatorcomment>
+        <translation type="unfinished">Transferencia</translation>
+    </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">por usuario %1</translation>
     </message>
 </context>
 <context>
@@ -2582,7 +3309,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- Arreglado error durante la selección de celdas en la ventana del gestor de transferencias
+        <translation type="obsolete">- Arreglado error durante la selección de celdas en la ventana del gestor de transferencias
 - Arreglado error al mostrar el menú contextual sobre las celdas en la ventana del gestor de transferencias
 - Nuevo diseño para la ventana principal
 - Mejorado el asistente de configuración inicial
@@ -2590,6 +3317,81 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Notificaciones de sistema mejoradas
 - Actualizadas varias bibliotecas de terceros
 - Arreglados errores menores y añadidas otras pequeñas mejoras</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="obsolete">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
+- Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
+- Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
+- Soporte para cuentas business
+- Otras mejoras y correcciones de errores</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="obsolete">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
+- Soporte para la creación de vistas en miniatura en documentos PDF
+- Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
+- Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
+- Soporte para cuentas business
+- Otras mejoras y correcciones de errores</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="obsolete">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Fix sync issues on macOS 10.15
+- Fix transfer resumption issues for webclient and public links downloads
+- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
+        <translation type="obsolete">- Arreglados problemas de sincronización en macOS 10.15
+- Arreglados problemas con la reanudación de transferencias durante las descargas de enlaces públicos utilizando el client web
+- Arreglado error durante el procesamiento de algunos Archivos PDF
+- Reanudar las transferencias pendientes después de un fallo del programa en el siguiente inicio de la aplicación
+- Incluida la opción de añadir sincronizaciones desde el diálogo principal de la aplicación
+- Otros errores menores y mejoras</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Soporte para notificaciones de usuario.
+- Soporte para enviar informes de error desde el diálogo de preferencias.
+- Nuevo diseño del diálogo principal de la aplicación.
+- Mejoras de rendimiento para un número elevado de sicronizaciones y transferencias.
+- Mejorado el soporte para cuentas Business.
+- Soporte para enlaces de archivos y carpetas dentro de un enlace público de carpeta.
+- Mejoras en la sincronización utilizando sistemas de archivo FAT32.
+- Otros arreglos de interfaz de usuario y ajustes.
+- Mejoras de rendimiento.</translation>
     </message>
 </context>
 <context>
@@ -2811,7 +3613,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Hazte PRO</translation>
+        <translation>Ampliar</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -3031,7 +3833,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Por favor espera...</translation>
+        <translation type="vanished">Por favor espera...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3227,7 +4029,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Las copias de seguridad de tus archivos sincronizados anteriormente se eliminarán de forma permanente. Por favor comprueba tu carpeta [A] de la Papelera de tu cuenta MEGA para ver si necesitas rescatar algo antes de continuar.</translation>
+        <translation type="unfinished">Las copias de seguridad de tus archivos sincronizados anteriormente se eliminarán de forma permanente. Por favor comprueba tu carpeta [A] de la Papelera de tu cuenta de MEGA para ver si necesitas rescatar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -3262,7 +4064,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">¿Quieres eliminar tu copia de seguridad local?</translation>
+        <translation type="unfinished">¿Quieres eliminar tu copia de seguridad ahora?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -3319,7 +4121,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Autolimpieza de %1</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3374,6 +4176,26 @@ when the application starts again</source>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
         <translation type="unfinished">Autolimpieza de %1</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 en uso</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-CLAVEDERECUPERACION</translation>
+    </message>
+    <message>
+        <source>Please let us know if you find a bug</source>
+        <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
+        <translation type="unfinished">Por favor, comuníquese con nosotros si encuentra algún problema.</translation>
+    </message>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Button label to show the bug report form.</translatorcomment>
+        <translation type="unfinished">Informe de fallo</translation>
     </message>
 </context>
 <context>
@@ -3502,7 +4324,7 @@ when the application starts again</source>
     <message>
         <source>Back</source>
         <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>Volver</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Next</source>
@@ -3552,7 +4374,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Por favor, introduce tu email</translation>
+        <translation>Por favor, escribe tu correo electrónico</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -3787,7 +4609,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation type="unfinished">Por favor, escribe tu(s) apellido(s)</translation>
+        <translation type="unfinished">Escribe tu(s) apellido(s)</translation>
     </message>
     <message>
         <source>Setup selective sync</source>
@@ -3797,7 +4619,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Carpetas específicas de tu nube serán sincronizadas con las correspondientes carpetas locales.</translation>
+        <translation type="unfinished">Carpetas específicas de tu Nube serán sincronizadas con una carpeta local.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3827,7 +4649,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation type="unfinished">Iniciar Sesión</translation>
+        <translation type="unfinished">Iniciar sesión</translation>
     </message>
 </context>
 <context>
@@ -3976,7 +4798,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning...</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Escaneando...</translation>
+        <translation type="obsolete">Escaneando...</translation>
     </message>
     <message>
         <source>Account full</source>
@@ -3991,12 +4813,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
-        <translation type="unfinished">Reanudar Transferencias</translation>
+        <translation type="obsolete">Reanudar Transferencias</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
-        <translation type="unfinished">Pausar Transferencias</translation>
+        <translation type="obsolete">Pausar Transferencias</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">Escaneando</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
+        <translation type="unfinished">Sincronizando</translation>
     </message>
 </context>
 <context>
@@ -4089,7 +4921,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Error al descifrar</translation>
+        <translation type="unfinished">Error de descifrado</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4300,6 +5132,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Almacenamiento agotado</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cuota de transferencia excedida</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4323,7 +5160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Has superado la cuota de transferencia gratuita</translation>
+        <translation type="unfinished">Has agotado la cuota de transferencia gratuita</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -4331,11 +5168,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Por favor hazte PRO para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
+        <translatorcomment>Label to indicate that current account has reached transfer limit and need to wait %1 time or upgrade the account to continue.</translatorcomment>
+        <translation type="unfinished">Por favor amplía tu cuenta para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translation type="unfinished">La dirección IP que está usando ha utilizado un %1 de transferencia de datos en las últimas 6 horas, por lo que has sobrepasado nuestro límite actual. Para eliminar este límite [A]hazte PRO[/A] y tendrás tu propio paquete de cuota de transferencia y también un amplio espacio de almacenamiento adicional.</translation>
+        <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
+        <translation type="unfinished">La dirección IP que está usando ha utilizado un %1 de transferencia de datos en las últimas 6 horas, por lo que has sobrepasado nuestro límite actual. Para eliminar este límite [A]Amplía tu cuenta[/A] y tendrás tu propio paquete de cuota de transferencia y también un amplio espacio de almacenamiento adicional.</translation>
     </message>
 </context>
 <context>
@@ -4353,7 +5192,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Hazte PRO para disfrutar de más espacio de almacenamiento (tus subidas se reanudarán automáticamente).</translation>
+        <translation type="unfinished">Amplía tu cuenta para disfrutar de más espacio de almacenamiento (tus subidas se reanudarán automáticamente).</translation>
     </message>
     <message>
         <source>Earn more storage quota with [A]Achievements[/A].</source>
@@ -4381,17 +5220,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">mes</translation>
+        <translation type="obsolete">mes</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Almacenamiento</translation>
+        <translation type="obsolete">Almacenamiento</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Transferencia</translation>
+        <translation type="obsolete">Transferencia</translation>
     </message>
 </context>
 <context>
@@ -4446,19 +5285,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Bandeja de entrada</translation>
+        <translation type="obsolete">Buzón de entrada</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Compartido conmigo</translation>
+        <translation type="obsolete">Compartido conmigo</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Mi nube</translation>
+        <translation type="obsolete">Mi nube</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Papelera</translation>
+        <translation type="obsolete">Papelera</translation>
     </message>
 </context>
 <context>
@@ -4477,7 +5316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Bandeja de entrada</translation>
+        <translation type="unfinished">Buzón de entrada</translation>
     </message>
     <message>
         <source>Used</source>

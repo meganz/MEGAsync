@@ -26,7 +26,12 @@
    <string>Setup Assistant - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTypicalDesc, #lAdvancedDesc
+   <string notr="true">QPushButton, QLabel, QLineEdit
+{
+font-size: 11px;
+}
+
+#lTypicalDesc, #lAdvancedDesc
 {
 	font-size:13px; 
 	color:#666666;
@@ -39,7 +44,7 @@
 
 #lHeader
 {
-   font-family: &quot;Montserrat&quot;;
+   font-family: &quot;Lato&quot;;
    font-size: 16px;
    color: #ffffff;
 }
@@ -63,7 +68,7 @@
 
 #lAdditionalSyncs
 {
-	font: &quot;Helvetica&quot;;
+	font: &quot;Lato&quot;;
 	font-size: 13px;
 	font-weight: normal;
 	color: #666666;
@@ -71,7 +76,7 @@
 
 #lProgress, #lAdvancedSetup
 {
-	font: &quot;Helvetica&quot;;
+	font: &quot;Lato&quot;;
 	font-weight: normal;
 	color: #666666;
 	font-size:20px;
@@ -80,13 +85,19 @@
 #lError
 {
 	color: #FFFFFF;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 }
 
 #wErrorMessage
 {
 	background-color: #333333;
+}
+
+QPushButton
+{
+	padding-right: 12px;
+	padding-left: 12px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -184,6 +195,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="wHelp">
+           <property name="minimumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -195,7 +218,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -449,7 +472,7 @@
      <property name="maximumSize">
       <size>
        <width>560</width>
-       <height>16777215</height>
+       <height>258</height>
       </size>
      </property>
      <property name="currentIndex">
@@ -843,7 +866,7 @@
                 <bool>true</bool>
                </property>
                <property name="openExternalLinks">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1092,7 +1115,7 @@ background-color: #E2E2E2;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #333333;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
                </property>
@@ -1105,7 +1128,7 @@ background-color: #E2E2E2;
               <widget class="QLabel" name="lCheckInboxDesc">
                <property name="font">
                 <font>
-                 <family>SF UI Text</family>
+                 <family>Lato</family>
                  <pointsize>-1</pointsize>
                 </font>
                </property>
@@ -1114,7 +1137,7 @@ background-color: #E2E2E2;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
                </property>
@@ -1287,7 +1310,9 @@ background-color: #E2E2E2;
                 </size>
                </property>
                <property name="font">
-                <font/>
+                <font>
+                 <pointsize>-1</pointsize>
+                </font>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -1297,7 +1322,7 @@ background-color: #E2E2E2;
 border: none;</string>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/full_sync_ico.png</normaloff>:/images/full_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1379,7 +1404,7 @@ border: none;</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:16px;
-font: &quot;Montserrat&quot;;
+font: &quot;Lato&quot;;
 font-weight: normal;
 color: #E2574C;
 
@@ -1412,7 +1437,7 @@ color: #E2574C;
                   </property>
                   <property name="font">
                    <font>
-                    <family>SF UI Text</family>
+                    <family>Lato</family>
                     <pointsize>-1</pointsize>
                    </font>
                   </property>
@@ -1421,7 +1446,7 @@ color: #E2574C;
                   </property>
                   <property name="styleSheet">
                    <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
                   </property>
@@ -1502,7 +1527,9 @@ color: #E2574C;
                 </size>
                </property>
                <property name="font">
-                <font/>
+                <font>
+                 <pointsize>-1</pointsize>
+                </font>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -1515,7 +1542,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/selective_sync_ico.png</normaloff>:/images/selective_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1602,7 +1629,7 @@ border: none;</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:16px;
-font: &quot;Montserrat&quot;;
+font: &quot;Lato&quot;;
 font-weight: normal;
 color: #E2574C;
 </string>
@@ -1643,7 +1670,7 @@ color: #E2574C;
                   </property>
                   <property name="styleSheet">
                    <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;</string>
                   </property>
                   <property name="text">
@@ -1695,7 +1722,7 @@ color: #E2574C;
          </property>
          <property name="font">
           <font>
-           <family>Montserrat</family>
+           <family>Lato</family>
            <pointsize>-1</pointsize>
            <weight>50</weight>
            <italic>false</italic>
@@ -1709,7 +1736,7 @@ color: #E2574C;
           <string notr="true">#lAdvancedSetup
 {
 	color: #333333;
-	font-family: &quot;Montserrat&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 16px;
 }
 </string>
@@ -1782,7 +1809,7 @@ color: #E2574C;
             <property name="styleSheet">
              <string notr="true">margin-left: 2px;
 color: #333333;
-font-family: &quot;SF UI Text&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 13px;
 </string>
             </property>
@@ -1793,6 +1820,9 @@ font-size: 13px;
           </item>
           <item row="0" column="1">
            <layout class="QHBoxLayout" name="hMegaFolder">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QLineEdit" name="eLocalFolder">
               <property name="enabled">
@@ -1807,6 +1837,9 @@ font-size: 13px;
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
               </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 6px;</string>
+              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -1814,6 +1847,12 @@ font-size: 13px;
             </item>
             <item>
              <widget class="QPushButton" name="bLocalFolder">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
               <property name="text">
                <string>Change</string>
               </property>
@@ -1826,7 +1865,7 @@ font-size: 13px;
             <property name="styleSheet">
              <string notr="true">margin-left: 2px;
 color: #333333;
-font-family: &quot;SF UI Text&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 13px;
 </string>
             </property>
@@ -1841,7 +1880,7 @@ font-size: 13px;
           <item row="2" column="1">
            <layout class="QHBoxLayout" name="hLocalFolder">
             <property name="spacing">
-             <number>6</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QLineEdit" name="eMegaFolder">
@@ -1851,6 +1890,9 @@ font-size: 13px;
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
               </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 6px;</string>
+              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -1858,6 +1900,12 @@ font-size: 13px;
             </item>
             <item>
              <widget class="QPushButton" name="bMegaFolder">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
               <property name="text">
                <string>Change</string>
               </property>
@@ -1979,7 +2027,7 @@ font-size: 13px;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #333333;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;</string>
                </property>
                <property name="text">
@@ -1991,7 +2039,7 @@ font-size: 13px;
               <widget class="QLabel" name="lSyncTypeDesc">
                <property name="font">
                 <font>
-                 <family>SF UI Text</family>
+                 <family>Lato</family>
                  <pointsize>-1</pointsize>
                 </font>
                </property>
@@ -2000,7 +2048,7 @@ font-size: 13px;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;</string>
                </property>
                <property name="text">
@@ -2064,7 +2112,7 @@ font-size: 13px;
          </property>
          <property name="font">
           <font>
-           <family>Montserrat</family>
+           <family>Lato</family>
            <pointsize>-1</pointsize>
           </font>
          </property>
@@ -2076,7 +2124,7 @@ font-size: 13px;
 {
 font-size: 16px;
 color: #E2574C;
-font-family: &quot;Montserrat&quot;;
+font-family: &quot;Lato&quot;;
 }</string>
          </property>
          <property name="text">
@@ -2094,7 +2142,7 @@ font-family: &quot;Montserrat&quot;;
          </property>
          <property name="styleSheet">
           <string notr="true">	color: #333333;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
          </property>
@@ -2194,7 +2242,7 @@ image: url(://images/desktop_app_TM.png);
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>0</height>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="text">
@@ -2245,6 +2293,12 @@ image: url(://images/desktop_app_TM.png);
       </property>
       <item>
        <widget class="QPushButton" name="bSkip">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Skip</string>
         </property>
@@ -2265,6 +2319,12 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -2272,6 +2332,12 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bBack">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -2279,6 +2345,12 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bNext">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Next</string>
         </property>
@@ -2310,7 +2382,7 @@ image: url(://images/desktop_app_TM.png);
   <tabstop>bFinish</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
  <slots>

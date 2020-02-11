@@ -1,16 +1,20 @@
 #include "TransferItem.h"
 #include "megaapi.h"
 
+using namespace mega;
+
 TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
 {
     type = -1;
     transferError = 0;
+    transferErrorValue = 0;
     totalSize = 0;
     totalTransferredBytes = 0;
     transferSpeed = 0;
     meanTransferSpeed = 0;
     regular = false;
     isLinkAvailable = false;
+    nodeAccess = MegaShare::ACCESS_UNKNOWN;
     cancelButtonEnabled = false;
     isSyncTransfer = false;
     priority = 0;
@@ -74,6 +78,11 @@ void TransferItem::setFinishedTime(long long time)
     dsFinishedTime = time;
 }
 
+long long TransferItem::getFinishedTime()
+{
+    return dsFinishedTime;
+}
+
 void TransferItem::setType(int type, bool isSyncTransfer)
 {
     this->type = type;
@@ -116,9 +125,10 @@ int TransferItem::getTransferError()
     return transferError;
 }
 
-void TransferItem::setTransferError(int error)
+void TransferItem::setTransferError(int error, long long value)
 {
     transferError = error;
+    transferErrorValue = value;
 }
 
 int TransferItem::getTransferTag()
@@ -151,3 +161,12 @@ void TransferItem::setIsLinkAvailable(bool value)
     isLinkAvailable = value;
 }
 
+int TransferItem::getNodeAccess()
+{
+    return nodeAccess;
+}
+
+void TransferItem::setNodeAccess(int value)
+{
+    nodeAccess = value;
+}

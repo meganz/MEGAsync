@@ -1,6 +1,6 @@
 Name:       nemo-megasync
 Version:    EXT_VERSION
-Release:	1%{?dist}
+Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	Easy automated syncing between your computers and your MEGA cloud drive
 License:	Freeware
 Group:		Applications/Others

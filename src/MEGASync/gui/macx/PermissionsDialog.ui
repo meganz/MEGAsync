@@ -33,7 +33,7 @@ font-size: 11px;
 
 #lFolders, #lFiles
 {
-  font-family: &quot;HelveticaNeue-Light&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
 }</string>
   </property>

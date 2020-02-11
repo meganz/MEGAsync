@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QStyle>
 #include <math.h>
+#include "gui/PlanWidget.h"
 
 using namespace mega;
 
@@ -37,6 +38,8 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi *megaApi, MegaPricing *pricing, Q
     ui->wPlans->setLayout(plansLayout);
 
     updatePlans();
+
+    highDpiResize.init(this);
 }
 
 void UpgradeOverStorage::setPricing(MegaPricing *pricing)
@@ -73,7 +76,7 @@ void UpgradeOverStorage::refreshUsedStorage()
         int percentage = floor((100 * ((double)usedStorage) / totalStorage));
         ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
 
-        if (percentage > 100)
+        if (percentage >= 100)
         {
             ui->pUsageStorage->setProperty("almostoq", false);
             ui->pUsageStorage->setProperty("crossedge", true);
@@ -93,7 +96,7 @@ void UpgradeOverStorage::refreshUsedStorage()
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii("%&nbsp;"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%&nbsp;"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(totalStorage)));
         ui->lPercentageUsedStorage->setText(used);
@@ -132,7 +135,7 @@ void UpgradeOverStorage::updatePlans()
                 pricing->getGBTransfer(it),
                 pricing->getProLevel(it)
             };
-            plansLayout->addWidget(new UpgradeWidget(data, userAgent));
+            plansLayout->addWidget(new PlanWidget(data, userAgent));
         }
     }
 }

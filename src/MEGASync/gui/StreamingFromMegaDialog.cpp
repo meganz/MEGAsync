@@ -4,6 +4,9 @@
 
 #include "platform/Platform.h"
 #include "control/Utilities.h"
+#include "HighDpiResize.h"
+
+#include <QCloseEvent>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -39,6 +42,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
     ui->bCopyLink->setEnabled(false);
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
     delegateListener = new QTMegaRequestListener(this->megaApi, this);
+    highDpiResize.init(this);
 }
 
 StreamingFromMegaDialog::~StreamingFromMegaDialog()
@@ -92,7 +96,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::STREAM_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::STREAM_SELECT, this->parentWidget());
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {
@@ -299,13 +303,11 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 
 void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status)
 {
-    QFont f = ui->lFileName->font();
-    QFontMetrics fm = QFontMetrics(f);
-    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->maximumWidth()));
+    ui->lFileName->ensurePolished();
+    ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lFileName->maximumWidth()));
     ui->lFileSize->setText(Utilities::getSizeString(selectedMegaNode->getSize()));
 
-    QIcon typeIcon;
-    typeIcon.addFile(Utilities::getExtensionPixmapMedium(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    QIcon typeIcon = Utilities::getExtensionPixmapMedium(fileName);
 
     ui->lFileType->setIcon(typeIcon);
     ui->lFileType->setIconSize(QSize(48, 48));

@@ -2,8 +2,6 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialog.cpp \
-    $$PWD/TransferProgressBar.cpp \
-    $$PWD/UsageProgressBar.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -25,6 +23,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
+    $$PWD/MegaProgressCustomDialog.cpp \
     $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
@@ -42,7 +41,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ActiveTransfersWidget.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
-    $$PWD/DataUsageMenu.cpp \
     $$PWD/AddExclusionDialog.cpp \
     $$PWD/LocalCleanScheduler.cpp \
     $$PWD/TransferManagerItem.cpp \
@@ -55,15 +53,23 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/PSAwidget.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
-    $$PWD/UpgradeWidget.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/QRWidget.cpp \
-    $$PWD/QSyncItemWidget.cpp
+    $$PWD/QSyncItemWidget.cpp \
+    $$PWD/TransfersStatusWidget.cpp \
+    $$PWD/TransfersSummaryWidget.cpp \
+    $$PWD/CircularUsageProgressBar.cpp \
+    $$PWD/HighDpiResize.cpp \
+    $$PWD/AlertItem.cpp \
+    $$PWD/QAlertsModel.cpp \
+    $$PWD/MegaAlertDelegate.cpp \
+    $$PWD/QFilterAlertsModel.cpp \
+    $$PWD/FilterAlertWidget.cpp \
+    $$PWD/AlertFilterType.cpp \
+    $$PWD/BugReportDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
-    $$PWD/TransferProgressBar.h \
-    $$PWD/UsageProgressBar.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -85,6 +91,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
+    $$PWD/MegaProgressCustomDialog.h \
     $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
@@ -102,7 +109,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfersWidget.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
-    $$PWD/DataUsageMenu.h \
     $$PWD/AddExclusionDialog.h \
     $$PWD/LocalCleanScheduler.h \
     $$PWD/TransferManagerItem.h \
@@ -114,11 +120,21 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/PSAwidget.h \
     $$PWD/ElidedLabel.h \
     $$PWD/UpgradeOverStorage.h \
-    $$PWD/UpgradeWidget.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/QRWidget.h \
-    $$PWD/QSyncItemWidget.h
+    $$PWD/QSyncItemWidget.h \
+    $$PWD/TransfersStatusWidget.h \
+    $$PWD/TransfersSummaryWidget.h \
+    $$PWD/CircularUsageProgressBar.h \
+    $$PWD/HighDpiResize.h \
+    $$PWD/AlertItem.h \
+    $$PWD/QAlertsModel.h \
+    $$PWD/MegaAlertDelegate.h \
+    $$PWD/QFilterAlertsModel.h \
+    $$PWD/FilterAlertWidget.h \
+    $$PWD/AlertFilterType.h \
+    $$PWD/BugReportDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -131,8 +147,6 @@ win32 {
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
                 $$PWD/win/CustomTransferItem.ui \
-                $$PWD/win/TransferProgressBar.ui \
-                $$PWD/win/UsageProgressBar.ui \
                 $$PWD/win/NodeSelector.ui \
                 $$PWD/win/FolderBinder.ui \
                 $$PWD/win/BindFolderDialog.ui \
@@ -151,6 +165,7 @@ win32 {
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
                 $$PWD/win/ConfirmSSLexception.ui \
+                $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
@@ -166,18 +181,21 @@ win32 {
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
-                $$PWD/win/UpgradeWidget.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
-                $$PWD/win/QSyncItemWidget.ui
+                $$PWD/win/QSyncItemWidget.ui \
+                $$PWD/win/TransfersStatusWidget.ui \
+                $$PWD/win/AlertItem.ui \
+                $$PWD/win/TransfersSummaryWidget.ui \
+                $$PWD/win/FilterAlertWidget.ui \
+                $$PWD/win/AlertFilterType.ui \
+                $$PWD/win/BugReportDialog.ui
 }
 
 macx {
     RESOURCES += $$PWD/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/macx/InfoDialog.ui \
-                $$PWD/macx/TransferProgressBar.ui \
-                $$PWD/macx/UsageProgressBar.ui \
                 $$PWD/macx/NodeSelector.ui \
                 $$PWD/macx/FolderBinder.ui \
                 $$PWD/macx/BindFolderDialog.ui \
@@ -197,6 +215,7 @@ macx {
                 $$PWD/macx/StreamingFromMegaDialog.ui \
                 $$PWD/macx/PermissionsDialog.ui \
                 $$PWD/macx/PermissionsWidget.ui \
+                $$PWD/macx/MegaProgressCustomDialog.ui \
                 $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
@@ -214,10 +233,15 @@ macx {
                 $$PWD/macx/CustomTransferItem.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/UpgradeOverStorage.ui \
-                $$PWD/macx/UpgradeWidget.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
-                $$PWD/macx/QSyncItemWidget.ui
+                $$PWD/macx/QSyncItemWidget.ui \
+                $$PWD/macx/TransfersStatusWidget.ui \
+                $$PWD/macx/AlertItem.ui \
+                $$PWD/macx/TransfersSummaryWidget.ui \
+                $$PWD/macx/FilterAlertWidget.ui \
+                $$PWD/macx/AlertFilterType.ui \
+                $$PWD/macx/BugReportDialog.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm gui/QSegmentedControl.mm
@@ -234,8 +258,6 @@ unix:!macx {
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
                 $$PWD/linux/CustomTransferItem.ui \
-                $$PWD/linux/TransferProgressBar.ui \
-                $$PWD/linux/UsageProgressBar.ui \
                 $$PWD/linux/NodeSelector.ui \
                 $$PWD/linux/FolderBinder.ui \
                 $$PWD/linux/BindFolderDialog.ui \
@@ -255,6 +277,7 @@ unix:!macx {
                 $$PWD/linux/StreamingFromMegaDialog.ui \
                 $$PWD/linux/PermissionsDialog.ui \
                 $$PWD/linux/PermissionsWidget.ui \
+                $$PWD/linux/MegaProgressCustomDialog.ui \
                 $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
@@ -271,13 +294,18 @@ unix:!macx {
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \
                 $$PWD/linux/UpgradeOverStorage.ui \
-                $$PWD/linux/UpgradeWidget.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
-                $$PWD/linux/QSyncItemWidget.ui
+                $$PWD/linux/QSyncItemWidget.ui \
+                $$PWD/linux/TransfersStatusWidget.ui \
+                $$PWD/linux/AlertItem.ui \
+                $$PWD/linux/TransfersSummaryWidget.ui \
+                $$PWD/linux/FilterAlertWidget.ui \
+                $$PWD/linux/AlertFilterType.ui \
+                $$PWD/linux/BugReportDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}
+}       

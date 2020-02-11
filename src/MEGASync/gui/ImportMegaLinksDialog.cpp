@@ -125,6 +125,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     finished = false;
     linkProcessor->requestLinkInfo();
     ui->bOk->setDefault(true);
+    highDpiResize.init(this);
 }
 
 ImportMegaLinksDialog::~ImportMegaLinksDialog()
@@ -291,7 +292,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
             {
                 status = ImportListWidgetItem::WARNING;
             }
-            item->setData(QCoreApplication::translate("MegaError", MegaError::getErrorString(e)), status);
+            item->setData(QCoreApplication::translate("MegaError", MegaError::getErrorString(e, MegaError::API_EC_IMPORT)), status);
         }
         else
         {

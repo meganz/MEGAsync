@@ -29,7 +29,7 @@ fi
 in_file="$1"
 out1=$(awk 'f; /\);/{f=0} /const QString Preferences::CHANGELOG = QString::fromUtf8/{f=1}' $in_file)
 # remove ");
-out2=$(awk -F'"\);' '{print $1}' <<< "$out1")
+out2=$(awk -F'")*;' '{print $1}' <<< "$out1")
 # remove leading and trailing space, tabs and quote marks
 out3=$(awk '{ gsub(/^[ \t"]+|[ \t"\n]+$/, ""); print }' <<< "$out2")
 # remove trailing "\n"
@@ -38,6 +38,8 @@ out4=$(sed "s#\\\\n\$##g" <<< "$out3")
 out5=$(awk '!/New in this version/' <<< "$out4")
 # replace "- " by *
 out6=$(sed 's#^- #  * #g' <<< "$out5")
+# remove duplicates
+out7=$(awk '!x[$0]++' <<< "$out6")
 
 #get version number
 new_version=$(awk 'f; /const QString Preferences::VERSION_STRING = QString::fromAscii/' $in_file | \
@@ -49,6 +51,6 @@ awk -F'\\("' '{print $2}' \
 NOW=$(LANG=en_us_8859_1;date)
 echo $NOW - linux@mega.co.nz
 echo "- Update to version $new_version:"
-echo "$out6"
+echo "$out7"
 echo ""
 echo "-------------------------------------------------------------------"

@@ -1,3 +1,23 @@
+megasync (4.2.3) stable; urgency=low
+
+  * Fix a crash during processing of some PDF files
+  * Resume pending transfers after a crash on next startup
+  * Include option to add synchronizations from the main dialog
+  * Other minor bug fixes and improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 19 Aug 2019 19:00:52 +0200
+
+megasync (4.1.1) stable; urgency=low
+
+  * Improved look&feel for high resolution displays on Windows and Linux
+  * Improved GUI performance during addition of many downloads
+  * Restyling of initial information wizard, new icons and interface improvements
+  * Support for business accounts
+  * Other minor bug fixes and improvements"));
+  * Enable thumbnail support for PDF
+
+ -- MEGA Team <linux@mega.co.nz>  Thu, 16 May 2019 12:27:20 +0200
+
 megasync (4.0.2) stable; urgency=low
 
   * Fix bug with selection of transfer manager items

@@ -92,7 +92,7 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>22</height>
          </size>
         </property>
         <property name="text">
@@ -105,7 +105,7 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>22</height>
          </size>
         </property>
         <property name="text">
@@ -131,7 +131,7 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>22</height>
          </size>
         </property>
         <property name="text">
@@ -144,7 +144,7 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>16</height>
+          <height>22</height>
          </size>
         </property>
         <property name="text">

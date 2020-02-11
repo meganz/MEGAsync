@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>392</height>
+    <width>402</width>
+    <height>394</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,26 +18,38 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>392</height>
+    <width>402</width>
+    <height>394</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
-    <height>392</height>
+    <width>402</width>
+    <height>394</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wHeader
+   <string notr="true">#wGuestWidgetIn
+{
+ border: 1px solid rgba(100, 100, 100);
+ border-radius: 16px;
+}
+
+QPushButton, QLabel
+{
+font-size: 13px;
+}
+
+#wHeader
 {
  background-color:  #FAFAFA;
- border-top-left-radius: 2px;
- border-top-right-radius: 2px;
+ border-top-left-radius: 16px;
+ border-top-right-radius: 16px;
 }
+
 #bMEGA, #bLogoLogging, #bLogoLogin, #bLogoSettingUp
 {
 	border: none;
@@ -47,7 +59,7 @@
 {
 	border: none;
 	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
     font-size: 13px;
 }
 QPushButton#bSettings:hover
@@ -58,27 +70,27 @@ QPushButton#bSettings:hover
 #lEmail, #lPassword
 {
      color:rgba(0, 0, 0, 0.4);
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
     padding-left: 10px;
 }
 
 #lDesc
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 18px;
   color:rgba(51, 51, 51, 0.7);
 }
 
 #lDescLogin
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 13px;
   color: #666666;
 }
 #lLogin
 {
-  font-family: &quot;Montserrat&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 16px;
   color: #333333;
 }
@@ -86,18 +98,22 @@ QPushButton#bSettings:hover
 #lProgress
 {
 	color: #333333;
-     font-family: &quot;Montserrat&quot;;
+     font-family: &quot;Lato&quot;;
 	font-size: 16px;
 	padding-top: 15px;
 }
 #lSettingUp
 {
 	color: #333333;
-     font-family: &quot;Montserrat&quot;;
+     font-family: &quot;Lato&quot;;
 	font-size: 16px;
 }
 
-</string>
+QPushButton
+{
+	padding-right: 12px;
+	padding-left: 12px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -116,6 +132,30 @@ QPushButton#bSettings:hover
     <number>0</number>
    </property>
    <item>
+    <widget class="QWidget" name="wGuestWidgetIn" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>402</width>
+       <height>394</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_11">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
     <widget class="QWidget" name="wHeader" native="true">
      <property name="minimumSize">
       <size>
@@ -183,7 +223,7 @@ margin-top: -1px;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -222,7 +262,7 @@ margin-top: -1px;</string>
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pLogin">
       <property name="minimumSize">
@@ -341,7 +381,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -382,8 +422,7 @@ padding-top: 50px;</string>
           <item>
            <widget class="QWidget" name="wFormContainer" native="true">
             <property name="styleSheet">
-             <string notr="true">background: transparent;
-image: none;</string>
+                <string notr="true">image: none;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
              <property name="spacing">
@@ -404,8 +443,7 @@ image: none;</string>
              <item>
               <widget class="QWidget" name="wInputData" native="true">
                <property name="styleSheet">
-                <string notr="true">background: transparent;
-image: none;</string>
+                   <string notr="true">image: none;</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
@@ -494,8 +532,7 @@ image: none;</string>
                 <item>
                  <widget class="QWidget" name="wLoginButton" native="true">
                   <property name="styleSheet">
-                   <string notr="true">background: transparent;
-image: none;</string>
+                      <string notr="true">image: none;</string>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_4">
                    <property name="leftMargin">
@@ -528,7 +565,7 @@ image: none;</string>
                      <property name="minimumSize">
                       <size>
                        <width>120</width>
-                       <height>0</height>
+                       <height>22</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -602,6 +639,9 @@ border-bottom-right-radius: 2px;
              </property>
              <item>
               <widget class="QPushButton" name="bForgotPassword">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 image: none;
@@ -628,6 +668,9 @@ image: none;
              </item>
              <item>
               <widget class="QPushButton" name="bCreateAccount">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 image: none;
@@ -660,7 +703,7 @@ image: none;
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: white;</string>
+          <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">
@@ -717,11 +760,14 @@ image: none;</string>
               <height>64</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
             </property>
             <property name="iconSize">
@@ -738,8 +784,7 @@ image: none;</string>
        <item>
         <widget class="QWidget" name="wStatusMessages" native="true">
          <property name="styleSheet">
-          <string notr="true">background: transparent;
-image: none;</string>
+             <string notr="true">image: none;</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <property name="leftMargin">
@@ -915,7 +960,7 @@ image: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>81</width>
-                    <height>0</height>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -1036,6 +1081,9 @@ image: none;</string>
               <height>64</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1043,7 +1091,7 @@ image: none;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
             </property>
             <property name="iconSize">
@@ -1090,19 +1138,20 @@ image: none;</string>
    </item>
   </layout>
  </widget>
+   </item>
+  </layout>
+ </widget>
  <tabstops>
-  <tabstop>lEmail</tabstop>
-  <tabstop>lPassword</tabstop>
+  <tabstop>bSettings</tabstop>
+  <tabstop>bCancel</tabstop>
   <tabstop>bLogin</tabstop>
   <tabstop>bForgotPassword</tabstop>
   <tabstop>bCreateAccount</tabstop>
-  <tabstop>bSettings</tabstop>
-  <tabstop>bLogoLogging</tabstop>
-  <tabstop>bLogoSettingUp</tabstop>
-  <tabstop>bCancel</tabstop>
+  <tabstop>lEmail</tabstop>
+  <tabstop>lPassword</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

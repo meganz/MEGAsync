@@ -1,3 +1,21 @@
+Mon Aug 19 19:00:52 CEST 2019 - linux@mega.co.nz
+- Update to version 4.2.3:
+  * Fix a crash during processing of some PDF files
+  * Resume pending transfers after a crash on next startup
+  * Include option to add synchronizations from the main dialog
+  * Other minor bug fixes and improvements
+
+-------------------------------------------------------------------
+Thu May 16 12:27:20 CEST 2019 - linux@mega.co.nz
+- Update to version 4.1.1:
+  * Improved look&feel for high resolution displays on Windows and Linux
+  * Improved GUI performance during addition of many downloads
+  * Restyling of initial information wizard, new icons and interface improvements
+  * Support for business accounts
+  * Other minor bug fixes and improvements"));
+  * Enable thumbnail support for PDF
+
+-------------------------------------------------------------------
 Mon Feb 4 19:48:32 CET 2019 - linux@mega.co.nz
 - Update to version 4.0.2:
   * Fix bug with selection of transfer manager items

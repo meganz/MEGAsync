@@ -32,7 +32,7 @@ git clone --recursive https://github.com/meganz/MEGAsync.git
 3.- Create a folder `Release_x32` inside the root of the code that you have just downloaded
 
 4.- Download the required third party libraries from this link:
-https://mega.nz/#!sjxDSSTa!TN8hASqd79E-5l6Xx0MbToOixfy07N7yxYEzYFTRVYM
+https://mega.nz/#!8tZglCTR!cZ_B39i9YxLgt3_8x9LsOpFhFDHuAh4jdz78IuQTQT4
 
 5.- Uncompress that file into `src\MEGASync\mega\bindings\qt`
 
@@ -70,7 +70,13 @@ https://mega.nz/#!T14B0Y4T!EXGg9dRtacgz9_vCUtVq5tj6C3PBpkOHgXG289EBxBM
 
 ## Linux compilation
 
-Preparation:
+#### Requirements:
+
+* Using `gcc` compiler below version 5 might result in compiler errors. 
+* Third party requirements vary depending on your system.
+
+
+#### Preparation:
 
 First install dependencies. e.g., for a debian/ubuntu with QT >= 5.6 (e.g: Ubuntu 18.04):
 ```

@@ -37,6 +37,8 @@ QPushButton
 {
     min-height: 24px;
 	height: 24px;
+	padding-right: 12px;
+	padding-left: 12px;
 }
 </string>
   </property>
@@ -78,7 +80,7 @@ QPushButton
        <number>9</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>9</number>
@@ -116,28 +118,32 @@ QPushButton
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="styleSheet">
-           <string notr="true">margin: 4px;
-border: none;</string>
+           <string notr="true"/>
           </property>
           <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../Resources_win.qrc">
-            <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
+           <string>Choose</string>
           </property>
           <property name="iconSize">
            <size>
-            <width>24</width>
-            <height>24</height>
+            <width>16</width>
+            <height>16</height>
            </size>
+          </property>
+          <property name="autoDefault">
+           <bool>true</bool>
           </property>
           <property name="default">
            <bool>false</bool>
           </property>
           <property name="flat">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -163,6 +169,12 @@ border: none;</string>
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="accessibleName">
            <string>Local folder:</string>
           </property>
@@ -173,29 +185,44 @@ border: none;</string>
         </item>
         <item>
          <widget class="QPushButton" name="bLocalFolder">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">margin: 4px;
-border: none;
-</string>
+           <string notr="true"/>
           </property>
           <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../Resources_win.qrc">
-            <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
+           <string>Choose</string>
           </property>
           <property name="iconSize">
            <size>
-            <width>24</width>
-            <height>24</height>
+            <width>16</width>
+            <height>16</height>
            </size>
+          </property>
+          <property name="autoDefault">
+           <bool>true</bool>
           </property>
           <property name="default">
            <bool>false</bool>
           </property>
           <property name="flat">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -214,8 +241,6 @@ border: none;
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>
- <resources>
-  <include location="../Resources_win.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

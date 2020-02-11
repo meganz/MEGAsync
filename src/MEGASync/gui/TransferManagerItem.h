@@ -28,14 +28,14 @@ public:
     void updateTransfer();
     void updateAnimation();
     void updateFinishedTime();
-    void mouseHoverTransfer(bool isHover);
+    void mouseHoverTransfer(bool isHover, const QPoint &pos);
     void loadDefaultTransferIcon();
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
     bool cancelButtonClicked(QPoint pos);
     bool mouseHoverRetryingLabel(QPoint pos);
-    bool getLinkButtonClicked(QPoint pos) { return false;}
+    bool checkIsInsideButton(QPoint pos, int button) { return false;}
 
     ~TransferManagerItem();
 

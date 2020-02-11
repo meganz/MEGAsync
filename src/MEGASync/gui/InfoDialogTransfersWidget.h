@@ -17,7 +17,7 @@ class InfoDialogTransfersWidget : public QWidget
 
 public:
     explicit InfoDialogTransfersWidget(QWidget *parent = 0);
-    void setupTransfers();
+    void setupTransfers(QCustomTransfersModel * model = nullptr);
     QCustomTransfersModel *getModel();
     ~InfoDialogTransfersWidget();
 
@@ -28,10 +28,6 @@ private:
 
 private:
     void configureTransferView();
-
-private slots:
-    void enableAlternateRowStyle();
-    void disableAlternateRowStyle();
 
 private:
     MegaApplication *app;

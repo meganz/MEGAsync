@@ -49,6 +49,7 @@ private slots:
     void wTypicalSetup_clicked();
     void wAdvancedSetup_clicked();
     void lTermsLink_clicked();
+    void on_lTermsLink_linkActivated( const QString &link);
     void on_bLearMore_clicked();
     void on_bFinish_clicked();
     void showErrorMessage(QString error);
@@ -63,6 +64,8 @@ private:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
     void closeEvent(QCloseEvent * event);
+    void reject();
+
     void setupPreferences();
     void page_login();
     void page_logout();

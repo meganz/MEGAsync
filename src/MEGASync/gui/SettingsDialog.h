@@ -6,8 +6,6 @@
 #include <QFutureWatcher>
 #include <QtCore>
 #include <QNetworkProxy>
-#include <QProgressDialog>
-#include <QCloseEvent>
 #include <QButtonGroup>
 #include <ConnectivityChecker.h>
 
@@ -16,25 +14,18 @@
 #include "SizeLimitDialog.h"
 #include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
+#include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "megaapi.h"
+#include "HighDpiResize.h"
 
 namespace Ui {
 class SettingsDialog;
 }
 
-class MegaProgressDialog : public QProgressDialog
-{
-public:
-    MegaProgressDialog(const QString & labelText, const QString & cancelButtonText, int minimum, int maximum, QWidget * parent = 0, Qt::WindowFlags f = 0);
-protected:
-    void reject();
-    void closeEvent(QCloseEvent * event);
-};
-
 class MegaApplication;
-class SettingsDialog : public QDialog
+class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
     Q_OBJECT
     
@@ -49,6 +40,7 @@ public:
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
+    void storageChanged();
 
 public slots:
     void stateChanged();
@@ -60,17 +52,29 @@ public slots:
     
 private slots:
     void on_bAccount_clicked();
-    void on_bSecurity_clicked();
+
     void on_bSyncs_clicked();
+
     void on_bBandwidth_clicked();
+
     void on_bAdvanced_clicked();
+
     void on_bProxies_clicked();
 
     void on_bCancel_clicked();
+
     void on_bOk_clicked();
+
     void on_bHelp_clicked();
+
+#ifndef __APPLE__
+    void on_bHelpIco_clicked();
+#endif
+
     void on_rProxyManual_clicked();
+
     void on_rProxyAuto_clicked();
+
     void on_rNoProxy_clicked();
 
     void on_bUpgrade_clicked();
@@ -112,6 +116,7 @@ private slots:
     void on_bStorageDetails_clicked();
     void on_lAccountImage_clicked();
     void on_bChangePassword_clicked();
+    void on_bSendBug_clicked();
 
     void onAnimationFinished();
 
@@ -128,6 +133,7 @@ private:
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    HighDpiResize highDpiResize;
     bool syncsChanged;
     bool excludedNamesChanged;
     QStringList syncNames;
@@ -135,7 +141,7 @@ private:
     bool proxyOnly;
     QFutureWatcher<long long> cacheSizeWatcher;
     QFutureWatcher<long long> remoteCacheSizeWatcher;
-    MegaProgressDialog *proxyTestProgressDialog;
+    MegaProgressCustomDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
     bool shouldClose;
     int modifyingSettings;
@@ -157,6 +163,7 @@ private:
     bool fileVersioningChanged;
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
+    bool reloadUIpage;
 
 #ifndef WIN32
     int folderPermissions;
@@ -171,12 +178,18 @@ private:
     QParallelAnimationGroup *animationGroup;
 #endif
 
-    void loadSyncSettings();
     void loadSizeLimits();
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
-    void drawAvatar(QString email);
+
+public:
+    void updateStorageElements();
+    void updateBandwidthElements();
+    void updateAccountElements();
+    void loadSyncSettings();
+    void updateUploadFolder();
+    void updateDownloadFolder();
 };
 
 #endif // SETTINGSDIALOG_H

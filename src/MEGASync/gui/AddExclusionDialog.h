@@ -2,6 +2,7 @@
 #define ADDEXCLUSIONDIALOG_H
 
 #include <QDialog>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class AddExclusionDialog;
@@ -29,6 +30,7 @@ protected:
 
 private:
     Ui::AddExclusionDialog *ui;
+    HighDpiResize highDpiResize;
 };
 
 #endif // ADDEXCLUSIONDIALOG_H
