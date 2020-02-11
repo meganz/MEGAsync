@@ -11,19 +11,22 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.2.5.0";
-const int Preferences::VERSION_CODE = 4205;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.0.0";
+const int Preferences::VERSION_CODE = 4300;
+const int Preferences::BUILD_ID = 8;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.5");
-QString Preferences::SDK_ID = QString::fromAscii("fcd2f0e");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.0");
+QString Preferences::SDK_ID = QString::fromAscii("1c1afc1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fix sync issues on macOS 10.15\n"
-    "- Fix transfer resumption issues for webclient and public links downloads\n"
-    "- Fix a crash during processing of some PDF files\n"
-    "- Resume pending transfers after a crash on next startup\n"
-    "- Include option to add synchronizations from the main dialog\n"
-    "- Other minor bug fixes and improvements"));
+    "- Support for user notifications.\n"
+    "- Support to send bug reports from settings dialog.\n"
+    "- New restyling of main dialog.\n"
+    "- Performance improvements when dealing with huge amount of syncs and transfers.\n"
+    "- Improved support for business accounts.\n"
+    "- Support links to files and folders inside a public folder link.\n"
+    "- Improvements for synchronization with FAT32 filesystems.\n"
+    "- Other UI fixes and adjustments.\n"
+    "- Other performance improvements, UI fixes and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -2915,8 +2918,26 @@ void Preferences::clearAll()
 
 void Preferences::sync()
 {
+    mutex.lock();
     settings->sync();
+    mutex.unlock();
 }
+
+void Preferences::deferSyncs(bool b)
+{
+    mutex.lock();
+    settings->deferSyncs(b);
+    mutex.unlock();
+}
+
+bool Preferences::needsDeferredSync()
+{
+    mutex.lock();
+    bool b = settings->needsDeferredSync();
+    mutex.unlock();
+    return b;
+}
+
 
 void Preferences::login(QString account)
 {

@@ -300,6 +300,9 @@ public:
     void clearAll();
     void sync();
 
+    void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
+    bool needsDeferredSync();
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,

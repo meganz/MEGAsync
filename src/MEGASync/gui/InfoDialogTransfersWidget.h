@@ -29,10 +29,6 @@ private:
 private:
     void configureTransferView();
 
-private slots:
-    void enableAlternateRowStyle();
-    void disableAlternateRowStyle();
-
 private:
     MegaApplication *app;
 };

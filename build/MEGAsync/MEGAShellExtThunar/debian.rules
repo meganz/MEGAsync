@@ -13,7 +13,7 @@ clean:
 	rm -f build-stamp
 
 install: build
-	dh_install libMEGAShellExtThunar.so* `pkg-config --variable=extensionsdir thunarx-2`/
+	dh_install libMEGAShellExtThunar.so* `pkg-config --variable=extensionsdir thunarx-2 || pkg-config --variable=extensionsdir thunarx-3`/
 
 # Build architecture-independent files here.
 binary-indep: build install

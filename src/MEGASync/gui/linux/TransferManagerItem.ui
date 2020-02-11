@@ -45,21 +45,21 @@
 }
 #lTransferName, #lTransferNameCompleted
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 16px;
   font-weight: 400;
   color: #333333;
 }
 #lTotal, #lTotalCompleted
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 13px;
   font-weight: 400;
   color: #333333;
 }
 #lSpeed
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 13px;
   font-weight: 400;
   color: #aaaaaa;
@@ -67,7 +67,7 @@
 
 #lRemainingTimeCompleted
 {
-   font: &quot;Source Sans Pro&quot;;
+   font: &quot;Lato&quot;;
    font-size: 10px;
    font-weight: normal;
    color: #333333;

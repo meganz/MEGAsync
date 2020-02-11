@@ -7,6 +7,8 @@
 #include "gui/Login2FA.h"
 #include "platform/Platform.h"
 
+#include <QKeyEvent>
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -650,11 +652,6 @@ void SetupWizard::on_bCancel_clicked()
             preferences->setCrashed(true);
             app->rebootApplication(false);
             return;
-        }
-
-        if (selectedMegaFolderHandle == rootNode->getHandle())
-        {
-            syncName = QString::fromUtf8("MEGA");
         }
 
         delete rootNode;

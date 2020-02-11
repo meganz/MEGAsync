@@ -37,6 +37,8 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
+#include "QFilterAlertsModel.h"
+#include "gui/MegaAlertDelegate.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -84,9 +86,10 @@ enum GetUserStatsReason {
     USERSTATS_PRO_EXPIRED,
     USERSTATS_OPENSETTINGSDIALOG,
     USERSTATS_STORAGECACHEUNKNOWN,
+    USERSTATS_SHOWMAINDIALOG,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener
+class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved
 {
     Q_OBJECT
 
@@ -116,15 +119,18 @@ public:
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onAccountUpdate(mega::MegaApi *api);
+    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list);
     virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
     virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
     virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
     virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
-
+    virtual void onCheckDeferredPreferencesSync(bool timeout);
 
     mega::MegaApi *getMegaApi() { return megaApi; }
+
+    std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
     void unlink();
     void cleanLocalCaches(bool all = false);
@@ -144,7 +150,7 @@ public:
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
-    void createTrayMenu();
+    void createAppMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
@@ -153,6 +159,12 @@ public:
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
+
+    bool notificationsAreFiltered();
+    bool hasNotifications();
+    bool hasNotificationsOfType(int type);
+
+    MegaSyncLogger& getLogger() const;
 
 signals:
     void startUpdaterThread();
@@ -167,12 +179,12 @@ public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
-    void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
+    void openSettings(int tab = -1);
     void openInfoWizard();
     void openBwOverquotaDialog();
-    void changeProxy();
     void importLinks();
     void officialWeb();
+    void goToMyCloud();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
@@ -203,7 +215,7 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void exitApplication();
+    void exitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
@@ -224,6 +236,7 @@ public slots:
     void onConnectivityCheckError();
     void proExpirityTimedOut();
     void userAction(int action);
+    void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
@@ -241,7 +254,9 @@ public slots:
     void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
+    void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
+    void onCheckDeferredPreferencesSyncTimeout();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
@@ -249,10 +264,12 @@ private slots:
     void showInFolder(int activationButton);
     void openFolderPath(QString path);
     void redirectToUpgrade(int activationButton);
+    void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
 
 protected:
+    bool checkOverquotaBandwidth();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -273,6 +290,7 @@ protected:
     void refreshStorageUIs();
 
     void sendOverStorageNotification(int state);
+    void sendBusinessWarningNotification();
 
     bool eventFilter(QObject *obj, QEvent *e);
 
@@ -294,8 +312,8 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    std::unique_ptr<QMenu> trayMenu;
-    std::unique_ptr<QMenu> trayGuestMenu;
+    std::unique_ptr<QMenu> infoDialogMenu;
+    std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
     QSignalMapper *menuSignalMapper;
@@ -306,7 +324,7 @@ protected:
     MenuItemAction *uploadAction;
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
-    MenuItemAction *webAction;
+    MenuItemAction *myCloudAction;
     MenuItemAction *addSyncAction;
 
     MenuItemAction *updateAction;
@@ -323,6 +341,7 @@ protected:
 
     QTimer *connectivityTimer;
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
+    std::unique_ptr<QTimer> onDeferredPreferencesSyncTimer;
     QTimer proExpirityTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
@@ -335,8 +354,13 @@ protected:
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
+    QFilterAlertsModel *notificationsProxyModel;
+    QAlertsModel *notificationsModel;
+    MegaAlertDelegate *notificationsDelegate;
+
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
+    long long lastTsConnectionError = 0;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
@@ -357,6 +381,8 @@ protected:
     bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
+    long long lastTsBusinessWarning;
+    long long lastTsErrorMessageShown;
     bool almostOQ;
     int storageState;
     int appliedStorageState;
@@ -390,6 +416,7 @@ protected:
     static QString appPath;
     static QString appDirPath;
     static QString dataPath;
+    static QString lastNotificationError;
 
     QThread *updateThread;
     UpdateTask *updateTask;
@@ -398,7 +425,7 @@ protected:
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
-    MegaSyncLogger *logger;
+    std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
@@ -410,6 +437,7 @@ protected:
     bool paused;
     bool indexing;
     bool waiting;
+    bool syncing; //if any sync is in syncing state
     bool updated;
     bool checkupdate;
     bool updateBlocked;
@@ -417,7 +445,6 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    long long externalNodesTimestamp;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
@@ -429,6 +456,29 @@ protected:
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
     bool nodescurrent;
+    int businessStatus = -2;
+    friend class DeferPreferencesSyncForScope;
+};
+
+class DeferPreferencesSyncForScope
+{
+    // This class is provided as an easy way to avoid updating the preferences file so often that it becomes a performance issue
+    // eg. when 1000 transfers all have a temporary error callback at once.
+    // It causes sync() to set a flag instead of actually rewriting the file, and the app will start a timer
+    // to do the actual sync() in 100ms instead.   Any other sync() calls (that are also protected by this class) in the meantime are effectively skipped.
+    MegaApplication* app;
+
+public:
+    DeferPreferencesSyncForScope(MegaApplication* a) : app(a)
+    {
+        app->preferences->deferSyncs(true);
+    }
+
+    ~DeferPreferencesSyncForScope()
+    {
+        app->preferences->deferSyncs(false);
+        app->onCheckDeferredPreferencesSync(false);
+    }
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

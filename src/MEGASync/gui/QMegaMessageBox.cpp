@@ -1,4 +1,5 @@
 #include "QMegaMessageBox.h"
+#include "HighDpiResize.h"
 #include <QDialogButtonBox>
 
 QMessageBox::StandardButton QMegaMessageBox::information(QWidget *parent, const QString &title,
@@ -33,6 +34,7 @@ QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, 
     const QString &title, const QString &text, qreal devPixelRatio, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton)
 {
     QMessageBox msgBox(icon, title, text, QMessageBox::NoButton, parent);
+    HighDpiResize hDpiResizer(&msgBox);
     switch (icon)
     {
         case Information:

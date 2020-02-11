@@ -19,6 +19,17 @@ GuestWidget::GuestWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef _WIN32
+    if(getenv("QT_SCREEN_SCALE_FACTORS"))
+    {
+        //do not use WA_TranslucentBackground when using custom scale factors in windows
+        setStyleSheet(styleSheet().append(QString::fromUtf8("#wGuestWidgetIn{border-radius: 0px;}" ) ));
+    }
+    else
+#endif
+    {
+        setAttribute(Qt::WA_TranslucentBackground);
+    }
     ui->lEmail->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
     ui->lPassword->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
 

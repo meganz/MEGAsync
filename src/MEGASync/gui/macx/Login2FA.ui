@@ -47,7 +47,7 @@ background-color:  rgba(0, 0, 0, 10%);
 	border-radius: 2px;
 	background-color: rgba(240,55,58,0.1);
     padding: 6px 12px 6px 12px;
-    font-family: &quot;SF UI Text&quot;;
+    font-family: &quot;Lato&quot;;
     font-size: 12px;
     color:  #DA3135;
 }
@@ -55,7 +55,7 @@ background-color:  rgba(0, 0, 0, 10%);
 #lDesc
 {
 	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
     font-weight: 500;
 }
@@ -63,14 +63,14 @@ background-color:  rgba(0, 0, 0, 10%);
 #lLostAuthCode
 {
     color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 11px;
 }
 
 #lCode 
 {
 	color: #333333;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 }</string>
   </property>

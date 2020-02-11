@@ -7,7 +7,7 @@ Version: MEGASYNC_VERSION
 DEBTRANSFORM-RELEASE: 1
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
-Build-Depends: ffmpeg-mega, pdfium-mega [!i386], libzen-dev, libmediainfo-dev, debhelper, libqt4-dev, libqt4-svg, libqt4-dbus, libcrypto++-dev, libraw-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs, unzip, wget, libtool-bin (>= 2.4.2-1.10) | libtool (<< 2.4.2-1.10)
+Build-Depends: ffmpeg-mega, pdfium-mega [!i386], libxkbcommon-dev, libxkbcommon-x11-0, qt-mega, libgl1-mesa-dev, libfontconfig1-dev, libzen-dev, libmediainfo-dev, debhelper, libcrypto++-dev, libraw-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs, unzip, wget, libtool-bin (>= 2.4.2-1.10) | libtool (<< 2.4.2-1.10)
 Package-List:
  megasync deb gnome optional
 Files:

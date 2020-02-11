@@ -7,6 +7,12 @@ class TransferItem : public QWidget
 {
     Q_OBJECT
 public:
+
+    enum {
+        ACTION_BUTTON = 0,
+        SHOW_IN_FOLDER_BUTTON,
+    };
+
     explicit TransferItem(QWidget *parent = 0);
 
     virtual void setFileName(QString fileName);
@@ -15,6 +21,7 @@ public:
     virtual void setSpeed(long long transferSpeed, long long meanSpeed);
     virtual void setTotalSize(long long size);
     virtual void setFinishedTime(long long time);
+    virtual long long getFinishedTime();
 
     virtual void setType(int type, bool isSyncTransfer = false);
     virtual int getType();
@@ -48,9 +55,9 @@ public:
     virtual void updateAnimation() = 0;
 
     virtual bool cancelButtonClicked(QPoint pos) = 0;
-    virtual bool getLinkButtonClicked(QPoint pos) = 0;
+    virtual bool checkIsInsideButton(QPoint pos, int button) = 0;
     virtual bool mouseHoverRetryingLabel(QPoint pos) = 0;
-    virtual void mouseHoverTransfer(bool isHover) = 0;
+    virtual void mouseHoverTransfer(bool isHover, const QPoint &pos) = 0;
     virtual void setStateLabel(QString labelState) = 0;
     virtual QString getTransferName() = 0;
 

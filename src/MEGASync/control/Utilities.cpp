@@ -166,7 +166,7 @@ qreal Utilities::getDevicePixelRatio()
 #endif
 }
 
-QString Utilities::getExtensionPixmap(QString fileName, QString prefix)
+QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
 {
     if (extensionIcons.isEmpty())
     {
@@ -187,9 +187,9 @@ QString Utilities::getExtensionPixmap(QString fileName, QString prefix)
 QString Utilities::languageCodeToString(QString code)
 {
     if (languageNames.isEmpty())
-    {       
+    {
         languageNames[QString::fromAscii("ar")] = QString::fromUtf8("العربية");
-        languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");  
+        languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");
         languageNames[QString::fromAscii("en")] = QString::fromUtf8("English");
         languageNames[QString::fromAscii("es")] = QString::fromUtf8("Español");
         languageNames[QString::fromAscii("fr")] = QString::fromUtf8("Français");
@@ -245,14 +245,54 @@ QString Utilities::languageCodeToString(QString code)
     return languageNames.value(code);
 }
 
-QString Utilities::getExtensionPixmapSmall(QString fileName)
+
+struct IconCache
 {
-    return getExtensionPixmap(fileName, QString::fromAscii(":/images/small_"));
+    std::map<QString, QIcon> mIcons;
+
+    QIcon& getDirect(QString resourceName)
+    {
+        auto i = mIcons.find(resourceName);
+        if (i == mIcons.end())
+        {
+            auto pair = mIcons.emplace(resourceName, QIcon());
+            i = pair.first;
+            i->second.addFile(resourceName, QSize(), QIcon::Normal, QIcon::Off);
+        }
+        return i->second;
+    }
+
+    QIcon& getByExtension(const QString &fileName, const QString &prefix)
+    {
+        return getDirect(Utilities::getExtensionPixmapName(fileName, prefix));
+    }
+};
+
+IconCache gIconCache;
+
+QString Utilities::getExtensionPixmapNameSmall(QString fileName)
+{
+    return getExtensionPixmapName(fileName, QString::fromAscii(":/images/small_"));
 }
 
-QString Utilities::getExtensionPixmapMedium(QString fileName)
+QString Utilities::getExtensionPixmapNameMedium(QString fileName)
 {
-    return getExtensionPixmap(fileName, QString::fromAscii(":/images/drag_"));
+    return getExtensionPixmapName(fileName, QString::fromAscii(":/images/drag_"));
+}
+
+QIcon Utilities::getCachedPixmap(QString fileName)
+{
+    return gIconCache.getDirect(fileName);
+}
+
+QIcon Utilities::getExtensionPixmapSmall(QString fileName)
+{
+    return gIconCache.getDirect(getExtensionPixmapNameSmall(fileName));
+}
+
+QIcon Utilities::getExtensionPixmapMedium(QString fileName)
+{
+    return gIconCache.getDirect(getExtensionPixmapNameMedium(fileName));
 }
 
 QString Utilities::getAvatarPath(QString email)
@@ -480,22 +520,22 @@ QString Utilities::getSizeString(unsigned long long bytes)
     QLocale locale(language);
     if (bytes >= TB)
     {
-        return locale.toString( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
+        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return locale.toString( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
+        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return locale.toString( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
+        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return locale.toString( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
+        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
     }
 
     return locale.toString(bytes) + QString::fromAscii(" bytes");

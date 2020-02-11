@@ -1,6 +1,7 @@
 #include "ActiveTransfersWidget.h"
 #include "ui_ActiveTransfersWidget.h"
 #include "control/Utilities.h"
+#include "HighDpiResize.h"
 #include "Preferences.h"
 #include <QMessageBox>
 
@@ -32,6 +33,7 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
     ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
                                                            "border: none; "));
+    mWhichGraphsStyleSheet = 1;
 }
 
 void ActiveTransfersWidget::init(MegaApi *megaApi, MegaTransfer *activeUpload, MegaTransfer *activeDownload)
@@ -137,13 +139,10 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             activeDownload.tag = transfer->getTag();
             setType(&activeDownload, type, transfer->isSyncTransfer());
             activeDownload.fileName = QString::fromUtf8(transfer->getFileName());
-            QFont f = ui->lDownFilename->font();
-            QFontMetrics fm = QFontMetrics(f);
-            ui->lDownFilename->setText(fm.elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
+            ui->lDownFilename->ensurePolished();
+            ui->lDownFilename->setText(ui->lDownFilename->fontMetrics().elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
             ui->lDownFilename->setToolTip(activeDownload.fileName);
-            QIcon icon;
-            icon.addFile(Utilities::getExtensionPixmapSmall(activeDownload.fileName), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bDownFileType->setIcon(icon);
+            ui->bDownFileType->setIcon(Utilities::getExtensionPixmapSmall(activeDownload.fileName));
             setTotalSize(&activeDownload, transfer->getTotalBytes());
         }
 
@@ -172,13 +171,10 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             activeUpload.tag = transfer->getTag();
             setType(&activeUpload, type, transfer->isSyncTransfer());
             activeUpload.fileName = QString::fromUtf8(transfer->getFileName());
-            QFont f = ui->lUpFilename->font();
-            QFontMetrics fm = QFontMetrics(f);
-            ui->lUpFilename->setText(fm.elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
+            ui->lUpFilename->ensurePolished();
+            ui->lUpFilename->setText(ui->lUpFilename->fontMetrics().elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
             ui->lUpFilename->setToolTip(activeUpload.fileName);
-            QIcon icon;
-            icon.addFile(Utilities::getExtensionPixmapSmall(activeUpload.fileName), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bUpFileType->setIcon(icon);
+            ui->bUpFileType->setIcon(Utilities::getExtensionPixmapSmall(activeUpload.fileName));
             setTotalSize(&activeUpload, transfer->getTotalBytes());
         }
 
@@ -259,6 +255,11 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
                                            .arg(QString::fromUtf8("<span style=\"color:#666666; font-size: 28px; text-decoration:none;\">%1</span>")
                                            .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0)))
                                            .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s")));
+
+            megaApi->log(MegaApi::LOG_LEVEL_INFO, (QString::fromUtf8("DOWNLOAD SPEED %1 %2")
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0))
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s"))).toUtf8().constData());
+
         }
     }
 }
@@ -298,6 +299,10 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
                                          .arg(QString::fromUtf8("<span style=\"color:#666666; font-size: 28px; text-decoration:none;\">%1</span>")
                                          .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0)))
                                          .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s")));
+
+            megaApi->log(MegaApi::LOG_LEVEL_INFO, (QString::fromUtf8("UPLOAD SPEED %1 %2")
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0))
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s"))).toUtf8().constData());
         }
     }
 }
@@ -312,6 +317,7 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
     }
 
     QMessageBox warning;
+    HighDpiResize hDpiResizer(&warning);
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);
@@ -337,6 +343,7 @@ void ActiveTransfersWidget::on_bUpCancel_clicked()
     }
 
     QMessageBox warning;
+    HighDpiResize hDpiResizer(&warning);
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);
@@ -541,14 +548,22 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
     if (!totalDownloads && !totalUploads)
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
-        ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
-                                                               "border: none; "));
+        if (mWhichGraphsStyleSheet != 1)
+        {
+            ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
+                "border: none; "));
+            mWhichGraphsStyleSheet = 1;
+        }
     }
     else
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pTransfers);
-        ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: rgba(0, 0, 0, 10%); "
-                                                               "border: none; "));
+        if (mWhichGraphsStyleSheet != 2)
+        {
+            ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: rgba(0, 0, 0, 10%); "
+                "border: none; "));
+            mWhichGraphsStyleSheet = 2;
+        }
     }
 }
 

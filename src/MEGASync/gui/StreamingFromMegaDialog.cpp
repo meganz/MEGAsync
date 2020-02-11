@@ -6,6 +6,8 @@
 #include "control/Utilities.h"
 #include "HighDpiResize.h"
 
+#include <QCloseEvent>
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -301,13 +303,11 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 
 void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status)
 {
-    QFont f = ui->lFileName->font();
-    QFontMetrics fm = QFontMetrics(f);
-    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->maximumWidth()));
+    ui->lFileName->ensurePolished();
+    ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lFileName->maximumWidth()));
     ui->lFileSize->setText(Utilities::getSizeString(selectedMegaNode->getSize()));
 
-    QIcon typeIcon;
-    typeIcon.addFile(Utilities::getExtensionPixmapMedium(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    QIcon typeIcon = Utilities::getExtensionPixmapMedium(fileName);
 
     ui->lFileType->setIcon(typeIcon);
     ui->lFileType->setIconSize(QSize(48, 48));

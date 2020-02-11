@@ -32,26 +32,26 @@ border-radius: 5px;
 }
 #lVersion, #lSDKVersion
 {
-  font-family: &quot;Helvetica&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 11px;
   color: #333333;
 }
 #lMEGAsync
 {
-  font-family: &quot;Helvetica-Bold&quot;;
+  font-family: &quot;Lato-Bold&quot;;
   font-size: 16px;
   color: #333333;
 }
 #bPolicy, #bTerms, #bAck, #bGDPR
 {
-  font-family: &quot;Helvetica&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 11px;
   color: #D90007;
   border: none;
 }
 #lCopyright
 {
-  font-family: &quot;Helvetica&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 11px;
   color: #666666;
 }
