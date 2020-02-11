@@ -54,17 +54,23 @@ set (HAVE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1 CACHE STRING "")
 
-set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
 
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
 
+## Use prebuild 3rdparties
+set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
 set(prebuilt_dir "${MEGAsyncDir}/mega/bindings/qt/3rdparty")
-
 #specify where 3rd party libraries are available
 set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
+
+
+## Use vcpkg 3rdparties
+#set (USE_THIRDPARTY_FROM_VCPKG 1 CACHE STRING "")
+#set(Mega3rdPartyDir "C:/path/to/vcpkg/parent/folder"  CACHE STRING "")
+
 
 # this line points to the MEGA SDK repo that you want to build MEGAsync against
 include(${MEGAsyncDir}/mega/contrib/cmake/CMakeLists.txt)
@@ -598,3 +604,27 @@ if (CMAKE_HOST_APPLE)
             COMMENT "Setting version to Info.plist..."
             )
 endif()
+
+set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
+
+if(FULLREQUIREMENTS)
+
+    add_definitions(
+
+        -DREQUIRE_HAVE_FFMPEG
+        -DREQUIRE_HAVE_LIBUV
+        -DREQUIRE_HAVE_LIBRAW
+        -DREQUIRE_USE_MEDIAINFO
+
+        #-DREQUIRE_ENABLE_CHAT
+        #-DREQUIRE_ENABLE_BACKUPS
+        #-DREQUIRE_ENABLE_WEBRTC
+        #-DREQUIRE_ENABLE_EVT_TLS
+        #-DREQUIRE_USE_PCRE
+        )
+
+    if (CMAKE_HOST_WIN32 OR CMAKE_HOST_APPLE OR build_64_bit)
+       # add_definitions( -DREQUIRE_HAVE_PDFIUM )
+    endif()
+
+endif(FULLREQUIREMENTS)
