@@ -18,6 +18,11 @@ QString CrashReportDialog::getUserMessage()
     return ui->tUserMessage->toPlainText();
 }
 
+bool CrashReportDialog::sendLogs()
+{
+    return ui->cLogs->isChecked();
+}
+
 CrashReportDialog::~CrashReportDialog()
 {
     delete ui;

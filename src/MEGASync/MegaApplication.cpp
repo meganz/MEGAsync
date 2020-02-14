@@ -1254,6 +1254,23 @@ void MegaApplication::initialize()
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
+                if (crashDialog.sendLogs())
+                {
+                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this]()
+                    {
+                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, CrashHandler::instance()->getLastCrashHash());
+                        if (!crashReportFilePath.isNull()
+                                && megaApi && megaApi->isLoggedIn())
+                        {
+                            megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
+                            crashReportFilePath.clear();
+                        }
+                        context.get()->deleteLater();
+                    });
+
+                    logger->prepareForReporting();
+                }
+
 #ifndef __APPLE__
                 QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"), Utilities::getDevicePixelRatio());
 #endif
@@ -1828,6 +1845,15 @@ void MegaApplication::loggedIn(bool fromWizard)
     {
         infoWizard->deleteLater();
         infoWizard = NULL;
+    }
+
+    //Send pending crash report log if neccessary
+    if (!crashReportFilePath.isNull() && megaApi)
+    {
+        QFileInfo crashReportFile{crashReportFilePath};
+        megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(),
+                                       false);
+        crashReportFilePath.clear();
     }
 
     registerUserActivity();

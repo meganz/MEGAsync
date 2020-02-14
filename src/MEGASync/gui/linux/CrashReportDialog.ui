@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>386</width>
-    <height>424</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,6 +81,18 @@ QPushButton
        <width>16777215</width>
        <height>100</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cLogs">
+     <property name="styleSheet">
+      <string notr="true">QCheckBox{
+spacing:10px;
+}</string>
+     </property>
+     <property name="text">
+      <string>Attach diagnostic log files to assist with debugging</string>
      </property>
     </widget>
    </item>
