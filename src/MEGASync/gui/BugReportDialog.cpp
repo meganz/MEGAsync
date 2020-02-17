@@ -100,25 +100,24 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
 
         createSupportTicket();
     }
-    else if (error->getErrorCode() == MegaError::API_EEXIST)
-    {
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.setText(tr("Error on submitting bug report"));
-        msgBox.setTextFormat(Qt::RichText);
-        msgBox.setInformativeText(tr("There is an ongoing report being uploaded.")
-                                  + QString::fromUtf8("<br>") +
-                                  tr("Please wait until the current upload is completed."));
-        msgBox.addButton(tr("Ok"), QMessageBox::AcceptRole);
-        msgBox.exec();
-    }
     else
     {
-        showErrorMessage();
-    }
-
-    if (error->getErrorCode() != MegaError::API_OK)
-    {
         sendProgress->hide();
+        if (error->getErrorCode() == MegaError::API_EEXIST)
+        {
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.setText(tr("Error on submitting bug report"));
+            msgBox.setTextFormat(Qt::RichText);
+            msgBox.setInformativeText(tr("There is an ongoing report being uploaded.")
+                                      + QString::fromUtf8("<br>") +
+                                      tr("Please wait until the current upload is completed."));
+            msgBox.addButton(tr("Ok"), QMessageBox::AcceptRole);
+            msgBox.exec();
+        }
+        else
+        {
+            showErrorMessage();
+        }
     }
 
     logger.resumeAfterReporting();
@@ -136,6 +135,11 @@ void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
     {
         case MegaRequest::TYPE_SUPPORT_TICKET:
         {
+            if (sendProgress)
+            {
+                sendProgress->hide();
+            }
+
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 QMessageBox msgBox;
@@ -153,11 +157,6 @@ void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
             else
             {
                 showErrorMessage();
-            }
-
-            if (sendProgress)
-            {
-                sendProgress->hide();
             }
 
             break;
