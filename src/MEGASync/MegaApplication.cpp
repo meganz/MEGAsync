@@ -7084,7 +7084,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete [] session;
 
                     //Successful login, fetch nodes
-                    megaApi->fetchNodes();
+                    megaApi->fetchNodesAndResumeSyncs();
                     break;
                 }
             }
@@ -8500,7 +8500,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 
     megaApi->enableTransferResumption();
     Preferences *preferences = Preferences::instance();
-    if (preferences->logged() && !api->getNumActiveSyncs())
+    if (preferences->logged())
     {
 #ifdef _WIN32
         bool addToLeftPane = false;
@@ -8513,6 +8513,9 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 #ifdef __APPLE__
         bool waitForLoad = true;
 #endif
+
+        std::vector<int> failedSyncs;
+
         //Start syncs
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
@@ -8521,7 +8524,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 continue;
             }
 
-            MegaNode *node = api->getNodeByHandle(preferences->getMegaFolderHandle(i));
+            std::unique_ptr<MegaNode> node{api->getNodeByHandle(preferences->getMegaFolderHandle(i))};
             if (!node)
             {
                 preferences->setSyncState(i, false);
@@ -8529,6 +8532,15 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
             }
 
             QString localFolder = preferences->getLocalFolder(i);
+
+            std::unique_ptr<MegaSync> sync{api->getSyncByPath(localFolder.toUtf8().data())};
+            if (!sync)
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Resuming sync failed: %1")
+                             .arg(localFolder).toUtf8().constData());
+                failedSyncs.push_back(i);
+                continue;
+            }
 
 #ifdef _WIN32
             if (addToLeftPane)
@@ -8551,9 +8563,11 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 }
             }
 #endif
+        }
 
-            api->resumeSync(localFolder.toUtf8().constData(), node, preferences->getLocalFingerprint(i));
-            delete node;
+        for (size_t i = failedSyncs.size(); i--;)
+        {
+            preferences->removeSyncedFolder(failedSyncs[i]);
         }
     }
 }
