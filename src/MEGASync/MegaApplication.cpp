@@ -1238,7 +1238,9 @@ void MegaApplication::initialize()
         {
             di.next();
             const QFileInfo& fi = di.fileInfo();
-            if (!fi.fileName().contains(QString::fromUtf8("transfers_")) && (fi.fileName().endsWith(QString::fromAscii(".db"))
+            if (!fi.fileName().contains(QString::fromUtf8("transfers_"))
+                && !fi.fileName().contains(QString::fromUtf8("syncconfigs_"))
+                && (fi.fileName().endsWith(QString::fromAscii(".db"))
                     || fi.fileName().endsWith(QString::fromAscii(".db-wal"))
                     || fi.fileName().endsWith(QString::fromAscii(".db-shm"))))
             {
