@@ -3821,6 +3821,8 @@ void MegaApplication::unlink()
         queuedUserStats[i] = false;
     }
     queuedStorageUserStatsReason = 0;
+
+    logger->cleanLogs();
 }
 
 void MegaApplication::cleanLocalCaches(bool all)

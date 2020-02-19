@@ -35,10 +35,12 @@ public:
      * @returns true if preparation went well (if false, there is no need for resumeAfterReporting)
      */
     bool prepareForReporting();
+    bool cleanLogs();
     void resumeAfterReporting();
 
 signals:
     void logReadyForReporting();
+    void logCleaned();
 
 private:
     QString mDesktopPath;
