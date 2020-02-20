@@ -35,7 +35,7 @@
    <string notr="true">QWidget
 {
 font-size: 11px;
-font-family: &quot;HelveticaNeue-Light&quot;;
+font-family: &quot;Lato&quot;;
 }
 </string>
   </property>

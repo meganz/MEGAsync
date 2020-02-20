@@ -4,6 +4,7 @@
 #include "control/Preferences.h"
 #include "control/Utilities.h"
 #include "math.h"
+#include "MegaApplication.h"
 
 #include <QStyle>
 
@@ -21,10 +22,12 @@ AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     ui->lLoading->setText(ui->lLoading->text().toUpper());
     refresh(Preferences::instance());
     highDpiResize.init(this);
+    ((MegaApplication*)qApp)->attachStorageObserver(*this);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()
 {
+    ((MegaApplication*)qApp)->dettachStorageObserver(*this);
     delete ui;
 }
 
@@ -102,6 +105,11 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
         ui->lSpaceAvailable->setText(Utilities::getSizeString(preferences->availableStorage()));
         ui->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
     }
+}
+
+void AccountDetailsDialog::updateStorageElements()
+{
+    refresh(Preferences::instance());
 }
 
 void AccountDetailsDialog::usageDataAvailable(bool isAvailable)

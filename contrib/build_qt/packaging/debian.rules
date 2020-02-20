@@ -1,6 +1,4 @@
 #!/usr/bin/make -f
-#FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
-#TODO: remove the -f in build_minimum.sh
 
 build: build-stamp
 build-stamp:

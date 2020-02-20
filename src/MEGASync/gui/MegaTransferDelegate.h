@@ -20,6 +20,8 @@ public:
 
 protected:
     QTransfersModel *model;
+    void processCancel(int tag);
+    void processShowInFolder(int tag);
 };
 
 #endif // MEGATRANSFERDELEGATE_H

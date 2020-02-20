@@ -70,7 +70,13 @@ https://mega.nz/#!T14B0Y4T!EXGg9dRtacgz9_vCUtVq5tj6C3PBpkOHgXG289EBxBM
 
 ## Linux compilation
 
-Preparation:
+#### Requirements:
+
+* Using `gcc` compiler below version 5 might result in compiler errors. 
+* Third party requirements vary depending on your system.
+
+
+#### Preparation:
 
 First install dependencies. e.g., for a debian/ubuntu with QT >= 5.6 (e.g: Ubuntu 18.04):
 ```

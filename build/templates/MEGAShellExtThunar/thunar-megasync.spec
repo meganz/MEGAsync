@@ -10,12 +10,28 @@ Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 
-BuildRequires:  qt-devel
 %if 0%{?suse_version}
-BuildRequires:  glib2-devel, libthunarx-2-0, thunar-devel
+BuildRequires:  glib2-devel, thunar-devel
+%if 0%{?suse_version} > 1500
+BuildRequires: libqt5-qtbase-devel
+%else
+BuildRequires: qt-devel
 %endif
+%endif
+
 %if 0%{?fedora}
-BuildRequires:  Thunar-devel
+BuildRequires: Thunar-devel
+BuildRequires: qt5-qtbase-devel
+%endif
+
+
+%if 0%{?rhel_version} || 0%{?centos_version}
+BuildRequires: Thunar-devel
+%if 0%{?rhel_version} >= 800 || 0%{?centos_version} >=800
+BuildRequires: qt5-qtbase-devel
+%else
+BuildRequires: qt-devel
+%endif
 %endif
 
 Requires:       thunar, megasync >= 3.5
@@ -37,11 +53,9 @@ Store up to 50 GB for free!
 %setup -q
 
 %build
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
-qmake-qt4
-%else
-qmake
-%endif
+#%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+qmake-qt5 || qmake-qt4 || qmake
+#%endif
 
 %if 0%{?fedora_version} >= 27
 #tweak to have debug symbols to stripe: for some reason they seem gone by default in Fedora 27,
@@ -51,7 +65,8 @@ sed "s# gcc# gcc -g#g" -i Makefile
 make
 
 %install
-export EXTENSIONSDIR=$(pkg-config --variable=extensionsdir thunarx-2)
+
+export EXTENSIONSDIR=$(pkg-config --variable=extensionsdir thunarx-3 || pkg-config --variable=extensionsdir thunarx-2)
 
 mkdir -p %{buildroot}$EXTENSIONSDIR
 
@@ -63,6 +78,6 @@ mkdir -p %{buildroot}$EXTENSIONSDIR
 %files
 %defattr(-,root,root)
 
-%(pkg-config --variable=extensionsdir thunarx-2)/libMEGAShellExtThunar.so
+%(pkg-config --variable=extensionsdir thunarx-3 || pkg-config --variable=extensionsdir thunarx-2)/libMEGAShellExtThunar.so
 
 %changelog

@@ -44,7 +44,7 @@ font-size: 11px;
 
 #lHeader
 {
-   font-family: &quot;Montserrat&quot;;
+   font-family: &quot;Lato&quot;;
    font-size: 16px;
    color: #ffffff;
 }
@@ -68,7 +68,7 @@ font-size: 11px;
 
 #lAdditionalSyncs
 {
-	font: &quot;Helvetica&quot;;
+	font: &quot;Lato&quot;;
 	font-size: 13px;
 	font-weight: normal;
 	color: #666666;
@@ -76,7 +76,7 @@ font-size: 11px;
 
 #lProgress, #lAdvancedSetup
 {
-	font: &quot;Helvetica&quot;;
+	font: &quot;Lato&quot;;
 	font-weight: normal;
 	color: #666666;
 	font-size:20px;
@@ -85,7 +85,7 @@ font-size: 11px;
 #lError
 {
 	color: #FFFFFF;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 }
 
@@ -1115,7 +1115,7 @@ background-color: #E2E2E2;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #333333;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
                </property>
@@ -1128,7 +1128,7 @@ background-color: #E2E2E2;
               <widget class="QLabel" name="lCheckInboxDesc">
                <property name="font">
                 <font>
-                 <family>SF UI Text</family>
+                 <family>Lato</family>
                  <pointsize>-1</pointsize>
                 </font>
                </property>
@@ -1137,7 +1137,7 @@ background-color: #E2E2E2;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
                </property>
@@ -1404,7 +1404,7 @@ border: none;</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:16px;
-font: &quot;Montserrat&quot;;
+font: &quot;Lato&quot;;
 font-weight: normal;
 color: #E2574C;
 
@@ -1437,7 +1437,7 @@ color: #E2574C;
                   </property>
                   <property name="font">
                    <font>
-                    <family>SF UI Text</family>
+                    <family>Lato</family>
                     <pointsize>-1</pointsize>
                    </font>
                   </property>
@@ -1446,7 +1446,7 @@ color: #E2574C;
                   </property>
                   <property name="styleSheet">
                    <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
                   </property>
@@ -1629,7 +1629,7 @@ border: none;</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:16px;
-font: &quot;Montserrat&quot;;
+font: &quot;Lato&quot;;
 font-weight: normal;
 color: #E2574C;
 </string>
@@ -1670,7 +1670,7 @@ color: #E2574C;
                   </property>
                   <property name="styleSheet">
                    <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;</string>
                   </property>
                   <property name="text">
@@ -1722,7 +1722,7 @@ color: #E2574C;
          </property>
          <property name="font">
           <font>
-           <family>Montserrat</family>
+           <family>Lato</family>
            <pointsize>-1</pointsize>
            <weight>50</weight>
            <italic>false</italic>
@@ -1736,7 +1736,7 @@ color: #E2574C;
           <string notr="true">#lAdvancedSetup
 {
 	color: #333333;
-	font-family: &quot;Montserrat&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 16px;
 }
 </string>
@@ -1809,7 +1809,7 @@ color: #E2574C;
             <property name="styleSheet">
              <string notr="true">margin-left: 2px;
 color: #333333;
-font-family: &quot;SF UI Text&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 13px;
 </string>
             </property>
@@ -1865,7 +1865,7 @@ font-size: 13px;
             <property name="styleSheet">
              <string notr="true">margin-left: 2px;
 color: #333333;
-font-family: &quot;SF UI Text&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 13px;
 </string>
             </property>
@@ -2027,7 +2027,7 @@ font-size: 13px;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #333333;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;</string>
                </property>
                <property name="text">
@@ -2039,7 +2039,7 @@ font-size: 13px;
               <widget class="QLabel" name="lSyncTypeDesc">
                <property name="font">
                 <font>
-                 <family>SF UI Text</family>
+                 <family>Lato</family>
                  <pointsize>-1</pointsize>
                 </font>
                </property>
@@ -2048,7 +2048,7 @@ font-size: 13px;
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;</string>
                </property>
                <property name="text">
@@ -2112,7 +2112,7 @@ font-size: 13px;
          </property>
          <property name="font">
           <font>
-           <family>Montserrat</family>
+           <family>Lato</family>
            <pointsize>-1</pointsize>
           </font>
          </property>
@@ -2124,7 +2124,7 @@ font-size: 13px;
 {
 font-size: 16px;
 color: #E2574C;
-font-family: &quot;Montserrat&quot;;
+font-family: &quot;Lato&quot;;
 }</string>
          </property>
          <property name="text">
@@ -2142,7 +2142,7 @@ font-family: &quot;Montserrat&quot;;
          </property>
          <property name="styleSheet">
           <string notr="true">	color: #333333;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 </string>
          </property>

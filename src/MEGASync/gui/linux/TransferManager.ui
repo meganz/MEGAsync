@@ -59,7 +59,7 @@
 }
 #tAllTransfers, #tDownloads, #tUploads
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 18px;
   font-weight: 400;
   color: #333333;
@@ -69,7 +69,7 @@
 
 #tCompleted
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 18px;
   font-weight: 400;
   color: #333333;
@@ -94,7 +94,7 @@
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
  padding: 7px 12px 7px 6px;
- font-family: &quot;Source Sans Pro&quot;;
+ font-family: &quot;Lato&quot;;
  font-size: 14px;
  color: #777777;
 
@@ -123,7 +123,7 @@
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 45%);
   padding: 7px 24px 7px 24px;
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
@@ -147,7 +147,7 @@
 #bNumberCompleted
 
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #FFFFFF;
   background-color: #9A9A9A;
@@ -292,8 +292,8 @@
                <string>Add...</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
+               <iconset resource="../Resources_win.qrc">
+                <normaloff>:/images/ico_drop_add_sync.png</normaloff>:/images/ico_drop_add_sync.png</iconset>
               </property>
               <property name="iconSize">
                <size>

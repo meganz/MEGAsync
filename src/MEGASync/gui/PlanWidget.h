@@ -19,8 +19,14 @@ public:
            PRO_I    = 1,
            PRO_II   = 2,
            PRO_III  = 3,
-           PRO_LITE = 4
+           PRO_LITE = 4,
+           BUSINESS = 100,
     } ProLevel;
+
+    enum {
+        STORAGE = 1,
+        BANDWIDTH = 2,
+    };
 
     explicit PlanWidget(PlanInfo data, QString userAgent, QWidget *parent = 0);
     void setPlanInfo(PlanInfo data);
@@ -33,6 +39,10 @@ private:
     QString userAgent;
 
     void updatePlanInfo();
+    QString formatRichString(QString str, int type);
+
+protected:
+    void changeEvent(QEvent* event);
 
 private slots:
     void onOverlayClicked();

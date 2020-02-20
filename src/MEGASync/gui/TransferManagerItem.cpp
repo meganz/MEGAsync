@@ -33,11 +33,12 @@ void TransferManagerItem::setFileName(QString fileName)
 {
     TransferItem::setFileName(fileName);
 
-    QFont f = ui->lTransferName->font();
-    QFontMetrics fm = QFontMetrics(f);
-    ui->lTransferNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lTransferNameCompleted->width()));
+    ui->lTransferNameCompleted->ensurePolished();
+    ui->lTransferNameCompleted->setText(ui->lTransferNameCompleted->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lTransferNameCompleted->width()));
     ui->lTransferNameCompleted->setToolTip(fileName);
-    ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lTransferName->width()));
+
+    ui->lTransferName->ensurePolished();
+    ui->lTransferName->setText(ui->lTransferName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lTransferName->width()));
     ui->lTransferName->setToolTip(fileName);
 
     QIcon icon = Utilities::getExtensionPixmapSmall(fileName);
@@ -320,7 +321,7 @@ bool TransferManagerItem::mouseHoverRetryingLabel(QPoint pos)
     return false;
 }
 
-void TransferManagerItem::mouseHoverTransfer(bool isHover)
+void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
     if (isHover)
     {
