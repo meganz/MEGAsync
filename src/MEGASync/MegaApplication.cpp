@@ -1256,9 +1256,18 @@ void MegaApplication::initialize()
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
                 if (crashDialog.sendLogs())
                 {
-                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this]()
+                    auto timestampString = reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: "))+11,20);
+                    timestampString = timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
+                    QDateTime crashTimestamp = QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
+
+                    if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
                     {
-                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, CrashHandler::instance()->getLastCrashHash());
+                        crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
+                    }
+
+                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this, crashTimestamp]()
+                    {
+                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
                         if (!crashReportFilePath.isNull()
                                 && megaApi && megaApi->isLoggedIn())
                         {

@@ -682,7 +682,7 @@ QString Utilities::getDefaultBasePath()
     return QString();
 }
 
-QString Utilities::joinLogZipFiles(MegaApi *megaApi, QString appenHashReference)
+QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampSince, QString appenHashReference)
 {
     if (!megaApi)
     {
@@ -729,6 +729,14 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, QString appenHashReference)
 
         foreach (QFileInfo i, logFiles)
         {
+            if (timestampSince)
+            {
+                if ( i.lastModified() < *timestampSince && i.fileName() != QString::fromUtf8("MEGAsync.0.log")) //keep at least the last log
+                {
+                    continue;
+                }
+            }
+
             try
             {
 #ifdef _WIN32
