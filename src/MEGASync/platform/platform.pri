@@ -149,6 +149,8 @@ macx {
         $$PWD/macx/MacXLocalServerPrivate.h \
         $$PWD/macx/MacXLocalSocket.h \
         $$PWD/macx/MacXLocalSocketPrivate.h \
+        $$PWD/macx/NSPopover+MISSINGBackgroundView.h \
+        $$PWD/macx/LockedPopOver.h \
         $$PWD/macx/Protocol.h
 
 
@@ -164,7 +166,9 @@ macx {
             $$PWD/macx/MacXLocalServer.mm \
             $$PWD/macx/MacXLocalServerPrivate.mm \
             $$PWD/macx/MacXLocalSocket.mm \
-            $$PWD/macx/MacXLocalSocketPrivate.mm
+            $$PWD/macx/MacXLocalSocketPrivate.mm \
+            $$PWD/macx/NSPopover+MISSINGBackgroundView.mm \
+            $$PWD/macx/LockedPopOver.mm
 
     LIBS += -framework Cocoa
     LIBS += -framework Security
