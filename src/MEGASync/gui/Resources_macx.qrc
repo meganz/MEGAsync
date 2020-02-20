@@ -530,5 +530,7 @@
         <file>images/transfers_empty@2x.png</file>
         <file>images/bug_report_success.png</file>
         <file>images/bug_report_success@2x.png</file>
+        <file>images/locked_account_ico.png</file>
+        <file>images/locked_account_ico@2x.png</file>
     </qresource>
 </RCC>
