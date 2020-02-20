@@ -6359,7 +6359,7 @@ void MegaApplication::createAppMenus()
         windowsImportLinksAction = NULL;
     }
 
-    windowsImportLinksAction = new QAction(tr("Import links"), this);
+    windowsImportLinksAction = new QAction(tr("Open links"), this);
     connect(windowsImportLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if (windowsUploadAction)
@@ -6593,7 +6593,7 @@ void MegaApplication::createAppMenus()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")), true);
+    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")), true);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
