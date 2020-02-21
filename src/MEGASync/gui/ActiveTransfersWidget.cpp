@@ -1,6 +1,7 @@
 #include "ActiveTransfersWidget.h"
 #include "ui_ActiveTransfersWidget.h"
 #include "control/Utilities.h"
+#include "HighDpiResize.h"
 #include "Preferences.h"
 #include <QMessageBox>
 
@@ -138,9 +139,8 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             activeDownload.tag = transfer->getTag();
             setType(&activeDownload, type, transfer->isSyncTransfer());
             activeDownload.fileName = QString::fromUtf8(transfer->getFileName());
-            QFont f = ui->lDownFilename->font();
-            QFontMetrics fm = QFontMetrics(f);
-            ui->lDownFilename->setText(fm.elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
+            ui->lDownFilename->ensurePolished();
+            ui->lDownFilename->setText(ui->lDownFilename->fontMetrics().elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
             ui->lDownFilename->setToolTip(activeDownload.fileName);
             ui->bDownFileType->setIcon(Utilities::getExtensionPixmapSmall(activeDownload.fileName));
             setTotalSize(&activeDownload, transfer->getTotalBytes());
@@ -171,9 +171,8 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             activeUpload.tag = transfer->getTag();
             setType(&activeUpload, type, transfer->isSyncTransfer());
             activeUpload.fileName = QString::fromUtf8(transfer->getFileName());
-            QFont f = ui->lUpFilename->font();
-            QFontMetrics fm = QFontMetrics(f);
-            ui->lUpFilename->setText(fm.elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
+            ui->lUpFilename->ensurePolished();
+            ui->lUpFilename->setText(ui->lUpFilename->fontMetrics().elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
             ui->lUpFilename->setToolTip(activeUpload.fileName);
             ui->bUpFileType->setIcon(Utilities::getExtensionPixmapSmall(activeUpload.fileName));
             setTotalSize(&activeUpload, transfer->getTotalBytes());
@@ -318,6 +317,7 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
     }
 
     QMessageBox warning;
+    HighDpiResize hDpiResizer(&warning);
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);
@@ -343,6 +343,7 @@ void ActiveTransfersWidget::on_bUpCancel_clicked()
     }
 
     QMessageBox warning;
+    HighDpiResize hDpiResizer(&warning);
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);

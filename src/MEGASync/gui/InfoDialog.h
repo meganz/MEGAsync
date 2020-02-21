@@ -14,6 +14,7 @@
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"
+#include "FilterAlertWidget.h"
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
@@ -33,7 +34,8 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_PAUSED,
         STATE_WAITING,
         STATE_INDEXING,
-        STATE_UPDATED
+        STATE_UPDATED,
+        STATE_SYNCING,
     };
 
 public:
@@ -46,9 +48,9 @@ public:
     void setTransfer(mega::MegaTransfer *transfer);
     void refreshTransferItems();
     void transferFinished(int error);
-    void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
+    void setSyncing(bool value);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void addSync(mega::MegaHandle h);
@@ -56,27 +58,53 @@ public:
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
 
+    void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
+
+    void reset();
 
     QCustomTransfersModel *stealModel();
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
+    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
 
+    void on_bStorageDetails_clicked();
     void regenerateLayout(InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
 #endif
 
+    void setUnseenNotifications(long long value);
+    void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
+
+    long long getUnseenNotifications() const;
+
+    void closeSyncsMenu();
+
 private:
     void drawAvatar(QString email);
     void animateStates(bool opt);
+    void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 public slots:
+
+    void pauseResumeClicked();
+    void generalAreaClicked();
+    void dlAreaClicked();
+    void upAreaClicked();
+
+    void pauseResumeHovered(QMouseEvent *event);
+    void generalAreaHovered(QMouseEvent *event);
+    void dlAreaHovered(QMouseEvent *event);
+    void upAreaHovered(QMouseEvent *event);
+
    void addSync();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
@@ -86,19 +114,30 @@ public slots:
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
-    void on_bSyncFolder_clicked();
     void openFolder(QString path);
     void onOverlayClicked();
     void on_bTransferManager_clicked();
+    void on_bAddSync_clicked();
+    void on_bUpload_clicked();
+    void on_bDownload_clicked();
     void onUserAction(int action);
 
-    void on_bDotUsedStorage_clicked();
-    void on_bDotUsedQuota_clicked();
+    void on_tTransfers_clicked();
+    void on_tNotifications_clicked();
+
+    void on_bActualFilter_clicked();
+    void applyFilterOption(int opt);
+    void on_bNotificationsSettings_clicked();
 
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
     void onAnimationFinished();
+    void onAnimationFinishedBlockedError();
+
+    void sTabsChanged(int tab);
+
+    void highLightMenuEntry(QAction* action);
 
 signals:
     void openTransferManager(int tab);
@@ -113,9 +152,7 @@ private:
     QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
 
-    std::unique_ptr<QMenu> syncsMenu;
-    QSignalMapper *menuSignalMapper;
-    QMenu *transferMenu;
+    FilterAlertWidget *filterMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *inboxItem;
@@ -124,14 +161,30 @@ private:
 
     int activeDownloadState, activeUploadState;
     int remainingUploads, remainingDownloads;
-    bool indexing;
+    int totalUploads, totalDownloads;
+    long long leftUploadBytes, completedUploadBytes;
+    long long leftDownloadBytes, completedDownloadBytes;
+    long long currentUploadBytes, currentCompletedUploadBytes;
+    long long currentDownloadBytes, currentCompletedDownloadBytes;
+    bool circlesShowAllActiveTransfersProgress;
+    unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
+    int uploadActiveTransferTag, downloadActiveTransferTag;
+    int uploadActiveTransferState, downloadActiveTransferState;
+
+    bool indexing; //scanning
     bool waiting;
+    bool syncing; //if any sync is in syncing state
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
     int storageState;
     int actualAccountType;
     bool loggedInMode = true;
+    bool notificationsReady = false;
+    bool isShown = false;
+    long long unseenNotifications = 0;
+
+    AccountDetailsDialog* accountDetailsDialog;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
@@ -140,7 +193,19 @@ private:
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
 
+    bool shownBlockedError = false;
+    QPropertyAnimation *minHeightAnimationBlockedError;
+    QPropertyAnimation *maxHeightAnimationBlockedError;
+    QParallelAnimationGroup animationGroupBlockedError;
+    void hideBlockedError(bool animated = false);
+    void showBlockedError();
+
+    std::unique_ptr<QMenu> syncsMenu;
+    MenuItemAction *addSyncAction;
+    MenuItemAction *lastHovered;
+
 protected:
+    void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
     void changeEvent(QEvent * event);

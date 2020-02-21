@@ -6,8 +6,6 @@
 #include <QFutureWatcher>
 #include <QtCore>
 #include <QNetworkProxy>
-#include <QProgressDialog>
-#include <QCloseEvent>
 #include <QButtonGroup>
 #include <ConnectivityChecker.h>
 
@@ -16,6 +14,7 @@
 #include "SizeLimitDialog.h"
 #include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
+#include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "megaapi.h"
@@ -25,17 +24,8 @@ namespace Ui {
 class SettingsDialog;
 }
 
-class MegaProgressDialog : public QProgressDialog
-{
-public:
-    MegaProgressDialog(const QString & labelText, const QString & cancelButtonText, int minimum, int maximum, QWidget * parent = 0, Qt::WindowFlags f = 0);
-protected:
-    void reject();
-    void closeEvent(QCloseEvent * event);
-};
-
 class MegaApplication;
-class SettingsDialog : public QDialog
+class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
     Q_OBJECT
     
@@ -126,6 +116,7 @@ private slots:
     void on_bStorageDetails_clicked();
     void on_lAccountImage_clicked();
     void on_bChangePassword_clicked();
+    void on_bSendBug_clicked();
 
     void onAnimationFinished();
 
@@ -150,7 +141,7 @@ private:
     bool proxyOnly;
     QFutureWatcher<long long> cacheSizeWatcher;
     QFutureWatcher<long long> remoteCacheSizeWatcher;
-    MegaProgressDialog *proxyTestProgressDialog;
+    MegaProgressCustomDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
     bool shouldClose;
     int modifyingSettings;
@@ -187,11 +178,18 @@ private:
     QParallelAnimationGroup *animationGroup;
 #endif
 
-    void loadSyncSettings();
     void loadSizeLimits();
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
+
+public:
+    void updateStorageElements();
+    void updateBandwidthElements();
+    void updateAccountElements();
+    void loadSyncSettings();
+    void updateUploadFolder();
+    void updateDownloadFolder();
 };
 
 #endif // SETTINGSDIALOG_H

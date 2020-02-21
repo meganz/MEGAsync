@@ -37,6 +37,8 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
+#include "QFilterAlertsModel.h"
+#include "gui/MegaAlertDelegate.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -46,8 +48,6 @@
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
-
-extern std::unique_ptr<MegaSyncLogger> gLogger;
 
 class TransferMetaData
 {
@@ -86,15 +86,18 @@ enum GetUserStatsReason {
     USERSTATS_PRO_EXPIRED,
     USERSTATS_OPENSETTINGSDIALOG,
     USERSTATS_STORAGECACHEUNKNOWN,
+    USERSTATS_SHOWMAINDIALOG,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener
+class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved
 {
     Q_OBJECT
 
 #ifdef Q_OS_LINUX
     void setTrayIconFromTheme(QString icon);
 #endif
+
+    static void loadDataPath();
 
 public:
 
@@ -118,6 +121,7 @@ public:
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onAccountUpdate(mega::MegaApi *api);
+    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list);
     virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
     virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
@@ -148,7 +152,7 @@ public:
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
-    void createTrayMenu();
+    void createAppMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
@@ -157,6 +161,12 @@ public:
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
+
+    bool notificationsAreFiltered();
+    bool hasNotifications();
+    bool hasNotificationsOfType(int type);
+
+    MegaSyncLogger& getLogger() const;
 
 signals:
     void startUpdaterThread();
@@ -171,12 +181,12 @@ public slots:
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
-    void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
+    void openSettings(int tab = -1);
     void openInfoWizard();
     void openBwOverquotaDialog();
-    void changeProxy();
     void importLinks();
     void officialWeb();
+    void goToMyCloud();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
@@ -228,6 +238,7 @@ public slots:
     void onConnectivityCheckError();
     void proExpirityTimedOut();
     void userAction(int action);
+    void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
@@ -245,6 +256,7 @@ public slots:
     void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
+    void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
 #ifdef __APPLE__
@@ -254,10 +266,12 @@ private slots:
     void showInFolder(int activationButton);
     void openFolderPath(QString path);
     void redirectToUpgrade(int activationButton);
+    void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
 
 protected:
+    bool checkOverquotaBandwidth();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -278,6 +292,7 @@ protected:
     void refreshStorageUIs();
 
     void sendOverStorageNotification(int state);
+    void sendBusinessWarningNotification();
 
     bool eventFilter(QObject *obj, QEvent *e);
 
@@ -299,8 +314,8 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    std::unique_ptr<QMenu> trayMenu;
-    std::unique_ptr<QMenu> trayGuestMenu;
+    std::unique_ptr<QMenu> infoDialogMenu;
+    std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
     QSignalMapper *menuSignalMapper;
@@ -311,7 +326,7 @@ protected:
     MenuItemAction *uploadAction;
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
-    MenuItemAction *webAction;
+    MenuItemAction *myCloudAction;
     MenuItemAction *addSyncAction;
 
     MenuItemAction *updateAction;
@@ -341,8 +356,13 @@ protected:
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
+    QFilterAlertsModel *notificationsProxyModel;
+    QAlertsModel *notificationsModel;
+    MegaAlertDelegate *notificationsDelegate;
+
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
+    long long lastTsConnectionError = 0;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
@@ -363,6 +383,8 @@ protected:
     bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
+    long long lastTsBusinessWarning;
+    long long lastTsErrorMessageShown;
     bool almostOQ;
     int storageState;
     int appliedStorageState;
@@ -396,6 +418,7 @@ protected:
     static QString appPath;
     static QString appDirPath;
     static QString dataPath;
+    static QString lastNotificationError;
 
     QThread *updateThread;
     UpdateTask *updateTask;
@@ -404,6 +427,7 @@ protected:
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
+    std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
@@ -415,6 +439,7 @@ protected:
     bool paused;
     bool indexing;
     bool waiting;
+    bool syncing; //if any sync is in syncing state
     bool updated;
     bool checkupdate;
     bool updateBlocked;
@@ -433,6 +458,7 @@ protected:
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
     bool nodescurrent;
+    int businessStatus = -2;
     friend class DeferPreferencesSyncForScope;
 };
 

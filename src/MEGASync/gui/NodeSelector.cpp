@@ -234,12 +234,6 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
                 ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
             }
         }
-        else
-        {
-            ui->tMegaFolders->setEnabled(true);
-            QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
-            return;
-        }
     }
     else if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
     {

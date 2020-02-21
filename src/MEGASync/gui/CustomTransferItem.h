@@ -26,8 +26,8 @@ public:
     void setTransferState(int value);
     QString getTransferName();
 
-    bool getLinkButtonClicked(QPoint pos);
-    void mouseHoverTransfer(bool isHover);
+    bool checkIsInsideButton(QPoint pos, int button);
+    void mouseHoverTransfer(bool isHover, const QPoint &pos);
     bool mouseHoverRetryingLabel(QPoint pos);
 
     void finishTransfer();
@@ -45,11 +45,16 @@ public:
 private:
     Ui::CustomTransferItem *ui;
     mega::MegaApi *megaApi;
-    int remainingUploads, remainingDownloads;
-    int totalUploads, totalDownloads;
+
+    QString lastActionTransferIconName;
+    QString lastShowInFolderIconName;
+
+    void setActionTransferIcon(const QString &name);
+    void setShowInFolderIcon(const QString &name);
+    void updateFinishedIco(int transferType, bool transferErrors);
 
 protected:
-    bool getLinkButtonEnabled;
+    bool actionButtonsEnabled;
 };
 
 #endif // CUSTOMTRANSFERITEM_H

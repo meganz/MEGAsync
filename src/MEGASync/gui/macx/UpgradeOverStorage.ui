@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>880</width>
     <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
+    <width>880</width>
     <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>800</width>
+    <width>880</width>
     <height>600</height>
    </size>
   </property>
@@ -52,7 +52,7 @@
 #lUsageStorage
 {
 	color: #333333;
-	font-family: &quot;Source Sans Pro&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 14px;
 	line-height: 24px;
 }
@@ -60,7 +60,7 @@
 #lAchievements
 {
 	color: #333333;
-	font-family: &quot;Source Sans Pro&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 14px;
 }
 
@@ -101,7 +101,7 @@ border-radius: 2px;
 }
 #lPercentageUsedStorage, #lTotalUsedStorage
 {
-font-family: &quot;Source Sans Pro&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 13px;
 font-weight: normal;
 border: none;
@@ -405,7 +405,7 @@ color: #666666;
                  <property name="styleSheet">
                   <string notr="true">#lTotalUsed
 {
-font: &quot;Source Sans Pro&quot;;
+font: &quot;Lato&quot;;
 font-size: 12px;
 font-weight: normal;
 color: #333333;
@@ -445,7 +445,7 @@ color: #333333;
                  <property name="styleSheet">
                   <string notr="true">#lPercentageUsed
 {
-font: &quot;Source Sans Pro&quot;;
+font: &quot;Lato&quot;;
 font-size: 12px;
 font-weight: normal;
 color: #333333;
@@ -542,13 +542,13 @@ color: #333333;
     <widget class="QWidget" name="wPlans" native="true">
      <property name="minimumSize">
       <size>
-       <width>800</width>
+       <width>880</width>
        <height>280</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>800</width>
+       <width>880</width>
        <height>280</height>
       </size>
      </property>
