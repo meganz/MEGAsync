@@ -325,23 +325,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 QString email = ui->eLoginEmail->text().toLower().trimmed();
                 if (preferences->hasEmail(email))
                 {
-                    int proxyType = preferences->proxyType();
-                    QString proxyServer = preferences->proxyServer();
-                    int proxyPort = preferences->proxyPort();
-                    int proxyProtocol = preferences->proxyProtocol();
-                    bool proxyAuth = preferences->proxyRequiresAuth();
-                    QString proxyUsername = preferences->getProxyUsername();
-                    QString proxyPassword = preferences->getProxyPassword();
-
-                    preferences->setEmail(email);
-                    preferences->setSession(sessionKey);
-                    preferences->setProxyType(proxyType);
-                    preferences->setProxyServer(proxyServer);
-                    preferences->setProxyPort(proxyPort);
-                    preferences->setProxyProtocol(proxyProtocol);
-                    preferences->setProxyRequiresAuth(proxyAuth);
-                    preferences->setProxyUsername(proxyUsername);
-                    preferences->setProxyPassword(proxyPassword);
+                    preferences->setEmailAndSessionAndTransferGeneralSettings(email, sessionKey);
 
                     Platform::notifyAllSyncFoldersAdded();
                     done(QDialog::Accepted);
@@ -876,25 +860,12 @@ void SetupWizard::wAdvancedSetup_clicked()
 
 void SetupWizard::setupPreferences()
 {
-    QString email = ui->eLoginEmail->text().toLower().trimmed();
+    std::unique_ptr<char[]> email(megaApi->getMyEmail());
+    std::unique_ptr<char[]> session(megaApi->dumpSession());
+    preferences->setEmailAndSessionAndTransferGeneralSettings(
+                QString::fromUtf8(email.get()),
+                QString::fromUtf8(session.get()));
 
-    int proxyType = preferences->proxyType();
-    QString proxyServer = preferences->proxyServer();
-    int proxyPort = preferences->proxyPort();
-    int proxyProtocol = preferences->proxyProtocol();
-    bool proxyAuth = preferences->proxyRequiresAuth();
-    QString proxyUsername = preferences->getProxyUsername();
-    QString proxyPassword = preferences->getProxyPassword();
-    preferences->setEmail(QString::fromUtf8(megaApi->getMyEmail()));
-    preferences->setSession(QString::fromUtf8(megaApi->dumpSession()));
-
-    preferences->setProxyType(proxyType);
-    preferences->setProxyServer(proxyServer);
-    preferences->setProxyPort(proxyPort);
-    preferences->setProxyProtocol(proxyProtocol);
-    preferences->setProxyRequiresAuth(proxyAuth);
-    preferences->setProxyUsername(proxyUsername);
-    preferences->setProxyPassword(proxyPassword);
 }
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)

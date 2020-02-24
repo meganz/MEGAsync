@@ -230,23 +230,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
                 if (preferences->hasEmail(email))
                 {
-                    int proxyType = preferences->proxyType();
-                    QString proxyServer = preferences->proxyServer();
-                    int proxyPort = preferences->proxyPort();
-                    int proxyProtocol = preferences->proxyProtocol();
-                    bool proxyAuth = preferences->proxyRequiresAuth();
-                    QString proxyUsername = preferences->getProxyUsername();
-                    QString proxyPassword = preferences->getProxyPassword();
-
-                    preferences->setEmail(email);
-                    preferences->setSession(sessionKey);
-                    preferences->setProxyType(proxyType);
-                    preferences->setProxyServer(proxyServer);
-                    preferences->setProxyPort(proxyPort);
-                    preferences->setProxyProtocol(proxyProtocol);
-                    preferences->setProxyRequiresAuth(proxyAuth);
-                    preferences->setProxyUsername(proxyUsername);
-                    preferences->setProxyPassword(proxyPassword);
+                    preferences->setEmailAndSessionAndTransferGeneralSettings(email, sessionKey);
 
                     Platform::notifyAllSyncFoldersAdded();
 

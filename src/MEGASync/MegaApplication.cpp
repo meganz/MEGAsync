@@ -1715,7 +1715,7 @@ void MegaApplication::start()
 #endif
 
     //Start the initial setup wizard if needed
-    if (!preferences->logged())
+    if (!preferences->logged() && preferences->getSessionInGeneral().isEmpty())
     {
         if (!preferences->installationTime())
         {
@@ -1770,46 +1770,58 @@ void MegaApplication::start()
         onGlobalSyncStateChanged(megaApi);
         return;
     }
-    else
+    else //Otherwise, login in the account
     {
-        QStringList exclusions = preferences->getExcludedSyncNames();
-        vector<string> vExclusions;
-        for (int i = 0; i < exclusions.size(); i++)
+        if (preferences->logged()) //we have per account settings to restore
         {
-            vExclusions.push_back(exclusions[i].toUtf8().constData());
-        }
-        megaApi->setExcludedNames(&vExclusions);
+            QStringList exclusions = preferences->getExcludedSyncNames();
+            vector<string> vExclusions;
+            for (int i = 0; i < exclusions.size(); i++)
+            {
+                vExclusions.push_back(exclusions[i].toUtf8().constData());
+            }
+            megaApi->setExcludedNames(&vExclusions);
 
-        QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-        vector<string> vExclusionPaths;
-        for (int i = 0; i < exclusionPaths.size(); i++)
-        {
-            vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-        }
-        megaApi->setExcludedPaths(&vExclusionPaths);
+            QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+            vector<string> vExclusionPaths;
+            for (int i = 0; i < exclusionPaths.size(); i++)
+            {
+                vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+            }
+            megaApi->setExcludedPaths(&vExclusionPaths);
 
-        if (preferences->lowerSizeLimit())
+            if (preferences->lowerSizeLimit())
+            {
+                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionLowerSizeLimit(0);
+            }
+
+            if (preferences->upperSizeLimit())
+            {
+                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionUpperSizeLimit(0);
+            }
+        }
+
+        QString theSession;
+        if (preferences->logged())
         {
-            megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+            theSession = preferences->getSession();
         }
         else
         {
-            megaApi->setExclusionLowerSizeLimit(0);
+            theSession = preferences->getSessionInGeneral();
         }
 
-        if (preferences->upperSizeLimit())
+        if (theSession.size())
         {
-            megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-        }
-        else
-        {
-            megaApi->setExclusionUpperSizeLimit(0);
-        }
-
-        //Otherwise, login in the account
-        if (preferences->getSession().size())
-        {
-            megaApi->fastLogin(preferences->getSession().toUtf8().constData());
+            megaApi->fastLogin(theSession.toUtf8().constData());
         }
         else
         {
@@ -7078,6 +7090,24 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         // while login request is being processed. This way, the local SSL certs request is not aborted.
         initLocalServer();
 
+        auto prevGeneralSession = preferences->getSessionInGeneral();
+
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            std::unique_ptr<char []> session(megaApi->dumpSession());
+            if (session)
+            {
+                preferences->storeSessionInGeneral(QString::fromUtf8(session.get()));
+
+                if (!preferences->logged() && prevGeneralSession == QString::fromUtf8(session.get()) && !preferences->logged())
+                {
+                    megaApi->fetchNodes();
+                }
+
+            }
+        }
+
+
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
@@ -7273,6 +7303,22 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_FETCH_NODES:
     {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            auto prevsession = preferences->getSessionInGeneral();
+
+            if (!preferences->logged() && !prevsession.isEmpty())
+            { //session resumed from general storage.
+
+                std::unique_ptr<char[]> email(megaApi->getMyEmail());
+                std::unique_ptr<char[]> session(megaApi->dumpSession());
+                preferences->setEmailAndSessionAndTransferGeneralSettings(
+                            QString::fromUtf8(email.get()),
+                            QString::fromUtf8(session.get()));
+            }
+
+            preferences->storeSessionInGeneral(QString()); //logged will be true from now on
+        }
         //This prevents to handle node requests in the initial setup wizard
         if (preferences->logged())
         {

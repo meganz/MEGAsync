@@ -31,6 +31,11 @@ void EncryptedSettings::beginGroup(int numGroup)
      QSettings::beginGroup(QSettings::childGroups().at(numGroup));
 }
 
+QString EncryptedSettings::getGroup()
+{
+     return QSettings::group();
+}
+
 void EncryptedSettings::endGroup()
 {
     QSettings::endGroup();

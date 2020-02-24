@@ -565,6 +565,58 @@ void Preferences::setSession(QString session)
     mutex.unlock();
 }
 
+void Preferences::storeSessionInGeneral(QString session)
+{
+    mutex.lock();
+    auto currentGroup = settings->getGroup();
+    if (!currentGroup.isEmpty())
+    {
+        settings->endGroup();
+    }
+    settings->setValue(sessionKey, session);
+    if (!currentGroup.isEmpty())
+    {
+        settings->beginGroup(currentGroup);
+    }
+    settings->sync();
+    mutex.unlock();
+}
+
+
+QString Preferences::getSessionInGeneral()
+{
+    mutex.lock();
+    auto currentGroup = settings->getGroup();
+    if (!currentGroup.isEmpty())
+    {
+        settings->endGroup();
+    }
+    QString value = settings->value(sessionKey).toString();
+    if (!currentGroup.isEmpty())
+    {
+        settings->beginGroup(currentGroup);
+    }
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::removeSessionInGeneral(QString session)
+{
+    mutex.lock();
+    auto currentGroup = settings->getGroup();
+    if (!currentGroup.isEmpty())
+    {
+        settings->endGroup();
+    }
+    settings->remove(sessionKey);
+    if (!currentGroup.isEmpty())
+    {
+        settings->beginGroup(currentGroup);
+    }
+    settings->sync();
+    mutex.unlock();
+}
+
 QString Preferences::getSession()
 {
     mutex.lock();
@@ -2938,6 +2990,27 @@ bool Preferences::needsDeferredSync()
     return b;
 }
 
+void Preferences::setEmailAndSessionAndTransferGeneralSettings(const QString &email, const QString &session)
+{
+    int proxyType = this->proxyType();
+    QString proxyServer = this->proxyServer();
+    int proxyPort = this->proxyPort();
+    int proxyProtocol = this->proxyProtocol();
+    bool proxyAuth = this->proxyRequiresAuth();
+    QString proxyUsername = this->getProxyUsername();
+    QString proxyPassword = this->getProxyPassword();
+
+    this->setEmail(email);
+    this->setSession(session);
+
+    this->setProxyType(proxyType);
+    this->setProxyServer(proxyServer);
+    this->setProxyPort(proxyPort);
+    this->setProxyProtocol(proxyProtocol);
+    this->setProxyRequiresAuth(proxyAuth);
+    this->setProxyUsername(proxyUsername);
+    this->setProxyPassword(proxyPassword);
+}
 
 void Preferences::login(QString account)
 {

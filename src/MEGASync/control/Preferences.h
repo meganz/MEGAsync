@@ -30,8 +30,10 @@ public:
 
     void initialize(QString dataPath);
 
+    void setEmailAndSessionAndTransferGeneralSettings(const QString &email, const QString &session);
+
     //Thread safe functions
-    bool logged();
+    bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
@@ -42,6 +44,9 @@ public:
     QString emailHash();
     QString privatePw();
     void setSession(QString session);
+    void storeSessionInGeneral(QString session);
+    void removeSessionInGeneral(QString session);
+    QString getSessionInGeneral();
     QString getSession();
     unsigned long long transferIdentifier();
     long long lastTransferNotificationTimestamp();

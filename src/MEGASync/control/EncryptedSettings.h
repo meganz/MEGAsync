@@ -17,6 +17,7 @@ public:
     QVariant value(const QString & key, const QVariant & defaultValue = QVariant());
     void beginGroup(const QString & prefix);
     void beginGroup(int numGroup);
+    QString getGroup();
     void endGroup();
     int numChildGroups();
     bool containsGroup(QString groupName);
