@@ -27,6 +27,8 @@ public:
     void sendPendingCrashReports(QString userMessage);
     void discardPendingCrashReports();
 
+    QString getLastCrashHash() const;
+
 private slots:
     void onPostFinished(QNetworkReply *reply);
     void onCrashPostTimeout();
@@ -42,6 +44,7 @@ private:
     QNetworkRequest request;
     QEventLoop loop;
     QTimer crashPostTimer;
+    QString lastCrashHash;
 };
 
 #endif // CRASHHANDLER_H

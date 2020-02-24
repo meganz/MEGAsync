@@ -2,7 +2,7 @@
 #include <QCloseEvent>
 #include <QRegExp>
 #include "ui_BugReportDialog.h"
-#include "control/gzjoin.h"
+
 
 using namespace mega;
 
@@ -100,25 +100,24 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
 
         createSupportTicket();
     }
-    else if (error->getErrorCode() == MegaError::API_EEXIST)
-    {
-        msgBox.setIcon(QMessageBox::Information);
-        msgBox.setText(tr("Error on submitting bug report"));
-        msgBox.setTextFormat(Qt::RichText);
-        msgBox.setInformativeText(tr("There is an ongoing report being uploaded.")
-                                  + QString::fromUtf8("<br>") +
-                                  tr("Please wait until the current upload is completed."));
-        msgBox.addButton(tr("Ok"), QMessageBox::AcceptRole);
-        msgBox.exec();
-    }
     else
     {
-        showErrorMessage();
-    }
-
-    if (error->getErrorCode() != MegaError::API_OK)
-    {
         sendProgress->hide();
+        if (error->getErrorCode() == MegaError::API_EEXIST)
+        {
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.setText(tr("Error on submitting bug report"));
+            msgBox.setTextFormat(Qt::RichText);
+            msgBox.setInformativeText(tr("There is an ongoing report being uploaded.")
+                                      + QString::fromUtf8("<br>") +
+                                      tr("Please wait until the current upload is completed."));
+            msgBox.addButton(tr("Ok"), QMessageBox::AcceptRole);
+            msgBox.exec();
+        }
+        else
+        {
+            showErrorMessage();
+        }
     }
 
     logger.resumeAfterReporting();
@@ -136,6 +135,11 @@ void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
     {
         case MegaRequest::TYPE_SUPPORT_TICKET:
         {
+            if (sendProgress)
+            {
+                sendProgress->hide();
+            }
+
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 QMessageBox msgBox;
@@ -153,11 +157,6 @@ void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
             else
             {
                 showErrorMessage();
-            }
-
-            if (sendProgress)
-            {
-                sendProgress->hide();
             }
 
             break;
@@ -228,75 +227,18 @@ void BugReportDialog::onReadyForReporting()
     //If send log file is enabled
     if (ui->cbAttachLogs->isChecked())
     {
-        QDir logDir{MegaApplication::applicationDataPath().append(QString::fromUtf8("/") + LOGS_FOLDER_LEAFNAME_QSTRING)};
-        if (logDir.exists())
+        QString pathToLogFile = Utilities::joinLogZipFiles(megaApi);
+        if (pathToLogFile.isNull())
         {
-            QString fileFormat{QDir::separator() + QString::fromUtf8("%1_%2").arg(QDateTime::currentDateTimeUtc().toString(QString::fromAscii("yyMMdd_hhmmss")))
-                                                                         .arg(QString::fromUtf8(std::unique_ptr<MegaUser>(megaApi->getMyUser())->getEmail()))};
-
-            QFileInfo joinLogsFile(logDir.absolutePath().append(fileFormat).append(QString::fromUtf8(".gz")));
-#ifdef _WIN32
-            FILE * pFile = nullptr;
-            errno_t er = _wfopen_s(&pFile, joinLogsFile.absoluteFilePath().toStdWString().c_str(), L"a+b");
-            if (er)
-            {
-                megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening file for joining log zip files (%1) : %2")
-                             .arg(er).arg(joinLogsFile.filePath()).toUtf8().constData());
-                pFile = nullptr; //just in case
-            }
-
-#else
-            FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toUtf8().constData(), "a+b");
-#endif
-            if (!pFile)
-            {
-                std::cerr << "Error opening file for joining log zip files " << std::endl;
-                megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening file for joining log zip files: %1").arg(joinLogsFile.filePath()).toUtf8().constData());
-
-
-                logger.resumeAfterReporting();
-                preparing = false;
-                return;
-            }
-
-            unsigned long crc, tot;
-            gzinit(&crc, &tot, pFile);
-
-            QFileInfoList logFiles = logDir.entryInfoList(QStringList() << QString::fromUtf8("MEGAsync.[0-9]*.log"), QDir::Files);
-            int nLogFiles = logFiles.count();
-
-            std::sort(logFiles.begin(), logFiles.end(), [](const QFileInfo &v1, const QFileInfo &v2){
-                return v1.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt() > v2.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt();} );
-
-            foreach (QFileInfo i, logFiles)
-            {
-                try
-                {
-#ifdef _WIN32
-                    gzcopy(i.absoluteFilePath().toStdWString().c_str(), --nLogFiles, &crc, &tot, pFile);
-#else
-                    gzcopy(i.absoluteFilePath().toUtf8().constData(), --nLogFiles, &crc, &tot, pFile);
-#endif
-                }
-                catch (const std::exception& e)
-                {
-                    std::cerr << "Error joining zip files for bug report " << e.what() << std::endl;
-                    megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error joining zip files for bug report : %1")
-                                 .arg(QString::fromUtf8(e.what())).toUtf8().constData());
-
-                    fclose(pFile);
-                    QFile::remove(joinLogsFile.absoluteFilePath());
-                    showErrorMessage();
-                    logger.resumeAfterReporting();
-                    preparing = false;
-                    return;
-                }
-            }
-
-            fclose(pFile);
-
+            showErrorMessage();
+            logger.resumeAfterReporting();
+            preparing = false;
+        }
+        else
+        {
+            QFileInfo joinLogsFile{pathToLogFile};
             reportFileName = joinLogsFile.fileName();
-            megaApi->startUploadForSupport(QDir::toNativeSeparators(joinLogsFile.absoluteFilePath()).toUtf8().constData(), true, delegateTransferListener);
+            megaApi->startUploadForSupport(QDir::toNativeSeparators(pathToLogFile).toUtf8().constData(), true, delegateTransferListener);
         }
     }
     else
