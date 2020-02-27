@@ -8504,7 +8504,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
     updateTrayIcon();
 }
 
-void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
+void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
 {
     if (appfinished)
     {
@@ -8560,6 +8560,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         bool waitForLoad = true;
 #endif
 
+        // check syncs
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
             if (!preferences->isFolderActive(i))
@@ -8567,14 +8568,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 continue;
             }
 
-            std::unique_ptr<MegaNode> node{api->getNodeByHandle(preferences->getMegaFolderHandle(i))};
-            if (!node)
-            {
-                continue;
-            }
-
             QString localFolder = preferences->getLocalFolder(i);
-
             std::unique_ptr<MegaSync> sync{api->getSyncByPath(localFolder.toUtf8().data())};
             if (!sync)
             {
