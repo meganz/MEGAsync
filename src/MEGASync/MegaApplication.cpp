@@ -8504,7 +8504,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
     updateTrayIcon();
 }
 
-void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
+void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
 {
     if (appfinished)
     {
@@ -8560,9 +8560,6 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         bool waitForLoad = true;
 #endif
 
-        std::vector<int> failedSyncs;
-
-        //Start syncs
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
             if (!preferences->isFolderActive(i))
@@ -8573,7 +8570,6 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
             std::unique_ptr<MegaNode> node{api->getNodeByHandle(preferences->getMegaFolderHandle(i))};
             if (!node)
             {
-                preferences->setSyncState(i, false);
                 continue;
             }
 
@@ -8582,9 +8578,6 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
             std::unique_ptr<MegaSync> sync{api->getSyncByPath(localFolder.toUtf8().data())};
             if (!sync)
             {
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Resuming sync failed: %1")
-                             .arg(localFolder).toUtf8().constData());
-                failedSyncs.push_back(i);
                 continue;
             }
 
@@ -8609,11 +8602,6 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 }
             }
 #endif
-        }
-
-        for (size_t i = failedSyncs.size(); i--;)
-        {
-            preferences->setSyncState(failedSyncs[i], false);
         }
     }
 }
