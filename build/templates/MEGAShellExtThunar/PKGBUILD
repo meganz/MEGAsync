@@ -21,7 +21,7 @@
 
 pkgname=thunar-megasync
 pkgver=EXT_VERSION
-pkgrel=1
+pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="Extension for Thunar to interact with Megasync"
 arch=('i686' 'x86_64')

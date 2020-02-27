@@ -348,6 +348,80 @@ void setScaleFactors()
 
 int main(int argc, char *argv[])
 {
+    if ((argc == 2) && !strcmp("/uninstall", argv[1]))
+    {
+        Preferences *preferences = Preferences::instance();
+        preferences->initialize(MegaApplication::applicationDataPath());
+        if (!preferences->error())
+        {
+            if (preferences->logged())
+            {
+                preferences->unlink();
+            }
+
+            for (int i = 0; i < preferences->getNumUsers(); i++)
+            {
+                preferences->enterUser(i);
+                for (int j = 0; j < preferences->getNumSyncedFolders(); j++)
+                {
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(j),
+                                                preferences->getSyncName(j),
+                                                preferences->getSyncID(j));
+
+                    #ifdef WIN32
+                        QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(j) +
+                                QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+
+                        WIN32_FILE_ATTRIBUTE_DATA fad;
+                        if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
+                        {
+                            SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+                        }
+
+                        QDir dir(debrisPath);
+                        QFileInfoList fList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
+                        for (int j = 0; j < fList.size(); j++)
+                        {
+                            QString folderPath = QDir::toNativeSeparators(fList[j].absoluteFilePath());
+                            WIN32_FILE_ATTRIBUTE_DATA fa;
+                            if (GetFileAttributesExW((LPCWSTR)folderPath.utf16(), GetFileExInfoStandard, &fa))
+                            {
+                                SetFileAttributesW((LPCWSTR)folderPath.utf16(), fa.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+                            }
+                        }
+                    #endif
+                }
+                preferences->leaveUser();
+            }
+        }
+
+        Utilities::removeRecursively(MegaApplication::applicationDataPath());
+        Platform::uninstall();
+
+#ifdef WIN32
+        if (preferences->installationTime() != -1)
+        {
+            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT);
+            QString stats = QString::fromUtf8("{\"it\":%1,\"act\":%2,\"lt\":%3}")
+                    .arg(preferences->installationTime())
+                    .arg(preferences->accountCreationTime())
+                    .arg(preferences->hasLoggedIn());
+
+            QByteArray base64stats = stats.toUtf8().toBase64();
+            base64stats.replace('+', '-');
+            base64stats.replace('/', '_');
+            while (base64stats.size() && base64stats[base64stats.size() - 1] == '=')
+            {
+                base64stats.resize(base64stats.size() - 1);
+            }
+
+            megaApi->sendEvent(99504, base64stats.constData());
+            Sleep(5000);
+        }
+#endif
+        return 0;
+    }
+
 #ifdef Q_OS_LINUX
 
     // Ensure interesting signals are unblocked.
@@ -559,79 +633,6 @@ int main(int argc, char *argv[])
 #ifndef DEBUG
     CrashHandler::instance()->Init(QDir::toNativeSeparators(crashPath));
 #endif
-    if ((argc == 2) && !strcmp("/uninstall", argv[1]))
-    {
-        Preferences *preferences = Preferences::instance();
-        preferences->initialize(app.applicationDataPath());
-        if (!preferences->error())
-        {
-            if (preferences->logged())
-            {
-                preferences->unlink();
-            }
-
-            for (int i = 0; i < preferences->getNumUsers(); i++)
-            {
-                preferences->enterUser(i);
-                for (int j = 0; j < preferences->getNumSyncedFolders(); j++)
-                {
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(j),
-                                                preferences->getSyncName(j),
-                                                preferences->getSyncID(j));
-
-                    #ifdef WIN32
-                        QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(j) +
-                                QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
-
-                        WIN32_FILE_ATTRIBUTE_DATA fad;
-                        if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
-                        {
-                            SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
-                        }
-
-                        QDir dir(debrisPath);
-                        QFileInfoList fList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
-                        for (int j = 0; j < fList.size(); j++)
-                        {
-                            QString folderPath = QDir::toNativeSeparators(fList[j].absoluteFilePath());
-                            WIN32_FILE_ATTRIBUTE_DATA fa;
-                            if (GetFileAttributesExW((LPCWSTR)folderPath.utf16(), GetFileExInfoStandard, &fa))
-                            {
-                                SetFileAttributesW((LPCWSTR)folderPath.utf16(), fa.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
-                            }
-                        }
-                    #endif
-                }
-                preferences->leaveUser();
-            }
-        }
-
-        Utilities::removeRecursively(MegaApplication::applicationDataPath());
-        Platform::uninstall();
-
-#ifdef WIN32
-        if (preferences->installationTime() != -1)
-        {
-            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT);
-            QString stats = QString::fromUtf8("{\"it\":%1,\"act\":%2,\"lt\":%3}")
-                    .arg(preferences->installationTime())
-                    .arg(preferences->accountCreationTime())
-                    .arg(preferences->hasLoggedIn());
-
-            QByteArray base64stats = stats.toUtf8().toBase64();
-            base64stats.replace('+', '-');
-            base64stats.replace('/', '_');
-            while (base64stats.size() && base64stats[base64stats.size() - 1] == '=')
-            {
-                base64stats.resize(base64stats.size() - 1);
-            }
-
-            megaApi->sendEvent(99504, base64stats.constData());
-            Sleep(5000);
-        }
-#endif
-        return 0;
-    }
 
     QtLockedFile singleInstanceChecker(appLockPath);
     bool alreadyStarted = true;
@@ -789,6 +790,35 @@ int main(int argc, char *argv[])
 #endif
 }
 
+void MegaApplication::loadDataPath()
+{
+#if QT_VERSION < 0x050000
+    dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+#else
+#ifdef Q_OS_LINUX
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QString::fromUtf8("/data/Mega Limited/MEGAsync");
+#else
+    QStringList dataPaths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+    if (dataPaths.size())
+    {
+        dataPath = dataPaths.at(0);
+    }
+#endif
+#endif
+
+    if (dataPath.isEmpty())
+    {
+        dataPath = QDir::currentPath();
+    }
+
+    dataPath = QDir::toNativeSeparators(dataPath);
+    QDir currentDir(dataPath);
+    if (!currentDir.exists())
+    {
+        currentDir.mkpath(QString::fromAscii("."));
+    }
+}
+
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
@@ -855,32 +885,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     appDirPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
 
     //Set the working directory
-#if QT_VERSION < 0x050000
-    dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#else
-#ifdef Q_OS_LINUX
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QString::fromUtf8("/data/Mega Limited/MEGAsync");
-#else
-    QStringList dataPaths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-    if (dataPaths.size())
-    {
-        dataPath = dataPaths.at(0);
-    }
-#endif
-#endif
-
-    if (dataPath.isEmpty())
-    {
-        dataPath = QDir::currentPath();
-    }
-
-    dataPath = QDir::toNativeSeparators(dataPath);
-    QDir currentDir(dataPath);
-    if (!currentDir.exists())
-    {
-        currentDir.mkpath(QString::fromAscii("."));
-    }
-    QDir::setCurrent(dataPath);
+    QDir::setCurrent(MegaApplication::applicationDataPath());
 
     QString desktopPath;
 #if QT_VERSION < 0x050000
@@ -1256,6 +1261,32 @@ void MegaApplication::initialize()
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
+                if (crashDialog.sendLogs())
+                {
+                    auto timestampString = reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: "))+11,20);
+                    timestampString = timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
+                    QDateTime crashTimestamp = QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
+
+                    if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
+                    {
+                        crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
+                    }
+
+                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this, crashTimestamp]()
+                    {
+                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
+                        if (!crashReportFilePath.isNull()
+                                && megaApi && megaApi->isLoggedIn())
+                        {
+                            megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
+                            crashReportFilePath.clear();
+                        }
+                        context.get()->deleteLater();
+                    });
+
+                    logger->prepareForReporting();
+                }
+
 #ifndef __APPLE__
                 QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"), Utilities::getDevicePixelRatio());
 #endif
@@ -1311,6 +1342,10 @@ QString MegaApplication::applicationDirPath()
 
 QString MegaApplication::applicationDataPath()
 {
+    if (dataPath.isEmpty())
+    {
+        loadDataPath();
+    }
     return dataPath;
 }
 
@@ -1830,6 +1865,15 @@ void MegaApplication::loggedIn(bool fromWizard)
     {
         infoWizard->deleteLater();
         infoWizard = NULL;
+    }
+
+    //Send pending crash report log if neccessary
+    if (!crashReportFilePath.isNull() && megaApi)
+    {
+        QFileInfo crashReportFile{crashReportFilePath};
+        megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(),
+                                       false);
+        crashReportFilePath.clear();
     }
 
     registerUserActivity();
@@ -6352,7 +6396,7 @@ void MegaApplication::createAppMenus()
         windowsImportLinksAction = NULL;
     }
 
-    windowsImportLinksAction = new QAction(tr("Import links"), this);
+    windowsImportLinksAction = new QAction(tr("Open links"), this);
     connect(windowsImportLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if (windowsUploadAction)
@@ -6586,7 +6630,7 @@ void MegaApplication::createAppMenus()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")), true);
+    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")), true);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)

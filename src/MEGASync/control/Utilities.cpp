@@ -9,6 +9,7 @@
 #include <QDateTime>
 #include <iostream>
 #include "MegaApplication.h"
+#include "control/gzjoin.h"
 
 #ifndef WIN32
 #include "megaapi.h"
@@ -678,6 +679,88 @@ QString Utilities::getDefaultBasePath()
         rootPath.resize(rootPath.size() - 1);
         return rootPath;
     }
+    return QString();
+}
+
+QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampSince, QString appenHashReference)
+{
+    if (!megaApi)
+    {
+        return QString();
+    }
+
+    QDir logDir{MegaApplication::applicationDataPath().append(QString::fromUtf8("/") + LOGS_FOLDER_LEAFNAME_QSTRING)};
+    if (logDir.exists())
+    {
+        QString fileFormat{QDir::separator() + QString::fromUtf8("%1%2%3")
+                                                    .arg(QDateTime::currentDateTimeUtc().toString(QString::fromAscii("yyMMdd_hhmmss")))
+                                                    .arg(megaApi->getMyUser() ? QString::fromUtf8("_") + QString::fromUtf8(std::unique_ptr<MegaUser>(megaApi->getMyUser())->getEmail()) : QString::fromUtf8(""))
+                                                    .arg(!appenHashReference.isEmpty() ? QString::fromUtf8("_") + appenHashReference : QString::fromUtf8(""))};
+
+        QFileInfo joinLogsFile(logDir.absolutePath().append(fileFormat).append(QString::fromUtf8(".gz")));
+#ifdef _WIN32
+        FILE * pFile = nullptr;
+        errno_t er = _wfopen_s(&pFile, joinLogsFile.absoluteFilePath().toStdWString().c_str(), L"a+b");
+        if (er)
+        {
+            megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening file for joining log zip files (%1) : %2")
+                         .arg(er).arg(joinLogsFile.filePath()).toUtf8().constData());
+            pFile = nullptr; //just in case
+        }
+
+#else
+        FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toUtf8().constData(), "a+b");
+#endif
+        if (!pFile)
+        {
+            std::cerr << "Error opening file for joining log zip files " << std::endl;
+            megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening file for joining log zip files: %1").arg(joinLogsFile.filePath()).toUtf8().constData());
+            return QString();
+        }
+
+        unsigned long crc, tot;
+        gzinit(&crc, &tot, pFile);
+
+        QFileInfoList logFiles = logDir.entryInfoList(QStringList() << QString::fromUtf8("MEGAsync.[0-9]*.log"), QDir::Files);
+        int nLogFiles = logFiles.count();
+
+        std::sort(logFiles.begin(), logFiles.end(), [](const QFileInfo &v1, const QFileInfo &v2){
+            return v1.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt() > v2.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt();} );
+
+        foreach (QFileInfo i, logFiles)
+        {
+            if (timestampSince)
+            {
+                if ( i.lastModified() < *timestampSince && i.fileName() != QString::fromUtf8("MEGAsync.0.log")) //keep at least the last log
+                {
+                    continue;
+                }
+            }
+
+            try
+            {
+#ifdef _WIN32
+                gzcopy(i.absoluteFilePath().toStdWString().c_str(), --nLogFiles, &crc, &tot, pFile);
+#else
+                gzcopy(i.absoluteFilePath().toUtf8().constData(), --nLogFiles, &crc, &tot, pFile);
+#endif
+            }
+            catch (const std::exception& e)
+            {
+                std::cerr << "Error joining zip files for bug report " << e.what() << std::endl;
+                megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error joining zip files for bug report : %1")
+                             .arg(QString::fromUtf8(e.what())).toUtf8().constData());
+
+                fclose(pFile);
+                QFile::remove(joinLogsFile.absoluteFilePath());
+                return QString();
+            }
+        }
+
+        fclose(pFile);
+        return joinLogsFile.absoluteFilePath();
+    }
+
     return QString();
 }
 
