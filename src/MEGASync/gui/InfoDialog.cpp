@@ -335,7 +335,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
         filterMenu->hide();
     }
 
-    QTimer::singleShot(1000, [this] () {
+    QTimer::singleShot(1000, this, [this] () {
         if (!isShown)
         {
             emit ui->sTabs->currentChanged(-1);
@@ -499,7 +499,7 @@ void InfoDialog::updateTransfersCount()
 
     if (remainingDownloads <= 0)
     {
-        QTimer::singleShot(5000, [this] () {
+        QTimer::singleShot(5000, this, [this] () {
             if (remainingDownloads <= 0)
             {
                 ui->bTransferManager->setCompletedDownloads(0);
@@ -509,7 +509,7 @@ void InfoDialog::updateTransfersCount()
     }
     if (remainingUploads <= 0)
     {
-        QTimer::singleShot(5000, [this] () {
+        QTimer::singleShot(5000, this, [this] () {
             if (remainingUploads <= 0)
             {
                 ui->bTransferManager->setCompletedUploads(0);
