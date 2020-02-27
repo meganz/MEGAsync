@@ -8613,7 +8613,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 
         for (size_t i = failedSyncs.size(); i--;)
         {
-            preferences->removeSyncedFolder(failedSyncs[i]);
+            preferences->setSyncState(failedSyncs[i], false);
         }
     }
 }
