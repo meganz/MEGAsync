@@ -178,7 +178,7 @@ struct LoggingThread
         }
     }
 
-    void log(int loglevel, const char *message, std::vector<const char *> directMessages = std::vector<const char *>());
+    void log(int loglevel, const char *message, std::vector<const char *> directMessages = std::vector<const char *>(), std::vector<size_t> directMessagesSizes = std::vector<size_t>());
 
 private:
     QString numberedLogFilename(QString baseName, int logNumber)
@@ -490,19 +490,19 @@ void cacheThreadNameAndTimeT(time_t t, struct tm& gmt, const char*& threadname)
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message
 #ifdef ENABLE_LOG_PERFORMANCE
-                  , std::vector<const char *> directMessages
+                         , std::vector<const char *> directMessages, std::vector<size_t> directMessagesSizes
 #endif
                          )
 
 {
     g_loggingThread.log(loglevel, message
 #ifdef ENABLE_LOG_PERFORMANCE
-                        , directMessages
+                        , directMessages, directMessagesSizes
 #endif
                         );
 }
 
-void LoggingThread::log(int loglevel, const char *message, std::vector<const char *> directMessages)
+void LoggingThread::log(int loglevel, const char *message, std::vector<const char *> directMessages, std::vector<size_t> directMessagesSizes)
 {
 
 // todo: do we need this xml logger?
@@ -582,12 +582,13 @@ void LoggingThread::log(int loglevel, const char *message, std::vector<const cha
                     std::promise<void> promise;
                     logListLast->mCompletionPromise = &promise;
                     auto future = logListLast->mCompletionPromise->get_future();
-                    DirectLogFunction func = [&timebuf, &threadname, &loglevelstring, &directMessages](std::ostream *oss)
+                    DirectLogFunction func = [&timebuf, &threadname, &loglevelstring, &directMessages, &directMessagesSizes](std::ostream *oss)
                     {
                         *oss << timebuf << threadname << loglevelstring;
+                        int i = 0;
                         for(const auto & dm : directMessages)
                         {
-                            *oss << dm;
+                            oss->write(dm, directMessagesSizes.at(i++));
                         }
                         *oss << std::endl;
                     };
