@@ -178,7 +178,7 @@ struct LoggingThread
         }
     }
 
-    void log(int loglevel, const char *message, std::vector<const char *> directMessages = std::vector<const char *>(), std::vector<size_t> directMessagesSizes = std::vector<size_t>());
+    void log(int loglevel, const char *message, const std::vector<const char *> &directMessages = std::vector<const char *>(), const std::vector<size_t> &directMessagesSizes = std::vector<size_t>());
 
 private:
     QString numberedLogFilename(QString baseName, int logNumber)
@@ -490,7 +490,7 @@ void cacheThreadNameAndTimeT(time_t t, struct tm& gmt, const char*& threadname)
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message
 #ifdef ENABLE_LOG_PERFORMANCE
-                         , std::vector<const char *> directMessages, std::vector<size_t> directMessagesSizes
+                         , const std::vector<const char *> &directMessages, const std::vector<size_t> &directMessagesSizes
 #endif
                          )
 
@@ -502,7 +502,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
                         );
 }
 
-void LoggingThread::log(int loglevel, const char *message, std::vector<const char *> directMessages, std::vector<size_t> directMessagesSizes)
+void LoggingThread::log(int loglevel, const char *message, const std::vector<const char *> &directMessages, const std::vector<size_t> &directMessagesSizes)
 {
 
 // todo: do we need this xml logger?
