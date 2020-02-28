@@ -76,3 +76,21 @@ int MegaProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption * option,
         return 24;
     return QProxyStyle::pixelMetric(metric, option, widget);
 }
+
+QIcon MegaProxyStyle::standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const
+{
+    switch (standardIcon)
+    {
+        case SP_MessageBoxInformation:
+            return QIcon(QString::fromAscii("://images/icon_info.png"));
+        case SP_MessageBoxQuestion:
+            return QIcon(QString::fromAscii("://images/icon_question.png"));
+        case SP_MessageBoxCritical:
+            return QIcon(QString::fromAscii("://images/icon_error.png"));
+        case SP_MessageBoxWarning:
+            return QIcon(QString::fromAscii("://images/icon_warning.png"));
+        default:
+            break;
+    }
+    return QProxyStyle::standardIcon(standardIcon, option, widget);
+}
