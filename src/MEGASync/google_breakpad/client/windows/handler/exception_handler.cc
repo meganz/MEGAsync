@@ -984,6 +984,7 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   oss << "Application: " << QApplication::applicationName().toUtf8().constData() << "\n";
   oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
          "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
+  oss << "Timestamp: " << QDateTime::currentMSecsSinceEpoch() << "\n";
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];
   int nameSize = GetModuleFileNameA(module, moduleName, sizeof(moduleName));

@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QDir>
 #include <QIcon>
+#include "megaapi.h"
 
 #include <sys/stat.h>
 
@@ -169,6 +170,7 @@ public:
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
     static void getPROurlWithParameters(QString &url);
+    static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
 private:
     Utilities() {}
