@@ -631,10 +631,10 @@ void LoggingThread::log(int loglevel, const char *message, const std::vector<con
                         logListLast->append(repeatbuf, n);
                     }
                     logListLast->append(timebuf, LOG_TIME_CHARS);
-                    logListLast->append(threadname, threadnameLen);
+                    logListLast->append(threadname, unsigned(threadnameLen));
                     logListLast->append(loglevelstring, LOG_LEVEL_CHARS);
                     logListLast->lastmessage = logListLast->used;
-                    logListLast->append(message, messageLen);
+                    logListLast->append(message, unsigned(messageLen));
                     logListLast->append("\n", 1);
                     notify = logListLast->used + 1024 > logListLast->allocated;
                 }
