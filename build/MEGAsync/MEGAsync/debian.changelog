@@ -12,6 +12,17 @@ megasync (4.3.0) stable; urgency=low
 
  -- MEGA Team <linux@mega.co.nz>  Wed, 26 Feb 2020 14:42:36 +0100
 
+megasync (4.2.5) stable; urgency=low
+
+  * Fix sync issues on macOS 10.15
+  * Fix transfer resumption issues for webclient and public links downloads
+  * Fix a crash during processing of some PDF files
+  * Resume pending transfers after a crash on next startup
+  * Include option to add synchronizations from the main dialog
+  * Other minor bug fixes and improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Fri, 06 Sep 2019 14:31:36 +0200
+
 megasync (4.2.3) stable; urgency=low
 
   * Fix a crash during processing of some PDF files
