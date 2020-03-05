@@ -2660,31 +2660,14 @@ void Preferences::setHttpsCertExpiration(long long expiration)
     settings->sync();
 }
 
-long long Preferences::lastPublicHandleTimestamp()
+void Preferences::getLastHandleInfo(MegaHandle &lastHandle, int &type, long long &timestamp)
 {
     mutex.lock();
     assert(logged());
-    long long value = settings->value(lastPublicHandleTimestampKey, 0).toLongLong();
+    timestamp = settings->value(lastPublicHandleTimestampKey, 0).toLongLong();
+    lastHandle = settings->value(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE).toULongLong();
+    type = settings->value(lastPublicHandleTypeKey, MegaApi::AFFILIATE_TYPE_INVALID).toInt();
     mutex.unlock();
-    return value;
-}
-
-MegaHandle Preferences::lastPublicHandle()
-{
-    mutex.lock();
-    assert(logged());
-    MegaHandle value = settings->value(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE).toULongLong();
-    mutex.unlock();
-    return value;
-}
-
-int Preferences::lastPublicHandleType()
-{
-    mutex.lock();
-    assert(logged());
-    int value = settings->value(lastPublicHandleTypeKey, MegaApi::AFFILIATE_TYPE_INVALID).toInt();
-    mutex.unlock();
-    return value;
 }
 
 void Preferences::setLastPublicHandle(MegaHandle handle, int type)

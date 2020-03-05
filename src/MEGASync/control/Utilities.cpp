@@ -695,18 +695,18 @@ void Utilities::getPROurlWithParameters(QString &url)
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     url.append(QString::fromUtf8("/uao=%1").arg(userAgent));
 
-    if (preferences->lastPublicHandleTimestamp()) //Always send aff parameters regardless time
+    MegaHandle aff;
+    int affType;
+    long long timestamp;
+    preferences->getLastHandleInfo(aff, affType, timestamp);
+
+    if (aff != INVALID_HANDLE)
     {
-        MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != INVALID_HANDLE)
-        {
-            int affType = preferences->lastPublicHandleType();
-            char *base64aff = MegaApi::handleToBase64(aff);
-            url.append(QString::fromUtf8("/aff=%1/aff_time=%2/aff_type=%3").arg(QString::fromUtf8(base64aff))
-                                                                           .arg(preferences->lastPublicHandleTimestamp() / 1000)
-                                                                           .arg(affType));
-            delete [] base64aff;
-        }
+        char *base64aff = MegaApi::handleToBase64(aff);
+        url.append(QString::fromUtf8("/aff=%1/aff_time=%2/aff_type=%3").arg(QString::fromUtf8(base64aff))
+                                                                       .arg(timestamp / 1000)
+                                                                       .arg(affType));
+        delete [] base64aff;
     }
 }
 

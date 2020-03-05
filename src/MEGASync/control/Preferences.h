@@ -265,9 +265,7 @@ public:
     long long getHttpsCertExpiration();
     void setHttpsCertExpiration(long long expiration);
 
-    long long lastPublicHandleTimestamp();
-    mega::MegaHandle lastPublicHandle();
-    int lastPublicHandleType();
+    void getLastHandleInfo(mega::MegaHandle &lastHandle, int &type, long long &timestamp);
     void setLastPublicHandle(mega::MegaHandle handle, int type);
 
     int getNumUsers();
