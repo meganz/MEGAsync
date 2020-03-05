@@ -50,7 +50,7 @@ set (USE_MEDIAINFO 1 CACHE STRING "")
 set (USE_LIBRAW 1 CACHE STRING "")
 set (USE_SODIUM 1 CACHE STRING "")
 set (USE_FFMPEG 1 CACHE STRING "")
-set (HAVE_PDFIUM 1 CACHE STRING "")
+set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1 CACHE STRING "")
 
