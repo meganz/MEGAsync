@@ -7321,8 +7321,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                     Utilities::queueFunctionInAppThread([=](){
 
-                        MegaApi::log(MegaApi::LOG_LEVEL_FATAL, " add queued singleshot!");
-
                         if (isFilesystemAvailable)
                         {
                             //If we have got the filesystem, start the app
