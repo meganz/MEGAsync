@@ -135,6 +135,12 @@ void Utilities::initializeExtensions()
      extensionIcons[QString::fromAscii("key")] = QString::fromAscii("keynote.png");
 }
 
+
+void Utilities::queueFunctionInAppThread(std::function<void()> fun) {
+   QObject temporary;
+   QObject::connect(&temporary, &QObject::destroyed, qApp, std::move(fun), Qt::QueuedConnection);
+}
+
 void Utilities::getFolderSize(QString folderPath, long long *size)
 {
     if (!folderPath.size())

@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QDir>
 #include <QIcon>
+#include <functional>
 #include "megaapi.h"
 
 #include <sys/stat.h>
@@ -185,6 +186,9 @@ public:
     static QString getAvatarPath(QString email);
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
+
+    static void queueFunctionInAppThread(std::function<void()> fun);
+
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
 

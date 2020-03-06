@@ -12,6 +12,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/CrashHandler.cpp \
     $$PWD/ExportProcessor.cpp \
     $$PWD/Utilities.cpp \
+    $$PWD/ThreadPool.cpp \
     $$PWD/MegaDownloader.cpp \
     $$PWD/MegaSyncLogger.cpp \
     $$PWD/ConnectivityChecker.cpp
@@ -25,6 +26,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/CrashHandler.h \
     $$PWD/ExportProcessor.h \
     $$PWD/Utilities.h \
+    $$PWD/ThreadPool.h \
     $$PWD/MegaDownloader.h \
     $$PWD/MegaSyncLogger.h \
     $$PWD/ConnectivityChecker.h \

@@ -35,6 +35,7 @@
 #include "control/MegaDownloader.h"
 #include "control/UpdateTask.h"
 #include "control/MegaSyncLogger.h"
+#include "control/ThreadPool.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "QFilterAlertsModel.h"
@@ -375,6 +376,7 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
+    std::unique_ptr<ThreadPool> mthreadPool;
     int numTransfers[2];
     int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];

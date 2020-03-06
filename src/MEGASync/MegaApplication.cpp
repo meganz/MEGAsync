@@ -907,6 +907,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     logger->setDebug(true);
 #endif
 
+    mthreadPool.reset(new ThreadPool(1));
+
     updateAvailable = false;
     networkConnectivity = true;
     activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] = 0xFFFFFFFFFFFFFFFFULL;
@@ -7080,6 +7082,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (e->getErrorCode() == MegaError::API_ENOENT)
             {
+
                 const char *email = megaApi->getMyEmail();
                 if (email)
                 {
@@ -7313,16 +7316,25 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                if (megaApi->isFilesystemAvailable())
-                {
-                    //If we have got the filesystem, start the app
-                    loggedIn(false);
-                    restoreSyncs();
-                }
-                else
-                {
-                    preferences->setCrashed(true);
-                }
+                mthreadPool->push([this]() {
+                    bool isFilesystemAvailable = megaApi->isFilesystemAvailable();
+
+                    Utilities::queueFunctionInAppThread([=](){
+
+                        MegaApi::log(MegaApi::LOG_LEVEL_FATAL, " add queued singleshot!");
+
+                        if (isFilesystemAvailable)
+                        {
+                            //If we have got the filesystem, start the app
+                            loggedIn(false);
+                            restoreSyncs();
+                        }
+                        else
+                        {
+                            preferences->setCrashed(true);
+                        }
+                    });
+                });
             }
             else
             {
