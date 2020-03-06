@@ -222,11 +222,10 @@ const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8(
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
+const QString Preferences::currentAccountStatusKey  = QString::fromAscii("currentAccountStatus");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
 const QString Preferences::firstNameKey             = QString::fromAscii("firstName");
 const QString Preferences::lastNameKey              = QString::fromAscii("lastName");
-const QString Preferences::emailHashKey             = QString::fromAscii("emailHash");
-const QString Preferences::privatePwKey             = QString::fromAscii("privatePw");
 const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
 const QString Preferences::usedStorageKey           = QString::fromAscii("usedStorage");
 const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudDriveStorage");
@@ -384,6 +383,8 @@ const bool Preferences::defaultProxyRequiresAuth    = false;
 const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
+const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
+
 Preferences *Preferences::preferences = NULL;
 
 Preferences *Preferences::instance()
@@ -536,31 +537,10 @@ void Preferences::setLastName(QString lastName)
     mutex.unlock();
 }
 
-QString Preferences::emailHash()
-{
-    mutex.lock();
-    assert(logged());
-    QString value = settings->value(emailHashKey).toString();
-    mutex.unlock();
-    return value;
-}
-
-QString Preferences::privatePw()
-{
-    mutex.lock();
-    assert(logged());
-    QString value = settings->value(privatePwKey).toString();
-    mutex.unlock();
-    return value;
-}
-
 void Preferences::setSession(QString session)
 {
     mutex.lock();
-    assert(logged());
-    settings->setValue(sessionKey, session);
-    settings->remove(emailHashKey);
-    settings->remove(privatePwKey);
+    storeSessionInGeneral(session);
     settings->sync();
     mutex.unlock();
 }
@@ -568,60 +548,61 @@ void Preferences::setSession(QString session)
 void Preferences::storeSessionInGeneral(QString session)
 {
     mutex.lock();
-    auto currentGroup = settings->getGroup();
-    if (!currentGroup.isEmpty())
+
+    QString currentAccount;
+    if (logged())
     {
         settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
     }
+
     settings->setValue(sessionKey, session);
-    if (!currentGroup.isEmpty())
+    if (!currentAccount.isEmpty())
     {
-        settings->beginGroup(currentGroup);
+        settings->beginGroup(currentAccount);
     }
     settings->sync();
     mutex.unlock();
 }
 
-
 QString Preferences::getSessionInGeneral()
 {
     mutex.lock();
-    auto currentGroup = settings->getGroup();
-    if (!currentGroup.isEmpty())
+    QString currentAccount;
+    if (logged())
     {
         settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
     }
+
     QString value = settings->value(sessionKey).toString();
-    if (!currentGroup.isEmpty())
+    if (!currentAccount.isEmpty())
     {
-        settings->beginGroup(currentGroup);
+        settings->beginGroup(currentAccount);
     }
     mutex.unlock();
     return value;
 }
 
-void Preferences::removeSessionInGeneral(QString session)
-{
-    mutex.lock();
-    auto currentGroup = settings->getGroup();
-    if (!currentGroup.isEmpty())
-    {
-        settings->endGroup();
-    }
-    settings->remove(sessionKey);
-    if (!currentGroup.isEmpty())
-    {
-        settings->beginGroup(currentGroup);
-    }
-    settings->sync();
-    mutex.unlock();
-}
-
 QString Preferences::getSession()
 {
     mutex.lock();
-    assert(logged());
-    QString value = settings->value(sessionKey).toString();
+    QString value;
+    if (logged())
+    {
+        value = settings->value(sessionKey).toString();
+    }
+
+    if (value.isEmpty())
+    {
+        value = getSessionInGeneral();
+    }
+    else
+    {
+        //Remove session from specific settings to use the global stored sessionKey instead
+        settings->remove(sessionKey);
+    }
+
     mutex.unlock();
     return value;
 }
@@ -1392,6 +1373,22 @@ bool Preferences::canUpdate(QString filePath)
     mutex.unlock();
 
     return value;
+}
+
+int Preferences::accountState()
+{
+    mutex.lock();
+    int value = settings->value(currentAccountStatusKey, defaultAccountStatus).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setAccountState(int value)
+{
+    mutex.lock();
+    settings->setValue(currentAccountStatusKey, value);
+    settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::uploadLimitKB()
@@ -2785,12 +2782,12 @@ void Preferences::unlink()
 {
     mutex.lock();
     assert(logged());
-    settings->remove(emailHashKey);
-    settings->remove(privatePwKey);
-    settings->remove(sessionKey);
+    settings->remove(sessionKey); // Remove session from specific account settings
     settings->endGroup();
 
     settings->remove(currentAccountKey);
+    settings->remove(currentAccountStatusKey);
+    settings->remove(sessionKey); // Remove session from global settings
     clearTemporalBandwidth();
     syncNames.clear();
     syncIDs.clear();
@@ -2990,7 +2987,7 @@ bool Preferences::needsDeferredSync()
     return b;
 }
 
-void Preferences::setEmailAndSessionAndTransferGeneralSettings(const QString &email, const QString &session)
+void Preferences::setEmailAndGeneralSettings(const QString &email)
 {
     int proxyType = this->proxyType();
     QString proxyServer = this->proxyServer();
@@ -3001,7 +2998,6 @@ void Preferences::setEmailAndSessionAndTransferGeneralSettings(const QString &em
     QString proxyPassword = this->getProxyPassword();
 
     this->setEmail(email);
-    this->setSession(session);
 
     this->setProxyType(proxyType);
     this->setProxyServer(proxyServer);

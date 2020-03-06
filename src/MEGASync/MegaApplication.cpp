@@ -1715,7 +1715,7 @@ void MegaApplication::start()
 #endif
 
     //Start the initial setup wizard if needed
-    if (!preferences->logged() && preferences->getSessionInGeneral().isEmpty())
+    if (!preferences->logged() && preferences->getSession().isEmpty())
     {
         if (!preferences->installationTime())
         {
@@ -1810,24 +1810,11 @@ void MegaApplication::start()
         }
 
         QString theSession;
-        if (preferences->logged())
-        {
-            theSession = preferences->getSession();
-        }
-        else
-        {
-            theSession = preferences->getSessionInGeneral();
-        }
+        theSession = preferences->getSession();
 
         if (theSession.size())
         {
             megaApi->fastLogin(theSession.toUtf8().constData());
-        }
-        else
-        {
-            megaApi->fastLogin(preferences->email().toUtf8().constData(),
-                       preferences->emailHash().toUtf8().constData(),
-                       preferences->privatePw().toUtf8().constData());
         }
 
         if (updated)
@@ -7090,38 +7077,36 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         // while login request is being processed. This way, the local SSL certs request is not aborted.
         initLocalServer();
 
-        auto prevGeneralSession = preferences->getSessionInGeneral();
-
         if (e->getErrorCode() == MegaError::API_OK)
         {
+            int prevAccountState = preferences->accountState();
+            preferences->setAccountState(Preferences::STATE_LOGGED_OK);
+
             std::unique_ptr<char []> session(megaApi->dumpSession());
             if (session)
             {
-                preferences->storeSessionInGeneral(QString::fromUtf8(session.get()));
+                preferences->setSession(QString::fromUtf8(session.get()));
+            }
 
-                if (!preferences->logged() && prevGeneralSession == QString::fromUtf8(session.get()) && !preferences->logged())
-                {
-                    megaApi->fetchNodes();
-                }
-
+            // In case fetchnode fails in previous request,
+            // but we have an active session, we will need to launch a fetchnodes
+            if (!preferences->logged()
+                    && prevAccountState == Preferences::STATE_FETCHNODES_FAILED)
+            {
+                megaApi->fetchNodes();
             }
         }
-
 
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
+
             Platform::prepareForSync();
             int errorCode = e->getErrorCode();
             if (errorCode == MegaError::API_OK)
             {
-                const char *session = megaApi->dumpSession();
-                if (session)
+                if (!preferences->getSession().isEmpty())
                 {
-                    QString sessionKey = QString::fromUtf8(session);
-                    preferences->setSession(sessionKey);
-                    delete [] session;
-
                     //Successful login, fetch nodes
                     megaApi->fetchNodes();
                     break;
@@ -7305,20 +7290,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            auto prevsession = preferences->getSessionInGeneral();
+            preferences->setAccountState(Preferences::STATE_FETCHNODES_OK);
 
-            if (!preferences->logged() && !prevsession.isEmpty())
+            std::unique_ptr<char[]> email(megaApi->getMyEmail());
+            if (!preferences->logged() && !preferences->hasEmail(QString::fromUtf8(email.get())))
             { //session resumed from general storage.
-
-                std::unique_ptr<char[]> email(megaApi->getMyEmail());
-                std::unique_ptr<char[]> session(megaApi->dumpSession());
-                preferences->setEmailAndSessionAndTransferGeneralSettings(
-                            QString::fromUtf8(email.get()),
-                            QString::fromUtf8(session.get()));
+                preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
             }
-
-            preferences->storeSessionInGeneral(QString()); //logged will be true from now on
         }
+        else
+        {
+            preferences->setAccountState(Preferences::STATE_FETCHNODES_FAILED);
+        }
+
         //This prevents to handle node requests in the initial setup wizard
         if (preferences->logged())
         {
