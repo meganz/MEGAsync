@@ -165,6 +165,7 @@ public:
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
+    std::shared_ptr<mega::MegaNode> getRootNode();
 
     MegaSyncLogger& getLogger() const;
 
@@ -375,6 +376,8 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
+    std::unique_ptr<ThreadPool> mthreadPool;
+    std::shared_ptr<mega::MegaNode> mRootNode;
     int numTransfers[2];
     int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
