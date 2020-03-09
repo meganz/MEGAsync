@@ -21,7 +21,7 @@ public:
     ~MegaSyncLogger();
     void log(const char *time, int loglevel, const char *source, const char *message
 #ifdef ENABLE_LOG_PERFORMANCE
-             , const std::vector<const char *> &directMessages, const std::vector<size_t> &directMessagesSizes
+             , const char **directMessages, size_t *directMessagesSizes, int numberMessages
 #endif
              ) override;
     void setDebug(bool enable);

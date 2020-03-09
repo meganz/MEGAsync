@@ -178,7 +178,7 @@ struct LoggingThread
         }
     }
 
-    void log(int loglevel, const char *message, const std::vector<const char *> &directMessages = std::vector<const char *>(), const std::vector<size_t> &directMessagesSizes = std::vector<size_t>());
+    void log(int loglevel, const char *message, const char **directMessages = nullptr, size_t *directMessagesSizes = nullptr, int numberMessages = 0);
 
 private:
     QString numberedLogFilename(QString baseName, int logNumber)
@@ -490,19 +490,19 @@ void cacheThreadNameAndTimeT(time_t t, struct tm& gmt, const char*& threadname)
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message
 #ifdef ENABLE_LOG_PERFORMANCE
-                         , const std::vector<const char *> &directMessages, const std::vector<size_t> &directMessagesSizes
+                         , const char **directMessages, size_t *directMessagesSizes, int numberMessages
 #endif
                          )
 
 {
     g_loggingThread.log(loglevel, message
 #ifdef ENABLE_LOG_PERFORMANCE
-                        , directMessages, directMessagesSizes
+                        , directMessages, directMessagesSizes, numberMessages
 #endif
                         );
 }
 
-void LoggingThread::log(int loglevel, const char *message, const std::vector<const char *> &directMessages, const std::vector<size_t> &directMessagesSizes)
+void LoggingThread::log(int loglevel, const char *message, const char **directMessages, size_t *directMessagesSizes, int numberMessages)
 {
 
 // todo: do we need this xml logger?
@@ -525,7 +525,7 @@ void LoggingThread::log(int loglevel, const char *message, const std::vector<con
 //    }
 //#endif
 
-    bool direct = !directMessages.empty();
+    bool direct = directMessages != nullptr;
 
     char timebuf[LOG_TIME_CHARS + 1];
     auto now = std::chrono::system_clock::now();
@@ -582,13 +582,13 @@ void LoggingThread::log(int loglevel, const char *message, const std::vector<con
                     std::promise<void> promise;
                     logListLast->mCompletionPromise = &promise;
                     auto future = logListLast->mCompletionPromise->get_future();
-                    DirectLogFunction func = [&timebuf, &threadname, &loglevelstring, &directMessages, &directMessagesSizes](std::ostream *oss)
+                    DirectLogFunction func = [&timebuf, &threadname, &loglevelstring, &directMessages, &directMessagesSizes, numberMessages](std::ostream *oss)
                     {
                         *oss << timebuf << threadname << loglevelstring;
-                        int i = 0;
-                        for(const auto & dm : directMessages)
+
+                        for(int i = 0; i < numberMessages; i++)
                         {
-                            oss->write(dm, directMessagesSizes.at(i++));
+                            oss->write(directMessages[i], directMessagesSizes[i]);
                         }
                         *oss << std::endl;
                     };
