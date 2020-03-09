@@ -1,6 +1,7 @@
 #include "CircularUsageProgressBar.h"
 #include <QPainter>
 #include <QDebug>
+#include <math.h>
 
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     QWidget(parent), outerRadius(0), penWidth(0)
@@ -85,7 +86,16 @@ void CircularUsageProgressBar::drawArcValue(QPainter &p, const QRectF &baseRect,
 void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, double innerRadius, double value)
 {
     QFont f(font());
-    f.setPixelSize(innerRadius * 0.33);
+    qreal factor_decrease = 0.86;
+    qreal factor = 1.0;
+    auto aux = value;
+    while (aux >= 1000)
+    {
+        factor *= factor_decrease;
+        aux = aux / 10;
+    }
+    int pixelSize = innerRadius * 0.33;
+    f.setPixelSize( std::max(5.0, floor(pixelSize * factor)) );
     f.setFamily(QString::fromUtf8("Lato"));
     p.setFont(f);
 

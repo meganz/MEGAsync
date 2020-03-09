@@ -209,7 +209,7 @@ void TransferManager::createAddMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")));
+    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")));
     connect(importLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)

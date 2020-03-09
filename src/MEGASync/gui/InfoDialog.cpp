@@ -282,6 +282,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 InfoDialog::~InfoDialog()
 {
+    removeEventFilter(this);
     delete ui;
     delete gWidget;
     delete activeDownload;
@@ -388,7 +389,7 @@ void InfoDialog::setUsage()
         {
 
         int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->wCircularStorage->setValue((percentage < 100) ? percentage : 100);
+        ui->wCircularStorage->setValue(percentage);
 
         QString usageColorS = (percentage < 90 ? QString::fromUtf8("#666666")
                                                       : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")

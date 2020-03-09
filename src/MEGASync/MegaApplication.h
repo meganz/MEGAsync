@@ -97,6 +97,8 @@ class MegaApplication : public QApplication, public mega::MegaListener, public S
     void setTrayIconFromTheme(QString icon);
 #endif
 
+    static void loadDataPath();
+
 public:
 
     explicit MegaApplication(int &argc, char **argv);
@@ -357,6 +359,8 @@ protected:
     QFilterAlertsModel *notificationsProxyModel;
     QAlertsModel *notificationsModel;
     MegaAlertDelegate *notificationsDelegate;
+    std::unique_ptr<QObject> context{new QObject};
+    QString crashReportFilePath;
 
     HTTPServer *httpServer;
     HTTPServer *httpsServer;

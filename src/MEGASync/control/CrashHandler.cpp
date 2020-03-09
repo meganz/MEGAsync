@@ -3,6 +3,7 @@
 #include <QtCore/QProcess>
 #include <QtCore/QCoreApplication>
 #include <QString>
+#include <QDateTime>
 #include <sstream>
 #include "MegaApplication.h"
 
@@ -158,6 +159,7 @@ string getDistroVersion()
         oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
                "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
         oss << "Module name: " << "megasync" << "\n";
+        oss << "Timestamp: " << QDateTime::currentMSecsSinceEpoch() << "\n";
 
         string distroinfo;
         #ifdef __linux__
@@ -456,6 +458,11 @@ CrashHandler::~CrashHandler()
     delete d;
 }
 
+QString CrashHandler::getLastCrashHash() const
+{
+    return lastCrashHash;
+}
+
 void CrashHandler::setReportCrashesToSystem(bool report)
 {
     d->bReportCrashesToSystem = report;
@@ -477,6 +484,8 @@ QStringList CrashHandler::getPendingCrashReports()
     Preferences *preferences = Preferences::instance();
     QStringList previousCrashes = preferences->getPreviousCrashes();
     QStringList result;
+
+    lastCrashHash.clear();
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Checking pending crash repors");
     QDir dir(dumpPath);
@@ -514,10 +523,17 @@ QStringList CrashHandler::getPendingCrashReports()
         }
 
         QString crashHash = QString::fromAscii(QCryptographicHash::hash(crashReport.toUtf8(),QCryptographicHash::Md5).toHex());
+        if (lastCrashHash.isNull())
+        {
+            lastCrashHash = crashHash;
+        }
+
         if (!previousCrashes.contains(crashHash))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New crash file: %1  Hash: %2")
                          .arg(file.fileName()).arg(crashHash).toUtf8().constData());
+            int idx = crashReport.indexOf(QString::fromAscii("Version code: "));
+            crashReport.insert(idx, QString::fromUtf8("Hash: %1\n").arg(crashHash));
             result.append(crashReport);
             previousCrashes.append(crashHash);
         }

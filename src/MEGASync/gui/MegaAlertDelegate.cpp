@@ -207,6 +207,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
 
         }
     }
+    return QAbstractItemDelegate::editorEvent(event, model, option, index);
 }
 
 bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
