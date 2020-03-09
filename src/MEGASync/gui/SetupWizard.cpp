@@ -585,7 +585,7 @@ void SetupWizard::on_bNext_clicked()
         MegaNode *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
         if (!node)
         {
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
             if (!rootNode)
             {
                 page_login();
@@ -600,9 +600,8 @@ void SetupWizard::on_bNext_clicked()
             }
 
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            megaApi->createFolder("MEGAsync", rootNode);
+            megaApi->createFolder("MEGAsync", rootNode.get());
             creatingDefaultSyncFolder = true;
-            delete rootNode;
 
             ui->lProgress->setText(tr("Creating folder..."));
             page_progress();
@@ -640,7 +639,8 @@ void SetupWizard::on_bCancel_clicked()
     {
         setupPreferences();
         QString syncName;
-        MegaNode *rootNode = megaApi->getRootNode();
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+
         if (!rootNode)
         {
             page_login();
@@ -653,8 +653,6 @@ void SetupWizard::on_bCancel_clicked()
             app->rebootApplication(false);
             return;
         }
-
-        delete rootNode;
 
         preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
         done(QDialog::Accepted);

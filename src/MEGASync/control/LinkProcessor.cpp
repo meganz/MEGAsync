@@ -1,6 +1,7 @@
 #include "LinkProcessor.h"
 #include "Utilities.h"
 #include "Preferences.h"
+#include "MegaApplication.h"
 #include <QDir>
 #include <QDateTime>
 #include <QApplication>
@@ -222,15 +223,14 @@ void LinkProcessor::importLinks(QString megaPath)
     }
     else
     {
-        MegaNode *rootNode = megaApi->getRootNode();
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
         if (!rootNode)
         {
             emit onLinkImportFinish();
             return;
         }
 
-        megaApi->createFolder("MEGAsync Imports", rootNode, delegateListener);
-        delete rootNode;
+        megaApi->createFolder("MEGAsync Imports", rootNode.get(), delegateListener);
     }
 }
 

@@ -1,5 +1,6 @@
 #include "NodeSelector.h"
 #include "ui_NodeSelector.h"
+#include "MegaApplication.h"
 
 #include <QMessageBox>
 #include <QPointer>
@@ -393,7 +394,7 @@ void NodeSelector::on_bNewFolder_clicked()
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         if (!parent)
         {
-            parent = megaApi->getRootNode();
+            parent = ((MegaApplication*)qApp)->getRootNode()->copy();
             if (!parent)
             {
                 delete id;
