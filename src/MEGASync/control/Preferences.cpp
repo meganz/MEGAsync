@@ -223,6 +223,7 @@ const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8(
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::currentAccountStatusKey  = QString::fromAscii("currentAccountStatus");
+const QString Preferences::needsFetchNodesKey       = QString::fromAscii("needsFetchNodes");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
 const QString Preferences::firstNameKey             = QString::fromAscii("firstName");
 const QString Preferences::lastNameKey              = QString::fromAscii("lastName");
@@ -384,6 +385,7 @@ const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
 const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
+const int  Preferences::defaultNeedsFetchNodes      = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -1375,21 +1377,89 @@ bool Preferences::canUpdate(QString filePath)
     return value;
 }
 
-int Preferences::accountState()
+int Preferences::accountStateInGeneral()
 {
     mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
     int value = settings->value(currentAccountStatusKey, defaultAccountStatus).toInt();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     mutex.unlock();
     return value;
 }
 
-void Preferences::setAccountState(int value)
+void Preferences::setAccountStateInGeneral(int value)
 {
     mutex.lock();
+
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
     settings->setValue(currentAccountStatusKey, value);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     settings->sync();
     mutex.unlock();
 }
+
+
+int Preferences::needsFetchNodesInGeneral()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    int value = settings->value(needsFetchNodesKey, defaultNeedsFetchNodes).toInt();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setNeedsFetchNodesInGeneral(int value)
+{
+    mutex.lock();
+
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(needsFetchNodesKey, value);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    settings->sync();
+    mutex.unlock();
+}
+
 
 int Preferences::uploadLimitKB()
 {
@@ -2786,6 +2856,7 @@ void Preferences::unlink()
     settings->endGroup();
 
     settings->remove(currentAccountKey);
+    settings->remove(needsFetchNodesKey);
     settings->remove(currentAccountStatusKey);
     settings->remove(sessionKey); // Remove session from global settings
     clearTemporalBandwidth();

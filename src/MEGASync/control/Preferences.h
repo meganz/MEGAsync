@@ -273,8 +273,11 @@ public:
     void enterUser(int i);
     void leaveUser();
 
-    int accountState();
-    void setAccountState(int value);
+    int accountStateInGeneral();
+    void setAccountStateInGeneral(int value);
+
+    int needsFetchNodesInGeneral();
+    void setNeedsFetchNodesInGeneral(int value);
 
     void unlink();
 
@@ -458,6 +461,7 @@ protected:
 
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
+    static const QString needsFetchNodesKey;
     static const QString syncsGroupKey;
     static const QString emailKey;
     static const QString firstNameKey;
@@ -609,6 +613,7 @@ protected:
     static const QString defaultHttpsCertIntermediate;
     static const long long defaultHttpsCertExpiration;
     static const int defaultAccountStatus;
+    static const int defaultNeedsFetchNodes;
 };
 
 #endif // PREFERENCES_H

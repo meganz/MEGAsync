@@ -106,7 +106,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (loggingStarted)
                 {
-                    preferences->setAccountState(Preferences::STATE_LOGGED_OK);
+                    preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
                     megaApi->fetchNodes();
                     if (!preferences->hasLoggedIn())
                     {
@@ -121,7 +121,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
-                preferences->setAccountState(Preferences::STATE_LOGGED_FAILED);
+                preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
                     QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
@@ -205,7 +205,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() != MegaError::API_OK)
             {
-                preferences->setAccountState(Preferences::STATE_FETCHNODES_FAILED);
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
                 page_login();
                 loggingStarted = false;
                 break;
@@ -213,7 +213,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
-                preferences->setAccountState(Preferences::STATE_FETCHNODES_OK);
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
                 if (!megaApi->isFilesystemAvailable())
                 {
                     page_login();

@@ -7114,8 +7114,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            int prevAccountState = preferences->accountState();
-            preferences->setAccountState(Preferences::STATE_LOGGED_OK);
+            preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK); //TODO: setGlobalAccountState
+
+            auto needsFetchNodes = preferences->needsFetchNodesInGeneral();
 
             std::unique_ptr<char []> session(megaApi->dumpSession());
             if (session)
@@ -7126,7 +7127,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             // In case fetchnode fails in previous request,
             // but we have an active session, we will need to launch a fetchnodes
             if (!preferences->logged()
-                    && prevAccountState == Preferences::STATE_FETCHNODES_FAILED)
+                    && needsFetchNodes)
             {
                 megaApi->fetchNodes();
             }
@@ -7325,17 +7326,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            preferences->setAccountState(Preferences::STATE_FETCHNODES_OK);
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
+            preferences->setNeedsFetchNodesInGeneral(false);
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
-            if (!preferences->logged() && !preferences->hasEmail(QString::fromUtf8(email.get())))
-            { //session resumed from general storage.
+            if (email && !preferences->logged() && !preferences->hasEmail(QString::fromUtf8(email.get())))
+            { //session resumed from general storage. //I'm getting there from loggin wizard -> guest widget //TODO: remove comment.
                 preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
             }
         }
         else
         {
-            preferences->setAccountState(Preferences::STATE_FETCHNODES_FAILED);
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
+            preferences->setNeedsFetchNodesInGeneral(true);
         }
 
         //This prevents to handle node requests in the initial setup wizard

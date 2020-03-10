@@ -160,7 +160,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (loggingStarted)
                 {
-                    preferences->setAccountState(Preferences::STATE_LOGGED_OK);
+                    preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
                     megaApi->fetchNodes();
                     if (!preferences->hasLoggedIn())
                     {
@@ -175,7 +175,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
-                preferences->setAccountState(Preferences::STATE_LOGGED_FAILED);
+                preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
                     showErrorMessage(tr("Incorrect email and/or password."));
@@ -294,7 +294,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() != MegaError::API_OK)
             {   
-                preferences->setAccountState(Preferences::STATE_FETCHNODES_FAILED);
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
                 if (loggingStarted)
                 {
                     page_login();
@@ -309,7 +309,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
-                preferences->setAccountState(Preferences::STATE_FETCHNODES_OK);
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
                 if (!megaApi->isFilesystemAvailable())
                 {
                     page_login();
