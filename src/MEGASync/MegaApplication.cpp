@@ -4616,9 +4616,9 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
-std::shared_ptr<MegaNode> MegaApplication::getRootNode()
+std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool force)
 {
-    if (!mRootNode)
+    if (force || !mRootNode)
     {
         mRootNode.reset(megaApi->getRootNode());
     }
@@ -7317,12 +7317,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_FETCH_NODES:
     {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            //Update/set root node
+            getRootNode(true); //TODO: move this to thread pool
+        }
+
         //This prevents to handle node requests in the initial setup wizard
         if (preferences->logged())
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                if (megaApi->isFilesystemAvailable())
+                if (mRootNode)
                 {
                     //If we have got the filesystem, start the app
                     loggedIn(false);
