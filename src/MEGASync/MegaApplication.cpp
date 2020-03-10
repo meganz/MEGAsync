@@ -1419,7 +1419,7 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (!megaApi->isLoggedIn())
+    else if (!megaApi->isLoggedIn()) //TODO: use if (preferences->accountState == STATE_NOT_INITIATED) after merging task/resume_session_after_failed_fetchnodes //add assert comparing both
     {
         if (!infoDialog)
         {
@@ -1469,7 +1469,7 @@ void MegaApplication::updateTrayIcon()
     #endif
         }
     }
-    else if (!megaApi->isFilesystemAvailable())
+    else if (!getRootNode())
     {
         tooltip = QCoreApplication::applicationName()
                 + QString::fromAscii(" ")
@@ -8486,29 +8486,46 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
         return;
     }
 
-    if (megaApi && infoDialog)
+    if (megaApi)
     {
-        indexing = megaApi->isScanning();
-        waiting = megaApi->isWaiting();
-        syncing = megaApi->isSyncing();
+        mthreadPool->push([this]() {
 
-        int pendingUploads = megaApi->getNumPendingUploads();
-        int pendingDownloads = megaApi->getNumPendingDownloads();
-        if (pendingUploads)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
-        }
+            indexing = megaApi->isScanning();
+            waiting = megaApi->isWaiting();
+            syncing = megaApi->isSyncing();
 
-        if (pendingDownloads)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
-        }
+            if (infoDialog)
+            {
+                Utilities::queueFunctionInAppThread([=](){
+                    int pendingUploads = megaApi->getNumPendingUploads();
+                    int pendingDownloads = megaApi->getNumPendingDownloads();
 
-        infoDialog->setIndexing(indexing);
-        infoDialog->setWaiting(waiting);
-        infoDialog->setSyncing(syncing);
-        infoDialog->updateDialogState();
-        infoDialog->transferFinished(MegaError::API_OK);
+
+                    if (pendingUploads)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
+                    }
+
+                    if (pendingDownloads)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
+                    }
+
+                    infoDialog->setIndexing(indexing);
+                    infoDialog->setWaiting(waiting);
+                    infoDialog->setSyncing(syncing);
+                    infoDialog->updateDialogState();
+                    infoDialog->transferFinished(MegaError::API_OK);
+
+
+                });
+            }
+
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4")
+                         .arg(paused).arg(indexing).arg(waiting).arg(syncing).toUtf8().constData());
+
+            updateTrayIcon();
+        });
     }
 
     if (transferManager)
@@ -8516,10 +8533,6 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
         transferManager->updateState();
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4")
-                 .arg(paused).arg(indexing).arg(waiting).arg(syncing).toUtf8().constData());
-
-    updateTrayIcon();
 }
 
 void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
