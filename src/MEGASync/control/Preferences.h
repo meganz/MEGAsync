@@ -24,11 +24,53 @@ private:
     static Preferences *preferences;
     Preferences();
 
+    std::map<QString, QVariant> cache;
+
 public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
 
     void initialize(QString dataPath);
+
+    template<typename T>
+    T getValue (const QString &key)
+    {
+        auto cf = cache.find(key);
+        if (cf != cache.end())
+        {
+            return cf->second.value<T>();
+        }
+        else return settings->value(key).value<T>();
+    }
+
+    template<typename T>
+    T getValue (const QString &key, const QVariant &defaultValue)
+    {
+        auto cf = cache.find(key);
+        if (cf != cache.end())
+        {
+            return cf->second.value<T>();
+        }
+        else return settings->value(key, defaultValue).value<T>();
+    }
+
+    void setCachedValue (const QString &key, const QVariant &value)
+    {
+        if (!key.isEmpty())
+        {
+            cache[key] = value;
+        }
+    }
+
+    void cleanCache()
+    {
+        cache.clear();
+    }
+
+    void removeFromCache(const QString &key)
+    {
+        cache.erase(key);
+    }
 
     void setEmailAndGeneralSettings(const QString &email);
 
