@@ -8,6 +8,7 @@ CrashReportDialog::CrashReportDialog(QString crash, QWidget *parent) :
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    ui->cLogs->setText(ui->cLogs->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("\n")));
     ui->tCrash->setText(crash);
     ui->bOK->setDefault(true);
     highDpiResize.init(this);
@@ -16,6 +17,11 @@ CrashReportDialog::CrashReportDialog(QString crash, QWidget *parent) :
 QString CrashReportDialog::getUserMessage()
 {
     return ui->tUserMessage->toPlainText();
+}
+
+bool CrashReportDialog::sendLogs()
+{
+    return ui->cLogs->isChecked();
 }
 
 CrashReportDialog::~CrashReportDialog()

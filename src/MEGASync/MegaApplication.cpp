@@ -1259,6 +1259,32 @@ void MegaApplication::initialize()
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
+                if (crashDialog.sendLogs())
+                {
+                    auto timestampString = reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: "))+11,20);
+                    timestampString = timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
+                    QDateTime crashTimestamp = QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
+
+                    if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
+                    {
+                        crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
+                    }
+
+                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this, crashTimestamp]()
+                    {
+                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
+                        if (!crashReportFilePath.isNull()
+                                && megaApi && megaApi->isLoggedIn())
+                        {
+                            megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
+                            crashReportFilePath.clear();
+                        }
+                        context.get()->deleteLater();
+                    });
+
+                    logger->prepareForReporting();
+                }
+
 #ifndef __APPLE__
                 QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"), Utilities::getDevicePixelRatio());
 #endif
@@ -1836,6 +1862,15 @@ void MegaApplication::loggedIn(bool fromWizard)
     {
         infoWizard->deleteLater();
         infoWizard = NULL;
+    }
+
+    //Send pending crash report log if neccessary
+    if (!crashReportFilePath.isNull() && megaApi)
+    {
+        QFileInfo crashReportFile{crashReportFilePath};
+        megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(),
+                                       false);
+        crashReportFilePath.clear();
     }
 
     registerUserActivity();
