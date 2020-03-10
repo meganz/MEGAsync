@@ -30,8 +30,10 @@ public:
 
     void initialize(QString dataPath);
 
+    void setEmailAndGeneralSettings(const QString &email);
+
     //Thread safe functions
-    bool logged();
+    bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
@@ -39,8 +41,6 @@ public:
     void setFirstName(QString firstName);
     QString lastName();
     void setLastName(QString lastName);
-    QString emailHash();
-    QString privatePw();
     void setSession(QString session);
     QString getSession();
     unsigned long long transferIdentifier();
@@ -273,6 +273,12 @@ public:
     void enterUser(int i);
     void leaveUser();
 
+    int accountStateInGeneral();
+    void setAccountStateInGeneral(int value);
+
+    int needsFetchNodesInGeneral();
+    void setNeedsFetchNodesInGeneral(int value);
+
     void unlink();
 
     bool isCrashed();
@@ -344,6 +350,14 @@ public:
         STATE_ALMOST_OVER_STORAGE,
         STATE_OVER_STORAGE,
         STATE_OVER_STORAGE_DISMISSED
+    };
+
+    enum {
+        STATE_NOT_INITIATED = 0,
+        STATE_LOGGED_OK = 1,
+        STATE_LOGGED_FAILED = 2,
+        STATE_FETCHNODES_OK = 3,
+        STATE_FETCHNODES_FAILED = 4
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
@@ -418,6 +432,9 @@ protected:
     void readFolders();
     void writeFolders();
 
+    void storeSessionInGeneral(QString session);
+    QString getSessionInGeneral();
+
     EncryptedSettings *settings;
     QStringList syncNames;
     QStringList syncIDs;
@@ -443,12 +460,12 @@ protected:
     long long lastTransferNotification;
 
     static const QString currentAccountKey;
+    static const QString currentAccountStatusKey;
+    static const QString needsFetchNodesKey;
     static const QString syncsGroupKey;
     static const QString emailKey;
     static const QString firstNameKey;
     static const QString lastNameKey;
-    static const QString emailHashKey;
-    static const QString privatePwKey;
     static const QString totalStorageKey;
     static const QString usedStorageKey;
     static const QString cloudDriveStorageKey;
@@ -595,6 +612,8 @@ protected:
     static const QString defaultHttpsCert;
     static const QString defaultHttpsCertIntermediate;
     static const long long defaultHttpsCertExpiration;
+    static const int defaultAccountStatus;
+    static const int defaultNeedsFetchNodes;
 };
 
 #endif // PREFERENCES_H
