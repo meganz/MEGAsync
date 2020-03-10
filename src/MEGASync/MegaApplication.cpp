@@ -4616,9 +4616,9 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
-std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool force)
+std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
 {
-    if (force || !mRootNode)
+    if (forceReset || !mRootNode)
     {
         mRootNode.reset(megaApi->getRootNode());
     }

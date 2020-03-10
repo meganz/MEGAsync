@@ -93,7 +93,11 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
         if (!testNode)
         {
-            testNode = ((MegaApplication*)qApp)->getRootNode()->copy();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+            if (rootNode)
+            {
+                testNode = rootNode->copy();
+            }
         }
 
         MegaNode *p = testNode;

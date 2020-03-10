@@ -394,7 +394,11 @@ void NodeSelector::on_bNewFolder_clicked()
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         if (!parent)
         {
-            parent = ((MegaApplication*)qApp)->getRootNode()->copy();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+            if (rootNode)
+            {
+                parent = rootNode->copy();
+            }
             if (!parent)
             {
                 delete id;
