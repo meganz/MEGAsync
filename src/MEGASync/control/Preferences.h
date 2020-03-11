@@ -8,6 +8,7 @@
 #include <QMutex>
 
 #include "control/EncryptedSettings.h"
+#include <assert.h>
 #include "megaapi.h"
 
 Q_DECLARE_METATYPE(QList<long long>)
@@ -38,6 +39,7 @@ public:
         auto cf = cache.find(key);
         if (cf != cache.end())
         {
+            assert(cf->second.value<T>() == settings->value(key).value<T>());
             return cf->second.value<T>();
         }
         else return settings->value(key).value<T>();
