@@ -51,6 +51,7 @@ public:
         auto cf = cache.find(key);
         if (cf != cache.end())
         {
+            assert(cf->second.value<T>() == settings->value(key, defaultValue).template value<T>());
             return cf->second.value<T>();
         }
         else return settings->value(key, defaultValue).template value<T>();
