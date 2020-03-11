@@ -134,6 +134,7 @@ public:
     mega::MegaApi *getMegaApi() { return megaApi; }
 
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
+    long long mStartPaintTime = 0;
 
     void unlink();
     void cleanLocalCaches(bool all = false);

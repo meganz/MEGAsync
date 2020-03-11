@@ -34,12 +34,27 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         TransferItem *ti = model->transferItems[tag];
         if (!ti)
         {
+            bool apiLockSucceded = false;
             if (static_cast<MegaApplication*>(qApp)->megaApiLock)
             {
-                // We will call the SDK several times, and if there is one new transfer there may be many, and the SDK may be working a lot.  
-                // Here we lock the SDK mutex so we can make all these calls back into it in one go, and get the painting done.  
+                // We will call the SDK several times, and if there is one new transfer there may be many, and the SDK may be working a lot.
+                // Here we lock the SDK mutex so we can make all these calls back into it in one go, and get the painting done.
                 // The lock will be released at the end of the infoDialog or transferDialog paintEvent().
-                static_cast<MegaApplication*>(qApp)->megaApiLock->lockOnce();
+                // we do a tentative lock with 100 millseconds for the entire painting attempt, otherwise we dont'add the item. The next repainting will do.
+                auto startPaintTime = std::max(0LL,static_cast<MegaApplication*>(qApp)->mStartPaintTime + 50 - QDateTime::currentMSecsSinceEpoch());
+                apiLockSucceded = static_cast<MegaApplication*>(qApp)->megaApiLock->try_lock_for(startPaintTime);
+                if (!apiLockSucceded)
+                {
+                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get api lock at MegaTransferDelegate::paint").toUtf8().constData());
+#ifndef NDEBUG
+                    painter->fillRect(option.rect, QColor(247, 60, 60)); //TODO: alternative: paint a "Loading message" or a blurry item for both DEBUG & NDEBUG
+#endif
+                    return;
+                }
+                else
+                {
+                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("ABLE to get api lock at MegaTransferDelegate::paint").toUtf8().constData());
+                }
             }
 
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
