@@ -7361,16 +7361,27 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         auto inbox = getInboxNode();
         auto rubbish = getRubbishNode();
 
-        unique_ptr<MegaNodeList> inShares(megaApi->getInShares());
-
-        if (!root || !inbox || !rubbish || !inShares)
+        if (!root || !inbox || !rubbish)
         {
             preferences->setCrashed(true);
             break;
         }
 
         //Account details retrieved, update the preferences and the information dialog
-        unique_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
+        shared_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
+
+        mthreadPool->push([=]()
+        {//thread pool function
+        shared_ptr<MegaNodeList> inShares(megaApi->getInShares());
+
+        if (!inShares)
+        {
+            preferences->setCrashed(true);
+            return;
+        }
+
+        Utilities::queueFunctionInAppThread([=]()
+        {//queued function
 
         if (pro)
         {
@@ -7414,8 +7425,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
             // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
-            preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle) 
-                                          + details->getVersionStorageUsed(inboxHandle) 
+            preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle)
+                                          + details->getVersionStorageUsed(inboxHandle)
                                           + details->getVersionStorageUsed(rubbishHandle));
 
             preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
@@ -7473,7 +7484,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         if (transfer)
-        {            
+        {
             preferences->setTotalBandwidth(details->getTransferMax());
             preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
             preferences->setUsedBandwidth(details->getTransferUsed());
@@ -7502,6 +7513,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             storageOverquotaDialog->refreshUsedStorage();
         }
+
+        });//end of queued function
+
+        });// end of thread pool function
+
         break;
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
