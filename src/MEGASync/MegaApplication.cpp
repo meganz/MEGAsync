@@ -3845,6 +3845,7 @@ void MegaApplication::unlink()
     //Reset fields that will be initialized again upon login
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
+    mRootNode.reset();
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
 
@@ -4612,6 +4613,15 @@ void MegaApplication::PSAseen(int id)
     {
         megaApi->setPSA(id);
     }
+}
+
+std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
+{
+    if (forceReset || !mRootNode)
+    {
+        mRootNode.reset(megaApi->getRootNode());
+    }
+    return mRootNode;
 }
 
 void MegaApplication::onDismissOQ(bool overStorage)
@@ -6599,7 +6609,7 @@ void MegaApplication::createAppMenus()
                 firstSyncHandle = preferences->getMegaFolderHandle(0);
             }
 
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = getRootNode();
             if (rootNode)
             {
                 long long rootHandle = rootNode->getHandle();
@@ -6614,7 +6624,6 @@ void MegaApplication::createAppMenus()
                     }
                     syncsMenu->addAction(addAction);
                 }
-                delete rootNode;
             }
 
             addSyncAction->setMenu(syncsMenu.get());
@@ -7326,6 +7335,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
+            //Update/set root node
+            getRootNode(true); //TODO: move this to thread pool
+        }
+
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
@@ -7346,7 +7361,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                if (megaApi->isFilesystemAvailable())
+                if (mRootNode)
                 {
                     //If we have got the filesystem, start the app
                     loggedIn(false);
@@ -7394,7 +7409,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        unique_ptr<MegaNode> root(megaApi->getRootNode());
+
+        auto root = getRootNode();
         unique_ptr<MegaNode> inbox(megaApi->getInboxNode());
         unique_ptr<MegaNode> rubbish(megaApi->getRubbishNode());
         unique_ptr<MegaNodeList> inShares(megaApi->getInShares());
