@@ -6186,7 +6186,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
+        proxyOnly = !getRootNode() || !preferences->logged();
         megaApi->retryPendingConnections();
     }
 
