@@ -4541,9 +4541,9 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
-std::shared_ptr<MegaNode> MegaApplication::getRootNode()
+std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
 {
-    if (!mRootNode)
+    if (forceReset || !mRootNode)
     {
         mRootNode.reset(megaApi->getRootNode());
     }
@@ -7262,6 +7262,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
+            //Update/set root node
+            getRootNode(true); //TODO: move this to thread pool
+        }
+
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
@@ -7282,23 +7288,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                mthreadPool->push([this]() {
-                    bool isFilesystemAvailable = megaApi->isFilesystemAvailable();
-
-                    Utilities::queueFunctionInAppThread([=](){
-
-                        if (isFilesystemAvailable)
-                        {
-                            //If we have got the filesystem, start the app
-                            loggedIn(false);
-                            restoreSyncs();
-                        }
-                        else
-                        {
-                            preferences->setCrashed(true);
-                        }
-                    });
-                });
+                if (mRootNode)
+                {
+                    //If we have got the filesystem, start the app
+                    loggedIn(false);
+                    restoreSyncs();
+                }
+                else
+                {
+                    preferences->setCrashed(true);
+                }
             }
             else
             {

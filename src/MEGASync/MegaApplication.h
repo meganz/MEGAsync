@@ -166,7 +166,7 @@ public:
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
-    std::shared_ptr<mega::MegaNode> getRootNode();
+    std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
 
