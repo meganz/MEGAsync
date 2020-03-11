@@ -1393,51 +1393,53 @@ void MegaApplication::updateTrayIcon()
         return;
     }
 
-    QString tooltip;
+    QString tooltipState;
     QString icon;
+
+    static std::map<std::string, QString> icons = {
+#ifndef __APPLE__
+    #ifdef _WIN32
+        { "warning", QString::fromUtf8("://images/warning_ico.ico") },
+        { "synching", QString::fromUtf8("://images/tray_sync.ico") },
+        { "uptodate", QString::fromUtf8("://images/app_ico.ico") },
+        { "paused", QString::fromUtf8("://images/tray_pause.ico") },
+        { "logging", QString::fromUtf8("://images/login_ico.ico") }
+
+    #else
+        { "warning", QString::fromUtf8("://images/warning.svg") },
+        { "synching", QString::fromUtf8("://images/synching.svg") },
+        { "uptodate", QString::fromUtf8("://images/uptodate.svg") },
+        { "paused", QString::fromUtf8("://images/paused.svg") },
+        { "logging", QString::fromUtf8("://images/logging.svg") }
+    #endif
+#else
+        { "warning", QString::fromUtf8("://images/icon_overquota_mac.png") },
+        { "synching", QString::fromUtf8("://images/icon_syncing_mac.png") },
+        { "uptodate", QString::fromUtf8("://images/icon_synced_mac.png") },
+        { "paused", QString::fromUtf8("://images/icon_paused_mac.png") },
+        { "logging", QString::fromUtf8("://images/icon_logging_mac.png") }
+#endif
+    };
 
     if (infoOverQuota)
     {
-        tooltip = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Over quota");
+        tooltipState = tr("Over quota");
+        icon = icons["warning"];
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        icon = QString::fromUtf8("://images/warning_ico.ico");
-    #else
-        icon = QString::fromUtf8("://images/warning.svg");
-    #endif
-#else
-        icon = QString::fromUtf8("://images/icon_overquota_mac.png");
-
+#ifdef __APPLE__
         if (scanningTimer->isActive())
         {
             scanningTimer->stop();
         }
 #endif
     }
-    else if (!megaApi->isLoggedIn()) //TODO: use if (preferences->accountState == STATE_NOT_INITIATED) after merging task/resume_session_after_failed_fetchnodes //add assert comparing both
+    else if (preferences->accountStateInGeneral() == Preferences::STATE_NOT_INITIATED)
     {
         if (!infoDialog)
         {
-            tooltip = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("Logging in");
-
-    #ifndef __APPLE__
-        #ifdef _WIN32
-            icon = QString::fromUtf8("://images/tray_sync.ico");
-        #else
-            icon = QString::fromUtf8("://images/synching.svg");
-        #endif
-    #else
-            icon = QString::fromUtf8("://images/icon_syncing_mac.png");
-
+            tooltipState = tr("Logging in");
+            icon = icons["synching"];
+    #ifdef __APPLE__
             if (!scanningTimer->isActive())
             {
                 scanningAnimationIndex = 1;
@@ -1447,21 +1449,10 @@ void MegaApplication::updateTrayIcon()
         }
         else
         {
-            tooltip = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("You are not logged in");
+            tooltipState = tr("You are not logged in");
+            icon = icons["uptodate"];
 
-    #ifndef __APPLE__
-        #ifdef _WIN32
-            icon = QString::fromUtf8("://images/app_ico.ico");
-        #else
-            icon = QString::fromUtf8("://images/uptodate.svg");
-        #endif
-    #else
-            icon = QString::fromUtf8("://images/icon_synced_mac.png");
-
+    #ifdef __APPLE__
             if (scanningTimer->isActive())
             {
                 scanningTimer->stop();
@@ -1471,21 +1462,10 @@ void MegaApplication::updateTrayIcon()
     }
     else if (!getRootNode())
     {
-        tooltip = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Fetching file list...");
+        tooltipState = tr("Fetching file list...");
+        icon = icons["synching"];
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        icon = QString::fromUtf8("://images/tray_sync.ico");
-    #else
-        icon = QString::fromUtf8("://images/synching.svg");
-    #endif
-#else
-        icon = QString::fromUtf8("://images/icon_syncing_mac.png");
-
+#ifdef __APPLE__
         if (!scanningTimer->isActive())
         {
             scanningAnimationIndex = 1;
@@ -1495,21 +1475,10 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        tooltip = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Paused");
+        tooltipState = tr("Paused");
+        icon = icons["paused"];
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        icon = QString::fromUtf8("://images/tray_pause.ico");
-    #else
-        icon = QString::fromUtf8("://images/paused.svg");
-    #endif
-#else
-        icon = QString::fromUtf8("://images/icon_paused_mac.png");
-
+#ifdef __APPLE__
         if (scanningTimer->isActive())
         {
             scanningTimer->stop();
@@ -1522,46 +1491,24 @@ void MegaApplication::updateTrayIcon()
     {
         if (indexing)
         {
-            tooltip = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("Scanning");
+            tooltipState = tr("Scanning");
         }
         else if (syncing)
         {
-            tooltip = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("Syncing");
+            tooltipState = tr("Syncing");
         }
         else if (waiting || (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000))
         {
-            tooltip = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("Waiting");
+            tooltipState = tr("Waiting");
         }
         else //TODO: this is actually a "Transfering" state
         {
-            tooltip = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("Syncing");
+            tooltipState = tr("Syncing");
         }
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        icon = QString::fromUtf8("://images/tray_sync.ico");
-    #else
-        icon = QString::fromUtf8("://images/synching.svg");
-    #endif
-#else
-        icon = QString::fromUtf8("://images/icon_syncing_mac.png");
+        icon = icons["synching"];
 
+#ifdef __APPLE__
         if (!scanningTimer->isActive())
         {
             scanningAnimationIndex = 1;
@@ -1571,21 +1518,10 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        tooltip = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Up to date");
+        tooltipState = tr("Up to date");
+        icon = icons["uptodate"];
 
-#ifndef __APPLE__
-    #ifdef _WIN32
-        icon = QString::fromUtf8("://images/app_ico.ico");
-    #else
-        icon = QString::fromUtf8("://images/uptodate.svg");
-    #endif
-#else
-        icon = QString::fromUtf8("://images/icon_synced_mac.png");
-
+#ifdef __APPLE__
         if (scanningTimer->isActive())
         {
             scanningTimer->stop();
@@ -1600,27 +1536,15 @@ void MegaApplication::updateTrayIcon()
     if (!networkConnectivity)
     {
         //Override the current state
-        tooltip = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("No Internet connection");
-
-#ifndef __APPLE__
-    #ifdef _WIN32
-        icon = QString::fromUtf8("://images/login_ico.ico");
-    #else
-        icon = QString::fromUtf8("://images/logging.svg");
-    #endif
-#else
-        icon = QString::fromUtf8("://images/icon_logging_mac.png");
-#endif
+        tooltipState = tr("No Internet connection");
+        icon = icons["logging"];
     }
+
+    QString tooltip = QString::fromUtf8("%1 %2\n%3").arg(QCoreApplication::applicationName()).arg(Preferences::VERSION_STRING).arg(tooltipState);
 
     if (updateAvailable)
     {
-        tooltip += QString::fromAscii("\n")
-                + tr("Update available!");
+        tooltip += QString::fromAscii("\n") + tr("Update available!");
     }
 
     if (!icon.isEmpty())
