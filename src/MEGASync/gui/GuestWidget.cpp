@@ -106,6 +106,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (loggingStarted)
                 {
+                    preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
                     megaApi->fetchNodes();
                     if (!preferences->hasLoggedIn())
                     {
@@ -120,6 +121,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
+                preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
                     QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
@@ -203,6 +205,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() != MegaError::API_OK)
             {
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
                 page_login();
                 loggingStarted = false;
                 break;
@@ -210,6 +213,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
                 if (!megaApi->isFilesystemAvailable())
                 {
                     page_login();
@@ -222,34 +226,11 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     return;
                 }
 
-                char *session = megaApi->dumpSession();
-                QString sessionKey = QString::fromUtf8(session);
-                delete [] session;
-
                 QString email = ui->lEmail->text().toLower().trimmed();
-
                 if (preferences->hasEmail(email))
                 {
-                    int proxyType = preferences->proxyType();
-                    QString proxyServer = preferences->proxyServer();
-                    int proxyPort = preferences->proxyPort();
-                    int proxyProtocol = preferences->proxyProtocol();
-                    bool proxyAuth = preferences->proxyRequiresAuth();
-                    QString proxyUsername = preferences->getProxyUsername();
-                    QString proxyPassword = preferences->getProxyPassword();
-
-                    preferences->setEmail(email);
-                    preferences->setSession(sessionKey);
-                    preferences->setProxyType(proxyType);
-                    preferences->setProxyServer(proxyServer);
-                    preferences->setProxyPort(proxyPort);
-                    preferences->setProxyProtocol(proxyProtocol);
-                    preferences->setProxyRequiresAuth(proxyAuth);
-                    preferences->setProxyUsername(proxyUsername);
-                    preferences->setProxyPassword(proxyPassword);
-
+                    preferences->setEmailAndGeneralSettings(email);
                     Platform::notifyAllSyncFoldersAdded();
-
                     app->setupWizardFinished(QDialog::Accepted);
                     break;
                 }

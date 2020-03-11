@@ -1741,7 +1741,7 @@ void MegaApplication::start()
 #endif
 
     //Start the initial setup wizard if needed
-    if (!preferences->logged())
+    if (!preferences->logged() && preferences->getSession().isEmpty())
     {
         if (!preferences->installationTime())
         {
@@ -1796,52 +1796,51 @@ void MegaApplication::start()
         onGlobalSyncStateChanged(megaApi);
         return;
     }
-    else
+    else //Otherwise, login in the account
     {
-        QStringList exclusions = preferences->getExcludedSyncNames();
-        vector<string> vExclusions;
-        for (int i = 0; i < exclusions.size(); i++)
+        if (preferences->logged()) //we have per account settings to restore
         {
-            vExclusions.push_back(exclusions[i].toUtf8().constData());
-        }
-        megaApi->setExcludedNames(&vExclusions);
+            QStringList exclusions = preferences->getExcludedSyncNames();
+            vector<string> vExclusions;
+            for (int i = 0; i < exclusions.size(); i++)
+            {
+                vExclusions.push_back(exclusions[i].toUtf8().constData());
+            }
+            megaApi->setExcludedNames(&vExclusions);
 
-        QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-        vector<string> vExclusionPaths;
-        for (int i = 0; i < exclusionPaths.size(); i++)
-        {
-            vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-        }
-        megaApi->setExcludedPaths(&vExclusionPaths);
+            QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+            vector<string> vExclusionPaths;
+            for (int i = 0; i < exclusionPaths.size(); i++)
+            {
+                vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+            }
+            megaApi->setExcludedPaths(&vExclusionPaths);
 
-        if (preferences->lowerSizeLimit())
-        {
-            megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-        }
-        else
-        {
-            megaApi->setExclusionLowerSizeLimit(0);
+            if (preferences->lowerSizeLimit())
+            {
+                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionLowerSizeLimit(0);
+            }
+
+            if (preferences->upperSizeLimit())
+            {
+                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionUpperSizeLimit(0);
+            }
         }
 
-        if (preferences->upperSizeLimit())
-        {
-            megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-        }
-        else
-        {
-            megaApi->setExclusionUpperSizeLimit(0);
-        }
+        QString theSession;
+        theSession = preferences->getSession();
 
-        //Otherwise, login in the account
-        if (preferences->getSession().size())
+        if (theSession.size())
         {
-            megaApi->fastLogin(preferences->getSession().toUtf8().constData());
-        }
-        else
-        {
-            megaApi->fastLogin(preferences->email().toUtf8().constData(),
-                       preferences->emailHash().toUtf8().constData(),
-                       preferences->privatePw().toUtf8().constData());
+            megaApi->fastLogin(theSession.toUtf8().constData());
         }
 
         if (updated)
@@ -7122,20 +7121,37 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         // while login request is being processed. This way, the local SSL certs request is not aborted.
         initLocalServer();
 
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK); //TODO: setGlobalAccountState
+
+            auto needsFetchNodes = preferences->needsFetchNodesInGeneral();
+
+            std::unique_ptr<char []> session(megaApi->dumpSession());
+            if (session)
+            {
+                preferences->setSession(QString::fromUtf8(session.get()));
+            }
+
+            // In case fetchnode fails in previous request,
+            // but we have an active session, we will need to launch a fetchnodes
+            if (!preferences->logged()
+                    && needsFetchNodes)
+            {
+                megaApi->fetchNodes();
+            }
+        }
+
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
+
             Platform::prepareForSync();
             int errorCode = e->getErrorCode();
             if (errorCode == MegaError::API_OK)
             {
-                const char *session = megaApi->dumpSession();
-                if (session)
+                if (!preferences->getSession().isEmpty())
                 {
-                    QString sessionKey = QString::fromUtf8(session);
-                    preferences->setSession(sessionKey);
-                    delete [] session;
-
                     //Successful login, fetch nodes
                     megaApi->fetchNodes();
                     break;
@@ -7321,6 +7337,23 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             //Update/set root node
             getRootNode(true); //TODO: move this to thread pool
+        }
+
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
+            preferences->setNeedsFetchNodesInGeneral(false);
+
+            std::unique_ptr<char[]> email(megaApi->getMyEmail());
+            if (email && !preferences->logged() && !preferences->hasEmail(QString::fromUtf8(email.get())))
+            { //session resumed from general storage. //I'm getting there from loggin wizard -> guest widget //TODO: remove comment.
+                preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+            }
+        }
+        else
+        {
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
+            preferences->setNeedsFetchNodesInGeneral(true);
         }
 
         //This prevents to handle node requests in the initial setup wizard
