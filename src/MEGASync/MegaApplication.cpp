@@ -2811,9 +2811,16 @@ void MegaApplication::periodicTasks()
 
             networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
-            megaApi->update();
+            mthreadPool->push([=]()
+            {//thread pool function
+                megaApi->update();
 
-            checkOverStorageStates();
+                Utilities::queueFunctionInAppThread([=]()
+                {//queued function
+                    checkOverStorageStates();
+                });//end of queued function
+
+            });// end of thread pool function
         }
 
         onGlobalSyncStateChanged(megaApi);
@@ -4196,12 +4203,25 @@ void MegaApplication::checkFirstTransfer()
 
     if (numTransfers[MegaTransfer::TYPE_DOWNLOAD] && activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] == 0xFFFFFFFFFFFFFFFFULL)
     {
-        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
-        if (nextTransfer)
-        {
-            onTransferUpdate(megaApi, nextTransfer);
-            delete nextTransfer;
-        }
+
+        mthreadPool->push([=]()
+        {//thread pool function
+
+            MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+
+            Utilities::queueFunctionInAppThread([=]()
+            {//queued function
+
+                if (nextTransfer)
+                {
+                    onTransferUpdate(megaApi, nextTransfer);
+                    delete nextTransfer;
+                }
+            });//end of queued function
+
+        });// end of thread pool function
+
+
     }
 
     if (numTransfers[MegaTransfer::TYPE_UPLOAD] && activeTransferPriority[MegaTransfer::TYPE_UPLOAD] == 0xFFFFFFFFFFFFFFFFULL)
