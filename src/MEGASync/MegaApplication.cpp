@@ -1951,7 +1951,6 @@ void MegaApplication::startSyncs()
     bool syncsModified = false;
 
     //Start syncs
-    MegaNode *rubbishNode =  megaApi->getRubbishNode();
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
         if (!preferences->isFolderActive(i))
@@ -1985,7 +1984,6 @@ void MegaApplication::startSyncs()
         megaApi->syncFolder(localFolder.toUtf8().constData(), node);
         delete node;
     }
-    delete rubbishNode;
 
     if (syncsModified)
     {
@@ -3772,6 +3770,8 @@ void MegaApplication::unlink()
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
     mRootNode.reset();
+    mRubbishNode.reset();
+    mInboxNode.reset();
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
 
@@ -4548,6 +4548,24 @@ std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
         mRootNode.reset(megaApi->getRootNode());
     }
     return mRootNode;
+}
+
+std::shared_ptr<MegaNode> MegaApplication::getInboxNode(bool forceReset)
+{
+    if (forceReset || !mInboxNode)
+    {
+        mInboxNode.reset(megaApi->getInboxNode());
+    }
+    return mInboxNode;
+}
+
+std::shared_ptr<MegaNode> MegaApplication::getRubbishNode(bool forceReset)
+{
+    if (forceReset || !mRubbishNode)
+    {
+        mRubbishNode.reset(megaApi->getRubbishNode());
+    }
+    return mRubbishNode;
 }
 
 void MegaApplication::onDismissOQ(bool overStorage)
@@ -7263,7 +7281,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK)
         {
             //Update/set root node
-            getRootNode(true); //TODO: move this to thread pool
+            getRootNode(true); //TODO: move this to thread pool, notice that mRootNode is used below
+            getInboxNode(true);
+            getRubbishNode(true);
         }
 
         if (e->getErrorCode() == MegaError::API_OK)
@@ -7338,8 +7358,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
 
         auto root = getRootNode();
-        unique_ptr<MegaNode> inbox(megaApi->getInboxNode());
-        unique_ptr<MegaNode> rubbish(megaApi->getRubbishNode());
+        auto inbox = getInboxNode();
+        auto rubbish = getRubbishNode();
+
         unique_ptr<MegaNodeList> inShares(megaApi->getInShares());
 
         if (!root || !inbox || !rubbish || !inShares)
