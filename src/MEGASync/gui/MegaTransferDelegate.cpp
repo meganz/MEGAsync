@@ -51,10 +51,6 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 #endif
                     return;
                 }
-                else
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("ABLE to get api lock at MegaTransferDelegate::paint").toUtf8().constData());
-                }
             }
 
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
