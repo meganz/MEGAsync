@@ -127,7 +127,7 @@ const QString Preferences::defaultHttpsCert = QString::fromUtf8(
             "WJ1PfDrK\n"
             "-----END CERTIFICATE-----\n");
 
-const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(            
+const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
             "-----BEGIN CERTIFICATE-----\n"
             "MIIFdDCCBFygAwIBAgIQJ2buVutJ846r13Ci/ITeIjANBgkqhkiG9w0BAQwFADBv\n"
             "MQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFk\n"
@@ -510,7 +510,7 @@ QString Preferences::firstName()
 {
     mutex.lock();
     assert(logged());
-    QString value = getValue<QString>(firstNameKey, QString());
+    QString value = getValue(firstNameKey, QString());
     mutex.unlock();
     return value;
 }
@@ -528,7 +528,7 @@ QString Preferences::lastName()
 {
     mutex.lock();
     assert(logged());
-    QString value = getValue<QString>(lastNameKey, QString());
+    QString value = getValue(lastNameKey, QString());
     mutex.unlock();
     return value;
 }
@@ -618,9 +618,10 @@ unsigned long long Preferences::transferIdentifier()
 {
     mutex.lock();
     assert(logged());
-    long long value = getValue<long long>(transferIdentifierKey, defaultTransferIdentifier);
-    settings->setValue(transferIdentifierKey, ++value);
-    setCachedValue(transferIdentifierKey, ++value);
+    long long value = getValue(transferIdentifierKey, defaultTransferIdentifier);
+    value++;
+    settings->setValue(transferIdentifierKey, value);
+    setCachedValue(transferIdentifierKey, value);
     mutex.unlock();
     return value;
 }
@@ -1194,7 +1195,7 @@ void Preferences::setProExpirityTime(long long value)
 bool Preferences::showNotifications()
 {
     mutex.lock();
-    bool value = getValue<bool>(showNotificationsKey, defaultShowNotifications);
+    bool value = getValue(showNotificationsKey, defaultShowNotifications);
     mutex.unlock();
     return value;
 }
@@ -1212,7 +1213,7 @@ void Preferences::setShowNotifications(bool value)
 bool Preferences::startOnStartup()
 {
     mutex.lock();
-    bool value = getValue<bool>(startOnStartupKey, defaultStartOnStartup);
+    bool value = getValue(startOnStartupKey, defaultStartOnStartup);
     mutex.unlock();
     return value;
 }
@@ -1229,7 +1230,7 @@ void Preferences::setStartOnStartup(bool value)
 bool Preferences::usingHttpsOnly()
 {
     mutex.lock();
-    bool value = getValue<bool>(useHttpsOnlyKey, defaultUseHttpsOnly);
+    bool value = getValue(useHttpsOnlyKey, defaultUseHttpsOnly);
     mutex.unlock();
     return value;
 }
@@ -1252,7 +1253,7 @@ bool Preferences::SSLcertificateException()
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
     }
-    bool value = getValue<bool>(SSLcertificateExceptionKey, defaultSSLcertificateException);
+    bool value = getValue(SSLcertificateExceptionKey, defaultSSLcertificateException);
     if (!currentAccount.isEmpty())
     {
         settings->beginGroup(currentAccount);
@@ -1283,7 +1284,7 @@ void Preferences::setSSLcertificateException(bool value)
 int Preferences::transferDownloadMethod()
 {
     mutex.lock();
-    int value = getValue<int>(transferDownloadMethodKey, defaultTransferDownloadMethod);
+    int value = getValue(transferDownloadMethodKey, defaultTransferDownloadMethod);
     mutex.unlock();
     return value;
 }
@@ -1300,7 +1301,7 @@ void Preferences::setTransferDownloadMethod(int value)
 int Preferences::transferUploadMethod()
 {
     mutex.lock();
-    int value = getValue<int>(transferUploadMethodKey, defaultTransferUploadMethod);
+    int value = getValue(transferUploadMethodKey, defaultTransferUploadMethod);
     mutex.unlock();
     return value;
 }
@@ -1317,7 +1318,7 @@ void Preferences::setTransferUploadMethod(int value)
 QString Preferences::language()
 {
     mutex.lock();
-    QString value = getValue<QString>(languageKey, QLocale::system().name());
+    QString value = getValue(languageKey, QLocale::system().name());
     mutex.unlock();
     return value;
 }
@@ -1334,7 +1335,7 @@ void Preferences::setLanguage(QString &value)
 bool Preferences::updateAutomatically()
 {
     mutex.lock();
-    bool value = getValue<bool>(updateAutomaticallyKey, defaultUpdateAutomatically);
+    bool value = getValue(updateAutomaticallyKey, defaultUpdateAutomatically);
     mutex.unlock();
     return value;
 }
@@ -1351,7 +1352,7 @@ void Preferences::setUpdateAutomatically(bool value)
 bool Preferences::hasDefaultUploadFolder()
 {
     mutex.lock();
-    bool value = getValue<bool>(hasDefaultUploadFolderKey, uploadFolder() != 0);
+    bool value = getValue(hasDefaultUploadFolderKey, uploadFolder() != 0);
     mutex.unlock();
     return value;
 }
@@ -1359,7 +1360,7 @@ bool Preferences::hasDefaultUploadFolder()
 bool Preferences::hasDefaultDownloadFolder()
 {
     mutex.lock();
-    bool value = getValue<bool>(hasDefaultDownloadFolderKey, !downloadFolder().isEmpty());
+    bool value = getValue(hasDefaultDownloadFolderKey, !downloadFolder().isEmpty());
     mutex.unlock();
     return value;
 }
@@ -1367,7 +1368,7 @@ bool Preferences::hasDefaultDownloadFolder()
 bool Preferences::hasDefaultImportFolder()
 {
     mutex.lock();
-    bool value = getValue<bool>(hasDefaultImportFolderKey, importFolder() != 0);
+    bool value = getValue(hasDefaultImportFolderKey, importFolder() != 0);
     mutex.unlock();
     return value;
 }
@@ -1431,7 +1432,7 @@ int Preferences::accountStateInGeneral()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    int value = getValue<int>(currentAccountStatusKey, defaultAccountStatus);
+    int value = getValue(currentAccountStatusKey, defaultAccountStatus);
 
     if (!currentAccount.isEmpty())
     {
@@ -1474,7 +1475,7 @@ int Preferences::needsFetchNodesInGeneral()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    int value = getValue<int>(needsFetchNodesKey, defaultNeedsFetchNodes);
+    int value = getValue(needsFetchNodesKey, defaultNeedsFetchNodes);
 
     if (!currentAccount.isEmpty())
     {
@@ -1511,7 +1512,7 @@ int Preferences::uploadLimitKB()
 {
     mutex.lock();
     assert(logged());
-    int value = getValue<int>(uploadLimitKBKey, defaultUploadLimitKB);
+    int value = getValue(uploadLimitKBKey, defaultUploadLimitKB);
     mutex.unlock();
     return value;
 }
@@ -1530,7 +1531,7 @@ int Preferences::downloadLimitKB()
 {
     mutex.lock();
     assert(logged());
-    int value = getValue<int>(downloadLimitKBKey, defaultDownloadLimitKB);
+    int value = getValue(downloadLimitKBKey, defaultDownloadLimitKB);
     mutex.unlock();
     return value;
 }
@@ -1538,7 +1539,7 @@ int Preferences::downloadLimitKB()
 int Preferences::parallelUploadConnections()
 {
     mutex.lock();
-    int value = getValue<int>(parallelUploadConnectionsKey, defaultParallelUploadConnections);
+    int value = getValue(parallelUploadConnectionsKey, defaultParallelUploadConnections);
     mutex.unlock();
     return value;
 }
@@ -1546,7 +1547,7 @@ int Preferences::parallelUploadConnections()
 int Preferences::parallelDownloadConnections()
 {
     mutex.lock();
-    int value = getValue<int>(parallelDownloadConnectionsKey, defaultParallelDownloadConnections);
+    int value = getValue(parallelDownloadConnectionsKey, defaultParallelDownloadConnections);
     mutex.unlock();
     return value;
 }
@@ -1592,7 +1593,7 @@ void Preferences::setDownloadLimitKB(int value)
 bool Preferences::upperSizeLimit()
 {
     mutex.lock();
-    bool value = getValue<bool>(upperSizeLimitKey, defaultUpperSizeLimit);
+    bool value = getValue(upperSizeLimitKey, defaultUpperSizeLimit);
     mutex.unlock();
     return value;
 }
@@ -1610,7 +1611,7 @@ long long Preferences::upperSizeLimitValue()
 {
     mutex.lock();
     assert(logged());
-    long long value = getValue<long long>(upperSizeLimitValueKey, defaultUpperSizeLimitValue);
+    long long value = getValue(upperSizeLimitValueKey, defaultUpperSizeLimitValue);
     mutex.unlock();
     return value;
 }
@@ -1627,7 +1628,7 @@ void Preferences::setUpperSizeLimitValue(long long value)
 bool Preferences::cleanerDaysLimit()
 {
     mutex.lock();
-    bool value = getValue<bool>(cleanerDaysLimitKey, defaultCleanerDaysLimit);
+    bool value = getValue(cleanerDaysLimitKey, defaultCleanerDaysLimit);
     mutex.unlock();
     return value;
 }
@@ -1645,7 +1646,7 @@ int Preferences::cleanerDaysLimitValue()
 {
     mutex.lock();
     assert(logged());
-    int value = getValue<int>(cleanerDaysLimitValueKey, defaultCleanerDaysLimitValue);
+    int value = getValue(cleanerDaysLimitValueKey, defaultCleanerDaysLimitValue);
     mutex.unlock();
     return value;
 }
@@ -1663,7 +1664,7 @@ int Preferences::upperSizeLimitUnit()
 {
     mutex.lock();
     assert(logged());
-    int value = getValue<int>(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit);
+    int value = getValue(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit);
     mutex.unlock();
     return value;
 }
@@ -1680,7 +1681,7 @@ void Preferences::setUpperSizeLimitUnit(int value)
 bool Preferences::lowerSizeLimit()
 {
     mutex.lock();
-    bool value = getValue<bool>(lowerSizeLimitKey, defaultLowerSizeLimit);
+    bool value = getValue(lowerSizeLimitKey, defaultLowerSizeLimit);
     mutex.unlock();
     return value;
 }
@@ -1698,7 +1699,7 @@ long long Preferences::lowerSizeLimitValue()
 {
     mutex.lock();
     assert(logged());
-    long long value = getValue<long long>(lowerSizeLimitValueKey, defaultLowerSizeLimitValue);
+    long long value = getValue(lowerSizeLimitValueKey, defaultLowerSizeLimitValue);
     mutex.unlock();
     return value;
 }
@@ -1716,7 +1717,7 @@ int Preferences::lowerSizeLimitUnit()
 {
     mutex.lock();
     assert(logged());
-    int value = getValue<int>(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit);
+    int value = getValue(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit);
     mutex.unlock();
     return value;
 }
@@ -1767,7 +1768,7 @@ void Preferences::setFilePermissionsValue(int permissions)
 int Preferences::proxyType()
 {
     mutex.lock();
-    int value = getValue<int>(proxyTypeKey, defaultProxyType);
+    int value = getValue(proxyTypeKey, defaultProxyType);
     mutex.unlock();
     return value;
 }
@@ -1784,7 +1785,7 @@ void Preferences::setProxyType(int value)
 int Preferences::proxyProtocol()
 {
     mutex.lock();
-    int value = getValue<int>(proxyProtocolKey, defaultProxyProtocol);
+    int value = getValue(proxyProtocolKey, defaultProxyProtocol);
     mutex.unlock();
     return value;
 }
@@ -1801,7 +1802,7 @@ void Preferences::setProxyProtocol(int value)
 QString Preferences::proxyServer()
 {
     mutex.lock();
-    QString value = getValue<QString>(proxyServerKey, defaultProxyServer);
+    QString value = getValue(proxyServerKey, defaultProxyServer);
     mutex.unlock();
     return value;
 }
@@ -1818,7 +1819,7 @@ void Preferences::setProxyServer(const QString &value)
 int Preferences::proxyPort()
 {
     mutex.lock();
-    int value = getValue<int>(proxyPortKey, defaultProxyPort);
+    int value = getValue(proxyPortKey, defaultProxyPort);
     mutex.unlock();
     return value;
 }
@@ -1835,7 +1836,7 @@ void Preferences::setProxyPort(int value)
 bool Preferences::proxyRequiresAuth()
 {
     mutex.lock();
-    bool value = getValue<bool>(proxyRequiresAuthKey, defaultProxyRequiresAuth);
+    bool value = getValue(proxyRequiresAuthKey, defaultProxyRequiresAuth);
     mutex.unlock();
     return value;
 }
@@ -1852,7 +1853,7 @@ void Preferences::setProxyRequiresAuth(bool value)
 QString Preferences::getProxyUsername()
 {
     mutex.lock();
-    QString value = getValue<QString>(proxyUsernameKey, defaultProxyUsername);
+    QString value = getValue(proxyUsernameKey, defaultProxyUsername);
     mutex.unlock();
     return value;
 }
@@ -1869,7 +1870,7 @@ void Preferences::setProxyUsername(const QString &value)
 QString Preferences::getProxyPassword()
 {
     mutex.lock();
-    QString value = getValue<QString>(proxyPasswordKey, defaultProxyPassword);
+    QString value = getValue(proxyPasswordKey, defaultProxyPassword);
     mutex.unlock();
     return value;
 }
@@ -1906,14 +1907,14 @@ QString Preferences::proxyHostAndPort()
 long long Preferences::lastExecutionTime()
 {
     mutex.lock();
-    long long value = getValue<long long>(lastExecutionTimeKey, 0);
+    long long value = getValue(lastExecutionTimeKey, 0);
     mutex.unlock();
     return value;
 }
 long long Preferences::installationTime()
 {
     mutex.lock();
-    long long value = getValue<long long>(installationTimeKey, 0);
+    long long value = getValue(installationTimeKey, 0);
     mutex.unlock();
     return value;
 }
@@ -1928,7 +1929,7 @@ void Preferences::setInstallationTime(long long time)
 long long Preferences::accountCreationTime()
 {
     mutex.lock();
-    long long value = getValue<long long>(accountCreationTimeKey, 0);
+    long long value = getValue(accountCreationTimeKey, 0);
     mutex.unlock();
     return value;
 }
@@ -1944,7 +1945,7 @@ void Preferences::setAccountCreationTime(long long time)
 long long Preferences::hasLoggedIn()
 {
     mutex.lock();
-    long long value = getValue<long long>(hasLoggedInKey, 0);
+    long long value = getValue(hasLoggedInKey, 0);
     mutex.unlock();
     return value;
 }
@@ -1960,7 +1961,7 @@ void Preferences::setHasLoggedIn(long long time)
 bool Preferences::isFirstStartDone()
 {
     mutex.lock();
-    bool value = getValue<bool>(firstStartDoneKey, false);
+    bool value = getValue(firstStartDoneKey, false);
     mutex.unlock();
     return value;
 }
@@ -1977,7 +1978,7 @@ void Preferences::setFirstStartDone(bool value)
 bool Preferences::isFirstSyncDone()
 {
     mutex.lock();
-    bool value = getValue<bool>(firstSyncDoneKey, false);
+    bool value = getValue(firstSyncDoneKey, false);
     mutex.unlock();
     return value;
 }
@@ -1994,7 +1995,7 @@ void Preferences::setFirstSyncDone(bool value)
 bool Preferences::isFirstFileSynced()
 {
     mutex.lock();
-    bool value = getValue<bool>(firstFileSyncedKey, false);
+    bool value = getValue(firstFileSyncedKey, false);
     mutex.unlock();
     return value;
 }
@@ -2011,7 +2012,7 @@ void Preferences::setFirstFileSynced(bool value)
 bool Preferences::isFirstWebDownloadDone()
 {
     mutex.lock();
-    bool value = getValue<bool>(firstWebDownloadKey, false);
+    bool value = getValue(firstWebDownloadKey, false);
     mutex.unlock();
     return value;
 }
@@ -2028,7 +2029,7 @@ void Preferences::setFirstWebDownloadDone(bool value)
 bool Preferences::isFatWarningShown()
 {
     mutex.lock();
-    bool value = getValue<bool>(fatWarningShownKey, false);
+    bool value = getValue(fatWarningShownKey, false);
     mutex.unlock();
     return value;
 }
@@ -2062,7 +2063,7 @@ void Preferences::setLastCustomStreamingApp(const QString &value)
 long long Preferences::getMaxMemoryUsage()
 {
     mutex.lock();
-    long long value = getValue<long long>(maxMemoryUsageKey, 0);
+    long long value = getValue(maxMemoryUsageKey, 0);
     mutex.unlock();
     return value;
 }
@@ -2079,7 +2080,7 @@ void Preferences::setMaxMemoryUsage(long long value)
 long long Preferences::getMaxMemoryReportTime()
 {
     mutex.lock();
-    long long value = getValue<long long>(maxMemoryReportTimeKey, 0);
+    long long value = getValue(maxMemoryReportTimeKey, 0);
     mutex.unlock();
     return value;
 }
@@ -2106,7 +2107,7 @@ long long Preferences::lastUpdateTime()
 {
     mutex.lock();
     assert(logged());
-    long long value = getValue<long long>(lastUpdateTimeKey, 0);
+    long long value = getValue(lastUpdateTimeKey, 0);
     mutex.unlock();
     return value;
 }
@@ -2125,7 +2126,7 @@ int Preferences::lastUpdateVersion()
 {
     mutex.lock();
     assert(logged());
-    int value = getValue<int>(lastUpdateVersionKey, 0);
+    int value = getValue(lastUpdateVersionKey, 0);
     mutex.unlock();
     return value;
 }
@@ -2362,7 +2363,7 @@ bool Preferences::isOneTimeActionDone(int action)
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    bool value = getValue<bool>(oneTimeActionDoneKey + QString::number(action), false);
+    bool value = getValue(oneTimeActionDoneKey + QString::number(action), false);
 
     if (!currentAccount.isEmpty())
     {
@@ -2721,7 +2722,7 @@ QString Preferences::getHttpsKey()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    QString value = getValue<QString>(httpsKeyKey, defaultHttpsKey);
+    QString value = getValue(httpsKeyKey, defaultHttpsKey);
 
     if (!currentAccount.isEmpty())
     {
@@ -2762,7 +2763,7 @@ QString Preferences::getHttpsCert()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    QString value = getValue<QString>(httpsCertKey, defaultHttpsCert);
+    QString value = getValue(httpsCertKey, defaultHttpsCert);
 
     if (!currentAccount.isEmpty())
     {
@@ -2803,7 +2804,7 @@ QString Preferences::getHttpsCertIntermediate()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    QString value = getValue<QString>(httpsCertIntermediateKey, defaultHttpsCertIntermediate);
+    QString value = getValue(httpsCertIntermediateKey, defaultHttpsCertIntermediate);
 
     if (!currentAccount.isEmpty())
     {
@@ -2844,7 +2845,7 @@ long long Preferences::getHttpsCertExpiration()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    long long value = getValue<long long>(httpsCertExpirationKey, defaultHttpsCertExpiration);
+    long long value = getValue(httpsCertExpirationKey, defaultHttpsCertExpiration);
 
     if (!currentAccount.isEmpty())
     {
@@ -2879,7 +2880,7 @@ long long Preferences::lastPublicHandleTimestamp()
 {
     mutex.lock();
     assert(logged());
-    long long value = getValue<long long>(lastPublicHandleTimestampKey, 0);
+    long long value = getValue(lastPublicHandleTimestampKey, 0);
     mutex.unlock();
     return value;
 }
@@ -2888,7 +2889,7 @@ MegaHandle Preferences::lastPublicHandle()
 {
     mutex.lock();
     assert(logged());
-    MegaHandle value = getValue<MegaHandle>(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE);
+    MegaHandle value = getValue(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE);
     mutex.unlock();
     return value;
 }
@@ -2952,6 +2953,7 @@ void Preferences::unlink()
     mutex.lock();
     assert(logged());
     settings->remove(sessionKey); // Remove session from specific account settings
+
     settings->endGroup();
 
     settings->remove(currentAccountKey);
@@ -2976,7 +2978,7 @@ void Preferences::unlink()
 bool Preferences::isCrashed()
 {
     mutex.lock();
-    bool value = getValue<bool>(isCrashedKey, false);
+    bool value = getValue(isCrashedKey, false);
     mutex.unlock();
     return value;
 }
@@ -2993,7 +2995,7 @@ void Preferences::setCrashed(bool value)
 bool Preferences::getGlobalPaused()
 {
     mutex.lock();
-    bool value = getValue<bool>(wasPausedKey, false);
+    bool value = getValue(wasPausedKey, false);
     mutex.unlock();
     return value;
 }
@@ -3010,7 +3012,7 @@ void Preferences::setGlobalPaused(bool value)
 bool Preferences::getUploadsPaused()
 {
     mutex.lock();
-    bool value = getValue<bool>(wasUploadsPausedKey, false);
+    bool value = getValue(wasUploadsPausedKey, false);
     mutex.unlock();
     return value;
 }
@@ -3027,7 +3029,7 @@ void Preferences::setUploadsPaused(bool value)
 bool Preferences::getDownloadsPaused()
 {
     mutex.lock();
-    bool value = getValue<bool>(wasDownloadsPausedKey, false);
+    bool value = getValue(wasDownloadsPausedKey, false);
     mutex.unlock();
     return value;
 }
@@ -3044,7 +3046,7 @@ void Preferences::setDownloadsPaused(bool value)
 long long Preferences::lastStatsRequest()
 {
     mutex.lock();
-    long long value = getValue<long long>(lastStatsRequestKey, 0);
+    long long value = getValue(lastStatsRequestKey, 0);
     mutex.unlock();
     return value;
 }
@@ -3372,6 +3374,7 @@ void Preferences::writeFolders()
         settings->setValue(folderActiveKey, activeFolders[i]);
         setCachedValue(folderActiveKey, activeFolders[i]);
         settings->setValue(temporaryInactiveKey,temporaryInactiveFolders[i]);
+        setCachedValue(temporaryInactiveKey, temporaryInactiveFolders[i]);
         settings->setValue(localFingerprintKey, localFingerprints[i]);
         setCachedValue(localFingerprintKey, localFingerprints[i]);
 

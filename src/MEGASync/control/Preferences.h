@@ -44,14 +44,14 @@ public:
     }
 
     template<typename T>
-    T getValue (const QString &key, const QVariant &defaultValue)
+    T getValue (const QString &key, const T &defaultValue)
     {
         auto cf = cache.find(key);
         if (cf != cache.end())
         {
             return cf->second.value<T>();
         }
-        else return settings->value(key, defaultValue).value<T>();
+        else return settings->value(key, defaultValue).template value<T>();
     }
 
     void setCachedValue (const QString &key, const QVariant &value)
