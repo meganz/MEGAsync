@@ -32,6 +32,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         int tag = index.internalId();
         int modelType = model->getModelType();
         TransferItem *ti = model->transferItems[tag];
+        bool deleteTemporaryTransferItem = false;
         if (!ti)
         {
             bool apiLockSucceded = false;
@@ -40,17 +41,21 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 // We will call the SDK several times, and if there is one new transfer there may be many, and the SDK may be working a lot.
                 // Here we lock the SDK mutex so we can make all these calls back into it in one go, and get the painting done.
                 // The lock will be released at the end of the infoDialog or transferDialog paintEvent().
+#ifdef NDEBUG
+                static_cast<MegaApplication*>(qApp)->megaApiLock->lockOnce();
+                apiLockSucceded = true;
+#else
+
                 // we do a tentative lock with 100 millseconds for the entire painting attempt, otherwise we dont'add the item. The next repainting will do.
                 auto startPaintTime = std::max(0LL,static_cast<MegaApplication*>(qApp)->mStartPaintTime + 50 - QDateTime::currentMSecsSinceEpoch());
                 apiLockSucceded = static_cast<MegaApplication*>(qApp)->megaApiLock->try_lock_for(startPaintTime);
                 if (!apiLockSucceded)
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get api lock at MegaTransferDelegate::paint").toUtf8().constData());
-#ifndef NDEBUG
-                    painter->fillRect(option.rect, QColor(247, 60, 60)); //TODO: alternative: paint a "Loading message" or a blurry item for both DEBUG & NDEBUG
-#endif
-                    return;
+                    deleteTemporaryTransferItem = true;
+                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get SDK lock at MegaTransferDelegate::paint").toUtf8().constData());
+                    painter->fillRect(option.rect, QColor(247, 60, 60)); //TODO: paint a blurry item for both DEBUG & NDEBUG
                 }
+#endif
             }
 
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
@@ -64,8 +69,17 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
             ti->setTransferTag(tag);
             connect(ti, SIGNAL(refreshTransfer(int)), model, SLOT(refreshTransferItem(int)));
-            model->transferItems.insert(tag, ti);
-            MegaTransfer *transfer = model->getTransferByTag(tag);
+
+            MegaTransfer *transfer = nullptr;
+            if (apiLockSucceded)
+            {
+                model->transferItems.insert(tag, ti);
+                transfer = model->getTransferByTag(tag);
+            }
+            else
+            {
+                ti->setFileName(QString::fromUtf8("Loading ...."));
+            }
 
             if (transfer)
             {
@@ -97,7 +111,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                     {
                         ti->setIsLinkAvailable(true);
                     }
-                    else
+                    else if (apiLockSucceded)
                     {
                         MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
                         if (ownNode)
@@ -180,6 +194,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
+        if (deleteTemporaryTransferItem)
+        {
+            delete ti;
+        }
+
     }
     else
     {
