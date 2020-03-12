@@ -1090,16 +1090,26 @@ void SettingsDialog::loadSettings()
 
 
         //Account
-        char *email = megaApi->getMyEmail();
-        if (email)
-        {
-            ui->lEmail->setText(QString::fromUtf8(email));
-            delete [] email;
-        }
-        else
-        {
-            ui->lEmail->setText(preferences->email());
-        }
+        ui->lEmail->setText(preferences->email());
+        static_cast<MegaApplication*>(qApp)->pushToThreadPool([=]()
+        {//thread pool function
+
+            char *email = megaApi->getMyEmail();
+            if (email)
+            {
+                Utilities::queueFunctionInAppThread([=]()
+                {//queued function
+
+                    ui->lEmail->setText(QString::fromUtf8(email));
+                    delete [] email;
+
+                });//end of queued function
+            }
+
+        });// end of thread pool function
+
+
+
 
         // account type and details
         updateAccountElements();
@@ -1326,8 +1336,12 @@ int SettingsDialog::saveSettings()
             preferences->setLanguage(selectedLanguageCode);
             app->changeLanguage(selectedLanguageCode);
             QString currentLanguageCode = app->getCurrentLanguageCode();
-            megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
-            megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());
+            static_cast<MegaApplication*>(qApp)->pushToThreadPool([=]()
+            {
+                megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
+                megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());
+            });
+
         }
 
         //Account
