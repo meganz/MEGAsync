@@ -8270,6 +8270,11 @@ MegaSyncLogger& MegaApplication::getLogger() const
     return *logger;
 }
 
+void MegaApplication::pushToThreadPool(std::function<void()> functor)
+{
+    mthreadPool->push(std::move(functor));
+}
+
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
     if (appfinished)

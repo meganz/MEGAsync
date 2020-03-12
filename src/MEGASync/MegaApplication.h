@@ -172,6 +172,7 @@ public:
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
+    void pushToThreadPool(std::function<void()> functor);
 
 signals:
     void startUpdaterThread();

@@ -32,24 +32,37 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     settingsAction = NULL;
     this->megaApi = megaApi; 
 
-    MegaTransferData *transferData = megaApi->getTransferData();
-    notificationNumber = transferData->getNotificationNumber();
-    ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
-    ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
+    static_cast<MegaApplication*>(qApp)->pushToThreadPool([=]()
+    {//thread pool function
 
-    MegaTransfer *firstUpload = NULL;
-    MegaTransfer *firstDownload = NULL;
-    if (transferData->getNumUploads())
-    {
-        firstUpload = megaApi->getTransferByTag(transferData->getUploadTag(0));
-    }
-    if (transferData->getNumDownloads())
-    {
-        firstDownload = megaApi->getTransferByTag(transferData->getDownloadTag(0));
-    }
-    ui->wActiveTransfers->init(megaApi, firstUpload, firstDownload);
-    delete firstUpload;
-    delete firstDownload;
+        MegaTransferData *transferData = this->megaApi->getTransferData();
+
+
+        Utilities::queueFunctionInAppThread([=]()
+        {//queued function
+
+            notificationNumber = transferData->getNotificationNumber();
+            ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
+            ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
+
+            MegaTransfer *firstUpload = NULL;
+            MegaTransfer *firstDownload = NULL;
+            if (transferData->getNumUploads())
+            {
+                firstUpload = megaApi->getTransferByTag(transferData->getUploadTag(0));
+            }
+            if (transferData->getNumDownloads())
+            {
+                firstDownload = megaApi->getTransferByTag(transferData->getDownloadTag(0));
+            }
+            ui->wActiveTransfers->init(megaApi, firstUpload, firstDownload);
+            delete firstUpload;
+            delete firstDownload;
+            delete transferData;
+
+        });//end of queued function
+
+    });// end of thread pool function
 
     if (((MegaApplication *)qApp)->getFinishedTransfers().size() > 0)
     {
@@ -62,7 +75,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     ui->wCompleted->setupFinishedTransfers(((MegaApplication *)qApp)->getFinishedTransfers());
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
-    delete transferData;
 
     connect(ui->wCompleted->getModel(), SIGNAL(noTransfers()), this, SLOT(updateState()));
     connect(ui->wCompleted->getModel(), SIGNAL(onTransferAdded()), this, SLOT(updateState()));
