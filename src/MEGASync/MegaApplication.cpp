@@ -4583,10 +4583,10 @@ void MegaApplication::redirectToPayBusiness(int activationButton)
             || activationButton == MegaNotification::ActivationContentClicked
         #endif
             )
-    {
-        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-        megaApi->getSessionTransferURL(url.toUtf8().constData());
+    {      
+        QString url = QString::fromUtf8("mega://#repay");
+        Utilities::getPROurlWithParameters(url);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
 }
 
@@ -6858,10 +6858,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.setDefaultButton(QMessageBox::Yes);
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
-                    {
-                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                    {                        
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     }
                 }
 
@@ -6893,9 +6893,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
                     {
-                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     }
                 }
                 else
