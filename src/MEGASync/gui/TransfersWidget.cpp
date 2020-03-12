@@ -53,12 +53,12 @@ void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData,
 
 void TransfersWidget::refreshTransferItems()
 {
-    model->refreshTransfers();
+    if (model) model->refreshTransfers();
 }
 
 void TransfersWidget::clearTransfers()
 {
-    model->removeAllTransfers();
+    if (model) model->removeAllTransfers();
 }
 
 TransfersWidget::~TransfersWidget()
@@ -108,7 +108,7 @@ void TransfersWidget::configureTransferView()
 void TransfersWidget::pausedTransfers(bool paused)
 {
     isPaused = paused;
-    if (model->rowCount(QModelIndex()) == 0)
+    if (model && model->rowCount(QModelIndex()) == 0)
     {
         noTransfers();
     }

@@ -8282,50 +8282,61 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         return;
     }
 
-    bool copyRequired = true;
-    if (!list)//User alerts already loaded: get the list from MegaApi::getUserAlerts
-    {
-        list = megaApi->getUserAlerts();
-        copyRequired = false;
-    }
-    else
-    {
-        assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
-    }
 
-    if (!notificationsModel)
-    {
-        notificationsModel = new QAlertsModel(list, copyRequired);
-        notificationsProxyModel = new QFilterAlertsModel();
-        notificationsProxyModel->setSourceModel(notificationsModel);
-        notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+    mthreadPool->push([=, &list]()
+    {//thread pool function
+        bool copyRequired = true;
 
-        notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
-
-        if (infoDialog)
+        if (!list)//User alerts already loaded: get the list from MegaApi::getUserAlerts
         {
-            infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
+            list = megaApi->getUserAlerts();
+            copyRequired = false;
         }
-    }
-    else
-    {
-        notificationsModel->insertAlerts(list, copyRequired);
-    }
 
-    if (infoDialog)
-    {
-        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
-        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
-                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
-                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
-                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
-    }
+        Utilities::queueFunctionInAppThread([=]()
+        {//queued function
 
-    if (!copyRequired)
-    {
-        list->clear(); //empty the list otherwise they will be deleted
-        delete list;
-    }
+            assert((!copyRequired || notificationsModel) && "onUserAlertsUpdate with !alerts should have happened before!");
+
+            if (!notificationsModel)
+            {
+                notificationsModel = new QAlertsModel(list, copyRequired);
+                notificationsProxyModel = new QFilterAlertsModel();
+                notificationsProxyModel->setSourceModel(notificationsModel);
+                notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+
+                notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
+
+                if (infoDialog)
+                {
+                    infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
+                }
+            }
+            else
+            {
+                notificationsModel->insertAlerts(list, copyRequired);
+            }
+
+            if (infoDialog)
+            {
+                infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
+                infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
+                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
+                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
+                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
+            }
+
+            if (!copyRequired)
+            {
+                list->clear(); //empty the list otherwise they will be deleted
+                delete list;
+            }
+
+        });//end of queued function
+
+    });// end of thread pool function
+
+
 }
 
 
