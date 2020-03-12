@@ -8,6 +8,7 @@
 #include <QMutex>
 
 #include "control/EncryptedSettings.h"
+#include <assert.h>
 #include "megaapi.h"
 
 Q_DECLARE_METATYPE(QList<long long>)
@@ -24,14 +25,60 @@ private:
     static Preferences *preferences;
     Preferences();
 
+    std::map<QString, QVariant> cache;
+
 public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
 
     void initialize(QString dataPath);
 
+    template<typename T>
+    T getValue (const QString &key)
+    {
+        auto cf = cache.find(key);
+        if (cf != cache.end())
+        {
+            assert(cf->second.value<T>() == settings->value(key).value<T>());
+            return cf->second.value<T>();
+        }
+        else return settings->value(key).value<T>();
+    }
+
+    template<typename T>
+    T getValue (const QString &key, const T &defaultValue)
+    {
+        auto cf = cache.find(key);
+        if (cf != cache.end())
+        {
+            assert(cf->second.value<T>() == settings->value(key, defaultValue).template value<T>());
+            return cf->second.value<T>();
+        }
+        else return settings->value(key, defaultValue).template value<T>();
+    }
+
+    void setCachedValue (const QString &key, const QVariant &value)
+    {
+        if (!key.isEmpty())
+        {
+            cache[key] = value;
+        }
+    }
+
+    void cleanCache()
+    {
+        cache.clear();
+    }
+
+    void removeFromCache(const QString &key)
+    {
+        cache.erase(key);
+    }
+
+    void setEmailAndGeneralSettings(const QString &email);
+
     //Thread safe functions
-    bool logged();
+    bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
@@ -39,8 +86,6 @@ public:
     void setFirstName(QString firstName);
     QString lastName();
     void setLastName(QString lastName);
-    QString emailHash();
-    QString privatePw();
     void setSession(QString session);
     QString getSession();
     unsigned long long transferIdentifier();
@@ -272,6 +317,12 @@ public:
     void enterUser(int i);
     void leaveUser();
 
+    int accountStateInGeneral();
+    void setAccountStateInGeneral(int value);
+
+    int needsFetchNodesInGeneral();
+    void setNeedsFetchNodesInGeneral(int value);
+
     void unlink();
 
     bool isCrashed();
@@ -343,6 +394,14 @@ public:
         STATE_ALMOST_OVER_STORAGE,
         STATE_OVER_STORAGE,
         STATE_OVER_STORAGE_DISMISSED
+    };
+
+    enum {
+        STATE_NOT_INITIATED = 0,
+        STATE_LOGGED_OK = 1,
+        STATE_LOGGED_FAILED = 2,
+        STATE_FETCHNODES_OK = 3,
+        STATE_FETCHNODES_FAILED = 4
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
@@ -417,6 +476,9 @@ protected:
     void readFolders();
     void writeFolders();
 
+    void storeSessionInGeneral(QString session);
+    QString getSessionInGeneral();
+
     EncryptedSettings *settings;
     QStringList syncNames;
     QStringList syncIDs;
@@ -442,12 +504,12 @@ protected:
     long long lastTransferNotification;
 
     static const QString currentAccountKey;
+    static const QString currentAccountStatusKey;
+    static const QString needsFetchNodesKey;
     static const QString syncsGroupKey;
     static const QString emailKey;
     static const QString firstNameKey;
     static const QString lastNameKey;
-    static const QString emailHashKey;
-    static const QString privatePwKey;
     static const QString totalStorageKey;
     static const QString usedStorageKey;
     static const QString cloudDriveStorageKey;
@@ -595,6 +657,8 @@ protected:
     static const QString defaultHttpsCert;
     static const QString defaultHttpsCertIntermediate;
     static const long long defaultHttpsCertExpiration;
+    static const int defaultAccountStatus;
+    static const int defaultNeedsFetchNodes;
 };
 
 #endif // PREFERENCES_H

@@ -282,6 +282,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 InfoDialog::~InfoDialog()
 {
+    removeEventFilter(this);
     delete ui;
     delete gWidget;
     delete activeDownload;
@@ -1030,7 +1031,7 @@ void InfoDialog::on_bAddSync_clicked()
                 firstSyncHandle = preferences->getMegaFolderHandle(0);
             }
 
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
             if (rootNode)
             {
                 long long rootHandle = rootNode->getHandle();
@@ -1045,7 +1046,6 @@ void InfoDialog::on_bAddSync_clicked()
                     }
                     syncsMenu->addAction(addAction);
                 }
-                delete rootNode;
             }
 
             addSyncAction->setMenu(syncsMenu.get());

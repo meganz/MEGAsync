@@ -4,6 +4,7 @@
 #include "gui/NodeSelector.h"
 #include "gui/MultiQFileDialog.h"
 #include "Utilities.h"
+#include "MegaApplication.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -92,7 +93,11 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
         if (!testNode)
         {
-            testNode = megaApi->getRootNode();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+            if (rootNode)
+            {
+                testNode = rootNode->copy();
+            }
         }
 
         MegaNode *p = testNode;
