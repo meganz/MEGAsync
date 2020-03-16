@@ -48,7 +48,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
                 // we do a tentative lock with 100 millseconds for the entire painting attempt, otherwise we dont'add the item. The next repainting will do.
                 auto startPaintTime = std::max(0LL,static_cast<MegaApplication*>(qApp)->mStartPaintTime + 50 - QDateTime::currentMSecsSinceEpoch());
-                apiLockSucceded = static_cast<MegaApplication*>(qApp)->megaApiLock->try_lock_for(startPaintTime);
+                apiLockSucceded = static_cast<MegaApplication*>(qApp)->megaApiLock->tryLockFor(startPaintTime);
                 if (!apiLockSucceded)
                 {
                     deleteTemporaryTransferItem = true;
