@@ -81,13 +81,19 @@ BuildRequires: ffmpeg-mega
         BuildRequires: lz4-libs
     %endif
 
+    %if 0%{?fedora_version} >= 31
+        BuildRequires: fonts-filesystem
+    %else
+        BuildRequires: fontpackages-filesystem
+    %endif
+
     %if 0%{?fedora_version} >= 23
         BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
         Requires: qt5-qtbase >= 5.6, qt5-qtsvg
-        BuildRequires: terminus-fonts, fontpackages-filesystem
+        BuildRequires: terminus-fonts
     %else
         BuildRequires: qt, qt-x11, qt-devel
-        BuildRequires: terminus-fonts, fontpackages-filesystem
+        BuildRequires: terminus-fonts
     %endif
 %endif
 
