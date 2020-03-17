@@ -1,4 +1,5 @@
 #include "QMegaModel.h"
+#include "MegaApplication.h"
 
 #include <QBrush>
 #include <QApplication>
@@ -10,8 +11,8 @@ QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
     QAbstractItemModel(parent)
 {
     this->megaApi = megaApi;
-    this->root = megaApi->getRootNode();
-    this->rootItem = new MegaItem(root);
+    this->root = ((MegaApplication*)qApp)->getRootNode();
+    this->rootItem = new MegaItem(root.get());
     this->folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
 
     MegaUserList *contacts = megaApi->getContacts();
@@ -241,6 +242,5 @@ QMegaModel::~QMegaModel()
 {
     delete rootItem;
     qDeleteAll(inshareItems);
-    delete root;
     qDeleteAll(ownNodes);
 }
