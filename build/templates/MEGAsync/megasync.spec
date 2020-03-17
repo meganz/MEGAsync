@@ -19,11 +19,9 @@ BuildRequires: ffmpeg-mega
     BuildRequires: libopenssl-devel, sqlite3-devel
     BuildRequires: libbz2-devel
 
-    %if %(echo $HOSTNAME) == "obs"
-        # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
-        # plus it speeds up building process
-        BuildRequires: -post-build-checks
-    %endif
+    # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
+    # plus it speeds up building process
+    #!BuildIgnore: post-build-checks
 
     %if 0%{?sle_version} >= 150000
         BuildRequires: libcurl4
