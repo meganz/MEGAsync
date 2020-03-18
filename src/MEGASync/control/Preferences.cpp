@@ -560,6 +560,7 @@ void Preferences::storeSessionInGeneral(QString session)
     QString currentAccount;
     if (logged())
     {
+        settings->setValue(sessionKey, session); //store in user group too (for backwards compatibility)
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
     }
