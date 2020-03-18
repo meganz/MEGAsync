@@ -589,18 +589,12 @@ QString Preferences::getSession()
     QString value;
     if (logged())
     {
-        value = settings->value(sessionKey).toString();
+        value = settings->value(sessionKey).toString(); // for MEGAsync prior unfinished fetchnodes resumable sessions (<=4.3.1)
     }
 
     if (value.isEmpty())
     {
-        value = getSessionInGeneral();
-    }
-    else
-    {
-        //Remove session from specific settings to use the global stored sessionKey instead
-        settings->remove(sessionKey);
-        removeFromCache(sessionKey);
+        value = getSessionInGeneral(); // for MEGAsync with unfinished fetchnodes resumable sessions (>4.3.1)
     }
 
     mutex.unlock();
