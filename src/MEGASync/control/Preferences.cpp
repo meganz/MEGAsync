@@ -543,6 +543,16 @@ void Preferences::setSession(QString session)
     mutex.unlock();
 }
 
+void Preferences::setSessionInUserGroup(QString session)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(sessionKey, session);
+    setCachedValue(sessionKey, session);
+    settings->sync();
+    mutex.unlock();
+}
+
 void Preferences::storeSessionInGeneral(QString session)
 {
     mutex.lock();
@@ -3159,8 +3169,11 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     QString proxyUsername = this->getProxyUsername();
     QString proxyPassword = this->getProxyPassword();
 
+    QString session = this->getSessionInGeneral();
+
     this->setEmail(email);
 
+    this->setSessionInUserGroup(session); //this is required to provide backwards compatibility
     this->setProxyType(proxyType);
     this->setProxyServer(proxyServer);
     this->setProxyPort(proxyPort);
