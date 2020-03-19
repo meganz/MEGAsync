@@ -87,6 +87,7 @@ public:
     QString lastName();
     void setLastName(QString lastName);
     void setSession(QString session);
+    void setSessionInUserGroup(QString session);
     QString getSession();
     unsigned long long transferIdentifier();
     long long lastTransferNotificationTimestamp();

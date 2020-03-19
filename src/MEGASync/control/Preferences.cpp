@@ -543,6 +543,16 @@ void Preferences::setSession(QString session)
     mutex.unlock();
 }
 
+void Preferences::setSessionInUserGroup(QString session)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(sessionKey, session);
+    setCachedValue(sessionKey, session);
+    settings->sync();
+    mutex.unlock();
+}
+
 void Preferences::storeSessionInGeneral(QString session)
 {
     mutex.lock();
@@ -550,6 +560,7 @@ void Preferences::storeSessionInGeneral(QString session)
     QString currentAccount;
     if (logged())
     {
+        settings->setValue(sessionKey, session); //store in user group too (for backwards compatibility)
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
     }
@@ -589,18 +600,12 @@ QString Preferences::getSession()
     QString value;
     if (logged())
     {
-        value = settings->value(sessionKey).toString();
+        value = settings->value(sessionKey).toString(); // for MEGAsync prior unfinished fetchnodes resumable sessions (<=4.3.1)
     }
 
     if (value.isEmpty())
     {
-        value = getSessionInGeneral();
-    }
-    else
-    {
-        //Remove session from specific settings to use the global stored sessionKey instead
-        settings->remove(sessionKey);
-        removeFromCache(sessionKey);
+        value = getSessionInGeneral(); // for MEGAsync with unfinished fetchnodes resumable sessions (>4.3.1)
     }
 
     mutex.unlock();
@@ -3165,8 +3170,11 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
     QString proxyUsername = this->getProxyUsername();
     QString proxyPassword = this->getProxyPassword();
 
+    QString session = this->getSessionInGeneral();
+
     this->setEmail(email);
 
+    this->setSessionInUserGroup(session); //this is required to provide backwards compatibility
     this->setProxyType(proxyType);
     this->setProxyServer(proxyServer);
     this->setProxyPort(proxyPort);
