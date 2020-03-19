@@ -1,8 +1,11 @@
 #!/usr/bin/make -f
 
+MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+
 build: build-stamp
 build-stamp:
 	dh_testdir
+	sed -i -E "0,/thunar-megasync \(([0-9.]*)[^\)]*\)/s//thunar-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
 	qmake
 	make
 	touch build-stamp
