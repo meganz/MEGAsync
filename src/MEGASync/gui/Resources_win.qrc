@@ -787,5 +787,6 @@
         <file>images/locked_account_ico.png</file>
         <file>images/locked_account_ico@2x.png</file>
         <file>images/locked_account_ico@3x.png</file>
+        <file>images/tray_warning_ico.ico</file>
     </qresource>
 </RCC>
