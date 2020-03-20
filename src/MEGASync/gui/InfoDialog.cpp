@@ -254,7 +254,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     }
     else
     {
-        regenerateLayout(olddialog);
+        regenerateLayout(false, olddialog);
     }
     highDpiResize.init(this);
 
@@ -1406,79 +1406,94 @@ void InfoDialog::on_bStorageDetails_clicked()
     accountDetailsDialog = NULL;
 }
 
-void InfoDialog::regenerateLayout(InfoDialog* olddialog)
+void InfoDialog::regenerateLayout(bool lockedAccount, InfoDialog* olddialog)
 {
-    bool logged = preferences->logged();
+    int actualAccountState;
 
-    if (loggedInMode == logged)
+    lockedAccount ? actualAccountState = STATE_LOCKED_EMAIL
+                  : preferences->logged() ? actualAccountState = STATE_LOGGEDIN
+                                          : actualAccountState = STATE_LOGOUT;
+
+    if (actualAccountState == loggedInMode)
     {
         return;
     }
-    loggedInMode = logged;
+
+    loggedInMode = actualAccountState;
 
     QLayout *dialogLayout = layout();
-    if (!loggedInMode)
+    switch(loggedInMode)
     {
-        if (!gWidget)
+        case STATE_LOGOUT:
+        case STATE_LOCKED_EMAIL:
         {
-            gWidget = new GuestWidget();
-            connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
-            if (olddialog)
+            if (!gWidget)
             {
-                auto t = olddialog->gWidget->getTexts();
-                gWidget->setTexts(t.first, t.second);
+                gWidget = new GuestWidget();
+
+                connect(gWidget, SIGNAL(onPageLogin()), this, SLOT(resetLoggedInMode()));
+                connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
+                if (olddialog)
+                {
+                    auto t = olddialog->gWidget->getTexts();
+                    gWidget->setTexts(t.first, t.second);
+                }
             }
+            else
+            {
+                gWidget->enableListener();
+            }
+
+            gWidget->setAccountLocked(lockedAccount);
+
+            updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
+            setOverQuotaMode(false);
+            ui->wPSA->removeAnnounce();
+
+            dialogLayout->removeWidget(ui->wInfoDialogIn);
+            ui->wInfoDialogIn->setVisible(false);
+            dialogLayout->addWidget(gWidget);
+            gWidget->setVisible(true);
+
+            #ifdef __APPLE__
+                if (!dummy)
+                {
+                    dummy = new QWidget();
+                }
+
+                dummy->resize(1,1);
+                dummy->setWindowFlags(Qt::FramelessWindowHint);
+                dummy->setAttribute(Qt::WA_NoSystemBackground);
+                dummy->setAttribute(Qt::WA_TranslucentBackground);
+                dummy->show();
+            #endif
+
+            adjustSize();
+            break;
         }
-        else
+
+        case STATE_LOGGEDIN:
         {
-            gWidget->enableListener();
+            gWidget->disableListener();
+            gWidget->initialize();
+
+            dialogLayout->removeWidget(gWidget);
+            gWidget->setVisible(false);
+            dialogLayout->addWidget(ui->wInfoDialogIn);
+            ui->wInfoDialogIn->setVisible(true);
+
+            #ifdef __APPLE__
+                if (dummy)
+                {
+                    dummy->hide();
+                    delete dummy;
+                    dummy = NULL;
+                }
+            #endif
+
+            adjustSize();
+            break;
         }
-
-        updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
-        setOverQuotaMode(false);
-        ui->wPSA->removeAnnounce();
-
-        dialogLayout->removeWidget(ui->wInfoDialogIn);
-        ui->wInfoDialogIn->setVisible(false);
-        dialogLayout->addWidget(gWidget);
-        gWidget->setVisible(true);
-
-        #ifdef __APPLE__
-            if (!dummy)
-            {
-                dummy = new QWidget();
-            }
-
-            dummy->resize(1,1);
-            dummy->setWindowFlags(Qt::FramelessWindowHint);
-            dummy->setAttribute(Qt::WA_NoSystemBackground);
-            dummy->setAttribute(Qt::WA_TranslucentBackground);
-            dummy->show();
-        #endif
-
-        adjustSize();
-
-    }
-    else
-    {
-        gWidget->disableListener();
-        gWidget->initialize();
-
-        dialogLayout->removeWidget(gWidget);
-        gWidget->setVisible(false);
-        dialogLayout->addWidget(ui->wInfoDialogIn);
-        ui->wInfoDialogIn->setVisible(true);
-
-        #ifdef __APPLE__
-            if (dummy)
-            {
-                dummy->hide();
-                delete dummy;
-                dummy = NULL;
-            }
-        #endif
-
-        adjustSize();
 
     }
 
@@ -1584,6 +1599,11 @@ void InfoDialog::animateStates(bool opt)
 void InfoDialog::onUserAction(int action)
 {
     app->userAction(action);
+}
+
+void InfoDialog::resetLoggedInMode()
+{
+    loggedInMode = STATE_NONE;
 }
 
 void InfoDialog::on_tTransfers_clicked()
@@ -1806,6 +1826,11 @@ void InfoDialog::highLightMenuEntry(QAction *action)
     }
     pAction->setHighlight(true);
     lastHovered = pAction;
+}
+
+int InfoDialog::getLoggedInMode() const
+{
+    return loggedInMode;
 }
 
 void InfoDialog::setBlockedStateLabel(QString state)

@@ -38,7 +38,17 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_SYNCING,
     };
 
+
+
 public:
+
+    enum {
+        STATE_NONE = -1,
+        STATE_LOGOUT = 0,
+        STATE_LOGGEDIN = 1,
+        STATE_LOCKED_EMAIL = 2
+    };
+
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0, InfoDialog* olddialog = nullptr);
     ~InfoDialog();
 
@@ -73,7 +83,7 @@ public:
 #endif
 
     void on_bStorageDetails_clicked();
-    void regenerateLayout(InfoDialog* olddialog = nullptr);
+    void regenerateLayout(bool lockedAccount = false, InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
@@ -85,6 +95,8 @@ public:
     long long getUnseenNotifications() const;
 
     void closeSyncsMenu();
+
+    int getLoggedInMode() const;
 
 private:
     void drawAvatar(QString email);
@@ -122,6 +134,7 @@ private slots:
     void on_bUpload_clicked();
     void on_bDownload_clicked();
     void onUserAction(int action);
+    void resetLoggedInMode();
 
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
@@ -180,7 +193,7 @@ private:
     bool overQuotaState;
     int storageState;
     int actualAccountType;
-    bool loggedInMode = true;
+    int loggedInMode = STATE_NONE;
     bool notificationsReady = false;
     bool isShown = false;
     long long unseenNotifications = 0;
