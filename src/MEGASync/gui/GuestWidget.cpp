@@ -206,8 +206,12 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             if (error->getErrorCode() != MegaError::API_OK)
             {
                 preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
-                page_login();
                 loggingStarted = false;
+
+                if (error->getErrorCode() != MegaError::API_EBLOCKED)
+                {
+                    page_login();
+                }
                 break;
             }
 
@@ -301,6 +305,15 @@ void GuestWidget::initialize()
     page_login();
 }
 
+void GuestWidget::setAccountLocked(bool state)
+{
+    //TODO: Check when account is unlock and if it is needed to update the page
+    if (state)
+    {
+        page_lockedAccount();
+    }
+}
+
 void GuestWidget::on_bLogin_clicked()
 {
     QString email = ui->lEmail->text().toLower().trimmed();
@@ -384,6 +397,16 @@ void GuestWidget::on_bCancel_clicked()
     }
 }
 
+void GuestWidget::on_bLogout_clicked()
+{
+    app->unlink();
+}
+
+void GuestWidget::on_bVerifyEmail_clicked()
+{
+    app->showVerifyEmailInfo();
+}
+
 void GuestWidget::page_login()
 {
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
@@ -395,6 +418,8 @@ void GuestWidget::page_login()
     ui->sPages->setCurrentWidget(ui->pLogin);
 
     resetFocus();
+
+    emit onPageLogin();
 }
 
 void GuestWidget::page_progress()
@@ -433,6 +458,14 @@ void GuestWidget::page_logout()
     ui->progressBar->setValue(-1);
 
     ui->sPages->setCurrentWidget(ui->pProgress);
+}
+
+void GuestWidget::page_lockedAccount()
+{
+    ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
+    ui->sPages->style()->unpolish(ui->sPages);
+    ui->sPages->style()->polish(ui->sPages);
+    ui->sPages->setCurrentWidget(ui->pLockedAccount);
 }
 
 void GuestWidget::changeEvent(QEvent *event)

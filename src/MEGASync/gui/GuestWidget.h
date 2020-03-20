@@ -39,11 +39,14 @@ public:
     void enableListener();
     void initialize();
 
+    void setAccountLocked(bool state);
+
     void setTexts(const QString& s1, const QString& s2);
     std::pair<QString, QString> getTexts();
 
 signals:
     void forwardAction(int action);
+    void onPageLogin();
 
 private slots:
     void on_bLogin_clicked();
@@ -51,6 +54,8 @@ private slots:
     void on_bSettings_clicked();
     void on_bForgotPassword_clicked();
     void on_bCancel_clicked();
+    void on_bLogout_clicked();
+    void on_bVerifyEmail_clicked();
 
 private:
     Ui::GuestWidget *ui;
@@ -67,6 +72,7 @@ protected:
     void page_progress();
     void page_settingUp();
     void page_logout();
+    void page_lockedAccount();
 
     void changeEvent(QEvent * event);
 };
