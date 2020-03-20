@@ -39,6 +39,7 @@
 #include "QTMegaListener.h"
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
+#include "gui/VerifyEmailMessage.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -134,7 +135,6 @@ public:
 
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
-    void unlink();
     void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
     void showWarningMessage(QString message, QString title = tr("MEGAsync"));
@@ -158,6 +158,7 @@ public:
     int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
+    void showVerifyEmailInfo();
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
@@ -178,6 +179,7 @@ signals:
     void clearFinishedTransfer(int transferTag);
 
 public slots:
+    void unlink();
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
@@ -315,6 +317,7 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
+    std::unique_ptr<VerifyEmailMessage> verifyEmail;
     std::unique_ptr<QMenu> infoDialogMenu;
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
@@ -463,6 +466,7 @@ protected:
     long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
+    bool suspendedAccount;
     friend class DeferPreferencesSyncForScope;
 };
 

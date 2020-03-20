@@ -916,6 +916,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     activeTransferTag[MegaTransfer::TYPE_DOWNLOAD] = 0;
     activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
+    verifyEmail = nullptr;
     infoDialogMenu = NULL;
     guestMenu = NULL;
     syncsMenu = NULL;
@@ -930,6 +931,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exportOps = 0;
     infoDialog = NULL;
     infoOverQuota = false;
+    suspendedAccount = false;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -1417,6 +1419,30 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
+    else if (suspendedAccount)
+    {
+        tooltip = QCoreApplication::applicationName()
+                + QString::fromAscii(" ")
+                + Preferences::VERSION_STRING
+                + QString::fromAscii("\n")
+                + tr("Locked Account");
+
+#ifndef __APPLE__
+    #ifdef _WIN32
+        icon = QString::fromUtf8("://images/tray_warning_ico.ico");
+    #else
+        icon = QString::fromUtf8("://images/tray_warning_ico.svg");
+    #endif
+#else
+        icon = QString::fromUtf8("://images/icon_warning_mac.png");
+
+        if (scanningTimer->isActive())
+        {
+            scanningTimer->stop();
+        }
+#endif
+
+    }
     else if (!megaApi->isLoggedIn())
     {
         if (!infoDialog)
@@ -1652,6 +1678,8 @@ void MegaApplication::start()
     {
         return;
     }
+
+    suspendedAccount = false;
 
     indexing = false;
     paused = false;
@@ -2382,6 +2410,11 @@ void MegaApplication::closeDialogs(bool bwoverquota)
 
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
+
+    if (verifyEmail)
+    {
+        verifyEmail->close();
+    }
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -4829,6 +4862,19 @@ void MegaApplication::removeAllFinishedTransfers()
     }
 }
 
+void MegaApplication::showVerifyEmailInfo()
+{
+    if (!verifyEmail)
+    {
+        verifyEmail = std::unique_ptr<VerifyEmailMessage>(new VerifyEmailMessage());
+        connect(verifyEmail.get(), SIGNAL(logout()), this, SLOT(unlink()));
+    }
+
+    verifyEmail->show();
+    verifyEmail->activateWindow();
+    verifyEmail->raise();
+}
+
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
 {
     return finishedTransferOrder;
@@ -6045,6 +6091,12 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         return;
     }
 
+    //If account is suspended chech status
+    if (suspendedAccount)
+    {
+        megaApi->whyAmIBlocked();
+    }
+
     // Code temporarily preserved here for testing
     /*if (httpServer)
     {
@@ -6071,7 +6123,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else if (reason == QSystemTrayIcon::Trigger)
             {
-                if (!megaApi->isLoggedIn())
+                if (suspendedAccount)
+                {
+                    showInfoMessage(tr("Locked account"));
+                }
+                else if (!megaApi->isLoggedIn())
                 {
                     showInfoMessage(tr("Logging in..."));
                 }
@@ -6816,9 +6872,35 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
-        QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
-                                  QCoreApplication::translate("MegaError", event->getText()),
-                                  Utilities::getDevicePixelRatio());
+        switch (event->getNumber())
+        {
+            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+            {
+                suspendedAccount = true;
+
+                if (infoDialog)
+                {
+                    if (infoDialog->getLoggedInMode() != InfoDialog::STATE_LOCKED_EMAIL)
+                    {
+                        infoDialog->regenerateLayout(true);
+                    }
+
+                }
+                else
+                {
+                    showVerifyEmailInfo();
+                }
+
+                break;
+            }
+            default:
+                QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                                          QCoreApplication::translate("MegaError", event->getText()),
+                                          Utilities::getDevicePixelRatio());
+                break;
+        }
+
+
     }
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
@@ -7262,17 +7344,26 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             unlink();
         }
 
-        if (preferences && preferences->logged())
+        if (preferences)
         {
-            clearUserAttributes();
-            preferences->unlink();
-            closeDialogs();
-            removeAllFinishedTransfers();
-            clearViewedTransfers();
+            if (preferences->logged())
+            {
+                clearUserAttributes();
+                preferences->unlink();
+                removeAllFinishedTransfers();
+                clearViewedTransfers();
+                preferences->setFirstStartDone();
+            }
 
-            preferences->setFirstStartDone();
+            if (preferences->accountStateInGeneral() == Preferences::STATE_FETCHNODES_FAILED)
+            {
+                preferences->resetGlobalSettings();
+            }
+
+            closeDialogs();
             start();
             periodicTasks();
+
         }
         break;
     }
@@ -7834,6 +7925,24 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                QString::fromUtf8(request->getFile() ? request->getFile() : ""),
                                                QString::fromUtf8(request->getPassword() ? request->getPassword() : ""),
                                                QString::fromUtf8(request->getLink() ? request->getLink() : ""));
+            }
+        }
+
+        break;
+    }
+    case MegaRequest::TYPE_WHY_AM_I_BLOCKED:
+    {
+        //TODO: Check if fully logged and need to make a fetchnodes
+        if (e->getErrorCode() == MegaError::API_OK
+                && request->getNumber() == MegaApi::ACCOUNT_NOT_BLOCKED)
+        {
+            suspendedAccount = false;
+
+            //TODO: Check if we have rootnode, otherwise perform a fetchnodes
+            //check all process complete successfully
+            if (infoDialog)
+            {
+                infoDialog->regenerateLayout(false);
             }
         }
 
