@@ -325,6 +325,7 @@ public:
     void setNeedsFetchNodesInGeneral(int value);
 
     void unlink();
+    void resetGlobalSettings();//Clear and remove any global setting. Not account specific ones.
 
     bool isCrashed();
     void setCrashed(bool value);
