@@ -184,6 +184,9 @@ border: none;
            </property>
            <item>
             <widget class="QLabel" name="lWhySeenThis">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
              <property name="styleSheet">
               <string notr="true">#lWhySeenThis
 {
