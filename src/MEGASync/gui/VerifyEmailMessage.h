@@ -21,6 +21,14 @@ public:
     explicit VerifyEmailMessage(QWidget *parent = nullptr);
     ~VerifyEmailMessage();
 
+signals:
+    void logout();
+    void resendEmail();
+
+private slots:
+    void on_bLogout_clicked();
+    void on_bResendEmail_clicked();
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void changeEvent(QEvent *event);

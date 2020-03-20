@@ -9,7 +9,6 @@ VerifyEmailMessage::VerifyEmailMessage(QWidget *parent) :
 {
     m_ui->setupUi(this);
     m_ui->lEmailSent->setVisible(false);
-    setAttribute(Qt::WA_DeleteOnClose, true);
 
     QStyle *style = QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
@@ -48,4 +47,15 @@ VerifyEmailMessage::~VerifyEmailMessage()
     releaseIdObject(m_popover);
 #endif
 
+}
+
+void VerifyEmailMessage::on_bLogout_clicked()
+{
+    emit logout();
+}
+
+void VerifyEmailMessage::on_bResendEmail_clicked()
+{
+    //TODO: Finish task of resend email confirmation to fix block situation
+    emit resendEmail();
 }
