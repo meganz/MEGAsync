@@ -297,7 +297,15 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
                 if (loggingStarted)
                 {
-                    page_login();
+                    if (error->getErrorCode() == MegaError::API_EBLOCKED)
+                    {
+                        done(QDialog::Rejected);
+                    }
+                    else
+                    {
+                        page_login();
+                    }
+
                     loggingStarted = false;
                 }
                 else
