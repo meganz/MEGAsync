@@ -378,7 +378,7 @@ const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
 const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
-const int  Preferences::defaultNeedsFetchNodes      = false;
+const bool  Preferences::defaultNeedsFetchNodes   = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -603,7 +603,7 @@ QString Preferences::getSession()
         value = settings->value(sessionKey).toString(); // for MEGAsync prior unfinished fetchnodes resumable sessions (<=4.3.1)
     }
 
-    if (value.isEmpty())
+    if (value.isEmpty() && needsFetchNodesInGeneral())
     {
         value = getSessionInGeneral(); // for MEGAsync with unfinished fetchnodes resumable sessions (>4.3.1)
     }
@@ -1463,7 +1463,7 @@ void Preferences::setAccountStateInGeneral(int value)
 }
 
 
-int Preferences::needsFetchNodesInGeneral()
+bool Preferences::needsFetchNodesInGeneral()
 {
     mutex.lock();
     QString currentAccount;
@@ -1473,7 +1473,7 @@ int Preferences::needsFetchNodesInGeneral()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    int value = getValue<int>(needsFetchNodesKey, defaultNeedsFetchNodes);
+    bool value = getValue<int>(needsFetchNodesKey, defaultNeedsFetchNodes);
 
     if (!currentAccount.isEmpty())
     {
@@ -1483,7 +1483,7 @@ int Preferences::needsFetchNodesInGeneral()
     return value;
 }
 
-void Preferences::setNeedsFetchNodesInGeneral(int value)
+void Preferences::setNeedsFetchNodesInGeneral(bool value)
 {
     mutex.lock();
 
