@@ -1,6 +1,11 @@
 #include "VerifyEmailMessage.h"
+#ifdef __APPLE__
 #include "macx/MacXFunctions.h"
+#endif
 #include "ui_VerifyEmailMessage.h"
+
+#include <QTimer>
+#include <QDebug>
 
 
 VerifyEmailMessage::VerifyEmailMessage(QWidget *parent) :
@@ -14,8 +19,8 @@ VerifyEmailMessage::VerifyEmailMessage(QWidget *parent) :
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     m_ui->bWarning->setIcon(tmpIcon);
 
-    QSize size = m_nativeWidget->size();
 #ifdef __APPLE__
+    QSize size = m_nativeWidget->size();
     m_popover = allocatePopOverWithView(m_nativeWidget->nativeView(), size);
     m_nativeWidget->show();
 #endif
@@ -27,6 +32,28 @@ void VerifyEmailMessage::mousePressEvent(QMouseEvent *event)
     {
 #ifdef __APPLE__
         showPopOverRelativeToRect(winId(), m_popover, event->localPos());
+#else
+
+        QPoint pos = event->globalPos();
+
+        mLockedPopOver->show();
+        mLockedPopOver->ensurePolished();
+        mLockedPopOver->move(pos - QPoint(mLockedPopOver->width()/2, mLockedPopOver->height()));
+
+        auto initialWidth = mLockedPopOver->width();
+        auto initialHeight = mLockedPopOver->height();
+
+        // size might be incorrect the first time it's shown. This works around that and repositions at the expected position afterwards
+        QTimer::singleShot(1, this, [this, pos, initialWidth, initialHeight] () {
+            mLockedPopOver->update();
+            mLockedPopOver->ensurePolished();
+
+            if (initialWidth != mLockedPopOver->width() || initialHeight != mLockedPopOver->height())
+            {
+                mLockedPopOver->move(pos - QPoint(mLockedPopOver->width()/2, mLockedPopOver->height()));
+                mLockedPopOver->update();
+            }
+        });
 #endif
     }
 }

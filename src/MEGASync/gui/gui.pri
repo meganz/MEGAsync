@@ -252,6 +252,10 @@ macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
+ else {
+    HEADERS += $$PWD/LockedPopOver.h
+    SOURCES += $$PWD/LockedPopOver.cpp
+}
 
 unix:!macx {
     RESOURCES += $$PWD/Resources_linux.qrc

@@ -3,10 +3,14 @@
 
 #include <QDialog>
 #include <QMouseEvent>
+#include <memory>
+
 
 #ifdef __APPLE__
     #include "macx/LockedPopOver.h"
     #import <objc/runtime.h>
+#else
+    #include "LockedPopOver.h"
 #endif
 
 namespace Ui {
@@ -35,9 +39,12 @@ protected:
 
 private:
     Ui::VerifyEmailMessage *m_ui;
-    std::unique_ptr<LockedPopOver> m_nativeWidget{new LockedPopOver()};
+
 #ifdef __APPLE__
+    std::unique_ptr<LockedPopOver> m_nativeWidget{new LockedPopOver()};
     id m_popover;
+#else
+    std::unique_ptr<LockedPopOver> mLockedPopOver{new LockedPopOver(this)};
 #endif
 };
 
