@@ -532,7 +532,7 @@
         <file>images/bug_report_success@2x.png</file>
         <file>images/locked_account_ico.png</file>
         <file>images/locked_account_ico@2x.png</file>
-        <file>images/icon_warning_mac.png</file>
-        <file>images/icon_warning_mac@2x.png</file>
+        <file>images/icon_alert_mac.png</file>
+        <file>images/icon_alert_mac@2x.png</file>
     </qresource>
 </RCC>

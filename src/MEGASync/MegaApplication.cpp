@@ -1429,12 +1429,12 @@ void MegaApplication::updateTrayIcon()
 
 #ifndef __APPLE__
     #ifdef _WIN32
-        icon = QString::fromUtf8("://images/tray_warning_ico.ico");
+        icon = QString::fromUtf8("://images/alert_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/tray_warning_ico.svg");
+        icon = QString::fromUtf8("://images/alert.svg");
     #endif
 #else
-        icon = QString::fromUtf8("://images/icon_warning_mac.png");
+        icon = QString::fromUtf8("://images/icon_alert_mac.png");
 
         if (scanningTimer->isActive())
         {
