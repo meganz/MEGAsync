@@ -211,6 +211,9 @@ QPushButton#bSettings:hover
              <height>24</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 margin-top: -1px;</string>
@@ -219,7 +222,7 @@ margin-top: -1px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -377,7 +380,7 @@ image: none;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_macx.qrc">
+                   <iconset resource="../Resources_win.qrc">
                     <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -563,6 +566,9 @@ padding-top: 50px;</string>
                           <width>120</width>
                           <height>22</height>
                          </size>
+                        </property>
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
                         </property>
                         <property name="styleSheet">
                          <string notr="true"/>
@@ -763,7 +769,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -959,6 +965,9 @@ image: none;</string>
                        <height>22</height>
                       </size>
                      </property>
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
@@ -1087,7 +1096,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -1408,6 +1417,9 @@ image: none;</string>
                 </item>
                 <item>
                  <widget class="QPushButton" name="bLogout">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">#bLogout
 {
@@ -1429,6 +1441,9 @@ image: none;</string>
                 </item>
                 <item>
                  <widget class="QPushButton" name="bVerifyEmail">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">#bVerifyEmail
 {
@@ -1485,7 +1500,7 @@ background-color: #F0373A;
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -171,6 +171,8 @@ public:
     static QString getDefaultBasePath();
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
+    static void adjustToScreenFunc(QPoint position, QWidget *what);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <iostream>
+#include <QDesktopWidget>
 #include "MegaApplication.h"
 #include "control/gzjoin.h"
 
@@ -764,3 +765,34 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
     return QString();
 }
 
+
+void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
+{
+    QDesktopWidget *desktop = QApplication::desktop();
+    int screenIndex = desktop->screenNumber(position);
+    auto screenGeometry = desktop->availableGeometry(screenIndex);
+    if (screenGeometry.isValid())
+    {
+        int newx = what->x(), newy = what->y();
+        if (what->x() < screenGeometry.x())
+        {
+            newx = screenGeometry.x();
+        }
+        if (what->y() < screenGeometry.y())
+        {
+            newy = screenGeometry.y();
+        }
+        if (what->x() + what->width() > screenGeometry.right())
+        {
+            newx = screenGeometry.right() - what->width();
+        }
+        if (what->y() + what->height() > screenGeometry.bottom())
+        {
+            newy = screenGeometry.bottom() - what->height();
+        }
+        if (newx != what->x() || newy != what->y())
+        {
+            what->move(newx, newy);
+        }
+    }
+};
