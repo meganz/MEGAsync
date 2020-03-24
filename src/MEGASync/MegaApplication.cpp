@@ -7358,8 +7358,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 clearViewedTransfers();
                 preferences->setFirstStartDone();
             }
-
-            if (preferences->accountStateInGeneral() == Preferences::STATE_FETCHNODES_FAILED)
+            else
             {
                 preferences->resetGlobalSettings();
             }
