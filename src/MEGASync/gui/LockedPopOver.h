@@ -17,6 +17,7 @@ public:
 
 protected:
     void changeEvent(QEvent *event);
+    void showEvent(QShowEvent* event);
 
 private:
     Ui::LockedPopOver *ui;

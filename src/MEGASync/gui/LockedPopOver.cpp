@@ -2,6 +2,8 @@
 #include "ui_LockedPopOver.h"
 
 #include <QMouseEvent>
+#include <QPropertyAnimation>
+#include <QTimer>
 #include "megaapi.h"
 #include "control/Utilities.h"
 #include "Preferences.h"
@@ -24,4 +26,16 @@ void LockedPopOver::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
+}
+
+void LockedPopOver::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+
+    QPropertyAnimation* anim = new QPropertyAnimation(this, "windowOpacity");
+    anim->setStartValue(0.0);
+    anim->setEndValue(1.0);
+    anim->setEasingCurve(QEasingCurve::InCubic);
+    anim->setDuration(300);
+    anim->start(QAbstractAnimation::DeleteWhenStopped);
 }

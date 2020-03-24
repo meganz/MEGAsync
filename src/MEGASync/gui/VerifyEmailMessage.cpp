@@ -6,6 +6,7 @@
 
 #include <QTimer>
 #include <QDebug>
+#include <QStyle>
 #include "Utilities.h"
 
 
@@ -39,7 +40,7 @@ void VerifyEmailMessage::mousePressEvent(QMouseEvent *event)
 
         mLockedPopOver->show();
         mLockedPopOver->ensurePolished();
-        mLockedPopOver->move(pos - QPoint(mLockedPopOver->width()/2, mLockedPopOver->height()));
+        mLockedPopOver->move(pos - QPoint(mLockedPopOver->width()/2, mLockedPopOver->height() + 10));
         Utilities::adjustToScreenFunc(pos, mLockedPopOver.get());
 
         auto initialWidth = mLockedPopOver->width();
