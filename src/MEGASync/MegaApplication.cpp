@@ -4866,7 +4866,7 @@ void MegaApplication::showVerifyEmailInfo()
 {
     if (!verifyEmail)
     {
-        verifyEmail = std::unique_ptr<VerifyEmailMessage>(new VerifyEmailMessage());
+        verifyEmail.reset(new VerifyEmailMessage());
         connect(verifyEmail.get(), SIGNAL(logout()), this, SLOT(unlink()));
     }
 
@@ -6178,7 +6178,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else
             {
-                if (!megaApi->isLoggedIn())
+                if (suspendedAccount)
+                {
+                    showInfoMessage(tr("Locked account"));
+                }
+                else if (!megaApi->isLoggedIn())
                 {
                     showInfoMessage(tr("Logging in..."));
                 }
