@@ -44,26 +44,29 @@ echo "#### Qt build ####"
 ##this is our working directory
 #cd $BUILD_DIR
 
+ver=5.12.6
+mainver=`echo $ver | awk -F"." '{print $1"."$2}'`
+
 #download and extract package
-if [ ! -f qt-everywhere-opensource-src-5.9.7.tar.xz ]; then
-wget http://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/5.9/5.9.7/single/qt-everywhere-opensource-src-5.9.7.tar.xz
+if [ ! -f qt-everywhere-src-$ver.tar.xz ]; then
+wget http://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/$mainver/$ver/single/qt-everywhere-src-$ver.tar.xz
 fi
 
 [ $download_only -eq 1 ] && exit 0
 echo "CHECKSUM ... "
-if ! echo 1c3852aa48b5a1310108382fb8f6185560cefc3802e81ecc099f4e62ee38516c qt-everywhere-opensource-src-5.9.7.tar.xz | sha256sum -c - ; then
+if ! echo a06c34222f4f049e8bd8da170178260aea1438b510cc064d16229dd340bfe592 qt-everywhere-src-$ver.tar.xz | sha256sum -c - ; then
 exit 1
 fi
 
-tar xvf qt-everywhere-opensource-src-5.9.7.tar.xz
-cd qt-everywhere-opensource-src-5.9.7
+tar xvf qt-everywhere-src-$ver.tar.xz
+cd qt-everywhere-src-$ver
 
 [ -f config.cache ] && rm config.cache; 
 
 ./configure --prefix=$TARGET_DIR/opt/mega \
 -opensource -ssl -confirm-license -nomake examples -nomake tests -nomake tools \
 -skip xmlpatterns -skip qtwebview -skip qtwebengine -skip qtwebchannel \
- --xkbcommon-x11=qt -xkbcommon-evdev -fontconfig \
+ -fontconfig \
  -I /temporal/tools/openssl/1.0.2r/include 2>&1 | tee salconfigure.txt
 
 make -j $jval

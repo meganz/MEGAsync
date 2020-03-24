@@ -1,8 +1,11 @@
 #!/usr/bin/make -f
 
+MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+
 build: build-stamp
 build-stamp:
 	dh_testdir
+	sed -i -E "0,/dolphin-megasync \(([0-9.]*)[^\)]*\)/s//dolphin-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
 	if ! grep "Ubuntu 1[8-9]" /etc/issue && ! grep "Debian GNU/Linux 10" /etc/issue; then cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .; fi
 	if ! grep "Ubuntu 1[8-9]" /etc/issue && ! grep "Debian GNU/Linux 10" /etc/issue; then make; fi
 	touch build-stamp

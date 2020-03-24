@@ -483,6 +483,11 @@
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation type="unfinished">Shared Folder Activity</translation>
     </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">Access to shared folder was removed</translation>
+    </message>
 </context>
 <context>
     <name>BindFolderDialog</name>
@@ -1660,6 +1665,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">No notifications for payments</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 used</translation>
     </message>
 </context>
 <context>

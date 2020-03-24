@@ -481,7 +481,12 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Activity</translation>
+        <translation type="unfinished">Activité dans un dossier partagé</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">L’accès à un dossier partagé a été supprimé</translation>
     </message>
 </context>
 <context>
@@ -849,7 +854,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation type="unfinished">Ajouté il y a [A]</translation>
+        <translation type="unfinished">Ajouté [A]</translation>
     </message>
     <message>
         <source>Out of storage space</source>
@@ -1159,7 +1164,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Veuillez saisir votre adresse courriel</translation>
+        <translation type="unfinished">Veuillez saisir votre adresse courriel.</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -1660,6 +1665,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">Il n’y a aucune notification pour les paiements</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 utilisés</translation>
     </message>
 </context>
 <context>
@@ -3137,7 +3147,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Saisir un ou plusieurs liens de fichiers MEGA</translation>
+        <translation>Saisissez un ou plusieurs liens de fichier MEGA</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -3157,7 +3167,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Saisir un ou plusieurs liens de fichiers MEGA</translation>
+        <translation>Saisissez un ou plusieurs liens de fichier MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4008,7 +4018,7 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Noms de fichiers et de dossiers exclus</translation>
+        <translation type="unfinished">Noms de fichier et de dossier exclus</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -4363,7 +4373,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Veuillez saisir votre adresse courriel</translation>
+        <translation>Veuillez saisir votre adresse courriel.</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>

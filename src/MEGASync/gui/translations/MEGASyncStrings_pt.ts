@@ -483,6 +483,11 @@
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation type="unfinished">Shared Folder Activity</translation>
     </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">O acesso a uma pasta compartilhada foi removido</translation>
+    </message>
 </context>
 <context>
     <name>BindFolderDialog</name>
@@ -1159,7 +1164,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Por favor, digite o seu email</translation>
+        <translation type="unfinished">Por favor, digite seu email</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -1169,7 +1174,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation type="unfinished">Por favor, digite sua senha</translation>
+        <translation type="unfinished">Por favor, digite a sua senha</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -1660,6 +1665,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">Não há notificações relacionadas a pagamentos</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 usado</translation>
     </message>
 </context>
 <context>
@@ -4013,7 +4023,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Versões de backup de arquivos que tenham sido sincronizados no seu computador serão excluídos permanentemente. Por favor verifique suas pastas de backup para ver se você precisa resgatar algo antes de continuar.</translation>
+        <translation type="unfinished">Os backups das versões anteriores dos arquivos sincronizados no seu computador serão excluídos permanentemente. Por favor, verifique as suas pastas de backup para ver se você precisa recuperar algo antes de continuar:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -4363,7 +4373,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Por favor, digite o seu email</translation>
+        <translation>Por favor, digite seu email</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -4373,12 +4383,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Por favor, digite sua senha</translation>
+        <translation>Por favor, digite a sua senha</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
         <translatorcomment>Label displayed when the user has not filled the name field.</translatorcomment>
-        <translation>Por favor, digite seu nome</translation>
+        <translation>Por favor, digite o seu nome</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
@@ -5231,7 +5241,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Selecione uma pasta de envio para seus arquivos:</translation>
+        <translation>Selecione uma pasta de destino para o seus uploads:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <atomic>
 #include <memory>
@@ -10,16 +10,7 @@
 
 #include "megaapi.h"
 
-namespace spdlog {
-class logger;
-namespace details {
-class thread_pool;
-}
-namespace sinks {
-template<typename T>
-class rotating_file_sink;
-}
-}
+#define LOGS_FOLDER_LEAFNAME_QSTRING QString::fromUtf8("logs")
 
 class MegaSyncLogger : public QObject, public mega::MegaLogger
 {
@@ -28,9 +19,17 @@ class MegaSyncLogger : public QObject, public mega::MegaLogger
 public:
     MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& mDesktopPath, bool logToStdout);
     ~MegaSyncLogger();
-    void log(const char *time, int loglevel, const char *source, const char *message) override;
+    void log(const char *time, int loglevel, const char *source, const char *message
+#ifdef ENABLE_LOG_PERFORMANCE
+             , const char **directMessages, size_t *directMessagesSizes, int numberMessages
+#endif
+             ) override;
     void setDebug(bool enable);
     bool isDebug() const;
+    bool mLogToStdout = false;
+
+    // this one is called on signal (flush log before crash report)
+    void flushAndClose();
 
     /**
      * @brief prepareForReporting
@@ -43,25 +42,10 @@ public:
     void resumeAfterReporting();
 
 signals:
-    void sendLog(QString time, int loglevel, QString message);
     void logReadyForReporting();
 
-public slots:
-    void onLogAvailable(QString time, int loglevel, QString message);
-    void clientConnected();
-    void disconnected();
-
 private:
-    void onAllRotated();
-
     QString mDesktopPath;
-    QLocalSocket* mClient = nullptr;
-    QLocalServer* mMegaServer = nullptr;
-    QXmlStreamWriter* mXmlWriter = nullptr;
-    std::atomic<bool> mConnected{true};
-    std::atomic<bool> mAwaitingRotation{false};
-    std::shared_ptr<spdlog::details::thread_pool> mThreadPool;
-    std::shared_ptr<spdlog::logger> mLogger; // Always-on logger with rotated file + stdout logging
-    std::shared_ptr<spdlog::logger> mDebugLogger; // Logger used in debug mode (when toggling to debug)
-    std::shared_ptr<spdlog::sinks::rotating_file_sink<std::mutex>> mRotatingFileSink;
 };
+
+extern MegaSyncLogger *g_megaSyncLogger;   // for crash report flush

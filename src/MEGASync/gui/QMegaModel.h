@@ -6,6 +6,7 @@
 #include <QIcon>
 #include "MegaItem.h"
 #include <megaapi.h>
+#include <memory>
 
 class QMegaModel : public QAbstractItemModel
 {
@@ -31,7 +32,7 @@ public:
 
 protected:
     mega::MegaApi *megaApi;
-    mega::MegaNode *root;
+    std::shared_ptr<mega::MegaNode> root;
     MegaItem *rootItem;
     QList<MegaItem *> inshareItems;
     QStringList inshareOwners;

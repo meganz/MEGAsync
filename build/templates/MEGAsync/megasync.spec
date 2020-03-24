@@ -9,22 +9,36 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
+BuildRequires: zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: ffmpeg-mega
 
 #OpenSUSE
-%if 0%{?suse_version}
+%if 0%{?suse_version} || 0%{?sle_version}
 
-    BuildRequires: libcares-devel, pkg-config
+    BuildRequires: libopenssl-devel, sqlite3-devel
     BuildRequires: libbz2-devel
 
-    # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
-    # plus it speeds up building process
-    BuildRequires: -post-build-checks
+    %if %(echo $HOSTNAME) == "obs"
+        # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
+        # plus it speeds up building process
+        BuildRequires: -post-build-checks
+    %endif
 
     %if 0%{?sle_version} >= 150000
         BuildRequires: libcurl4
+    %endif
+
+    %if 0%{?suse_version}>=1550
+        BuildRequires: pkgconf-pkg-config
+    %else
+        BuildRequires: pkg-config
+    %endif
+
+    %if 0%{?suse_version}>=1550 || (0%{?is_opensuse} && 0%{?sle_version} > 120300 )
+        BuildRequires: c-ares-devel
+    %else
+        BuildRequires: libcares-devel
     %endif
 
     %if !( ( %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?suse_version} == 1230 )
@@ -33,8 +47,8 @@ BuildRequires: ffmpeg-mega
         BuildRequires: update-desktop-files
 
     %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-        BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist, libqt5-qtsvg-devel
-        Requires: libQt5Core5 >= 5.6
+        BuildRequires: libqt5-qtbase-devel, libqt5-linguist, libqt5-qtsvg-devel
+        Requires: libQt5Core5
     %else
         BuildRequires: libqt4-devel, qt-devel
     %endif
@@ -58,12 +72,9 @@ BuildRequires: ffmpeg-mega
 
 #Fedora specific
 %if 0%{?fedora}
-    BuildRequires: c-ares-devel, cryptopp-devel
+    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, cryptopp-devel
     BuildRequires: desktop-file-utils
-
-    %if 0%{?fedora_version} >= 31
-        BuildRequires: bzip2-devel
-    %endif
+    BuildRequires: bzip2-devel
 
     %if 0%{?fedora_version} >= 26
         Requires: cryptopp >= 5.6.5
@@ -84,20 +95,21 @@ BuildRequires: ffmpeg-mega
 
 #centos/scientific linux
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
-    BuildRequires: c-ares-devel,
+    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
     BuildRequires: desktop-file-utils
 
     %if 0%{?centos_version} >= 800
         BuildRequires: bzip2-devel
         BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
     %else
-        BuildRequires: qt, qt-x11, qt-devel
+        BuildRequires: qt-mega, mesa-libGL-devel
+        Requires: freetype >= 2.8
     %endif
 %endif
 
 #red hat
 %if 0%{?rhel_version}
-    BuildRequires: desktop-file-utils
+    BuildRequires: openssl-devel, sqlite-devel, desktop-file-utils
     %if 0%{?rhel_version} < 800
         BuildRequires: qt, qt-x11, qt-devel
     %else
@@ -183,6 +195,10 @@ sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control
     export PATH=`pwd`/userPath:$PATH
 %endif
 
+%if 0%{?centos_version} && 0%{?centos_version} < 800
+    export PATH=/opt/mega/bin:${PATH}
+%endif
+
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
 ./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
@@ -192,7 +208,7 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=27 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?suse_version} && 0%{?suse_version} <= 1320 && !0%{?sle_version} ) || ( 0%{?sle_version} && 0%{?sle_version} <= 120200 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=28 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?suse_version} && 0%{?suse_version} < 1550 && !0%{?sle_version} ) || ( 0%{?sle_version} && 0%{?sle_version} <= 120300 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}
@@ -215,7 +231,7 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
         lrelease-qt4  MEGASync/MEGASync.pro
     %endif
 %else
-    %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
+    %if 0%{?rhel_version} || 0%{?scientificlinux_version}
         qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
         lrelease-qt4  MEGASync/MEGASync.pro
     %else
@@ -237,6 +253,38 @@ make install DESTDIR=%{buildroot}%{_bindir}
         --add-category="Network" \
         --dir %{buildroot}%{_datadir}/applications \
     %{buildroot}%{_datadir}/applications/%{name}.desktop
+%endif
+
+%if 0%{?centos_version} && 0%{?centos_version} < 800
+    for i in `ldd %{buildroot}%{_bindir}/megasync | grep opt | awk '{print $3}'`; do
+        install -D $i %{buildroot}/$i
+    done
+    install -pD /opt/mega/lib/libQt5XcbQpa.so.*.*.* %{buildroot}/opt/mega/lib/libQt5XcbQpa.so.5 || :
+    install -D /opt/mega/plugins/platforms/libqxcb.so %{buildroot}/opt/mega/plugins/platforms/libqxcb.so
+    install -D /opt/mega/plugins/platforms/libqvnc.so %{buildroot}/opt/mega/plugins/platforms/libqvnc.so
+    install -D /opt/mega/plugins/platforms/libqoffscreen.so %{buildroot}/opt/mega/plugins/platforms/libqoffscreen.so
+    install -D /opt/mega/plugins/platforms/libqminimal.so %{buildroot}/opt/mega/plugins/platforms/libqminimal.so
+    install -D /opt/mega/plugins/platforms/libqlinuxfb.so %{buildroot}/opt/mega/plugins/platforms/libqlinuxfb.so
+    install -D /opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so
+    install -D /opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so
+    install -D /opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so
+    install -D /opt/mega/plugins/imageformats/libqwebp.so %{buildroot}/opt/mega/plugins/imageformats/libqwebp.so
+    install -D /opt/mega/plugins/imageformats/libqwbmp.so %{buildroot}/opt/mega/plugins/imageformats/libqwbmp.so
+    install -D /opt/mega/plugins/imageformats/libqtiff.so %{buildroot}/opt/mega/plugins/imageformats/libqtiff.so
+    install -D /opt/mega/plugins/imageformats/libqtga.so %{buildroot}/opt/mega/plugins/imageformats/libqtga.so
+    install -D /opt/mega/plugins/imageformats/libqsvg.so %{buildroot}/opt/mega/plugins/imageformats/libqsvg.so
+    install -D /opt/mega/plugins/imageformats/libqjpeg.so %{buildroot}/opt/mega/plugins/imageformats/libqjpeg.so
+    install -D /opt/mega/plugins/imageformats/libqico.so %{buildroot}/opt/mega/plugins/imageformats/libqico.so
+    install -D /opt/mega/plugins/imageformats/libqicns.so %{buildroot}/opt/mega/plugins/imageformats/libqicns.so
+    install -D /opt/mega/plugins/imageformats/libqgif.so %{buildroot}/opt/mega/plugins/imageformats/libqgif.so
+    install -D /opt/mega/plugins/iconengines/libqsvgicon.so %{buildroot}/opt/mega/plugins/iconengines/libqsvgicon.so
+    install -D /opt/mega/plugins/bearer/libqnmbearer.so %{buildroot}/opt/mega/plugins/bearer/libqnmbearer.so
+    install -D /opt/mega/plugins/bearer/libqgenericbearer.so %{buildroot}/opt/mega/plugins/bearer/libqgenericbearer.so
+    install -D /opt/mega/plugins/bearer/libqconnmanbearer.so %{buildroot}/opt/mega/plugins/bearer/libqconnmanbearer.so
+
+    install -D /opt/mega/lib/libQt5VirtualKeyboard.so.*.*.* %{buildroot}/opt/mega/lib/libQt5VirtualKeyboard.so.5
+    install -D /opt/mega/lib/libQt5Qml.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Qml.so.5
+    install -D /opt/mega/lib/libQt5Quick.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Quick.so.5
 %endif
 
 mkdir -p  %{buildroot}/etc/sysctl.d/
@@ -433,15 +481,14 @@ sleep 2
 [ "$1" == "0" ] && killall megasync 2> /dev/null || true
 
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
     /bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
-
-    # to restore dormant MEGAsync upon updates
-    killall -s SIGUSR2 megasync 2> /dev/null || true
 %endif
+# to restore dormant MEGAsync upon updates
+killall -s SIGUSR2 megasync 2> /dev/null || true
 
 
 %clean
@@ -458,5 +505,8 @@ sleep 2
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
 /etc/sysctl.d/100-megasync-inotify-limit.conf
+%if 0%{?centos_version} && 0%{?centos_version} < 800
+/opt/*
+%endif
 
 %changelog

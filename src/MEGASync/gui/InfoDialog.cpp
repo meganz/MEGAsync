@@ -282,6 +282,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 InfoDialog::~InfoDialog()
 {
+    removeEventFilter(this);
     delete ui;
     delete gWidget;
     delete activeDownload;
@@ -388,7 +389,7 @@ void InfoDialog::setUsage()
         {
 
         int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->wCircularStorage->setValue((percentage < 100) ? percentage : 100);
+        ui->wCircularStorage->setValue(percentage);
 
         QString usageColorS = (percentage < 90 ? QString::fromUtf8("#666666")
                                                       : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
@@ -416,7 +417,7 @@ void InfoDialog::setUsage()
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         ui->wCircularQuota->setValue(0, true);
-        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style='color:#666666; font-family: Lato; text-decoration:none;'>%1</span>")
+        usedQuota = tr("%1 used").arg(QString::fromUtf8("<span style='color:#666666; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
@@ -860,21 +861,9 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bUpgrade_clicked()
 {
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-    Preferences *preferences = Preferences::instance();
-    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-    {
-        mega::MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != mega::INVALID_HANDLE)
-        {
-            char *base64aff = mega::MegaApi::handleToBase64(aff);
-            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-            delete [] base64aff;
-        }
-    }
-
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    QString url = QString::fromUtf8("mega://#pro");
+    Utilities::getPROurlWithParameters(url);
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
 void InfoDialog::openFolder(QString path)
@@ -949,13 +938,6 @@ void InfoDialog::moveArrow(QPoint p)
     arrow->show();
 }
 #endif
-
-void InfoDialog::on_bChats_clicked()
-{
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("").arg(userAgent);
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
-}
 
 void InfoDialog::onOverlayClicked()
 {
@@ -1049,7 +1031,7 @@ void InfoDialog::on_bAddSync_clicked()
                 firstSyncHandle = preferences->getMegaFolderHandle(0);
             }
 
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
             if (rootNode)
             {
                 long long rootHandle = rootNode->getHandle();
@@ -1064,7 +1046,6 @@ void InfoDialog::on_bAddSync_clicked()
                     }
                     syncsMenu->addAction(addAction);
                 }
-                delete rootNode;
             }
 
             addSyncAction->setMenu(syncsMenu.get());

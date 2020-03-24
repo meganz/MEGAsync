@@ -160,6 +160,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (loggingStarted)
                 {
+                    preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
                     megaApi->fetchNodes();
                     if (!preferences->hasLoggedIn())
                     {
@@ -174,6 +175,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
+                preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
                     showErrorMessage(tr("Incorrect email and/or password."));
@@ -292,6 +294,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() != MegaError::API_OK)
             {   
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
                 if (loggingStarted)
                 {
                     page_login();
@@ -306,6 +309,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
+                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
                 if (!megaApi->isFilesystemAvailable())
                 {
                     page_login();
@@ -318,30 +322,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     return;
                 }
 
-                char *session = megaApi->dumpSession();
-                sessionKey = QString::fromUtf8(session);
-                delete [] session;
-
                 QString email = ui->eLoginEmail->text().toLower().trimmed();
                 if (preferences->hasEmail(email))
                 {
-                    int proxyType = preferences->proxyType();
-                    QString proxyServer = preferences->proxyServer();
-                    int proxyPort = preferences->proxyPort();
-                    int proxyProtocol = preferences->proxyProtocol();
-                    bool proxyAuth = preferences->proxyRequiresAuth();
-                    QString proxyUsername = preferences->getProxyUsername();
-                    QString proxyPassword = preferences->getProxyPassword();
-
-                    preferences->setEmail(email);
-                    preferences->setSession(sessionKey);
-                    preferences->setProxyType(proxyType);
-                    preferences->setProxyServer(proxyServer);
-                    preferences->setProxyPort(proxyPort);
-                    preferences->setProxyProtocol(proxyProtocol);
-                    preferences->setProxyRequiresAuth(proxyAuth);
-                    preferences->setProxyUsername(proxyUsername);
-                    preferences->setProxyPassword(proxyPassword);
+                    preferences->setEmailAndGeneralSettings(email);
 
                     Platform::notifyAllSyncFoldersAdded();
                     done(QDialog::Accepted);
@@ -585,7 +569,7 @@ void SetupWizard::on_bNext_clicked()
         MegaNode *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
         if (!node)
         {
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
             if (!rootNode)
             {
                 page_login();
@@ -600,9 +584,8 @@ void SetupWizard::on_bNext_clicked()
             }
 
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            megaApi->createFolder("MEGAsync", rootNode);
+            megaApi->createFolder("MEGAsync", rootNode.get());
             creatingDefaultSyncFolder = true;
-            delete rootNode;
 
             ui->lProgress->setText(tr("Creating folder..."));
             page_progress();
@@ -640,7 +623,8 @@ void SetupWizard::on_bCancel_clicked()
     {
         setupPreferences();
         QString syncName;
-        MegaNode *rootNode = megaApi->getRootNode();
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+
         if (!rootNode)
         {
             page_login();
@@ -653,8 +637,6 @@ void SetupWizard::on_bCancel_clicked()
             app->rebootApplication(false);
             return;
         }
-
-        delete rootNode;
 
         preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
         done(QDialog::Accepted);
@@ -876,25 +858,8 @@ void SetupWizard::wAdvancedSetup_clicked()
 
 void SetupWizard::setupPreferences()
 {
-    QString email = ui->eLoginEmail->text().toLower().trimmed();
-
-    int proxyType = preferences->proxyType();
-    QString proxyServer = preferences->proxyServer();
-    int proxyPort = preferences->proxyPort();
-    int proxyProtocol = preferences->proxyProtocol();
-    bool proxyAuth = preferences->proxyRequiresAuth();
-    QString proxyUsername = preferences->getProxyUsername();
-    QString proxyPassword = preferences->getProxyPassword();
-    preferences->setEmail(QString::fromUtf8(megaApi->getMyEmail()));
-    preferences->setSession(QString::fromUtf8(megaApi->dumpSession()));
-
-    preferences->setProxyType(proxyType);
-    preferences->setProxyServer(proxyServer);
-    preferences->setProxyPort(proxyPort);
-    preferences->setProxyProtocol(proxyProtocol);
-    preferences->setProxyRequiresAuth(proxyAuth);
-    preferences->setProxyUsername(proxyUsername);
-    preferences->setProxyPassword(proxyPassword);
+    std::unique_ptr<char[]> email(megaApi->getMyEmail());
+    preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
 }
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)

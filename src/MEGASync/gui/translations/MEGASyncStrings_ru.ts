@@ -483,6 +483,11 @@
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation type="unfinished">Активность общик папок</translation>
     </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
+        <translation type="unfinished">Доступ к общей входящей папке был закрыт</translation>
+    </message>
 </context>
 <context>
     <name>BindFolderDialog</name>
@@ -1159,7 +1164,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Пожалуйста, введите свой адрес электронной почты</translation>
+        <translation type="unfinished">Пожалуйста, введите адрес электронной почты</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
@@ -1660,6 +1665,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation type="unfinished">Нет уведомлений о платежах</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 использовано</translation>
     </message>
 </context>
 <context>
@@ -4363,7 +4373,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Пожалуйста, введите свой адрес электронной почты</translation>
+        <translation>Пожалуйста, введите адрес электронной почты</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
