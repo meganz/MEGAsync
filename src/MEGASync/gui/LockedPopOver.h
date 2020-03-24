@@ -1,18 +1,18 @@
 #pragma once
 
-#include <QWidget>
+#include <QDialog>
 #include "ui_LockedPopOver.h"
 
 namespace Ui {
 class LockedPopOver;
 }
 
-class LockedPopOver : public QWidget
+class LockedPopOver : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit LockedPopOver(QWidget *parent = 0);
+    explicit LockedPopOver(QDialog *parent = 0);
     LockedPopOver();
 
 protected:

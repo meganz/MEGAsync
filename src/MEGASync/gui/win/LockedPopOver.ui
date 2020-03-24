@@ -27,7 +27,8 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#LockedPopOver {
-background-color: #FFFFFF;
+background: #FFFFFF;
+border: 1px solid rgba(0,0,0,0.05);
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
