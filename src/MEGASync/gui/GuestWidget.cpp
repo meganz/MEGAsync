@@ -305,12 +305,28 @@ void GuestWidget::initialize()
     page_login();
 }
 
-void GuestWidget::setAccountLocked(bool state)
+void GuestWidget::setAccountLocked(int lockType)
 {
     //TODO: Check when account is unlock and if it is needed to update the page
-    if (state)
+    switch(lockType)
     {
-        page_lockedAccount();
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+        {
+            page_lockedEmailAccount();
+            break;
+        }
+
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+        {
+            page_lockedSMSAccount();
+            break;
+        }
+        case MegaApi::ACCOUNT_NOT_BLOCKED:
+        default:
+        {
+          //TODO: Set default page if there is no lock
+          break;
+        }
     }
 }
 
@@ -397,14 +413,24 @@ void GuestWidget::on_bCancel_clicked()
     }
 }
 
-void GuestWidget::on_bLogout_clicked()
+void GuestWidget::on_bVerifySMSLogout_clicked()
+{
+    app->unlink();
+}
+
+void GuestWidget::on_bVerifyEmailLogout_clicked()
 {
     app->unlink();
 }
 
 void GuestWidget::on_bVerifyEmail_clicked()
 {
-    app->showVerifyEmailInfo();
+    app->showVerifyAccountInfo();
+}
+
+void GuestWidget::on_bVerifySMS_clicked()
+{
+    app->showVerifyAccountInfo();
 }
 
 void GuestWidget::page_login()
@@ -460,12 +486,20 @@ void GuestWidget::page_logout()
     ui->sPages->setCurrentWidget(ui->pProgress);
 }
 
-void GuestWidget::page_lockedAccount()
+void GuestWidget::page_lockedEmailAccount()
 {
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
-    ui->sPages->setCurrentWidget(ui->pLockedAccount);
+    ui->sPages->setCurrentWidget(ui->pVerifyEmailAccount);
+}
+
+void GuestWidget::page_lockedSMSAccount()
+{
+    ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
+    ui->sPages->style()->unpolish(ui->sPages);
+    ui->sPages->style()->polish(ui->sPages);
+    ui->sPages->setCurrentWidget(ui->pVerifySMSAccount);
 }
 
 void GuestWidget::changeEvent(QEvent *event)

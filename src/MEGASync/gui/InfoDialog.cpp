@@ -254,7 +254,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     }
     else
     {
-        regenerateLayout(false, olddialog);
+        regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED, olddialog);
     }
     highDpiResize.init(this);
 
@@ -1406,11 +1406,11 @@ void InfoDialog::on_bStorageDetails_clicked()
     accountDetailsDialog = NULL;
 }
 
-void InfoDialog::regenerateLayout(bool lockedAccount, InfoDialog* olddialog)
+void InfoDialog::regenerateLayout(int lockedAccount, InfoDialog* olddialog)
 {
     int actualAccountState;
 
-    lockedAccount ? actualAccountState = STATE_LOCKED_EMAIL
+    lockedAccount ? actualAccountState = lockedAccount
                   : preferences->logged() ? actualAccountState = STATE_LOGGEDIN
                                           : actualAccountState = STATE_LOGOUT;
 
@@ -1426,6 +1426,7 @@ void InfoDialog::regenerateLayout(bool lockedAccount, InfoDialog* olddialog)
     {
         case STATE_LOGOUT:
         case STATE_LOCKED_EMAIL:
+        case STATE_LOCKED_SMS:
         {
             if (!gWidget)
             {

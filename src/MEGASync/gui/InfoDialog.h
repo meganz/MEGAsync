@@ -46,7 +46,8 @@ public:
         STATE_NONE = -1,
         STATE_LOGOUT = 0,
         STATE_LOGGEDIN = 1,
-        STATE_LOCKED_EMAIL = 2
+        STATE_LOCKED_EMAIL = mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL,
+        STATE_LOCKED_SMS = mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS
     };
 
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0, InfoDialog* olddialog = nullptr);
@@ -83,7 +84,7 @@ public:
 #endif
 
     void on_bStorageDetails_clicked();
-    void regenerateLayout(bool lockedAccount = false, InfoDialog* olddialog = nullptr);
+    void regenerateLayout(int lockedAccount = mega::MegaApi::ACCOUNT_NOT_BLOCKED, InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;

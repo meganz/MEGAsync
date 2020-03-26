@@ -9,13 +9,17 @@
 #include <QStyle>
 #include "Utilities.h"
 
+using namespace mega;
 
-VerifyEmailMessage::VerifyEmailMessage(QWidget *parent) :
+VerifyEmailMessage::VerifyEmailMessage(int lockStatus, QWidget *parent) :
     QDialog(parent),
     m_ui(new Ui::VerifyEmailMessage)
 {
     m_ui->setupUi(this);
     m_ui->lEmailSent->setVisible(false);
+
+    m_lockStatus = MegaApi::ACCOUNT_NOT_BLOCKED;
+    regenerateUI(lockStatus);
 
     QStyle *style = QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
@@ -30,7 +34,8 @@ VerifyEmailMessage::VerifyEmailMessage(QWidget *parent) :
 
 void VerifyEmailMessage::mousePressEvent(QMouseEvent *event)
 {
-    if (m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
+    if (m_lockStatus == MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL &&
+            m_ui->lWhySeenThis->rect().contains(m_ui->lWhySeenThis->mapFrom(this, event->pos())))
     {
 #ifdef __APPLE__
         showPopOverRelativeToRect(winId(), m_popover, event->localPos());
@@ -67,8 +72,45 @@ void VerifyEmailMessage::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         m_ui->retranslateUi(this);
+        regenerateUI(m_lockStatus, true);
     }
-    QWidget::changeEvent(event);
+
+    QDialog::changeEvent(event);
+}
+
+void VerifyEmailMessage::regenerateUI(int currentStatus, bool force)
+{
+    if (!force && m_lockStatus == currentStatus)
+    {
+        return;
+    }
+
+    m_lockStatus = currentStatus;
+
+    switch (m_lockStatus)
+    {
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+        {
+            setWindowTitle(tr("Verify your email"));
+            m_ui->lVerifyEmailTitle->setText(tr("Verify your email"));
+            m_ui->lVerifyEmailDesc->setText(tr("Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account."));
+            m_ui->lWhySeenThis->setVisible(true);
+            m_ui->bResendEmail->setText(tr("Resend email"));
+
+            break;
+        }
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+        {
+            setWindowTitle(tr("Verify your account"));
+            m_ui->lVerifyEmailTitle->setText(tr("Verify your account"));
+            m_ui->lVerifyEmailDesc->setText(tr("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."));
+            m_ui->lWhySeenThis->setVisible(false);
+            m_ui->lEmailSent->setVisible(false);
+            m_ui->bResendEmail->setText(tr("Verify now"));
+            break;
+        }
+
+    }
 }
 
 VerifyEmailMessage::~VerifyEmailMessage()
@@ -77,7 +119,6 @@ VerifyEmailMessage::~VerifyEmailMessage()
 #ifdef __APPLE__
     releaseIdObject(m_popover);
 #endif
-
 }
 
 void VerifyEmailMessage::on_bLogout_clicked()

@@ -158,7 +158,7 @@ public:
     int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
-    void showVerifyEmailInfo();
+    void showVerifyAccountInfo();
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
@@ -466,7 +466,7 @@ protected:
     long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
-    bool suspendedAccount;
+    int suspendedAccount;
     friend class DeferPreferencesSyncForScope;
 };
 
