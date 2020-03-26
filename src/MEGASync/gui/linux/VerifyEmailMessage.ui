@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Verify your email</string>
+   <string/>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -147,7 +147,7 @@ border: none;
 }</string>
           </property>
           <property name="text">
-           <string>Verify your email</string>
+           <string/>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -166,7 +166,7 @@ border: none;
 }</string>
           </property>
           <property name="text">
-           <string>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</string>
+           <string/>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -293,7 +293,7 @@ border: none;
       <item>
        <widget class="QPushButton" name="bResendEmail">
         <property name="text">
-         <string>Resend email</string>
+         <string/>
         </property>
         <property name="default">
          <bool>true</bool>
