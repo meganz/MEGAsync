@@ -307,7 +307,7 @@ Section "Principal" SEC01
 
   ${If} ${RunningX64}
   ${Else}
-    MessageBox MB_OK "This installer is for 64 Bit, but Windows is 32 Bit."
+    MessageBox MB_OK "This is a 64-bit installer for MEGAsync, but you are using a 32-bit Windows. Please, download the 32-bit MEGAsync version from https://mega.nz/sync."
     Quit
   ${EndIf}
 
@@ -879,6 +879,13 @@ modeselected:
   Delete "$INSTDIR\swresample-2.dll"
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\pdfium.dll"
+!else
+  ;remove any vcpkg based dlls in case we are installing a prebuilt-dll version over a vcpkg version (eg swapping 64/32 in the next release after 4.3.1)
+  Delete "$INSTDIR\avcodec-58.dll"
+  Delete "$INSTDIR\avformat-58.dll"
+  Delete "$INSTDIR\avutil-56.dll"
+  Delete "$INSTDIR\swscale-5.dll"
+  Delete "$INSTDIR\swresample-3.dll"
 !endif
 
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
