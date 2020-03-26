@@ -336,7 +336,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
         filterMenu->hide();
     }
 
-    QTimer::singleShot(1000, [this] () {
+    QTimer::singleShot(1000, this, [this] () {
         if (!isShown)
         {
             emit ui->sTabs->currentChanged(-1);
@@ -500,7 +500,7 @@ void InfoDialog::updateTransfersCount()
 
     if (remainingDownloads <= 0)
     {
-        QTimer::singleShot(5000, [this] () {
+        QTimer::singleShot(5000, this, [this] () {
             if (remainingDownloads <= 0)
             {
                 ui->bTransferManager->setCompletedDownloads(0);
@@ -510,7 +510,7 @@ void InfoDialog::updateTransfersCount()
     }
     if (remainingUploads <= 0)
     {
-        QTimer::singleShot(5000, [this] () {
+        QTimer::singleShot(5000, this, [this] () {
             if (remainingUploads <= 0)
             {
                 ui->bTransferManager->setCompletedUploads(0);
@@ -861,21 +861,9 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bUpgrade_clicked()
 {
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-    Preferences *preferences = Preferences::instance();
-    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-    {
-        mega::MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != mega::INVALID_HANDLE)
-        {
-            char *base64aff = mega::MegaApi::handleToBase64(aff);
-            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-            delete [] base64aff;
-        }
-    }
-
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    QString url = QString::fromUtf8("mega://#pro");
+    Utilities::getPROurlWithParameters(url);
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
 void InfoDialog::openFolder(QString path)
@@ -950,13 +938,6 @@ void InfoDialog::moveArrow(QPoint p)
     arrow->show();
 }
 #endif
-
-void InfoDialog::on_bChats_clicked()
-{
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("").arg(userAgent);
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
-}
 
 void InfoDialog::onOverlayClicked()
 {

@@ -26,21 +26,8 @@ else()
     set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg)
 endif()
 
-#For convenience, added some default qt paths if none is specified by CMAKE_PREFIX_PATH
-if (CMAKE_HOST_WIN32 AND (NOT DEFINED CMAKE_PREFIX_PATH) )
-    if (build_64_bit)
-        set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015_64;${CMAKE_PREFIX_PATH}")
-    else()
-        set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015;${CMAKE_PREFIX_PATH}")
-    ENDIF()
-ENDIF()
-
-find_package(Qt5 COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM} REQUIRED)
-
-# get qt version
-execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_VERSION OUTPUT_VARIABLE QT_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
-message(STATUS "Using QT ${QT_VERSION} from ${Qt5_DIR} ${QT_DIR}")
-
+set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM})
+set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
 
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
 
@@ -533,6 +520,11 @@ add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO
  #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
 
 add_definitions( -DENABLE_LOG_PERFORMANCE )
+
+if(WIN32)
+    add_definitions( -DUNICODE -D_UNICODE )  # needed for visual studio projects to use the unicode runtime libraries
+endif()
+
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_STDOUT -DLOG_TO_LOGGER")
 

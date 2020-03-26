@@ -4515,21 +4515,9 @@ void MegaApplication::redirectToUpgrade(int activationButton)
         #endif
             )
     {
-        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-        Preferences *preferences = Preferences::instance();
-        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-        {
-            MegaHandle aff = preferences->lastPublicHandle();
-            if (aff != INVALID_HANDLE)
-            {
-                char *base64aff = MegaApi::handleToBase64(aff);
-                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-                delete [] base64aff;
-            }
-        }
-
-        megaApi->getSessionTransferURL(url.toUtf8().constData());
+        QString url = QString::fromUtf8("mega://#pro");
+        Utilities::getPROurlWithParameters(url);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
 }
 
@@ -4541,10 +4529,10 @@ void MegaApplication::redirectToPayBusiness(int activationButton)
             || activationButton == MegaNotification::ActivationContentClicked
         #endif
             )
-    {
-        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-        megaApi->getSessionTransferURL(url.toUtf8().constData());
+    {      
+        QString url = QString::fromUtf8("mega://#repay");
+        Utilities::getPROurlWithParameters(url);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
 }
 
@@ -6834,10 +6822,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.setDefaultButton(QMessageBox::Yes);
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
-                    {
-                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                    {                        
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     }
                 }
 
@@ -6869,9 +6857,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
                     {
-                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     }
                 }
                 else
@@ -7774,7 +7762,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             node = request->getPublicMegaNode();
             if (node)
             {
-                preferences->setLastPublicHandle(node->getHandle());
+                preferences->setLastPublicHandle(node->getHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
             }
         }
 

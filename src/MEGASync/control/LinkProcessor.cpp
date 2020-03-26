@@ -171,7 +171,7 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
                 rootNode = megaApiFolders->getNodeByHandle(handle);
             }
 
-            Preferences::instance()->setLastPublicHandle(request->getNodeHandle());
+            Preferences::instance()->setLastPublicHandle(request->getNodeHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
             linkNode[currentIndex] = megaApiFolders->authorizeNode(rootNode);
             delete rootNode;
         }

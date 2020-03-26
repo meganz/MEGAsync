@@ -87,6 +87,7 @@ public:
     QString lastName();
     void setLastName(QString lastName);
     void setSession(QString session);
+    void setSessionInUserGroup(QString session);
     QString getSession();
     unsigned long long transferIdentifier();
     long long lastTransferNotificationTimestamp();
@@ -310,9 +311,8 @@ public:
     long long getHttpsCertExpiration();
     void setHttpsCertExpiration(long long expiration);
 
-    long long lastPublicHandleTimestamp();
-    mega::MegaHandle lastPublicHandle();
-    void setLastPublicHandle(mega::MegaHandle handle);
+    void getLastHandleInfo(mega::MegaHandle &lastHandle, int &type, long long &timestamp);
+    void setLastPublicHandle(mega::MegaHandle handle, int type);
 
     int getNumUsers();
     void enterUser(int i);
@@ -622,6 +622,7 @@ protected:
     static const QString transferIdentifierKey;
     static const QString lastPublicHandleKey;
     static const QString lastPublicHandleTimestampKey;
+    static const QString lastPublicHandleTypeKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
