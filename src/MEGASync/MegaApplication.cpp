@@ -8270,8 +8270,10 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         return;
     }
 
+    bool doSynchronously = list; // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
+                                 // since we are not copying the list, and we need to process it before it goes out of scope.
 
-    mthreadPool->push([=, &list]()
+    auto funcToThreadPool = [=, &list]()
     {//thread pool function
         bool copyRequired = true;
 
@@ -8281,7 +8283,7 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
             copyRequired = false;
         }
 
-        Utilities::queueFunctionInAppThread([=]()
+        auto callBackFunctionForQt = [=]()
         {//queued function
 
             assert((!copyRequired || notificationsModel) && "onUserAlertsUpdate with !alerts should have happened before!");
@@ -8319,12 +8321,27 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
                 list->clear(); //empty the list otherwise they will be deleted
                 delete list;
             }
+        };
 
-        });//end of queued function
+      if (doSynchronously)
+      {
+          callBackFunctionForQt();
+      }
+      else
+      {
+          Utilities::queueFunctionInAppThread(callBackFunctionForQt);//end of queued function
+      }
+    };// end of thread pool function
 
-    });// end of thread pool function
 
-
+    if (doSynchronously)
+    {
+        funcToThreadPool();
+    }
+    else
+    {
+        mthreadPool->push(funcToThreadPool);
+    }
 }
 
 
