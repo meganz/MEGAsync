@@ -1,3 +1,8 @@
+Tue Mar 17 14:13:40 CET 2020 - linux@mega.co.nz
+- Update to version 4.3.1:
+  * Performance improvements for the sync engine.
+
+-------------------------------------------------------------------
 Wed Feb 26 14:42:36 CET 2020 - linux@mega.co.nz
 - Update to version 4.3.0:
   * Support for user notifications.
