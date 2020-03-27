@@ -1406,11 +1406,11 @@ void InfoDialog::on_bStorageDetails_clicked()
     accountDetailsDialog = NULL;
 }
 
-void InfoDialog::regenerateLayout(int lockedAccount, InfoDialog* olddialog)
+void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
 {
     int actualAccountState;
 
-    lockedAccount ? actualAccountState = lockedAccount
+    blockState ? actualAccountState = blockState
                   : preferences->logged() ? actualAccountState = STATE_LOGGEDIN
                                           : actualAccountState = STATE_LOGOUT;
 
@@ -1445,7 +1445,7 @@ void InfoDialog::regenerateLayout(int lockedAccount, InfoDialog* olddialog)
                 gWidget->enableListener();
             }
 
-            gWidget->setAccountLocked(lockedAccount);
+            gWidget->setBlockState(blockState);
 
             updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
             setOverQuotaMode(false);

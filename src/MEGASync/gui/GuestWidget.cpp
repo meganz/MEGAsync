@@ -43,6 +43,9 @@ GuestWidget::GuestWidget(QWidget *parent) :
     megaApi->addRequestListener(delegateListener);
 
     ui->sPages->setCurrentWidget(ui->pLogin);
+    state = GuestWidgetState::LOGIN;
+
+    connect(static_cast<MegaApplication *>(qApp), SIGNAL(fetchNodesAfterBlock()), this, SLOT(fetchNodesAfterBlockCallbak()));
 
     resetFocus();
 }
@@ -78,6 +81,11 @@ void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
     }
 }
 
+void GuestWidget::page_fetchnodes()
+{
+    ui->lProgress->setText(tr("Fetching file list..."));
+    page_progress();
+}
 void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
 {
     if (closing)
@@ -107,15 +115,14 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 if (loggingStarted)
                 {
                     preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-                    megaApi->fetchNodes();
+                    static_cast<MegaApplication*>(qApp)->fetchNodes();
                     if (!preferences->hasLoggedIn())
                     {
                         preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                     }
                 }
 
-                ui->lProgress->setText(tr("Fetching file list..."));
-                page_progress();
+                page_fetchnodes();
                 break;
             }
 
@@ -305,9 +312,33 @@ void GuestWidget::initialize()
     page_login();
 }
 
-void GuestWidget::setAccountLocked(int lockType)
+void GuestWidget::resetPageAfterBlock()
 {
-    //TODO: Check when account is unlock and if it is needed to update the page
+    switch(state)
+    {
+    case GuestWidgetState::LOGIN:
+    {
+        page_login();
+        break;
+    }
+    case GuestWidgetState::PROGRESS: //Notice: we are not considering fetchnode & loging out as different pages: the progress text would already be set
+    {
+        page_progress();
+        break;
+    }
+    case GuestWidgetState::SETTINGUP:
+    {
+        page_settingUp();
+        break;
+    }
+    default:
+        assert(false && "Unexpected state to reset Guest Widget to");
+        break;
+    }
+}
+
+void GuestWidget::setBlockState(int lockType)
+{
     switch(lockType)
     {
         case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
@@ -324,8 +355,8 @@ void GuestWidget::setAccountLocked(int lockType)
         case MegaApi::ACCOUNT_NOT_BLOCKED:
         default:
         {
-          //TODO: Set default page if there is no lock
-          break;
+            resetPageAfterBlock();
+            break;
         }
     }
 }
@@ -433,6 +464,11 @@ void GuestWidget::on_bVerifySMS_clicked()
     app->showVerifyAccountInfo();
 }
 
+void GuestWidget::fetchNodesAfterBlockCallbak()
+{
+    page_fetchnodes();
+}
+
 void GuestWidget::page_login()
 {
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
@@ -442,8 +478,11 @@ void GuestWidget::page_login()
     ui->lEmail->clear();
     ui->lPassword->clear();
     ui->sPages->setCurrentWidget(ui->pLogin);
+    state = GuestWidgetState::LOGIN;
 
     resetFocus();
+
+    state = GuestWidgetState::LOGIN;
 
     emit onPageLogin();
 }
@@ -460,6 +499,7 @@ void GuestWidget::page_progress()
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
     ui->sPages->setCurrentWidget(ui->pProgress);
+    state = GuestWidgetState::PROGRESS;
 }
 
 void GuestWidget::page_settingUp()
@@ -468,6 +508,7 @@ void GuestWidget::page_settingUp()
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
     ui->sPages->setCurrentWidget(ui->pSettingUp);
+    state = GuestWidgetState::SETTINGUP;
 }
 
 void GuestWidget::page_logout()
@@ -484,6 +525,7 @@ void GuestWidget::page_logout()
     ui->progressBar->setValue(-1);
 
     ui->sPages->setCurrentWidget(ui->pProgress);
+    state = GuestWidgetState::PROGRESS;
 }
 
 void GuestWidget::page_lockedEmailAccount()

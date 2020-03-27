@@ -25,6 +25,16 @@ public:
         CONFIG_MODE = 3
     };
 
+    enum GuestWidgetState {
+        //block states are on top of these
+        NONE = -1,
+        LOGOUT = 0,
+        LOGGEDIN = 1,
+        LOGIN = 2,
+        PROGRESS = 3,
+        SETTINGUP = 4,
+    };
+
     explicit GuestWidget(QWidget *parent = 0);
 
     ~GuestWidget();
@@ -39,10 +49,11 @@ public:
     void enableListener();
     void initialize();
 
-    void setAccountLocked(int lockType);
+    void setBlockState(int lockType);
 
     void setTexts(const QString& s1, const QString& s2);
     std::pair<QString, QString> getTexts();
+
 
 signals:
     void forwardAction(int action);
@@ -58,10 +69,15 @@ private slots:
     void on_bVerifyEmailLogout_clicked();
     void on_bVerifyEmail_clicked();
     void on_bVerifySMS_clicked();
+    void fetchNodesAfterBlockCallbak();
 
 private:
     Ui::GuestWidget *ui;
     MegaApplication *app;
+
+    GuestWidgetState state = GuestWidgetState::NONE;
+    void resetPageAfterBlock();
+
 
 protected:
     mega::QTMegaRequestListener *delegateListener;
@@ -71,6 +87,7 @@ protected:
     bool loggingStarted;
 
     void page_login();
+    void page_fetchnodes();
     void page_progress();
     void page_settingUp();
     void page_logout();

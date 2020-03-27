@@ -84,7 +84,7 @@ public:
 #endif
 
     void on_bStorageDetails_clicked();
-    void regenerateLayout(int lockedAccount = mega::MegaApi::ACCOUNT_NOT_BLOCKED, InfoDialog* olddialog = nullptr);
+    void regenerateLayout(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED, InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
