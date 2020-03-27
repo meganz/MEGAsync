@@ -931,7 +931,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exportOps = 0;
     infoDialog = NULL;
     infoOverQuota = false;
-    suspendedAccount = false;
+    suspendedAccount = MegaApi::ACCOUNT_NOT_BLOCKED;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -1679,7 +1679,7 @@ void MegaApplication::start()
         return;
     }
 
-    suspendedAccount = false;
+    suspendedAccount = MegaApi::ACCOUNT_NOT_BLOCKED;
 
     indexing = false;
     paused = false;
@@ -2411,10 +2411,7 @@ void MegaApplication::closeDialogs(bool bwoverquota)
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
 
-    if (verifyEmail)
-    {
-        verifyEmail->close();
-    }
+    verifyEmail.reset(nullptr);
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -4862,12 +4859,16 @@ void MegaApplication::removeAllFinishedTransfers()
     }
 }
 
-void MegaApplication::showVerifyEmailInfo()
+void MegaApplication::showVerifyAccountInfo()
 {
     if (!verifyEmail)
     {
-        verifyEmail.reset(new VerifyEmailMessage());
+        verifyEmail.reset(new VerifyEmailMessage(suspendedAccount));
         connect(verifyEmail.get(), SIGNAL(logout()), this, SLOT(unlink()));
+    }
+    else
+    {
+        verifyEmail->regenerateUI(suspendedAccount);
     }
 
     verifyEmail->show();
@@ -6879,20 +6880,20 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
         switch (event->getNumber())
         {
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
-                suspendedAccount = true;
+                suspendedAccount = event->getNumber();
 
                 if (infoDialog)
                 {
-                    if (infoDialog->getLoggedInMode() != InfoDialog::STATE_LOCKED_EMAIL)
+                    if (infoDialog->getLoggedInMode() != suspendedAccount)
                     {
-                        infoDialog->regenerateLayout(true);
+                        infoDialog->regenerateLayout(suspendedAccount);
                     }
-
                 }
                 else
                 {
-                    showVerifyEmailInfo();
+                    showVerifyAccountInfo();
                 }
 
                 break;
@@ -7939,13 +7940,13 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_OK
                 && request->getNumber() == MegaApi::ACCOUNT_NOT_BLOCKED)
         {
-            suspendedAccount = false;
+            suspendedAccount = MegaApi::ACCOUNT_NOT_BLOCKED;
 
             //TODO: Check if we have rootnode, otherwise perform a fetchnodes
             //check all process complete successfully
             if (infoDialog)
             {
-                infoDialog->regenerateLayout(false);
+                infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
             }
         }
 

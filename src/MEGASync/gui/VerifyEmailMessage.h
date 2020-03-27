@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QMouseEvent>
 #include <memory>
-
+#include "megaapi.h"
 
 #ifdef __APPLE__
     #include "macx/LockedPopOver.h"
@@ -22,8 +22,11 @@ class VerifyEmailMessage : public QDialog
     Q_OBJECT
 
 public:
-    explicit VerifyEmailMessage(QWidget *parent = nullptr);
+
+    explicit VerifyEmailMessage(int lockStatus, QWidget *parent = nullptr);
     ~VerifyEmailMessage();
+
+    void regenerateUI(int newStatus, bool force = false);
 
 signals:
     void logout();
@@ -39,6 +42,7 @@ protected:
 
 private:
     Ui::VerifyEmailMessage *m_ui;
+    int m_lockStatus;
 
 #ifdef __APPLE__
     std::unique_ptr<LockedPopOver> m_nativeWidget{new LockedPopOver()};
