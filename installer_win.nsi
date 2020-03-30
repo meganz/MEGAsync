@@ -9,7 +9,6 @@ Unicode true
 !define BUILD_X64_VERSION
 #!define BUILD_WITH_LOGGER
 #!define ENABLE_DEBUG_MESSAGES
-!define ENABLE_QT5
 
 !macro DEBUG_MSG message
 !ifdef ENABLE_DEBUG_MESSAGES
@@ -47,11 +46,7 @@ VIAddVersionKey "ProductVersion" "4.3.1.0"
 !ifdef BUILD_X64_VERSION
 !define QT_PATH "C:\Qt\Qt5.6.3-64\5.6.3\msvc2015_64"
 !else
-!ifndef ENABLE_QT5
-!define QT_PATH "C:\Qt\4.8.6.0\"
-!else
 !define QT_PATH "C:\Qt\Qt5.6.3\5.6.3\msvc2015"
-!endif
 !endif
 
 !ifdef BUILD_X64_VERSION
@@ -299,17 +294,24 @@ Function GetPaths
   FileWriteUTF16LE $0 "$USERNAME"
   FileClose $0
 done:
-
-
 FunctionEnd
+
+!macro Install3264DLL  source target
+  File "${source}"
+  AccessControl::SetFileOwner ${target} "$USERNAME"
+  AccessControl::GrantOnFile ${target} "$USERNAME" "GenericRead + GenericWrite"
+!macroend
+
 
 Section "Principal" SEC01
 
+!ifdef BUILD_X64_VERSION
   ${If} ${RunningX64}
   ${Else}
-    MessageBox MB_OK "This is a 64-bit installer for MEGAsync, but you are using a 32-bit Windows. Please, download the 32-bit MEGAsync version from https://mega.nz/sync."
+    MessageBox MB_OK "This is an installer for 64-bit MEGAsync, but you are using a 32-bit Windows. Please, download the 32-bit MEGAsync version from https://mega.nz/sync."
     Quit
   ${EndIf}
+!endif
 
   !insertmacro DEBUG_MSG "Getting needed information"
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
@@ -352,285 +354,102 @@ modeselected:
   SetOverwrite try
 
   SetOutPath "$INSTDIR"
-  
-  !ifndef ENABLE_QT5
-  !insertmacro DEBUG_MSG "Looking for MSVC++ Redistributable 2010 SP1 (x86)"
-  
-  ;VC++ 2010 SP1 x86
-  ClearErrors
-  ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}" "Version"
-  IfErrors 0 VSRedist2010x86Installed
-           ${Do}
-               Pop $0
-               IfErrors cslbl1
-           ${Loop}
-           cslbl1:
-           !insertmacro DEBUG_MSG "Downloading MSVC++ Redistributable (x86)"
-           ClearErrors
-           inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x86)" "http://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/vcredist_x86.exe" "$INSTDIR\vcredist_x86.exe" /end
-           pop $0
-           StrCmp $0 "OK" dlok1
-           MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Incomplete download, aborting!"
-           Abort
-           dlok1:
 
-           !insertmacro DEBUG_MSG "Checking MSVC++ Redistributable (x86)"
-           md5dll::GetMD5File "$INSTDIR\vcredist_x86.exe"
-           Pop $0
-           ;DetailPrint "md5: [$0]"
-           StrCmp $0 "cede02d7af62449a2c38c49abecc0cd3" md5x32ok
-                  MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Corrupt download, aborting!"
-                  Abort
-           md5x32ok:
-           
-           !insertmacro DEBUG_MSG "Installing MSVC++ Redistributable (x86)"
-           retryvsredistx32:
-                ExecDos::exec /DETAILED '"$INSTDIR\vcredist_x86.exe" /NoSetupVersionCheck /passive /showfinalerror /promptrestart'
-                Pop $0
-                StrCmp $0 "0" vcredist32ok
-                       StrCmp $0 "5100" askforretryx32 fatalvcredistx32
-                       askforretryx32:
-                       MessageBox MB_RETRYCANCEL "Another installation is already in progress. Please, finish it and retry." IDRETRY retryvsredistx32 IDABORT abortx32
-                       fatalvcredistx32:
-                       MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "There was a problem installing Microsoft VC++ 2010 x32 ($0), aborting!"
-                       abortx32:
-                       Abort
-           vcredist32ok:
-           Delete "$INSTDIR\vcredist_x86.exe"
-  VSRedist2010x86Installed:
-  !insertmacro DEBUG_MSG "MSVC++ Redistributable (x86) is installed"
-    
-  ${If} ${RunningX64}
-        !insertmacro DEBUG_MSG "Looking for MSVC++ Redistributable 2010 SP1 (x64)"
-        ;VC++ 2010 SP1 x64
-        SetRegView 64
-        ClearErrors
-        ReadRegDword $R0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1D8E6291-B0D5-35EC-8441-6616F567A0F7}" "Version"
-        IfErrors 0 VSRedist2010x64Installed
-                ${Do}
-                    Pop $0
-                    IfErrors cslbl2
-                ${Loop}
-                cslbl2:
-                
-                !insertmacro DEBUG_MSG "Downloading for MSVC++ Redistributable (x64)"
-                ClearErrors
-                inetc::get /caption "Microsoft Visual C++ 2010 SP1 Redistributable Package (x64)" "http://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe" "$INSTDIR\vcredist_x64.exe" /end
-                pop $0
-                StrCmp $0 "OK" dlok2
-                MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Incomplete download, aborting!"
-                Abort
-                dlok2:
-                 
-                !insertmacro DEBUG_MSG "Checking MSVC++ Redistributable (x64)"
-                md5dll::GetMD5File "$INSTDIR\vcredist_x64.exe"
-                Pop $0
-                ;DetailPrint "md5: [$0]"
-                StrCmp $0 "cbe0b05c11d5d523c2af997d737c137b" md5x64ok
-                       MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "Corrupt download, aborting!"
-                       Abort
-                md5x64ok:
-
-                !insertmacro DEBUG_MSG "Installing MSVC++ Redistributable (x64)"
-                retryvsredistx64:
-                ExecDos::exec /DETAILED /DISABLEFSR '"$INSTDIR\vcredist_x64.exe" /NoSetupVersionCheck /passive /showfinalerror /promptrestart'
-                Pop $0
-                StrCmp $0 "0" vcredist64ok
-                       StrCmp $0 "5100" askforretryx64 fatalvcredistx64
-                       askforretryx64:
-                       MessageBox MB_RETRYCANCEL "Another installation is already in progress. Please, finish it and retry." IDRETRY retryvsredistx64 IDABORT abortx64
-                       fatalvcredistx64:
-                       MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "There was a problem installing Microsoft VC++ 2010 x64 ($0), aborting!"
-                       abortx64:
-                       Abort
-                vcredist64ok:
-                Delete "$INSTDIR\vcredist_x64.exe"
-        VSRedist2010x64Installed:
-        !insertmacro DEBUG_MSG "MSVC++ Redistributable (x64) is installed"
-        SetRegView 32
-  ${EndIf}
-!else
-  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vcruntime140.dll"
-  AccessControl::SetFileOwner "$INSTDIR\vcruntime140.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\vcruntime140.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\msvcp140.dll"
-  AccessControl::SetFileOwner "$INSTDIR\msvcp140.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\msvcp140.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\concrt140.dll"
-  AccessControl::SetFileOwner "$INSTDIR\concrt140.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\concrt140.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vccorlib140.dll"
-  AccessControl::SetFileOwner "$INSTDIR\vccorlib140.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\vccorlib140.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\ucrtbase.dll"
-  AccessControl::SetFileOwner "$INSTDIR\ucrtbase.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\ucrtbase.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite" 
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-time-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-string-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-stdio-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-runtime-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-process-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-private-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-multibyte-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-math-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-locale-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-heap-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-filesystem-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-environment-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-convert-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-conio-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-util-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-util-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-util-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-timezone-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-sysinfo-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-2-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-string-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-string-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-string-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-rtlsupport-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-profile-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-  
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-1.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processenvironment-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-namedpipe-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-memory-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-localization-l1-2-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-libraryloader-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-interlocked-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-heap-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-handle-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l2-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-file-l2-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-file-l2-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-2-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-file-l1-2-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-file-l1-2-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-file-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-file-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-errorhandling-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-debug-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-datetime-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-
-  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-console-l1-1-0.dll"
-  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-console-l1-1-0.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-console-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
-!endif
-
+  !ifdef BUILD_X64_VERSION
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\vccorlib140.dll"  "$INSTDIR\vccorlib140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-stdio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-runtime-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-process-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-private-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-multibyte-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-math-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-locale-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-filesystem-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-environment-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-convert-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-conio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-util-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-timezone-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-sysinfo-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-synch-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-synch-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-rtlsupport-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-profile-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-processthreads-l1-1-1.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-processthreads-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-processenvironment-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-namedpipe-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-memory-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-localization-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-libraryloader-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-interlocked-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-handle-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-file-l2-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-file-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-file-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-errorhandling-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+  !else
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vccorlib140.dll"  "$INSTDIR\vccorlib140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-stdio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-runtime-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-process-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-private-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-multibyte-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-math-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-locale-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-filesystem-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-environment-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-convert-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-conio-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-util-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-timezone-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-sysinfo-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-string-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-rtlsupport-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-profile-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-1.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processenvironment-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-namedpipe-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-memory-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-localization-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-libraryloader-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-interlocked-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-heap-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-handle-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l2-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-2-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-errorhandling-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+  !endif
 
   !insertmacro DEBUG_MSG "Closing MEGAsync"
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
@@ -640,59 +459,7 @@ modeselected:
   
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
-!ifndef ENABLE_QT5
-  ;x86_32 files
-  File "${QT_PATH}\bin\QtCore4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\QtCore4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\QtCore4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${QT_PATH}\bin\QtGui4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\QtGui4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\QtGui4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${QT_PATH}\bin\QtNetwork4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\QtNetwork4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\QtNetwork4.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${QT_PATH}\bin\QtXml4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\QtXml4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\QtXml4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\bin\QtSvg4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\QtSvg4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\QtSvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  SetOutPath "$INSTDIR\imageformats"
-  File "${QT_PATH}\plugins\imageformats\qgif4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qico4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qico4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qico4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qjpeg4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qmng4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qmng4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qmng4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qsvg4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qsvg4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qtga4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtga4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtga4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qtiff4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME" "GenericRead + GenericWrite"
-!else
   ;x86_32 files
   File "${QT_PATH}\bin\Qt5Core.dll"
   AccessControl::SetFileOwner "$INSTDIR\Qt5Core.dll" "$USERNAME"
@@ -777,7 +544,7 @@ modeselected:
 
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
-!endif
+
           
   SetOutPath "$INSTDIR"
   SetOverwrite on
@@ -796,13 +563,13 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\libeay32.dll"
-  AccessControl::SetFileOwner "$INSTDIR\libeay32.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\libeay32.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${SRCDIR_MEGASYNC}\ssleay32.dll"
-  AccessControl::SetFileOwner "$INSTDIR\ssleay32.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\ssleay32.dll" "$USERNAME" "GenericRead + GenericWrite"
+!ifdef BUILD_X64_VERSION
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1-x64.dll"  "$INSTDIR\libcrypto-1_1-x64.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll" 
+!else
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libeay32.dll"  "$INSTDIR\libeay32.dll"
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\ssleay32.dll"  "$INSTDIR\ssleay32.dll" 
+!endif
 
   File "${SRCDIR_MEGASYNC}\libcurl.dll"
   AccessControl::SetFileOwner "$INSTDIR\libcurl.dll" "$USERNAME"
@@ -1151,6 +918,8 @@ Section Uninstall
   Delete "$INSTDIR\MEGAupdater.exe"
   Delete "$INSTDIR\libeay32.dll"
   Delete "$INSTDIR\ssleay32.dll"
+  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
+  Delete "$INSTDIR\libssl-1_1-x64.dll"
   Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
