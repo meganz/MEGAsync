@@ -480,7 +480,6 @@ void GuestWidget::page_login()
     ui->lEmail->clear();
     ui->lPassword->clear();
     ui->sPages->setCurrentWidget(ui->pLogin);
-    state = GuestWidgetState::LOGIN;
 
     resetFocus();
 
