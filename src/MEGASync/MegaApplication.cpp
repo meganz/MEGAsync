@@ -1687,6 +1687,7 @@ void MegaApplication::start()
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
+    mFetchingNodes = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
@@ -7956,6 +7957,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 fetchNodes();
                 emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
             }
+
+            emit unblocked();
 
             blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
 

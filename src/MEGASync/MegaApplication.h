@@ -180,6 +180,7 @@ signals:
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
+    void unblocked();
 
 public slots:
     void unlink();

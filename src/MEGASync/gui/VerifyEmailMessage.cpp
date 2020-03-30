@@ -26,6 +26,8 @@ VerifyEmailMessage::VerifyEmailMessage(int lockStatus, QWidget *parent) :
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     m_ui->bWarning->setIcon(tmpIcon);
 
+    connect(static_cast<MegaApplication *>(qApp), SIGNAL(unblocked()), this, SLOT(close()));
+
 #ifdef __APPLE__
     QSize size = m_nativeWidget->size();
     m_popover = allocatePopOverWithView(m_nativeWidget->nativeView(), size);
