@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QStyle>
 #include "Utilities.h"
+#include "MegaApplication.h"
 
 using namespace mega;
 
@@ -128,6 +129,17 @@ void VerifyEmailMessage::on_bLogout_clicked()
 
 void VerifyEmailMessage::on_bResendEmail_clicked()
 {
-    //TODO: Finish task of resend email confirmation to fix block situation
-    emit resendEmail();
+    switch (m_lockStatus)
+    {
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+        {
+        //TODO: Finish task of resend email confirmation to fix block situation
+            emit resendEmail();
+            break;
+        }
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+        {
+            static_cast<MegaApplication *>(qApp)->goToMyCloud();
+        }
+    }
 }

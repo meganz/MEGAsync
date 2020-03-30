@@ -86,6 +86,7 @@ void GuestWidget::page_fetchnodes()
     ui->lProgress->setText(tr("Fetching file list..."));
     page_progress();
 }
+
 void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
 {
     if (closing)
@@ -466,6 +467,7 @@ void GuestWidget::on_bVerifySMS_clicked()
 
 void GuestWidget::fetchNodesAfterBlockCallbak()
 {
+    loggingStarted = true;
     page_fetchnodes();
 }
 
