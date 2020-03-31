@@ -1157,6 +1157,17 @@ void MegaApplication::initialize()
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 
+    //Set payload max size to be logged: a 10th of system's memory
+    long long availMemory = Utilities::getSystemsAvailableMemory();
+    auto newPayLoadLogSize = availMemory / 10 ;
+    if (newPayLoadLogSize < 10240)
+    {
+        newPayLoadLogSize = 10240;
+    }
+    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
+    megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
+    megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
+
     QString stagingPath = QDir(dataPath).filePath(QString::fromAscii("megasync.staging"));
     QFile fstagingPath(stagingPath);
     if (fstagingPath.exists())
