@@ -358,7 +358,6 @@ modeselected:
   !ifdef BUILD_X64_VERSION
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x64\Microsoft.VC140.CRT\vccorlib140.dll"  "$INSTDIR\vccorlib140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
@@ -404,7 +403,6 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   !else
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vccorlib140.dll"  "$INSTDIR\vccorlib140.dll"
