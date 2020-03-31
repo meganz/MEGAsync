@@ -15,7 +15,7 @@
 #include "megaapi.h"
 #include <utime.h>
 #else
-#include <sysinfoapi.h>
+#include <windows.h>
 #endif
 
 using namespace std;
@@ -803,11 +803,11 @@ long long Utilities::getSystemsAvailableMemory()
     statex.dwLength = sizeof (statex);
     if (GlobalMemoryStatusEx(&statex))
     {
-        physicMemory = std::min(statex.ullAvailPhys, statex.ullTotalVirtual);
+        availMemory = std::min(statex.ullAvailPhys, statex.ullTotalVirtual);
     }
     else
     {
-        LOG_warn << "Error getting RAM usage info";
+        std::cerr << "Error getting RAM usage info" << std::endl;
     }
 #else
     long long pages = sysconf(_SC_PHYS_PAGES);
