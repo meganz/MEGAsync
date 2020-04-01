@@ -214,13 +214,8 @@ void MegaTransferDelegate::processCancel(int tag)
         warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         warning.setDefaultButton(QMessageBox::No);
         int result = warning.exec();
-        if (result == QMessageBox::Yes)
+        if (modelPointer && result == QMessageBox::Yes)
         {
-            if (!modelPointer)
-            {
-                return;
-            }
-
             model->megaApi->cancelTransferByTag(tag);
         }
     }
