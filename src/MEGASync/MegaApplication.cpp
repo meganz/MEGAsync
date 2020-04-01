@@ -931,7 +931,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exportOps = 0;
     infoDialog = NULL;
     infoOverQuota = false;
-    suspendedAccount = MegaApi::ACCOUNT_NOT_BLOCKED;
+    blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -1036,6 +1036,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     completedTabActive = false;
     nodescurrent = false;
     almostOQ = false;
+    mFetchingNodes = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
 
@@ -1419,7 +1420,7 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (suspendedAccount)
+    else if (blockState)
     {
         tooltip = QCoreApplication::applicationName()
                 + QString::fromAscii(" ")
@@ -1679,13 +1680,14 @@ void MegaApplication::start()
         return;
     }
 
-    suspendedAccount = MegaApi::ACCOUNT_NOT_BLOCKED;
+    blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
 
     indexing = false;
     paused = false;
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
+    mFetchingNodes = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
@@ -3876,6 +3878,7 @@ void MegaApplication::unlink()
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
     mRootNode.reset();
+    mFetchingNodes = false;
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
 
@@ -4645,6 +4648,13 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
+void MegaApplication::fetchNodes()
+{
+    assert(!mFetchingNodes);
+    mFetchingNodes = true;
+    megaApi->fetchNodes();
+}
+
 std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
 {
     if (forceReset || !mRootNode)
@@ -4863,12 +4873,12 @@ void MegaApplication::showVerifyAccountInfo()
 {
     if (!verifyEmail)
     {
-        verifyEmail.reset(new VerifyEmailMessage(suspendedAccount));
+        verifyEmail.reset(new VerifyEmailMessage(blockState));
         connect(verifyEmail.get(), SIGNAL(logout()), this, SLOT(unlink()));
     }
     else
     {
-        verifyEmail->regenerateUI(suspendedAccount);
+        verifyEmail->regenerateUI(blockState);
     }
 
     verifyEmail->show();
@@ -6093,7 +6103,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 
     //If account is suspended chech status
-    if (suspendedAccount)
+    if (blockState)
     {
         megaApi->whyAmIBlocked();
     }
@@ -6124,7 +6134,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else if (reason == QSystemTrayIcon::Trigger)
             {
-                if (suspendedAccount)
+                if (blockState)
                 {
                     showInfoMessage(tr("Locked account"));
                 }
@@ -6179,7 +6189,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else
             {
-                if (suspendedAccount)
+                if (blockState)
                 {
                     showInfoMessage(tr("Locked account"));
                 }
@@ -6882,13 +6892,13 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
-                suspendedAccount = event->getNumber();
+                blockState = event->getNumber();
 
                 if (infoDialog)
                 {
-                    if (infoDialog->getLoggedInMode() != suspendedAccount)
+                    if (infoDialog->getLoggedInMode() != blockState)
                     {
-                        infoDialog->regenerateLayout(suspendedAccount);
+                        infoDialog->regenerateLayout(blockState);
                     }
                 }
                 else
@@ -7225,7 +7235,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             if (!preferences->logged()
                     && needsFetchNodes)
             {
-                megaApi->fetchNodes();
+                fetchNodes();
             }
         }
 
@@ -7240,7 +7250,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 if (!preferences->getSession().isEmpty())
                 {
                     //Successful login, fetch nodes
-                    megaApi->fetchNodes();
+                    fetchNodes();
                     break;
                 }
             }
@@ -7428,6 +7438,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_FETCH_NODES:
     {
+        mFetchingNodes = false;
         if (e->getErrorCode() == MegaError::API_OK)
         {
             //Update/set root node
@@ -7762,7 +7773,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                         if (megaApi->isLoggedIn())
                         {
-                            megaApi->fetchNodes();
+                            fetchNodes();
                         }
                     }
                     else if (e->getErrorCode() != MegaError::API_ENOENT
@@ -7936,14 +7947,22 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_WHY_AM_I_BLOCKED:
     {
-        //TODO: Check if fully logged and need to make a fetchnodes
         if (e->getErrorCode() == MegaError::API_OK
                 && request->getNumber() == MegaApi::ACCOUNT_NOT_BLOCKED)
         {
-            suspendedAccount = MegaApi::ACCOUNT_NOT_BLOCKED;
+            // if we received a block before nodes were fetch,
+            // we want to try again now that we are no longer blocked
+            if (!mFetchingNodes && !getRootNode())
+            {
+                fetchNodes();
+                emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
+            }
 
-            //TODO: Check if we have rootnode, otherwise perform a fetchnodes
-            //check all process complete successfully
+            emit unblocked();
+
+            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+
+            //in any case we reflect the change in the InfoDialog
             if (infoDialog)
             {
                 infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
@@ -8569,7 +8588,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             {
                 if (megaApi->isLoggedIn())
                 {
-                    megaApi->fetchNodes();
+                    fetchNodes();
                 }
             }
             else if (noKeyDetected > 20)

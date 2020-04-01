@@ -169,6 +169,8 @@ public:
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
+    void fetchNodes();
+
 
 signals:
     void startUpdaterThread();
@@ -177,6 +179,8 @@ signals:
     void unityFixSignal();
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
+    void fetchNodesAfterBlock();
+    void unblocked();
 
 public slots:
     void unlink();
@@ -380,6 +384,7 @@ protected:
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
     std::shared_ptr<mega::MegaNode> mRootNode;
+    bool mFetchingNodes = false;
     int numTransfers[2];
     int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
@@ -466,7 +471,7 @@ protected:
     long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
-    int suspendedAccount;
+    int blockState;
     friend class DeferPreferencesSyncForScope;
 };
 

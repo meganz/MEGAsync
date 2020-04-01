@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QStyle>
 #include "Utilities.h"
+#include "MegaApplication.h"
 
 using namespace mega;
 
@@ -24,6 +25,8 @@ VerifyEmailMessage::VerifyEmailMessage(int lockStatus, QWidget *parent) :
     QStyle *style = QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     m_ui->bWarning->setIcon(tmpIcon);
+
+    connect(static_cast<MegaApplication *>(qApp), SIGNAL(unblocked()), this, SLOT(close()));
 
 #ifdef __APPLE__
     QSize size = m_nativeWidget->size();
@@ -128,6 +131,17 @@ void VerifyEmailMessage::on_bLogout_clicked()
 
 void VerifyEmailMessage::on_bResendEmail_clicked()
 {
-    //TODO: Finish task of resend email confirmation to fix block situation
-    emit resendEmail();
+    switch (m_lockStatus)
+    {
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+        {
+        //TODO: Finish task of resend email confirmation to fix block situation
+            emit resendEmail();
+            break;
+        }
+        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+        {
+            static_cast<MegaApplication *>(qApp)->goToMyCloud();
+        }
+    }
 }

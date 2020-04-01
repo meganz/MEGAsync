@@ -161,7 +161,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 if (loggingStarted)
                 {
                     preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-                    megaApi->fetchNodes();
+                    static_cast<MegaApplication*>(qApp)->fetchNodes();
                     if (!preferences->hasLoggedIn())
                     {
                         preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);

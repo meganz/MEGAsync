@@ -951,13 +951,6 @@ void InfoDialog::moveArrow(QPoint p)
 }
 #endif
 
-void InfoDialog::on_bChats_clicked()
-{
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("").arg(userAgent);
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
-}
-
 void InfoDialog::onOverlayClicked()
 {
     app->uploadActionClicked();
@@ -1406,11 +1399,11 @@ void InfoDialog::on_bStorageDetails_clicked()
     accountDetailsDialog = NULL;
 }
 
-void InfoDialog::regenerateLayout(int lockedAccount, InfoDialog* olddialog)
+void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
 {
     int actualAccountState;
 
-    lockedAccount ? actualAccountState = lockedAccount
+    blockState ? actualAccountState = blockState
                   : preferences->logged() ? actualAccountState = STATE_LOGGEDIN
                                           : actualAccountState = STATE_LOGOUT;
 
@@ -1445,7 +1438,7 @@ void InfoDialog::regenerateLayout(int lockedAccount, InfoDialog* olddialog)
                 gWidget->enableListener();
             }
 
-            gWidget->setAccountLocked(lockedAccount);
+            gWidget->setBlockState(blockState);
 
             updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
             setOverQuotaMode(false);
@@ -1475,11 +1468,14 @@ void InfoDialog::regenerateLayout(int lockedAccount, InfoDialog* olddialog)
 
         case STATE_LOGGEDIN:
         {
-            gWidget->disableListener();
-            gWidget->initialize();
+            if (gWidget)
+            {
+                gWidget->disableListener();
+                gWidget->initialize();
 
-            dialogLayout->removeWidget(gWidget);
-            gWidget->setVisible(false);
+                dialogLayout->removeWidget(gWidget);
+                gWidget->setVisible(false);
+            }
             dialogLayout->addWidget(ui->wInfoDialogIn);
             ui->wInfoDialogIn->setVisible(true);
 
