@@ -530,5 +530,13 @@
         <file>images/transfers_empty@2x.png</file>
         <file>images/bug_report_success.png</file>
         <file>images/bug_report_success@2x.png</file>
+        <file>images/icon_error.png</file>
+        <file>images/icon_error@2x.png</file>
+        <file>images/icon_info.png</file>
+        <file>images/icon_info@2x.png</file>
+        <file>images/icon_question.png</file>
+        <file>images/icon_question@2x.png</file>
+        <file>images/icon_warning.png</file>
+        <file>images/icon_warning@2x.png</file>
     </qresource>
 </RCC>
