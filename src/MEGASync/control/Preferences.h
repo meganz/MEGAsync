@@ -321,8 +321,8 @@ public:
     int accountStateInGeneral();
     void setAccountStateInGeneral(int value);
 
-    int needsFetchNodesInGeneral();
-    void setNeedsFetchNodesInGeneral(int value);
+    bool needsFetchNodesInGeneral();
+    void setNeedsFetchNodesInGeneral(bool value);
 
     void unlink();
 
@@ -659,7 +659,7 @@ protected:
     static const QString defaultHttpsCertIntermediate;
     static const long long defaultHttpsCertExpiration;
     static const int defaultAccountStatus;
-    static const int defaultNeedsFetchNodes;
+    static const bool defaultNeedsFetchNodes;
 };
 
 #endif // PREFERENCES_H
