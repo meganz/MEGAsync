@@ -517,7 +517,9 @@ add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII
 add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO_CAST_FROM_ASCII -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB )
  #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
 
-add_definitions( -DENABLE_LOG_PERFORMANCE )
+if (ENABLE_LOG_PERFORMANCE)
+    add_definitions(-DENABLE_LOG_PERFORMANCE)
+endif()
 
 if(WIN32)
     add_definitions( -DUNICODE -D_UNICODE )  # needed for visual studio projects to use the unicode runtime libraries
@@ -605,10 +607,11 @@ endif()
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
 
 if(FULLREQUIREMENTS)
+    if (USE_FFMPEG AND HAVE_FFMPEG)
+        add_definitions(-DREQUIRE_HAVE_FFMPEG)
+    endif()
 
     add_definitions(
-
-        -DREQUIRE_HAVE_FFMPEG
         -DREQUIRE_HAVE_LIBUV
         -DREQUIRE_HAVE_LIBRAW
         -DREQUIRE_USE_MEDIAINFO
@@ -621,7 +624,9 @@ if(FULLREQUIREMENTS)
         )
 
     if (CMAKE_HOST_WIN32 OR CMAKE_HOST_APPLE OR build_64_bit)
-        add_definitions( -DREQUIRE_HAVE_PDFIUM )
+        if (USE_PDFIUM)
+            add_definitions(-DREQUIRE_HAVE_PDFIUM)
+        endif()
     endif()
 
 endif(FULLREQUIREMENTS)
