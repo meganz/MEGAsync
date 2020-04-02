@@ -35,6 +35,7 @@ public:
     static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
+    static bool isTilingWindowManager();
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();

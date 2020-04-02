@@ -98,6 +98,15 @@ bool LinuxPlatform::isStartOnStartupActive()
     return QFile(desktop_file).exists();
 }
 
+bool LinuxPlatform::isTilingWindowManager()
+{
+    static const QSet<QString> tiling_wms = {
+        QString::fromUtf8("i3")
+    };
+
+    return tiling_wms.contains(getWindowManagerName());
+}
+
 void LinuxPlatform::showInFolder(QString pathIn)
 {
     QString filebrowser = getDefaultFileBrowserApp();
