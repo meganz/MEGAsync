@@ -43,7 +43,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 
 unix:!macx {
-    QT += svg
+    QT += svg x11extras
     TARGET = megasync
 
 #    Uncomment the following if "make install" doesn't copy megasync in /usr/bin directory

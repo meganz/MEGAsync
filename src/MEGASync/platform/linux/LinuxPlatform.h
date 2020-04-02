@@ -49,6 +49,7 @@ public:
     static QString getDefaultFileBrowserApp();
     static QString getDefaultOpenApp(QString extension);
     static QString getDefaultOpenAppByMimeType(QString mimeType);
+    static QString getWindowManagerName();
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
     static void execBackgroundWindow(QDialog *window);

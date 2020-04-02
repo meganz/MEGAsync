@@ -1,13 +1,25 @@
 #include "LinuxPlatform.h"
+
+#include <QSet>
+#include <QX11Info>
+#include <xcb/xcb.h>
+#include <xcb/xproto.h>
 #include <map>
 
 using namespace std;
 using namespace mega;
 
+static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
+
+static std::string getProperty(xcb_connection_t * const connection,
+                               const xcb_window_t window,
+                               const char *name);
+
 ExtServer *LinuxPlatform::ext_server = NULL;
 NotifyServer *LinuxPlatform::notify_server = NULL;
 
 static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
+
 QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
 QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
 QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
@@ -257,6 +269,24 @@ QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
     return line.mid(5, size);
 }
 
+QString LinuxPlatform::getWindowManagerName()
+{
+    static std::string window_manager_name;
+    static bool cached = false;
+
+    if (!cached)
+    {
+        window_manager_name =
+          getProperty(QX11Info::connection(),
+                      QX11Info::appRootWindow(),
+                      "_NET_WM_NAME");
+
+        cached = true;
+    }
+
+    return QString::fromStdString(window_manager_name);
+}
+
 void LinuxPlatform::enableDialogBlur(QDialog *dialog)
 {
 
@@ -372,3 +402,71 @@ bool LinuxPlatform::isUserActive()
 {
     return true;
 }
+
+xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name)
+{
+    xcb_intern_atom_cookie_t cookie =
+      xcb_intern_atom(connection, 0, strlen(name), name);
+    xcb_intern_atom_reply_t *reply =
+      xcb_intern_atom_reply(connection, cookie, nullptr);
+
+    if (!reply)
+        return XCB_ATOM_NONE;
+
+    xcb_atom_t result = reply->atom;
+    free(reply);
+
+    return result;
+}
+
+std::string getProperty(xcb_connection_t * const connection,
+                        const xcb_window_t window,
+                        const char *name)
+{
+    static xcb_atom_t atom_type = XCB_ATOM_NONE;
+    static const size_t result_length = 255;
+
+    std::string result;
+
+    if (!atom_type)
+    {
+        atom_type = getAtom(connection, "UTF8_STRING");
+        if (!atom_type)
+            return result;
+    }
+
+    xcb_atom_t atom_name = getAtom(connection, name);
+    if (!atom_name)
+        return result;
+
+    result.reserve(result_length + 1);
+
+    xcb_get_property_cookie_t cookie =
+      xcb_get_property(connection,
+                       0,
+                       window,
+                       atom_name,
+                       atom_type,
+                       0,
+                       result_length);
+
+    xcb_get_property_reply_t *reply =
+      xcb_get_property_reply(connection, cookie, nullptr);
+    if (!reply)
+        return result;
+
+    const int value_length = xcb_get_property_value_length(reply);
+    if (value_length > 0)
+    {
+        const char *value =
+          static_cast<const char *>(xcb_get_property_value(reply));
+
+        result.assign(value, value_length);
+        result[value_length] = '\0';
+    }
+
+    free(reply);
+
+    return result;
+}
+
