@@ -14,6 +14,8 @@
 #ifndef WIN32
 #include "megaapi.h"
 #include <utime.h>
+#else
+#include <windows.h>
 #endif
 
 using namespace std;
@@ -792,3 +794,25 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
     return QString();
 }
 
+long long Utilities::getSystemsAvailableMemory()
+{
+    long long availMemory = 0;
+#ifdef _WIN32
+    MEMORYSTATUSEX statex;
+    memset(&statex, 0, sizeof (statex));
+    statex.dwLength = sizeof (statex);
+    if (GlobalMemoryStatusEx(&statex))
+    {
+        availMemory = std::min(statex.ullAvailPhys, statex.ullTotalVirtual);
+    }
+    else
+    {
+        std::cerr << "Error getting RAM usage info" << std::endl;
+    }
+#else
+    long long pages = sysconf(_SC_PHYS_PAGES);
+    long long page_size = sysconf(_SC_PAGE_SIZE);
+    availMemory = (pages * page_size);
+#endif
+    return availMemory;
+}

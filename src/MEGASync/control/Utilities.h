@@ -193,6 +193,8 @@ public:
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
+
+    static long long getSystemsAvailableMemory();
 };
 
 #endif // UTILITIES_H
