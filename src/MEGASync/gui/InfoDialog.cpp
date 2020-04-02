@@ -103,11 +103,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Set window properties
 #ifdef Q_OS_LINUX
-    doNotActAsPopup = false;
-    if (getenv("USE_MEGASYNC_AS_REGULAR_WINDOW"))
-    {
-        doNotActAsPopup = true;
-    }
+    doNotActAsPopup =
+        getenv("USE_MEGASYNC_AS_REGULAR_WINDOW")
+        || Platform::isTilingWindowManager();
 
     if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
     {
