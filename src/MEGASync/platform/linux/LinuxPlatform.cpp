@@ -281,26 +281,24 @@ QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
     return line.mid(5, size);
 }
 
-bool LinuxPlatform::getValue(const char * const name, bool &destination)
+bool LinuxPlatform::getValue(const char * const name, const bool default_value)
 {
     const char * const value = getenv(name);
 
-    if (!value || !strlen(value))
-        return false;
+    if (!value)
+        return default_value;
 
-    destination = !strcmp(value, "1");
-
-    return true;
+    return strcmp(value, "0") != 0;
 }
 
-bool LinuxPlatform::getValue(const char * const name, std::string &destination)
+std::string LinuxPlatform::getValue(const char * const name, const std::string &default_value)
 {
     const char * const value = getenv(name);
 
-    if (value)
-        destination.assign(value);
+    if (!value)
+        return default_value;
 
-    return value != nullptr;
+    return value;
 }
 
 QString LinuxPlatform::getWindowManagerName()

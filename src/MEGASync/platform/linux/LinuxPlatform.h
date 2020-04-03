@@ -50,8 +50,8 @@ public:
     static QString getDefaultFileBrowserApp();
     static QString getDefaultOpenApp(QString extension);
     static QString getDefaultOpenAppByMimeType(QString mimeType);
-    static bool getValue(const char * const name, bool &destination);
-    static bool getValue(const char * const name, std::string &destination);
+    static bool getValue(const char * const name, const bool default_value = false);
+    static std::string getValue(const char * const name, const std::string &default_value = "");
     static QString getWindowManagerName();
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
