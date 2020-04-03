@@ -46,10 +46,12 @@ public:
     static void notifyAllSyncFoldersRemoved();
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
+    static bool getBoolean(const char * const name);
     static QByteArray getLocalStorageKey();
     static QString getDefaultFileBrowserApp();
     static QString getDefaultOpenApp(QString extension);
     static QString getDefaultOpenAppByMimeType(QString mimeType);
+    static std::string getString(const char * const name);
     static QString getWindowManagerName();
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);

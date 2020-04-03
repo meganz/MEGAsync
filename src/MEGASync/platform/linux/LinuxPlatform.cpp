@@ -4,6 +4,9 @@
 #include <QX11Info>
 #include <xcb/xcb.h>
 #include <xcb/xproto.h>
+
+#include <cstdlib>
+#include <cstring>
 #include <map>
 
 using namespace std;
@@ -200,6 +203,13 @@ QByteArray LinuxPlatform::decrypt(QByteArray data, QByteArray key)
     return data;
 }
 
+bool LinuxPlatform::getBoolean(const char * const name)
+{
+    const char *value = getenv(name);
+
+    return value && !strcmp(value, "1");
+}
+
 QByteArray LinuxPlatform::getLocalStorageKey()
 {
     return QByteArray(128, 0);
@@ -276,6 +286,16 @@ QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
     }
 
     return line.mid(5, size);
+}
+
+std::string LinuxPlatform::getString(const char * const name)
+{
+    const char *value = getenv(name);
+
+    if (!value)
+        return std::string();
+
+    return value;
 }
 
 QString LinuxPlatform::getWindowManagerName()
