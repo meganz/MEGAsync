@@ -103,13 +103,19 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Set window properties
 #ifdef Q_OS_LINUX
-    doNotActAsPopup =
-      Platform::getValue("USE_MEGASYNC_AS_REGULAR_WINDOW",
-                         Platform::isTilingWindowManager());
+    doNotActAsPopup = Platform::getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
 
     if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
     {
-        setWindowFlags(Qt::FramelessWindowHint); //To avoid issues with text input we implement a popup (instead of using Qt::Popup) ourselves by listening to WindowDeactivate event
+        // To avoid issues with text input we implement a popup ourselves
+        // instead of using Qt::Popup by listening to the WindowDeactivate
+        // event.
+        Qt::WindowFlags flags = Qt::FramelessWindowHint;
+
+        if (Platform::isTilingWindowManager())
+            flags |= Qt::Dialog;
+
+        setWindowFlags(flags);
     }
     else
     {
