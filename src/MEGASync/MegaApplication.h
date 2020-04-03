@@ -39,7 +39,7 @@
 #include "QTMegaListener.h"
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
-#include "gui/VerifyEmailMessage.h"
+#include "gui/VerifyLockMessage.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -321,7 +321,7 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    std::unique_ptr<VerifyEmailMessage> verifyEmail;
+    std::unique_ptr<VerifyLockMessage> verifyEmail;
     std::unique_ptr<QMenu> infoDialogMenu;
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VerifyEmailMessage</class>
- <widget class="QDialog" name="VerifyEmailMessage">
+ <class>VerifyLockMessage</class>
+ <widget class="QDialog" name="VerifyLockMessage">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,6 +24,12 @@
   </property>
   <property name="windowTitle">
    <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -260,7 +266,7 @@ border: none;
 }</string>
         </property>
         <property name="text">
-         <string>Email sent</string>
+         <string/>
         </property>
        </widget>
       </item>

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VerifyEmailMessage</class>
- <widget class="QDialog" name="VerifyEmailMessage">
+ <class>VerifyLockMessage</class>
+ <widget class="QDialog" name="VerifyLockMessage">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
+    <width>480</width>
     <height>165</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>440</width>
+    <width>480</width>
     <height>165</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>440</width>
+    <width>480</width>
     <height>165</height>
    </size>
   </property>
@@ -260,7 +260,7 @@ border: none;
 }</string>
         </property>
         <property name="text">
-         <string>Email sent</string>
+         <string/>
         </property>
        </widget>
       </item>

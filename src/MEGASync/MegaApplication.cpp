@@ -4873,7 +4873,7 @@ void MegaApplication::showVerifyAccountInfo()
 {
     if (!verifyEmail)
     {
-        verifyEmail.reset(new VerifyEmailMessage(blockState));
+        verifyEmail.reset(new VerifyLockMessage(blockState));
         connect(verifyEmail.get(), SIGNAL(logout()), this, SLOT(unlink()));
     }
     else
