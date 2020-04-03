@@ -433,22 +433,20 @@ std::string getProperty(xcb_connection_t * const connection,
                         const char *name)
 {
     static xcb_atom_t atom_type = XCB_ATOM_NONE;
-    static const size_t result_length = 255;
+    static const size_t buffer_length = 255;
 
-    std::string result;
+    char buffer[buffer_length + 1];
 
     if (!atom_type)
     {
         atom_type = getAtom(connection, "UTF8_STRING");
         if (!atom_type)
-            return result;
+            return std::string();
     }
 
     xcb_atom_t atom_name = getAtom(connection, name);
     if (!atom_name)
-        return result;
-
-    result.reserve(result_length + 1);
+        return std::string();
 
     xcb_get_property_cookie_t cookie =
       xcb_get_property(connection,
@@ -457,12 +455,12 @@ std::string getProperty(xcb_connection_t * const connection,
                        atom_name,
                        atom_type,
                        0,
-                       result_length);
+                       buffer_length);
 
     xcb_get_property_reply_t *reply =
       xcb_get_property_reply(connection, cookie, nullptr);
     if (!reply)
-        return result;
+        return std::string();
 
     const int value_length = xcb_get_property_value_length(reply);
     if (value_length > 0)
@@ -470,12 +468,12 @@ std::string getProperty(xcb_connection_t * const connection,
         const char *value =
           static_cast<const char *>(xcb_get_property_value(reply));
 
-        result.assign(value, value_length);
-        result[value_length] = '\0';
+        memcpy(buffer, value, value_length);
+        buffer[value_length] = '\0';
     }
 
     free(reply);
 
-    return result;
+    return std::string(buffer);
 }
 
