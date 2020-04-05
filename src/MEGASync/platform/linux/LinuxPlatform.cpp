@@ -107,7 +107,8 @@ bool LinuxPlatform::isTilingWindowManager()
         QString::fromUtf8("i3")
     };
 
-    return tiling_wms.contains(getWindowManagerName());
+    return getValue("MEGASYNC_ASSUME_TILING_WM", false)
+           || tiling_wms.contains(getWindowManagerName());
 }
 
 void LinuxPlatform::showInFolder(QString pathIn)

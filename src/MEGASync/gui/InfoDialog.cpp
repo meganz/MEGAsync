@@ -113,7 +113,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         Qt::WindowFlags flags = Qt::FramelessWindowHint;
 
         if (Platform::isTilingWindowManager())
+        {
             flags |= Qt::Dialog;
+        }
 
         setWindowFlags(flags);
     }
