@@ -24,7 +24,7 @@ class VerifyLockMessage : public QDialog, public mega::MegaRequestListener
 
 public:
 
-    explicit VerifyLockMessage(int lockStatus, QWidget *parent = nullptr);
+    explicit VerifyLockMessage(int lockStatus, bool isMainDialogAvailable = true, QWidget *parent = nullptr);
     ~VerifyLockMessage();
 
     void regenerateUI(int newStatus, bool force = false);
@@ -49,6 +49,7 @@ protected:
 private:
     Ui::VerifyLockMessage *m_ui;
     int m_lockStatus;
+    bool m_haveMainDialog;
 
 #ifdef __APPLE__
     std::unique_ptr<LockedPopOver> m_nativeWidget{new LockedPopOver()};

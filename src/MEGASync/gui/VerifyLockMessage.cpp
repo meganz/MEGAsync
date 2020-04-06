@@ -12,8 +12,8 @@
 
 using namespace mega;
 
-VerifyLockMessage::VerifyLockMessage(int lockStatus, QWidget *parent) :
-    QDialog(parent),
+VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable, QWidget *parent) :
+    QDialog(parent), m_haveMainDialog(isMainDialogAvailable),
     m_ui(new Ui::VerifyLockMessage)
 {
     m_ui->setupUi(this);
@@ -97,8 +97,9 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
     {
         case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
         {
-            setWindowTitle(tr("Verify your email"));
-            m_ui->lVerifyEmailTitle->setText(tr("Verify your email"));
+            QString title = m_haveMainDialog ? tr("Verify your email") : tr("Locked account");
+            setWindowTitle(title);
+            m_ui->lVerifyEmailTitle->setText(title);
             m_ui->lVerifyEmailDesc->setText(tr("Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account."));
             m_ui->lWhySeenThis->setVisible(true);
             m_ui->lEmailSent->setText(m_ui->lEmailSent->text());
@@ -109,8 +110,9 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
         }
         case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
         {
-            setWindowTitle(tr("Verify your account"));
-            m_ui->lVerifyEmailTitle->setText(tr("Verify your account"));
+            QString title = m_haveMainDialog ? tr("Verify your account") : tr("Locked account");
+            setWindowTitle(title);
+            m_ui->lVerifyEmailTitle->setText(title);
             m_ui->lVerifyEmailDesc->setText(tr("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."));
             m_ui->lWhySeenThis->setVisible(false);
             m_ui->lEmailSent->setVisible(false);
