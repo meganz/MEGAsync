@@ -6414,7 +6414,7 @@ void MegaApplication::createAppMenus()
     initialMenu->addAction(initialExitAction);
 
 
-    if (isLinux && infoDialog)
+//    if (isLinux && infoDialog)
     {
         if (showStatusAction)
         {
@@ -7443,29 +7443,25 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             //Update/set root node
             getRootNode(true); //TODO: move this to thread pool
-        }
 
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
-            if (email && !preferences->logged() && !preferences->hasEmail(QString::fromUtf8(email.get())))
-            { //session resumed from general storage. //I'm getting there from loggin wizard -> guest widget //TODO: remove comment.
-                preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+            bool firstTime = email && !preferences->hasEmail(QString::fromUtf8(email.get()));
+            if (!preferences->logged()) //session resumed from general storage (or logged in via user/pass)
+            {
+                if (firstTime)
+                {
+                    // TODO: this requires showing the setupWizard
+                }
+                else
+                {
+                    preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+                }
             }
-        }
-        else
-        {
-            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
-            preferences->setNeedsFetchNodesInGeneral(true);
-        }
 
-        //This prevents to handle node requests in the initial setup wizard
-        if (preferences->logged())
-        {
-            if (e->getErrorCode() == MegaError::API_OK)
+            if (!firstTime)
             {
                 if (mRootNode)
                 {
@@ -7478,11 +7474,13 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     preferences->setCrashed(true);
                 }
             }
-            else
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
-                             .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-            }
+        }
+        else
+        {
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
+            preferences->setNeedsFetchNodesInGeneral(true);
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
+                         .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
         }
 
         break;
