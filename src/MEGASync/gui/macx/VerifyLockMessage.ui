@@ -135,7 +135,6 @@ border: none;
            <string notr="true">#lVerifyEmailTitle
 {
 	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF Pro Text&quot;;
 	font-size: 13px;
 	font-weight: bold;
 }</string>
@@ -154,7 +153,6 @@ border: none;
            <string notr="true">#lVerifyEmailDesc
 {
 	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF Pro Text&quot;;
 	font-size: 12px;
 	line-height: 14px;
 }</string>
@@ -192,7 +190,6 @@ border: none;
 {
     border: none;
 	color: #F0373A;
-	font-family: &quot;Segoe UI&quot;;
 	font-size: 12px;
 	line-height: 20px;
 }</string>
@@ -254,7 +251,6 @@ border: none;
          <string notr="true">#lEmailSent
 {
 	color: #666666;
-	font-family: &quot;SF Pro Text&quot;;
 	font-size: 11px;
 	line-height: 13px;
 }</string>
