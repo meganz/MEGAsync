@@ -1064,7 +1064,7 @@ void SetupWizard::page_welcome()
     }
 
     ui->sPages->setCurrentWidget(ui->pWelcome);
-    emit pageChanged(PAGE_SETTINGUP);
+    emit pageChanged(PAGE_MODE);
     ui->wButtons->hide();
     ui->bFinish->setFocus();
 }
