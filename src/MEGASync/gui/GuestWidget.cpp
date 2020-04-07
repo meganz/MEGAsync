@@ -457,7 +457,7 @@ void GuestWidget::connectToSetupWizard()
     auto setupWizard = static_cast<MegaApplication *>(qApp)->getSetupWizard();
     if (setupWizard)
     {
-        connect(setupWizard, SIGNAL(pageChanged(int)), this, SLOT(onSetupWizardPageChanged()));
+        connect(setupWizard, SIGNAL(pageChanged(int)), this, SLOT(onSetupWizardPageChanged(int)));
     }
 }
 

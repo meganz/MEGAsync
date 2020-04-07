@@ -7459,9 +7459,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setNeedsFetchNodesInGeneral(false);
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
-            bool firstTime = email && !preferences->hasEmail(QString::fromUtf8(email.get()));
+            bool logged = preferences->logged();
+            bool firstTime = !logged && email && !preferences->hasEmail(QString::fromUtf8(email.get()));
             bool setupWizardContinues = false;
-            if (!preferences->logged()) //session resumed from general storage (or logged in via user/pass)
+            if (!logged) //session resumed from general storage (or logged in via user/pass)
             {
                 if (firstTime)
                 {
