@@ -2905,9 +2905,10 @@ void MegaApplication::periodicTasks()
     initLocalServer();
 
     static int counter = 0;
+    counter++;
     if (megaApi)
     {
-        if (!(++counter % 6))
+        if (!(counter % 6))
         {
             HTTPServer::checkAndPurgeRequests();
 
@@ -2929,6 +2930,11 @@ void MegaApplication::periodicTasks()
         if (isLinux)
         {
             updateTrayIcon();
+        }
+
+        if (isLinux && blockState && !(counter%10))
+        {
+            megaApi->whyAmIBlocked();
         }
     }
 
@@ -6095,6 +6101,18 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+
+    if (appfinished)
+    {
+        return;
+    }
+
+    //If account is suspended chech status
+    if (blockState)
+    {
+        megaApi->whyAmIBlocked();
+    }
+
 #ifdef Q_OS_LINUX
     if (getenv("XDG_CURRENT_DESKTOP") && (
                 !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME")
@@ -6108,16 +6126,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 #endif
 
-    if (appfinished)
-    {
-        return;
-    }
-
-    //If account is suspended chech status
-    if (blockState)
-    {
-        megaApi->whyAmIBlocked();
-    }
 
     // Code temporarily preserved here for testing
     /*if (httpServer)
@@ -6425,7 +6433,7 @@ void MegaApplication::createAppMenus()
     initialMenu->addAction(initialExitAction);
 
 
-//    if (isLinux && infoDialog)
+    if (isLinux && infoDialog)
     {
         if (showStatusAction)
         {
