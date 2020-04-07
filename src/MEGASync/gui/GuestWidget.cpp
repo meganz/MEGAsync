@@ -85,6 +85,7 @@ void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
 void GuestWidget::page_fetchnodes()
 {
     ui->lProgress->setText(tr("Fetching file list..."));
+    ui->progressBar->setValue(-1);
     page_progress();
 }
 
@@ -491,6 +492,11 @@ void GuestWidget::onSetupWizardPageChanged(int page)
 
 void GuestWidget::page_login()
 {
+    if (ui->sPages->currentWidget() == ui->pLogin)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
@@ -507,8 +513,12 @@ void GuestWidget::page_login()
 }
 
 void GuestWidget::page_progress()
-{
-    //TODO: if current widget is the same, return. Do the same for other pages
+{  
+    if (ui->sPages->currentWidget() == ui->pProgress)
+    {
+        return;
+    }
+
     ui->bCancel->setVisible(true);
     ui->bCancel->setEnabled(true);
 
@@ -518,12 +528,18 @@ void GuestWidget::page_progress()
 
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
+
     ui->sPages->setCurrentWidget(ui->pProgress);
     state = GuestWidgetState::PROGRESS;
 }
 
 void GuestWidget::page_settingUp()
 {
+    if (ui->sPages->currentWidget() == ui->pSettingUp)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_intermediate.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
@@ -533,23 +549,18 @@ void GuestWidget::page_settingUp()
 
 void GuestWidget::page_logout()
 {
-    ui->bCancel->setVisible(true);
-    ui->bCancel->setEnabled(true);
-
-    ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
-    ui->sPages->style()->unpolish(ui->sPages);
-    ui->sPages->style()->polish(ui->sPages);
-
     ui->lProgress->setText(tr("Logging out..."));
-    ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
-
-    ui->sPages->setCurrentWidget(ui->pProgress);
-    state = GuestWidgetState::PROGRESS;
+    page_progress();
 }
 
 void GuestWidget::page_lockedEmailAccount()
 {
+    if (ui->sPages->currentWidget() == ui->pVerifyEmailAccount)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
@@ -558,6 +569,11 @@ void GuestWidget::page_lockedEmailAccount()
 
 void GuestWidget::page_lockedSMSAccount()
 {
+    if (ui->sPages->currentWidget() == ui->pVerifySMSAccount)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
