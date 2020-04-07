@@ -142,7 +142,7 @@ border: 1px solid rgba(0,0,0,0.05);
 }</string>
      </property>
      <property name="text">
-      <string>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</string>
+      <string>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -164,7 +164,7 @@ border: 1px solid rgba(0,0,0,0.05);
 }</string>
      </property>
      <property name="text">
-      <string>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</string>
+      <string>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

@@ -14,7 +14,7 @@ LockedPopOver::LockedPopOver(QDialog *parent) :
     ui(new Ui::LockedPopOver)
 {
     ui->setupUi(this);
-
+    tweakStrings();
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 }
 
@@ -24,9 +24,26 @@ void LockedPopOver::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        tweakStrings();
     }
     QWidget::changeEvent(event);
 }
+
+void LockedPopOver::tweakStrings()
+{
+    ui->lDescLock->setText(ui->lDescLock->text()
+                                 .replace(QString::fromUtf8("[A]"),
+                                          QString::fromUtf8("<p style=\"line-height: 20px;\">"))
+                                 .replace(QString::fromUtf8("[/A]"),
+                                          QString::fromUtf8("</p>")));
+
+    ui->lPassLeaked->setText(ui->lPassLeaked->text()
+                                 .replace(QString::fromUtf8("[A]"),
+                                          QString::fromUtf8("<p style=\"line-height: 20px;\">"))
+                                 .replace(QString::fromUtf8("[/A]"),
+                                          QString::fromUtf8("</p>")));
+}
+
 
 void LockedPopOver::showEvent(QShowEvent* event)
 {
