@@ -1037,6 +1037,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     nodescurrent = false;
     almostOQ = false;
     mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
 
@@ -1688,6 +1690,8 @@ void MegaApplication::start()
     infoOverQuota = false;
     almostOQ = false;
     mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
@@ -2934,7 +2938,7 @@ void MegaApplication::periodicTasks()
 
         if (isLinux && blockState && !(counter%10))
         {
-            megaApi->whyAmIBlocked();
+            whyAmIBlocked(true);
         }
     }
 
@@ -3890,6 +3894,8 @@ void MegaApplication::unlink()
     downloadQueue.clear();
     mRootNode.reset();
     mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
 
@@ -4664,6 +4670,16 @@ void MegaApplication::fetchNodes()
     assert(!mFetchingNodes);
     mFetchingNodes = true;
     megaApi->fetchNodes();
+}
+
+void MegaApplication::whyAmIBlocked(bool periodicCall)
+{
+    if (!mQueringWhyAmIBlocked)
+    {
+        whyamiblockedPeriodicPetition = periodicCall;
+        mQueringWhyAmIBlocked = true;
+        megaApi->whyAmIBlocked();
+    }
 }
 
 std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
@@ -6101,7 +6117,6 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-
     if (appfinished)
     {
         return;
@@ -6110,7 +6125,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     //If account is suspended chech status
     if (blockState)
     {
-        megaApi->whyAmIBlocked();
+        whyAmIBlocked();
     }
 
 #ifdef Q_OS_LINUX
@@ -6334,6 +6349,11 @@ void MegaApplication::openSettings(int tab)
     {
         proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
         megaApi->retryPendingConnections();
+    }
+
+    if (isLinux && blockState) //we force a whyamiblocked here since trayIconActivated might not be available
+    {
+        whyAmIBlocked();
     }
 
 #ifndef __MACH__
@@ -6913,6 +6933,11 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             {
                 blockState = event->getNumber();
 
+                if (verifyEmail)
+                {
+                    verifyEmail->regenerateUI(blockState);
+                }
+
                 if (infoDialog)
                 {
                     if (infoDialog->getLoggedInMode() != blockState)
@@ -6920,7 +6945,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                         infoDialog->regenerateLayout(blockState);
                     }
                 }
-                else
+                else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
                 {
                     showVerifyAccountInfo();
                 }
@@ -6933,8 +6958,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                                           Utilities::getDevicePixelRatio());
                 break;
         }
-
-
+        whyamiblockedPeriodicPetition = false;
     }
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
@@ -8003,6 +8027,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
+        mQueringWhyAmIBlocked = false;
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:

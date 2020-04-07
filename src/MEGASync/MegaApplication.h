@@ -171,7 +171,7 @@ public:
     MegaSyncLogger& getLogger() const;
     SetupWizard *getSetupWizard() const;
     void fetchNodes();
-
+    void whyAmIBlocked(bool periodicCall = false);
 
 signals:
     void startUpdaterThread();
@@ -389,6 +389,7 @@ protected:
     QQueue<mega::MegaNode *> downloadQueue;
     std::shared_ptr<mega::MegaNode> mRootNode;
     bool mFetchingNodes = false;
+    bool mQueringWhyAmIBlocked = false;
     int numTransfers[2];
     int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
@@ -476,6 +477,7 @@ protected:
     bool nodescurrent;
     int businessStatus = -2;
     int blockState;
+    bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
 };
 
