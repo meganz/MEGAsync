@@ -3568,6 +3568,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     return QApplication::eventFilter(obj, e);
 }
 
+SetupWizard *MegaApplication::getSetupWizard() const
+{
+    return setupWizard;
+}
+
 TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appDataID)
 {
     QHash<unsigned long long, TransferMetaData*>::const_iterator it = transferAppData.find(appDataID);
@@ -5213,7 +5218,24 @@ void MegaApplication::loginActionClicked()
         return;
     }
 
-    userAction(GuestWidget::LOGIN_CLICKED);
+    userAction(SetupWizard::PAGE_LOGIN);
+}
+
+void MegaApplication::showSetupWizard(int action)
+{
+    if (setupWizard)
+    {
+        setupWizard->goToStep(action);
+        setupWizard->activateWindow();
+        setupWizard->raise();
+        return;
+    }
+    setupWizard = new SetupWizard(this);
+    emit setupWizardCreated();
+    setupWizard->setModal(false);
+    connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+    setupWizard->goToStep(action);
+    setupWizard->show();
 }
 
 void MegaApplication::userAction(int action)
@@ -5231,18 +5253,7 @@ void MegaApplication::userAction(int action)
                 showInfoDialog();
                 break;
             default:
-                if (setupWizard)
-                {
-                    setupWizard->goToStep(action);
-                    setupWizard->activateWindow();
-                    setupWizard->raise();
-                    return;
-                }
-                setupWizard = new SetupWizard(this);
-                setupWizard->setModal(false);
-                connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
-                setupWizard->goToStep(action);
-                setupWizard->show();
+                showSetupWizard(action);
                 break;
         }
     }
@@ -7449,15 +7460,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
             bool firstTime = email && !preferences->hasEmail(QString::fromUtf8(email.get()));
+            bool setupWizardContinues = false;
             if (!preferences->logged()) //session resumed from general storage (or logged in via user/pass)
             {
                 if (firstTime)
                 {
-                    // TODO: this requires showing the setupWizard
+                    showSetupWizard(SetupWizard::PAGE_MODE);
+                    setupWizardContinues = true;
                 }
                 else
                 {
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+                    setupWizardFinished(QDialog::Accepted);
                 }
             }
 
@@ -7471,8 +7485,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
                 else
                 {
+                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                           "Please, try again. If the problem persists "
+                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
+
+                    setupWizardFinished(QDialog::Rejected);
+
                     preferences->setCrashed(true);
+
+                    rebootApplication(false);
                 }
+            }
+
+            if (!setupWizardContinues) //otherwise it needs to close
+            {
+                  emit closeSetupWizard(QDialog::Accepted);
             }
         }
         else

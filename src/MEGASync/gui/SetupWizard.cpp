@@ -63,6 +63,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
     connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
 
+    connect(static_cast<MegaApplication*>(qApp), SIGNAL(closeSetupWizard(int)), this, SLOT(done(int)));
+
     page_newaccount();
 
     ui->lError->setText(QString::fromUtf8(""));
@@ -294,7 +296,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() != MegaError::API_OK)
             {   
-                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
                 if (loggingStarted)
                 {
                     if (error->getErrorCode() == MegaError::API_EBLOCKED)
@@ -314,34 +315,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 break;
             }
+            loggingStarted = false;
 
-            if (loggingStarted)
-            {
-                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
-                if (!megaApi->isFilesystemAvailable())
-                {
-                    page_login();
-                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                        "Please, try again. If the problem persists "
-                                        "please contact bug@mega.co.nz"));
-                    done(QDialog::Rejected);
-                    preferences->setCrashed(true);
-                    app->rebootApplication(false);
-                    return;
-                }
-
-                QString email = ui->eLoginEmail->text().toLower().trimmed();
-                if (preferences->hasEmail(email))
-                {
-                    preferences->setEmailAndGeneralSettings(email);
-
-                    Platform::notifyAllSyncFoldersAdded();
-                    done(QDialog::Accepted);
-                    break;
-                }
-
-                page_mode();
-            }
             break;
         }
         case MegaRequest::TYPE_LOGOUT:
@@ -993,6 +968,7 @@ void SetupWizard::page_login()
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pLogin);
+    emit pageChanged(PAGE_LOGIN);
     sessionKey.clear();
 }
 
@@ -1016,6 +992,7 @@ void SetupWizard::page_logout()
     ui->bCancel->setDefault(true);
 
     ui->sPages->setCurrentWidget(ui->pProgress);
+    emit pageChanged(PAGE_LOGOUT);
     sessionKey.clear();
 }
 
@@ -1053,7 +1030,7 @@ void SetupWizard::page_mode()
         ui->bBack->setEnabled(true);
     }
 
-
+    emit pageChanged(PAGE_MODE);
     ui->sPages->setCurrentWidget(ui->pSetupType);
 }
 
@@ -1087,6 +1064,7 @@ void SetupWizard::page_welcome()
     }
 
     ui->sPages->setCurrentWidget(ui->pWelcome);
+    emit pageChanged(PAGE_INITIAL);
     ui->wButtons->hide();
     ui->bFinish->setFocus();
 }
@@ -1123,6 +1101,7 @@ void SetupWizard::page_newaccount()
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pNewAccount);
+    emit pageChanged(PAGE_NEW_ACCOUNT);
 }
 
 void SetupWizard::page_progress()
@@ -1140,6 +1119,7 @@ void SetupWizard::page_progress()
     ui->bCancel->setDefault(true);
 
     ui->sPages->setCurrentWidget(ui->pProgress);
+    emit pageChanged(PAGE_PROGRESS);
 }
 
 void SetupWizard::setLevelStrength(int level)

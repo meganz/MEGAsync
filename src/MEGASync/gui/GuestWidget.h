@@ -18,12 +18,6 @@ class GuestWidget : public QWidget, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    enum {
-        INITIAL_CLICKED = 0,
-        CREATE_ACCOUNT_CLICKED = 1,
-        LOGIN_CLICKED = 2,
-        CONFIG_MODE = 3
-    };
 
     enum GuestWidgetState {
         //block states are on top of these
@@ -70,7 +64,8 @@ private slots:
     void on_bVerifyEmail_clicked();
     void on_bVerifySMS_clicked();
     void fetchNodesAfterBlockCallbak();
-
+    void connectToSetupWizard();
+    void onSetupWizardPageChanged(int page);
 private:
     Ui::GuestWidget *ui;
     MegaApplication *app;

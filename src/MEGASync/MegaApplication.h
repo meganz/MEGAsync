@@ -169,6 +169,7 @@ public:
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
+    SetupWizard *getSetupWizard() const;
     void fetchNodes();
 
 
@@ -180,6 +181,8 @@ signals:
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
+    void closeSetupWizard(int);
+    void setupWizardCreated();
     void unblocked();
 
 public slots:
@@ -245,6 +248,7 @@ public slots:
     void onConnectivityCheckError();
     void proExpirityTimedOut();
     void userAction(int action);
+    void showSetupWizard(int action);
     void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
