@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QProcess>
 #include <Preferences.h>
+#import "platform/macx/NSPopover+MISSINGBackgroundView.h"
 
 #import <objc/runtime.h>
 #import <sys/proc_info.h>
@@ -17,6 +18,19 @@
 #ifndef kCFCoreFoundationVersionNumber10_9
     #define kCFCoreFoundationVersionNumber10_9 855.00
 #endif
+
+// A NSViewController that controls a programatically created view
+@interface ProgramaticViewController : NSViewController
+@end
+
+@implementation ProgramaticViewController
+- (id)initWithView:(NSView *)aView
+{
+    self = [self initWithNibName:nil bundle:nil];
+    self.view = aView;
+    return self;
+}
+@end
 
 void setMacXActivationPolicy()
 {
@@ -787,4 +801,40 @@ double uptime()
     time_t bsec = boottime.tv_sec, csec = time(NULL);
 
     return difftime(csec, bsec);
+}
+
+id allocatePopOverWithView(id view, QSize size)
+{
+    //Check we have received a valid NSView
+    if ([view isKindOfClass:[NSView class]])
+    {
+        NSPopover *m_popover = [[NSPopover alloc] init];
+        [m_popover setBackgroundColor:[NSColor whiteColor]];
+        [m_popover setContentSize:NSMakeSize((CGFloat)size.width() + 2, (CGFloat)size.height() + 2)];
+        [m_popover setBehavior:NSPopoverBehaviorTransient];
+        [m_popover setAnimates:YES];
+        [m_popover setContentViewController:[[ProgramaticViewController alloc] initWithView:(NSView*)view]];
+
+        return m_popover;
+    }
+
+    return nil;
+}
+
+void showPopOverRelativeToRect(WId view, id popOver, QPointF rect)
+{
+    NSView *thisView = (__bridge NSView *)reinterpret_cast<void *>(view);
+
+    //Check we have received a valid NSView
+    if (thisView &&
+         [popOver isKindOfClass:[NSPopover class]])
+    {
+        NSRect position = CGRectMake(rect.x(), rect.y(), 1, 1);
+        [popOver showRelativeToRect:position ofView:thisView preferredEdge:NSMinYEdge];
+    }
+}
+
+void releaseIdObject(id obj)
+{
+    [obj release];
 }

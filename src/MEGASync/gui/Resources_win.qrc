@@ -784,6 +784,10 @@
         <file>images/bug_report_success.png</file>
         <file>images/bug_report_success@2x.png</file>
         <file>images/bug_report_success@3x.png</file>
+        <file>images/locked_account_ico.png</file>
+        <file>images/locked_account_ico@2x.png</file>
+        <file>images/locked_account_ico@3x.png</file>
+        <file>images/alert_ico.ico</file>
         <file>images/icon_error.png</file>
         <file>images/icon_error@2x.png</file>
         <file>images/icon_error@3x.png</file>

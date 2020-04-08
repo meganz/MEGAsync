@@ -916,6 +916,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     activeTransferTag[MegaTransfer::TYPE_DOWNLOAD] = 0;
     activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
+    verifyEmail = nullptr;
     infoDialogMenu = NULL;
     guestMenu = NULL;
     syncsMenu = NULL;
@@ -930,6 +931,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exportOps = 0;
     infoDialog = NULL;
     infoOverQuota = false;
+    blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -1034,6 +1036,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     completedTabActive = false;
     nodescurrent = false;
     almostOQ = false;
+    mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
 
@@ -1428,6 +1433,30 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
+    else if (blockState)
+    {
+        tooltip = QCoreApplication::applicationName()
+                + QString::fromAscii(" ")
+                + Preferences::VERSION_STRING
+                + QString::fromAscii("\n")
+                + tr("Locked Account");
+
+#ifndef __APPLE__
+    #ifdef _WIN32
+        icon = QString::fromUtf8("://images/alert_ico.ico");
+    #else
+        icon = QString::fromUtf8("://images/alert.svg");
+    #endif
+#else
+        icon = QString::fromUtf8("://images/icon_alert_mac.png");
+
+        if (scanningTimer->isActive())
+        {
+            scanningTimer->stop();
+        }
+#endif
+
+    }
     else if (!megaApi->isLoggedIn())
     {
         if (!infoDialog)
@@ -1664,11 +1693,16 @@ void MegaApplication::start()
         return;
     }
 
+    blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+
     indexing = false;
     paused = false;
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
+    mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
@@ -2393,6 +2427,8 @@ void MegaApplication::closeDialogs(bool bwoverquota)
 
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
+
+    verifyEmail.reset(nullptr);
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2884,9 +2920,10 @@ void MegaApplication::periodicTasks()
     initLocalServer();
 
     static int counter = 0;
+    counter++;
     if (megaApi)
     {
-        if (!(++counter % 6))
+        if (!(counter % 6))
         {
             HTTPServer::checkAndPurgeRequests();
 
@@ -2908,6 +2945,11 @@ void MegaApplication::periodicTasks()
         if (isLinux)
         {
             updateTrayIcon();
+        }
+
+        if (isLinux && blockState && !(counter%10))
+        {
+            whyAmIBlocked(true);
         }
     }
 
@@ -3547,6 +3589,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     return QApplication::eventFilter(obj, e);
 }
 
+SetupWizard *MegaApplication::getSetupWizard() const
+{
+    return setupWizard;
+}
+
 TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appDataID)
 {
     QHash<unsigned long long, TransferMetaData*>::const_iterator it = transferAppData.find(appDataID);
@@ -3857,6 +3904,9 @@ void MegaApplication::unlink()
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
     mRootNode.reset();
+    mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
 
@@ -4614,6 +4664,23 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
+void MegaApplication::fetchNodes()
+{
+    assert(!mFetchingNodes);
+    mFetchingNodes = true;
+    megaApi->fetchNodes();
+}
+
+void MegaApplication::whyAmIBlocked(bool periodicCall)
+{
+    if (!mQueringWhyAmIBlocked)
+    {
+        whyamiblockedPeriodicPetition = periodicCall;
+        mQueringWhyAmIBlocked = true;
+        megaApi->whyAmIBlocked();
+    }
+}
+
 std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
 {
     if (forceReset || !mRootNode)
@@ -4826,6 +4893,23 @@ void MegaApplication::removeAllFinishedTransfers()
     {
         infoDialog->updateDialogState();
     }
+}
+
+void MegaApplication::showVerifyAccountInfo()
+{
+    if (!verifyEmail)
+    {
+        verifyEmail.reset(new VerifyLockMessage(blockState, infoDialog ? true : false));
+        connect(verifyEmail.get(), SIGNAL(logout()), this, SLOT(unlink()));
+    }
+    else
+    {
+        verifyEmail->regenerateUI(blockState);
+    }
+
+    verifyEmail->show();
+    verifyEmail->activateWindow();
+    verifyEmail->raise();
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
@@ -5155,7 +5239,24 @@ void MegaApplication::loginActionClicked()
         return;
     }
 
-    userAction(GuestWidget::LOGIN_CLICKED);
+    userAction(SetupWizard::PAGE_LOGIN);
+}
+
+void MegaApplication::showSetupWizard(int action)
+{
+    if (setupWizard)
+    {
+        setupWizard->goToStep(action);
+        setupWizard->activateWindow();
+        setupWizard->raise();
+        return;
+    }
+    setupWizard = new SetupWizard(this);
+    emit setupWizardCreated();
+    setupWizard->setModal(false);
+    connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+    setupWizard->goToStep(action);
+    setupWizard->show();
 }
 
 void MegaApplication::userAction(int action)
@@ -5173,18 +5274,7 @@ void MegaApplication::userAction(int action)
                 showInfoDialog();
                 break;
             default:
-                if (setupWizard)
-                {
-                    setupWizard->goToStep(action);
-                    setupWizard->activateWindow();
-                    setupWizard->raise();
-                    return;
-                }
-                setupWizard = new SetupWizard(this);
-                setupWizard->setModal(false);
-                connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
-                setupWizard->goToStep(action);
-                setupWizard->show();
+                showSetupWizard(action);
                 break;
         }
     }
@@ -6026,6 +6116,17 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
+    //If account is suspended chech status
+    if (blockState)
+    {
+        whyAmIBlocked();
+    }
+
 #ifdef Q_OS_LINUX
     if (getenv("XDG_CURRENT_DESKTOP") && (
                 !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME")
@@ -6039,10 +6140,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 #endif
 
-    if (appfinished)
-    {
-        return;
-    }
 
     // Code temporarily preserved here for testing
     /*if (httpServer)
@@ -6070,7 +6167,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else if (reason == QSystemTrayIcon::Trigger)
             {
-                if (!megaApi->isLoggedIn())
+                if (blockState)
+                {
+                    showInfoMessage(tr("Locked account"));
+                }
+                else if (!megaApi->isLoggedIn())
                 {
                     showInfoMessage(tr("Logging in..."));
                 }
@@ -6121,7 +6222,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else
             {
-                if (!megaApi->isLoggedIn())
+                if (blockState)
+                {
+                    showInfoMessage(tr("Locked account"));
+                }
+                else if (!megaApi->isLoggedIn())
                 {
                     showInfoMessage(tr("Logging in..."));
                 }
@@ -6243,6 +6348,11 @@ void MegaApplication::openSettings(int tab)
     {
         proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
         megaApi->retryPendingConnections();
+    }
+
+    if (isLinux && blockState) //we force a whyamiblocked here since trayIconActivated might not be available
+    {
+        whyAmIBlocked();
     }
 
 #ifndef __MACH__
@@ -6815,9 +6925,41 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
-        QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
-                                  QCoreApplication::translate("MegaError", event->getText()),
-                                  Utilities::getDevicePixelRatio());
+        switch (event->getNumber())
+        {
+            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+            {
+                blockState = event->getNumber();
+
+                if (verifyEmail)
+                {
+                    verifyEmail->regenerateUI(blockState);
+                }
+
+                if (infoDialog)
+                {
+                    if (infoDialog->getLoggedInMode() != blockState)
+                    {
+                        infoDialog->regenerateLayout(blockState);
+                    }
+                }
+                else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
+                {
+                    showVerifyAccountInfo();
+                }
+
+                whyamiblockedPeriodicPetition = false;
+
+                break;
+            }
+            default:
+                QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                                          QCoreApplication::translate("MegaError", event->getText()),
+                                          Utilities::getDevicePixelRatio());
+                break;
+        }
+
     }
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
@@ -7137,7 +7279,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             if (!preferences->logged()
                     && needsFetchNodes)
             {
-                megaApi->fetchNodes();
+                fetchNodes();
             }
         }
 
@@ -7152,7 +7294,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 if (!preferences->getSession().isEmpty())
                 {
                     //Successful login, fetch nodes
-                    megaApi->fetchNodes();
+                    fetchNodes();
                     break;
                 }
             }
@@ -7261,17 +7403,25 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             unlink();
         }
 
-        if (preferences && preferences->logged())
+        if (preferences)
         {
-            clearUserAttributes();
-            preferences->unlink();
-            closeDialogs();
-            removeAllFinishedTransfers();
-            clearViewedTransfers();
+            if (preferences->logged())
+            {
+                clearUserAttributes();
+                preferences->unlink();
+                removeAllFinishedTransfers();
+                clearViewedTransfers();
+                preferences->setFirstStartDone();
+            }
+            else
+            {
+                preferences->resetGlobalSettings();
+            }
 
-            preferences->setFirstStartDone();
+            closeDialogs();
             start();
             periodicTasks();
+
         }
         break;
     }
@@ -7332,33 +7482,34 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_FETCH_NODES:
     {
+        mFetchingNodes = false;
         if (e->getErrorCode() == MegaError::API_OK)
         {
             //Update/set root node
             getRootNode(true); //TODO: move this to thread pool
-        }
 
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
-            if (email && !preferences->logged() && !preferences->hasEmail(QString::fromUtf8(email.get())))
-            { //session resumed from general storage. //I'm getting there from loggin wizard -> guest widget //TODO: remove comment.
-                preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+            bool logged = preferences->logged();
+            bool firstTime = !logged && email && !preferences->hasEmail(QString::fromUtf8(email.get()));
+            bool setupWizardContinues = false;
+            if (!logged) //session resumed from general storage (or logged in via user/pass)
+            {
+                if (firstTime)
+                {
+                    showSetupWizard(SetupWizard::PAGE_MODE);
+                    setupWizardContinues = true;
+                }
+                else
+                {
+                    preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+                    setupWizardFinished(QDialog::Accepted);
+                }
             }
-        }
-        else
-        {
-            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
-            preferences->setNeedsFetchNodesInGeneral(true);
-        }
 
-        //This prevents to handle node requests in the initial setup wizard
-        if (preferences->logged())
-        {
-            if (e->getErrorCode() == MegaError::API_OK)
+            if (!firstTime)
             {
                 if (mRootNode)
                 {
@@ -7368,14 +7519,29 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
                 else
                 {
+                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                           "Please, try again. If the problem persists "
+                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
+
+                    setupWizardFinished(QDialog::Rejected);
+
                     preferences->setCrashed(true);
+
+                    rebootApplication(false);
                 }
             }
-            else
+
+            if (!setupWizardContinues) //otherwise it needs to close
             {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
-                             .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+                  emit closeSetupWizard(QDialog::Accepted);
             }
+        }
+        else
+        {
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
+            preferences->setNeedsFetchNodesInGeneral(true);
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
+                         .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
         }
 
         break;
@@ -7666,7 +7832,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                         if (megaApi->isLoggedIn())
                         {
-                            megaApi->fetchNodes();
+                            fetchNodes();
                         }
                     }
                     else if (e->getErrorCode() != MegaError::API_ENOENT
@@ -7836,6 +8002,33 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
+        break;
+    }
+    case MegaRequest::TYPE_WHY_AM_I_BLOCKED:
+    {
+        if (e->getErrorCode() == MegaError::API_OK
+                && request->getNumber() == MegaApi::ACCOUNT_NOT_BLOCKED)
+        {
+            // if we received a block before nodes were fetch,
+            // we want to try again now that we are no longer blocked
+            if (!mFetchingNodes && !getRootNode())
+            {
+                fetchNodes();
+                emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
+            }
+
+            emit unblocked();
+
+            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+
+            //in any case we reflect the change in the InfoDialog
+            if (infoDialog)
+            {
+                infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
+            }
+        }
+
+        mQueringWhyAmIBlocked = false;
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:
@@ -8455,7 +8648,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             {
                 if (megaApi->isLoggedIn())
                 {
-                    megaApi->fetchNodes();
+                    fetchNodes();
                 }
             }
             else if (noKeyDetected > 20)

@@ -2949,8 +2949,21 @@ void Preferences::unlink()
     mutex.lock();
     assert(logged());
     settings->remove(sessionKey); // Remove session from specific account settings
-
     settings->endGroup();
+    mutex.unlock();
+
+    resetGlobalSettings();
+}
+
+void Preferences::resetGlobalSettings()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
 
     settings->remove(currentAccountKey);
     settings->remove(needsFetchNodesKey);
@@ -2965,9 +2978,15 @@ void Preferences::unlink()
     activeFolders.clear();
     temporaryInactiveFolders.clear();
     localFingerprints.clear();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     settings->sync();
     cleanCache();
     mutex.unlock();
+
     emit stateChanged();
 }
 

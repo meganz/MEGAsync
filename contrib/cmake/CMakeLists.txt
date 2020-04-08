@@ -157,7 +157,9 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui )
+    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
+    )
 
 
 if (CMAKE_HOST_WIN32)
@@ -252,6 +254,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
     ${MEGAsyncDir}/gui/UsageWidget.h
+    ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -259,6 +262,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
 )
+
+if (NOT CMAKE_HOST_APPLE)
+    set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/gui/LockedPopOver.h
+        )
+endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
     set (MOC_INPUT ${MOC_INPUT}
@@ -373,6 +382,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -400,6 +410,12 @@ set (SRCS
 
 )
 
+
+if (NOT CMAKE_HOST_APPLE)
+    set (SRCS ${SRCS}
+        ${MEGAsyncDir}/gui/LockedPopOver.cpp
+        )
+endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
     set (SRCS ${SRCS}
