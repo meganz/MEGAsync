@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QDir>
 #include <QIcon>
+#include <QEasingCurve>
 #include "megaapi.h"
 
 #include <sys/stat.h>
@@ -172,6 +173,9 @@ public:
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget *what);
+
+    static void animatePartialFadeout(QWidget *object, int msecs = 2000);
+    static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
 
 private:
     Utilities() {}

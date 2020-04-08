@@ -254,7 +254,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
     ${MEGAsyncDir}/gui/UsageWidget.h
-    ${MEGAsyncDir}/gui/VerifyEmailMessage.h
+    ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -382,7 +382,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
-    ${MEGAsyncDir}/gui/VerifyEmailMessage.cpp
+    ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp

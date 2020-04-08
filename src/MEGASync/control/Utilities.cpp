@@ -795,4 +795,21 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
             what->move(newx, newy);
         }
     }
+}
+
+void Utilities::animatePartialFadeout(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 1.0, 0.5);
+}
+
+void Utilities::animateProperty(QWidget *object, int msecs, const char * property, QVariant startValue, QVariant endValue, QEasingCurve curve)
+{
+    QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect();
+    object->setGraphicsEffect(effect);
+    auto animation = new QPropertyAnimation(effect, property);
+    animation->setDuration(msecs);
+    animation->setStartValue(startValue);
+    animation->setEndValue(endValue);
+    animation->setEasingCurve(curve);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 };

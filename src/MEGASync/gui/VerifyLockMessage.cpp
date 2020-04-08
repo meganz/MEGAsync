@@ -102,7 +102,7 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
             m_ui->lVerifyEmailTitle->setText(title);
             m_ui->lVerifyEmailDesc->setText(tr("Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account."));
             m_ui->lWhySeenThis->setVisible(true);
-            m_ui->lEmailSent->setText(m_ui->lEmailSent->text());
+            m_ui->lEmailSent->setText(tr(m_ui->lEmailSent->text().toUtf8().constData()));
             m_ui->lEmailSent->setVisible(true);
             m_ui->bResendEmail->setText(tr("Resend email"));
 
@@ -150,11 +150,14 @@ void VerifyLockMessage::onRequestFinish(MegaApi *api, MegaRequest *request, Mega
 
         m_ui->lEmailSent->setVisible(true);
 
-        QTimer::singleShot(10000, this, [this, error] () {
-            QString color = error == MegaError::API_OK ? QString::fromUtf8("#lEmailSent {color: rgba(102, 102, 102, 0.5);}")
-                                                                   : QString::fromUtf8("#lEmailSent {color: rgba(240, 55, 58, 0.5);}");
-            m_ui->lEmailSent->setStyleSheet(color);
-            m_ui->bResendEmail->setEnabled(true);
+        Utilities::animateProperty(m_ui->lEmailSent, 400, "opacity", m_ui->lEmailSent->property("opacity"), 1.0);
+
+        int animationTime = 500;
+        QTimer::singleShot(10000-animationTime, this, [this, error, animationTime] () {
+            Utilities::animateProperty(m_ui->lEmailSent, animationTime, "opacity", 1.0, 0.5);
+            QTimer::singleShot(animationTime, this, [this, error] () {
+                m_ui->bResendEmail->setEnabled(true);
+            });
         });
     }
 }
@@ -180,6 +183,8 @@ void VerifyLockMessage::on_bResendEmail_clicked()
         case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
         {
             m_ui->lEmailSent->setStyleSheet(QString::fromUtf8("#lEmailSent {color: rgba(102, 102, 102, 1.0);}"));
+            m_ui->lEmailSent->setProperty("opacity", 0.0);
+
             m_ui->bResendEmail->setEnabled(false);
             megaApi->resendVerificationEmail(delegateListener);
             break;
