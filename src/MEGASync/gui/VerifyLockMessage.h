@@ -1,10 +1,11 @@
-#ifndef VERIFYEMAILMESSAGE_H
-#define VERIFYEMAILMESSAGE_H
+#ifndef VERIFYLOCKMESSAGE_H
+#define VERIFYLOCKMESSAGE_H
 
 #include <QDialog>
 #include <QMouseEvent>
 #include <memory>
 #include "megaapi.h"
+#include "QTMegaRequestListener.h"
 
 #ifdef __APPLE__
     #include "macx/LockedPopOver.h"
@@ -14,19 +15,21 @@
 #endif
 
 namespace Ui {
-class VerifyEmailMessage;
+class VerifyLockMessage;
 }
 
-class VerifyEmailMessage : public QDialog
+class VerifyLockMessage : public QDialog, public mega::MegaRequestListener
 {
     Q_OBJECT
 
 public:
 
-    explicit VerifyEmailMessage(int lockStatus, QWidget *parent = nullptr);
-    ~VerifyEmailMessage();
+    explicit VerifyLockMessage(int lockStatus, bool isMainDialogAvailable = true, QWidget *parent = nullptr);
+    ~VerifyLockMessage();
 
     void regenerateUI(int newStatus, bool force = false);
+
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 
 signals:
     void logout();
@@ -37,12 +40,16 @@ private slots:
     void on_bResendEmail_clicked();
 
 protected:
+    mega::MegaApi *megaApi;
+    mega::QTMegaRequestListener *delegateListener;
+
     void mousePressEvent(QMouseEvent *event);
     void changeEvent(QEvent *event);
 
 private:
-    Ui::VerifyEmailMessage *m_ui;
+    Ui::VerifyLockMessage *m_ui;
     int m_lockStatus;
+    bool m_haveMainDialog;
 
 #ifdef __APPLE__
     std::unique_ptr<LockedPopOver> m_nativeWidget{new LockedPopOver()};
@@ -52,4 +59,4 @@ private:
 #endif
 };
 
-#endif // VERIFYEMAILMESSAGE_H
+#endif // VERIFYLOCKMESSAGE_H

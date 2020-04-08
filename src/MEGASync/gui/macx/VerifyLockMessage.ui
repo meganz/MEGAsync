@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VerifyEmailMessage</class>
- <widget class="QDialog" name="VerifyEmailMessage">
+ <class>VerifyLockMessage</class>
+ <widget class="QDialog" name="VerifyLockMessage">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
+    <width>480</width>
     <height>165</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>440</width>
+    <width>480</width>
     <height>165</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>440</width>
+    <width>480</width>
     <height>165</height>
    </size>
   </property>
@@ -135,7 +135,6 @@ border: none;
            <string notr="true">#lVerifyEmailTitle
 {
 	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF Pro Text&quot;;
 	font-size: 13px;
 	font-weight: bold;
 }</string>
@@ -154,7 +153,6 @@ border: none;
            <string notr="true">#lVerifyEmailDesc
 {
 	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF Pro Text&quot;;
 	font-size: 12px;
 	line-height: 14px;
 }</string>
@@ -192,7 +190,6 @@ border: none;
 {
     border: none;
 	color: #F0373A;
-	font-family: &quot;Segoe UI&quot;;
 	font-size: 12px;
 	line-height: 20px;
 }</string>
@@ -254,13 +251,12 @@ border: none;
          <string notr="true">#lEmailSent
 {
 	color: #666666;
-	font-family: &quot;SF Pro Text&quot;;
 	font-size: 11px;
 	line-height: 13px;
 }</string>
         </property>
         <property name="text">
-         <string>Email sent</string>
+         <string/>
         </property>
        </widget>
       </item>

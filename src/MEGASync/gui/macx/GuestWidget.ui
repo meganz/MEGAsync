@@ -1130,7 +1130,7 @@ image: none;</string>
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>11</number>
        </property>
        <item>
         <widget class="QWidget" name="wContainerVerifyEmail" native="true">
@@ -1268,7 +1268,7 @@ image: none;</string>
               <number>50</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>60</number>
              </property>
              <property name="rightMargin">
               <number>50</number>
@@ -1277,68 +1277,76 @@ image: none;</string>
               <number>0</number>
              </property>
              <item>
-              <spacer name="verticalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="lVerifyEmailTitle">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#lVerifyEmailTitle
+              <widget class="QWidget" name="wInsideContainerVerifyEmail" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <property name="spacing">
+                 <number>24</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>2</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lVerifyEmailTitle">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#lVerifyEmailTitle
 {
 	color: #333333;
-    font-family: &quot;Lato&quot;;
+    font-family: &quot;Montserrat&quot;;
 	font-size: 16px;
 }</string>
-               </property>
-               <property name="text">
-                <string>Locked Account</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lVerifyEmailDesc">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#lVerifyEmailDesc
+                  </property>
+                  <property name="text">
+                   <string>Locked Account</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lVerifyEmailDesc">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#lVerifyEmailDesc
 {
 	color: rgba(0,0,0,0.85);
 	font-family: &quot;Lato&quot;;
 	font-size: 13px;
 	line-height: 15px;
 }</string>
-               </property>
-               <property name="text">
-                <string>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
+                  </property>
+                  <property name="text">
+                   <string>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
@@ -1349,7 +1357,7 @@ image: none;</string>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>40</height>
+                 <height>0</height>
                 </size>
                </property>
               </spacer>
@@ -1378,6 +1386,12 @@ image: none;</string>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <property name="spacing">
+              <number>12</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
              <item>
               <spacer name="horizontalSpacer_15">
                <property name="orientation">
@@ -1393,6 +1407,18 @@ image: none;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bVerifyEmailLogout">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>34</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">#bVerifyEmailLogout
 {
@@ -1400,7 +1426,7 @@ image: none;</string>
                                       stop: 0 #ffffff, stop: 1 #fcfcfc);
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
- padding: 9px 16px 9px 16px;
+ padding: 7px 14px 7px 14px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
  color: #333333;
@@ -1414,13 +1440,25 @@ image: none;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bVerifyEmail">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>34</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">#bVerifyEmail
 {
 background-color: #F0373A;
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
- padding: 9px 16px 9px 16px;
+ padding: 7px 14px 7px 14px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
  color: #ffffff;
@@ -1490,7 +1528,7 @@ image: none;</string>
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>11</number>
           </property>
           <item>
            <widget class="QWidget" name="wVerifyIcon" native="true">
@@ -1606,7 +1644,7 @@ image: none;</string>
               <number>50</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>60</number>
              </property>
              <property name="rightMargin">
               <number>50</number>
@@ -1615,68 +1653,76 @@ image: none;</string>
               <number>0</number>
              </property>
              <item>
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="lVerifySMSTitle">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#lVerifySMSTitle
+              <widget class="QWidget" name="wInsideContainerVerifySMS" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_14">
+                <property name="spacing">
+                 <number>24</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>2</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lVerifySMSTitle">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#lVerifySMSTitle
 {
         color: #333333;
         font-family: &quot;Lato&quot;;
         font-size: 16px;
 }</string>
-               </property>
-               <property name="text">
-                <string>Verify your account</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lVerifySMSDesc">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#lVerifySMSDesc
+                  </property>
+                  <property name="text">
+                   <string>Locked Account</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lVerifySMSDesc">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#lVerifySMSDesc
 {
         color: rgba(0,0,0,0.85);
         font-family: &quot;Lato&quot;;
         font-size: 13px;
         line-height: 15px;
 }</string>
-               </property>
-               <property name="text">
-                <string>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
+                  </property>
+                  <property name="text">
+                   <string>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
@@ -1716,6 +1762,12 @@ image: none;</string>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <property name="spacing">
+              <number>12</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
              <item>
               <spacer name="horizontalSpacer_11">
                <property name="orientation">
@@ -1731,6 +1783,18 @@ image: none;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bVerifySMSLogout">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>34</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">#bVerifySMSLogout
 {
@@ -1738,7 +1802,7 @@ image: none;</string>
                                       stop: 0 #ffffff, stop: 1 #fcfcfc);
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
- padding: 9px 16px 9px 16px;
+ padding: 7px 14px 7px 14px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
  color: #333333;
@@ -1752,13 +1816,25 @@ image: none;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bVerifySMS">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>34</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>34</height>
+                </size>
+               </property>
                <property name="styleSheet">
                 <string notr="true">#bVerifySMS
 {
 background-color: #F0373A;
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
- padding: 9px 16px 9px 16px;
+ padding: 7px 14px 7px 14px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
  color: #ffffff;
