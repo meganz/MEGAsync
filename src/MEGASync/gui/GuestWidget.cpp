@@ -46,6 +46,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     state = GuestWidgetState::LOGIN;
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(fetchNodesAfterBlock()), this, SLOT(fetchNodesAfterBlockCallbak()));
+    connect(static_cast<MegaApplication *>(qApp), SIGNAL(setupWizardCreated()), this, SLOT(connectToSetupWizard()));
 
     resetFocus();
 }
@@ -74,6 +75,11 @@ void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
         ui->lProgress->setText(tr("Logging in..."));
         page_progress();
     }
+    if (request->getType() == MegaRequest::TYPE_CREATE_ACCOUNT)
+    {
+        ui->lProgress->setText(tr("Creating account..."));
+        page_progress();
+    }
     else if (request->getType() == MegaRequest::TYPE_LOGOUT && request->getFlag())
     {
         closing = true;
@@ -84,6 +90,7 @@ void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
 void GuestWidget::page_fetchnodes()
 {
     ui->lProgress->setText(tr("Fetching file list..."));
+    ui->progressBar->setValue(-1);
     page_progress();
 }
 
@@ -213,7 +220,6 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() != MegaError::API_OK)
             {
-                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
                 loggingStarted = false;
 
                 if (error->getErrorCode() != MegaError::API_EBLOCKED)
@@ -225,32 +231,13 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
-                preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
                 if (!megaApi->isFilesystemAvailable())
                 {
                     page_login();
-                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
-                    app->setupWizardFinished(QDialog::Rejected);
-                    preferences->setCrashed(true);
-                    app->rebootApplication(false);
                     return;
                 }
 
-                QString email = ui->lEmail->text().toLower().trimmed();
-                if (preferences->hasEmail(email))
-                {
-                    preferences->setEmailAndGeneralSettings(email);
-                    Platform::notifyAllSyncFoldersAdded();
-                    app->setupWizardFinished(QDialog::Accepted);
-                    break;
-                }
-
-                emit forwardAction(CONFIG_MODE);
             }
-
-            page_settingUp();
             break;
         }
         case MegaRequest::TYPE_LOGOUT:
@@ -393,7 +380,7 @@ void GuestWidget::on_bLogin_clicked()
 void GuestWidget::on_bCreateAccount_clicked()
 {
     app->infoWizardDialogFinished(QDialog::Accepted);
-    emit forwardAction(CREATE_ACCOUNT_CLICKED);
+    emit forwardAction(SetupWizard::PAGE_NEW_ACCOUNT);
 }
 
 void GuestWidget::on_bSettings_clicked()
@@ -471,8 +458,50 @@ void GuestWidget::fetchNodesAfterBlockCallbak()
     page_fetchnodes();
 }
 
+void GuestWidget::connectToSetupWizard()
+{
+    auto setupWizard = static_cast<MegaApplication *>(qApp)->getSetupWizard();
+    if (setupWizard)
+    {
+        connect(setupWizard, SIGNAL(pageChanged(int)), this, SLOT(onSetupWizardPageChanged(int)));
+    }
+}
+
+void GuestWidget::onSetupWizardPageChanged(int page)
+{
+    switch(page)
+    {
+        case SetupWizard::PAGE_MODE:
+        {
+            page_settingUp();
+            break;
+        }
+        case SetupWizard::PAGE_PROGRESS:
+        {
+            page_progress();// this should already be managed by requests callbacks that also set the proper text
+                            // but calling it again is idempotent
+            break;
+        }
+        case SetupWizard::PAGE_LOGOUT:
+        {
+            page_logout();
+            break;
+        }
+        default:
+        {
+            page_login();
+            break;
+        }
+    }
+}
+
 void GuestWidget::page_login()
 {
+    if (ui->sPages->currentWidget() == ui->pLogin)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
@@ -489,7 +518,12 @@ void GuestWidget::page_login()
 }
 
 void GuestWidget::page_progress()
-{
+{  
+    if (ui->sPages->currentWidget() == ui->pProgress)
+    {
+        return;
+    }
+
     ui->bCancel->setVisible(true);
     ui->bCancel->setEnabled(true);
 
@@ -499,12 +533,18 @@ void GuestWidget::page_progress()
 
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
+
     ui->sPages->setCurrentWidget(ui->pProgress);
     state = GuestWidgetState::PROGRESS;
 }
 
 void GuestWidget::page_settingUp()
 {
+    if (ui->sPages->currentWidget() == ui->pSettingUp)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_intermediate.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
@@ -514,23 +554,18 @@ void GuestWidget::page_settingUp()
 
 void GuestWidget::page_logout()
 {
-    ui->bCancel->setVisible(true);
-    ui->bCancel->setEnabled(true);
-
-    ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
-    ui->sPages->style()->unpolish(ui->sPages);
-    ui->sPages->style()->polish(ui->sPages);
-
     ui->lProgress->setText(tr("Logging out..."));
-    ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
-
-    ui->sPages->setCurrentWidget(ui->pProgress);
-    state = GuestWidgetState::PROGRESS;
+    page_progress();
 }
 
 void GuestWidget::page_lockedEmailAccount()
 {
+    if (ui->sPages->currentWidget() == ui->pVerifyEmailAccount)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
@@ -539,6 +574,11 @@ void GuestWidget::page_lockedEmailAccount()
 
 void GuestWidget::page_lockedSMSAccount()
 {
+    if (ui->sPages->currentWidget() == ui->pVerifySMSAccount)
+    {
+        return;
+    }
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);

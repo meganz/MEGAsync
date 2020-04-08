@@ -169,8 +169,9 @@ public:
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
+    SetupWizard *getSetupWizard() const;
     void fetchNodes();
-
+    void whyAmIBlocked(bool periodicCall = false);
 
 signals:
     void startUpdaterThread();
@@ -180,6 +181,8 @@ signals:
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
+    void closeSetupWizard(int);
+    void setupWizardCreated();
     void unblocked();
 
 public slots:
@@ -245,6 +248,7 @@ public slots:
     void onConnectivityCheckError();
     void proExpirityTimedOut();
     void userAction(int action);
+    void showSetupWizard(int action);
     void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
@@ -385,6 +389,7 @@ protected:
     QQueue<mega::MegaNode *> downloadQueue;
     std::shared_ptr<mega::MegaNode> mRootNode;
     bool mFetchingNodes = false;
+    bool mQueringWhyAmIBlocked = false;
     int numTransfers[2];
     int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
@@ -472,6 +477,7 @@ protected:
     bool nodescurrent;
     int businessStatus = -2;
     int blockState;
+    bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
 };
 
