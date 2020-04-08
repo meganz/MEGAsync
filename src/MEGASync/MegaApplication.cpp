@@ -6950,6 +6950,8 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     showVerifyAccountInfo();
                 }
 
+                whyamiblockedPeriodicPetition = false;
+
                 break;
             }
             default:
@@ -6958,7 +6960,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                                           Utilities::getDevicePixelRatio());
                 break;
         }
-        whyamiblockedPeriodicPetition = false;
+
     }
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
