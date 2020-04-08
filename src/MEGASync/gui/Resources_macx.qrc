@@ -534,5 +534,13 @@
         <file>images/locked_account_ico@2x.png</file>
         <file>images/icon_alert_mac.png</file>
         <file>images/icon_alert_mac@2x.png</file>
+        <file>images/icon_error.png</file>
+        <file>images/icon_error@2x.png</file>
+        <file>images/icon_info.png</file>
+        <file>images/icon_info@2x.png</file>
+        <file>images/icon_question.png</file>
+        <file>images/icon_question@2x.png</file>
+        <file>images/icon_warning.png</file>
+        <file>images/icon_warning@2x.png</file>
     </qresource>
 </RCC>

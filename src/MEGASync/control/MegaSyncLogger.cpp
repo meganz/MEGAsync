@@ -200,6 +200,7 @@ private:
         outputFile << "----------------------------- program start -----------------------------\n";
         long long outFileSize = outputFile.tellp();
         std::ofstream logDesktopFile;
+        bool logDesktopFileOpen = false;
 
         while (!logExit)
         {
@@ -275,6 +276,24 @@ private:
                 });
             }
 
+            if (logToDesktopChanged)
+            {
+                logToDesktopChanged = false;
+                if (logToDesktop && !logDesktopFileOpen)
+                {
+    #ifdef WIN32
+                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
+    #else
+                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
+    #endif
+                    logDesktopFileOpen = true;
+                }
+                else if (!logToDesktop && logDesktopFileOpen)
+                {
+                    logDesktopFile.close();
+                }
+            }
+
             if (topLevelMemoryGap)
             {
                 if (outputFile)
@@ -321,6 +340,7 @@ private:
                             logDesktopFile << "<log gap - out of logging memory at this point>\n";
                         }
                     }
+                    logDesktopFile.flush(); //always flush in `active` logging
                 }
 
                 if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
@@ -333,6 +353,7 @@ private:
                     {
                         std::cout << p->message;
                     }
+                    std::cout << std::flush; //always flush into stdout (DEBUG mode)
                 }
                 p->notifyWaiter();
                 free(p);
@@ -361,24 +382,6 @@ private:
                 }
                 return;  // This request means we have received a termination signal; close and exit the thread as quick & clean as possible
             }
-
-            if (logToDesktopChanged)
-            {
-                logToDesktopChanged = false;
-                if (logToDesktop && !logDesktopFile)
-                {
-    #ifdef WIN32
-                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
-    #else
-                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
-    #endif
-                }
-                else if (!logToDesktop && logDesktopFile)
-                {
-                    logDesktopFile.close();
-                }
-            }
-
         }
     }
 

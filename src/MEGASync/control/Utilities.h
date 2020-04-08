@@ -170,6 +170,7 @@ public:
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
+    static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget *what);
@@ -198,6 +199,8 @@ public:
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
+
+    static long long getSystemsAvailableMemory();
 };
 
 #endif // UTILITIES_H

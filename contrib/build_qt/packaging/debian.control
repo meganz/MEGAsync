@@ -7,7 +7,8 @@ Build-Depends:  debhelper,
                 wget,
                 libtool,
                 dh-autoreconf,
-                cdbs
+                cdbs,
+                libxkbcommon-x11-dev
 
 Package: qt-mega
 Architecture: any

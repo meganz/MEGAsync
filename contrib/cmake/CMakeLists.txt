@@ -560,7 +560,10 @@ target_include_directories(MEGAsync PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google
 
 if (CMAKE_HOST_WIN32)
     set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
-    set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
+    set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
+    if (USE_PREBUILT_3RDPARTY)
+        set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS " /DELAYLOAD:pdfium.dll " )
+    endif()
 else()
 
 if (CMAKE_HOST_APPLE)

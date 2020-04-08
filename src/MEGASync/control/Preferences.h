@@ -87,6 +87,7 @@ public:
     QString lastName();
     void setLastName(QString lastName);
     void setSession(QString session);
+    void setSessionInUserGroup(QString session);
     QString getSession();
     unsigned long long transferIdentifier();
     long long lastTransferNotificationTimestamp();
@@ -310,9 +311,8 @@ public:
     long long getHttpsCertExpiration();
     void setHttpsCertExpiration(long long expiration);
 
-    long long lastPublicHandleTimestamp();
-    mega::MegaHandle lastPublicHandle();
-    void setLastPublicHandle(mega::MegaHandle handle);
+    void getLastHandleInfo(mega::MegaHandle &lastHandle, int &type, long long &timestamp);
+    void setLastPublicHandle(mega::MegaHandle handle, int type);
 
     int getNumUsers();
     void enterUser(int i);
@@ -321,8 +321,8 @@ public:
     int accountStateInGeneral();
     void setAccountStateInGeneral(int value);
 
-    int needsFetchNodesInGeneral();
-    void setNeedsFetchNodesInGeneral(int value);
+    bool needsFetchNodesInGeneral();
+    void setNeedsFetchNodesInGeneral(bool value);
 
     void unlink();
     void resetGlobalSettings();//Clear and remove any global setting. Not account specific ones.
@@ -623,6 +623,7 @@ protected:
     static const QString transferIdentifierKey;
     static const QString lastPublicHandleKey;
     static const QString lastPublicHandleTimestampKey;
+    static const QString lastPublicHandleTypeKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -659,7 +660,7 @@ protected:
     static const QString defaultHttpsCertIntermediate;
     static const long long defaultHttpsCertExpiration;
     static const int defaultAccountStatus;
-    static const int defaultNeedsFetchNodes;
+    static const bool defaultNeedsFetchNodes;
 };
 
 #endif // PREFERENCES_H

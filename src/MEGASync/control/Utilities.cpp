@@ -15,6 +15,8 @@
 #ifndef WIN32
 #include "megaapi.h"
 #include <utime.h>
+#else
+#include <windows.h>
 #endif
 
 using namespace std;
@@ -683,6 +685,34 @@ QString Utilities::getDefaultBasePath()
     return QString();
 }
 
+void Utilities::getPROurlWithParameters(QString &url)
+{
+    Preferences *preferences = Preferences::instance();
+    MegaApi *megaApi = ((MegaApplication *)qApp)->getMegaApi();
+
+    if (!preferences || !megaApi)
+    {
+        return;
+    }
+
+    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+    url.append(QString::fromUtf8("/uao=%1").arg(userAgent));
+
+    MegaHandle aff;
+    int affType;
+    long long timestamp;
+    preferences->getLastHandleInfo(aff, affType, timestamp);
+
+    if (aff != INVALID_HANDLE)
+    {
+        char *base64aff = MegaApi::handleToBase64(aff);
+        url.append(QString::fromUtf8("/aff=%1/aff_time=%2/aff_type=%3").arg(QString::fromUtf8(base64aff))
+                                                                       .arg(timestamp / 1000)
+                                                                       .arg(affType));
+        delete [] base64aff;
+    }
+}
+
 QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampSince, QString appenHashReference)
 {
     if (!megaApi)
@@ -765,7 +795,6 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
     return QString();
 }
 
-
 void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
 {
     QDesktopWidget *desktop = QApplication::desktop();
@@ -813,3 +842,26 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
     animation->setEasingCurve(curve);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 };
+
+long long Utilities::getSystemsAvailableMemory()
+{
+    long long availMemory = 0;
+#ifdef _WIN32
+    MEMORYSTATUSEX statex;
+    memset(&statex, 0, sizeof (statex));
+    statex.dwLength = sizeof (statex);
+    if (GlobalMemoryStatusEx(&statex))
+    {
+        availMemory = std::min(statex.ullAvailPhys, statex.ullTotalVirtual);
+    }
+    else
+    {
+        std::cerr << "Error getting RAM usage info" << std::endl;
+    }
+#else
+    long long pages = sysconf(_SC_PHYS_PAGES);
+    long long page_size = sysconf(_SC_PAGE_SIZE);
+    availMemory = (pages * page_size);
+#endif
+    return availMemory;
+}
