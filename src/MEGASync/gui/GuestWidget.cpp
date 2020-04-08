@@ -75,6 +75,11 @@ void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
         ui->lProgress->setText(tr("Logging in..."));
         page_progress();
     }
+    if (request->getType() == MegaRequest::TYPE_CREATE_ACCOUNT)
+    {
+        ui->lProgress->setText(tr("Creating account..."));
+        page_progress();
+    }
     else if (request->getType() == MegaRequest::TYPE_LOGOUT && request->getFlag())
     {
         closing = true;
