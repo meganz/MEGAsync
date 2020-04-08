@@ -153,9 +153,9 @@ void VerifyLockMessage::onRequestFinish(MegaApi *api, MegaRequest *request, Mega
         Utilities::animateProperty(m_ui->lEmailSent, 400, "opacity", m_ui->lEmailSent->property("opacity"), 1.0);
 
         int animationTime = 500;
-        QTimer::singleShot(10000-animationTime, this, [this, error, animationTime] () {
+        QTimer::singleShot(10000-animationTime, this, [this, animationTime] () {
             Utilities::animateProperty(m_ui->lEmailSent, animationTime, "opacity", 1.0, 0.5);
-            QTimer::singleShot(animationTime, this, [this, error] () {
+            QTimer::singleShot(animationTime, this, [this] () {
                 m_ui->bResendEmail->setEnabled(true);
             });
         });
@@ -182,7 +182,6 @@ void VerifyLockMessage::on_bResendEmail_clicked()
     {
         case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
         {
-            m_ui->lEmailSent->setStyleSheet(QString::fromUtf8("#lEmailSent {color: rgba(102, 102, 102, 1.0);}"));
             m_ui->lEmailSent->setProperty("opacity", 0.0);
 
             m_ui->bResendEmail->setEnabled(false);
