@@ -200,6 +200,7 @@ private:
         outputFile << "----------------------------- program start -----------------------------\n";
         long long outFileSize = outputFile.tellp();
         std::ofstream logDesktopFile;
+        bool logDesktopFileOpen = false;
 
         while (!logExit)
         {
@@ -273,6 +274,24 @@ private:
                         }
                         else return false;
                 });
+            }
+
+            if (logToDesktopChanged)
+            {
+                logToDesktopChanged = false;
+                if (logToDesktop && !logDesktopFileOpen)
+                {
+    #ifdef WIN32
+                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
+    #else
+                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
+    #endif
+                    logDesktopFileOpen = true;
+                }
+                else if (!logToDesktop && logDesktopFileOpen)
+                {
+                    logDesktopFile.close();
+                }
             }
 
             if (topLevelMemoryGap)
@@ -363,24 +382,6 @@ private:
                 }
                 return;  // This request means we have received a termination signal; close and exit the thread as quick & clean as possible
             }
-
-            if (logToDesktopChanged)
-            {
-                logToDesktopChanged = false;
-                if (logToDesktop && !logDesktopFile)
-                {
-    #ifdef WIN32
-                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
-    #else
-                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
-    #endif
-                }
-                else if (!logToDesktop && logDesktopFile)
-                {
-                    logDesktopFile.close();
-                }
-            }
-
         }
     }
 
