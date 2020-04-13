@@ -196,6 +196,17 @@ License: MIT
 
 https://github.com/libuv/libuv/blob/v1.x/LICENSE
 
+#### NSPopover+MISSINGBackgroundView
+Copyright (c) 2015 Valentin Shergin
+
+A very tiny library that allows to access (and customize) background view of NSPopover.
+
+https://github.com/shergin/NSPopover-MISSINGBackgroundView
+
+License: MIT
+
+https://github.com/shergin/NSPopover-MISSINGBackgroundView/blob/master/LICENSE
+
 #### LibRaw
 Copyright © 2008-2018 LibRaw LLC (info@libraw.org)
 

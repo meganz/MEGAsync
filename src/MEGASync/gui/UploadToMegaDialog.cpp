@@ -2,6 +2,7 @@
 #include "ui_UploadToMegaDialog.h"
 #include "gui/NodeSelector.h"
 #include "control/Utilities.h"
+#include "MegaApplication.h"
 #include <QPointer>
 #include "HighDpiResize.h"
 
@@ -145,14 +146,13 @@ void UploadToMegaDialog::on_bOK_clicked()
     {
         ui->bChange->setEnabled(false);
         ui->bOK->setEnabled(false);
-        MegaNode *rootNode = megaApi->getRootNode();
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
         if (!rootNode)
         {
             return;
         }
 
-        megaApi->createFolder(QString::fromUtf8("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
-        delete rootNode;
+        megaApi->createFolder(QString::fromUtf8("MEGAsync Uploads").toUtf8().constData(), rootNode.get(), delegateListener);
         return;
     }
 

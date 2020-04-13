@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QDir>
 #include <QIcon>
+#include <QEasingCurve>
 #include "megaapi.h"
 
 #include <sys/stat.h>
@@ -169,7 +170,13 @@ public:
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
+    static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
+
+    static void adjustToScreenFunc(QPoint position, QWidget *what);
+
+    static void animatePartialFadeout(QWidget *object, int msecs = 2000);
+    static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
 
 private:
     Utilities() {}
@@ -192,6 +199,8 @@ public:
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
+
+    static long long getSystemsAvailableMemory();
 };
 
 #endif // UTILITIES_H

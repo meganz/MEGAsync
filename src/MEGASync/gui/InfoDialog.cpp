@@ -254,7 +254,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     }
     else
     {
-        regenerateLayout(olddialog);
+        regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED, olddialog);
     }
     highDpiResize.init(this);
 
@@ -282,6 +282,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 InfoDialog::~InfoDialog()
 {
+    removeEventFilter(this);
     delete ui;
     delete gWidget;
     delete activeDownload;
@@ -335,7 +336,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
         filterMenu->hide();
     }
 
-    QTimer::singleShot(1000, [this] () {
+    QTimer::singleShot(1000, this, [this] () {
         if (!isShown)
         {
             emit ui->sTabs->currentChanged(-1);
@@ -499,7 +500,7 @@ void InfoDialog::updateTransfersCount()
 
     if (remainingDownloads <= 0)
     {
-        QTimer::singleShot(5000, [this] () {
+        QTimer::singleShot(5000, this, [this] () {
             if (remainingDownloads <= 0)
             {
                 ui->bTransferManager->setCompletedDownloads(0);
@@ -509,7 +510,7 @@ void InfoDialog::updateTransfersCount()
     }
     if (remainingUploads <= 0)
     {
-        QTimer::singleShot(5000, [this] () {
+        QTimer::singleShot(5000, this, [this] () {
             if (remainingUploads <= 0)
             {
                 ui->bTransferManager->setCompletedUploads(0);
@@ -860,21 +861,9 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bUpgrade_clicked()
 {
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-    Preferences *preferences = Preferences::instance();
-    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-    {
-        mega::MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != mega::INVALID_HANDLE)
-        {
-            char *base64aff = mega::MegaApi::handleToBase64(aff);
-            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-            delete [] base64aff;
-        }
-    }
-
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    QString url = QString::fromUtf8("mega://#pro");
+    Utilities::getPROurlWithParameters(url);
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
 void InfoDialog::openFolder(QString path)
@@ -949,13 +938,6 @@ void InfoDialog::moveArrow(QPoint p)
     arrow->show();
 }
 #endif
-
-void InfoDialog::on_bChats_clicked()
-{
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("").arg(userAgent);
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
-}
 
 void InfoDialog::onOverlayClicked()
 {
@@ -1049,7 +1031,7 @@ void InfoDialog::on_bAddSync_clicked()
                 firstSyncHandle = preferences->getMegaFolderHandle(0);
             }
 
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
             if (rootNode)
             {
                 long long rootHandle = rootNode->getHandle();
@@ -1064,7 +1046,6 @@ void InfoDialog::on_bAddSync_clicked()
                     }
                     syncsMenu->addAction(addAction);
                 }
-                delete rootNode;
             }
 
             addSyncAction->setMenu(syncsMenu.get());
@@ -1406,79 +1387,98 @@ void InfoDialog::on_bStorageDetails_clicked()
     accountDetailsDialog = NULL;
 }
 
-void InfoDialog::regenerateLayout(InfoDialog* olddialog)
+void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
 {
-    bool logged = preferences->logged();
+    int actualAccountState;
 
-    if (loggedInMode == logged)
+    blockState ? actualAccountState = blockState
+                  : preferences->logged() ? actualAccountState = STATE_LOGGEDIN
+                                          : actualAccountState = STATE_LOGOUT;
+
+    if (actualAccountState == loggedInMode)
     {
         return;
     }
-    loggedInMode = logged;
+
+    loggedInMode = actualAccountState;
 
     QLayout *dialogLayout = layout();
-    if (!loggedInMode)
+    switch(loggedInMode)
     {
-        if (!gWidget)
+        case STATE_LOGOUT:
+        case STATE_LOCKED_EMAIL:
+        case STATE_LOCKED_SMS:
         {
-            gWidget = new GuestWidget();
-            connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
-            if (olddialog)
+            if (!gWidget)
             {
-                auto t = olddialog->gWidget->getTexts();
-                gWidget->setTexts(t.first, t.second);
+                gWidget = new GuestWidget();
+
+                connect(gWidget, SIGNAL(onPageLogin()), this, SLOT(resetLoggedInMode()));
+                connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
+                if (olddialog)
+                {
+                    auto t = olddialog->gWidget->getTexts();
+                    gWidget->setTexts(t.first, t.second);
+                }
             }
+            else
+            {
+                gWidget->enableListener();
+            }
+
+            gWidget->setBlockState(blockState);
+
+            updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
+            setOverQuotaMode(false);
+            ui->wPSA->removeAnnounce();
+
+            dialogLayout->removeWidget(ui->wInfoDialogIn);
+            ui->wInfoDialogIn->setVisible(false);
+            dialogLayout->addWidget(gWidget);
+            gWidget->setVisible(true);
+
+            #ifdef __APPLE__
+                if (!dummy)
+                {
+                    dummy = new QWidget();
+                }
+
+                dummy->resize(1,1);
+                dummy->setWindowFlags(Qt::FramelessWindowHint);
+                dummy->setAttribute(Qt::WA_NoSystemBackground);
+                dummy->setAttribute(Qt::WA_TranslucentBackground);
+                dummy->show();
+            #endif
+
+            adjustSize();
+            break;
         }
-        else
+
+        case STATE_LOGGEDIN:
         {
-            gWidget->enableListener();
+            if (gWidget)
+            {
+                gWidget->disableListener();
+                gWidget->initialize();
+
+                dialogLayout->removeWidget(gWidget);
+                gWidget->setVisible(false);
+            }
+            dialogLayout->addWidget(ui->wInfoDialogIn);
+            ui->wInfoDialogIn->setVisible(true);
+
+            #ifdef __APPLE__
+                if (dummy)
+                {
+                    dummy->hide();
+                    delete dummy;
+                    dummy = NULL;
+                }
+            #endif
+
+            adjustSize();
+            break;
         }
-
-        updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
-        setOverQuotaMode(false);
-        ui->wPSA->removeAnnounce();
-
-        dialogLayout->removeWidget(ui->wInfoDialogIn);
-        ui->wInfoDialogIn->setVisible(false);
-        dialogLayout->addWidget(gWidget);
-        gWidget->setVisible(true);
-
-        #ifdef __APPLE__
-            if (!dummy)
-            {
-                dummy = new QWidget();
-            }
-
-            dummy->resize(1,1);
-            dummy->setWindowFlags(Qt::FramelessWindowHint);
-            dummy->setAttribute(Qt::WA_NoSystemBackground);
-            dummy->setAttribute(Qt::WA_TranslucentBackground);
-            dummy->show();
-        #endif
-
-        adjustSize();
-
-    }
-    else
-    {
-        gWidget->disableListener();
-        gWidget->initialize();
-
-        dialogLayout->removeWidget(gWidget);
-        gWidget->setVisible(false);
-        dialogLayout->addWidget(ui->wInfoDialogIn);
-        ui->wInfoDialogIn->setVisible(true);
-
-        #ifdef __APPLE__
-            if (dummy)
-            {
-                dummy->hide();
-                delete dummy;
-                dummy = NULL;
-            }
-        #endif
-
-        adjustSize();
 
     }
 
@@ -1584,6 +1584,11 @@ void InfoDialog::animateStates(bool opt)
 void InfoDialog::onUserAction(int action)
 {
     app->userAction(action);
+}
+
+void InfoDialog::resetLoggedInMode()
+{
+    loggedInMode = STATE_NONE;
 }
 
 void InfoDialog::on_tTransfers_clicked()
@@ -1806,6 +1811,11 @@ void InfoDialog::highLightMenuEntry(QAction *action)
     }
     pAction->setHighlight(true);
     lastHovered = pAction;
+}
+
+int InfoDialog::getLoggedInMode() const
+{
+    return loggedInMode;
 }
 
 void InfoDialog::setBlockedStateLabel(QString state)
