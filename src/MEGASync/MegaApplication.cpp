@@ -1769,6 +1769,8 @@ void MegaApplication::start()
         {
             preferences->setInstallationTime(-1);
         }
+
+        Platform::reloadFinderExtension();
     }
 
     applyProxySettings();
@@ -3066,8 +3068,6 @@ void MegaApplication::cleanAll()
         args.append(QString::fromAscii("-n"));
         args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
-
-        Platform::reloadFinderExtension();
 #endif
 
 #ifdef WIN32
