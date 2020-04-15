@@ -33,6 +33,7 @@ void MacXPlatform::initialize(int argc, char *argv[])
     {
         if (!enableSetuidBit())
         {
+            MacXPlatform::disableSignalHandler();
             ::exit(0);
         }
 
@@ -47,6 +48,7 @@ void MacXPlatform::initialize(int argc, char *argv[])
         args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
         sleep(2);
+        MacXPlatform::disableSignalHandler();
         ::exit(0);
     }
 }
@@ -326,4 +328,13 @@ bool MacXPlatform::isUserActive()
 double MacXPlatform::getUpTime()
 {
     return uptime();
+}
+
+void MacXPlatform::disableSignalHandler()
+{
+    signal(SIGSEGV, SIG_DFL);
+    signal(SIGBUS, SIG_DFL);
+    signal(SIGILL, SIG_DFL);
+    signal(SIGFPE, SIG_DFL);
+    signal(SIGABRT, SIG_DFL);
 }

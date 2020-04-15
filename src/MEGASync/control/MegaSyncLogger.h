@@ -12,6 +12,7 @@
 
 #define LOGS_FOLDER_LEAFNAME_QSTRING QString::fromUtf8("logs")
 
+class LoggingThread;
 class MegaSyncLogger : public QObject, public mega::MegaLogger
 {
     Q_OBJECT
@@ -46,6 +47,7 @@ signals:
 
 private:
     QString mDesktopPath;
+    std::unique_ptr<LoggingThread> g_loggingThread;
 };
 
 extern MegaSyncLogger *g_megaSyncLogger;   // for crash report flush
