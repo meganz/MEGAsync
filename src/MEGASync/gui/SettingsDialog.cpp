@@ -1321,9 +1321,16 @@ int SettingsDialog::saveSettings()
             //Check for removed or disabled folders
             for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
             {
-                QString localPath = preferences->getLocalFolder(i);
-                QString megaPath = preferences->getMegaFolder(i);
-                MegaHandle megaHandle = preferences->getMegaFolderHandle(i);
+                auto syncSetting = preferences->getSyncSetting(i);
+                if (!syncSetting)
+                {
+                    assert("missing setting when looping for saving");
+                    continue;
+                }
+
+                QString localPath = syncSetting->getLocalFolder();
+                QString megaPath = syncSetting->getMegaFolder();
+                MegaHandle megaHandle = syncSetting->getMegaHandle();
 
                 int j;
                 for (j = 0; j < ui->tSyncs->rowCount(); j++)
@@ -1334,108 +1341,89 @@ int SettingsDialog::saveSettings()
 
                     if (!megaPath.compare(newMegaPath) && !localPath.compare(newLocalPath))
                     {
-                        if (!enabled && preferences->isFolderActive(i) != enabled)
+                        if (!enabled && syncSetting->isEnabled()) //sync disabled
                         {
                             Platform::syncFolderRemoved(preferences->getLocalFolder(i),
                                                         preferences->getSyncName(i),
                                                         preferences->getSyncID(i));
-                            preferences->setSyncState(i, enabled);
+//                            preferences->setSyncState(i, enabled);
+                            //TODO: ensure this is handled in onSyncDeleted!
 
                             MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-                            megaApi->removeSync(node);
+//                            megaApi->removeSync(node); //TODO: call to disableSync!
                             delete node;
+                        }
+                        else if (enabled && !syncSetting->isEnabled()) //sync re-enabled!
+                        {
+                            //TODO: needs calling to
+//                            megaApi->enableSync(syncSetting->tag());
                         }
                         break;
                     }
+                    else
+                    {
+                        assert("paths changed for an already configured sync");
+                    }
                 }
 
-                if (j == ui->tSyncs->rowCount())
+                if (j == ui->tSyncs->rowCount()) //sync no longer found in settings: needs removing
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(preferences->getSyncName(i)).toUtf8().constData());
                     bool active = preferences->isFolderActive(i);
                     MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-                    if (active)
-                    {
-                        Platform::syncFolderRemoved(preferences->getLocalFolder(i),
-                                                    preferences->getSyncName(i),
-                                                    preferences->getSyncID(i));
+//                    if (active) //That no longer makes sense: we need to delete regardless if active or not
+//                    {
+                        //TODO: do this in onSyncDeleted
+//                        Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+//                                                    preferences->getSyncName(i),
+//                                                    preferences->getSyncID(i));
                         megaApi->removeSync(node);
-                    }
-                    preferences->removeSyncedFolder(i);
+//                    }
+//                    preferences->removeSyncedFolder(i); //TODO: delete this and add upon onDeletedSync
                     delete node;
-                    i--;
                 }
             }
 
-            //Check for new or enabled folders
-            for (int i = 0; i < ui->tSyncs->rowCount(); i++)
+
+            //TODO: still need to connect to changes in settings and reload configuration (loadSettings recall should be enough)
+
+            for (int j = 0; j < ui->tSyncs->rowCount(); j++)// rowCount() is incorrect! TODO: follow here!
             {
-                QString localFolderPath = ui->tSyncs->item(i, 0)->text();
-                QString megaFolderPath = ui->tSyncs->item(i, 1)->text();
-                bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->isChecked();
-
-                QString syncName = syncNames.at(i);
-                MegaNode *node = megaApi->getNodeByPath(megaFolderPath.toUtf8().constData());
-                if (!node)
+                auto item = ui->tSyncs->item(j, 3);
+                if (!item)
                 {
-                    if (enabled)
-                    {
-                        ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
-                    }
+                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii("invalid item saving settings %1")
+                                 .arg(j).toUtf8().constData());
 
                     continue;
                 }
-
-                int j;
-
-                QFileInfo localFolderInfo(localFolderPath);
-                localFolderPath = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
-                if (!localFolderPath.size() || !localFolderInfo.isDir())
+                auto rowTagText = item->text();
+                if (!rowTagText.size())
                 {
-                    if (enabled)
-                    {
-                        ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
-                    }
-
                     continue;
                 }
-
-                for (j = 0; j < preferences->getNumSyncedFolders(); j++)
+                auto rowTag =  rowTagText.toInt();
+                if (!rowTag) //not found: new sync
                 {
-                    QString previousLocalPath = preferences->getLocalFolder(j);
-                    QString previousMegaPath = preferences->getMegaFolder(j);
-
-                    if (!megaFolderPath.compare(previousMegaPath) && !localFolderPath.compare(previousLocalPath))
-                    {
-                        if (enabled && preferences->isFolderActive(j) != enabled)
-                        {
-                            preferences->setMegaFolderHandle(j, node->getHandle());
-                            preferences->setSyncState(j, enabled);
-                            megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
-                        }
-                        break;
-                    }
-                }
-
-                if (j == preferences->getNumSyncedFolders())
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync: %1 - %2")
-                                 .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
-
-                    preferences->addSyncedFolder(localFolderPath,
-                                                 megaFolderPath,
-                                                 node->getHandle(),
-                                                 syncName, enabled);
-
+                    bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
                     if (enabled)
                     {
-                        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                        QString localFolderPath = ui->tSyncs->item(j, 0)->text();
+                        QString megaFolderPath = ui->tSyncs->item(j, 1)->text();
+                        std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(megaFolderPath.toUtf8().constData()));
+
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync from Settings: %1 - %2")
+                                     .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
+                        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node.get());
+                    }
+                    else
+                    {
+                        assert("adding a disabled sync is not allowed");
                     }
                 }
-                delete node;
             }
 
-            app->createAppMenus();
+            app->createAppMenus(); //TODO: this makes no sense here, but in callbacks
             syncsChanged = false;
         }
 #ifdef _WIN32
@@ -1729,25 +1717,42 @@ void SettingsDialog::loadSyncSettings()
     int numFolders = preferences->getNumSyncedFolders();
     ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
     ui->tSyncs->setRowCount(numFolders);
-    ui->tSyncs->setColumnCount(3);
+    ui->tSyncs->setColumnCount(4);
     ui->tSyncs->setColumnWidth(2, 21);
+    ui->tSyncs->setColumnHidden(3, true); //hidden tag
 
     for (int i = 0; i < numFolders; i++)
     {
+        auto syncSetting = preferences->getSyncSetting(i);
+        if (!syncSetting)
+        {
+            assert("A sync has been deleting while trying to loop in");
+            continue;
+        }
+
+        if (!syncSetting->getMegaFolder().size())
+        {
+            //TODO: log warn!
+            continue; // do not try to paint a sync that's not loaded!
+        }
+
         QTableWidgetItem *localFolder = new QTableWidgetItem();
-        localFolder->setText(preferences->getLocalFolder(i));
+        localFolder->setText(syncSetting->getLocalFolder());
         QTableWidgetItem *megaFolder = new QTableWidgetItem();
-        megaFolder->setText(preferences->getMegaFolder(i));
-        localFolder->setToolTip(preferences->getLocalFolder(i));
+        megaFolder->setText(syncSetting->getMegaFolder());
+        localFolder->setToolTip(syncSetting->getLocalFolder());
         ui->tSyncs->setItem(i, 0, localFolder);
-        megaFolder->setToolTip(preferences->getMegaFolder(i));
+        megaFolder->setToolTip(syncSetting->getMegaFolder());
         ui->tSyncs->setItem(i, 1, megaFolder);
-        syncNames.append(preferences->getSyncName(i));
+        syncNames.append(syncSetting->name());
         QCheckBox *c = new QCheckBox();
-        c->setChecked(preferences->isFolderActive(i));
+        c->setChecked(syncSetting->isEnabled()); //TODO: review this once distinction between enabled/disabled vs temporary error
         c->setToolTip(tr("Enable / disable"));
         connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
         ui->tSyncs->setCellWidget(i, 2, c);
+        QLabel *lTag = new QLabel();
+        lTag->setText(QString::number(syncSetting->tag()));
+        ui->tSyncs->setCellWidget(i, 3, lTag);
     }
 }
 

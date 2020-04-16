@@ -100,6 +100,8 @@ class MegaApplication : public QApplication, public mega::MegaListener, public S
 
     static void loadDataPath();
 
+    void migrateSyncConfToSdk();
+
 public:
 
     explicit MegaApplication(int &argc, char **argv);
@@ -129,6 +131,10 @@ public:
     virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
     virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
+
+    virtual void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync);
+    virtual void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync);
+
     virtual void onCheckDeferredPreferencesSync(bool timeout);
 
     mega::MegaApi *getMegaApi() { return megaApi; }
@@ -287,7 +293,7 @@ protected:
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn(bool fromWizard);
-    void startSyncs();
+    void startSyncs(); //initializes syncs configured in the setup wizard
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);

@@ -6,12 +6,71 @@
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
+#include <QDataStream>
 
 #include "control/EncryptedSettings.h"
 #include <assert.h>
+#include <memory>
 #include "megaapi.h"
 
 Q_DECLARE_METATYPE(QList<long long>)
+
+class SyncSetting
+{
+private:
+    std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
+    int mTag = 0;
+    QString mName;
+    QString mMegaFolder; //TODO: this might be persisted? when to update it?
+
+public:
+    SyncSetting();
+    SyncSetting(QString initializer);
+    ~SyncSetting();
+    SyncSetting(const SyncSetting& a);
+    SyncSetting(SyncSetting&& a) = default;
+    SyncSetting& operator=(const SyncSetting& a);
+    SyncSetting& operator=(SyncSetting&& a) = default;
+
+
+    SyncSetting(mega::MegaSync *sync, const char *value = nullptr);
+    int tag() const;
+    void setTag(int tag);
+    QString name() const;
+    void setName(const QString &name);
+
+    void setSync(mega::MegaSync *sync);
+
+    QString getLocalFolder() const;
+    long long getLocalFingerprint() const;
+    QString getMegaFolder() const;
+    long long getMegaHandle() const;
+    bool isEnabled() const;
+    bool isTemporaryDisabled() const;
+
+    void setMegaFolder(const char *value);
+
+    mega::MegaSync* getSync() const;
+
+    QString toString();
+};
+
+struct OldSyncData
+{
+    OldSyncData(QString name, QString localFolder, long long  megaHandle,
+                long long localfp, bool enabled, int pos);
+    QString mName;
+    QString mLocalFolder;
+    long long mMegaHandle;
+    long long mLocalfp;
+    bool mEnabled;
+
+    int mPos;
+};
+
+QDataStream& operator<<(QDataStream& out, const SyncSetting& v);
+
+QDataStream& operator>>(QDataStream& in, SyncSetting& v);
 
 class Preferences : public QObject
 {
@@ -264,20 +323,24 @@ public:
     long long importFolder();
     void setImportFolder(long long value);
 
+    // sync related
+    void removeOldCachedSync(int position);
+    QList<OldSyncData> readOldCachedSyncs();//get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    void saveOldCachedSyncs(); //save the old cache (intended to clean them)
+
+    std::shared_ptr<SyncSetting> getSyncSetting(int num);
+
+    void updateSyncSettings(mega::MegaSync *sync, const char *remotePath = nullptr);
+    void pickInfoFromOldSync(const OldSyncData &osd, int tag);
     int getNumSyncedFolders();
     QString getSyncName(int num);
     QString getSyncID(int num);
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
     long long getLocalFingerprint(int num);
-    void setLocalFingerprint(int num, long long fingerprint);
     mega::MegaHandle getMegaFolderHandle(int num);
     bool isFolderActive(int num);
     bool isTemporaryInactiveFolder(int num);
-    void setSyncState(int num, bool enabled, bool temporaryDisabled = false);
-
-    bool isOneTimeActionDone(int action);
-    void setOneTimeActionDone(int action, bool done);
 
     QStringList getSyncNames();
     QStringList getSyncIDs();
@@ -285,15 +348,17 @@ public:
     QStringList getLocalFolders();
     QList<long long> getMegaFolderHandles();
 
-    void addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName = QString(), bool active = true);
-    void setMegaFolderHandle(int num, mega::MegaHandle handle);
     void removeSyncedFolder(int num);
+    void removeSyncedFolderByTag(int tag);
     void removeAllFolders();
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
     QStringList getExcludedSyncPaths();
     void setExcludedSyncPaths(QStringList paths);
+
+    bool isOneTimeActionDone(int action);
+    void setOneTimeActionDone(int action, bool done);
 
     QStringList getPreviousCrashes();
     void setPreviousCrashes(QStringList crashes);
@@ -475,21 +540,28 @@ protected:
     void logout();
 
     void loadExcludedSyncNames();
+
+    // sync related:
     void readFolders();
-    void writeFolders();
+
+    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
+    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
+
 
     void storeSessionInGeneral(QString session);
     QString getSessionInGeneral();
 
     EncryptedSettings *settings;
-    QStringList syncNames;
-    QStringList syncIDs;
-    QStringList megaFolders;
-    QStringList localFolders;
-    QList<long long> megaFolderHandles;
-    QList<long long> localFingerprints;
-    QList<bool> activeFolders;
-    QList<bool> temporaryInactiveFolders;
+
+    QList<int> configuredSyncs; //Tags of configured syncs
+    QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
+
+    QList<OldSyncData> oldSyncs;
+
+    // loaded syncs at startup //TODO: extend docs on all these
+    QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+
+
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;
     bool errorFlag;
@@ -509,6 +581,7 @@ protected:
     static const QString currentAccountStatusKey;
     static const QString needsFetchNodesKey;
     static const QString syncsGroupKey;
+    static const QString syncsGroupByTagKey;
     static const QString emailKey;
     static const QString firstNameKey;
     static const QString lastNameKey;
@@ -564,7 +637,8 @@ protected:
     static const QString proxyRequiresAuthKey;
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
-    static const QString syncNameKey;
+    static const QString configuredSyncsKey;
+    static const QString syncNameKey;//TODO: remove unused keys
     static const QString syncIdKey;
     static const QString localFolderKey;
     static const QString megaFolderKey;

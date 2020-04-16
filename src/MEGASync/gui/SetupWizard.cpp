@@ -621,7 +621,7 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
+        mPreconfiguredSyncs.append(PreConfiguredSync(ui->eLocalFolder->text(), selectedMegaFolderHandle, syncName));
         done(QDialog::Accepted);
     }
     else
@@ -1171,6 +1171,11 @@ void SetupWizard::setLevelStrength(int level)
     }
 }
 
+QList<PreConfiguredSync> SetupWizard::preconfiguredSyncs() const
+{
+    return mPreconfiguredSyncs;
+}
+
 void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
@@ -1228,4 +1233,25 @@ void SetupWizard::onPasswordTextChanged(QString text)
 {
     int strength = megaApi->getPasswordStrength(text.toUtf8().constData());
     text.isEmpty() ? setLevelStrength(-1) : setLevelStrength(strength);
+}
+
+PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
+    mLocalFolder{localFolder}, mMegaFolderHandle{megaFolderHandle},mSyncName(syncName)
+{
+
+}
+
+QString PreConfiguredSync::localFolder() const
+{
+    return mLocalFolder;
+}
+
+QString PreConfiguredSync::syncName() const
+{
+    return mSyncName;
+}
+
+mega::MegaHandle PreConfiguredSync::megaFolderHandle() const
+{
+    return mMegaFolderHandle;
 }

@@ -908,27 +908,18 @@ void InfoDialog::addSync(MegaHandle h)
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     MegaHandle handle = dialog->getMegaFolder();
-    MegaNode *node = megaApi->getNodeByHandle(handle);
+    std::unique_ptr<MegaNode> node(megaApi->getNodeByHandle(handle));
     QString syncName = dialog->getSyncName();
     delete dialog;
     dialog = NULL;
     if (!localFolderPath.length() || !node)
     {
-        delete node;
         return;
     }
 
-   const char *nPath = megaApi->getNodePath(node);
-   if (!nPath)
-   {
-       delete node;
-       return;
-   }
 
-   preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
-   delete [] nPath;
-   megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
-   delete node;
+   MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
+   megaApi->syncFolder(localFolderPath.toUtf8().constData(), node.get());
 }
 
 #ifdef __APPLE__

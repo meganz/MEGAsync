@@ -10,6 +10,8 @@ using namespace mega;
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
+Q_DECLARE_METATYPE(SyncSetting);
+
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
 const char Preferences::USER_AGENT[] = "MEGAsync/4.3.2.0";
 const int Preferences::VERSION_CODE = 4302;
@@ -217,6 +219,7 @@ const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("https://g.api.mega.co.nz/cs");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
+const QString Preferences::syncsGroupByTagKey       = QString::fromAscii("SyncsByTag");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::currentAccountStatusKey  = QString::fromAscii("currentAccountStatus");
 const QString Preferences::needsFetchNodesKey       = QString::fromAscii("needsFetchNodes");
@@ -286,6 +289,7 @@ const QString Preferences::proxyPortKey             = QString::fromAscii("proxyP
 const QString Preferences::proxyRequiresAuthKey     = QString::fromAscii("proxyRequiresAuth");
 const QString Preferences::proxyUsernameKey         = QString::fromAscii("proxyUsername");
 const QString Preferences::proxyPasswordKey         = QString::fromAscii("proxyPassword");
+const QString Preferences::configuredSyncsKey       = QString::fromAscii("configuredSyncs");
 const QString Preferences::syncNameKey              = QString::fromAscii("syncName");
 const QString Preferences::syncIdKey                = QString::fromAscii("syncId");
 const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
@@ -597,6 +601,7 @@ QString Preferences::getSessionInGeneral()
     mutex.unlock();
     return value;
 }
+
 
 QString Preferences::getSession()
 {
@@ -2198,326 +2203,274 @@ void Preferences::setImportFolder(long long value)
     mutex.unlock();
 }
 
+void Preferences::updateSyncSettings(MegaSync *sync, const char *remotePath)
+{
+    if (!sync)
+    {
+        return;
+    }
+
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    std::shared_ptr<SyncSetting> cs;
+
+    if (configuredSyncsMap.contains(sync->getTag()))
+    {
+        cs = configuredSyncsMap[sync->getTag()];
+        cs->setSync(sync);
+        cs->setMegaFolder(remotePath);
+    }
+    else
+    {
+        cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync, remotePath);
+        configuredSyncs.append(sync->getTag());
+    }
+
+    writeSyncSetting(cs);
+
+    settings->sync();
+}
+
+void Preferences::pickInfoFromOldSync(const OldSyncData &osd, int tag)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+    std::shared_ptr<SyncSetting> cs;
+
+    if (!configuredSyncsMap.contains(tag)) //this should always be the case
+    {
+        cs = configuredSyncsMap[tag] = std::make_shared<SyncSetting>();
+    }
+    cs->setTag(tag);
+    cs->setName(osd.mName);
+
+    configuredSyncs.append(tag);
+
+    writeSyncSetting(cs);
+
+    settings->sync();
+}
+
+/////////   Sync related stuff /////////////////////
+std::shared_ptr<SyncSetting> Preferences::getSyncSetting(int num)
+{
+    QMutexLocker qm(&mutex);
+    return configuredSyncsMap[configuredSyncs.at(num)];
+}
+
+QDataStream& operator<<(QDataStream& out, const SyncSetting& v)
+{
+    out << v.tag() << v.name();
+    return out;
+}
+
+QDataStream& operator>>(QDataStream& in, SyncSetting& v) {
+    decltype(v.tag()) tag; in >> tag; v.setTag(tag);
+    decltype(v.name()) name; in >> name; v.setName(name);
+    return in;
+}
+
 int Preferences::getNumSyncedFolders()
 {
-    mutex.lock();
-    int value = localFolders.length();
-    mutex.unlock();
-    return value;
+    QMutexLocker qm(&mutex);
+    return  configuredSyncs.size();
 }
 
 QString Preferences::getSyncName(int num)
 {
-    mutex.lock();
-    assert(logged() && (syncNames.size()>num));
-    if (num >= syncNames.size())
+    QMutexLocker qm(&mutex);
+    assert(logged() && (configuredSyncs.size()>num));
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return QString();
     }
-    QString value = syncNames.at(num);
-    mutex.unlock();
-    return value;
+    return configuredSyncsMap[configuredSyncs.at(num)]->name();
 }
 
 QString Preferences::getSyncID(int num)
 {
-    mutex.lock();
-    assert(logged() && (syncIDs.size() > num));
-    if (num >= syncIDs.size())
+    QMutexLocker qm(&mutex);
+    assert(logged() && (configuredSyncs.size() > num));
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return QString();
     }
-    QString value = syncIDs.at(num);
-    mutex.unlock();
-    return value;
+    return QString::number(configuredSyncsMap[configuredSyncs.at(num)]->tag());
 }
 
 QString Preferences::getLocalFolder(int num)
 {
-    mutex.lock();
-    assert(logged() && (localFolders.size()>num));
-    if (num >= localFolders.size())
+    QMutexLocker qm(&mutex);
+    assert(logged() && (configuredSyncs.size()>num));
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return QString();
     }
-
-    QFileInfo fileInfo(localFolders.at(num));
-    QString value = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
-    if (value.isEmpty())
-    {
-        value = QDir::toNativeSeparators(localFolders.at(num));
-    }
-
-    mutex.unlock();
-    return value;
+    return configuredSyncsMap[configuredSyncs.at(num)]->getLocalFolder();
 }
 
 QString Preferences::getMegaFolder(int num)
 {
-    mutex.lock();
-    assert(logged() && (megaFolders.size()>num));
-    if (num >= megaFolders.size())
+    QMutexLocker qm(&mutex);
+    assert(logged() && (configuredSyncs.size()>num)/* && configuredSyncs.at(num).sync()*/); //TODO: add the same check in all similar asserts?
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return QString();
     }
-    QString value = megaFolders.at(num);
-    mutex.unlock();
-    return value;
+    return configuredSyncsMap[configuredSyncs.at(num)]->getMegaFolder();
 }
 
 long long Preferences::getLocalFingerprint(int num)
 {
-    mutex.lock();
-    assert(logged() && (localFingerprints.size()>num));
-    if (num >= localFingerprints.size())
+    QMutexLocker qm(&mutex);
+    assert(logged() && (configuredSyncs.size()>num));
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return 0;
     }
-    long long value = localFingerprints.at(num);
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setLocalFingerprint(int num, long long fingerprint)
-{
-    mutex.lock();
-    if (num >= localFingerprints.size())
-    {
-        mutex.unlock();
-        return;
-    }
-    localFingerprints[num] = fingerprint;
-    writeFolders();
-    mutex.unlock();
+    return configuredSyncsMap[configuredSyncs.at(num)]->getLocalFingerprint();
 }
 
 MegaHandle Preferences::getMegaFolderHandle(int num)
 {
-    mutex.lock();
-    assert(logged() && (megaFolderHandles.size()>num));
-    if (num >= megaFolderHandles.size())
+    QMutexLocker qm(&mutex);
+    assert(logged() && (configuredSyncs.size()>num));
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return mega::INVALID_HANDLE;
     }
-    long long value = megaFolderHandles.at(num);
-    mutex.unlock();
-    return value;
+
+    return configuredSyncsMap[configuredSyncs.at(num)]->getMegaHandle();
 }
 
-bool Preferences::isFolderActive(int num)
+bool Preferences::isFolderActive(int num) //TODO: study usages of this one
 {
-    mutex.lock();
-    if (num >= activeFolders.size())
+    QMutexLocker qm(&mutex);
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return false;
     }
-    bool value = activeFolders.at(num);
-    mutex.unlock();
-    return value;
+    return configuredSyncsMap[configuredSyncs.at(num)]->isEnabled();
 }
 
 bool Preferences::isTemporaryInactiveFolder(int num)
 {
-    mutex.lock();
-    if (num >= temporaryInactiveFolders.size())
+    QMutexLocker qm(&mutex);
+    if (num >= configuredSyncs.size())
     {
-        mutex.unlock();
         return false;
     }
-    bool value = temporaryInactiveFolders.at(num);
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setSyncState(int num, bool enabled, bool temporaryDisabled)
-{
-    mutex.lock();
-    if (num >= activeFolders.size() || num >= temporaryInactiveFolders.size())
-    {
-        mutex.unlock();
-        return;
-    }
-    activeFolders[num] = enabled;
-    temporaryInactiveFolders[num] = temporaryDisabled;
-    writeFolders();
-    mutex.unlock();
-
-    if (enabled)
-    {
-        Platform::syncFolderAdded(localFolders[num], syncNames[num], syncIDs[num]);
-    }
-}
-
-bool Preferences::isOneTimeActionDone(int action)
-{
-    mutex.lock();
-    QString currentAccount;
-    if (logged())
-    {
-        settings->endGroup();
-        currentAccount = settings->value(currentAccountKey).toString();
-    }
-
-    bool value = getValue<bool>(oneTimeActionDoneKey + QString::number(action), false);
-
-    if (!currentAccount.isEmpty())
-    {
-        settings->beginGroup(currentAccount);
-    }
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setOneTimeActionDone(int action, bool done)
-{
-    mutex.lock();
-    QString currentAccount;
-    if (logged())
-    {
-        settings->endGroup();
-        currentAccount = settings->value(currentAccountKey).toString();
-    }
-
-    settings->setValue(oneTimeActionDoneKey + QString::number(action), done);
-    setCachedValue(oneTimeActionDoneKey + QString::number(action), done);
-
-    if (!currentAccount.isEmpty())
-    {
-        settings->beginGroup(currentAccount);
-    }
-    settings->sync();
-    mutex.unlock();
+    return configuredSyncsMap[configuredSyncs.at(num)]->isTemporaryDisabled();
 }
 
 QStringList Preferences::getSyncNames()
 {
-    mutex.lock();
-    QStringList value = syncNames;
-    mutex.unlock();
+    QMutexLocker qm(&mutex);
+    QStringList value;
+    for (auto &cs : configuredSyncs)
+    {
+        value.append(configuredSyncsMap[cs]->name());
+    }
     return value;
 }
 
 QStringList Preferences::getSyncIDs()
 {
-    mutex.lock();
-    QStringList value = syncIDs;
-    mutex.unlock();
+    QMutexLocker qm(&mutex);
+    QStringList value;
+    for (auto &cs : configuredSyncs)
+    {
+        value.append(QString::number(configuredSyncsMap[cs]->tag()));
+    }
     return value;
 }
 
 QStringList Preferences::getMegaFolders()
 {
-    mutex.lock();
-    QStringList value = megaFolders;
-    mutex.unlock();
+    QMutexLocker qm(&mutex);
+    QStringList value;
+    for (auto &cs : configuredSyncs)
+    {
+        value.append(configuredSyncsMap[cs]->getMegaFolder());
+    }
     return value;
 }
 
 QStringList Preferences::getLocalFolders()
 {
-    mutex.lock();
-    QStringList value = localFolders;
-    mutex.unlock();
+    QMutexLocker qm(&mutex);
+    QStringList value;
+    for (auto &cs : configuredSyncs)
+    {
+        value.append(configuredSyncsMap[cs]->getLocalFolder());
+    }
     return value;
 }
 
 QList<long long> Preferences::getMegaFolderHandles()
 {
-    mutex.lock();
-    QList<long long> value = megaFolderHandles;
-    mutex.unlock();
+    QMutexLocker qm(&mutex);
+    QList<long long> value;
+    for (auto &cs : configuredSyncs)
+    {
+        value.append(configuredSyncsMap[cs]->getMegaHandle());
+    }
     return value;
-}
-
-void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName,  bool active)
-{
-    mutex.lock();
-    assert(logged());
-
-    QFileInfo localFolderInfo(localFolder);
-    if (syncName.isEmpty())
-    {
-        syncName = localFolderInfo.fileName();
-    }
-
-    if (syncName.isEmpty())
-    {
-        syncName = QDir::toNativeSeparators(localFolder);
-    }
-
-    syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
-
-    localFolder = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
-    syncNames.append(syncName);
-    QString syncID = QUuid::createUuid().toString().toUpper();
-    syncIDs.append(syncID);
-    localFolders.append(localFolder);
-    megaFolders.append(megaFolder);
-    megaFolderHandles.append(megaFolderHandle);
-    activeFolders.append(active);
-    temporaryInactiveFolders.append(false);
-    localFingerprints.append(0);
-    writeFolders();
-    mutex.unlock();
-    Platform::syncFolderAdded(localFolder, syncName, syncID);
-}
-
-void Preferences::setMegaFolderHandle(int num, MegaHandle handle)
-{
-    mutex.lock();
-    if (num >= megaFolderHandles.size())
-    {
-        mutex.unlock();
-        return;
-    }
-    megaFolderHandles[num] = handle;
-    writeFolders();
-    mutex.unlock();
 }
 
 void Preferences::removeSyncedFolder(int num)
 {
     mutex.lock();
     assert(logged());
-    syncNames.removeAt(num);
-    syncIDs.removeAt(num);
-    localFolders.removeAt(num);
-    megaFolders.removeAt(num);
-    megaFolderHandles.removeAt(num);
-    activeFolders.removeAt(num);
-    temporaryInactiveFolders.removeAt(num);
-    localFingerprints.removeAt(num);
-    writeFolders();
+    removeSyncSetting(configuredSyncsMap[configuredSyncs.at(num)]);
+    configuredSyncsMap.remove(configuredSyncs.at(num));
+    configuredSyncs.removeAt(num);
+    mutex.unlock();
+}
+
+void Preferences::removeSyncedFolderByTag(int tag)
+{
+    mutex.lock();
+    assert(logged());
+
+    removeSyncSetting(configuredSyncsMap[tag]);
+    configuredSyncsMap.remove(tag);
+
+    auto it = configuredSyncs.begin();
+    while (it != configuredSyncs.end())
+    {
+        if ((*it) == tag)
+        {
+            it = configuredSyncs.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
     mutex.unlock();
 }
 
 void Preferences::removeAllFolders()
 {
-    mutex.lock();
+    QMutexLocker qm(&mutex);
     assert(logged());
 
-    for (int i = 0; i < localFolders.size(); i++)
-    {
-        Platform::syncFolderRemoved(localFolders[i], syncNames[i], syncIDs[i]);
-    }
+    //remove all configured syncs
+    settings->beginGroup(syncsGroupByTagKey);
+    settings->remove(QString::fromAscii("")); //remove group and all its settingsings));
+    settings->endGroup();
 
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
-    writeFolders();
-    mutex.unlock();
+    for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
+    {
+        //TODO: reuse this one whenevere else syncFolderRemoved needs to be called!
+        Platform::syncFolderRemoved(it.value()->getLocalFolder(), it.value()->name(), QString::number(it.value()->tag()));
+    }
+    configuredSyncs.clear();
+    configuredSyncsMap.clear();
+    loadedSyncsMap.clear();
 }
 
 QStringList Preferences::getExcludedSyncNames()
@@ -2577,6 +2530,49 @@ void Preferences::setExcludedSyncPaths(QStringList paths)
     settings->sync();
     mutex.unlock();
 }
+
+
+bool Preferences::isOneTimeActionDone(int action)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    bool value = getValue<bool>(oneTimeActionDoneKey + QString::number(action), false);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setOneTimeActionDone(int action, bool done)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(oneTimeActionDoneKey + QString::number(action), done);
+    setCachedValue(oneTimeActionDoneKey + QString::number(action), done);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    settings->sync();
+    mutex.unlock();
+}
+
 
 QStringList Preferences::getPreviousCrashes()
 {
@@ -2933,14 +2929,7 @@ void Preferences::leaveUser()
     settings->endGroup();
 
     clearTemporalBandwidth();
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
+    configuredSyncs.clear();
     mutex.unlock();
 }
 
@@ -2970,14 +2959,7 @@ void Preferences::resetGlobalSettings()
     settings->remove(currentAccountStatusKey);
     settings->remove(sessionKey); // Remove session from global settings
     clearTemporalBandwidth();
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
+    configuredSyncs.clear();
 
     if (!currentAccount.isEmpty())
     {
@@ -3266,14 +3248,7 @@ void Preferences::logout()
         settings->endGroup();
     }
     clearTemporalBandwidth();
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
+    configuredSyncs.clear();
     cleanCache();
     mutex.unlock();
 }
@@ -3337,71 +3312,154 @@ void Preferences::readFolders()
 {
     mutex.lock();
     assert(logged());
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
+    configuredSyncs.clear();
 
-    settings->beginGroup(syncsGroupKey);
+    settings->beginGroup(syncsGroupByTagKey);
     int numSyncs = settings->numChildGroups();
     for (int i = 0; i < numSyncs; i++)
     {
-        settings->beginGroup(QString::number(i));
+        settings->beginGroup(i);
 
-        syncNames.append(settings->value(syncNameKey).toString());
-        syncIDs.append(settings->value(syncIdKey, QUuid::createUuid().toString().toUpper()).toString());
-        localFolders.append(settings->value(localFolderKey).toString());
-        megaFolders.append(settings->value(megaFolderKey).toString());
-        megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
-        activeFolders.append(settings->value(folderActiveKey, true).toBool());
-        temporaryInactiveFolders.append(settings->value(temporaryInactiveKey, false).toBool());
-        localFingerprints.append(settings->value(localFingerprintKey, 0).toLongLong());
+        auto sc = std::make_shared<SyncSetting>(settings->value(configuredSyncsKey).value<QString>());
+        if (sc->tag())
+        {
+            loadedSyncsMap[sc->tag()] = sc;
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii("Reading invalid Sync Setting!").toUtf8().constData());
+        }
 
+        // TODO: review temporaryInactiveFolders vs activeFolders
         settings->endGroup();
     }
     settings->endGroup();
     mutex.unlock();
 }
 
-void Preferences::writeFolders()
+
+OldSyncData::OldSyncData(QString name, QString localFolder, long long  megaHandle, long long localfp, bool enabled, int pos)
+    : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mLocalfp(localfp), mEnabled(enabled), mPos(pos)
 {
-    mutex.lock();
+
+}
+
+void Preferences::removeOldCachedSync(int position)
+{
+    QMutexLocker qm(&mutex);
     assert(logged());
+
+    auto it = oldSyncs.begin();
+    while (it != oldSyncs.end())
+    {
+        if (it->mPos == position)
+        {
+            it = oldSyncs.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+    saveOldCachedSyncs();
+}
+
+QList<OldSyncData> Preferences::readOldCachedSyncs()
+{
+    QMutexLocker qm(&mutex);
+    oldSyncs.clear();
+    assert(logged());
+    settings->beginGroup(syncsGroupKey);
+    int numSyncs = settings->numChildGroups();
+    for (int i = 0; i < numSyncs; i++)
+    {
+        settings->beginGroup(i);
+
+        oldSyncs.push_back(OldSyncData(settings->value(syncNameKey).toString(), settings->value(localFolderKey).toString(),
+                                    settings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
+                                    settings->value(localFingerprintKey, 0).toLongLong(),
+                                    settings->value(folderActiveKey, true).toBool(),
+                                     i
+                                    ));
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
+        settings->endGroup();
+    }
+    settings->endGroup();
+    return oldSyncs;
+}
+
+void Preferences::saveOldCachedSyncs()
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    if (!logged())
+    {
+        return;
+    }
 
     settings->beginGroup(syncsGroupKey);
 
-    settings->remove(QString::fromAscii(""));
-    for (int i = 0; i < localFolders.size(); i++)
+    settings->remove(QString::fromAscii("")); //Remove all previous values
+
+    int i = 0 ;
+    foreach(OldSyncData osd, oldSyncs) //normally if no errors happened it'll be empty
     {
         settings->beginGroup(QString::number(i));
 
-        settings->setValue(syncNameKey, syncNames[i]);
-        setCachedValue(syncNameKey, syncNames[i]);
-        settings->setValue(syncIdKey, syncIDs[i]);
-        setCachedValue(syncIdKey, syncIDs[i]);
-        settings->setValue(localFolderKey, localFolders[i]);
-        setCachedValue(localFolderKey, localFolders[i]);
-        settings->setValue(megaFolderKey, megaFolders[i]);
-        setCachedValue(megaFolderKey, megaFolders[i]);
-        settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
-        setCachedValue(megaFolderHandleKey, megaFolderHandles[i]);
-        settings->setValue(folderActiveKey, activeFolders[i]);
-        setCachedValue(folderActiveKey, activeFolders[i]);
-        settings->setValue(temporaryInactiveKey,temporaryInactiveFolders[i]);
-        setCachedValue(temporaryInactiveKey, temporaryInactiveFolders[i]);
-        settings->setValue(localFingerprintKey, localFingerprints[i]);
-        setCachedValue(localFingerprintKey, localFingerprints[i]);
+        settings->setValue(syncNameKey, osd.mName);
+        settings->setValue(localFolderKey, osd.mLocalFolder);
+        settings->setValue(localFingerprintKey, osd.mLocalfp);
+        settings->setValue(megaFolderHandleKey, osd.mMegaHandle);
+        settings->setValue(folderActiveKey, osd.mEnabled);
 
         settings->endGroup();
     }
 
     settings->endGroup();
     settings->sync();
-    mutex.unlock();
+}
+
+
+void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged() && syncSettings);
+    if (!syncSettings)
+    {//TODO: log warn
+        return;
+    }
+
+    settings->beginGroup(syncsGroupByTagKey);
+
+    settings->beginGroup(QString::number(syncSettings->tag()));
+
+    settings->remove(QString::fromAscii("")); //remove group and all its settingsings));
+
+    settings->endGroup();
+
+    settings->endGroup();
+    settings->sync();
+}
+
+void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    //TODO: review persistence of these
+    settings->beginGroup(syncsGroupByTagKey);
+
+    settings->beginGroup(QString::number(syncSettings->tag()));
+
+    settings->setValue(configuredSyncsKey, syncSettings->toString());
+    setCachedValue(configuredSyncsKey, QVariant::fromValue<SyncSetting>(*syncSettings));
+
+    settings->endGroup();
+
+    settings->endGroup();
+    settings->sync();
 }
 
 void Preferences::setBaseUrl(const QString &value)
@@ -3447,4 +3505,134 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("PROXY_TEST_TIMEOUT_MS"), Preferences::PROXY_TEST_TIMEOUT_MS);
     overridePreference(settings, QString::fromUtf8("MAX_IDLE_TIME_MS"), Preferences::MAX_IDLE_TIME_MS);
     overridePreference(settings, QString::fromUtf8("MAX_COMPLETED_ITEMS"), Preferences::MAX_COMPLETED_ITEMS);
+}
+
+
+SyncSetting::~SyncSetting()
+{
+}
+
+SyncSetting::SyncSetting(const SyncSetting& a) :
+    mSync(a.getSync()->copy()), mTag(a.tag()), mName(a.name()), mMegaFolder(a.getMegaFolder())
+{
+}
+
+SyncSetting& SyncSetting::operator=(const SyncSetting& a)
+{
+    mSync.reset(a.getSync()->copy());
+    mTag = a.tag();
+    mName = a.name();
+    mMegaFolder = a.getMegaFolder();
+    return *this;
+}
+
+SyncSetting::SyncSetting()
+{
+    mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
+}
+
+SyncSetting::SyncSetting(MegaSync *sync, const char *remotePath)
+{
+    setSync(sync);
+    setMegaFolder(remotePath);
+}
+
+QString SyncSetting::name() const
+{
+    return mName.size()? mName : getLocalFolder();
+}
+
+void SyncSetting::setName(const QString &name)
+{
+    mName = name;
+}
+
+MegaSync * SyncSetting::getSync() const
+{
+    return mSync.get();
+}
+
+SyncSetting::SyncSetting(QString initializer)
+{
+    QStringList parts = initializer.split(QString::fromUtf8("0x1E"));
+    int i = 0;
+    if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
+    if (i<parts.size()) { mName = parts.at(i++); }
+
+    mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
+}
+
+QString SyncSetting::toString()
+{
+    QStringList toret;
+    toret.append(QString::number(mTag));
+    toret.append(mName);
+
+    return toret.join(QString::fromUtf8("0x1E"));
+}
+
+void SyncSetting::setSync(MegaSync *sync)
+{
+    if (sync)
+    {
+        if (!mName.size())
+        {
+            mName = QFileInfo(QString::fromUtf8(sync->getLocalFolder())).fileName();
+        }
+        mSync.reset(sync->copy());
+
+        assert(mTag == 0 || mTag == sync->getTag());
+        mTag = sync->getTag();
+    }
+    else
+    {
+        assert("SyncSettings constructor with null sync");
+        mSync.reset(new MegaSync()); // MegaSync getter return fair enough defaults
+    }
+}
+
+QString SyncSetting::getLocalFolder() const
+{
+    return QString::fromUtf8(mSync->getLocalFolder());
+}
+
+long long SyncSetting::getLocalFingerprint()  const
+{
+    return mSync->getLocalFingerprint();
+}
+
+QString SyncSetting::getMegaFolder()  const
+{
+    //TODO: use remote path (stored somewhere, probably within SyncConfig)
+    return mMegaFolder;
+}
+
+long long SyncSetting::getMegaHandle()  const
+{
+    return mSync->getMegaHandle();
+}
+
+bool SyncSetting::isEnabled()  const
+{
+    return mSync->isEnabled();
+}
+
+bool SyncSetting::isTemporaryDisabled()  const
+{
+    return mSync->isTemporaryDisabled();
+}
+
+void SyncSetting::setMegaFolder(const char *value)
+{
+    mMegaFolder = QString::fromUtf8(value);
+}
+
+int SyncSetting::tag() const
+{
+    return mTag;
+}
+
+void SyncSetting::setTag(int tag)
+{
+    mTag = tag;
 }
