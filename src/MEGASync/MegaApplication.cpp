@@ -348,6 +348,10 @@ void setScaleFactors()
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setOrganizationName(QString::fromAscii("Mega Limited"));
+    QCoreApplication::setOrganizationDomain(QString::fromAscii("mega.co.nz"));
+    QCoreApplication::setApplicationName(QString::fromAscii("MEGAsync"));
+
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();
