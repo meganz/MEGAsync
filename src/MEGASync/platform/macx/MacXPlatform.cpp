@@ -153,7 +153,7 @@ void MacXPlatform::reloadFinderExtension()
 
     scriptArgs.clear();
     scriptArgs << QString::fromUtf8("-c")
-               << QString::fromUtf8("pluginkit -e ignore -i mega.mac.MEGAShellExtFinder && pluginkit -e use -i mega.mac.MEGAShellExtFinder");
+               << QString::fromUtf8("pluginkit -e ignore -i mega.mac.MEGAShellExtFinder && sleep 1 && pluginkit -e use -i mega.mac.MEGAShellExtFinder");
     QProcess::startDetached(QString::fromUtf8("bash"), scriptArgs);
 }
 
