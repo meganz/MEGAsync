@@ -64,7 +64,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QFilterAlertsModel.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
-    $$PWD/BugReportDialog.cpp
+    $$PWD/BugReportDialog.cpp \
+    $$PWD/VerifyLockMessage.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -130,7 +131,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QFilterAlertsModel.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
-    $$PWD/BugReportDialog.h
+    $$PWD/BugReportDialog.h \
+    $$PWD/VerifyLockMessage.h
 
 INCLUDEPATH += $$PWD
 
@@ -184,7 +186,9 @@ win32 {
                 $$PWD/win/TransfersSummaryWidget.ui \
                 $$PWD/win/FilterAlertWidget.ui \
                 $$PWD/win/AlertFilterType.ui \
-                $$PWD/win/BugReportDialog.ui
+                $$PWD/win/BugReportDialog.ui \
+                $$PWD/win/LockedPopOver.ui \
+                $$PWD/win/VerifyLockMessage.ui
 }
 
 macx {
@@ -235,7 +239,9 @@ macx {
                 $$PWD/macx/TransfersSummaryWidget.ui \
                 $$PWD/macx/FilterAlertWidget.ui \
                 $$PWD/macx/AlertFilterType.ui \
-                $$PWD/macx/BugReportDialog.ui
+                $$PWD/macx/BugReportDialog.ui \
+                $$PWD/macx/LockedPopOver.ui \
+                $$PWD/macx/VerifyLockMessage.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -245,6 +251,10 @@ macx {
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
+}
+ else {
+    HEADERS += $$PWD/LockedPopOver.h
+    SOURCES += $$PWD/LockedPopOver.cpp
 }
 
 unix:!macx {
@@ -295,10 +305,12 @@ unix:!macx {
                 $$PWD/linux/TransfersSummaryWidget.ui \
                 $$PWD/linux/FilterAlertWidget.ui \
                 $$PWD/linux/AlertFilterType.ui \
-                $$PWD/linux/BugReportDialog.ui
+                $$PWD/linux/BugReportDialog.ui \
+                $$PWD/linux/LockedPopOver.ui \
+                $$PWD/linux/VerifyLockMessage.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}       
+}

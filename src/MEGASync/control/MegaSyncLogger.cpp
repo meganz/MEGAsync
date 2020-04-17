@@ -21,6 +21,7 @@
 #include <zlib.h>
 
 #include <megaapi.h>
+#include <future>
 
 #ifdef WIN32
 #include <windows.h>
@@ -87,6 +88,8 @@ void gzipCompressOnRotate(const QString filename, const QString destinationFilen
     QFile::remove(filename);
 }
 
+using DirectLogFunction = std::function <void (std::ostream *)>;
+
 struct LogLinkedList
 {
     LogLinkedList* next = nullptr;
@@ -95,6 +98,8 @@ struct LogLinkedList
     int lastmessage = -1;
     int lastmessageRepeats = 0;
     bool oomGap = false;
+    DirectLogFunction *mDirectLoggingFunction = nullptr; // we cannot use a non pointer due to the malloc allocation of new entries
+    std::promise<void>* mCompletionPromise = nullptr; // we cannot use a unique_ptr due to the malloc allocation of new entries
     char message[1];
 
     static LogLinkedList* create(LogLinkedList* prev, size_t size)
@@ -108,6 +113,8 @@ struct LogLinkedList
             entry->lastmessage = -1;
             entry->lastmessageRepeats = 0;
             entry->oomGap = false;
+            entry->mDirectLoggingFunction = nullptr;
+            entry->mCompletionPromise = nullptr;
             prev->next = entry;
         }
         return entry;
@@ -118,12 +125,25 @@ struct LogLinkedList
         return used + size + 2 < allocated;
     }
 
+    bool needsDirectOutput()
+    {
+        return mDirectLoggingFunction != nullptr;
+    }
+
     void append(const char* s, unsigned int n = 0)
     {
         n = n ? n : unsigned(strlen(s));
         assert(used + n + 1 < allocated);
         strcpy(message + used, s);
         used += n;
+    }
+
+    void notifyWaiter()
+    {
+        if (mCompletionPromise)
+        {
+            mCompletionPromise->set_value();
+        }
     }
 
 };
@@ -159,7 +179,7 @@ struct LoggingThread
         }
     }
 
-    void log(int loglevel, const char *message);
+    void log(int loglevel, const char *message, const char **directMessages = nullptr, size_t *directMessagesSizes = nullptr, int numberMessages = 0);
 
 private:
     QString numberedLogFilename(QString baseName, int logNumber)
@@ -181,6 +201,7 @@ private:
         outputFile << "----------------------------- program start -----------------------------\n";
         long long outFileSize = outputFile.tellp();
         std::ofstream logDesktopFile;
+        bool logDesktopFileOpen = false;
 
         while (!logExit)
         {
@@ -292,6 +313,24 @@ private:
                 });
             }
 
+            if (logToDesktopChanged)
+            {
+                logToDesktopChanged = false;
+                if (logToDesktop && !logDesktopFileOpen)
+                {
+    #ifdef WIN32
+                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
+    #else
+                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
+    #endif
+                    logDesktopFileOpen = true;
+                }
+                else if (!logToDesktop && logDesktopFileOpen)
+                {
+                    logDesktopFile.close();
+                }
+            }
+
             if (topLevelMemoryGap)
             {
                 if (outputFile)
@@ -310,26 +349,50 @@ private:
                 newMessages = newMessages->next;
                 if (outputFile)
                 {
-                    outputFile << p->message;
-                    outFileSize += p->used;
-                    if (p->oomGap)
+                    if (p->needsDirectOutput())
                     {
-                        outputFile << "<log gap - out of logging memory at this point>\n";
+                        (*p->mDirectLoggingFunction)(&outputFile);
+                    }
+                    else
+                    {
+                        outputFile << p->message;
+                        outFileSize += p->used;
+                        if (p->oomGap)
+                        {
+                            outputFile << "<log gap - out of logging memory at this point>\n";
+                        }
                     }
                 }
                 if (logDesktopFile)
                 {
-                    logDesktopFile << p->message;
-                    if (p->oomGap)
+                    if (p->needsDirectOutput())
                     {
-                        logDesktopFile << "<log gap - out of logging memory at this point>\n";
+                        (*p->mDirectLoggingFunction)(&logDesktopFile);
                     }
+                    else
+                    {
+                        logDesktopFile << p->message;
+                        if (p->oomGap)
+                        {
+                            logDesktopFile << "<log gap - out of logging memory at this point>\n";
+                        }
+                    }
+                    logDesktopFile.flush(); //always flush in `active` logging
                 }
 
                 if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
                 {
-                    std::cout << p->message;
+                    if (p->needsDirectOutput())
+                    {
+                        (*p->mDirectLoggingFunction)(&std::cout);
+                    }
+                    else
+                    {
+                        std::cout << p->message;
+                    }
+                    std::cout << std::flush; //always flush into stdout (DEBUG mode)
                 }
+                p->notifyWaiter();
                 free(p);
             }
             if (flushLog || forceRotationForReporting || nextFlushTime <= std::chrono::steady_clock::now())
@@ -356,28 +419,10 @@ private:
                 }
                 return;  // This request means we have received a termination signal; close and exit the thread as quick & clean as possible
             }
-
-            if (logToDesktopChanged)
-            {
-                logToDesktopChanged = false;
-                if (logToDesktop && !logDesktopFile)
-                {
-    #ifdef WIN32
-                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
-    #else
-                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
-    #endif
-                }
-                else if (!logToDesktop && logDesktopFile)
-                {
-                    logDesktopFile.close();
-                }
-            }
-
         }
     }
 
-} g_loggingThread;
+};
 
 
 MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& desktopPath, bool logToStdout)
@@ -395,7 +440,8 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     const QDir desktopDir{mDesktopPath};
     const auto desktopLogPath = desktopDir.filePath(QString::fromUtf8("MEGAsync.log"));
 
-    g_loggingThread.startLoggingThread(logPath, desktopLogPath);
+    g_loggingThread.reset(new LoggingThread());
+    g_loggingThread->startLoggingThread(logPath, desktopLogPath);
 
     mega::MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_MAX);
     mega::MegaApi::addLoggerObject(this);
@@ -406,14 +452,14 @@ MegaSyncLogger::~MegaSyncLogger()
     mega::MegaApi::removeLoggerObject(this); // after this no more calls to MegaSyncLogger::log
 
     {
-        std::lock_guard<std::mutex> g(g_loggingThread.logMutex);
-        g_loggingThread.logExit = true;
-        g_loggingThread.logConditionVariable.notify_one();
+        std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
+        g_loggingThread->logExit = true;
+        g_loggingThread->logConditionVariable.notify_one();
     }
     assert(g_megaSyncLogger == this);
     g_megaSyncLogger = nullptr;
-    g_loggingThread.logThread->join();
-    g_loggingThread.logThread.reset();
+    g_loggingThread->logThread->join();
+    g_loggingThread->logThread.reset();
 }
 
 inline void twodigit(char*& s, int n)
@@ -483,12 +529,21 @@ void cacheThreadNameAndTimeT(time_t t, struct tm& gmt, const char*& threadname)
     lastThreadId = std::this_thread::get_id();
 }
 
-void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
+void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message
+#ifdef ENABLE_LOG_PERFORMANCE
+                         , const char **directMessages, size_t *directMessagesSizes, int numberMessages
+#endif
+                         )
+
 {
-    g_loggingThread.log(loglevel, message);
+    g_loggingThread->log(loglevel, message
+#ifdef ENABLE_LOG_PERFORMANCE
+                        , directMessages, directMessagesSizes, numberMessages
+#endif
+                        );
 }
 
-void LoggingThread::log(int loglevel, const char *message)
+void LoggingThread::log(int loglevel, const char *message, const char **directMessages, size_t *directMessagesSizes, int numberMessages)
 {
 
 // todo: do we need this xml logger?
@@ -511,6 +566,7 @@ void LoggingThread::log(int loglevel, const char *message)
 //    }
 //#endif
 
+    bool direct = directMessages != nullptr;
 
     char timebuf[LOG_TIME_CHARS + 1];
     auto now = std::chrono::system_clock::now();
@@ -540,9 +596,9 @@ void LoggingThread::log(int loglevel, const char *message)
     bool notify = false;
 
     {
-        std::lock_guard<std::mutex> g(logMutex);
+        std::unique_ptr<std::lock_guard<std::mutex>> g(new std::lock_guard<std::mutex>(logMutex));
 
-        bool isRepeat = logListLast != &logListFirst && 
+        bool isRepeat = !direct && logListLast != &logListFirst &&
                         logListLast->lastmessage >= 0 && 
                         !strncmp(message, logListLast->message + logListLast->lastmessage, messageLen);
 
@@ -558,32 +614,71 @@ void LoggingThread::log(int loglevel, const char *message)
                 lineLen += 30;
                 logListLast->lastmessageRepeats = 0;
             }
-            if (logListLast == &logListFirst || logListLast->oomGap || !logListLast->messageFits(lineLen))
+
+            if (direct)
             {
-                if (LogLinkedList* newentry = LogLinkedList::create(logListLast, std::max<size_t>(lineLen, 8192) + sizeof(LogLinkedList) + 10))
+                if (LogLinkedList* newentry = LogLinkedList::create(logListLast, 1 + sizeof(LogLinkedList))) //create a new "empty" element
                 {
                     logListLast = newentry;
+                    std::promise<void> promise;
+                    logListLast->mCompletionPromise = &promise;
+                    auto future = logListLast->mCompletionPromise->get_future();
+                    DirectLogFunction func = [&timebuf, &threadname, &loglevelstring, &directMessages, &directMessagesSizes, numberMessages](std::ostream *oss)
+                    {
+                        *oss << timebuf << threadname << loglevelstring;
+
+                        for(int i = 0; i < numberMessages; i++)
+                        {
+                            oss->write(directMessages[i], directMessagesSizes[i]);
+                        }
+                        *oss << std::endl;
+                    };
+
+                    logListLast->mDirectLoggingFunction = &func;
+
+                    g.reset(); //to liberate the mutex and let the logging thread call the logging function
+
+                    logConditionVariable.notify_one();
+
+                    //wait for until logging thread completes the outputting
+                    future.get();
+                    return;
                 }
                 else
                 {
                     logListLast->oomGap = true;
                 }
+
             }
-            if (!logListLast->oomGap)
+            else
             {
-                if (reportRepeats)
+                if (logListLast == &logListFirst || logListLast->oomGap || !logListLast->messageFits(lineLen))
                 {
-                    char repeatbuf[31]; // this one can occur very frequently with many in a row: cURL DEBUG: schannel: failed to decrypt data, need more data
-                    int n = snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
-                    logListLast->append(repeatbuf, n);
+                    if (LogLinkedList* newentry = LogLinkedList::create(logListLast, std::max<size_t>(lineLen, 8192) + sizeof(LogLinkedList) + 10))
+                    {
+                        logListLast = newentry;
+                    }
+                    else
+                    {
+                        logListLast->oomGap = true;
+                    }
                 }
-                logListLast->append(timebuf, LOG_TIME_CHARS);
-                logListLast->append(threadname, threadnameLen);
-                logListLast->append(loglevelstring, LOG_LEVEL_CHARS);
-                logListLast->lastmessage = logListLast->used;
-                logListLast->append(message, messageLen);
-                logListLast->append("\n", 1);
-                notify = logListLast->used + 1024 > logListLast->allocated;
+                if (!logListLast->oomGap)
+                {
+                    if (reportRepeats)
+                    {
+                        char repeatbuf[31]; // this one can occur very frequently with many in a row: cURL DEBUG: schannel: failed to decrypt data, need more data
+                        int n = snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
+                        logListLast->append(repeatbuf, n);
+                    }
+                    logListLast->append(timebuf, LOG_TIME_CHARS);
+                    logListLast->append(threadname, unsigned(threadnameLen));
+                    logListLast->append(loglevelstring, LOG_LEVEL_CHARS);
+                    logListLast->lastmessage = logListLast->used;
+                    logListLast->append(message, unsigned(messageLen));
+                    logListLast->append("\n", 1);
+                    notify = logListLast->used + 1024 > logListLast->allocated;
+                }
             }
         }
 
@@ -606,28 +701,28 @@ void LoggingThread::log(int loglevel, const char *message)
 
 void MegaSyncLogger::setDebug(const bool enable)
 {
-    g_loggingThread.logToDesktop = enable;
-    g_loggingThread.logToDesktopChanged = true;
+    g_loggingThread->logToDesktop = enable;
+    g_loggingThread->logToDesktopChanged = true;
 }
 
 bool MegaSyncLogger::isDebug() const
 {
-    return g_loggingThread.logToDesktop;
+    return g_loggingThread->logToDesktop;
 }
 
 bool MegaSyncLogger::prepareForReporting()
 {
-    std::lock_guard<std::mutex> g(g_loggingThread.logMutex);
-    g_loggingThread.forceRotationForReporting = true;
-    g_loggingThread.logConditionVariable.notify_one();
+    std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
+    g_loggingThread->forceRotationForReporting = true;
+    g_loggingThread->logConditionVariable.notify_one();
     return true;
 }
 
 bool MegaSyncLogger::cleanLogs()
 {
-    std::lock_guard<std::mutex> g(g_loggingThread.logMutex);
-    g_loggingThread.forceRenew = true;
-    g_loggingThread.logConditionVariable.notify_one();
+    std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
+    g_loggingThread->forceRenew = true;
+    g_loggingThread->logConditionVariable.notify_one();
     return true;
 }
 
@@ -637,10 +732,18 @@ void MegaSyncLogger::resumeAfterReporting()
 
 void MegaSyncLogger::flushAndClose()
 {
-    g_loggingThread.log(mega::MegaApi::LOG_LEVEL_FATAL, "***CRASH DETECTED: FLUSHING AND CLOSING***");
-    g_loggingThread.flushLog = true;
-    g_loggingThread.closeLog = true;
-    g_loggingThread.logConditionVariable.notify_one();
+    try
+    {
+        g_loggingThread->log(mega::MegaApi::LOG_LEVEL_FATAL, "***CRASH DETECTED: FLUSHING AND CLOSING***");
+
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << endl;
+    }
+    g_loggingThread->flushLog = true;
+    g_loggingThread->closeLog = true;
+    g_loggingThread->logConditionVariable.notify_one();
     // This is called on crash so the app may be unstable. Don't assume the thread is working properly.
     // It might be the one that crashed.  Just give it 1 second to complete
 #ifdef WIN32

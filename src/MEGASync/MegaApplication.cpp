@@ -348,6 +348,10 @@ void setScaleFactors()
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setOrganizationName(QString::fromAscii("Mega Limited"));
+    QCoreApplication::setOrganizationDomain(QString::fromAscii("mega.co.nz"));
+    QCoreApplication::setApplicationName(QString::fromAscii("MEGAsync"));
+
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();
@@ -916,6 +920,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     activeTransferTag[MegaTransfer::TYPE_DOWNLOAD] = 0;
     activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
+    verifyEmail = nullptr;
     infoDialogMenu = NULL;
     guestMenu = NULL;
     syncsMenu = NULL;
@@ -930,6 +935,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exportOps = 0;
     infoDialog = NULL;
     infoOverQuota = false;
+    blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -1034,6 +1040,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     completedTabActive = false;
     nodescurrent = false;
     almostOQ = false;
+    mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
 
@@ -1157,6 +1166,17 @@ void MegaApplication::initialize()
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 
+    //Set payload max size to be logged: a 10th of system's memory
+    long long availMemory = Utilities::getSystemsAvailableMemory();
+    auto newPayLoadLogSize = availMemory / 10 ;
+    if (newPayLoadLogSize < 10240)
+    {
+        newPayLoadLogSize = 10240;
+    }
+    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
+    megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
+    megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
+
     QString stagingPath = QDir(dataPath).filePath(QString::fromAscii("megasync.staging"));
     QFile fstagingPath(stagingPath);
     if (fstagingPath.exists())
@@ -1259,6 +1279,32 @@ void MegaApplication::initialize()
             {
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
+                if (crashDialog.sendLogs())
+                {
+                    auto timestampString = reports[0].mid(reports[0].indexOf(QString::fromUtf8("Timestamp: "))+11,20);
+                    timestampString = timestampString.left(timestampString.indexOf(QString::fromUtf8("\n")));
+                    QDateTime crashTimestamp = QDateTime::fromMSecsSinceEpoch(timestampString.toLongLong());
+
+                    if (crashTimestamp != QDateTime::fromMSecsSinceEpoch(0))
+                    {
+                        crashTimestamp = crashTimestamp.addSecs(-300); //to gather some logging before the crash
+                    }
+
+                    connect(logger.get(), &MegaSyncLogger::logReadyForReporting, context.get(), [this, crashTimestamp]()
+                    {
+                        crashReportFilePath = Utilities::joinLogZipFiles(megaApi, &crashTimestamp, CrashHandler::instance()->getLastCrashHash());
+                        if (!crashReportFilePath.isNull()
+                                && megaApi && megaApi->isLoggedIn())
+                        {
+                            megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(), false);
+                            crashReportFilePath.clear();
+                        }
+                        context.get()->deleteLater();
+                    });
+
+                    logger->prepareForReporting();
+                }
+
 #ifndef __APPLE__
                 QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"), Utilities::getDevicePixelRatio());
 #endif
@@ -1390,6 +1436,30 @@ void MegaApplication::updateTrayIcon()
             scanningTimer->stop();
         }
 #endif
+    }
+    else if (blockState)
+    {
+        tooltip = QCoreApplication::applicationName()
+                + QString::fromAscii(" ")
+                + Preferences::VERSION_STRING
+                + QString::fromAscii("\n")
+                + tr("Locked Account");
+
+#ifndef __APPLE__
+    #ifdef _WIN32
+        icon = QString::fromUtf8("://images/alert_ico.ico");
+    #else
+        icon = QString::fromUtf8("://images/alert.svg");
+    #endif
+#else
+        icon = QString::fromUtf8("://images/icon_alert_mac.png");
+
+        if (scanningTimer->isActive())
+        {
+            scanningTimer->stop();
+        }
+#endif
+
     }
     else if (!megaApi->isLoggedIn())
     {
@@ -1627,11 +1697,16 @@ void MegaApplication::start()
         return;
     }
 
+    blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+
     indexing = false;
     paused = false;
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
+    mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
@@ -1698,6 +1773,8 @@ void MegaApplication::start()
         {
             preferences->setInstallationTime(-1);
         }
+
+        Platform::reloadFinderExtension();
     }
 
     applyProxySettings();
@@ -1715,7 +1792,7 @@ void MegaApplication::start()
 #endif
 
     //Start the initial setup wizard if needed
-    if (!preferences->logged())
+    if (!preferences->logged() && preferences->getSession().isEmpty())
     {
         if (!preferences->installationTime())
         {
@@ -1770,52 +1847,51 @@ void MegaApplication::start()
         onGlobalSyncStateChanged(megaApi);
         return;
     }
-    else
+    else //Otherwise, login in the account
     {
-        QStringList exclusions = preferences->getExcludedSyncNames();
-        vector<string> vExclusions;
-        for (int i = 0; i < exclusions.size(); i++)
+        if (preferences->logged()) //we have per account settings to restore
         {
-            vExclusions.push_back(exclusions[i].toUtf8().constData());
-        }
-        megaApi->setExcludedNames(&vExclusions);
+            QStringList exclusions = preferences->getExcludedSyncNames();
+            vector<string> vExclusions;
+            for (int i = 0; i < exclusions.size(); i++)
+            {
+                vExclusions.push_back(exclusions[i].toUtf8().constData());
+            }
+            megaApi->setExcludedNames(&vExclusions);
 
-        QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-        vector<string> vExclusionPaths;
-        for (int i = 0; i < exclusionPaths.size(); i++)
-        {
-            vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-        }
-        megaApi->setExcludedPaths(&vExclusionPaths);
+            QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+            vector<string> vExclusionPaths;
+            for (int i = 0; i < exclusionPaths.size(); i++)
+            {
+                vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+            }
+            megaApi->setExcludedPaths(&vExclusionPaths);
 
-        if (preferences->lowerSizeLimit())
-        {
-            megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-        }
-        else
-        {
-            megaApi->setExclusionLowerSizeLimit(0);
+            if (preferences->lowerSizeLimit())
+            {
+                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionLowerSizeLimit(0);
+            }
+
+            if (preferences->upperSizeLimit())
+            {
+                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+            }
+            else
+            {
+                megaApi->setExclusionUpperSizeLimit(0);
+            }
         }
 
-        if (preferences->upperSizeLimit())
-        {
-            megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-        }
-        else
-        {
-            megaApi->setExclusionUpperSizeLimit(0);
-        }
+        QString theSession;
+        theSession = preferences->getSession();
 
-        //Otherwise, login in the account
-        if (preferences->getSession().size())
+        if (theSession.size())
         {
-            megaApi->fastLogin(preferences->getSession().toUtf8().constData());
-        }
-        else
-        {
-            megaApi->fastLogin(preferences->email().toUtf8().constData(),
-                       preferences->emailHash().toUtf8().constData(),
-                       preferences->privatePw().toUtf8().constData());
+            megaApi->fastLogin(theSession.toUtf8().constData());
         }
 
         if (updated)
@@ -1837,6 +1913,15 @@ void MegaApplication::loggedIn(bool fromWizard)
     {
         infoWizard->deleteLater();
         infoWizard = NULL;
+    }
+
+    //Send pending crash report log if neccessary
+    if (!crashReportFilePath.isNull() && megaApi)
+    {
+        QFileInfo crashReportFile{crashReportFilePath};
+        megaApi->startUploadForSupport(QDir::toNativeSeparators(crashReportFilePath).toUtf8().constData(),
+                                       false);
+        crashReportFilePath.clear();
     }
 
     registerUserActivity();
@@ -2348,6 +2433,8 @@ void MegaApplication::closeDialogs(bool bwoverquota)
 
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
+
+    verifyEmail.reset(nullptr);
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2839,9 +2926,10 @@ void MegaApplication::periodicTasks()
     initLocalServer();
 
     static int counter = 0;
+    counter++;
     if (megaApi)
     {
-        if (!(++counter % 6))
+        if (!(counter % 6))
         {
             HTTPServer::checkAndPurgeRequests();
 
@@ -2863,6 +2951,11 @@ void MegaApplication::periodicTasks()
         if (isLinux)
         {
             updateTrayIcon();
+        }
+
+        if (isLinux && blockState && !(counter%10))
+        {
+            whyAmIBlocked(true);
         }
     }
 
@@ -2979,8 +3072,6 @@ void MegaApplication::cleanAll()
         args.append(QString::fromAscii("-n"));
         args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
-
-        Platform::reloadFinderExtension();
 #endif
 
 #ifdef WIN32
@@ -3502,6 +3593,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     return QApplication::eventFilter(obj, e);
 }
 
+SetupWizard *MegaApplication::getSetupWizard() const
+{
+    return setupWizard;
+}
+
 TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appDataID)
 {
     QHash<unsigned long long, TransferMetaData*>::const_iterator it = transferAppData.find(appDataID);
@@ -3811,6 +3907,10 @@ void MegaApplication::unlink(bool keepLogs)
     //Reset fields that will be initialized again upon login
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
+    mRootNode.reset();
+    mFetchingNodes = false;
+    mQueringWhyAmIBlocked = false;
+    whyamiblockedPeriodicPetition = false;
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
 
@@ -4539,21 +4639,9 @@ void MegaApplication::redirectToUpgrade(int activationButton)
         #endif
             )
     {
-        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-        Preferences *preferences = Preferences::instance();
-        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-        {
-            MegaHandle aff = preferences->lastPublicHandle();
-            if (aff != INVALID_HANDLE)
-            {
-                char *base64aff = MegaApi::handleToBase64(aff);
-                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-                delete [] base64aff;
-            }
-        }
-
-        megaApi->getSessionTransferURL(url.toUtf8().constData());
+        QString url = QString::fromUtf8("mega://#pro");
+        Utilities::getPROurlWithParameters(url);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
 }
 
@@ -4565,10 +4653,10 @@ void MegaApplication::redirectToPayBusiness(int activationButton)
             || activationButton == MegaNotification::ActivationContentClicked
         #endif
             )
-    {
-        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-        megaApi->getSessionTransferURL(url.toUtf8().constData());
+    {      
+        QString url = QString::fromUtf8("mega://#repay");
+        Utilities::getPROurlWithParameters(url);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
 }
 
@@ -4583,6 +4671,32 @@ void MegaApplication::PSAseen(int id)
     {
         megaApi->setPSA(id);
     }
+}
+
+void MegaApplication::fetchNodes()
+{
+    assert(!mFetchingNodes);
+    mFetchingNodes = true;
+    megaApi->fetchNodes();
+}
+
+void MegaApplication::whyAmIBlocked(bool periodicCall)
+{
+    if (!mQueringWhyAmIBlocked)
+    {
+        whyamiblockedPeriodicPetition = periodicCall;
+        mQueringWhyAmIBlocked = true;
+        megaApi->whyAmIBlocked();
+    }
+}
+
+std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
+{
+    if (forceReset || !mRootNode)
+    {
+        mRootNode.reset(megaApi->getRootNode());
+    }
+    return mRootNode;
 }
 
 void MegaApplication::onDismissOQ(bool overStorage)
@@ -4788,6 +4902,23 @@ void MegaApplication::removeAllFinishedTransfers()
     {
         infoDialog->updateDialogState();
     }
+}
+
+void MegaApplication::showVerifyAccountInfo()
+{
+    if (!verifyEmail)
+    {
+        verifyEmail.reset(new VerifyLockMessage(blockState, infoDialog ? true : false));
+        connect(verifyEmail.get(), SIGNAL(logout()), this, SLOT(unlink()));
+    }
+    else
+    {
+        verifyEmail->regenerateUI(blockState);
+    }
+
+    verifyEmail->show();
+    verifyEmail->activateWindow();
+    verifyEmail->raise();
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
@@ -5117,7 +5248,24 @@ void MegaApplication::loginActionClicked()
         return;
     }
 
-    userAction(GuestWidget::LOGIN_CLICKED);
+    userAction(SetupWizard::PAGE_LOGIN);
+}
+
+void MegaApplication::showSetupWizard(int action)
+{
+    if (setupWizard)
+    {
+        setupWizard->goToStep(action);
+        setupWizard->activateWindow();
+        setupWizard->raise();
+        return;
+    }
+    setupWizard = new SetupWizard(this);
+    emit setupWizardCreated();
+    setupWizard->setModal(false);
+    connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+    setupWizard->goToStep(action);
+    setupWizard->show();
 }
 
 void MegaApplication::userAction(int action)
@@ -5135,18 +5283,7 @@ void MegaApplication::userAction(int action)
                 showInfoDialog();
                 break;
             default:
-                if (setupWizard)
-                {
-                    setupWizard->goToStep(action);
-                    setupWizard->activateWindow();
-                    setupWizard->raise();
-                    return;
-                }
-                setupWizard = new SetupWizard(this);
-                setupWizard->setModal(false);
-                connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
-                setupWizard->goToStep(action);
-                setupWizard->show();
+                showSetupWizard(action);
                 break;
         }
     }
@@ -5988,6 +6125,17 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+    if (appfinished)
+    {
+        return;
+    }
+
+    //If account is suspended chech status
+    if (blockState)
+    {
+        whyAmIBlocked();
+    }
+
 #ifdef Q_OS_LINUX
     if (getenv("XDG_CURRENT_DESKTOP") && (
                 !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME")
@@ -6001,10 +6149,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 #endif
 
-    if (appfinished)
-    {
-        return;
-    }
 
     // Code temporarily preserved here for testing
     /*if (httpServer)
@@ -6032,7 +6176,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else if (reason == QSystemTrayIcon::Trigger)
             {
-                if (!megaApi->isLoggedIn())
+                if (blockState)
+                {
+                    showInfoMessage(tr("Locked account"));
+                }
+                else if (!megaApi->isLoggedIn())
                 {
                     showInfoMessage(tr("Logging in..."));
                 }
@@ -6083,7 +6231,11 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
             else
             {
-                if (!megaApi->isLoggedIn())
+                if (blockState)
+                {
+                    showInfoMessage(tr("Locked account"));
+                }
+                else if (!megaApi->isLoggedIn())
                 {
                     showInfoMessage(tr("Logging in..."));
                 }
@@ -6205,6 +6357,11 @@ void MegaApplication::openSettings(int tab)
     {
         proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
         megaApi->retryPendingConnections();
+    }
+
+    if (isLinux && blockState) //we force a whyamiblocked here since trayIconActivated might not be available
+    {
+        whyAmIBlocked();
     }
 
 #ifndef __MACH__
@@ -6364,7 +6521,7 @@ void MegaApplication::createAppMenus()
         windowsImportLinksAction = NULL;
     }
 
-    windowsImportLinksAction = new QAction(tr("Import links"), this);
+    windowsImportLinksAction = new QAction(tr("Open links"), this);
     connect(windowsImportLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if (windowsUploadAction)
@@ -6570,7 +6727,7 @@ void MegaApplication::createAppMenus()
                 firstSyncHandle = preferences->getMegaFolderHandle(0);
             }
 
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = getRootNode();
             if (rootNode)
             {
                 long long rootHandle = rootNode->getHandle();
@@ -6585,7 +6742,6 @@ void MegaApplication::createAppMenus()
                     }
                     syncsMenu->addAction(addAction);
                 }
-                delete rootNode;
             }
 
             addSyncAction->setMenu(syncsMenu.get());
@@ -6598,7 +6754,7 @@ void MegaApplication::createAppMenus()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")), true);
+    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")), true);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
@@ -6778,9 +6934,46 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
-        QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
-                                  QCoreApplication::translate("MegaError", event->getText()),
-                                  Utilities::getDevicePixelRatio());
+        switch (event->getNumber())
+        {
+            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
+            case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
+            {
+                blockState = event->getNumber();
+
+                if (verifyEmail)
+                {
+                    verifyEmail->regenerateUI(blockState);
+                }
+
+                if (infoDialog)
+                {
+                    if (infoDialog->getLoggedInMode() != blockState)
+                    {
+                        infoDialog->regenerateLayout(blockState);
+                    }
+                }
+                else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
+                {
+                    showVerifyAccountInfo();
+                }
+
+                whyamiblockedPeriodicPetition = false;
+
+                break;
+            }
+            case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
+            {
+                QMessageBox::warning(nullptr, tr("MEGAsync"), tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details."));
+                break;
+            }
+            default:
+                QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                                          QCoreApplication::translate("MegaError", event->getText()),
+                                          Utilities::getDevicePixelRatio());
+                break;
+        }
+
     }
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
@@ -6832,10 +7025,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.setDefaultButton(QMessageBox::Yes);
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
-                    {
-                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                    {                        
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     }
                 }
 
@@ -6867,9 +7060,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
                     {
-                        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-                        QString url = QString::fromUtf8("repay/uao=%1").arg(userAgent);
-                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                        QString url = QString::fromUtf8("mega://#repay");
+                        Utilities::getPROurlWithParameters(url);
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     }
                 }
                 else
@@ -7083,22 +7276,39 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         // while login request is being processed. This way, the local SSL certs request is not aborted.
         initLocalServer();
 
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK); //TODO: setGlobalAccountState
+
+            auto needsFetchNodes = preferences->needsFetchNodesInGeneral();
+
+            std::unique_ptr<char []> session(megaApi->dumpSession());
+            if (session)
+            {
+                preferences->setSession(QString::fromUtf8(session.get()));
+            }
+
+            // In case fetchnode fails in previous request,
+            // but we have an active session, we will need to launch a fetchnodes
+            if (!preferences->logged()
+                    && needsFetchNodes)
+            {
+                fetchNodes();
+            }
+        }
+
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
+
             Platform::prepareForSync();
             int errorCode = e->getErrorCode();
             if (errorCode == MegaError::API_OK)
             {
-                const char *session = megaApi->dumpSession();
-                if (session)
+                if (!preferences->getSession().isEmpty())
                 {
-                    QString sessionKey = QString::fromUtf8(session);
-                    preferences->setSession(sessionKey);
-                    delete [] session;
-
                     //Successful login, fetch nodes
-                    megaApi->fetchNodes();
+                    fetchNodes();
                     break;
                 }
             }
@@ -7207,17 +7417,25 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             unlink();
         }
 
-        if (preferences && preferences->logged())
+        if (preferences)
         {
-            clearUserAttributes();
-            preferences->unlink();
-            closeDialogs();
-            removeAllFinishedTransfers();
-            clearViewedTransfers();
+            if (preferences->logged())
+            {
+                clearUserAttributes();
+                preferences->unlink();
+                removeAllFinishedTransfers();
+                clearViewedTransfers();
+                preferences->setFirstStartDone();
+            }
+            else
+            {
+                preferences->resetGlobalSettings();
+            }
 
-            preferences->setFirstStartDone();
+            closeDialogs();
             start();
             periodicTasks();
+
         }
         break;
     }
@@ -7278,12 +7496,36 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_FETCH_NODES:
     {
-        //This prevents to handle node requests in the initial setup wizard
-        if (preferences->logged())
+        mFetchingNodes = false;
+        if (e->getErrorCode() == MegaError::API_OK)
         {
-            if (e->getErrorCode() == MegaError::API_OK)
+            //Update/set root node
+            getRootNode(true); //TODO: move this to thread pool
+
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
+            preferences->setNeedsFetchNodesInGeneral(false);
+
+            std::unique_ptr<char[]> email(megaApi->getMyEmail());
+            bool logged = preferences->logged();
+            bool firstTime = !logged && email && !preferences->hasEmail(QString::fromUtf8(email.get()));
+            bool setupWizardContinues = false;
+            if (!logged) //session resumed from general storage (or logged in via user/pass)
             {
-                if (megaApi->isFilesystemAvailable())
+                if (firstTime)
+                {
+                    showSetupWizard(SetupWizard::PAGE_MODE);
+                    setupWizardContinues = true;
+                }
+                else
+                {
+                    preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+                    setupWizardFinished(QDialog::Accepted);
+                }
+            }
+
+            if (!firstTime)
+            {
+                if (mRootNode)
                 {
                     //If we have got the filesystem, start the app
                     loggedIn(false);
@@ -7291,14 +7533,29 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
                 else
                 {
+                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                           "Please, try again. If the problem persists "
+                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
+
+                    setupWizardFinished(QDialog::Rejected);
+
                     preferences->setCrashed(true);
+
+                    rebootApplication(false);
                 }
             }
-            else
+
+            if (!setupWizardContinues) //otherwise it needs to close
             {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
-                             .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+                  emit closeSetupWizard(QDialog::Accepted);
             }
+        }
+        else
+        {
+            preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_FAILED);
+            preferences->setNeedsFetchNodesInGeneral(true);
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
+                         .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
         }
 
         break;
@@ -7331,7 +7588,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        unique_ptr<MegaNode> root(megaApi->getRootNode());
+
+        auto root = getRootNode();
         unique_ptr<MegaNode> inbox(megaApi->getInboxNode());
         unique_ptr<MegaNode> rubbish(megaApi->getRubbishNode());
         unique_ptr<MegaNodeList> inShares(megaApi->getInShares());
@@ -7588,7 +7846,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                         if (megaApi->isLoggedIn())
                         {
-                            megaApi->fetchNodes();
+                            fetchNodes();
                         }
                     }
                     else if (e->getErrorCode() != MegaError::API_ENOENT
@@ -7711,7 +7969,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             node = request->getPublicMegaNode();
             if (node)
             {
-                preferences->setLastPublicHandle(node->getHandle());
+                preferences->setLastPublicHandle(node->getHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
             }
         }
 
@@ -7758,6 +8016,33 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
+        break;
+    }
+    case MegaRequest::TYPE_WHY_AM_I_BLOCKED:
+    {
+        if (e->getErrorCode() == MegaError::API_OK
+                && request->getNumber() == MegaApi::ACCOUNT_NOT_BLOCKED)
+        {
+            // if we received a block before nodes were fetch,
+            // we want to try again now that we are no longer blocked
+            if (!mFetchingNodes && !getRootNode())
+            {
+                fetchNodes();
+                emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
+            }
+
+            emit unblocked();
+
+            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+
+            //in any case we reflect the change in the InfoDialog
+            if (infoDialog)
+            {
+                infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
+            }
+        }
+
+        mQueringWhyAmIBlocked = false;
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:
@@ -8377,7 +8662,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             {
                 if (megaApi->isLoggedIn())
                 {
-                    megaApi->fetchNodes();
+                    fetchNodes();
                 }
             }
             else if (noKeyDetected > 20)

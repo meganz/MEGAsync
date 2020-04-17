@@ -202,6 +202,8 @@ void MegaTransferDelegate::processCancel(int tag)
     }
     else
     {
+        QPointer<QTransfersModel> modelPointer = model;
+
         QMessageBox warning;
         HighDpiResize hDpiResizer(&warning);
         warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
@@ -212,7 +214,7 @@ void MegaTransferDelegate::processCancel(int tag)
         warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         warning.setDefaultButton(QMessageBox::No);
         int result = warning.exec();
-        if (result == QMessageBox::Yes)
+        if (modelPointer && result == QMessageBox::Yes)
         {
             model->megaApi->cancelTransferByTag(tag);
         }
