@@ -3897,7 +3897,7 @@ void MegaApplication::infoWizardDialogFinished(int result)
     }
 }
 
-void MegaApplication::unlink()
+void MegaApplication::unlink(bool keepLogs)
 {
     if (appfinished)
     {
@@ -3921,6 +3921,11 @@ void MegaApplication::unlink()
         queuedUserStats[i] = false;
     }
     queuedStorageUserStatsReason = 0;
+
+    if (!keepLogs)
+    {
+        logger->cleanLogs();
+    }
 }
 
 void MegaApplication::cleanLocalCaches(bool all)
@@ -7318,7 +7323,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             //Wrong login -> logout
-            unlink();
+            unlink(true);
         }
         onGlobalSyncStateChanged(megaApi);
         break;

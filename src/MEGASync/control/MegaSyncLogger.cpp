@@ -162,6 +162,7 @@ struct LoggingThread
     bool flushLog = false;
     bool closeLog = false;
     bool forceRotationForReporting = false;
+    bool forceRenew = false; //to force removal of all logs and create an empty MEGAsync.log
     bool logToDesktop = false;
     bool logToDesktopChanged = false;
     int flushOnLevel = mega::MegaApi::LOG_LEVEL_WARNING;
@@ -204,7 +205,43 @@ private:
 
         while (!logExit)
         {
-            if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
+            if (forceRenew)
+            {
+                std::lock_guard<std::mutex> g(logRotationMutex);
+                for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
+                {
+                    QString toDelete = numberedLogFilename(filename, i);
+
+                    if (QFile::exists(toDelete))
+                    {
+                        if (!QFile::remove(toDelete))
+                        {
+                            std::cerr << "Error removing log file " << i << std::endl;
+                        }
+                    }
+                }
+
+                outputFile.close();
+                if (!QFile::remove(filename) )
+                {
+                    std::cerr << "Error removing log file!! " << std::endl;
+                }
+
+    #ifdef WIN32
+                outputFile.open(filename.toStdWString().data(), std::ofstream::out);
+    #else
+                outputFile.open(filename.toUtf8().data(), std::ofstream::out);
+    #endif
+                outFileSize = 0;
+
+                forceRenew = false;
+
+                if (g_megaSyncLogger)
+                {
+                    emit g_megaSyncLogger->logCleaned();
+                }
+            }
+            else if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
             {
                 std::lock_guard<std::mutex> g(logRotationMutex);
                 for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
@@ -263,7 +300,7 @@ private:
             {
                 std::unique_lock<std::mutex> lock(logMutex);
                 logConditionVariable.wait_for(lock, std::chrono::milliseconds(500), [this, &newMessages, &topLevelMemoryGap]() { 
-                        if (logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog || closeLog)
+                        if (forceRenew || logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog || closeLog)
                         {
                             newMessages = logListFirst.next;
                             logListFirst.next = nullptr;
@@ -677,6 +714,14 @@ bool MegaSyncLogger::prepareForReporting()
 {
     std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
     g_loggingThread->forceRotationForReporting = true;
+    g_loggingThread->logConditionVariable.notify_one();
+    return true;
+}
+
+bool MegaSyncLogger::cleanLogs()
+{
+    std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
+    g_loggingThread->forceRenew = true;
     g_loggingThread->logConditionVariable.notify_one();
     return true;
 }
