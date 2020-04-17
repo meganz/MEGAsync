@@ -44,7 +44,7 @@ VIAddVersionKey "ProductVersion" "4.3.1.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH ""C:\Qt\Qt5.12.6\5.12.6\msvc2017_64"
+!define QT_PATH "C:\Qt\Qt5.12.6\5.12.6\msvc2017_64"
 !else
 !define QT_PATH "C:\Qt\Qt5.6.3\5.6.3\msvc2015"
 !endif
@@ -879,6 +879,7 @@ Section Uninstall
   Delete "$INSTDIR\msvcp140.dll"
   Delete "$INSTDIR\concrt140.dll"
   Delete "$INSTDIR\vccorlib140.dll"
+  Delete "$INSTDIR\vcomp140.dll"
   Delete "$INSTDIR\ucrtbase.dll"
   Delete "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
   Delete "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
