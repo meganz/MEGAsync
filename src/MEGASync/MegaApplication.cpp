@@ -6957,6 +6957,11 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 
                 break;
             }
+            case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
+            {
+                QMessageBox::warning(nullptr, tr("MEGAsync"), tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details."));
+                break;
+            }
             default:
                 QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
                                           QCoreApplication::translate("MegaError", event->getText()),
