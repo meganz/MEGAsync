@@ -1773,8 +1773,9 @@ void MegaApplication::start()
         {
             preferences->setInstallationTime(-1);
         }
-
+#ifdef Q_OS_MACX
         Platform::reloadFinderExtension();
+#endif
     }
 
     applyProxySettings();
