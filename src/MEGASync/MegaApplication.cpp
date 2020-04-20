@@ -6030,7 +6030,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             return;
         }
 
-#ifdef _WIN32
+#if defined _WIN32 || defined Q_OS_LINUX
         if (reason == QSystemTrayIcon::Context)
         {
             return;
