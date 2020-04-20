@@ -1443,7 +1443,7 @@ void MegaApplication::updateTrayIcon()
                 + QString::fromAscii(" ")
                 + Preferences::VERSION_STRING
                 + QString::fromAscii("\n")
-                + tr("Locked Account");
+                + tr("Locked account");
 
 #ifndef __APPLE__
     #ifdef _WIN32
