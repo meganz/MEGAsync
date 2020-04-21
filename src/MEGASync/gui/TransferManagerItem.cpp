@@ -164,12 +164,12 @@ void TransferManagerItem::finishTransfer()
     if (transferError < 0)
     {
         ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
-        updateFinishedIco(type, true);
+        updateFinishedIco(true);
     }
     else
     {
         ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
-        updateFinishedIco(type, false);
+        updateFinishedIco(false);
     }
 
     ui->lTotalCompleted->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
@@ -353,11 +353,11 @@ void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
     emit refreshTransfer(this->getTransferTag());
 }
 
-void TransferManagerItem::updateFinishedIco(int transferType, bool transferErrors)
+void TransferManagerItem::updateFinishedIco(bool transferErrors)
 {
     QIcon iconCompleted;
 
-    switch (transferType)
+    switch (type)
     {
         case MegaTransfer::TYPE_UPLOAD:
             iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/upload_fail_item_ico.png")

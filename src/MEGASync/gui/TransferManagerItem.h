@@ -48,7 +48,7 @@ private slots:
     void frameChanged(int);
 
 private:
-    void updateFinishedIco(int transferType, bool transferErrors);
+    void updateFinishedIco(bool transferErrors);
 
 protected:
     QMovie *animation;
