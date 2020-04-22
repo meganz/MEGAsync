@@ -3,7 +3,7 @@
 
 #include <QClipboard>
 #include <QUrl>
-#include <QMessageBox>
+#include "QMegaMessageBox.h"
 
 #include<iostream>
 using namespace std;
@@ -46,11 +46,11 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     {
         if (!text.trimmed().size())
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("Enter one or more MEGA file links"));
+            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Enter one or more MEGA file links"));
         }
         else
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("Invalid MEGA Link"));
+            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid MEGA Link"));
         }
         return;
     }
