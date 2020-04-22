@@ -4407,13 +4407,10 @@ void MegaApplication::checkOperatingSystem()
                                  tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
                                  + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
-#else
-                         #ifdef WIN32
+#elif defined(_WIN32)
                                  + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.")
-                         #else
+#else
                                  + tr("MEGAsync will continue to work, however you might not receive new updates.")
-                         #endif
-
 #endif
                                  );
             preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
