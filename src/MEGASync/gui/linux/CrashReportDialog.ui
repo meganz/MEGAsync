@@ -92,7 +92,7 @@ spacing:10px;
 }</string>
      </property>
      <property name="text">
-      <string>Attach diagnostic log files to assist with debugging[A](in some cases it may contain details about your data, such as file or folder names)</string>
+      <string>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</string>
      </property>
      <property name="checked">
       <bool>true</bool>
