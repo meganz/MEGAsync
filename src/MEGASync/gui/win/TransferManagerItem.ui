@@ -548,6 +548,18 @@ padding-top: 1px;</string>
              </property>
              <item>
               <widget class="QPushButton" name="lTransferTypeCompleted">
+               <property name="minimumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
                </property>
