@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -814,14 +814,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Send report</translation>
     </message>
     <message>
-        <source>Attach diagnostic log files to assist with debugging[A](in some cases it may contain details about your data, such as file or folder names)</source>
-        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [A] place holder.</translatorcomment>
-        <translation type="obsolete">Attach diagnostic log files to assist with debugging[A](in some cases it may contain details about your data, such as file or folder names)</translation>
-    </message>
-    <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</translation>
+        <translation type="unfinished">Attach diagnostic log files to assist with debugging
+(in some cases it may contain details about your data, such as file or folder names)</translation>
     </message>
 </context>
 <context>
@@ -1214,7 +1210,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation type="unfinished">Your account has been temporarily suspended due to potential abuse. Please verify your phone number to unlock your account.</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -2731,7 +2727,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
-        <translation type="unfinished">Locked account</translation>
+        <translation type="unfinished">Locked Account</translation>
     </message>
     <message>
         <source>Open links</source>
@@ -2742,6 +2738,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
         <translation type="unfinished">Your account has been disabled by your administrator. Please contact your business account administrator for further details.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
     </message>
 </context>
 <context>
@@ -3482,7 +3483,28 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>- Fix crash issue for OSX 10.9.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
-        <translation type="unfinished">- Fix crash issue for OSX 10.9.</translation>
+        <translation type="obsolete">- Fixed crash issue for OSX 10.9.</translation>
+    </message>
+    <message>
+        <source>- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
+        <translation type="unfinished">- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -5525,7 +5547,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
-        <translation type="unfinished">Locked account</translation>
+        <translation type="unfinished">Locked Account</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
@@ -5545,7 +5567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation type="unfinished">Your account has been temporarily suspended due to potential abuse. Please verify your phone number to unlock your account.</translation>
     </message>
     <message>
         <source>Verify now</source>
