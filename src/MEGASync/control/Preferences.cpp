@@ -1485,7 +1485,7 @@ bool Preferences::needsFetchNodesInGeneral()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    bool value = getValue<int>(needsFetchNodesKey, defaultNeedsFetchNodes);
+    bool value = getValue<bool>(needsFetchNodesKey, defaultNeedsFetchNodes);
 
     if (!currentAccount.isEmpty())
     {
