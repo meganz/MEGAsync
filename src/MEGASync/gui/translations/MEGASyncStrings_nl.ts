@@ -813,6 +813,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Verzend rapport</translation>
     </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
+        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
+        <translation type="unfinished">Voeg diagnostische logbestanden toe om te helpen bij het opsporen van fouten
+(in sommige gevallen kan het details bevatten over uw gegevens, zoals bestands- of mapnamen)</translation>
+    </message>
 </context>
 <context>
     <name>CustomTransferItem</name>
@@ -1160,7 +1166,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
+        <translation type="obsolete">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1181,6 +1187,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
         <translation type="unfinished">Uitloggen...</translation>
+    </message>
+    <message>
+        <source>Locked Account</source>
+        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
+        <translation type="unfinished">Gesloten Account</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Uw account is voor uw veiligheid tijdelijk opgeschort. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <translation type="unfinished">Log uit</translation>
+    </message>
+    <message>
+        <source>Verify email</source>
+        <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
+        <translation type="unfinished">Verifieer e-mail</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Uw account is tijdelijk geschorst vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
+        <translation type="unfinished">Verifieer nu</translation>
+    </message>
+    <message>
+        <source>Creating account...</source>
+        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translation type="unfinished">Account creëren...</translation>
     </message>
 </context>
 <context>
@@ -1204,7 +1245,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation>Importeer koppelingen</translation>
+        <translation type="vanished">Importeer koppelingen</translation>
     </message>
     <message>
         <source>Download to my computer</source>
@@ -1268,6 +1309,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
     </message>
 </context>
 <context>
@@ -1868,6 +1914,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>LockedPopOver</name>
+    <message>
+        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">[A]Het is mogelijk dat u voor uw MEGA-account hetzelfde wachtwoord gebruikt als voor andere services en dat ten minste een van deze andere services een data lek heeft opgelopen.[/A]</translation>
+    </message>
+    <message>
+        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">[A]UW wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief maar niet beperkt tot uw MEGA-account.[/A]</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Vergrendelde Accounts</translation>
+    </message>
+</context>
+<context>
     <name>Login2FA</name>
     <message>
         <source>Login Verification</source>
@@ -2011,7 +2075,7 @@ Exit anyway?</source>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Importeer koppelingen</translation>
+        <translation type="vanished">Importeer koppelingen</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -2115,7 +2179,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation type="vanished">Fout</translation>
+        <translation>Fout</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -2133,7 +2197,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
+        <translation type="unfinished">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2661,6 +2725,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation type="unfinished">contact</translation>
     </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
+        <translation type="unfinished">Gesloten Account</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
+    </message>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translation type="unfinished">Uw account is uitgeschakeld door uw administratie. Neem contact op met uw zakelijke account administratie voor meer informatie.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2794,7 +2878,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Uw account werd beëindigd door het verbreken van Mega&apos;s Algemene Voorwaarden, zoals misbruik van rechten van andere; delen en/of importeren van illegale gegevens; systeem misbruik.</translation>
+        <translation type="unfinished">Uw account is beëindigd wegens schending van de Servicevoorwaarden van MEGA, zoals misbruik van rechten van anderen; het delen en/of importeren van illegale gegevens; of systeemmisbruik.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3143,7 +3227,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation>Importeer koppelingen</translation>
+        <translation type="vanished">Importeer koppelingen</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -3179,6 +3263,11 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">Ongeldige MEGA Koppeling</translation>
+    </message>
+    <message>
+        <source>Enter links</source>
+        <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
+        <translation type="unfinished">Voer links in</translation>
     </message>
 </context>
 <context>
@@ -3383,15 +3472,40 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Ondersteuning voor gebruikersmeldingen 
- - Ondersteuning voor het verzenden van bugrapporten vanuit het instellingendialoogvenster 
- - Nieuwe restyling van hoofddialoogvenster 
- - Prestatieverbeteringen bij het omgaan met een groot aantal synchronisaties en overdrachten 
- - Verbeterde ondersteuning voor zakelijke accounts. 
- - Ondersteuning van koppelingen naar bestanden en mappen in een openbare mapkoppeling. 
- - Verbeteringen voor synchronisatie met FAT32-bestandssystemen. 
- - Andere UI-fixes en aanpassingen. 
- - Andere prestaties verbeteringen, UI fixes en aanpassingen.</translation>
+        <translation type="obsolete">- Ondersteuning voor gebruikersmeldingen. 
+- Bugrapporten kunnen nu worden verzonden vanuit het instellingendialoog. 
+- Het hoofddialoog vernieuwd. 
+- Prestatieverbeteringen bij het omgaan met een enorme hoeveelheid synchronisaties en overdrachten. 
+- Verbeterde bruikbaarheid van zakelijke accounts. 
+- Ondersteuning toegevoegd voor links naar bestanden en mappen in een openbare maplink. 
+- Verbeteringen voor synchronisatie met FAT32-bestandssystemen.
+- Andere prestatieverbeteringen, UI-fixes en aanpassingen.</translation>
+    </message>
+    <message>
+        <source>- Fix crash issue for OSX 10.9.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
+        <translation type="obsolete">- Gerepareerd crash probleem voor OSX 10.9</translation>
+    </message>
+    <message>
+        <source>- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
+        <translation type="unfinished">- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -3598,7 +3712,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>GRATIS</translation>
+        <translation>Gratis</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -5050,7 +5164,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Importeer koppelingen</translation>
+        <translation type="obsolete">Importeer koppelingen</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -5098,6 +5212,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translation type="unfinished">Download</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
     </message>
 </context>
 <context>
@@ -5408,6 +5527,59 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyLockMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Waarom zie ik dit?</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <translation type="unfinished">Log uit</translation>
+    </message>
+    <message>
+        <source>Verify your email</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
+        <translation type="unfinished">Verifieer uw email</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
+        <translation type="unfinished">Gesloten Account</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
+        <translation type="unfinished">Uw account is voor uw veiligheid tijdelijk opgeschort. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Email opnieuw verzenden</translation>
+    </message>
+    <message>
+        <source>Verify your account</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
+        <translation type="unfinished">Uw account verifiëren</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
+        <translation type="unfinished">Uw account is tijdelijk geschorst vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
+        <translation type="unfinished">Verifieer nu</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email verstuurd</translation>
     </message>
 </context>
 <context>

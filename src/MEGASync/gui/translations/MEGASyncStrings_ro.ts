@@ -481,7 +481,7 @@
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Activity</translation>
+        <translation type="unfinished">Activitate privind un folder partajat</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
@@ -572,7 +572,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation type="unfinished">Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.</translation>
+        <translation type="unfinished">Te rugăm să descri clar problema întâmpinată. Cu cât oferi mai multe detalii, cu atât ne va fi mai ușor să o rezolvăm. Trimiterea ta va fi examinată de către echipa noastră de dezvoltare.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -627,7 +627,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Your issue cannot be uploaded due to an error. Please try again or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+        <translation type="unfinished">Problema ta nu poate fi încărcată din cauza unei erori. Te rugăm să încerci din nou sau contactează echipa noastră de asistență via [A]support@mega.nz[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -637,12 +637,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel uploading your reported issue?</translation>
+        <translation type="unfinished">Sigur vrei să anulezi încărcarea problemei raportate?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation type="unfinished">The issue will not be reported if you cancel uploading it.</translation>
+        <translation type="unfinished">Problema nu va fi raportată dacă anulezi încărcarea acesteia.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -657,12 +657,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation type="unfinished">There is currently another reported issue being uploaded.</translation>
+        <translation type="unfinished">În prezent, este încărcată o altă problemă raportată.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation type="unfinished">Please wait until the current upload is completed.</translation>
+        <translation type="unfinished">Te rugăm să aștepți până când încărcarea actuală este finalizată.</translation>
     </message>
 </context>
 <context>
@@ -812,6 +812,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Trimite raportul</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
+        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
+        <translation type="unfinished">Attach diagnostic log files to assist with debugging
+(in some cases it may contain details about your data, such as file or folder names)</translation>
     </message>
 </context>
 <context>
@@ -1159,7 +1165,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">Nu se poate obține sistemul de fișiere. Te rugăm să încerci din nou. Dacă problema persistă, te rugăm să ne contactezi la adresa bug@mega.nz</translation>
+        <translation type="obsolete">Nu se poate obține sistemul de fișiere. Te rugăm să încerci din nou. Dacă problema persistă, te rugăm să ne contactezi la adresa bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1180,6 +1186,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
         <translation type="unfinished">Se deconectează…</translation>
+    </message>
+    <message>
+        <source>Locked Account</source>
+        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
+        <translation type="unfinished">Locked Account</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <translation type="unfinished">Deconectează-te</translation>
+    </message>
+    <message>
+        <source>Verify email</source>
+        <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
+        <translation type="unfinished">Verify email</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Contul tău a fost suspendat temporar din cauza unor posibile abuzuri. Te rugăm să verifici numărul de telefon pentru a-ți debloca contul.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
+        <translation type="unfinished">Verify now</translation>
+    </message>
+    <message>
+        <source>Creating account...</source>
+        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translation type="unfinished">Se creează contul…</translation>
     </message>
 </context>
 <context>
@@ -1203,7 +1244,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation>Importă linkuri</translation>
+        <translation type="vanished">Importă linkuri</translation>
     </message>
     <message>
         <source>Download to my computer</source>
@@ -1267,6 +1308,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Nu ai permisiuni de scriere în acest folder local.</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
     </message>
 </context>
 <context>
@@ -1867,6 +1913,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>LockedPopOver</name>
+    <message>
+        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</translation>
+    </message>
+    <message>
+        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Conturi blocate</translation>
+    </message>
+</context>
+<context>
     <name>Login2FA</name>
     <message>
         <source>Login Verification</source>
@@ -2010,7 +2074,7 @@ Exit anyway?</source>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Importă linkuri</translation>
+        <translation type="vanished">Importă linkuri</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -2114,7 +2178,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation type="vanished">Eroare</translation>
+        <translation>Eroare</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -2132,7 +2196,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Nu se poate obține sistemul de fișiere. Te rugăm să încerci din nou. Dacă problema persistă, te rugăm să ne contactezi la adresa bug@mega.nz</translation>
+        <translation type="unfinished">Nu se poate obține sistemul de fișiere. Te rugăm să încerci din nou. Dacă problema persistă, te rugăm să ne contactezi la adresa bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2628,7 +2692,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">Please resolve your payment issue to avoid suspension of your business account.</translation>
+        <translation type="unfinished">Te rugăm să îți rezolvi problema legată de plată pentru a evita suspendarea contului business.</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2638,7 +2702,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished">This month’s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</translation>
+        <translation type="unfinished">Plata din această lună a eșuat. Te rugăm să îți rezolvi problema legată de plată cât mai curând posibil pentru a evita suspendarea contului business.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2648,7 +2712,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished">Your account is currently [A]suspended[/A]. You can only browse your data.</translation>
+        <translation type="unfinished">În prezent, contul tău este [A]suspendat[/A]. Poți răsfoi numai prin datele tale.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2659,6 +2723,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>contact</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation type="unfinished">contact</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
+        <translation type="unfinished">Locked Account</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
+    </message>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translation type="unfinished">Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
     </message>
 </context>
 <context>
@@ -2793,7 +2877,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Contul tău a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, cum ar fi abuzul drepturilor altora; partajarea și/sau importarea de date ilegale; ori abuzul de sistem.</translation>
+        <translation type="unfinished">Contul tău a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, cum ar fi abuzul drepturilor celorlalți; partajarea și/sau importarea de date ilegale; ori abuzul de sistem.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3142,7 +3226,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation>Importă linkuri</translation>
+        <translation type="vanished">Importă linkuri</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -3178,6 +3262,11 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">Link MEGA nevalid</translation>
+    </message>
+    <message>
+        <source>Enter links</source>
+        <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
+        <translation type="unfinished">Enter links</translation>
     </message>
 </context>
 <context>
@@ -3291,7 +3380,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="obsolete">- Design nou pentru dialogul principal
+        <translation type="obsolete">- Design nou pentru caseta de dialog principală
 - Asistent de configurare îmbunătățit
 - Suport pentru a afișa anunțurile de interes general
 - Notificări moderne
@@ -3310,7 +3399,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
         <translation type="obsolete">- Remedierea erorii cu selectarea elementelor din managerul de transferuri
 - Remedierea erorii meniului contextual care nu este afișat deasupra elementelor din managerul de transferuri
-- Design nou pentru dialogul principal
+- Design nou pentru caseta de dialog principală
 - Asistent de configurare îmbunătățit
 - Suport pentru a afișa anunțurile de interes general
 - Notificări moderne
@@ -3353,7 +3442,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
         <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
         <translation type="obsolete">- Remedierea unei defecțiuni în timpul procesării anumitor fișiere PDF
 - Se reiau transferurile în așteptare după o defecțiune la următoarea pornire
-- Include opțiunea de a adăuga sincronizări din dialogul principal
+- Include opțiunea de a adăuga sincronizări din caseta de dialog principală
 - Alte remedieri minore de erori și îmbunătățiri</translation>
     </message>
     <message>
@@ -3368,7 +3457,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Remedierea unor probleme de reluare a transferurilor în cazul descărcărilor prin clientul web și a linkurilor publice
 - Remedierea unei defecțiuni în timpul procesării anumitor fișiere PDF
 - Se reiau transferurile în așteptare după o defecțiune la următoarea pornire
-- Include opțiunea de a adăuga sincronizări din dialogul principal
+- Include opțiunea de a adăuga sincronizări din caseta de dialog principală
  - Alte remedieri minore de erori și îmbunătățiri</translation>
     </message>
     <message>
@@ -3382,15 +3471,40 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Suport pentru notificări destinate utilizatorului.
-- Suport pentru a trimite rapoarte de erori din dialogul de setări.
-- Noua restilizare a dialogului principal.
+        <translation type="obsolete">- Suport pentru notificări destinate utilizatorului.
+- Rapoartele de erori pot fi trimise acum din caseta de dialog pentru setări.
+- A fost restilizată caseta de dialog principală.
 - Îmbunătățiri de performanță atunci când aplicația are de-a face cu o cantitate imensă de sincronizări și transferuri.
-- Suport îmbunătățit pentru conturile business.
-- Suport pentru linkurile către fișiere și foldere în interiorul unui link al unui folder public.
+- A fost îmbunătățită ușurința utilizării pentru conturile business.
+- Suport adăugat pentru linkurile către fișiere și foldere în interiorul unui link al unui folder public.
 - Îmbunătățiri pentru sincronizarea cu sistemele de fișiere FAT32.
-- Alte remedieri și ajustări ale interfeței de utilizator.
 - Alte îmbunătățiri de performanță, remedieri și ajustări ale interfeței de utilizator.</translation>
+    </message>
+    <message>
+        <source>- Fix crash issue for OSX 10.9.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
+        <translation type="obsolete">- Fixed crash issue for OSX 10.9.</translation>
+    </message>
+    <message>
+        <source>- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
+        <translation type="unfinished">- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -3597,7 +3711,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>GRATUIT</translation>
+        <translation>Gratuit</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -4567,7 +4681,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">Când închei acest asistent, vei putea să sincronizezi foldere adiționale folosind dialogul cu setări</translation>
+        <translation type="unfinished">Când închei acest asistent, vei putea să sincronizezi foldere adiționale folosind caseta de dialog pentru setări</translation>
     </message>
     <message>
         <source>Learn more</source>
@@ -4899,7 +5013,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open link</source>
         <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Deschide linkul</translation>
+        <translation type="unfinished">Deschide un link</translation>
     </message>
     <message>
         <source>Enter a MEGA file link:</source>
@@ -5048,7 +5162,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Importă linkuri</translation>
+        <translation type="obsolete">Importă linkuri</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -5096,6 +5210,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translation type="unfinished">Descarcă</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
     </message>
 </context>
 <context>
@@ -5406,6 +5525,59 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyLockMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">De ce văd asta?</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <translation type="unfinished">Deconectează-te</translation>
+    </message>
+    <message>
+        <source>Verify your email</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
+        <translation type="unfinished">Verify your email</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
+        <translation type="unfinished">Locked Account</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
+        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Retrimite e-mailul</translation>
+    </message>
+    <message>
+        <source>Verify your account</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
+        <translation type="unfinished">Verifică-ți contul</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
+        <translation type="unfinished">Contul tău a fost suspendat temporar din cauza unor posibile abuzuri. Te rugăm să verifici numărul de telefon pentru a-ți debloca contul.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
+        <translation type="unfinished">Verify now</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">E-mail trimis</translation>
     </message>
 </context>
 <context>
