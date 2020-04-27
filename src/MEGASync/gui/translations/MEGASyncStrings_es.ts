@@ -4509,7 +4509,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation type="unfinished">Introduce una contraseña más segura</translation>
+        <translation>Introduce una contraseña más segura</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>

@@ -816,8 +816,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging
-(in some cases it may contain details about your data, such as file or folder names)</translation>
+        <translation type="unfinished">Прикрепите файлы журнала диагностики, чтобы помочь с отладкой
+(в некоторых случаях они могут содержать подробную информацию о ваших данных, например имена файлов или папок)</translation>
     </message>
 </context>
 <context>
