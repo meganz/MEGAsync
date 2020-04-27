@@ -35,11 +35,11 @@ using namespace std;
 
 long long calculateCacheSize()
 {
-    Preferences *preferences = Preferences::instance();
+    Model *model = Model::instance();
     long long cacheSize = 0;
-    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+    for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
-        QString syncPath = preferences->getLocalFolder(i);
+        QString syncPath = model->getLocalFolder(i);
         if (!syncPath.isEmpty())
         {
             Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER), &cacheSize);
@@ -79,6 +79,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->app = app;
     this->megaApi = app->getMegaApi();
     this->preferences = Preferences::instance();
+    this->model = Model::instance();
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
@@ -1319,9 +1320,9 @@ int SettingsDialog::saveSettings()
         if (syncsChanged)
         {
             //Check for removed or disabled folders
-            for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+            for (int i = 0; i < model->getNumSyncedFolders(); i++)
             {
-                auto syncSetting = preferences->getSyncSetting(i);
+                auto syncSetting = model->getSyncSetting(i);
                 if (!syncSetting)
                 {
                     assert("missing setting when looping for saving");
@@ -1343,9 +1344,9 @@ int SettingsDialog::saveSettings()
                     {
                         if (!enabled && syncSetting->isEnabled()) //sync disabled
                         {
-                            Platform::syncFolderRemoved(preferences->getLocalFolder(i),
-                                                        preferences->getSyncName(i),
-                                                        preferences->getSyncID(i));
+                            Platform::syncFolderRemoved(model->getLocalFolder(i),
+                                                        model->getSyncName(i),
+                                                        model->getSyncID(i));
 //                            preferences->setSyncState(i, enabled);
                             //TODO: ensure this is handled in onSyncDeleted!
 
@@ -1368,15 +1369,15 @@ int SettingsDialog::saveSettings()
 
                 if (j == ui->tSyncs->rowCount()) //sync no longer found in settings: needs removing
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(preferences->getSyncName(i)).toUtf8().constData());
-                    bool active = preferences->isFolderActive(i);
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(model->getSyncName(i)).toUtf8().constData());
+                    bool active = model->isFolderActive(i);
                     MegaNode *node = megaApi->getNodeByHandle(megaHandle);
 //                    if (active) //That no longer makes sense: we need to delete regardless if active or not
 //                    {
                         //TODO: do this in onSyncDeleted
-//                        Platform::syncFolderRemoved(preferences->getLocalFolder(i),
-//                                                    preferences->getSyncName(i),
-//                                                    preferences->getSyncID(i));
+//                        Platform::syncFolderRemoved(model->getLocalFolder(i),
+//                                                    model->getSyncName(i),
+//                                                    model->getSyncID(i));
                         megaApi->removeSync(node);
 //                    }
 //                    preferences->removeSyncedFolder(i); //TODO: delete this and add upon onDeletedSync
@@ -1436,11 +1437,11 @@ int SettingsDialog::saveSettings()
             }
             else
             {
-                for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+                for (int i = 0; i < model->getNumSyncedFolders(); i++)
                 {
-                    Platform::addSyncToLeftPane(preferences->getLocalFolder(i),
-                                                preferences->getSyncName(i),
-                                                preferences->getSyncID(i));
+                    Platform::addSyncToLeftPane(model->getLocalFolder(i),
+                                                model->getSyncName(i),
+                                                model->getSyncID(i));
                 }
             }
             preferences->disableLeftPaneIcons(iconsDisabled);
@@ -1547,9 +1548,9 @@ int SettingsDialog::saveSettings()
             #ifdef Q_OS_MACX
             Platform::notifyRestartSyncFolders();
             #else
-            for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+            for (int i = 0; i < model->getNumSyncedFolders(); i++)
             {
-                app->notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
+                app->notifyItemChange(model->getLocalFolder(i), MegaApi::STATE_NONE);
             }
             #endif
         }
@@ -1714,7 +1715,7 @@ void SettingsDialog::loadSyncSettings()
     syncNames.clear();
 
     ui->tSyncs->horizontalHeader()->setVisible(true);
-    int numFolders = preferences->getNumSyncedFolders();
+    int numFolders = model->getNumSyncedFolders();
     ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(4);
@@ -1723,7 +1724,7 @@ void SettingsDialog::loadSyncSettings()
 
     for (int i = 0; i < numFolders; i++)
     {
-        auto syncSetting = preferences->getSyncSetting(i);
+        auto syncSetting = model->getSyncSetting(i);
         if (!syncSetting)
         {
             assert("A sync has been deleting while trying to loop in");
@@ -2228,14 +2229,14 @@ QString SettingsDialog::getFormatLimitDays()
 void SettingsDialog::on_bClearCache_clicked()
 {
     QString syncs;
-    int numFolders = preferences->getNumSyncedFolders();
+    int numFolders = model->getNumSyncedFolders();
     for (int i = 0; i < numFolders; i++)
     {
-        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+        QFileInfo fi(model->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
             syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>")
-                    .arg(fi.absoluteFilePath() + QDir::separator()).arg(preferences->getSyncName(i));
+                    .arg(fi.absoluteFilePath() + QDir::separator()).arg(model->getSyncName(i));
         }
     }
 

@@ -16,9 +16,11 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
 
     this->app = app;
     Preferences *preferences = Preferences::instance();
-    syncNames = preferences->getSyncNames();
-    localFolders = preferences->getLocalFolders();
-    megaFolderHandles = preferences->getMegaFolderHandles();
+    Model *model = Model::instance();
+
+    syncNames = model->getSyncNames();
+    localFolders = model->getLocalFolders();
+    megaFolderHandles = model->getMegaFolderHandles();
     ui->bOK->setDefault(true);
     highDpiResize.init(this);
 }

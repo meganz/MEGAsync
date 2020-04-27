@@ -201,6 +201,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
+    model = Model::instance();
 
     actualAccountType = -1;
 
@@ -956,7 +957,7 @@ void InfoDialog::on_bAddSync_clicked()
         addSyncAction = NULL;
     }
 
-    int num = (megaApi && preferences->logged()) ? preferences->getNumSyncedFolders() : 0;
+    int num = (megaApi && preferences->logged()) ? model->getNumSyncedFolders() : 0;
     if (num == 0)
     {
         addSync();
@@ -996,17 +997,17 @@ void InfoDialog::on_bAddSync_clicked()
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
-            if (!preferences->isFolderActive(i))
+            if (!model->isFolderActive(i))
             {
                 continue;
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
+            MenuItemAction *action = new MenuItemAction(model->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             syncsMenu->addAction(action);
-            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+            menuSignalMapper->setMapping(action, model->getLocalFolder(i));
         }
 
         if (!activeFolders)
@@ -1019,7 +1020,7 @@ void InfoDialog::on_bAddSync_clicked()
             long long firstSyncHandle = INVALID_HANDLE;
             if (num == 1)
             {
-                firstSyncHandle = preferences->getMegaFolderHandle(0);
+                firstSyncHandle = model->getMegaFolderHandle(0);
             }
 
             auto rootNode = ((MegaApplication*)qApp)->getRootNode();

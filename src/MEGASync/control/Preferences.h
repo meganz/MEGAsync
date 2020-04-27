@@ -9,69 +9,15 @@
 #include <QDataStream>
 
 #include "control/EncryptedSettings.h"
+#include "Model.h"
 #include <assert.h>
 #include <memory>
 #include "megaapi.h"
 
 Q_DECLARE_METATYPE(QList<long long>)
 
-class SyncSetting
-{
-private:
-    std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
-    int mTag = 0;
-    QString mName;
-    QString mMegaFolder; //TODO: this might be persisted? when to update it?
-
-public:
-    SyncSetting();
-    SyncSetting(QString initializer);
-    ~SyncSetting();
-    SyncSetting(const SyncSetting& a);
-    SyncSetting(SyncSetting&& a) = default;
-    SyncSetting& operator=(const SyncSetting& a);
-    SyncSetting& operator=(SyncSetting&& a) = default;
-
-
-    SyncSetting(mega::MegaSync *sync, const char *value = nullptr);
-    int tag() const;
-    void setTag(int tag);
-    QString name() const;
-    void setName(const QString &name);
-
-    void setSync(mega::MegaSync *sync);
-
-    QString getLocalFolder() const;
-    long long getLocalFingerprint() const;
-    QString getMegaFolder() const;
-    long long getMegaHandle() const;
-    bool isEnabled() const;
-    bool isTemporaryDisabled() const;
-
-    void setMegaFolder(const char *value);
-
-    mega::MegaSync* getSync() const;
-
-    QString toString();
-};
-
-struct OldSyncData
-{
-    OldSyncData(QString name, QString localFolder, long long  megaHandle,
-                long long localfp, bool enabled, int pos);
-    QString mName;
-    QString mLocalFolder;
-    long long mMegaHandle;
-    long long mLocalfp;
-    bool mEnabled;
-
-    int mPos;
-};
-
-QDataStream& operator<<(QDataStream& out, const SyncSetting& v);
-
-QDataStream& operator>>(QDataStream& in, SyncSetting& v);
-
+class SyncSetting;
+class SyncData;
 class Preferences : public QObject
 {
     Q_OBJECT
@@ -82,6 +28,7 @@ signals:
 
 private:
     static Preferences *preferences;
+
     Preferences();
 
     std::map<QString, QVariant> cache;
@@ -324,33 +271,14 @@ public:
     void setImportFolder(long long value);
 
     // sync related
+    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
+    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
+    QMap<int, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
+    void removeAllFolders(); //remove all syncs from cache
+    // old cache transition related:
     void removeOldCachedSync(int position);
-    QList<OldSyncData> readOldCachedSyncs();//get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    QList<SyncData> readOldCachedSyncs();//get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
-
-    std::shared_ptr<SyncSetting> getSyncSetting(int num);
-
-    void updateSyncSettings(mega::MegaSync *sync, const char *remotePath = nullptr);
-    void pickInfoFromOldSync(const OldSyncData &osd, int tag);
-    int getNumSyncedFolders();
-    QString getSyncName(int num);
-    QString getSyncID(int num);
-    QString getLocalFolder(int num);
-    QString getMegaFolder(int num);
-    long long getLocalFingerprint(int num);
-    mega::MegaHandle getMegaFolderHandle(int num);
-    bool isFolderActive(int num);
-    bool isTemporaryInactiveFolder(int num);
-
-    QStringList getSyncNames();
-    QStringList getSyncIDs();
-    QStringList getMegaFolders();
-    QStringList getLocalFolders();
-    QList<long long> getMegaFolderHandles();
-
-    void removeSyncedFolder(int num);
-    void removeSyncedFolderByTag(int tag);
-    void removeAllFolders();
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
@@ -544,23 +472,15 @@ protected:
     // sync related:
     void readFolders();
 
-    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
-    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
-
-
     void storeSessionInGeneral(QString session);
     QString getSessionInGeneral();
 
     EncryptedSettings *settings;
 
-    QList<int> configuredSyncs; //Tags of configured syncs
-    QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
-
-    QList<OldSyncData> oldSyncs;
-
-    // loaded syncs at startup //TODO: extend docs on all these
+    // sync configuration from old syncs
+    QList<SyncData> oldSyncs;
+    // loaded syncs when loggedin/entered user
     QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
-
 
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;

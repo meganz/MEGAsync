@@ -17,6 +17,7 @@
 #include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
+#include "Model.h"
 #include "megaapi.h"
 #include "HighDpiResize.h"
 
@@ -132,6 +133,7 @@ private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
+    Model *model;
     mega::MegaApi *megaApi;
     HighDpiResize highDpiResize;
     bool syncsChanged;

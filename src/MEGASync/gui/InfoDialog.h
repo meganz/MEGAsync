@@ -233,6 +233,7 @@ protected:
     QTimer transfersFinishedTimer;
     MegaApplication *app;
     Preferences *preferences;
+    Model *model;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;

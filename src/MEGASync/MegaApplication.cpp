@@ -346,6 +346,37 @@ void setScaleFactors()
 }
 #endif
 
+
+void removeSyncData(const QString &localFolder, const QString & name, const QString &syncID)
+{
+    Platform::syncFolderRemoved(localFolder,
+                                name,
+                                syncID);
+
+    #ifdef WIN32
+        QString debrisPath = QDir::toNativeSeparators(localFolder +
+                QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+
+        WIN32_FILE_ATTRIBUTE_DATA fad;
+        if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
+        {
+            SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+        }
+
+        QDir dir(debrisPath);
+        QFileInfoList fList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
+        for (int j = 0; j < fList.size(); j++)
+        {
+            QString folderPath = QDir::toNativeSeparators(fList[j].absoluteFilePath());
+            WIN32_FILE_ATTRIBUTE_DATA fa;
+            if (GetFileAttributesExW((LPCWSTR)folderPath.utf16(), GetFileExInfoStandard, &fa))
+            {
+                SetFileAttributesW((LPCWSTR)folderPath.utf16(), fa.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+            }
+        }
+    #endif
+}
+
 int main(int argc, char *argv[])
 {
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
@@ -362,35 +393,21 @@ int main(int argc, char *argv[])
             for (int i = 0; i < preferences->getNumUsers(); i++)
             {
                 preferences->enterUser(i);
-                for (int j = 0; j < preferences->getNumSyncedFolders(); j++)
+                //TODO: this should be done for old settings & new settings!
+
+                QList<SyncData> syncData = preferences->readOldCachedSyncs();
+                foreach(SyncData osd, syncData)
                 {
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(j),
-                                                preferences->getSyncName(j),
-                                                preferences->getSyncID(j));
-
-                    #ifdef WIN32
-                        QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(j) +
-                                QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
-
-                        WIN32_FILE_ATTRIBUTE_DATA fad;
-                        if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
-                        {
-                            SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
-                        }
-
-                        QDir dir(debrisPath);
-                        QFileInfoList fList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
-                        for (int j = 0; j < fList.size(); j++)
-                        {
-                            QString folderPath = QDir::toNativeSeparators(fList[j].absoluteFilePath());
-                            WIN32_FILE_ATTRIBUTE_DATA fa;
-                            if (GetFileAttributesExW((LPCWSTR)folderPath.utf16(), GetFileExInfoStandard, &fa))
-                            {
-                                SetFileAttributesW((LPCWSTR)folderPath.utf16(), fa.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
-                            }
-                        }
-                    #endif
+                    removeSyncData(osd.mLocalFolder, osd.mName, osd.mSyncID);
                 }
+
+                auto loadedSyncs = preferences->getLoadedSyncsMap();
+
+                for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
+                {
+                    removeSyncData(it.value()->getLocalFolder(), it.value()->name(), QString::number(it.value()->tag())); //TODO: is tag enough syncID?
+                }
+
                 preferences->leaveUser();
             }
         }
@@ -1128,6 +1145,9 @@ void MegaApplication::initialize()
     connect(preferences, SIGNAL(stateChanged()), this, SLOT(changeState()));
     connect(preferences, SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
     preferences->initialize(dataPath);
+
+    model = Model::instance();
+
     if (preferences->error())
     {
         QMegaMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"), Utilities::getDevicePixelRatio());
@@ -2081,29 +2101,29 @@ void MegaApplication::startSyncs()
 
 //    //TODO: review if there's something from here that might make sense in ADD_SYNC processing
 //    MegaNode *rubbishNode =  megaApi->getRubbishNode();
-//    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+//    for (int i = 0; i < model->getNumSyncedFolders(); i++)
 //    {
-//        if (!preferences->isFolderActive(i))
+//        if (!model->isFolderActive(i))
 //        {
 //            continue;
 //        }
 
-//        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+//        MegaNode *node = megaApi->getNodeByHandle(model->getMegaFolderHandle(i));
 //        if (!node)
 //        {
 //            showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
-//                             .arg(preferences->getSyncName(i)));
+//                             .arg(model->getSyncName(i)));
 //            preferences->setSyncState(i, false);
 //            syncsModified = true;
 //            openSettings(SettingsDialog::SYNCS_TAB);
 //            continue;
 //        }
 
-//        QString localFolder = preferences->getLocalFolder(i);
+//        QString localFolder = model->getLocalFolder(i);
 //        if (!QFileInfo(localFolder).isDir())
 //        {
 //            showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
-//                             .arg(preferences->getSyncName(i)));
+//                             .arg(model->getSyncName(i)));
 //            preferences->setSyncState(i, false);
 //            syncsModified = true;
 //            openSettings(SettingsDialog::SYNCS_TAB);
@@ -2318,22 +2338,22 @@ void MegaApplication::disableSyncs()
     }
 
     bool syncsModified = false;
-    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+    for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
-       if (!preferences->isFolderActive(i))
+       if (!model->isFolderActive(i))
        {
            continue;
        }
 
-       Platform::syncFolderRemoved(preferences->getLocalFolder(i),
-                                   preferences->getSyncName(i),
-                                   preferences->getSyncID(i));
-       notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
+       Platform::syncFolderRemoved(model->getLocalFolder(i),
+                                   model->getSyncName(i),
+                                   model->getSyncID(i));
+       notifyItemChange(model->getLocalFolder(i), MegaApi::STATE_NONE);
 //       preferences->setSyncState(i, false, true); //TODO: this should be done in callback: onSyncDisabled
        //probably want to still use sync preferences, but only update them with whatever the sdk tells
 
        syncsModified = true;
-       MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+       MegaNode *node = megaApi->getNodeByHandle(model->getMegaFolderHandle(i));
        megaApi->disableSync(node);
        delete node;
     }
@@ -2353,22 +2373,22 @@ void MegaApplication::restoreSyncs() //TODO: this shouldn't even exist
 //    }
 
 //    bool syncsModified = false;
-//    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+//    for (int i = 0; i < model->getNumSyncedFolders(); i++)
 //    {
-//       if (!preferences->isTemporaryInactiveFolder(i) || preferences->isFolderActive(i))
+//       if (!model->isTemporaryInactiveFolder(i) || model->isFolderActive(i))
 //       {
 //           continue;
 //       }
 
 //       syncsModified = true;
-//       MegaNode *node = megaApi->getNodeByPath(preferences->getMegaFolder(i).toUtf8().constData());
+//       MegaNode *node = megaApi->getNodeByPath(model->getMegaFolder(i).toUtf8().constData());
 //       if (!node)
 //       {
 ////           preferences->setSyncState(i, false, false);
 //           continue;
 //       }
 
-//       QFileInfo localFolderInfo(preferences->getLocalFolder(i));
+//       QFileInfo localFolderInfo(model->getLocalFolder(i));
 //       QString localFolderPath = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
 //       if (!localFolderPath.size() || !localFolderInfo.isDir())
 //       {
@@ -3003,9 +3023,9 @@ void MegaApplication::cleanAll()
     periodicTasksTimer->stop();
     stopUpdateTask();
     Platform::stopShellDispatcher();
-    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+    for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
-        notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
+        notifyItemChange(model->getLocalFolder(i), MegaApi::STATE_NONE);
     }
 
     closeDialogs();
@@ -3935,6 +3955,8 @@ void MegaApplication::unlink()
         queuedUserStats[i] = false;
     }
     queuedStorageUserStatsReason = 0;
+
+    model->reset();
 }
 
 void MegaApplication::cleanLocalCaches(bool all)
@@ -3947,9 +3969,9 @@ void MegaApplication::cleanLocalCaches(bool all)
     if (all || preferences->cleanerDaysLimit())
     {
         int timeLimitDays = preferences->cleanerDaysLimitValue();
-        for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+        for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
-            QString syncPath = preferences->getLocalFolder(i);
+            QString syncPath = model->getLocalFolder(i);
             if (!syncPath.isEmpty())
             {
                 QDir cacheDir(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
@@ -4686,7 +4708,7 @@ void MegaApplication::migrateSyncConfToSdk()
 {
     if (preferences->logged())
     {
-        foreach(OldSyncData osd, preferences->readOldCachedSyncs())
+        foreach(SyncData osd, preferences->readOldCachedSyncs())
         {
             megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mMegaHandle, osd.mLocalfp, osd.mEnabled,
                                          new MegaListenerFuncExecuter([this, osd](MegaApi* api,  MegaRequest *request, MegaError *e)
@@ -4694,7 +4716,7 @@ void MegaApplication::migrateSyncConfToSdk()
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
                     //TODO: consider queuing this function back into MegaApplication thread. preferences method use a mutex and execution should be instantaneous ...
-                    preferences->pickInfoFromOldSync(osd, request->getNumber());
+                    model->pickInfoFromOldSync(osd, request->getNumber());
                     preferences->removeOldCachedSync(osd.mPos);
                 }
                 else
@@ -6284,21 +6306,21 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         }
 
         int i;
-        for (i = 0; i < preferences->getNumSyncedFolders(); i++)
+        for (i = 0; i < model->getNumSyncedFolders(); i++)
         {
-            if (preferences->isFolderActive(i))
+            if (model->isFolderActive(i))
             {
                 break;
             }
         }
-        if (i == preferences->getNumSyncedFolders())
+        if (i == model->getNumSyncedFolders())
         {
             return;
         }
 
         infoDialogTimer->stop();
         infoDialog->hide();
-        QString localFolderPath = preferences->getLocalFolder(i);
+        QString localFolderPath = model->getLocalFolder(i);
         if (!localFolderPath.isEmpty())
         {
             QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
@@ -6695,7 +6717,7 @@ void MegaApplication::createAppMenus()
         addSyncAction = NULL;
     }
 
-    int num = (megaApi && preferences->logged()) ? preferences->getNumSyncedFolders() : 0;
+    int num = (megaApi && preferences->logged()) ? model->getNumSyncedFolders() : 0;
     if (num == 0)
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync_folder.png")), true);
@@ -6736,17 +6758,17 @@ void MegaApplication::createAppMenus()
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
-            if (!preferences->isFolderActive(i))
+            if (!model->isFolderActive(i))
             {
                 continue;
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
+            MenuItemAction *action = new MenuItemAction(model->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             syncsMenu->addAction(action);
-            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+            menuSignalMapper->setMapping(action, model->getLocalFolder(i));
         }
 
         if (!activeFolders)
@@ -6759,7 +6781,7 @@ void MegaApplication::createAppMenus()
             long long firstSyncHandle = INVALID_HANDLE;
             if (num == 1)
             {
-                firstSyncHandle = preferences->getMegaFolderHandle(0);
+                firstSyncHandle = model->getMegaFolderHandle(0);
             }
 
             auto rootNode = getRootNode();
@@ -7460,6 +7482,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             else
             {
                 preferences->resetGlobalSettings();
+                model->reset();
             }
 
             closeDialogs();
@@ -7822,11 +7845,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //        }
 
 
-//        for (int i = preferences->getNumSyncedFolders() - 1; i >= 0; i--)
+//        for (int i = model->getNumSyncedFolders() - 1; i >= 0; i--)
 //        {
-//            if ((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
+//            if ((request->getNodeHandle() == model->getMegaFolderHandle(i)))
 //            {
-//                QString localFolder = preferences->getLocalFolder(i);
+//                QString localFolder = model->getLocalFolder(i);
 
 //        #ifdef WIN32
 //                string path, fsname;
@@ -7843,7 +7866,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
 //                if (e->getErrorCode() != MegaError::API_OK)
 //                {
-//                    MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+//                    MegaNode *node = megaApi->getNodeByHandle(model->getMegaFolderHandle(i));
 //                    const char *nodePath = megaApi->getNodePath(node);
 //                    delete node;
 
@@ -7863,17 +7886,17 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                    if (!QFileInfo(localFolder).isDir())
 //                    {
 //                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
-//                                         .arg(preferences->getSyncName(i)));
+//                                         .arg(model->getSyncName(i)));
 //                    }
 //                    else if (nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
 //                    {
 //                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
-//                                         .arg(preferences->getSyncName(i)));
+//                                         .arg(model->getSyncName(i)));
 //                    }
-//                    else if (!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
+//                    else if (!nodePath || model->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
 //                    {
 //                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
-//                                         .arg(preferences->getSyncName(i)));
+//                                         .arg(model->getSyncName(i)));
 //                    }
 //                    else if (e->getErrorCode() == MegaError::API_EFAILED)
 //                    {
@@ -7883,13 +7906,13 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                        {
 //                            QMegaMessageBox::critical(NULL, tr("MEGAsync"),
 //                                tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
-//                                .arg(preferences->getSyncName(i)), Utilities::getDevicePixelRatio());
+//                                .arg(model->getSyncName(i)), Utilities::getDevicePixelRatio());
 //                        }
 //                        else
 //                        {
 //#endif
 //                            showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
-//                                         .arg(preferences->getSyncName(i)));
+//                                         .arg(model->getSyncName(i)));
 //#ifdef WIN32
 //                        }
 //#endif
@@ -7897,7 +7920,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                    else if (e->getErrorCode() == MegaError::API_EACCESS)
 //                    {
 //                        showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
-//                                         .arg(preferences->getSyncName(i)));
+//                                         .arg(model->getSyncName(i)));
 
 //                        if (megaApi->isLoggedIn())
 //                        {
@@ -7914,10 +7937,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
 //                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error adding sync");
 //                    Platform::syncFolderRemoved(localFolder,
-//                                                preferences->getSyncName(i),
-//                                                preferences->getSyncID(i));
+//                                                model->getSyncName(i),
+//                                                model->getSyncID(i));
 
-//                    if (preferences->isFolderActive(i))
+//                    if (model->isFolderActive(i))
 //                    {
 ////                        preferences->setSyncState(i, false);
 //                        createAppMenus();
@@ -7938,7 +7961,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                    }
 
 //#ifdef _WIN32
-//                    QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(i) +
+//                    QString debrisPath = QDir::toNativeSeparators(model->getLocalFolder(i) +
 //                            QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
 
 //                    WIN32_FILE_ATTRIBUTE_DATA fad;
@@ -8665,39 +8688,39 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         localPath.clear();
         MegaNode *node = nodes->get(i);
 
-        for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+        for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
-            if (!preferences->isFolderActive(i))
+            if (!model->isFolderActive(i))
             {
                 continue;
             }
 
             if (node->getType() == MegaNode::TYPE_FOLDER
-                    && (node->getHandle() == preferences->getMegaFolderHandle(i)))
+                    && (node->getHandle() == model->getMegaFolderHandle(i)))
             {
-                MegaNode *nodeByHandle = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+                MegaNode *nodeByHandle = megaApi->getNodeByHandle(model->getMegaFolderHandle(i));
                 const char *nodePath = megaApi->getNodePath(nodeByHandle);
 
                 //TODO: move this out of here: the sdk should report sync_disabled with the corresponding reason when one synced node is updated (onNodesUpdate) and the remote path changes!
 
 
-                if (!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
+                if (!nodePath || model->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
                 {
                     if (nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
                     {
                         showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
-                                         .arg(preferences->getSyncName(i)));
+                                         .arg(model->getSyncName(i)));
                     }
                     else //TODO: shouldn't this get into when a remote node simply changed path? (perhaps that's not notified as onNodesUpdate)
                     {
                         showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
-                                         .arg(preferences->getSyncName(i)));
+                                         .arg(model->getSyncName(i)));
                     }
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i),
-                                                preferences->getSyncName(i),
-                                                preferences->getSyncID(i));
-                    notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
-                    MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
+                    Platform::syncFolderRemoved(model->getLocalFolder(i),
+                                                model->getSyncName(i),
+                                                model->getSyncID(i));
+                    notifyItemChange(model->getLocalFolder(i), MegaApi::STATE_NONE);
+                    MegaNode *node = megaApi->getNodeByHandle(model->getMegaFolderHandle(i));
                     megaApi->removeSync(node); //TODO: all this code should happen in the sdk!
                     delete node;
                     //TODO: this should happend upon removeSync
@@ -8849,14 +8872,14 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
     std::unique_ptr<MegaNode> node (api->getNodeByHandle(sync->getMegaHandle()) );
     std::unique_ptr< char[]> path (api->getNodePath(node.get()) ); //TODO: review api value!
 
-    preferences->updateSyncSettings(sync, path.get()); //TODO: review ownership and the like. it seem that some destructor is called when it shouldnt. maybe change ownership stealing
+    model->updateSyncSettings(sync, path.get()); //TODO: review ownership and the like. it seem that some destructor is called when it shouldnt. maybe change ownership stealing
 
-    for (int i = preferences->getNumSyncedFolders() - 1; i >= 0; i--)
+    for (int i = model->getNumSyncedFolders() - 1; i >= 0; i--)
     {
-//        if ((sync->getMegaHandle() == preferences->getMegaFolderHandle(i))) //TODO: if we use tag as the primary key and store a map instead of a list, we won't need to iterate and use index
-        if ((sync->getTag() == preferences->getSyncID(i))) //TODO: if we use tag as the primary key and store a map instead of a list, we won't need to iterate and use index
+//        if ((sync->getMegaHandle() == model->getMegaFolderHandle(i))) //TODO: if we use tag as the primary key and store a map instead of a list, we won't need to iterate and use index
+        if ((sync->getTag() == model->getSyncID(i))) //TODO: if we use tag as the primary key and store a map instead of a list, we won't need to iterate and use index
         {
-            QString localFolder = preferences->getLocalFolder(i);
+            QString localFolder = model->getLocalFolder(i);
 
     #ifdef WIN32
             string path, fsname;
@@ -8891,17 +8914,17 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
                 if (!QFileInfo(localFolder).isDir())
                 {
                     showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
-                                     .arg(preferences->getSyncName(i)));
+                                     .arg(model->getSyncName(i)));
                 }
                 else if (nodePath && QString::fromUtf8(nodePath).startsWith(QString::fromUtf8("//bin")))
                 {
                     showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
-                                     .arg(preferences->getSyncName(i)));
+                                     .arg(model->getSyncName(i)));
                 }
-                else if (!nodePath || preferences->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
+                else if (!nodePath || model->getMegaFolder(i).compare(QString::fromUtf8(nodePath)))
                 {
                     showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
-                                     .arg(preferences->getSyncName(i)));
+                                     .arg(model->getSyncName(i)));
                 }
 //                else if (e->getErrorCode() == MegaError::API_EFAILED)
 //                {
@@ -8911,13 +8934,13 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
 //                    {
 //                        QMegaMessageBox::critical(NULL, tr("MEGAsync"),
 //                            tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
-//                            .arg(preferences->getSyncName(i)), Utilities::getDevicePixelRatio());
+//                            .arg(model->getSyncName(i)), Utilities::getDevicePixelRatio());
 //                    }
 //                    else
 //                    {
 //#endif
 //                        showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
-//                                     .arg(preferences->getSyncName(i)));
+//                                     .arg(model->getSyncName(i)));
 //#ifdef WIN32
 //                    }
 //#endif
@@ -8925,7 +8948,7 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
 //                else if (e->getErrorCode() == MegaError::API_EACCESS)
 //                {
 //                    showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
-//                                     .arg(preferences->getSyncName(i)));
+//                                     .arg(model->getSyncName(i)));
 
 //                    if (megaApi->isLoggedIn())
 //                    {
@@ -8943,10 +8966,10 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
 
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error adding sync");
                 Platform::syncFolderRemoved(localFolder,
-                                            preferences->getSyncName(i),
-                                            preferences->getSyncID(i));
+                                            model->getSyncName(i),
+                                            model->getSyncID(i));
 
-                if (preferences->isFolderActive(i))
+                if (model->isFolderActive(i))
                 {
 //                        preferences->setSyncState(i, false);
                     createAppMenus();
@@ -8967,7 +8990,7 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
                 }
 
 #ifdef _WIN32
-                QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(i) +
+                QString debrisPath = QDir::toNativeSeparators(model->getLocalFolder(i) +
                         QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
 
                 WIN32_FILE_ATTRIBUTE_DATA fad;
@@ -9018,7 +9041,7 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    preferences->removeSyncedFolderByTag(sync->getTag());
+    model->removeSyncedFolderByTag(sync->getTag());
 
     onGlobalSyncStateChanged(api);
 }
@@ -9059,14 +9082,14 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 //#endif
 
 //        // check syncs
-//        for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+//        for (int i = 0; i < model->getNumSyncedFolders(); i++)
 //        {
-//            if (!preferences->isFolderActive(i))
+//            if (!model->isFolderActive(i))
 //            {
 //                continue;
 //            }
 
-//            QString localFolder = preferences->getLocalFolder(i);
+//            QString localFolder = model->getLocalFolder(i);
 //            std::unique_ptr<MegaSync> sync{api->getSyncByPath(localFolder.toUtf8().data())};
 //            if (!sync)
 //            {
@@ -9077,8 +9100,8 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 //#ifdef _WIN32
 //            if (addToLeftPane)
 //            {
-//                QString name = preferences->getSyncName(i);
-//                QString uuid = preferences->getSyncID(i);
+//                QString name = model->getSyncName(i);
+//                QString uuid = model->getSyncID(i);
 //                Platform::addSyncToLeftPane(localFolder, name, uuid);
 //            }
 //#endif

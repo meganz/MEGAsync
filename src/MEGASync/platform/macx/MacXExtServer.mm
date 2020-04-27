@@ -51,16 +51,16 @@ void MacXExtServer::acceptConnection()
 
         // send the list of current synced folders to the new client
         Preferences *preferences = Preferences::instance();
-        for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+        for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
-            QString syncPath = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
-            if (!syncPath.size() || !preferences->isFolderActive(i))
+            QString syncPath = QDir::toNativeSeparators(QDir(model->getLocalFolder(i)).canonicalPath());
+            if (!syncPath.size() || !model->isFolderActive(i))
             {
                 continue;
             }
 
             QString message = QString::fromUtf8("A:") + syncPath
-                    + QChar::fromAscii(':') + preferences->getSyncName(i);
+                    + QChar::fromAscii(':') + model->getSyncName(i);
             client->writeData(message.toUtf8().constData(), message.length());
         }        
     }
@@ -399,15 +399,15 @@ void MacXExtServer::notifyAllClients(int op)
         command = QString::fromUtf8("D:");
     }
 
-    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+    for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
-        QString syncPath = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
-        if (!syncPath.size() || !preferences->isFolderActive(i))
+        QString syncPath = QDir::toNativeSeparators(QDir(model->getLocalFolder(i)).canonicalPath());
+        if (!syncPath.size() || !model->isFolderActive(i))
         {
             continue;
         }
 
-        QString message = command + syncPath + QChar::fromAscii(':') + preferences->getSyncName(i);
+        QString message = command + syncPath + QChar::fromAscii(':') + model->getSyncName(i);
 
         emit sendToAll(message.toUtf8());
     }

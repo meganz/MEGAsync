@@ -101,6 +101,7 @@ else {
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
+include(model/model.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
