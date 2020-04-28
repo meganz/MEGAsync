@@ -40,6 +40,7 @@
 #include "QTMegaListener.h"
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
+#include "gui/VerifyLockMessage.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -136,7 +137,6 @@ public:
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
     long long mStartPaintTime = 0;
 
-    void unlink();
     void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
     void showWarningMessage(QString message, QString title = tr("MEGAsync"));
@@ -160,6 +160,7 @@ public:
     int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
+    void showVerifyAccountInfo();
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
@@ -173,6 +174,9 @@ public:
 
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
+    SetupWizard *getSetupWizard() const;
+    void fetchNodes();
+    void whyAmIBlocked(bool periodicCall = false);
 
 signals:
     void startUpdaterThread();
@@ -181,8 +185,13 @@ signals:
     void unityFixSignal();
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
+    void fetchNodesAfterBlock();
+    void closeSetupWizard(int);
+    void setupWizardCreated();
+    void unblocked();
 
 public slots:
+    void unlink(bool keepLogs = false);
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
@@ -244,6 +253,7 @@ public slots:
     void onConnectivityCheckError();
     void proExpirityTimedOut();
     void userAction(int action);
+    void showSetupWizard(int action);
     void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
@@ -320,6 +330,7 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
+    std::unique_ptr<VerifyLockMessage> verifyEmail;
     std::unique_ptr<QMenu> infoDialogMenu;
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
@@ -385,6 +396,8 @@ protected:
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mInboxNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
+    bool mFetchingNodes = false;
+    bool mQueringWhyAmIBlocked = false;
     int numTransfers[2];
     int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
@@ -471,6 +484,8 @@ protected:
     long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
+    int blockState;
+    bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
 };
 

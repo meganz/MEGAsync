@@ -232,17 +232,17 @@ void MegaTransferDelegate::processCancel(int tag)
     }
     else
     {
+        QPointer<QTransfersModel> modelPointer = model;
+
         QMessageBox warning;
         HighDpiResize hDpiResizer(&warning);
         warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
         warning.setText(tr("Are you sure you want to cancel this transfer?"));
         warning.setIcon(QMessageBox::Warning);
-        warning.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                                           : QString::fromUtf8(":/images/mbox-warning@2x.png")));
         warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         warning.setDefaultButton(QMessageBox::No);
         int result = warning.exec();
-        if (result == QMessageBox::Yes)
+        if (modelPointer && result == QMessageBox::Yes)
         {
             model->megaApi->cancelTransferByTag(tag);
         }

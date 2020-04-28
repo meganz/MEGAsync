@@ -59,6 +59,9 @@ public:
     static double getUpTime();
 
     static int fd;
+
+private:
+    static void disableSignalHandler();
 };
 
 #endif // MACXPLATFORM_H

@@ -19,11 +19,9 @@ BuildRequires: ffmpeg-mega
     BuildRequires: libopenssl-devel, sqlite3-devel
     BuildRequires: libbz2-devel
 
-    %if %(echo $HOSTNAME) == "obs"
-        # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
-        # plus it speeds up building process
-        BuildRequires: -post-build-checks
-    %endif
+    # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
+    # plus it speeds up building process
+    #!BuildIgnore: post-build-checks
 
     %if 0%{?sle_version} >= 150000
         BuildRequires: libcurl4
@@ -47,7 +45,7 @@ BuildRequires: ffmpeg-mega
         BuildRequires: update-desktop-files
 
     %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-        BuildRequires: libqt5-qtbase-devel, libqt5-linguist, libqt5-qtsvg-devel
+        BuildRequires: libqt5-qtbase-devel, libqt5-linguist, libqt5-qtsvg-devel, libqt5-qtx11extras-devel
         Requires: libQt5Core5
     %else
         BuildRequires: libqt4-devel, qt-devel
@@ -83,13 +81,19 @@ BuildRequires: ffmpeg-mega
         BuildRequires: lz4-libs
     %endif
 
+    %if 0%{?fedora_version} >= 31
+        BuildRequires: fonts-filesystem
+    %else
+        BuildRequires: fontpackages-filesystem
+    %endif
+
     %if 0%{?fedora_version} >= 23
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
+        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel
         Requires: qt5-qtbase >= 5.6, qt5-qtsvg
-        BuildRequires: terminus-fonts, fontpackages-filesystem
+        BuildRequires: terminus-fonts
     %else
         BuildRequires: qt, qt-x11, qt-devel
-        BuildRequires: terminus-fonts, fontpackages-filesystem
+        BuildRequires: terminus-fonts
     %endif
 %endif
 
@@ -100,7 +104,7 @@ BuildRequires: ffmpeg-mega
 
     %if 0%{?centos_version} >= 800
         BuildRequires: bzip2-devel
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
+        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel
     %else
         BuildRequires: qt-mega, mesa-libGL-devel
         Requires: freetype >= 2.8
@@ -113,7 +117,7 @@ BuildRequires: ffmpeg-mega
     %if 0%{?rhel_version} < 800
         BuildRequires: qt, qt-x11, qt-devel
     %else
-        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
+        BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel
         BuildRequires: bzip2-devel
     %endif
 %endif

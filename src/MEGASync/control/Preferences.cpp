@@ -11,14 +11,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.1.0";
-const int Preferences::VERSION_CODE = 4301;
-const int Preferences::BUILD_ID = 2;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.2.0";
+const int Preferences::VERSION_CODE = 4302;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.2");
 QString Preferences::SDK_ID = QString::fromAscii("660dafe");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Performance improvements for the sync engine."));
+    "- Fix crash issue for OSX 10.9."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -201,7 +201,11 @@ bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
 
 #ifdef WIN32
-    const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
+    #ifdef _WIN64
+        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync64/v.txt");
+    #else
+        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
+    #endif
 #else
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msync/v.txt");
 #endif
@@ -378,7 +382,7 @@ const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
 const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
-const int  Preferences::defaultNeedsFetchNodes      = false;
+const bool  Preferences::defaultNeedsFetchNodes   = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -603,7 +607,7 @@ QString Preferences::getSession()
         value = settings->value(sessionKey).toString(); // for MEGAsync prior unfinished fetchnodes resumable sessions (<=4.3.1)
     }
 
-    if (value.isEmpty())
+    if (value.isEmpty() && needsFetchNodesInGeneral())
     {
         value = getSessionInGeneral(); // for MEGAsync with unfinished fetchnodes resumable sessions (>4.3.1)
     }
@@ -1463,7 +1467,7 @@ void Preferences::setAccountStateInGeneral(int value)
 }
 
 
-int Preferences::needsFetchNodesInGeneral()
+bool Preferences::needsFetchNodesInGeneral()
 {
     mutex.lock();
     QString currentAccount;
@@ -1473,7 +1477,7 @@ int Preferences::needsFetchNodesInGeneral()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    int value = getValue<int>(needsFetchNodesKey, defaultNeedsFetchNodes);
+    bool value = getValue<int>(needsFetchNodesKey, defaultNeedsFetchNodes);
 
     if (!currentAccount.isEmpty())
     {
@@ -1483,7 +1487,7 @@ int Preferences::needsFetchNodesInGeneral()
     return value;
 }
 
-void Preferences::setNeedsFetchNodesInGeneral(int value)
+void Preferences::setNeedsFetchNodesInGeneral(bool value)
 {
     mutex.lock();
 
@@ -2945,8 +2949,21 @@ void Preferences::unlink()
     mutex.lock();
     assert(logged());
     settings->remove(sessionKey); // Remove session from specific account settings
-
     settings->endGroup();
+    mutex.unlock();
+
+    resetGlobalSettings();
+}
+
+void Preferences::resetGlobalSettings()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
 
     settings->remove(currentAccountKey);
     settings->remove(needsFetchNodesKey);
@@ -2961,9 +2978,15 @@ void Preferences::unlink()
     activeFolders.clear();
     temporaryInactiveFolders.clear();
     localFingerprints.clear();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     settings->sync();
     cleanCache();
     mutex.unlock();
+
     emit stateChanged();
 }
 

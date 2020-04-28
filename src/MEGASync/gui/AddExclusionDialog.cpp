@@ -2,7 +2,7 @@
 #include "ui_AddExclusionDialog.h"
 #include "gui/MultiQFileDialog.h"
 #include <QPointer>
-#include <QMessageBox>
+#include "QMegaMessageBox.h"
 
 AddExclusionDialog::AddExclusionDialog(QWidget *parent) :
     QDialog(parent),
@@ -38,7 +38,7 @@ void AddExclusionDialog::on_bOk_clicked()
     QString text = textValue();
     if (text.isEmpty() || !QRegExp(text, Qt::CaseInsensitive, QRegExp::Wildcard).isValid())
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Please enter a valid file name or absolute path."));
+        QMegaMessageBox::warning(this, tr("Warning"), tr("Please enter a valid file name or absolute path."));
         return;
     }
 

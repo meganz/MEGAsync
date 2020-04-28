@@ -321,10 +321,11 @@ public:
     int accountStateInGeneral();
     void setAccountStateInGeneral(int value);
 
-    int needsFetchNodesInGeneral();
-    void setNeedsFetchNodesInGeneral(int value);
+    bool needsFetchNodesInGeneral();
+    void setNeedsFetchNodesInGeneral(bool value);
 
     void unlink();
+    void resetGlobalSettings();//Clear and remove any global setting. Not account specific ones.
 
     bool isCrashed();
     void setCrashed(bool value);
@@ -659,7 +660,7 @@ protected:
     static const QString defaultHttpsCertIntermediate;
     static const long long defaultHttpsCertExpiration;
     static const int defaultAccountStatus;
-    static const int defaultNeedsFetchNodes;
+    static const bool defaultNeedsFetchNodes;
 };
 
 #endif // PREFERENCES_H

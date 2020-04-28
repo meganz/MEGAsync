@@ -218,7 +218,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     if (e->getErrorCode() != MegaError::API_OK)
     {
         ui->tMegaFolders->setEnabled(true);
-        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+        QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
     }
 
@@ -294,7 +294,7 @@ void NodeSelector::onDeleteClicked()
     }
 
     QPointer<NodeSelector> currentDialog = this;
-    if (QMessageBox::question(this,
+    if (QMegaMessageBox::question(this,
                              QString::fromUtf8("MEGAsync"),
                              tr("Are you sure that you want to delete \"%1\"?")
                                 .arg(QString::fromUtf8(node->getName())),
@@ -436,7 +436,7 @@ void NodeSelector::on_bNewFolder_clicked()
     }
     else
     {
-        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Invalid folder name.\n"
+        QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"), tr("Invalid folder name.\n"
                                                                       "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."));
         if (!id)
         {
@@ -459,20 +459,20 @@ void NodeSelector::on_bOk_clicked()
     if ((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {
         delete node;
-        QMessageBox::warning(NULL, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
         return;
 
     }
     else if ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
     {
         delete node;
-        QMessageBox::warning(NULL, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
         return;
     }
     else if ((selectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
     {
         delete node;
-        QMessageBox::warning(NULL, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
         return;
     }
 
@@ -484,7 +484,7 @@ void NodeSelector::on_bOk_clicked()
         if (!check)
         {
             delete node;
-            QMessageBox::warning(NULL, tr("Warning"), tr("Invalid folder for synchronization.\n"
+            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Invalid folder for synchronization.\n"
                                                          "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
                                  QMessageBox::Ok);
             return;

@@ -371,11 +371,11 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 if (node)
                 {
                     notificationContent = tr("Your publicly shared [%1] ([%2]) has been taken down")
-                            .arg(node->getType() == MegaNode::TYPE_FILE ? tr("file")
+                            .replace(QString::fromUtf8("[%1]"), node->getType() == MegaNode::TYPE_FILE ? tr("file")
                                        : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
                                        : QString::fromUtf8(""))
-                            .arg(formatRichString(QString::fromUtf8(node->getName())));
-                    delete node;
+                            .replace(QString::fromUtf8("[%2]"), formatRichString(QString::fromUtf8(node->getName())));
+                      delete node;
                 }
                 else
                 {

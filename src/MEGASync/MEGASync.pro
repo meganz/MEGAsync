@@ -4,6 +4,20 @@
 #
 #-------------------------------------------------
 
+win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200402
+win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
+win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
+
+macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+macx:VCPKG_TRIPLET = x64-osx
+
+unix:!macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+unix:!macx:VCPKG_TRIPLET = x64-linux
+
+message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
+message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
+
+
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
 
 debug_and_release {
@@ -29,7 +43,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 
 unix:!macx {
-    QT += svg
+    QT += svg x11extras
     TARGET = megasync
 
 #    Uncomment the following if "make install" doesn't copy megasync in /usr/bin directory

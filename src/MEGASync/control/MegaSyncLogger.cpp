@@ -162,6 +162,7 @@ struct LoggingThread
     bool flushLog = false;
     bool closeLog = false;
     bool forceRotationForReporting = false;
+    bool forceRenew = false; //to force removal of all logs and create an empty MEGAsync.log
     bool logToDesktop = false;
     bool logToDesktopChanged = false;
     int flushOnLevel = mega::MegaApi::LOG_LEVEL_WARNING;
@@ -200,10 +201,47 @@ private:
         outputFile << "----------------------------- program start -----------------------------\n";
         long long outFileSize = outputFile.tellp();
         std::ofstream logDesktopFile;
+        bool logDesktopFileOpen = false;
 
         while (!logExit)
         {
-            if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
+            if (forceRenew)
+            {
+                std::lock_guard<std::mutex> g(logRotationMutex);
+                for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
+                {
+                    QString toDelete = numberedLogFilename(filename, i);
+
+                    if (QFile::exists(toDelete))
+                    {
+                        if (!QFile::remove(toDelete))
+                        {
+                            std::cerr << "Error removing log file " << i << std::endl;
+                        }
+                    }
+                }
+
+                outputFile.close();
+                if (!QFile::remove(filename) )
+                {
+                    std::cerr << "Error removing log file!! " << std::endl;
+                }
+
+    #ifdef WIN32
+                outputFile.open(filename.toStdWString().data(), std::ofstream::out);
+    #else
+                outputFile.open(filename.toUtf8().data(), std::ofstream::out);
+    #endif
+                outFileSize = 0;
+
+                forceRenew = false;
+
+                if (g_megaSyncLogger)
+                {
+                    emit g_megaSyncLogger->logCleaned();
+                }
+            }
+            else if (forceRotationForReporting || outFileSize > MAX_FILESIZE_MB*1024*1024)
             {
                 std::lock_guard<std::mutex> g(logRotationMutex);
                 for (int i = MAX_ROTATE_LOGS_TODELETE; i--; )
@@ -262,7 +300,7 @@ private:
             {
                 std::unique_lock<std::mutex> lock(logMutex);
                 logConditionVariable.wait_for(lock, std::chrono::milliseconds(500), [this, &newMessages, &topLevelMemoryGap]() { 
-                        if (logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog || closeLog)
+                        if (forceRenew || logListFirst.next || logExit || forceRotationForReporting || logToDesktopChanged || flushLog || closeLog)
                         {
                             newMessages = logListFirst.next;
                             logListFirst.next = nullptr;
@@ -273,6 +311,24 @@ private:
                         }
                         else return false;
                 });
+            }
+
+            if (logToDesktopChanged)
+            {
+                logToDesktopChanged = false;
+                if (logToDesktop && !logDesktopFileOpen)
+                {
+    #ifdef WIN32
+                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
+    #else
+                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
+    #endif
+                    logDesktopFileOpen = true;
+                }
+                else if (!logToDesktop && logDesktopFileOpen)
+                {
+                    logDesktopFile.close();
+                }
             }
 
             if (topLevelMemoryGap)
@@ -321,6 +377,7 @@ private:
                             logDesktopFile << "<log gap - out of logging memory at this point>\n";
                         }
                     }
+                    logDesktopFile.flush(); //always flush in `active` logging
                 }
 
                 if (g_megaSyncLogger && g_megaSyncLogger->mLogToStdout)
@@ -333,6 +390,7 @@ private:
                     {
                         std::cout << p->message;
                     }
+                    std::cout << std::flush; //always flush into stdout (DEBUG mode)
                 }
                 p->notifyWaiter();
                 free(p);
@@ -361,28 +419,10 @@ private:
                 }
                 return;  // This request means we have received a termination signal; close and exit the thread as quick & clean as possible
             }
-
-            if (logToDesktopChanged)
-            {
-                logToDesktopChanged = false;
-                if (logToDesktop && !logDesktopFile)
-                {
-    #ifdef WIN32
-                    logDesktopFile.open(desktopFilename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
-    #else
-                    logDesktopFile.open(desktopFilename.toUtf8().data(), std::ofstream::out | std::ofstream::app);
-    #endif
-                }
-                else if (!logToDesktop && logDesktopFile)
-                {
-                    logDesktopFile.close();
-                }
-            }
-
         }
     }
 
-} g_loggingThread;
+};
 
 
 MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& desktopPath, bool logToStdout)
@@ -400,7 +440,8 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     const QDir desktopDir{mDesktopPath};
     const auto desktopLogPath = desktopDir.filePath(QString::fromUtf8("MEGAsync.log"));
 
-    g_loggingThread.startLoggingThread(logPath, desktopLogPath);
+    g_loggingThread.reset(new LoggingThread());
+    g_loggingThread->startLoggingThread(logPath, desktopLogPath);
 
     mega::MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_MAX);
     mega::MegaApi::addLoggerObject(this);
@@ -411,14 +452,14 @@ MegaSyncLogger::~MegaSyncLogger()
     mega::MegaApi::removeLoggerObject(this); // after this no more calls to MegaSyncLogger::log
 
     {
-        std::lock_guard<std::mutex> g(g_loggingThread.logMutex);
-        g_loggingThread.logExit = true;
-        g_loggingThread.logConditionVariable.notify_one();
+        std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
+        g_loggingThread->logExit = true;
+        g_loggingThread->logConditionVariable.notify_one();
     }
     assert(g_megaSyncLogger == this);
     g_megaSyncLogger = nullptr;
-    g_loggingThread.logThread->join();
-    g_loggingThread.logThread.reset();
+    g_loggingThread->logThread->join();
+    g_loggingThread->logThread.reset();
 }
 
 inline void twodigit(char*& s, int n)
@@ -495,7 +536,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
                          )
 
 {
-    g_loggingThread.log(loglevel, message
+    g_loggingThread->log(loglevel, message
 #ifdef ENABLE_LOG_PERFORMANCE
                         , directMessages, directMessagesSizes, numberMessages
 #endif
@@ -660,20 +701,28 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 
 void MegaSyncLogger::setDebug(const bool enable)
 {
-    g_loggingThread.logToDesktop = enable;
-    g_loggingThread.logToDesktopChanged = true;
+    g_loggingThread->logToDesktop = enable;
+    g_loggingThread->logToDesktopChanged = true;
 }
 
 bool MegaSyncLogger::isDebug() const
 {
-    return g_loggingThread.logToDesktop;
+    return g_loggingThread->logToDesktop;
 }
 
 bool MegaSyncLogger::prepareForReporting()
 {
-    std::lock_guard<std::mutex> g(g_loggingThread.logMutex);
-    g_loggingThread.forceRotationForReporting = true;
-    g_loggingThread.logConditionVariable.notify_one();
+    std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
+    g_loggingThread->forceRotationForReporting = true;
+    g_loggingThread->logConditionVariable.notify_one();
+    return true;
+}
+
+bool MegaSyncLogger::cleanLogs()
+{
+    std::lock_guard<std::mutex> g(g_loggingThread->logMutex);
+    g_loggingThread->forceRenew = true;
+    g_loggingThread->logConditionVariable.notify_one();
     return true;
 }
 
@@ -683,10 +732,18 @@ void MegaSyncLogger::resumeAfterReporting()
 
 void MegaSyncLogger::flushAndClose()
 {
-    g_loggingThread.log(mega::MegaApi::LOG_LEVEL_FATAL, "***CRASH DETECTED: FLUSHING AND CLOSING***");
-    g_loggingThread.flushLog = true;
-    g_loggingThread.closeLog = true;
-    g_loggingThread.logConditionVariable.notify_one();
+    try
+    {
+        g_loggingThread->log(mega::MegaApi::LOG_LEVEL_FATAL, "***CRASH DETECTED: FLUSHING AND CLOSING***");
+
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << endl;
+    }
+    g_loggingThread->flushLog = true;
+    g_loggingThread->closeLog = true;
+    g_loggingThread->logConditionVariable.notify_one();
     // This is called on crash so the app may be unstable. Don't assume the thread is working properly.
     // It might be the one that crashed.  Just give it 1 second to complete
 #ifdef WIN32

@@ -15,6 +15,8 @@ public:
     virtual void drawItemText ( QPainter * painter, const QRect & rect, int flags, const QPalette & pal, bool enabled, const QString & text, QPalette::ColorRole textRole = QPalette::NoRole ) const;
     virtual void drawPrimitive ( PrimitiveElement element, const QStyleOption * option, QPainter * painter, const QWidget * widget = 0 ) const;
     virtual int pixelMetric(PixelMetric metric, const QStyleOption * option, const QWidget * widget = 0) const;
+    virtual QIcon standardIcon(QStyle::StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const;
+
 };
 
 #endif // MEGAPROXYSTYLE_H

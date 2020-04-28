@@ -64,7 +64,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             }
             else
             {
-                QMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
+                QMegaMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
             }
             break;
         }
@@ -99,12 +99,12 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
                 ui->bOk->setEnabled(true);
-                QMessageBox::critical(NULL, tr("Error"), tr("Too many requests. Please wait."));
+                QMegaMessageBox::critical(nullptr, tr("Error"), tr("Too many requests. Please wait."));
             }
             else
             {
                 ui->bOk->setEnabled(true);
-                QMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
+                QMegaMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
             }
 
             break;
@@ -125,17 +125,17 @@ void ChangePassword::on_bOk_clicked()
 
     if (emptyField)
     {
-        QMessageBox::warning(this, tr("Error"), tr("Please enter your password"));
+        QMegaMessageBox::warning(this, tr("Error"), tr("Please enter your password"));
         return;
     }
     else if (!equalPasswords)
     {
-        QMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"));
+        QMegaMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"));
         return;
     }
     else if (megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK)
     {
-        QMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"));
+        QMegaMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"));
         return;
     }
 

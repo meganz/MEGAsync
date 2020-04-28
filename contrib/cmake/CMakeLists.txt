@@ -22,8 +22,8 @@ elseif (CMAKE_HOST_APPLE)
     set(CMAKE_AUTOMOC_MOC_OPTIONS -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__)
 else()
     set (UiDir "linux")
-    set (QTCOMPONENS_REQUIRED_PLATFORM Svg)
-    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg)
+    set (QTCOMPONENS_REQUIRED_PLATFORM Svg X11Extras)
+    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg Qt5::X11Extras xcb)
 endif()
 
 set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM})
@@ -157,7 +157,9 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
-    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui )
+    ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
+    )
 
 
 if (CMAKE_HOST_WIN32)
@@ -253,6 +255,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
     ${MEGAsyncDir}/gui/UsageWidget.h
+    ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -260,6 +263,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
 )
+
+if (NOT CMAKE_HOST_APPLE)
+    set (MOC_INPUT ${MOC_INPUT}
+        ${MEGAsyncDir}/gui/LockedPopOver.h
+        )
+endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
     set (MOC_INPUT ${MOC_INPUT}
@@ -374,6 +383,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -402,6 +412,12 @@ set (SRCS
 
 )
 
+
+if (NOT CMAKE_HOST_APPLE)
+    set (SRCS ${SRCS}
+        ${MEGAsyncDir}/gui/LockedPopOver.cpp
+        )
+endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
     set (SRCS ${SRCS}
@@ -519,7 +535,9 @@ add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII
 add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO_CAST_FROM_ASCII -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB )
  #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
 
-add_definitions( -DENABLE_LOG_PERFORMANCE )
+if (ENABLE_LOG_PERFORMANCE)
+    add_definitions(-DENABLE_LOG_PERFORMANCE)
+endif()
 
 if(WIN32)
     add_definitions( -DUNICODE -D_UNICODE )  # needed for visual studio projects to use the unicode runtime libraries
@@ -546,7 +564,10 @@ target_include_directories(MEGAsync PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google
 
 if (CMAKE_HOST_WIN32)
     set(TARGET_LINK_LIBRARIES_PLATFORM ${TARGET_LINK_LIBRARIES_PLATFORM} ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
-    set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG /DELAYLOAD:pdfium.dll" )
+    set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
+    if (USE_PREBUILT_3RDPARTY)
+        set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS " /DELAYLOAD:pdfium.dll " )
+    endif()
 else()
 
 if (CMAKE_HOST_APPLE)
@@ -604,10 +625,11 @@ endif()
 set(FULLREQUIREMENTS TRUE CACHE BOOL "Verbose output")
 
 if(FULLREQUIREMENTS)
+    if (USE_FFMPEG AND HAVE_FFMPEG)
+        add_definitions(-DREQUIRE_HAVE_FFMPEG)
+    endif()
 
     add_definitions(
-
-        -DREQUIRE_HAVE_FFMPEG
         -DREQUIRE_HAVE_LIBUV
         -DREQUIRE_HAVE_LIBRAW
         -DREQUIRE_USE_MEDIAINFO
@@ -620,7 +642,9 @@ if(FULLREQUIREMENTS)
         )
 
     if (CMAKE_HOST_WIN32 OR CMAKE_HOST_APPLE OR build_64_bit)
-        add_definitions( -DREQUIRE_HAVE_PDFIUM )
+        if (USE_PDFIUM)
+            add_definitions(-DREQUIRE_HAVE_PDFIUM)
+        endif()
     endif()
 
 endif(FULLREQUIREMENTS)
