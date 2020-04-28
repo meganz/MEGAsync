@@ -189,8 +189,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/MegaUploader.h
     ${MEGAsyncDir}/control/Preferences.h
     ${MEGAsyncDir}/control/UpdateTask.h
-    ${MEGAsyncDir}/control/Model.h
-    ${MEGAsyncDir}/control/SyncSettings.h
+    ${MEGAsyncDir}/control/MegaController.h
+    ${MEGAsyncDir}/model/SyncSettings.h
+    ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
     ${MEGAsyncDir}/gui/BugReportDialog.h
@@ -405,9 +406,10 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaDownloader.cpp
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
+    ${MEGAsyncDir}/control/MegaController.cpp
 
-    ${MEGAsyncDir}/control/Model.cpp
-    ${MEGAsyncDir}/control/SyncSettings.cpp
+    ${MEGAsyncDir}/model/SyncSettings.cpp
+    ${MEGAsyncDir}/model/Model.cpp
 
     ${MEGAsyncDir}/platform/notificator.cpp
 

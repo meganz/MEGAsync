@@ -35,6 +35,7 @@
 #include "control/MegaDownloader.h"
 #include "control/UpdateTask.h"
 #include "control/MegaSyncLogger.h"
+#include "control/MegaController.h"
 #include "model/Model.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
@@ -374,6 +375,7 @@ protected:
     bool infoOverQuota;
     Preferences *preferences;
     Model *model;
+    Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     QFilterAlertsModel *notificationsProxyModel;

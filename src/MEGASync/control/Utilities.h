@@ -174,6 +174,7 @@ class MegaListenerFuncExecuter : public mega::MegaRequestListener
 private:
     std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
     bool mAutoremove = true;
+    bool mExecuteInAppThread = true;
 
 public:
 
@@ -188,18 +189,12 @@ public:
         mAutoremove = autoremove;
     }
 
-    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
-    {
-        onRequestFinishCallback(api, request, e);
-
-        if (mAutoremove)
-        {
-            delete this;
-        }
-    }
+    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
     virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) {}
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
     virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+
+    void setExecuteInAppThread(bool executeInAppThread);
 };
 
 

@@ -865,3 +865,37 @@ long long Utilities::getSystemsAvailableMemory()
 #endif
     return availMemory;
 }
+
+void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)
+{
+    mExecuteInAppThread = executeInAppThread;
+}
+
+void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+{
+    if (mExecuteInAppThread)
+    {
+        MegaRequest *requestCopy = request->copy();
+        MegaError *errorCopy = e->copy();
+        QObject temporary;
+        QObject::connect(&temporary, &QObject::destroyed, qApp, [this, api, requestCopy, errorCopy](){
+
+            onRequestFinishCallback(api, requestCopy, errorCopy);
+
+            if (mAutoremove)
+            {
+                delete this;
+            }
+
+        }, Qt::QueuedConnection);
+    }
+    else
+    {
+        onRequestFinishCallback(api, request, e);
+
+        if (mAutoremove)
+        {
+            delete this;
+        }
+    }
+}
