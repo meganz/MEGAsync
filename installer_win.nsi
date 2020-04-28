@@ -44,7 +44,7 @@ VIAddVersionKey "ProductVersion" "4.3.3.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH "C:\Qt\Qt5.12.6\5.12.6\msvc2017_64"
+!define QT_PATH "C:\QtOnline\Qt5.12.8\5.12.8\msvc2017_64"
 !else
 !define QT_PATH "C:\Qt\Qt5.6.3\5.6.3\msvc2015"
 !endif
@@ -53,8 +53,12 @@ VIAddVersionKey "ProductVersion" "4.3.3.0"
 !define VCPKG
 !endif
 
+!ifdef BUILD_X64_VERSION
+!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_8_MSVC2017_64bit-Release"
+!else
 !define BUILDPATH_X86 "build-MEGA-Desktop_Qt_5_6_3_MSVC2015_32bit-Release"
-!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_6_MSVC2017_64bit-Release"
+!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_6_3_MSVC2015_64bit-Release"
+!endif
 
 !ifdef BUILD_X64_VERSION
 !define SRCDIR_MEGASYNC "${BUILDPATH_X64}\MEGAsync\release"
