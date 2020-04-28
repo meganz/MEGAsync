@@ -202,6 +202,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
     model = Model::instance();
+    controller = Controller::instance();
 
     actualAccountType = -1;
 
@@ -909,18 +910,13 @@ void InfoDialog::addSync(MegaHandle h)
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     MegaHandle handle = dialog->getMegaFolder();
-    std::unique_ptr<MegaNode> node(megaApi->getNodeByHandle(handle));
-    QString syncName = dialog->getSyncName();
+    QString syncName = dialog->getSyncName(); //TODO: shouldn't this be used?
     delete dialog;
     dialog = NULL;
-    if (!localFolderPath.length() || !node)
-    {
-        return;
-    }
 
 
    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-   megaApi->syncFolder(localFolderPath.toUtf8().constData(), node.get());
+   controller->addSync(localFolderPath, handle);
 }
 
 #ifdef __APPLE__

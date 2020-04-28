@@ -10,6 +10,8 @@
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
+#include "control/MegaController.h"
+#include "model/Model.h"
 #include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
@@ -234,6 +236,7 @@ protected:
     MegaApplication *app;
     Preferences *preferences;
     Model *model;
+    Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;

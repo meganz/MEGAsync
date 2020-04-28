@@ -2100,8 +2100,7 @@ void MegaApplication::startSyncs()
     for (auto & ps : setupWizard->preconfiguredSyncs())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from SetupWizard: ").arg(ps.localFolder()).toUtf8().constData());
-        std::unique_ptr<MegaNode> node(megaApi->getNodeByHandle(ps.megaFolderHandle()));
-        megaApi->syncFolder(ps.localFolder().toUtf8().constData(), node.get());
+        controller->addSync(ps.localFolder(), ps.megaFolderHandle());
     }
 
 //    //TODO: review if there's something from here that might make sense in ADD_SYNC processing
@@ -4716,11 +4715,10 @@ void MegaApplication::migrateSyncConfToSdk()
         foreach(SyncData osd, preferences->readOldCachedSyncs())
         {
             megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mMegaHandle, osd.mLocalfp, osd.mEnabled,
-                                         new MegaListenerFuncExecuter([this, osd](MegaApi* api,  MegaRequest *request, MegaError *e)
+                                         new MegaListenerFuncExecuter(true, [this, osd](MegaApi* api,  MegaRequest *request, MegaError *e)
             {
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    //TODO: consider queuing this function back into MegaApplication thread. preferences method use a mutex and execution should be instantaneous ...
                     model->pickInfoFromOldSync(osd, request->getNumber());
                     preferences->removeOldCachedSync(osd.mPos);
                 }
@@ -4729,7 +4727,7 @@ void MegaApplication::migrateSyncConfToSdk()
                     //TODO: log error!
                 }
 
-             }, true));
+             }));
         }
     }
 }

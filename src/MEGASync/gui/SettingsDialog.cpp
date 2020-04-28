@@ -79,6 +79,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->app = app;
     this->megaApi = app->getMegaApi();
     this->preferences = Preferences::instance();
+    this->controller = Controller::instance();
     this->model = Model::instance();
     syncsChanged = false;
     excludedNamesChanged = false;
@@ -457,6 +458,17 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 {
     remoteCacheSize = remoteCacheSizeWatcher.result();
     onCacheSizeAvailable();
+}
+
+void SettingsDialog::onSavingSettingsProgress(double progress)
+{
+    qDebug() << " Savving settings advanced: " << progress << endl; //TODO: delete
+
+}
+
+void SettingsDialog::onSavingSettingsCompleted()
+{
+    qDebug() << " Saving settings completed!"<< endl; //TODO: delete
 }
 
 void SettingsDialog::storageChanged()
@@ -1250,6 +1262,12 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
 
 int SettingsDialog::saveSettings()
 {
+    saveSettingsProgress.reset(new ProgressHelper(false, QString::fromUtf8("Saving settings")));
+    connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
+    connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
+
+    ProgressHelperCompletionGuard g(saveSettingsProgress.get());
+
     modifyingSettings++;
     if (!proxyOnly)
     {
@@ -1388,39 +1406,33 @@ int SettingsDialog::saveSettings()
 
             //TODO: still need to connect to changes in settings and reload configuration (loadSettings recall should be enough)
 
-            for (int j = 0; j < ui->tSyncs->rowCount(); j++)// rowCount() is incorrect! TODO: follow here!
+            //look for new syncs
+            for (int j = 0; j < ui->tSyncs->rowCount(); j++)
             {
-                auto item = ui->tSyncs->item(j, 3);
-                if (!item)
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii("invalid item saving settings %1")
-                                 .arg(j).toUtf8().constData());
-
-                    continue;
-                }
-                auto rowTagText = item->text();
-                if (!rowTagText.size())
-                {
-                    continue;
-                }
-                auto rowTag =  rowTagText.toInt();
-                if (!rowTag) //not found: new sync
+                auto item = ui->tSyncs->cellWidget(j, 3);
+                if (!item) //not found: new sync
                 {
                     bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
                     if (enabled)
                     {
                         QString localFolderPath = ui->tSyncs->item(j, 0)->text();
                         QString megaFolderPath = ui->tSyncs->item(j, 1)->text();
-                        std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(megaFolderPath.toUtf8().constData()));
+                        std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(megaFolderPath.toUtf8().constData())); //TODO: store handle in some column
 
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync from Settings: %1 - %2")
                                      .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
-                        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node.get());
+
+
+                        ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: ").append(localFolderPath));
+                        saveSettingsProgress->addStep(addSyncStep);
+                        controller->addSync(localFolderPath, node->getHandle(), addSyncStep);
                     }
                     else
                     {
                         assert("adding a disabled sync is not allowed");
                     }
+
+                    continue;
                 }
             }
 

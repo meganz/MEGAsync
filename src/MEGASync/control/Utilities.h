@@ -183,10 +183,11 @@ public:
      * @param func to call upon onRequestFinish
      * @param autoremove whether this should be deleted after func is called
      */
-    MegaListenerFuncExecuter(std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func, bool autoremove = false)
+    MegaListenerFuncExecuter(bool autoremove = false,
+                             std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
+                            )
+        : mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
     {
-        onRequestFinishCallback = std::move(func);
-        mAutoremove = autoremove;
     }
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);

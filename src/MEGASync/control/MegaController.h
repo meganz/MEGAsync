@@ -18,10 +18,12 @@ class ActionProgress;
 class Controller
 {
 public:
-    void addSync(ActionProgress *progress);
+    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle, ActionProgress *progress = nullptr);
     static Controller *instance();
 
     //void doSth(mega::MegaApi *value); //example call
+
+    void setApi(mega::MegaApi *value);
 
 private:
 
@@ -54,9 +56,10 @@ public:
      * @param func to call upon onRequestFinish
      * @param autoremove whether this should be deleted after func is called
      */
-    ProgressFuncExecuterListener(ActionProgress *progressHepler, std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func
-                                 , bool autoremove = false)
-        :mProgressHelper(progressHepler), onRequestFinishCallback(std::move(func)), mAutoremove(autoremove)
+    ProgressFuncExecuterListener(ActionProgress *progressHepler, bool autoremove = false,
+                                 std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
+                                 )
+        : mProgressHelper(progressHepler), mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
     {
     }
 
@@ -94,19 +97,39 @@ public:
     void setPercentage(double value);
     void setComplete();
     ProgressHelper *addStep(const QString &description = QString(), double weight = 1.0);
-    void addStep(ProgressHelper *task, double weight);
+    void addStep(ProgressHelper *task, double weight = 1.0);
 
 
     QString description() const;
     void setDescription(const QString &description);
+
+    void checkCompletion();
 
 private slots:
     void onStepProgress(double percentage, int position);
     void onStepCompleted(int position);
 
 signals:
-    void progress(float percentage);
+    void progress(double percentage);
     void completed();
+};
+
+/**
+ * @brief Class to ensure that a progress helper created in a context gets completed if no subtasks are asigned to it
+ */
+class ProgressHelperCompletionGuard
+{
+private:
+    ProgressHelper *mProgressHelper = nullptr;
+public:
+    ProgressHelperCompletionGuard(ProgressHelper *progressHelper) : mProgressHelper(progressHelper) {};
+    ~ProgressHelperCompletionGuard()
+    {
+        if (mProgressHelper)
+        {
+            mProgressHelper->checkCompletion();
+        }
+    }
 };
 
 class ActionProgress : public ProgressHelper

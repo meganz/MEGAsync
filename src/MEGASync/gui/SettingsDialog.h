@@ -17,7 +17,8 @@
 #include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
-#include "Model.h"
+#include "MegaController.h"
+#include "../model/Model.h"
 #include "megaapi.h"
 #include "HighDpiResize.h"
 
@@ -52,6 +53,10 @@ public slots:
     void onRemoteCacheSizeAvailable();
     
 private slots:
+
+    void onSavingSettingsProgress(double progress);
+    void onSavingSettingsCompleted();
+
     void on_bAccount_clicked();
 
     void on_bSyncs_clicked();
@@ -133,6 +138,7 @@ private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
+    Controller *controller;
     Model *model;
     mega::MegaApi *megaApi;
     HighDpiResize highDpiResize;
@@ -146,6 +152,7 @@ private:
     MegaProgressCustomDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
     bool shouldClose;
+    std::unique_ptr<ProgressHelper> saveSettingsProgress;
     int modifyingSettings;
     long long cacheSize;
     long long remoteCacheSize;

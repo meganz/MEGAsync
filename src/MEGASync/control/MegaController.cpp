@@ -11,6 +11,25 @@ using namespace mega;
 
 Controller *Controller::controller = NULL;
 
+void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle, ActionProgress *progress)
+{
+    assert(api);
+
+    std::unique_ptr<MegaNode> node(api->getNodeByHandle(remoteHandle)); //TODO: threadify this
+    if (!localFolder.size() || !node)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Adding invalid sync %1").arg(localFolder).toUtf8().constData());
+        return;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
+
+    api->syncFolder(localFolder.toUtf8().constData(), node.get(),
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+                        //TODO: consider moving onReqFinish handling from MegaApplication to here.
+    }));
+}
+
 Controller *Controller::instance()
 {
     if (!controller)
@@ -25,18 +44,6 @@ void Controller::setApi(mega::MegaApi *value)
     api = value;
 }
 
-//void Controller::doSth(parameters, ActionProgress *progress)
-//{
-//    assert(api);
-
-//    api->doSth(paremeters, new ProgressFuncExecuterListener(progress, [](MegaApi *api, MegaRequest *request, MegaError *e){
-//        //emmit sync called, so that suscribers (menus & settings) reload their UI
-//        qDebug() << "doSth call ended alright" << endl;
-
-//        emit sthDone();
-//    }, true));
-//}
-
 QString ProgressHelper::description() const
 {
     return mDescription;
@@ -45,6 +52,14 @@ QString ProgressHelper::description() const
 void ProgressHelper::setDescription(const QString &description)
 {
     mDescription = description;
+}
+
+void ProgressHelper::checkCompletion()
+{
+    if (completedtasks == steps.size())
+    {
+        this->setComplete();
+    }
 }
 
 ProgressHelper::ProgressHelper(bool deleteOnCompletion, const QString description)
@@ -122,10 +137,7 @@ void ProgressHelper::onStepCompleted(int position)
     qDebug() << "Step " << position << ": <" << steps[position].task()->description()
              << "> completed " << endl; //TODO: delete
     completedtasks++;
-    if (completedtasks == steps.size())
-    {
-        this->setComplete();
-    }
+    checkCompletion();
 }
 
 ProgressHelper::~ProgressHelper()
@@ -170,11 +182,11 @@ void ActionProgress::setFailed(int errorCode)
     setComplete();
 }
 
-void ProgressFuncExecuterListener::onRequestStart(MegaApi *api, MegaRequest *request, MegaError *e)
+void ProgressFuncExecuterListener::onRequestStart(MegaApi *api, MegaRequest *request)
 {
     if (mProgressHelper)
     {
-        mProgressHelper->setPercentage(0.3); //consider starting as an initial progress
+        mProgressHelper->setPercentage(0.3); //considered started as an initial progress
     }
 }
 
@@ -199,7 +211,11 @@ void ProgressFuncExecuterListener::onRequestFinish(MegaApi *api, MegaRequest *re
         MegaRequest *requestCopy = request->copy();
         MegaError *errorCopy = e->copy();
         QObject::connect(&temporary, &QObject::destroyed, qApp, [this, api, requestCopy, errorCopy](){
-            onRequestFinishCallback(api, requestCopy, errorCopy);
+
+            if (onRequestFinishCallback)
+            {
+                onRequestFinishCallback(api, requestCopy, errorCopy);
+            }
 
             if (mAutoremove)
             {
@@ -210,7 +226,10 @@ void ProgressFuncExecuterListener::onRequestFinish(MegaApi *api, MegaRequest *re
     }
     else
     {
-        onRequestFinishCallback(api, request, e);
+        if (onRequestFinishCallback)
+        {
+            onRequestFinishCallback(api, request, e);
+        }
 
         if (mAutoremove)
         {

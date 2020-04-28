@@ -880,7 +880,10 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
         QObject temporary;
         QObject::connect(&temporary, &QObject::destroyed, qApp, [this, api, requestCopy, errorCopy](){
 
-            onRequestFinishCallback(api, requestCopy, errorCopy);
+            if (onRequestFinishCallback)
+            {
+                onRequestFinishCallback(api, requestCopy, errorCopy);
+            }
 
             if (mAutoremove)
             {
@@ -891,7 +894,10 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
     }
     else
     {
-        onRequestFinishCallback(api, request, e);
+        if (onRequestFinishCallback)
+        {
+            onRequestFinishCallback(api, request, e);
+        }
 
         if (mAutoremove)
         {
