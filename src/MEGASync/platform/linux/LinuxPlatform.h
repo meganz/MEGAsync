@@ -35,6 +35,7 @@ public:
     static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
+    static bool isTilingWindowManager();
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
@@ -49,6 +50,9 @@ public:
     static QString getDefaultFileBrowserApp();
     static QString getDefaultOpenApp(QString extension);
     static QString getDefaultOpenAppByMimeType(QString mimeType);
+    static bool getValue(const char * const name, const bool default_value);
+    static std::string getValue(const char * const name, const std::string &default_value);
+    static QString getWindowManagerName();
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
     static void execBackgroundWindow(QDialog *window);

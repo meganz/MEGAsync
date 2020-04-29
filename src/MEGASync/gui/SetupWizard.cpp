@@ -273,7 +273,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
                 if (!node)
                 {
-                    QMessageBox::warning(NULL, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
                 }
                 else
                 {
@@ -287,7 +287,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             if (error->getErrorCode() != MegaError::API_ESSL
                     && error->getErrorCode() != MegaError::API_ESID)
             {
-                QMessageBox::warning(NULL, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
             }
 
             break;
@@ -545,7 +545,7 @@ void SetupWizard::on_bNext_clicked()
         QString localFolderPath = ui->eLocalFolder->text();
         if (!Utilities::verifySyncedFolderLimits(localFolderPath))
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
             return;
         }
 
@@ -556,7 +556,7 @@ void SetupWizard::on_bNext_clicked()
             if (!rootNode)
             {
                 page_login();
-                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
                                     "Please, try again. If the problem persists "
                                     "please contact bug@mega.co.nz"));
 
@@ -611,7 +611,7 @@ void SetupWizard::on_bCancel_clicked()
         if (!rootNode)
         {
             page_login();
-            QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
                                 "Please, try again. If the problem persists "
                                 "please contact bug@mega.co.nz"));
 
@@ -723,7 +723,7 @@ void SetupWizard::on_bLocalFolder_clicked()
         }
 
         QTemporaryFile test(path + QDir::separator());
-        if (test.open() || QMessageBox::warning(NULL, tr("Warning"), tr("You don't have write permissions in this local folder.") +
+        if (test.open() || QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You don't have write permissions in this local folder.") +
                     QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.") + QString::fromUtf8("\n") + tr("Do you want to continue?"),
                     QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
         {

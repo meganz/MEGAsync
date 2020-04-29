@@ -379,6 +379,10 @@ void removeSyncData(const QString &localFolder, const QString & name, const QStr
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setOrganizationName(QString::fromAscii("Mega Limited"));
+    QCoreApplication::setOrganizationDomain(QString::fromAscii("mega.co.nz"));
+    QCoreApplication::setApplicationName(QString::fromAscii("MEGAsync"));
+
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();
@@ -1150,7 +1154,7 @@ void MegaApplication::initialize()
 
     if (preferences->error())
     {
-        QMegaMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"), Utilities::getDevicePixelRatio());
+        QMegaMessageBox::critical(nullptr, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"));
     }
 
     preferences->setLastStatsRequest(0);
@@ -1206,13 +1210,13 @@ void MegaApplication::initialize()
         QString apiURL = settings.value(QString::fromUtf8("apiurl"), QString::fromUtf8("https://staging.api.mega.co.nz/")).toString();
         megaApi->changeApiUrl(apiURL.toUtf8());
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
-        QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL, Utilities::getDevicePixelRatio());
+        QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL);
 
         QString baseURL = settings.value(QString::fromUtf8("baseurl"), Preferences::BASE_URL).toString();
         Preferences::setBaseUrl(baseURL);
         if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
         {
-            QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL, Utilities::getDevicePixelRatio());
+            QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL);
         }
 
         Preferences::overridePreferences(settings);
@@ -1329,7 +1333,7 @@ void MegaApplication::initialize()
                 }
 
 #ifndef __APPLE__
-                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"), Utilities::getDevicePixelRatio());
+                QMegaMessageBox::information(nullptr, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"));
 #endif
             }
         }
@@ -1466,7 +1470,7 @@ void MegaApplication::updateTrayIcon()
                 + QString::fromAscii(" ")
                 + Preferences::VERSION_STRING
                 + QString::fromAscii("\n")
-                + tr("Locked Account");
+                + tr("Locked account");
 
 #ifndef __APPLE__
     #ifdef _WIN32
@@ -1796,6 +1800,9 @@ void MegaApplication::start()
         {
             preferences->setInstallationTime(-1);
         }
+#ifdef Q_OS_MACX
+        Platform::reloadFinderExtension();
+#endif
     }
 
     applyProxySettings();
@@ -1844,7 +1851,7 @@ void MegaApplication::start()
             {
                 if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
                 {
-                    QMessageBox::warning(NULL, tr("MEGAsync"),
+                    QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
                                          tr("Could not find a system tray to place MEGAsync tray icon. "
                                             "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
                                             "If you want to open the interface, just try to open MEGAsync again."));
@@ -2021,7 +2028,7 @@ void MegaApplication::loggedIn(bool fromWizard)
         {
             if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
             {
-                QMessageBox::warning(NULL, tr("MEGAsync"),
+                QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
                                      tr("Could not find a system tray to place MEGAsync tray icon. "
                                         "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
                                         "If you want to open the interface, just try to open MEGAsync again."));
@@ -3108,8 +3115,6 @@ void MegaApplication::cleanAll()
         args.append(QString::fromAscii("-n"));
         args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
-
-        Platform::reloadFinderExtension();
 #endif
 
 #ifdef WIN32
@@ -3935,7 +3940,7 @@ void MegaApplication::infoWizardDialogFinished(int result)
     }
 }
 
-void MegaApplication::unlink()
+void MegaApplication::unlink(bool keepLogs)
 {
     if (appfinished)
     {
@@ -3961,6 +3966,11 @@ void MegaApplication::unlink()
     queuedStorageUserStatsReason = 0;
 
     model->reset();
+
+    if (!keepLogs)
+    {
+        logger->cleanLogs();
+    }
 }
 
 void MegaApplication::cleanLocalCaches(bool all)
@@ -4025,7 +4035,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
     }
     else
     {
-        QMegaMessageBox::information(NULL, title, message, Utilities::getDevicePixelRatio());
+        QMegaMessageBox::information(nullptr, title, message);
     }
 }
 
@@ -4049,7 +4059,7 @@ void MegaApplication::showWarningMessage(QString message, QString title)
         notificator->notify(Notificator::Warning, title, message,
                                     QIcon(QString::fromUtf8("://images/app_128.png")));
     }
-    else QMegaMessageBox::warning(NULL, title, message, Utilities::getDevicePixelRatio());
+    else QMegaMessageBox::warning(nullptr, title, message);
 }
 
 void MegaApplication::showErrorMessage(QString message, QString title)
@@ -4084,7 +4094,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     }
     else
     {
-        QMegaMessageBox::critical(NULL, title, message, Utilities::getDevicePixelRatio());
+        QMegaMessageBox::critical(nullptr, title, message);
     }
 }
 
@@ -4427,12 +4437,22 @@ void MegaApplication::checkOperatingSystem()
             }
         }
 #endif
+
+#ifdef WIN32
+        DWORD dwVersion = GetVersion();
+        DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
+        DWORD dwMinorVersion = (DWORD) (HIBYTE(LOWORD(dwVersion)));
+        isOSdeprecated = (dwMajorVersion < 6) || ((dwMajorVersion == 6) && (dwMinorVersion == 0));
+#endif
+
         if (isOSdeprecated)
         {
-            QMessageBox::warning(NULL, tr("MEGAsync"),
+            QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
                                  tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
                                  + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
+#elif defined(_WIN32)
+                                 + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.")
 #else
                                  + tr("MEGAsync will continue to work, however you might not receive new updates.")
 #endif
@@ -7022,10 +7042,14 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 
                 break;
             }
+            case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
+            {
+                QMegaMessageBox::warning(nullptr, tr("MEGAsync"), tr("Your account has been disabled by your administrator. Please contact your business account administrator for further details."));
+                break;
+            }
             default:
-                QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
-                                          QCoreApplication::translate("MegaError", event->getText()),
-                                          Utilities::getDevicePixelRatio());
+                QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
+                                          QCoreApplication::translate("MegaError", event->getText()));
                 break;
         }
 
@@ -7369,16 +7393,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             else if (errorCode == MegaError::API_EBLOCKED)
             {
-                QMegaMessageBox::critical(NULL, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"), Utilities::getDevicePixelRatio());
+                QMegaMessageBox::critical(nullptr, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
             }
             else if (errorCode != MegaError::API_ESID && errorCode != MegaError::API_ESSL)
             //Invalid session or public key, already managed in TYPE_LOGOUT
             {
-                QMegaMessageBox::warning(NULL, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())), Utilities::getDevicePixelRatio());
+                QMegaMessageBox::warning(nullptr, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
 
             //Wrong login -> logout
-            unlink();
+            unlink(true);
         }
         onGlobalSyncStateChanged(megaApi);
         break;
@@ -7456,18 +7480,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             if (errorCode == MegaError::API_ESID)
             {
-                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"), Utilities::getDevicePixelRatio());
+                QMegaMessageBox::information(nullptr, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
             }
             else if (errorCode == MegaError::API_ESSL)
             {
-                QMegaMessageBox::critical(NULL, QString::fromAscii("MEGAsync"),
+                QMegaMessageBox::critical(nullptr, QString::fromAscii("MEGAsync"),
                                       tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")), Utilities::getDevicePixelRatio());
+                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
             }
             else if (errorCode != MegaError::API_EACCESS)
             {
-                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
-                                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())), Utilities::getDevicePixelRatio());
+                QMegaMessageBox::information(nullptr, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
+                                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
             }
             unlink();
         }
@@ -7589,7 +7613,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
                 else
                 {
-                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
                                                            "Please, try again. If the problem persists "
                                                            "please contact bug@mega.co.nz"), QMessageBox::Ok);
 
@@ -7620,7 +7644,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            QMessageBox::information(NULL, tr("Password changed"), tr("Your password has been changed."));
+            QMegaMessageBox::information(nullptr, tr("Password changed"), tr("Your password has been changed."));
         }
         break;
     }
@@ -7907,9 +7931,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                        WCHAR VBoxSharedFolderFS[] = L"VBoxSharedFolderFS";
 //                        if (fsname.size() && !memcmp(fsname.data(), VBoxSharedFolderFS, sizeof(VBoxSharedFolderFS)))
 //                        {
-//                            QMegaMessageBox::critical(NULL, tr("MEGAsync"),
+//                            QMegaMessageBox::critical(nullptr, tr("MEGAsync"),
 //                                tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
-//                                .arg(model->getSyncName(i)), Utilities::getDevicePixelRatio());
+//                                .arg(model->getSyncName(i)));
 //                        }
 //                        else
 //                        {
@@ -7945,7 +7969,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
 //                    if (model->isFolderActive(i))
 //                    {
-////                        preferences->setSyncState(i, false);
+//                        preferences->setSyncState(i, false);
 //                        createAppMenus();
 //                    }
 
@@ -7956,7 +7980,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                }
 //                else
 //                {
-////                    preferences->setLocalFingerprint(i, request->getNumber());
+//                    preferences->setLocalFingerprint(i, request->getNumber());
 //                    if (!isFirstSyncDone && !preferences->isFirstSyncDone())
 //                    {
 //                        megaApi->sendEvent(99501, "MEGAsync first sync");
@@ -7979,7 +8003,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                    {
 //                        if ((!memcmp(fsname.data(), L"FAT", 6) || !memcmp(fsname.data(), L"exFAT", 10)) && !preferences->isFatWarningShown())
 //                        {
-//                            QMessageBox::warning(NULL, tr("MEGAsync"),
+//                            QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
 //                                             tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
 //                                                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
 //                                                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
@@ -7987,7 +8011,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //                        }
 //                        else if (!memcmp(fsname.data(), L"HGFS", 8) && !preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING))
 //                        {
-//                            QMessageBox::warning(NULL, tr("MEGAsync"),
+//                            QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
 //                                tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage."));
 //                            preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
 //                        }
@@ -8752,8 +8776,8 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
             else if (noKeyDetected > 20)
             {
-                QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
-                    QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"), Utilities::getDevicePixelRatio());
+                QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
+                    QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"));
                 preferences->setCrashed(true);
                 rebootApplication(false);
             }

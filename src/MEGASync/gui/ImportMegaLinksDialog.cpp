@@ -230,7 +230,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
         QTemporaryFile test(path + QDir::separator());
         if (!test.open())
         {
-            QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
+            QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
             return;
         }
 

@@ -78,7 +78,7 @@ void BindFolderDialog::on_bOK_clicked()
     if (!localFolderPath.length() || !node)
     {
         delete node;
-        QMessageBox::warning(NULL, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
         return;
     }
 
@@ -102,14 +102,14 @@ void BindFolderDialog::on_bOK_clicked()
                     || (localFolderPath[c.size()] == QDir::separator())))
         {
             delete node;
-            QMessageBox::warning(NULL, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
             return;
         }
         else if (c.startsWith(localFolderPath)
                  && c[localFolderPath.size()] == QDir::separator())
         {
             delete node;
-            QMessageBox::warning(NULL, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             return;
         }
     }
@@ -143,14 +143,14 @@ void BindFolderDialog::on_bOK_clicked()
             {
                 delete n;
                 delete node;
-                QMessageBox::warning(NULL, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 return;
             }
             else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
             {
                 delete n;
                 delete node;
-                QMessageBox::warning(NULL, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
                 return;
             }
             delete n;

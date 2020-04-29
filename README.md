@@ -80,7 +80,7 @@ https://mega.nz/#!T14B0Y4T!EXGg9dRtacgz9_vCUtVq5tj6C3PBpkOHgXG289EBxBM
 
 First install dependencies. e.g., for a debian/ubuntu with QT >= 5.6 (e.g: Ubuntu 18.04):
 ```
-sudo apt-get install libzen-dev libmediainfo-dev debhelper qtbase5-dev qt5-qmake qt4-linguist-tools libqt5dbus5 libqt5svg5-dev libcrypto++-dev libraw-dev libc-ares-dev libssl-dev libsqlite3-dev zlib1g-dev wget dh-autoreconf cdbs unzip libtool-bin pkg-config qt5-default qttools5-dev-tools libavcodec-dev libavutil-dev libavformat-dev libswscale-dev libmediainfo-dev
+sudo apt-get install libzen-dev libmediainfo-dev debhelper qtbase5-dev qt5-qmake libqt5x11extras5-dev libqt5dbus5 libqt5svg5-dev libcrypto++-dev libraw-dev libc-ares-dev libssl-dev libsqlite3-dev zlib1g-dev wget dh-autoreconf cdbs unzip libtool-bin pkg-config qt5-default qttools5-dev-tools libavcodec-dev libavutil-dev libavformat-dev libswscale-dev libmediainfo-dev
 ```
 
 for older debian/ubuntu based systems (e.g: Ubuntu 16.04):

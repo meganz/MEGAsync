@@ -177,10 +177,11 @@ border: 1px solid rgba(0,0,0,0.05);
 	color: #111111;
 	font-family: &quot;Lato&quot;;
 	font-size: 15px;
+	font-weight: 600;
 }</string>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Locked Accounts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Locked Accounts</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

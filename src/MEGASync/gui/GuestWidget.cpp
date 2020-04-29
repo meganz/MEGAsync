@@ -139,7 +139,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
+                    QMegaMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
@@ -166,11 +166,11 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
                 {
-                    QMessageBox::warning(NULL, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
                 }
                 else if (error->getErrorCode() == MegaError::API_ETOOMANY)
                 {
-                    QMessageBox::warning(NULL, tr("Error"),
+                    QMegaMessageBox::warning(nullptr, tr("Error"),
                                              tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
                                              .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
                                              .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
@@ -178,7 +178,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EBLOCKED)
                 {
-                    QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                    QMegaMessageBox::critical(nullptr, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
                 }
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
@@ -206,7 +206,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() != MegaError::API_ESSL)
                 {
-                    QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                    QMegaMessageBox::warning(nullptr, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
                 }
 
                 loggingStarted = false;
@@ -356,19 +356,19 @@ void GuestWidget::on_bLogin_clicked()
 
     if (!email.length())
     {
-        QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
         return;
     }
 
     if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
     {
-        QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
         return;
     }
 
     if (!password.length())
     {
-        QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
         return;
     }
 

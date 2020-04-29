@@ -142,7 +142,7 @@ void MainWindow::parseCrashes(QString folder)
                     {
                         comment.append(QString::fromUtf8("\n\nCrash report:\n"));
                         comment.append(lines.join("\n"));
-                        //QMessageBox::warning(this, tr("Crash analyzer"), comment);
+                        //QMegaMessageBox::warning(this, tr("Crash analyzer"), comment);
                         qDebug() << QString::fromUtf8("User comment: %1\n\n").arg(comment);
                     }
 

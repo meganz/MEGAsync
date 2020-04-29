@@ -194,7 +194,7 @@ signals:
     void unblocked();
 
 public slots:
-    void unlink();
+    void unlink(bool keepLogs = false);
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
