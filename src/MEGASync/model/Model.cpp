@@ -280,7 +280,6 @@ QList<long long> Model::getMegaFolderHandles()
     return value;
 }
 
-
 std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
 {
     QMutexLocker qm(&mutex);

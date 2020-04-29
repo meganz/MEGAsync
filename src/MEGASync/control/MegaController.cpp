@@ -7,8 +7,6 @@
 
 using namespace mega;
 
-
-
 Controller *Controller::controller = NULL;
 
 void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle, ActionProgress *progress)
@@ -25,6 +23,31 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
 
     api->syncFolder(localFolder.toUtf8().constData(), node.get(),
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+                        //TODO: consider moving onReqFinish handling from MegaApplication to here.
+    }));
+}
+
+void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
+{
+    assert(api);
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid sync").toUtf8().constData());
+        return;
+    }
+
+    std::unique_ptr<MegaNode> node(api->getNodeByHandle(syncSetting->getMegaHandle())); //TODO: threadify this
+    if (!node)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid sync %1 to %2")
+                     .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
+        return;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync").toUtf8().constData());
+
+    api->removeSync(node.get(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         //TODO: consider moving onReqFinish handling from MegaApplication to here.
     }));

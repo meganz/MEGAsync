@@ -393,16 +393,16 @@ int main(int argc, char *argv[])
             for (int i = 0; i < preferences->getNumUsers(); i++)
             {
                 preferences->enterUser(i);
-                //TODO: this should be done for old settings & new settings!
 
+                // we do first for old sync configuration (in case there were remaining for some user)
                 QList<SyncData> syncData = preferences->readOldCachedSyncs();
                 foreach(SyncData osd, syncData)
                 {
                     removeSyncData(osd.mLocalFolder, osd.mName, osd.mSyncID);
                 }
 
+                // now for the new syncs cached configurations
                 auto loadedSyncs = preferences->getLoadedSyncsMap();
-
                 for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
                 {
                     removeSyncData(it.value()->getLocalFolder(), it.value()->name(), QString::number(it.value()->tag())); //TODO: is tag enough syncID?

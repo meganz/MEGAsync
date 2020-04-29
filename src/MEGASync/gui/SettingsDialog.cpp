@@ -1266,6 +1266,9 @@ int SettingsDialog::saveSettings()
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
 
+    // Uncomment the following to see a progress bar when saving settings
+    // Utilities::showProgressDialog(saveSettingsProgress.get(), this);
+
     ProgressHelperCompletionGuard g(saveSettingsProgress.get());
 
     modifyingSettings++;
@@ -1387,19 +1390,24 @@ int SettingsDialog::saveSettings()
 
                 if (j == ui->tSyncs->rowCount()) //sync no longer found in settings: needs removing
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(model->getSyncName(i)).toUtf8().constData());
-                    bool active = model->isFolderActive(i);
-                    MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-//                    if (active) //That no longer makes sense: we need to delete regardless if active or not
-//                    {
-                        //TODO: do this in onSyncDeleted
-//                        Platform::syncFolderRemoved(model->getLocalFolder(i),
-//                                                    model->getSyncName(i),
-//                                                    model->getSyncID(i));
-                        megaApi->removeSync(node);
-//                    }
-//                    preferences->removeSyncedFolder(i); //TODO: delete this and add upon onDeletedSync
-                    delete node;
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(syncSetting->name()).toUtf8().constData());
+                    ActionProgress *removeSyncStep = new ActionProgress(true, QString::fromUtf8("Removeing sync: %1 - %2")
+                                                                        .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
+                    saveSettingsProgress->addStep(removeSyncStep);
+                    controller->removeSync(syncSetting, removeSyncStep);
+
+//                    bool active = model->isFolderActive(i);
+//                    MegaNode *node = megaApi->getNodeByHandle(megaHandle);
+////                    if (active) //That no longer makes sense: we need to delete regardless if active or not
+////                    {
+//                        //TODO: do this in onSyncDeleted
+////                        Platform::syncFolderRemoved(model->getLocalFolder(i),
+////                                                    model->getSyncName(i),
+////                                                    model->getSyncID(i));
+//                        megaApi->removeSync(node);
+////                    }
+////                    preferences->removeSyncedFolder(i); //TODO: delete this and add upon onDeletedSync
+//                    delete node;
                 }
             }
 
@@ -1423,7 +1431,8 @@ int SettingsDialog::saveSettings()
                                      .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
 
 
-                        ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: ").append(localFolderPath));
+                        ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1 - %2")
+                                                                         .arg(localFolderPath).arg(megaFolderPath));
                         saveSettingsProgress->addStep(addSyncStep);
                         controller->addSync(localFolderPath, node->getHandle(), addSyncStep);
                     }

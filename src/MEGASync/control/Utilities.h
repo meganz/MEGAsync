@@ -4,6 +4,9 @@
 #include <QString>
 #include <QHash>
 #include <QPixmap>
+#include <QProgressDialog>
+#include <control/MegaController.h>
+
 #include <QDir>
 #include <QIcon>
 #include <QEasingCurve>
@@ -216,6 +219,10 @@ public:
 
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
+
+    // shows a ProgressDialog while some progress goes on. it returns a copy of the objet,
+    // but the object will be deleted when the progress closes
+    static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
 
 private:
     Utilities() {}
