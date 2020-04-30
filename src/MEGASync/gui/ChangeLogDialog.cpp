@@ -37,7 +37,10 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
                           "}"
                  ""));
 
-    ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
+    auto copyRightText{ui->lCopyright->text().arg(QDate::currentDate().year())};
+    copyRightText.replace(QStringLiteral("Copyright"), tr("Copyright"));
+    copyRightText.replace(QStringLiteral("All rights reserved"), tr("All rights reserved"));
+    ui->lCopyright->setText(copyRightText);
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
