@@ -98,7 +98,12 @@ void Model::updateSyncSettings(MegaSync *sync, const char *remotePath)
     {
         cs = configuredSyncsMap[sync->getTag()];
         cs->setSync(sync);
-        cs->setMegaFolder(remotePath);
+
+        assert(remotePath || cs->getMegaFolder().size()); //updated syncs should always have a remote path
+        if (remotePath)
+        {
+            cs->setMegaFolder(remotePath);
+        }
     }
     else
     {

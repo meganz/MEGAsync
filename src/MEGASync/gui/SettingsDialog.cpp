@@ -81,6 +81,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->preferences = Preferences::instance();
     this->controller = Controller::instance();
     this->model = Model::instance();
+
+    connect(this->model, SIGNAL(syncStateChanged(int)),
+            this, SLOT(onSyncStateChanged(int)));
+
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
@@ -458,6 +462,11 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 {
     remoteCacheSize = remoteCacheSizeWatcher.result();
     onCacheSizeAvailable();
+}
+
+void SettingsDialog::onSyncStateChanged(int)
+{
+    loadSyncSettings();
 }
 
 void SettingsDialog::onSavingSettingsProgress(double progress)
@@ -1337,6 +1346,8 @@ int SettingsDialog::saveSettings()
 
         preferences->setHasDefaultDownloadFolder(hasDefaultDownloadOption);
 
+        //TODO: change order to: 1 remove removed, 2 enable/disable changed, 3 add new
+
         //Syncs
         if (syncsChanged)
         {
@@ -1360,8 +1371,9 @@ int SettingsDialog::saveSettings()
                     QString newLocalPath = ui->tSyncs->item(j, 0)->text();
                     QString newMegaPath = ui->tSyncs->item(j, 1)->text();
                     bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
+                    auto tagItem = ui->tSyncs->cellWidget(j, 3);
 
-                    if (!megaPath.compare(newMegaPath) && !localPath.compare(newLocalPath))
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toInt() == syncSetting->tag())
                     {
                         if (!enabled && syncSetting->isEnabled()) //sync disabled
                         {
@@ -1372,13 +1384,13 @@ int SettingsDialog::saveSettings()
                             //TODO: ensure this is handled in onSyncDeleted!
 
                             MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-//                            megaApi->removeSync(node); //TODO: call to disableSync!
+                            megaApi->disableSync(syncSetting->getSync());
                             delete node;
                         }
                         else if (enabled && !syncSetting->isEnabled()) //sync re-enabled!
                         {
                             //TODO: needs calling to
-//                            megaApi->enableSync(syncSetting->tag());
+                            megaApi->enableSync(syncSetting->getSync());
                         }
                         break;
                     }
@@ -1417,8 +1429,8 @@ int SettingsDialog::saveSettings()
             //look for new syncs
             for (int j = 0; j < ui->tSyncs->rowCount(); j++)
             {
-                auto item = ui->tSyncs->cellWidget(j, 3);
-                if (!item) //not found: new sync
+                auto tagItem = ui->tSyncs->cellWidget(j, 3);
+                if (!tagItem) //not found: new sync
                 {
                     bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
                     if (enabled)

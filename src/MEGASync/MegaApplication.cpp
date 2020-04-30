@@ -8866,12 +8866,15 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
     updateTrayIcon();
 }
 
-void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
+void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *sync)
 {
     if (appfinished)
     {
         return;
     }
+
+    model->updateSyncSettings(sync); //Note, we are not updating the remote sync path
+    // we asume that cannot change for existing syncs.
 
     onGlobalSyncStateChanged(api);
 }

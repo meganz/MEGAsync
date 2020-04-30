@@ -51,6 +51,7 @@ public slots:
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
+    void onSyncStateChanged(int);
     
 private slots:
 

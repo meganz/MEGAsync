@@ -31,6 +31,7 @@ class Model : public QObject
 signals:
     void stateChanged();
     void updated(int lastVersion);
+    void onSyncStateChanged(int tag);
 
 private:
     static Model *model;
@@ -54,6 +55,8 @@ protected:
     // loaded syncs at startup //TODO: extend docs on all these
     QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
     ///////////// END OF SYNCS ////////////////////
+
+    void onSyncStateChanged(std::shared_ptr<mega::MegaSync> sync);
 
 public:
     void reset();
