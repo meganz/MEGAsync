@@ -125,6 +125,11 @@ bool SyncSetting::isTemporaryDisabled()  const
     return mSync->isTemporaryDisabled();
 }
 
+int SyncSetting::getError() const
+{
+    return mSync->getError();
+}
+
 void SyncSetting::setMegaFolder(const char *value)
 {
     mMegaFolder = QString::fromUtf8(value);

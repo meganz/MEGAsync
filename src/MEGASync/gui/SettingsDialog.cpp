@@ -82,8 +82,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->controller = Controller::instance();
     this->model = Model::instance();
 
-    connect(this->model, SIGNAL(syncStateChanged(int)),
-            this, SLOT(onSyncStateChanged(int)));
+    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
 
     syncsChanged = false;
     excludedNamesChanged = false;
@@ -442,6 +442,59 @@ void SettingsDialog::syncStateChanged(int state)
     stateChanged();
 }
 
+// errorCode referrs to the requestErrorCode.
+void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetting> syncSetting)
+{
+    switch (errorCode)
+    {
+    //        TODO: this should address the possible failures of addSync:
+    //            NO_ERROR = 0,
+    //            UNKNOWN_ERROR = 1,
+    //            UNSUPPORTED_FILE_SYSTEM = 2,
+    //            INVALID_REMOTE_TYPE = 3,
+    //            INVALID_LOCAL_TYPE = 4,
+    //            INITIAL_SCAN_FAILED = 5,
+    //            LOCAL_PATH_TEMPORARY_UNAVAILABLE = 6, //Note, this is fatal when adding a sync! TODO: review
+    //            LOCAL_PATH_UNAVAILABLE = 7,
+    //            REMOTE_NODE_NOT_FOUND = 8,
+    //            STORAGE_OVERQUOTA = 9,
+    //            BUSINESS_EXPIRED = 10,
+    //            FOREIGN_TARGET_OVERSTORAGE = 11,
+    //            REMOTE_PATH_HAS_CHANGED = 12,
+
+    case MegaSync::Error::NO_ERROR:
+    {
+        assert(false && "unexpected no error after enabling failed");
+        return;
+    }
+    case MegaSync::Error::INVALID_LOCAL_TYPE:
+    case MegaSync::Error::LOCAL_PATH_TEMPORARY_UNAVAILABLE:
+    case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error"),
+           tr("This sync can't be enabled because the remote folder doesn't exist"));
+        break;
+    }
+    case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
+    case MegaSync::Error::INVALID_REMOTE_TYPE:
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error"),
+           tr("This sync can't be enabled because the remote folder doesn't exist"));
+        break;
+    }
+
+
+    default:
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
+           tr(MegaSync::getMegaSyncErrorCode(errorCode))); //TODO: incluye local path and the like
+        break;
+    }
+    }
+
+    loadSettings(); //alt: look for item with syncSetting->tag & update enable/disable checkbox
+
+}
 void SettingsDialog::proxyStateChanged()
 {
     if (modifyingSettings)
@@ -464,14 +517,14 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
-void SettingsDialog::onSyncStateChanged(int)
+void SettingsDialog::onSyncStateChanged(std::shared_ptr<SyncSetting>)
 {
     loadSyncSettings();
 }
 
 void SettingsDialog::onSavingSettingsProgress(double progress)
 {
-    qDebug() << " Savving settings advanced: " << progress << endl; //TODO: delete
+    qDebug() << " Saving settings advanced: " << progress << endl; //TODO: delete
 
 }
 
@@ -1271,12 +1324,12 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
 
 int SettingsDialog::saveSettings()
 {
-    saveSettingsProgress.reset(new ProgressHelper(false, QString::fromUtf8("Saving settings")));
+    saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
 
-    // Uncomment the following to see a progress bar when saving settings
-    // Utilities::showProgressDialog(saveSettingsProgress.get(), this);
+    // Uncomment the following to see a progress bar when saving settings (which being modal will prevent from modifying while changing)
+    //Utilities::showProgressDialog(saveSettingsProgress.get(), this);
 
     ProgressHelperCompletionGuard g(saveSettingsProgress.get());
 
@@ -1371,26 +1424,43 @@ int SettingsDialog::saveSettings()
                     QString newLocalPath = ui->tSyncs->item(j, 0)->text();
                     QString newMegaPath = ui->tSyncs->item(j, 1)->text();
                     bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
-                    auto tagItem = ui->tSyncs->cellWidget(j, 3);
+                    auto tagItem = ui->tSyncs->cellWidget(j,3);
 
                     if (tagItem && static_cast<QLabel *>(tagItem)->text().toInt() == syncSetting->tag())
                     {
                         if (!enabled && syncSetting->isEnabled()) //sync disabled
                         {
-                            Platform::syncFolderRemoved(model->getLocalFolder(i),
-                                                        model->getSyncName(i),
-                                                        model->getSyncID(i));
-//                            preferences->setSyncState(i, enabled);
-                            //TODO: ensure this is handled in onSyncDeleted!
+//                            Platform::syncFolderRemoved(model->getLocalFolder(i),
+//                                                        model->getSyncName(i),
+//                                                        model->getSyncID(i));
+////                            preferences->setSyncState(i, enabled);
+//                            //TODO: ensure this is handled in onSyncDeleted!
 
-                            MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-                            megaApi->disableSync(syncSetting->getSync());
-                            delete node;
+                            ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
+                                                                                .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
+                            saveSettingsProgress->addStep(disableSyncStep);
+                            controller->disableSync(syncSetting, disableSyncStep);
+                            //TODO: ensure a failure is well processed
                         }
                         else if (enabled && !syncSetting->isEnabled()) //sync re-enabled!
                         {
-                            //TODO: needs calling to
-                            megaApi->enableSync(syncSetting->getSync());
+                            ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
+                                                                                .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
+                            saveSettingsProgress->addStep(enableSyncStep);
+                            connect(enableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
+                            {
+                                if (error->getErrorCode())
+                                {
+                                    auto syncError = request->getNumDetails();
+                                    QObject temporary;
+                                    QObject::connect(&temporary, &QObject::destroyed, this, [this, syncError, syncSetting](){
+                                        onEnableSyncFailed(syncError, syncSetting); //Note: this might get executed before onSyncStateChanged!
+                                        //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
+                                    }, Qt::QueuedConnection);
+                                }
+                            }, Qt::DirectConnection); //Note, we need direct connection to use request & error
+
+                            controller->enableSync(syncSetting, enableSyncStep);
                         }
                         break;
                     }
@@ -1403,7 +1473,7 @@ int SettingsDialog::saveSettings()
                 if (j == ui->tSyncs->rowCount()) //sync no longer found in settings: needs removing
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(syncSetting->name()).toUtf8().constData());
-                    ActionProgress *removeSyncStep = new ActionProgress(true, QString::fromUtf8("Removeing sync: %1 - %2")
+                    ActionProgress *removeSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
                                                                         .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
                     saveSettingsProgress->addStep(removeSyncStep);
                     controller->removeSync(syncSetting, removeSyncStep);

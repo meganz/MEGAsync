@@ -46,6 +46,7 @@ public:
     long long getMegaHandle() const;
     bool isEnabled() const;
     bool isTemporaryDisabled() const;
+    int getError() const;
 
     void setMegaFolder(const char *value);
 

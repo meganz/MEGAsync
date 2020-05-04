@@ -112,6 +112,8 @@ void Model::updateSyncSettings(MegaSync *sync, const char *remotePath)
     }
 
     preferences->writeSyncSetting(cs);
+
+    emit syncStateChanged(cs);
 }
 
 void Model::pickInfoFromOldSync(const SyncData &osd, int tag)

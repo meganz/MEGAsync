@@ -29,9 +29,7 @@ class Model : public QObject
     Q_OBJECT
 
 signals:
-    void stateChanged();
-    void updated(int lastVersion);
-    void onSyncStateChanged(int tag);
+    void syncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
 
 private:
     static Model *model;

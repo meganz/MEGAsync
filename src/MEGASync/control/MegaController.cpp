@@ -4,7 +4,6 @@
 #include <QDateTime>
 #include <QPointer>
 #include <QDebug>
-
 using namespace mega;
 
 Controller *Controller::controller = NULL;
@@ -17,6 +16,7 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
     if (!localFolder.size() || !node)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Adding invalid sync %1").arg(localFolder).toUtf8().constData());
+        if (progress) progress->setFailed(MegaError::API_EARGS);
         return;
     }
 
@@ -24,6 +24,7 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
 
     api->syncFolder(localFolder.toUtf8().constData(), node.get(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+                        ///// onRequestFinish Management: ////
                         //TODO: consider moving onReqFinish handling from MegaApplication to here.
     }));
 }
@@ -34,6 +35,7 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid sync").toUtf8().constData());
+        if (progress) progress->setFailed(MegaError::API_EARGS);
         return;
     }
 
@@ -42,6 +44,7 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid sync %1 to %2")
                      .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
+        if (progress) progress->setFailed(MegaError::API_ENOENT);
         return;
     }
 
@@ -49,8 +52,30 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
 
     api->removeSync(node.get(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
-                        //TODO: consider moving onReqFinish handling from MegaApplication to here.
-    }));
+                        ///// onRequestFinish Management: ////
+                    }));
+}
+
+void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Enabling sync %1 to %2")
+                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
+
+    api->enableSync(syncSetting->tag(),
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+                        ///// onRequestFinish Management: ////
+                    }));
+}
+
+void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Disabling sync %1 to %2")
+                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
+
+    api->disableSync(syncSetting->tag(),
+        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+                        ///// onRequestFinish Management: ////
+                    }));
 }
 
 Controller *Controller::instance()
@@ -198,9 +223,13 @@ QString ActionProgress::error() const
     return mError;
 }
 
-void ActionProgress::setFailed(int errorCode)
+void ActionProgress::setFailed(int errorCode, MegaRequest *request, MegaError *e)
 {
     mError = errorCode;
+    if (request && e)
+    {
+        emit failedRequest(request, e);
+    }
     emit failed(errorCode);
     setComplete();
 }
@@ -221,7 +250,7 @@ void ProgressFuncExecuterListener::onRequestFinish(MegaApi *api, MegaRequest *re
         mProgressHelper->setPercentage(1);
         if (e->getErrorCode())
         {
-            mProgressHelper->setFailed(e->getErrorCode());
+            mProgressHelper->setFailed(e->getErrorCode(), request, e);
         }
         mProgressHelper->setComplete();
     }

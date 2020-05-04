@@ -22,6 +22,8 @@ public:
 
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle, ActionProgress *progress = nullptr);
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
+    void enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
+    void disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
 
 
 
@@ -145,11 +147,18 @@ public:
     ActionProgress(bool deleteOnCompletion = false, const QString description = QString());
 
     QString error() const;
-    void setFailed(int errorCode); //note, this will call SetComplete() & hence emit a completion signal
+    void setFailed(int errorCode, mega::MegaRequest *request = nullptr,  mega::MegaError *error = nullptr); //note, this will call SetComplete() & hence emit a completion signal
 
 signals:
     void failed(int errorCode);
-
+    /**
+     * @brief to be emited when a request fails
+     * @param request. ActionProgress simply forwards the pointer to the request, this signal should be connected
+     * with Qt::DirectConnection before this becomes a dangling pointer
+     * @param error. ActionProgress simply forwards the pointer to the error, this signal should be connected
+     * with Qt::DirectConnection before this becomes a dangling pointer
+     */
+    void failedRequest(mega::MegaRequest *request, mega::MegaError *error);
 };
 
 

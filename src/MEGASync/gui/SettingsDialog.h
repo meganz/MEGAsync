@@ -51,7 +51,8 @@ public slots:
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-    void onSyncStateChanged(int);
+    void onSyncStateChanged(std::shared_ptr<SyncSetting>);
+    void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
     
 private slots:
 
