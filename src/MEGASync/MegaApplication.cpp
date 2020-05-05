@@ -4801,7 +4801,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (guestMenu && !preferences->logged())
+    if (guestMenu && (!preferences->logged() || blockState))
     {
         if (guestMenu->isVisible())
         {
@@ -6366,7 +6366,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
+        proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged() || blockState;
         megaApi->retryPendingConnections();
     }
 
@@ -6962,6 +6962,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     if (infoDialog->getLoggedInMode() != blockState)
                     {
                         infoDialog->regenerateLayout(blockState);
+                        closeDialogs();
                     }
                 }
                 else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
@@ -8049,6 +8050,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             if (infoDialog)
             {
                 infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
+            }
+
+            if (settingsDialog)
+            {
+                settingsDialog->setProxyOnly(false);
             }
         }
 
