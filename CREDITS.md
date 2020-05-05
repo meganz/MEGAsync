@@ -17,7 +17,7 @@ QT is the framework used by MEGAsync to get cross platform compatibility
 ######  License: 
 Dual license: LGPL 3
 
-https://opensource.org/licenses/lgpl-3.0.html
+https://www.gnu.org/licenses/lgpl-3.0.html
 
 https://www.gnu.org/licenses/licenses.html
 
