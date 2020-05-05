@@ -262,8 +262,13 @@ void TransferManagerItem::updateTransfer()
     ui->pbTransfer->setValue(permil);
 
     // Update transferred bytes
-    ui->lTotal->setText(QString::fromUtf8("%1%2").arg(!totalTransferredBytes ? QString::fromUtf8(""): QString::fromUtf8("%1<span style=\"color:#777777; text-decoration:none;\">&nbsp;&nbsp;of&nbsp;&nbsp;</span>").arg(Utilities::getSizeString(totalTransferredBytes)))
-                        .arg(Utilities::getSizeString(totalSize)));
+    auto translatedSeparationCharacter{tr("%1 of %2").remove(QStringLiteral("%1 ")).remove(QStringLiteral(" %2"))};
+    auto separationFormated{QStringLiteral("<span style=\"color:#777777; text-decoration:none;\">&nbsp;&nbsp;")+
+                translatedSeparationCharacter + QStringLiteral("&nbsp;&nbsp;</span>")};
+    auto transferredBytesText{not totalTransferredBytes ?
+                    QStringLiteral("") :
+                    Utilities::getSizeString(totalTransferredBytes) + separationFormated};
+    ui->lTotal->setText(transferredBytesText + Utilities::getSizeString(totalSize));
 }
 
 void TransferManagerItem::updateFinishedTime()

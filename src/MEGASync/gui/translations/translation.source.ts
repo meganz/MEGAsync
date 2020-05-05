@@ -2743,6 +2743,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
         <translation type="unfinished">Your account has been disabled by your administrator. Please contact your business account administrator for further details.</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -5231,6 +5235,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
         <translation type="unfinished">Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
+        <translation type="unfinished">%1 of %2</translation>
     </message>
 </context>
 <context>
