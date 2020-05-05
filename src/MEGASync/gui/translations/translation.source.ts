@@ -5513,6 +5513,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
     </message>
+    <message>
+        <source>Bytes</source>
+        <translation type="unfinished">Bytes</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>

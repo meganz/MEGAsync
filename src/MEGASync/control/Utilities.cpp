@@ -542,7 +542,7 @@ QString Utilities::getSizeString(unsigned long long bytes)
         return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
     }
 
-    return locale.toString(bytes) + QString::fromAscii(" bytes");
+    return locale.toString(bytes) + QStringLiteral(" ") + QCoreApplication::translate("Utilities", "Bytes");
 }
 
 QString Utilities::extractJSONString(QString json, QString name)
