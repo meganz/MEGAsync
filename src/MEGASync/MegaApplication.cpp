@@ -3147,6 +3147,71 @@ bool MegaApplication::checkOverquotaBandwidth()
     return false;
 }
 
+void MegaApplication::repositionInfoDialog()
+{
+    int posx, posy;
+    calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
+
+    // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
+    // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
+    // it is reverted to the correct size.
+    infoDialog->ensurePolished();
+    auto initialDialogWidth  = infoDialog->width();
+    auto initialDialogHeight = infoDialog->height();
+    QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
+        if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
+                         .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                         .toUtf8().constData());
+
+            infoDialog->resize(initialDialogWidth,initialDialogHeight);
+
+            auto iDPos = infoDialog->pos();
+            if (iDPos.x() != posx || iDPos.y() != posy )
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                             QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
+                             .arg(iDPos.x()).arg(iDPos.y()).arg(posx).arg(posy)
+                             .toUtf8().constData());
+                infoDialog->move(posx, posy);
+
+                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
+                    if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                     QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
+                                     .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                                     .toUtf8().constData());
+
+                        infoDialog->resize(initialDialogWidth,initialDialogHeight);
+                    }
+                });
+            }
+        }
+    });
+
+    if (isLinux)
+    {
+        unityFix();
+    }
+
+    infoDialog->move(posx, posy);
+
+#ifdef __APPLE__
+    QPoint positionTrayIcon = trayIcon->geometry().topLeft();
+    QPoint globalCoordinates(positionTrayIcon.x() + trayIcon->geometry().width()/2, posy);
+
+    //Work-Around to paint the arrow correctly
+    infoDialog->show();
+    QPixmap px = QPixmap::grabWidget(infoDialog);
+    infoDialog->hide();
+    QPoint localCoordinates = infoDialog->mapFromGlobal(globalCoordinates);
+    infoDialog->moveArrow(localCoordinates);
+#endif
+}
+
 void MegaApplication::showInfoDialog()
 {
     if (appfinished)
@@ -3203,67 +3268,7 @@ void MegaApplication::showInfoDialog()
                 megaApi->sendEvent(99524, "Main dialog shown while almost overquota");
             }
 
-            int posx, posy;
-            calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
-
-            // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
-            // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
-            // it is reverted to the correct size.
-            infoDialog->ensurePolished();
-            auto initialDialogWidth  = infoDialog->width();
-            auto initialDialogHeight = infoDialog->height();
-            QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
-                if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                                 QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
-                                 .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                                 .toUtf8().constData());
-
-                    infoDialog->resize(initialDialogWidth,initialDialogHeight);
-
-                    auto iDPos = infoDialog->pos();
-                    if (iDPos.x() != posx || iDPos.y() != posy )
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                                     QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
-                                     .arg(iDPos.x()).arg(iDPos.y()).arg(posx).arg(posy)
-                                     .toUtf8().constData());
-                        infoDialog->move(posx, posy);
-
-                        QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
-                            if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
-                            {
-                                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                                             QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
-                                             .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
-                                             .toUtf8().constData());
-
-                                infoDialog->resize(initialDialogWidth,initialDialogHeight);
-                            }
-                        });
-                    }
-                }
-            });
-
-            if (isLinux)
-            {
-                unityFix();
-            }
-
-            infoDialog->move(posx, posy);
-
-            #ifdef __APPLE__
-                QPoint positionTrayIcon = trayIcon->geometry().topLeft();
-                QPoint globalCoordinates(positionTrayIcon.x() + trayIcon->geometry().width()/2, posy);
-
-                //Work-Around to paint the arrow correctly
-                infoDialog->show();
-                QPixmap px = QPixmap::grabWidget(infoDialog);
-                infoDialog->hide();
-                QPoint localCoordinates = infoDialog->mapFromGlobal(globalCoordinates);
-                infoDialog->moveArrow(localCoordinates);
-            #endif
+            repositionInfoDialog();
 
             infoDialog->show();
             infoDialog->updateDialogState();

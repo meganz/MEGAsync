@@ -17,6 +17,9 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     m_ui(new Ui::VerifyLockMessage)
 {
     m_ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     m_ui->lEmailSent->setVisible(false);
 
     m_lockStatus = MegaApi::ACCOUNT_NOT_BLOCKED;

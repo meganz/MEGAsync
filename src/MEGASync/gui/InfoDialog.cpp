@@ -1485,8 +1485,8 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
             adjustSize();
             break;
         }
-
     }
+    app->repositionInfoDialog();
 
     app->onGlobalSyncStateChanged(NULL);
 }

@@ -112,6 +112,7 @@ public:
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
+    void repositionInfoDialog();
 
     virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
     virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
