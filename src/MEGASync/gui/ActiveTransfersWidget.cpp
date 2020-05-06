@@ -521,7 +521,13 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
     totalDownloads = api->getNumPendingDownloads();
 
     ui->lRemainingDownloads->setText(QString::fromUtf8("%1").arg(totalDownloads));
+    const auto remainingDownText{totalDownloads == 1 ? tr("Remaining Download"): tr("Remaining Downloads")};
+    ui->lDescRemainingDown->setText(remainingDownText);
+
     ui->lRemainingUploads->setText(QString::fromUtf8("%1").arg(totalUploads));
+    const auto remainingUpText{totalUploads == 1 ? tr("Remaining Upload"): tr("Remaining Uploads")};
+    ui->lDescRemainingUp->setText(remainingUpText);
+
 
     if (totalDownloads)
     {

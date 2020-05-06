@@ -129,6 +129,14 @@
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
         <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
     </message>
+    <message>
+        <source>Remaining Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remaining Upload</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddExclusionDialog</name>
