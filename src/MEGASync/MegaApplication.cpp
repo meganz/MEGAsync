@@ -3594,6 +3594,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     return QApplication::eventFilter(obj, e);
 }
 
+int MegaApplication::getBlockState() const
+{
+    return blockState;
+}
+
 SetupWizard *MegaApplication::getSetupWizard() const
 {
     return setupWizard;
@@ -6971,7 +6976,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 }
 
                 whyamiblockedPeriodicPetition = false;
-
+                disableSyncs();
                 break;
             }
             case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -8045,6 +8050,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             emit unblocked();
 
             blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+            restoreSyncs();
 
             //in any case we reflect the change in the InfoDialog
             if (infoDialog)

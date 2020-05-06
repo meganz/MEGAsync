@@ -173,6 +173,8 @@ public:
     void fetchNodes();
     void whyAmIBlocked(bool periodicCall = false);
 
+    int getBlockState() const;
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
