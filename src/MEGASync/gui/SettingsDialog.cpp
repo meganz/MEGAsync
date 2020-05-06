@@ -1194,7 +1194,7 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
         else
         {
             int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
-            ui->pStorage->setValue(percentage);
+            ui->pStorage->setValue(percentage > ui->pStorage->maximum() ? ui->pStorage->maximum() : percentage);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
                   .arg(QString::number(percentage))
