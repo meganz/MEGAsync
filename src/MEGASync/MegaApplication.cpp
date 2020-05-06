@@ -855,6 +855,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
+
+    connect(this, SIGNAL(blocked()), this, SLOT(onBlocked()));
+    connect(this, SIGNAL(unblocked()), this, SLOT(onUnBlocked()));
+
 #ifdef _WIN32
     connect(this, SIGNAL(screenAdded(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
     connect(this, SIGNAL(screenRemoved(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
@@ -3124,6 +3128,8 @@ bool MegaApplication::checkOverquotaBandwidth()
         return false;
     }
 
+    updateTrayIconMenu();
+
     if (QDateTime::currentMSecsSinceEpoch() / 1000 > bwOverquotaTimestamp) //we have waited enough
     {
         bwOverquotaTimestamp = 0;
@@ -3132,11 +3138,6 @@ bool MegaApplication::checkOverquotaBandwidth()
         {
             bwOverquotaDialog->refreshAccountDetails();
         }
-#ifdef __MACH__
-        trayIcon->setContextMenu(&emptyMenu);
-#elif defined(_WIN32)
-        trayIcon->setContextMenu(windowsMenu.get());
-#endif
     }
     else //still OQ
     {
@@ -4689,6 +4690,16 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
+void MegaApplication::onBlocked()
+{
+    updateTrayIconMenu();
+}
+
+void MegaApplication::onUnblocked()
+{
+    updateTrayIconMenu();
+}
+
 void MegaApplication::fetchNodes()
 {
     assert(!mFetchingNodes);
@@ -5345,6 +5356,27 @@ void MegaApplication::changeDisplay(QScreen *disp)
     }
 }
 #endif
+void MegaApplication::updateTrayIconMenu()
+{
+    if (trayIcon)
+    {
+#ifdef _WIN32
+        if (!blockState && preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
+                && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
+        {
+            trayIcon->setContextMenu(windowsMenu.get());
+        }
+        else
+        {
+            trayIcon->setContextMenu(initialMenu.get());
+        }
+
+#else
+        trayIcon->setContextMenu(&emptyMenu);
+#endif
+    }
+}
+
 void MegaApplication::createTrayIcon()
 {
     if (appfinished)
@@ -5377,19 +5409,7 @@ void MegaApplication::createTrayIcon()
         return;
     }
 
-#ifdef _WIN32
-    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
-            && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
-    {
-        trayIcon->setContextMenu(windowsMenu.get());
-    }
-    else
-    {
-        trayIcon->setContextMenu(initialMenu.get());
-    }
-#else
-    trayIcon->setContextMenu(&emptyMenu);
-#endif
+    updateTrayIconMenu();
 
     trayIcon->setToolTip(QCoreApplication::applicationName()
                      + QString::fromAscii(" ")
@@ -6607,6 +6627,8 @@ void MegaApplication::createAppMenus()
     //prevents it from being truncated on the first display
     windowsMenu->show();
     windowsMenu->hide();
+
+    updateTrayIconMenu();
 #endif
 
     if (infoDialogMenu)
@@ -6956,6 +6978,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
                 blockState = event->getNumber();
+                emit blocked();
 
                 if (verifyEmail)
                 {
@@ -7708,11 +7731,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             bwOverquotaTimestamp = 0;
             preferences->clearTemporalBandwidth();
-#ifdef __MACH__
-            trayIcon->setContextMenu(&emptyMenu);
-#elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu.get());
-#endif
+
             if (bwOverquotaDialog)
             {
                 bwOverquotaDialog->close();
@@ -8463,14 +8482,14 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         else if (e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
         {
             preferences->clearTemporalBandwidth();
+
+            updateTrayIconMenu();
+
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
             bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
             assert(bwOverquotaTimestamp > 0);
 
-#if defined(__MACH__) || defined(_WIN32)
-            trayIcon->setContextMenu(initialMenu.get());
-#endif
             closeDialogs(true);
             openBwOverquotaDialog();
         }
