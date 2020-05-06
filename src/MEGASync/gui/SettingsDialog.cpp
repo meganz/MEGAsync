@@ -2506,7 +2506,7 @@ void SettingsDialog::on_bFullCheck_clicked()
     preferences->setCrashed(true);
     QPointer<SettingsDialog> currentDialog = this;
     if (QMegaMessageBox::warning(nullptr, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders when it starts.\n\nDo you want to restart MEGAsync now?"),
-                         QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
         if (currentDialog)
         {
