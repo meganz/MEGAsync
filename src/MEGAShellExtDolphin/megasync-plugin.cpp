@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QString>
+#include <QStandardPaths>
 
 #ifndef WITH_KF5
 #include <kaction.h>
@@ -30,7 +31,6 @@
 
 K_PLUGIN_FACTORY(MEGASyncPluginFactory, registerPlugin<MEGASyncPlugin>();)
 K_EXPORT_PLUGIN(MEGASyncPluginFactory("megasync-plugin"))
-
 
 typedef enum {
     STRING_UPLOAD = 0,
@@ -66,8 +66,8 @@ MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
     KAbstractFileItemActionPlugin(parent)
 {
     Q_UNUSED(args);
-    sockPath = QDir::home().path();
-    sockPath.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/mega.socket");
+    sockPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
+    sockPath.append(QDir::separator()).append("data/Mega Limited/MEGAsync/mega.socket");
     sock.connectToServer(sockPath);
 }
 
