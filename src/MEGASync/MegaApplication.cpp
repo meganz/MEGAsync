@@ -857,7 +857,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 
     connect(this, SIGNAL(blocked()), this, SLOT(onBlocked()));
-    connect(this, SIGNAL(unblocked()), this, SLOT(onUnBlocked()));
+    connect(this, SIGNAL(unblocked()), this, SLOT(onUnblocked()));
 
 #ifdef _WIN32
     connect(this, SIGNAL(screenAdded(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
@@ -5335,6 +5335,7 @@ void MegaApplication::changeState()
     {
         infoDialog->regenerateLayout();
     }
+    updateTrayIconMenu();
 }
 
 #ifdef _WIN32
@@ -5361,7 +5362,7 @@ void MegaApplication::updateTrayIconMenu()
     if (trayIcon)
     {
 #ifdef _WIN32
-        if (!blockState && preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
+        if (!blockState && preferences && preferences->logged() && megaApi && getRootNode()
                 && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             trayIcon->setContextMenu(windowsMenu.get());
@@ -8066,9 +8067,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
             }
 
+            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             emit unblocked();
 
-            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             restoreSyncs();
 
             //in any case we reflect the change in the InfoDialog
@@ -8483,12 +8484,12 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         {
             preferences->clearTemporalBandwidth();
 
-            updateTrayIconMenu();
 
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
             bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
             assert(bwOverquotaTimestamp > 0);
+            updateTrayIconMenu();
 
             closeDialogs(true);
             openBwOverquotaDialog();
