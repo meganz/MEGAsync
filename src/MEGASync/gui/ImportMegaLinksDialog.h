@@ -45,6 +45,8 @@ private:
     LinkProcessor *linkProcessor;
     bool finished;
     HighDpiResize highDpiResize;
+
+    void enableOkButton() const;
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H

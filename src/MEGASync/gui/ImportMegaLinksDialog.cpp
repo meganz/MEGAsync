@@ -160,30 +160,14 @@ QString ImportMegaLinksDialog::getDownloadPath()
 
 void ImportMegaLinksDialog::on_cDownload_clicked()
 {
-    if (finished && (ui->cDownload->isChecked() || ui->cImport->isChecked()))
-    {
-        ui->bOk->setEnabled(true);
-    }
-    else
-    {
-        ui->bOk->setEnabled(false);
-    }
-
+    enableOkButton();
     ui->bLocalFolder->setEnabled(ui->cDownload->isChecked());
     ui->eLocalFolder->setEnabled(ui->cDownload->isChecked());
 }
 
 void ImportMegaLinksDialog::on_cImport_clicked()
 {
-    if (finished && (ui->cDownload->isChecked() || ui->cImport->isChecked()))
-    {
-        ui->bOk->setEnabled(true);
-    }
-    else
-    {
-        ui->bOk->setEnabled(false);
-    }
-
+    enableOkButton();
     ui->bMegaFolder->setEnabled(ui->cImport->isChecked());
     ui->eMegaFolder->setEnabled(ui->cImport->isChecked());
 }
@@ -311,15 +295,13 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 {
     finished = true;
-    if (ui->cDownload->isChecked() || ui->cImport->isChecked())
-    {
-        ui->bOk->setEnabled(true);
-    }
+    enableOkButton();
 }
 
 void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
 {
     linkProcessor->setSelected(id, state);
+    enableOkButton();
 }
 
 void ImportMegaLinksDialog::changeEvent(QEvent *event)
@@ -332,4 +314,12 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
             this->onLinkInfoAvailable(i);
     }
     QDialog::changeEvent(event);
+}
+
+void ImportMegaLinksDialog::enableOkButton() const
+{
+    const auto downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
+    const auto atLeastOneLinkValidAndSelected{linkProcessor->atLeastOneLinkValidAndSelected()};
+    const auto enable{finished && downloadOrImportChecked && atLeastOneLinkValidAndSelected};
+    ui->bOk->setEnabled(enable);
 }
