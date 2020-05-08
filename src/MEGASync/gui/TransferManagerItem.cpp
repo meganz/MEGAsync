@@ -265,7 +265,7 @@ void TransferManagerItem::updateTransfer()
     const auto translatedSeparationCharacter{tr("%1 of %2").remove(QStringLiteral("%1 ")).remove(QStringLiteral(" %2"))};
     const auto separationFormated{QStringLiteral("<span style=\"color:#777777; text-decoration:none;\">&nbsp;&nbsp;")+
                 translatedSeparationCharacter + QStringLiteral("&nbsp;&nbsp;</span>")};
-    const auto transferredBytesText{not totalTransferredBytes ?
+    const auto transferredBytesText{! totalTransferredBytes ?
                     QStringLiteral("") :
                     Utilities::getSizeString(totalTransferredBytes) + separationFormated};
     ui->lTotal->setText(transferredBytesText + Utilities::getSizeString(totalSize));
