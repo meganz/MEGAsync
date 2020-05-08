@@ -159,7 +159,7 @@ void CircularUsageProgressBar::setValue(int value, bool unknownTotal)
         }
         else
         {
-            textValue = QString::number(value).append(QString::fromUtf8("%"));
+            textValue = QString::number(value).append(QString::fromUtf8(" %"));
         }
         pbValue = value;
         if (value >= CircularUsageProgressBar::MAXVALUE)
