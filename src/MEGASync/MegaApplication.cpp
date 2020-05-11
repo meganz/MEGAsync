@@ -3149,6 +3149,11 @@ bool MegaApplication::checkOverquotaBandwidth()
 
 void MegaApplication::repositionInfoDialog()
 {
+    if (!infoDialog)
+    {
+        return;
+    }
+
     int posx, posy;
     calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
