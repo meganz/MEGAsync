@@ -25,6 +25,12 @@
   <property name="windowTitle">
    <string>Why am I seeing this?</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
@@ -294,6 +300,12 @@ border: none;
       </item>
       <item>
        <widget class="QPushButton" name="bClose">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Close</string>
         </property>

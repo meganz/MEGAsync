@@ -9,6 +9,8 @@
 #include "Preferences.h"
 #include "gui/MegaInfoMessage.h"
 
+#include <memory>
+
 namespace Ui {
 class GuestWidget;
 }

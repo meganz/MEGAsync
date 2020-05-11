@@ -109,6 +109,11 @@ QPushButton#bSettings:hover
      font-family: &quot;Lato&quot;;
 	font-size: 16px;
 }
+
+#bLogin::focus, #bCancel::focus, #bLogin::default
+{
+color:white;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1154,7 +1159,7 @@ image: none;</string>
            <number>0</number>
           </property>
           <property name="bottomMargin">
-        <number>11</number>
+           <number>11</number>
           </property>
           <item>
            <widget class="QWidget" name="wContainerVerifyEmail" native="true">
@@ -1374,7 +1379,75 @@ image: none;</string>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="verticalSpacer_4">
+                 <widget class="QWidget" name="wWhyAmIseen" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_12">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <spacer name="horizontalSpacer_19">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>79</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="bWhyAmIseen">
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#bWhyAmIseen
+{
+
+  color: #F0373A;
+  font-family: &quot;SF Pro Text&quot;;
+  font-size: 13px;
+  line-height: 15px;
+  border: none;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Why am I seeing this?</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_20">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>79</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_6">
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
@@ -1415,6 +1488,9 @@ image: none;</string>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
                 </property>
                 <item>
                  <spacer name="horizontalSpacer_11">
@@ -1485,18 +1561,21 @@ image: none;</string>
                   <property name="styleSheet">
                    <string notr="true">#bVerifyEmail
 {
-background-color: #F0373A;
+background-color: rgba(240, 55, 58, 1);
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
  padding: 7px 14px 7px 14px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
  color: #ffffff;
+}
 
+#bVerifyEmail:disabled {
+background-color:rgba(240, 55, 58, 0.3);
 }</string>
                   </property>
                   <property name="text">
-                   <string>Verify email</string>
+                   <string>Resend email</string>
                   </property>
                  </widget>
                 </item>
@@ -1509,6 +1588,81 @@ background-color: #F0373A;
                    <size>
                     <width>65</width>
                     <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wEmailSent" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_11">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>170</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lEmailSent">
+                  <property name="styleSheet">
+                   <string notr="true">#lEmailSent
+{
+  color: #666666;
+  font-family: Lato;
+  font-size: 11px;
+  letter-spacing: 0;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Email sent</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_18">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>169</width>
+                    <height>17</height>
                    </size>
                   </property>
                  </spacer>
