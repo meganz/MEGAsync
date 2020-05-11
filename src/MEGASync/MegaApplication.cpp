@@ -5363,16 +5363,16 @@ void MegaApplication::updateTrayIconMenu()
                 && !amIOverTemporalQuotaBandwidth() && !blockState)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
-            trayIcon->setContextMenu(windowsMenu.get());
+            trayIcon->setContextMenu(windowsMenu?windowsMenu.get():&emptyMenu);
 #elif defined(Q_OS_MACX)
             trayIcon->setContextMenu(&emptyMenu);
 #else
-            trayIcon->setContextMenu(initialMenu.get());
+            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
 #endif
         }
         else
         {
-            trayIcon->setContextMenu(initialMenu.get());
+            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
         }
     }
 }
@@ -5404,12 +5404,13 @@ void MegaApplication::createTrayIcon()
     #endif
     }
 
+    updateTrayIconMenu();
+
     if (isLinux)
     {
         return;
     }
 
-    updateTrayIconMenu();
 
     trayIcon->setToolTip(QCoreApplication::applicationName()
                      + QString::fromAscii(" ")
