@@ -33,6 +33,8 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->lEmail->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
     ui->lPassword->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
 
+    reset_UI_props();
+
     app = (MegaApplication *)qApp;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
@@ -100,6 +102,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     {
         if (request->getType() == MegaRequest::TYPE_LOGOUT)
         {
+            verifyEmail.reset(nullptr);
             closing = false;
             loggingStarted = false;
             page_login();
@@ -215,7 +218,6 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             page_login();
             break;
         }
-
         case MegaRequest::TYPE_FETCH_NODES:
         {
             if (error->getErrorCode() != MegaError::API_OK)
@@ -242,8 +244,45 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         }
         case MegaRequest::TYPE_LOGOUT:
         {
+            verifyEmail.reset(nullptr);
             loggingStarted = false;
             page_login();
+            break;
+        }
+        case MegaRequest::TYPE_RESEND_VERIFICATION_EMAIL:
+        {
+            int e = error->getErrorCode();
+            if (e == MegaError::API_OK)
+            {
+                ui->lEmailSent->setStyleSheet(QString::fromUtf8("#lEmailSent {font-size: 11px; color: #666666;}"));
+                ui->lEmailSent->setText(tr("Email sent"));
+            }
+            else
+            {
+                ui->lEmailSent->setStyleSheet(QString::fromUtf8("#lEmailSent {font-size: 11px; color: #F0373A;}"));
+
+                if (e == MegaError::API_ETEMPUNAVAIL)
+                {
+                    ui->lEmailSent->setText(QString::fromUtf8("Email already sent"));
+                }
+                else
+                {
+                    ui->lEmailSent->setText(QString::fromUtf8("%1").arg(QCoreApplication::translate("MegaError", error->getErrorString())));
+                }
+            }
+
+            ui->lEmailSent->setVisible(true);
+
+            Utilities::animateProperty(ui->lEmailSent, 400, "opacity", ui->lEmailSent->property("opacity"), 1.0);
+
+            int animationTime = 500;
+            QTimer::singleShot(10000-animationTime, this, [this, animationTime] () {
+                Utilities::animateProperty(ui->lEmailSent, animationTime, "opacity", 1.0, 0.5);
+                QTimer::singleShot(animationTime, this, [this] () {
+                    ui->bVerifyEmail->setEnabled(true);
+                });
+            });
+
             break;
         }
     }
@@ -295,6 +334,9 @@ void GuestWidget::enableListener()
 
 void GuestWidget::initialize()
 {
+    verifyEmail.reset(nullptr);
+    reset_UI_props();
+
     closing = false;
     loggingStarted = false;
     page_login();
@@ -444,12 +486,31 @@ void GuestWidget::on_bVerifyEmailLogout_clicked()
 
 void GuestWidget::on_bVerifyEmail_clicked()
 {
-    app->showVerifyAccountInfo();
+    ui->lEmailSent->setProperty("opacity", 0.0);
+    ui->bVerifyEmail->setEnabled(false);
+    megaApi->resendVerificationEmail(delegateListener);
 }
 
 void GuestWidget::on_bVerifySMS_clicked()
 {
-    app->showVerifyAccountInfo();
+    static_cast<MegaApplication *>(qApp)->goToMyCloud();
+}
+
+void GuestWidget::on_bWhyAmIseen_clicked()
+{
+    if (!verifyEmail)
+    {
+        QString title {tr("Locked Accounts")};
+        QString firstP {tr("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.")};
+        QString secondP {tr("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.")};
+
+        verifyEmail.reset(new MegaInfoMessage(tr("Why am I seeing this?"),title, firstP, secondP,
+                                              QIcon(QString::fromUtf8(":/images/locked_account_ico.png")).pixmap(70.0, 70.0)));
+    }
+
+    verifyEmail->show();
+    verifyEmail->activateWindow();
+    verifyEmail->raise();
 }
 
 void GuestWidget::fetchNodesAfterBlockCallbak()
@@ -583,6 +644,12 @@ void GuestWidget::page_lockedSMSAccount()
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
     ui->sPages->setCurrentWidget(ui->pVerifySMSAccount);
+}
+
+void GuestWidget::reset_UI_props()
+{
+    ui->lEmailSent->setVisible(false);
+    ui->bVerifyEmail->setEnabled(true);
 }
 
 void GuestWidget::changeEvent(QEvent *event)
