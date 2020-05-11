@@ -6628,7 +6628,6 @@ void MegaApplication::createAppMenus()
     windowsMenu->show();
     windowsMenu->hide();
 
-    updateTrayIconMenu();
 #endif
 
     if (infoDialogMenu)
@@ -6856,6 +6855,7 @@ void MegaApplication::createAppMenus()
     infoDialogMenu->hide();
 #endif
 
+    updateTrayIconMenu();
 }
 
 void MegaApplication::createGuestMenu()
