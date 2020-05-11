@@ -85,7 +85,7 @@ protected:
     bool closing;
     bool loggingStarted;
 
-    std::unique_ptr<MegaInfoMessage> verifyEmail;
+    std::unique_ptr<MegaInfoMessage> whyAmISeeingThisDialog;
 
     void page_login();
     void page_fetchnodes();

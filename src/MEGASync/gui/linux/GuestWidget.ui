@@ -110,10 +110,6 @@ QPushButton#bSettings:hover
 	font-size: 16px;
 }
 
-#bLogin::focus, #bCancel::focus, #bLogin::default
-{
-color:white;
-}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">

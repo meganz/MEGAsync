@@ -98,15 +98,17 @@ void GuestWidget::page_fetchnodes()
 
 void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
 {
+    if (request->getType() == MegaRequest::TYPE_LOGOUT)
+    {
+        whyAmISeeingThisDialog.reset(nullptr);
+        reset_UI_props();
+        closing = false;
+        loggingStarted = false;
+        page_login();
+        return;
+    }
     if (closing)
     {
-        if (request->getType() == MegaRequest::TYPE_LOGOUT)
-        {
-            verifyEmail.reset(nullptr);
-            closing = false;
-            loggingStarted = false;
-            page_login();
-        }
         return;
     }
 
@@ -242,13 +244,6 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
             break;
         }
-        case MegaRequest::TYPE_LOGOUT:
-        {
-            verifyEmail.reset(nullptr);
-            loggingStarted = false;
-            page_login();
-            break;
-        }
         case MegaRequest::TYPE_RESEND_VERIFICATION_EMAIL:
         {
             int e = error->getErrorCode();
@@ -334,7 +329,7 @@ void GuestWidget::enableListener()
 
 void GuestWidget::initialize()
 {
-    verifyEmail.reset(nullptr);
+    whyAmISeeingThisDialog.reset(nullptr);
     reset_UI_props();
 
     closing = false;
@@ -498,19 +493,19 @@ void GuestWidget::on_bVerifySMS_clicked()
 
 void GuestWidget::on_bWhyAmIseen_clicked()
 {
-    if (!verifyEmail)
+    if (!whyAmISeeingThisDialog)
     {
         QString title {tr("Locked Accounts")};
         QString firstP {tr("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.")};
         QString secondP {tr("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.")};
 
-        verifyEmail.reset(new MegaInfoMessage(tr("Why am I seeing this?"),title, firstP, secondP,
+        whyAmISeeingThisDialog.reset(new MegaInfoMessage(tr("Why am I seeing this?"),title, firstP, secondP,
                                               QIcon(QString::fromUtf8(":/images/locked_account_ico.png")).pixmap(70.0, 70.0)));
     }
 
-    verifyEmail->show();
-    verifyEmail->activateWindow();
-    verifyEmail->raise();
+    whyAmISeeingThisDialog->show();
+    whyAmISeeingThisDialog->activateWindow();
+    whyAmISeeingThisDialog->raise();
 }
 
 void GuestWidget::fetchNodesAfterBlockCallbak()

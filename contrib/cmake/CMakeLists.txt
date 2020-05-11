@@ -159,6 +159,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
     ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
+    ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
     )
 
