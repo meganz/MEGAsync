@@ -310,6 +310,9 @@ protected:
     void initLocalServer();
     void refreshStorageUIs();
 
+    // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
+    bool amIOverTemporalQuotaBandwidth();
+
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
 

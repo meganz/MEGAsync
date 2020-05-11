@@ -1582,7 +1582,7 @@ void MegaApplication::updateTrayIcon()
                     + QString::fromAscii("\n")
                     + tr("Syncing");
         }
-        else if (waiting || (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000))
+        else if (waiting || amIOverTemporalQuotaBandwidth())
         {
             tooltip = QCoreApplication::applicationName()
                     + QString::fromAscii(" ")
@@ -1729,10 +1729,7 @@ void MegaApplication::start()
         infoDialog->reset();
     }
 
-    if (!isLinux || !trayIcon->contextMenu())
-    {
-        trayIcon->setContextMenu(initialMenu.get());
-    }
+    updateTrayIconMenu();
 
     if(notificationsModel) notificationsModel->deleteLater();
     notificationsModel = NULL;
@@ -3130,7 +3127,7 @@ bool MegaApplication::checkOverquotaBandwidth()
 
     updateTrayIconMenu();
 
-    if (QDateTime::currentMSecsSinceEpoch() / 1000 > bwOverquotaTimestamp) //we have waited enough
+    if (!amIOverTemporalQuotaBandwidth()) //we have waited enough
     {
         bwOverquotaTimestamp = 0;
         preferences->clearTemporalBandwidth();
@@ -3180,7 +3177,7 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        if (bwOverquotaTimestamp && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
+        if (bwOverquotaTimestamp && !amIOverTemporalQuotaBandwidth()) //I was bandwidth OQ, but the time has passed: need to update transfer stats
         {
             updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
         }
@@ -4719,7 +4716,7 @@ void MegaApplication::whyAmIBlocked(bool periodicCall)
 
 std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
 {
-    if (forceReset || !mRootNode)
+    if (megaApi && (forceReset || !mRootNode) )
     {
         mRootNode.reset(megaApi->getRootNode());
     }
@@ -5357,24 +5354,26 @@ void MegaApplication::changeDisplay(QScreen *disp)
     }
 }
 #endif
+
 void MegaApplication::updateTrayIconMenu()
 {
     if (trayIcon)
     {
+        if (preferences && preferences->logged() && getRootNode()
+                && !amIOverTemporalQuotaBandwidth() && !blockState)
+        { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
-        if (!blockState && preferences && preferences->logged() && megaApi && getRootNode()
-                && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
-        {
             trayIcon->setContextMenu(windowsMenu.get());
+#elif defined(Q_OS_MACX)
+            trayIcon->setContextMenu(&emptyMenu);
+#else
+            trayIcon->setContextMenu(initialMenu.get());
+#endif
         }
         else
         {
             trayIcon->setContextMenu(initialMenu.get());
         }
-
-#else
-        trayIcon->setContextMenu(&emptyMenu);
-#endif
     }
 }
 
@@ -6963,6 +6962,11 @@ void MegaApplication::refreshStorageUIs()
     }
 }
 
+bool MegaApplication::amIOverTemporalQuotaBandwidth()
+{
+    return (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000);
+}
+
 void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 {
     DeferPreferencesSyncForScope deferrer(this);
@@ -7732,6 +7736,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             bwOverquotaTimestamp = 0;
             preferences->clearTemporalBandwidth();
+            updateTrayIconMenu();
 
             if (bwOverquotaDialog)
             {
@@ -8480,7 +8485,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
                              .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
 
         }
-        else if (e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
+        else if (e->getValue() && !amIOverTemporalQuotaBandwidth())
         {
             preferences->clearTemporalBandwidth();
 
