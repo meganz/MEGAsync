@@ -44,12 +44,12 @@ void MegaInfoMessage::changeEvent(QEvent *event)
 
 void MegaInfoMessage::setTexts()
 {
-    this->setWindowTitle(m_windowTitle);
-    ui->lInfoTitle->setText(m_title);
-    ui->lFirstDescP->setText(m_firstParagraph);
+    this->setWindowTitle(tr(m_windowTitle.toUtf8().constData()));
+    ui->lInfoTitle->setText(tr(m_title.toUtf8().constData()));
+    ui->lFirstDescP->setText(tr(m_firstParagraph.toUtf8().constData()));
 
     if (!m_secondParagraph.isEmpty())
     {
-        ui->lSecondDescP->setText(m_secondParagraph);
+        ui->lSecondDescP->setText(tr(m_secondParagraph.toUtf8().constData()));
     }
 }

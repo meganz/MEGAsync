@@ -495,11 +495,11 @@ void GuestWidget::on_bWhyAmIseen_clicked()
 {
     if (!whyAmISeeingThisDialog)
     {
-        QString title {tr("Locked Accounts")};
-        QString firstP {tr("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.")};
-        QString secondP {tr("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.")};
+        QString title {QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage", "Locked Accounts"))};
+        QString firstP {QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage","It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."))};
+        QString secondP {QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage","Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."))};
 
-        whyAmISeeingThisDialog.reset(new MegaInfoMessage(tr("Why am I seeing this?"),title, firstP, secondP,
+        whyAmISeeingThisDialog.reset(new MegaInfoMessage(QString::fromUtf8(QT_TRANSLATE_NOOP("MegaInfoMessage","Why am I seeing this?")),title, firstP, secondP,
                                               QIcon(QString::fromUtf8(":/images/locked_account_ico.png")).pixmap(70.0, 70.0)));
     }
 
