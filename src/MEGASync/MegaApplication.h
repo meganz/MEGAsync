@@ -175,6 +175,8 @@ public:
 
     int getBlockState() const;
 
+    void updateTrayIconMenu();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -186,6 +188,7 @@ signals:
     void closeSetupWizard(int);
     void setupWizardCreated();
     void unblocked();
+    void blocked();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -282,6 +285,9 @@ private slots:
     void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
+    void onBlocked();
+    void onUnblocked();
+
 
 protected:
     bool checkOverquotaBandwidth();
@@ -303,6 +309,9 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+
+    // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
+    bool amIOverTemporalQuotaBandwidth();
 
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
