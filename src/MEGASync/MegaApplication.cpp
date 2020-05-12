@@ -855,6 +855,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
+
+    connect(this, SIGNAL(blocked()), this, SLOT(onBlocked()));
+    connect(this, SIGNAL(unblocked()), this, SLOT(onUnblocked()));
+
 #ifdef _WIN32
     connect(this, SIGNAL(screenAdded(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
     connect(this, SIGNAL(screenRemoved(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
@@ -1578,7 +1582,7 @@ void MegaApplication::updateTrayIcon()
                     + QString::fromAscii("\n")
                     + tr("Syncing");
         }
-        else if (waiting || (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000))
+        else if (waiting || amIOverTemporalQuotaBandwidth())
         {
             tooltip = QCoreApplication::applicationName()
                     + QString::fromAscii(" ")
@@ -1725,10 +1729,7 @@ void MegaApplication::start()
         infoDialog->reset();
     }
 
-    if (!isLinux || !trayIcon->contextMenu())
-    {
-        trayIcon->setContextMenu(initialMenu.get());
-    }
+    updateTrayIconMenu();
 
     if(notificationsModel) notificationsModel->deleteLater();
     notificationsModel = NULL;
@@ -3124,7 +3125,9 @@ bool MegaApplication::checkOverquotaBandwidth()
         return false;
     }
 
-    if (QDateTime::currentMSecsSinceEpoch() / 1000 > bwOverquotaTimestamp) //we have waited enough
+    updateTrayIconMenu();
+
+    if (!amIOverTemporalQuotaBandwidth()) //we have waited enough
     {
         bwOverquotaTimestamp = 0;
         preferences->clearTemporalBandwidth();
@@ -3132,11 +3135,6 @@ bool MegaApplication::checkOverquotaBandwidth()
         {
             bwOverquotaDialog->refreshAccountDetails();
         }
-#ifdef __MACH__
-        trayIcon->setContextMenu(&emptyMenu);
-#elif defined(_WIN32)
-        trayIcon->setContextMenu(windowsMenu.get());
-#endif
     }
     else //still OQ
     {
@@ -3244,7 +3242,7 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        if (bwOverquotaTimestamp && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
+        if (bwOverquotaTimestamp && !amIOverTemporalQuotaBandwidth()) //I was bandwidth OQ, but the time has passed: need to update transfer stats
         {
             updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
         }
@@ -3597,6 +3595,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     }
 
     return QApplication::eventFilter(obj, e);
+}
+
+int MegaApplication::getBlockState() const
+{
+    return blockState;
 }
 
 SetupWizard *MegaApplication::getSetupWizard() const
@@ -4689,6 +4692,16 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
+void MegaApplication::onBlocked()
+{
+    updateTrayIconMenu();
+}
+
+void MegaApplication::onUnblocked()
+{
+    updateTrayIconMenu();
+}
+
 void MegaApplication::fetchNodes()
 {
     assert(!mFetchingNodes);
@@ -4708,7 +4721,7 @@ void MegaApplication::whyAmIBlocked(bool periodicCall)
 
 std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
 {
-    if (forceReset || !mRootNode)
+    if (megaApi && (forceReset || !mRootNode) )
     {
         mRootNode.reset(megaApi->getRootNode());
     }
@@ -4806,36 +4819,40 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (guestMenu && !preferences->logged())
+    if (!preferences->logged() || blockState) // if not logged or blocked account
     {
-        if (guestMenu->isVisible())
+        if (guestMenu)
         {
-            guestMenu->close();
+            if (guestMenu->isVisible())
+            {
+                guestMenu->close();
+            }
+
+            menuWidthInitialPopup = guestMenu->sizeHint().width();
+            QPoint p = point ? (*point) - QPoint(guestMenu->sizeHint().width(), 0)
+                             : QCursor::pos();
+
+            guestMenu->update();
+            guestMenu->popup(p);
+            displayedMenu = guestMenu.get();
         }
-
-        menuWidthInitialPopup = guestMenu->sizeHint().width();
-        QPoint p = point ? (*point) - QPoint(guestMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
-
-        guestMenu->update();
-        guestMenu->popup(p);
-        displayedMenu = guestMenu.get();
-
     }
-    else if (infoDialogMenu)
+    else // logged in
     {
-        if (infoDialogMenu->isVisible())
+        if (infoDialogMenu)
         {
-            infoDialogMenu->close();
+            if (infoDialogMenu->isVisible())
+            {
+                infoDialogMenu->close();
+            }
+
+            menuWidthInitialPopup = infoDialogMenu->sizeHint().width();
+            QPoint p = point ? (*point) - QPoint(infoDialogMenu->sizeHint().width(), 0)
+                                     : QCursor::pos();
+            infoDialogMenu->update();
+            infoDialogMenu->popup(p);
+            displayedMenu = infoDialogMenu.get();
         }
-
-
-        menuWidthInitialPopup = infoDialogMenu->sizeHint().width();
-        QPoint p = point ? (*point) - QPoint(infoDialogMenu->sizeHint().width(), 0)
-                                 : QCursor::pos();
-        infoDialogMenu->update();
-        infoDialogMenu->popup(p);
-        displayedMenu = infoDialogMenu.get();
     }
 
     // Menu width might be incorrect the first time it's shown. This works around that and repositions the menu at the expected position afterwards
@@ -5324,6 +5341,7 @@ void MegaApplication::changeState()
     {
         infoDialog->regenerateLayout();
     }
+    updateTrayIconMenu();
 }
 
 #ifdef _WIN32
@@ -5345,6 +5363,29 @@ void MegaApplication::changeDisplay(QScreen *disp)
     }
 }
 #endif
+
+void MegaApplication::updateTrayIconMenu()
+{
+    if (trayIcon)
+    {
+        if (preferences && preferences->logged() && getRootNode()
+                && !amIOverTemporalQuotaBandwidth() && !blockState)
+        { //regular situation: fully logged and without any blocking status
+#ifdef _WIN32
+            trayIcon->setContextMenu(windowsMenu?windowsMenu.get():&emptyMenu);
+#elif defined(Q_OS_MACX)
+            trayIcon->setContextMenu(&emptyMenu);
+#else
+            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
+#endif
+        }
+        else
+        {
+            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
+        }
+    }
+}
+
 void MegaApplication::createTrayIcon()
 {
     if (appfinished)
@@ -5372,24 +5413,13 @@ void MegaApplication::createTrayIcon()
     #endif
     }
 
+    updateTrayIconMenu();
+
     if (isLinux)
     {
         return;
     }
 
-#ifdef _WIN32
-    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
-            && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
-    {
-        trayIcon->setContextMenu(windowsMenu.get());
-    }
-    else
-    {
-        trayIcon->setContextMenu(initialMenu.get());
-    }
-#else
-    trayIcon->setContextMenu(&emptyMenu);
-#endif
 
     trayIcon->setToolTip(QCoreApplication::applicationName()
                      + QString::fromAscii(" ")
@@ -6371,7 +6401,7 @@ void MegaApplication::openSettings(int tab)
 
     if (megaApi)
     {
-        proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
+        proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged() || blockState;
         megaApi->retryPendingConnections();
     }
 
@@ -6607,6 +6637,7 @@ void MegaApplication::createAppMenus()
     //prevents it from being truncated on the first display
     windowsMenu->show();
     windowsMenu->hide();
+
 #endif
 
     if (infoDialogMenu)
@@ -6834,6 +6865,7 @@ void MegaApplication::createAppMenus()
     infoDialogMenu->hide();
 #endif
 
+    updateTrayIconMenu();
 }
 
 void MegaApplication::createGuestMenu()
@@ -6940,6 +6972,11 @@ void MegaApplication::refreshStorageUIs()
     }
 }
 
+bool MegaApplication::amIOverTemporalQuotaBandwidth()
+{
+    return (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000);
+}
+
 void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 {
     DeferPreferencesSyncForScope deferrer(this);
@@ -6956,6 +6993,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
                 blockState = event->getNumber();
+                emit blocked();
 
                 if (verifyEmail)
                 {
@@ -6967,6 +7005,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     if (infoDialog->getLoggedInMode() != blockState)
                     {
                         infoDialog->regenerateLayout(blockState);
+                        closeDialogs();
                     }
                 }
                 else if (!whyamiblockedPeriodicPetition) //Do not force show on periodic whyamiblocked call
@@ -6975,7 +7014,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 }
 
                 whyamiblockedPeriodicPetition = false;
-
+                disableSyncs();
                 break;
             }
             case MegaApi::ACCOUNT_BLOCKED_SUBUSER_DISABLED:
@@ -7707,11 +7746,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             bwOverquotaTimestamp = 0;
             preferences->clearTemporalBandwidth();
-#ifdef __MACH__
-            trayIcon->setContextMenu(&emptyMenu);
-#elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu.get());
-#endif
+            updateTrayIconMenu();
+
             if (bwOverquotaDialog)
             {
                 bwOverquotaDialog->close();
@@ -8046,14 +8082,20 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 emit fetchNodesAfterBlock(); //so that guest widget notice and loads fetch noding page
             }
 
+            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             emit unblocked();
 
-            blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+            restoreSyncs();
 
             //in any case we reflect the change in the InfoDialog
             if (infoDialog)
             {
                 infoDialog->regenerateLayout(MegaApi::ACCOUNT_NOT_BLOCKED);
+            }
+
+            if (settingsDialog)
+            {
+                settingsDialog->setProxyOnly(false);
             }
         }
 
@@ -8453,17 +8495,17 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
                              .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
 
         }
-        else if (e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
+        else if (e->getValue() && !amIOverTemporalQuotaBandwidth())
         {
             preferences->clearTemporalBandwidth();
+
+
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
             bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
             assert(bwOverquotaTimestamp > 0);
+            updateTrayIconMenu();
 
-#if defined(__MACH__) || defined(_WIN32)
-            trayIcon->setContextMenu(initialMenu.get());
-#endif
             closeDialogs(true);
             openBwOverquotaDialog();
         }
