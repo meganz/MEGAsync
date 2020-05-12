@@ -1195,7 +1195,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1210,7 +1210,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation type="unfinished">Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -3540,11 +3540,11 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- New customized message boxes.
-- Clean retroactive logs when logout.
-- Fixed issues that disable Finder extension under some circumstances.
+- Clean retroactive logs when logging out.
+- Fixed issues that disabled Finder extension under some circumstances.
 - Email verification for locked accounts.
 - SMS verification for locked accounts.
-- Support for affiliate program.
+- Support for the affiliate program.
 - Included option to send logs from crash report dialog.
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</translation>
@@ -5595,7 +5595,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -5610,7 +5610,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation type="unfinished">Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
     </message>
     <message>
         <source>Verify now</source>
