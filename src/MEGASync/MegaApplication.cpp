@@ -4806,36 +4806,40 @@ void MegaApplication::showTrayMenu(QPoint *point)
 #endif
     QMenu *displayedMenu = nullptr;
     int menuWidthInitialPopup = -1;
-    if (guestMenu && (!preferences->logged() || blockState))
+    if (!preferences->logged() || blockState) // if not logged or blocked account
     {
-        if (guestMenu->isVisible())
+        if (guestMenu)
         {
-            guestMenu->close();
+            if (guestMenu->isVisible())
+            {
+                guestMenu->close();
+            }
+
+            menuWidthInitialPopup = guestMenu->sizeHint().width();
+            QPoint p = point ? (*point) - QPoint(guestMenu->sizeHint().width(), 0)
+                             : QCursor::pos();
+
+            guestMenu->update();
+            guestMenu->popup(p);
+            displayedMenu = guestMenu.get();
         }
-
-        menuWidthInitialPopup = guestMenu->sizeHint().width();
-        QPoint p = point ? (*point) - QPoint(guestMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
-
-        guestMenu->update();
-        guestMenu->popup(p);
-        displayedMenu = guestMenu.get();
-
     }
-    else if (infoDialogMenu)
+    else // logged in
     {
-        if (infoDialogMenu->isVisible())
+        if (infoDialogMenu)
         {
-            infoDialogMenu->close();
+            if (infoDialogMenu->isVisible())
+            {
+                infoDialogMenu->close();
+            }
+
+            menuWidthInitialPopup = infoDialogMenu->sizeHint().width();
+            QPoint p = point ? (*point) - QPoint(infoDialogMenu->sizeHint().width(), 0)
+                                     : QCursor::pos();
+            infoDialogMenu->update();
+            infoDialogMenu->popup(p);
+            displayedMenu = infoDialogMenu.get();
         }
-
-
-        menuWidthInitialPopup = infoDialogMenu->sizeHint().width();
-        QPoint p = point ? (*point) - QPoint(infoDialogMenu->sizeHint().width(), 0)
-                                 : QCursor::pos();
-        infoDialogMenu->update();
-        infoDialogMenu->popup(p);
-        displayedMenu = infoDialogMenu.get();
     }
 
     // Menu width might be incorrect the first time it's shown. This works around that and repositions the menu at the expected position afterwards
