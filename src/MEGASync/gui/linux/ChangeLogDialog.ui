@@ -518,7 +518,7 @@ border-bottom: 1px solid #EFEFEC;
 }</string>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;p style=&quot;line-height: 16px;&quot;&gt;This software uses Qt (&amp;copy; 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3&lt;/p&gt;&lt;/html&gt;
+         <string notr="true">&lt;html&gt;&lt;p style=&quot;line-height: 16px;&quot;&gt;This software uses Qt (&amp;copy; 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3&lt;/p&gt;&lt;/html&gt;
 </string>
         </property>
         <property name="alignment">
