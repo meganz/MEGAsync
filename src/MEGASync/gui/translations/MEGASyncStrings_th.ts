@@ -816,8 +816,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging
-(in some cases it may contain details about your data, such as file or folder names)</translation>
+        <translation type="unfinished">แนบไฟล์บันทึกการวินิจฉัยเพื่อช่วยในการแก้ไขข้อขัดข้อง
+(ในบางกรณีอาจมีรายละเอียดเกี่ยวกับข้อมูลของคุณ เช่น ชื่อไฟล์หรือโฟลเดอร์)</translation>
     </message>
 </context>
 <context>
@@ -1030,7 +1030,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync จะไม่ดาวน์โหลดใดๆ ทั้งสิ้น</translation>
+        <translation>MEGAsync จะไม่ดาวน์โหลดใด ๆ ทั้งสิ้น</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -1190,12 +1190,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Locked Account</source>
         <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation type="unfinished">Locked Account</translation>
+        <translation type="unfinished">บัญชีถูกล็อก</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ กรุณายืนยันอีเมลของคุณและทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1205,22 +1205,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify email</source>
         <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
-        <translation type="unfinished">Verify email</translation>
+        <translation type="obsolete">ตรวจสอบอีเมล</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูกระงับชั่วคราวเนื่องจากอาจมีการละเมิด กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิดได้ กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Verify now</source>
         <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation type="unfinished">Verify now</translation>
+        <translation type="unfinished">ตรวจสอบตอนนี้</translation>
     </message>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
         <translation type="unfinished">กำลังสร้างบัญชี...</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">ทำไมฉันเห็นสิ่งนี้</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">ส่งอีเมลอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">ส่งอีเมลแล้ว</translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1303,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not found</source>
         <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
-        <translation>ไม่พบข้อมูลใดๆ</translation>
+        <translation>ไม่พบข้อมูล</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1312,7 +1327,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
-        <translation type="unfinished">Open links</translation>
+        <translation type="unfinished">เปิดลิงก์</translation>
     </message>
 </context>
 <context>
@@ -1772,7 +1787,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="obsolete">[S]ยืดหยุ่น:[/S] ซิงค์โฟลเดอร์ใดๆ จากเครื่องคอมพิวเตอร์ของคุณไปยังโฟลเดอร์ใดๆ ในระบบคลาวด์ และซิงค์โฟลเดอร์ได้พร้อมกัน</translation>
+        <translation type="obsolete">[S]ยืดหยุ่น:[/S] ซิงค์โฟลเดอร์ใด ๆ จากพีซีของคุณไปยังโฟลเดอร์ใด ๆ ในระบบคลาวด์ ซิงค์โฟลเดอร์จำนวนเท่าใดก็ได้พร้อมกัน</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1917,12 +1932,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation type="unfinished">[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</translation>
+        <translation type="unfinished">[A]เป็นไปได้ว่าคุณกําลังใช้รหัสผ่านเดียวกันสําหรับบัญชี MEGA ของคุณสําหรับบริการอื่น ๆ และอย่างน้อยหนึ่งบริการอื่น ๆ เหล่านี้ได้รับความเสียหายการละเมิดข้อมูล[/A]</translation>
     </message>
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation type="unfinished">[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</translation>
+        <translation type="unfinished">[A]รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
@@ -2727,12 +2742,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
-        <translation type="unfinished">Locked Account</translation>
+        <translation type="unfinished">บัญชีถูกล็อก</translation>
     </message>
     <message>
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
-        <translation type="unfinished">Open links</translation>
+        <translation type="unfinished">เปิดลิงก์</translation>
     </message>
     <message>
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
@@ -2742,7 +2757,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
+        <translation type="unfinished">MEGAsync ยังคงใช้งานได้ต่อไป อย่างไรก็ตาม การปรับปรุงจะไม่ได้รับการสนับสนุนสำหรับ Windows Vista และระบบปฏิบัติการรุ่นเก่าในเร็ว ๆ นี้</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2810,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not found</source>
         <translatorcomment>Label to show that an error related with a resource Not found occurs during a SDK operation.</translatorcomment>
-        <translation>ไม่พบข้อมูลใดๆ</translation>
+        <translation>ไม่พบข้อมูล</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -2877,7 +2892,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to a breach of MEGA’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">บัญชีของคุณถูกยกเลิกเนื่องจากการละเมิดเงื่อนไขการให้บริการของ MEGA เช่น การละเมิดสิทธิของผู้อื่น การแบ่งปันและ/หรือการนําเข้าข้อมูลที่ผิดกฎหมาย หรือการละเมิดของระบบ</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2903,6 +2918,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">การถ่ายโอนล้มเหลวเนื่องจากมีโครงสร้างของไดเรกทอรีที่ซ้ำกัน</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">ทำไมฉันเห็นสิ่งนี้</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">ปิด</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">บัญชีถูกล็อกแล้ว</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">เป็นไปได้ว่าคุณกำลังใช้รหัสผ่านเดียวกันสำหรับบัญชี MEGA ของคุณสำหรับบริการอื่น ๆ และอย่างน้อยหนึ่งในบริการอื่น ๆ เหล่านี้ได้รับความเสียหายจากข้อมูล</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ</translation>
     </message>
 </context>
 <context>
@@ -3266,7 +3309,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation type="unfinished">Enter links</translation>
+        <translation type="unfinished">กรอกลิงก์</translation>
     </message>
 </context>
 <context>
@@ -3472,19 +3515,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
         <translation type="obsolete">- รองรับการแจ้งเตือนผู้ใช้
-- รองรับการส่งรายงานข้อผิดพลาดจากกล่องโต้ตอบการตั้งค่า
-- ออกแบบกล่องโต้ตอบหลักใหม่
+- ขณะนี้คุณสามารถส่งรายงานข้อผิดพลาดได้จากกล่องโต้ตอบการตั้งค่า
+- ปรับแต่างกล่องโต้ตอบหลักใหม่
 - ปรับปรุงประสิทธิภาพเมื่อต้องรับมือกับการซิงค์และการถ่ายโอนจำนวนมาก
 - ปรับปรุงการรองรับบัญชีธุรกิจ
-- รองรับลิงก์ไปยังไฟล์และโฟลเดอร์ภายในลิงก์โฟลเดอร์สาธารณะ
+- เพิ่มการรองรับลิงก์ไปยังไฟล์และโฟลเดอร์ภายในลิงก์โฟลเดอร์สาธารณะ
 - ปรับปรุงการซิงโครไนซ์กับระบบไฟล์แบบ FAT32
-- แก้ไขและปรับแต่ง UI อื่น ๆ
 - ปรับปรุงประสิทธิภาพอื่น ๆ การแก้ไข UI และการปรับค่าต่าง ๆ</translation>
     </message>
     <message>
         <source>- Fix crash issue for OSX 10.9.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
-        <translation type="obsolete">- Fixed crash issue for OSX 10.9.</translation>
+        <translation type="obsolete">- แก้ไขปัญหาการขัดข้องสำหรับ OSX 10.9</translation>
     </message>
     <message>
         <source>- New customized message boxes.
@@ -3497,15 +3539,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- New customized message boxes.
-- Clean retroactive logs when logout.
-- Fixed issues that disable Finder extension under some circumstances.
-- Email verification for locked accounts.
-- SMS verification for locked accounts.
-- Support for affiliate program.
-- Included option to send logs from crash report dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">- ออกแบบกล่องข้อความแบบกําหนดเองใหม่
+- ลบการบันทึกย้อนหลังเมื่อมีการออกจากระบบ
+- แก้ไขปัญหาการปิดใช้งานส่วนขยาย Finder ในบางกรณี
+- การยืนยันอีเมล กรณีบัญชีถูกล็อก
+- การตรวจสอบ SMS กรณีบัญชีถูกล็อก
+- รองรับโปรแกรมชวนเพื่อนสร้างรายได้
+- มีตัวเลือกให้ระบุการส่งข้อมูลเพิ่มเติม เพื่อให้สามารถแนบบันทึกรายงานข้อขัดข้องจากกล่องโต้ตอบได้
+- แก้ไขและปรับแต่ง UI อื่น ๆ
+- ปรับปรุงประสิทธิภาพการทํางานและการปรับปรุงอื่น ๆ</translation>
     </message>
 </context>
 <context>
@@ -4610,7 +4652,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync จะไม่ดาวน์โหลดใดๆ ทั้งสิ้น</translation>
+        <translation>MEGAsync จะไม่ดาวน์โหลดใด ๆ ทั้งสิ้น</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -5215,7 +5257,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
-        <translation type="unfinished">Open links</translation>
+        <translation type="unfinished">เปิดลิงก์</translation>
     </message>
 </context>
 <context>
@@ -5543,17 +5585,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation type="unfinished">Verify your email</translation>
+        <translation type="unfinished">ยืนยันอีเมลของคุณ</translation>
     </message>
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
-        <translation type="unfinished">Locked Account</translation>
+        <translation type="unfinished">บัญชีถูกล็อก</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ กรุณายืนยันอีเมลของคุณและทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -5568,12 +5610,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูกระงับชั่วคราวเนื่องจากอาจมีการละเมิด กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิดได้ กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Verify now</source>
         <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation type="unfinished">Verify now</translation>
+        <translation type="unfinished">ตรวจสอบตอนนี้</translation>
     </message>
     <message>
         <source>Email sent</source>

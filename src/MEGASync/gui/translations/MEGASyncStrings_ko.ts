@@ -1196,7 +1196,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">당신의 안전을 위해 계정을 일시적으로 정지하였습니다. 계정을 잠금 해제하려면 이메일을 인증하고 절차를 따라주세요.</translation>
+        <translation type="unfinished">당신의 안전을 위해 계정을 일시적으로 잠갔습니다. 계정을 잠금 해제하려면 이메일을 인증하고 절차를 따라주세요.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1206,12 +1206,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify email</source>
         <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
-        <translation type="unfinished">이메일 인증</translation>
+        <translation type="obsolete">이메일 인증</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">당신의 계정이 잠재적 오남용으로 인하여 일시적으로 정지되었습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
+        <translation type="unfinished">당신의 계정이 잠재적 오남용으로 인하여 잠겼습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -1222,6 +1222,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
         <translation type="unfinished">계정 생성 중...</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">이게 왜 보여지나요?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">이메일 재발송</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">이메일 발송됨</translation>
     </message>
 </context>
 <context>
@@ -2743,7 +2758,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
+        <translation type="unfinished">MEGAsync는 계속 작동할 것이지만, Windows Vista와 이전 운영체제에 대한 업데이트는 더 이상 지원되지 않을 것입니다.</translation>
     </message>
 </context>
 <context>
@@ -2904,6 +2919,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">재귀적 경로 구조로 인하여 전송 실패</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">이게 왜 보여지나요?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">닫기</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">잠긴 계정들</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -3497,15 +3540,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- New customized message boxes.
-- Clean retroactive logs when logout.
-- Fixed issues that disable Finder extension under some circumstances.
-- Email verification for locked accounts.
-- SMS verification for locked accounts.
-- Support for affiliate program.
-- Included option to send logs from crash report dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">- 새로운 맞춤 메시지 박스.
+- 로그아웃 할 때 지난 로그 정리.
+- 특정 상황에서 Finder 확장 프로그램의 해제 문제 해결.
+- 잠긴 계정에 대한 이메일 인증.
+- 잠근 계정에 대한 SMS 인증.
+- 추천 프로그램 지원.
+- 충돌 보고 대화상자에서 로그 전송 옵션 포함.
+- 기타 UI 수정 및 조정.
+- 기타 성능 향상 및 조정.</translation>
     </message>
 </context>
 <context>
@@ -5554,7 +5597,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">당신의 안전을 위해 계정을 일시적으로 정지하였습니다. 계정을 잠금 해제하려면 이메일을 인증하고 절차를 따라주세요.</translation>
+        <translation type="unfinished">당신의 안전을 위해 계정을 일시적으로 잠갔습니다. 계정을 잠금 해제하려면 이메일을 인증하고 절차를 따라주세요.</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -5569,7 +5612,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">당신의 계정이 잠재적 오남용으로 인하여 일시적으로 정지되었습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
+        <translation type="unfinished">당신의 계정이 잠재적 오남용으로 인하여 잠겼습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
     </message>
     <message>
         <source>Verify now</source>

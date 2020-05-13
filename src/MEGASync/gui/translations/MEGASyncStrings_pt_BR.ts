@@ -745,7 +745,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">Por favor, digite uma senha mais forte</translation>
+        <translation type="unfinished">Por favor, digite uma senha mais segura</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -816,8 +816,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging
-(in some cases it may contain details about your data, such as file or folder names)</translation>
+        <translation type="unfinished">Anexar arquivos de log de diagnóstico para ajudar na depuração
+(estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos ou pastas)</translation>
     </message>
 </context>
 <context>
@@ -1195,7 +1195,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueadaa para a sua segurança. Por favor, confirme o seu email e siga os passos indicados para desbloquear a sua conta.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1205,12 +1205,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify email</source>
         <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
-        <translation type="unfinished">Confirmar email</translation>
+        <translation type="obsolete">Confirmar email</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">A sua conta foi temporariamente suspensa devido a um possível abuso. Por favor, verifique o seu número de telefone para desbloquear a sua conta.</translation>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueada devido a uma suspeita de infração. Por favor, confirme o seu número de telefone para desbloquear a sua conta.</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -1221,6 +1221,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
         <translation type="unfinished">Criando conta...</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Por que estou vendo isso?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Reenviar email</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email enviado</translation>
     </message>
 </context>
 <context>
@@ -1917,12 +1932,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation type="unfinished">[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</translation>
+        <translation type="unfinished">[A]É possível que você esteja usando no MEGA a mesma senha que usa em outros serviços, e que pelo menos um desses outros serviços tenha sofrido uma filtração de dados.[/A]</translation>
     </message>
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation type="unfinished">[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</translation>
+        <translation type="unfinished">[A]A sua senha foi comprometida, e agora está sendo usada por pessoas mal intencionadas para fazer login nas suas contas, incluindo a sua conta no MEGA (mas não se limitando a ela).[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
@@ -2742,7 +2757,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
+        <translation type="unfinished">O MEGAsync vai continuar funcionando, porém já não será possível atualizá-lo no Windows Vista ou em outros sistemas operacionais mais antigos.</translation>
     </message>
 </context>
 <context>
@@ -2903,6 +2918,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">Não foi possível fazer a transferência devido a uma estrutura de diretório recursiva</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Por que estou vendo isso?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">Fechar</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Contas bloqueadas</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">É possível que você esteja usando no MEGA a mesma senha que usa em outros serviços, e que pelo menos um desses outros serviços tenha sofrido uma filtração de dados.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">A sua senha foi comprometida, e agora está sendo usada por pessoas mal intencionadas para fazer login nas suas contas, incluindo a sua conta no MEGA (mas não se limitando a ela).</translation>
     </message>
 </context>
 <context>
@@ -3483,7 +3526,7 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
     <message>
         <source>- Fix crash issue for OSX 10.9.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
-        <translation type="obsolete">- Fixed crash issue for OSX 10.9.</translation>
+        <translation type="obsolete">- Correcao de falha no OSX 10.9.</translation>
     </message>
     <message>
         <source>- New customized message boxes.
@@ -3496,15 +3539,15 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- New customized message boxes.
-- Clean retroactive logs when logout.
-- Fixed issues that disable Finder extension under some circumstances.
-- Email verification for locked accounts.
-- SMS verification for locked accounts.
-- Support for affiliate program.
-- Included option to send logs from crash report dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">- Caixas de mensagem personalizadas.
+- Eliminação dos logs retroativos ao fazer logout.
+- Correção de problemas que desativavam a extensão do Finder em alguns casos.
+- Verificação de email para contas bloqueadas.
+- Verificação de SMS para contas bloqueadas.
+- Suporte para o programa de indicação.
+- Possibilidade de enviar logs da caixa de diálogo de relatório de erro.
+- Outras correções e ajustes da interface do usuário.
+- Aprimoramentos e ajustes de desempenho.</translation>
     </message>
 </context>
 <context>
@@ -4507,7 +4550,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Por favor, digite uma senha mais forte</translation>
+        <translation>Por favor, digite uma senha mais segura</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -4668,7 +4711,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Strong</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation type="unfinished">Forte</translation>
+        <translation type="unfinished">Segura</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -5552,7 +5595,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueadaa para a sua segurança. Por favor, confirme o seu email e siga os passos indicados para desbloquear a sua conta.</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -5567,7 +5610,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">A sua conta foi temporariamente suspensa devido a um possível abuso. Por favor, verifique o seu número de telefone para desbloquear a sua conta.</translation>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueada devido a uma suspeita de infração. Por favor, confirme o seu número de telefone para desbloquear a sua conta.</translation>
     </message>
     <message>
         <source>Verify now</source>

@@ -1196,7 +1196,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Uw account is voor uw veiligheid tijdelijk opgeschort. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
+        <translation type="unfinished">Uw account is voor uw veiligheid tijdelijk vergrendeld. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1206,12 +1206,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify email</source>
         <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
-        <translation type="unfinished">Verifieer e-mail</translation>
+        <translation type="obsolete">Verifieer e-mail</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Uw account is tijdelijk geschorst vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.</translation>
+        <translation type="unfinished">Uw account is tijdelijk vergrendeld vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -1222,6 +1222,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
         <translation type="unfinished">Account creëren...</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Waarom zie ik dit?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Email opnieuw verzenden</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email verstuurd</translation>
     </message>
 </context>
 <context>
@@ -2743,7 +2758,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
+        <translation type="unfinished">MEGAsync blijft werken, maar updates worden binnenkort niet meer ondersteund voor Windows Vista en oudere besturingssystemen.</translation>
     </message>
 </context>
 <context>
@@ -2904,6 +2919,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">Overdracht is mislukt vanwege een recursieve mapstructuur</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Waarom zie ik dit?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">Sluit</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Vergrendelde Accounts</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">Het is mogelijk dat u hetzelfde wachtwoord gebruikt voor uw MEGA-account als voor andere services en dat ten minste een van deze andere services een gegevenslek heeft geleden.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.</translation>
     </message>
 </context>
 <context>
@@ -3497,15 +3540,15 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- New customized message boxes.
-- Clean retroactive logs when logout.
-- Fixed issues that disable Finder extension under some circumstances.
-- Email verification for locked accounts.
-- SMS verification for locked accounts.
-- Support for affiliate program.
-- Included option to send logs from crash report dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">- Nieuwe aangepaste berichtvensters. 
+- Schone retroactieve logs bij het uitloggen. 
+- Problemen opgelost die de Finder-extensie onder bepaalde omstandigheden uitschakelden. 
+- E-mailverificatie voor vergrendelde accounts. 
+- SMS-verificatie voor vergrendelde accounts. 
+- Ondersteuning voor het partnerprogramma. 
+- Inbegrepen optie om logs te verzenden vanuit het crashrapport dialoogvenster. 
+- Andere UI-fixes en aanpassingen. 
+- Andere prestatieverbeteringen en aanpassingen.</translation>
     </message>
 </context>
 <context>
@@ -5554,7 +5597,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">Uw account is voor uw veiligheid tijdelijk opgeschort. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
+        <translation type="unfinished">Uw account is voor uw veiligheid tijdelijk vergrendeld. Verifieer uw e-mailadres en volg de stappen om uw account te ontgrendelen.</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -5569,7 +5612,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">Uw account is tijdelijk geschorst vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.</translation>
+        <translation type="unfinished">Uw account is tijdelijk vergrendeld vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.</translation>
     </message>
     <message>
         <source>Verify now</source>

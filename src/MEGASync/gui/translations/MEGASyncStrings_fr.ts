@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponibles</translation>
+        <translation type="unfinished">Disponible</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
@@ -371,7 +371,7 @@
     <message>
         <source>[A] added 1 item</source>
         <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation type="unfinished">[A] ajouté 1 élément</translation>
+        <translation type="unfinished">[A] a ajouté 1 élément</translation>
     </message>
     <message>
         <source>[A] added [B] items</source>
@@ -705,7 +705,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation type="unfinished">Confirmez le nouveau mot de passe</translation>
+        <translation type="unfinished">Confirmer le nouveau mot de passe</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1139,7 +1139,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation type="unfinished">Courriel ou mot de passe erroné.</translation>
+        <translation type="unfinished">L’adresse courriel ou le mot de passe sont erronés.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -1195,7 +1195,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Votre compte a temporairement été désactivé pour votre sécurité. Veuillez la présence d’un courriel de MEGA vérifier dans votre boîte de réception et suivre les étapes qu’il décrit afin de déverrouiller votre compte.</translation>
+        <translation type="unfinished">Votre compte a temporairement été verrouillé pour votre sécurité. Veuillez vérifier la présence d’un courriel de MEGA dans votre boîte de réception et suivre les étapes qu’il décrit afin de déverrouiller votre compte.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1205,12 +1205,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify email</source>
         <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
-        <translation type="unfinished">Confirmer votre adresse courriel</translation>
+        <translation type="obsolete">Confirmer votre adresse courriel</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Votre compte a temporairement été désactivé en raison d’un abus potentiel. Veuillez confimer votre numéro de téléphone pour déverrouiller votre compte.</translation>
+        <translation type="unfinished">Votre compte a temporairement été verrouillé en raison d’un abus potentiel. Veuillez confirmer votre numéro de téléphone pour déverrouiller votre compte.</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -1221,6 +1221,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
         <translation type="unfinished">Création du compte…</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Pourquoi vois-je ceci ?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Renvoyer le courriel</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Le courriel a été envoyé</translation>
     </message>
 </context>
 <context>
@@ -2021,7 +2036,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">La synchronisation s’arrêtera. Les suppressions qui ont lieu alors que la synchronisation est désactivée ne sont pas propagées. Quitter quand même ?</translation>
+        <translation type="obsolete">La synchronisation s’arrêtera. Les suppressions qui ont lieu alors que la synchronisation est désactivée ne sont pas propagées. Fermer quand même ?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2051,7 +2066,7 @@ Exit anyway?</source>
     <message>
         <source>Exit</source>
         <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Quitter</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>About</source>
@@ -2185,7 +2200,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">La synchronisation s&apos;arrêtera. Quiter quand même ?</translation>
+        <translation type="obsolete">La synchronisation s’arrêtera. Fermer quand même ?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -2220,7 +2235,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Quit</source>
         <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Quitter</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -2380,7 +2395,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">Voulez-vous vraiment quitter le client de synchronisation ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment fermer le client de synchronisation ?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
@@ -2607,7 +2622,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation type="unfinished">Montrer dans le dossier</translation>
+        <translation type="unfinished">Afficher dans le dossier</translation>
     </message>
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
@@ -2742,7 +2757,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
+        <translation type="unfinished">MEGAsync continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à Windows 7.</translation>
     </message>
 </context>
 <context>
@@ -2906,6 +2921,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Pourquoi vois-je ceci ?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Comptes verrouillés</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">Il est possible que vous utilisiez le même mot de passe pour votre compte MEGA que pour d’autres services et qu’au moins l’un de ses services ait souffert d’une atteinte à la protection des données.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">Votre mot de passe a été divulgué et est maintenant utilisé par des personnes malveillantes pour se connecter à vos comptes dont, mais sans s’y limiter, à votre compte MEGA.</translation>
+    </message>
+</context>
+<context>
     <name>MegaNodeNames</name>
     <message>
         <source>Cloud Drive</source>
@@ -2956,7 +2999,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Show in folder</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Show in folder&quot; button related to a transfer</translatorcomment>
-        <translation type="unfinished">Montrer dans le dossier</translation>
+        <translation type="unfinished">Afficher dans le dossier</translation>
     </message>
 </context>
 <context>
@@ -3004,7 +3047,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation type="unfinished">Montrer dans le dossier</translation>
+        <translation type="unfinished">Afficher dans le dossier</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -3231,7 +3274,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Saisissez un ou plusieurs liens de fichier MEGA</translation>
+        <translation>Saisir un ou plusieurs liens de fichier MEGA</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -3496,15 +3539,15 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- New customized message boxes.
-- Clean retroactive logs when logout.
-- Fixed issues that disable Finder extension under some circumstances.
-- Email verification for locked accounts.
-- SMS verification for locked accounts.
-- Support for affiliate program.
-- Included option to send logs from crash report dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">– Nouvelles fenêtres de message personnalisées. 
+– Nettoyage rétroactif des journaux à la déconnexion. 
+– Correctif de problèmes qui désactivaient l’extension Finder dans certaines circonstances. 
+– Confirmation par courriel pour les comptes verrouillés. 
+– Confirmation par texto pour les comptes verrouillés. 
+– Prise en charge du programme de parrainage. 
+– Ajout d’une option d’envoi des journaux dans la fenêtre de signalement d’un plantage. 
+– Autres correctifs de l’interface utilisateur et ajustements. 
+– Autres améliorations des performances et ajustements.</translation>
     </message>
 </context>
 <context>
@@ -3624,7 +3667,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
-        <translation type="vanished">Montrer dans le dossier</translation>
+        <translation type="vanished">Afficher dans le dossier</translation>
     </message>
 </context>
 <context>
@@ -3892,12 +3935,12 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Synchronization will stop working.</source>
         <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
-        <translation>La synchronisation s&apos;arrêtera.</translation>
+        <translation>La synchronisation s’arrêtera.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Êtes-vous sûr ?</translation>
+        <translation>Confirmez-vous ?</translation>
     </message>
     <message>
         <source>Excluded name</source>
@@ -4366,7 +4409,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Veuillez vérifier votre compte en utilisant le lien de confirmation envoyé à votre adresse courriel</translation>
+        <translation>Veuillez confirmer votre compte en utilisant le lien de confirmation envoyé à votre adresse courriel</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -4467,7 +4510,7 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Courriel ou mot de passe erroné.</translation>
+        <translation>L’adresse courriel ou le mot de passe sont erronés.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -4653,12 +4696,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation type="unfinished">Faible</translation>
+        <translation type="unfinished">Vulnérable</translation>
     </message>
     <message>
         <source>Medium</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation type="unfinished">Moyenne</translation>
+        <translation type="unfinished">Moyen</translation>
     </message>
     <message>
         <source>Good</source>
@@ -5441,7 +5484,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponibles</translation>
+        <translation type="unfinished">Disponible</translation>
     </message>
 </context>
 <context>
@@ -5532,7 +5575,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation type="unfinished">Pourquoi est-ce que je vois ceci ?</translation>
+        <translation type="unfinished">Pourquoi vois-je ceci ?</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -5552,7 +5595,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">Votre compte a temporairement été désactivé pour votre sécurité. Veuillez la présence d’un courriel de MEGA vérifier dans votre boîte de réception et suivre les étapes qu’il décrit afin de déverrouiller votre compte.</translation>
+        <translation type="unfinished">Votre compte a temporairement été verrouillé pour votre sécurité. Veuillez vérifier la présence d’un courriel de MEGA dans votre boîte de réception et suivre les étapes qu’il décrit afin de déverrouiller votre compte.</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -5567,7 +5610,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">Votre compte a temporairement été désactivé en raison d’un abus potentiel. Veuillez confimer votre numéro de téléphone pour déverrouiller votre compte.</translation>
+        <translation type="unfinished">Votre compte a temporairement été verrouillé en raison d’un abus potentiel. Veuillez confirmer votre numéro de téléphone pour déverrouiller votre compte.</translation>
     </message>
     <message>
         <source>Verify now</source>
