@@ -3541,13 +3541,13 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- Nieuwe aangepaste berichtvensters. 
-- Schone retroactieve logs bij het uitloggen. 
-- Problemen opgelost die de Finder-extensie onder bepaalde omstandigheden uitschakelden. 
+- Opschonen van logboeken met terugwerkende kracht bij het uitloggen. 
+- Problemen opgelost die de Finder-extensie onder bepaalde omstandigheden hebben uitgeschakeld. 
 - E-mailverificatie voor vergrendelde accounts. 
-- SMS-verificatie voor vergrendelde accounts. 
+- SMS-verificatie voor vergrendelde accounts 
 - Ondersteuning voor het partnerprogramma. 
-- Inbegrepen optie om logs te verzenden vanuit het crashrapport dialoogvenster. 
-- Andere UI-fixes en aanpassingen. 
+- Inbegrepen optie om logs te verzenden vanuit het crashrapportvenster. 
+- Andere UI fixes en aanpassingen. 
 - Andere prestatieverbeteringen en aanpassingen.</translation>
     </message>
 </context>

@@ -3540,14 +3540,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- 新的可自訂訊息對話框。
-- 登出時清除追溯日誌。
-- 修正在某些情況下停用Finder擴充程式的問題。
-- Email驗證來解除帳戶鎖定。
-- 簡訊驗證來解除帳戶鎖定。
-- 支援推薦聯盟計畫。
-- 當機報告對話框中加入日誌發送的選項。
-- 其它UI修正與調整。
-- 其它性能改善與調整。</translation>
+ - 登出時清除追溯日誌。
+ - 修正在某些情況下停用Finder擴充程式的問題。
+ - Email驗證來解除帳戶鎖定。
+ - 簡訊驗證來解除帳戶鎖定。
+ - 支援推薦聯盟計畫。
+ - 當機報告對話框中加入日誌發送的選項。
+ - 其它UI修正與調整。
+ - 其它性能改善與調整。</translation>
     </message>
 </context>
 <context>

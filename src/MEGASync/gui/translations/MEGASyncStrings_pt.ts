@@ -3540,14 +3540,14 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- Caixas de mensagem personalizadas.
-- Eliminação dos logs retroativos ao fazer logout.
-- Correção de problemas que desativavam a extensão do Finder em alguns casos.
-- Verificação de email para contas bloqueadas.
-- Verificação de SMS para contas bloqueadas.
-- Suporte para o programa de indicação.
-- Possibilidade de enviar logs da caixa de diálogo de relatório de erro.
-- Outras correções e ajustes da interface do usuário.
-- Aprimoramentos e ajustes de desempenho.</translation>
+ - Eliminação dos logs retroativos ao fazer logout.
+ - Correção de problemas que desativavam a extensão do Finder em alguns casos.
+ - Verificação de email para contas bloqueadas.
+ - Verificação de SMS para contas bloqueadas.
+ - Suporte para o programa de indicação.
+ - Possibilidade de enviar logs da caixa de diálogo de relatório de erro.
+ - Outras correções e ajustes da interface do usuário.
+ - Aprimoramentos e ajustes de desempenho.</translation>
     </message>
 </context>
 <context>

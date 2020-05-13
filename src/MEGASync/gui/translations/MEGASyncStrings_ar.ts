@@ -3814,7 +3814,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation type="vanished">%s كيلو بايت</translation>
+        <translation type="vanished">كيلو بايت</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -4922,17 +4922,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
-        <translation type="unfinished">%s كيلو بايت</translation>
+        <translation type="unfinished">كيلو بايت</translation>
     </message>
     <message>
         <source>MB</source>
         <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
-        <translation type="unfinished">%s ميغابايب</translation>
+        <translation type="unfinished">ميغابايب</translation>
     </message>
     <message>
         <source>GB</source>
         <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
-        <translation type="unfinished">%s غيغابايت</translation>
+        <translation type="unfinished">غيغابايت</translation>
     </message>
 </context>
 <context>
@@ -5554,22 +5554,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
-        <translation type="unfinished">%s تيرابايت</translation>
+        <translation type="unfinished">تيرابايت</translation>
     </message>
     <message>
         <source>GB</source>
         <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
-        <translation type="unfinished">%s غيغابايت</translation>
+        <translation type="unfinished">غيغابايت</translation>
     </message>
     <message>
         <source>MB</source>
         <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
-        <translation type="unfinished">%s ميغابايب</translation>
+        <translation type="unfinished">ميغابايب</translation>
     </message>
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
-        <translation type="unfinished">%s كيلو بايت</translation>
+        <translation type="unfinished">كيلو بايت</translation>
     </message>
 </context>
 <context>

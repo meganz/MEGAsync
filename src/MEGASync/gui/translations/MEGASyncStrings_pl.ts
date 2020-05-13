@@ -3539,15 +3539,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- Nowe niestandardowe skrzynki wiadomości.
-- Wyczyść dzienniki z mocą wsteczną podczas wylogowywania.
-- Naprawiono problemy, które wyłączały rozszerzenie Findera w niektórych okolicznościach.
-- Weryfikacja adresu e-mail dla zablokowanych kont.
-- Weryfikacja SMS dla zablokowanych kont.
-- Wsparcie dla programu partnerskiego.
-- Dołączona opcja wysyłania dzienników z okna dialogowego raportu o awarii.
-- Inne poprawki i dostosowania interfejsu użytkownika.
-- Inne ulepszenia i dostosowania wydajności.</translation>
+        <translation type="unfinished">- Nowe dostosowane okna wiadomości.
+ - Wyczyść dzienniki z mocą wsteczną podczas wylogowywania.
+ - Naprawiono problemy, które wyłączały rozszerzenie Findera w niektórych okolicznościach.
+ - Weryfikacja adresu e-mail dla zablokowanych kont.
+ - Weryfikacja SMS dla zablokowanych kont.
+ - Wsparcie dla programu partnerskiego.
+ - Zawiera opcję wysyłania dzienników z okna dialogowego raportu o awarii.
+ - Inne poprawki i dostosowania interfejsu użytkownika.
+ - Inne ulepszenia i korekty wydajności.</translation>
     </message>
 </context>
 <context>

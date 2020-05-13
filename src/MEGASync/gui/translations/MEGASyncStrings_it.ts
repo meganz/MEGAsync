@@ -3540,9 +3540,9 @@ Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:�
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- Nuovi spazi per i messaggi personalizzati.
-- Pulizia dei log retroattivi quando si effettua il log out.
+- Pulizia retroattiva dei log quando si effettua il log out.
 - Aggiustati problemi che disabilitavano l&apos;estensione Finder in alcune circostanze.
-- Verifica email per account bloccati.
+- Verifica dell&apos;email per account bloccati.
 - Verifica tramite SMS per account bloccati.
 - Supporto per il Programma affiliato.
 - Inclusa l&apos;opzione per mandare i log dalla finestra per riportare un crash.
