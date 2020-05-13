@@ -1006,6 +1006,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     waiting = false;
     updated = false;
     syncing = false;
+    transferring = false;
     checkupdate = false;
     updateAction = NULL;
     updateActionGuest = NULL;
@@ -1562,9 +1563,7 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (indexing || waiting || syncing
-             || megaApi->getNumPendingUploads()
-             || megaApi->getNumPendingDownloads())
+    else if (indexing || waiting || syncing || transferring)
     {
         if (indexing)
         {
@@ -1590,13 +1589,13 @@ void MegaApplication::updateTrayIcon()
                     + QString::fromAscii("\n")
                     + tr("Waiting");
         }
-        else //TODO: this is actually a "Transfering" state
+        else
         {
             tooltip = QCoreApplication::applicationName()
                     + QString::fromAscii(" ")
                     + Preferences::VERSION_STRING
                     + QString::fromAscii("\n")
-                    + tr("Syncing");
+                    + tr("Transferring");
         }
 
 #ifndef __APPLE__
@@ -8788,6 +8787,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();
         syncing = megaApi->isSyncing();
+        transferring = megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads();
 
         int pendingUploads = megaApi->getNumPendingUploads();
         int pendingDownloads = megaApi->getNumPendingDownloads();
@@ -8804,6 +8804,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
         infoDialog->setIndexing(indexing);
         infoDialog->setWaiting(waiting);
         infoDialog->setSyncing(syncing);
+        infoDialog->setTransferring(transferring);
         infoDialog->updateDialogState();
         infoDialog->transferFinished(MegaError::API_OK);
     }
