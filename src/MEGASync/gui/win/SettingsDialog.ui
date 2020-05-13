@@ -981,7 +981,7 @@ background:transparent;</string>
                    </size>
                   </property>
                   <property name="text">
-                   <string>Export Key</string>
+                   <string>Backup Recovery Key</string>
                   </property>
                  </widget>
                 </item>

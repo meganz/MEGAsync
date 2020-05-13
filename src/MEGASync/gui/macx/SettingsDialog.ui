@@ -867,7 +867,7 @@ padding-bottom: 6px;
                    </size>
                   </property>
                   <property name="text">
-                   <string>Export Key</string>
+                   <string>Backup Recovery Key</string>
                   </property>
                  </widget>
                 </item>
