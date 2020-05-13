@@ -148,6 +148,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     indexing = false;
     waiting = false;
     syncing = false;
+    transferring = false;
     activeDownload = NULL;
     activeUpload = NULL;
     cloudItem = NULL;
@@ -590,6 +591,11 @@ void InfoDialog::setSyncing(bool value)
     this->syncing = value;
 }
 
+void InfoDialog::setTransferring(bool value)
+{
+    this->transferring = value;
+}
+
 void InfoDialog::setOverQuotaMode(bool state)
 {
     if (overQuotaState == state)
@@ -728,6 +734,14 @@ void InfoDialog::updateState()
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
+                animateStates(true);
+            }
+        }
+        else if (transferring)
+        {
+            if (state != STATE_TRANSFERRING)
+            {
+                state = STATE_TRANSFERRING;
                 animateStates(true);
             }
         }
