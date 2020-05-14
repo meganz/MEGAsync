@@ -79,24 +79,25 @@ void Model::removeAllFolders()
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
-    loadedSyncsMap.clear();
 }
 
-void Model::updateSyncSettings(MegaSync *sync, const char *remotePath)
+std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, bool addingNew, const char *remotePath)
 {
     if (!sync)
     {
-        return;
+        return nullptr;
     }
 
     QMutexLocker qm(&mutex);
     assert(preferences->logged());
 
     std::shared_ptr<SyncSetting> cs;
+    bool wasEnabled = true; //TODO: review this, for failed syncs being added again as failed
 
-    if (configuredSyncsMap.contains(sync->getTag()))
+    if (configuredSyncsMap.contains(sync->getTag())) //existing configuration (can have been picked from old sync config)
     {
         cs = configuredSyncsMap[sync->getTag()];
+        wasEnabled = cs->isEnabled();
         cs->setSync(sync);
 
         assert(remotePath || cs->getMegaFolder().size()); //updated syncs should always have a remote path
@@ -107,13 +108,36 @@ void Model::updateSyncSettings(MegaSync *sync, const char *remotePath)
     }
     else
     {
-        cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync, remotePath);
+        assert(addingNew && "!addingnew and didn't find previously configured sync");
+
+        auto loaded = preferences->getLoadedSyncsMap();
+        if (loaded.contains(sync->getTag())) //existing configuration from previous executions (we get the data that the sdk might not be providing from our cache)
+        {
+            cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(*loaded[sync->getTag()].get());
+            cs->setSync(sync);
+            assert(remotePath || cs->getMegaFolder().size()); //updated syncs should always have a remote path
+            if (remotePath)
+            {
+                cs->setMegaFolder(remotePath);
+            }
+        }
+        else // new addition (no reference in the cache)
+        {
+            cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync, remotePath);
+        }
+
         configuredSyncs.append(sync->getTag());
     }
 
     preferences->writeSyncSetting(cs);
 
+    if (!cs->isActive() && wasEnabled)
+    {
+        emit syncDisabled(cs, addingNew);
+    }
+
     emit syncStateChanged(cs);
+    return cs;
 }
 
 void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
@@ -128,6 +152,7 @@ void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
     }
     cs->setTag(tag);
     cs->setName(osd.mName);
+    cs->setEnabled(osd.mEnabled);
 
     configuredSyncs.append(tag);
 
@@ -291,16 +316,4 @@ std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
 {
     QMutexLocker qm(&mutex);
     return configuredSyncsMap[configuredSyncs.at(num)];
-}
-
-QDataStream& operator<<(QDataStream& out, const SyncSetting& v)
-{
-    out << v.tag() << v.name();
-    return out;
-}
-
-QDataStream& operator>>(QDataStream& in, SyncSetting& v) {
-    decltype(v.tag()) tag; in >> tag; v.setTag(tag);
-    decltype(v.name()) name; in >> name; v.setName(name);
-    return in;
 }

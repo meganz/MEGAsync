@@ -1424,11 +1424,17 @@ int SettingsDialog::saveSettings()
                     QString newLocalPath = ui->tSyncs->item(j, 0)->text();
                     QString newMegaPath = ui->tSyncs->item(j, 1)->text();
                     bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
+                    bool disabled = !enabled;
+#ifdef SYNC_ADVANCED_TEST_MODE
+                    enabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Checked;
+                    disabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Unchecked;
+#endif
+
                     auto tagItem = ui->tSyncs->cellWidget(j,3);
 
                     if (tagItem && static_cast<QLabel *>(tagItem)->text().toInt() == syncSetting->tag())
                     {
-                        if (!enabled && syncSetting->isEnabled()) //sync disabled
+                        if (disabled && syncSetting->isEnabled()) //sync disabled
                         {
 //                            Platform::syncFolderRemoved(model->getLocalFolder(i),
 //                                                        model->getSyncName(i),
@@ -1442,7 +1448,11 @@ int SettingsDialog::saveSettings()
                             controller->disableSync(syncSetting, disableSyncStep);
                             //TODO: ensure a failure is well processed
                         }
+#ifdef SYNC_ADVANCED_TEST_MODE
+                        else if (enabled && !syncSetting->isActive()) //sync re-enabled!
+#else
                         else if (enabled && !syncSetting->isEnabled()) //sync re-enabled!
+#endif
                         {
                             ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
                                                                                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
@@ -1833,24 +1843,48 @@ void SettingsDialog::loadSyncSettings()
             continue;
         }
 
-        if (!syncSetting->getMegaFolder().size())
-        {
-            //TODO: log warn!
-            continue; // do not try to paint a sync that's not loaded!
-        }
-
         QTableWidgetItem *localFolder = new QTableWidgetItem();
         localFolder->setText(syncSetting->getLocalFolder());
         QTableWidgetItem *megaFolder = new QTableWidgetItem();
-        megaFolder->setText(syncSetting->getMegaFolder());
+        assert(syncSetting->getMegaFolder().size() && "remote folder lacks path");
+        megaFolder->setText(syncSetting->getMegaFolder().size()?syncSetting->getMegaFolder():QString::fromUtf8("---"));
         localFolder->setToolTip(syncSetting->getLocalFolder());
         ui->tSyncs->setItem(i, 0, localFolder);
         megaFolder->setToolTip(syncSetting->getMegaFolder());
         ui->tSyncs->setItem(i, 1, megaFolder);
         syncNames.append(syncSetting->name());
         QCheckBox *c = new QCheckBox();
-        c->setChecked(syncSetting->isEnabled()); //TODO: review this once distinction between enabled/disabled vs temporary error
+        c->setChecked(syncSetting->isEnabled()); //note: this refers to enable/disabled by the user. It can be temporary disabled or even failed. This should e shown in the UI
         c->setToolTip(tr("Enable / disable"));
+
+
+#ifdef SYNC_ADVANCED_TEST_MODE
+
+        if (syncSetting->isEnabled() && !syncSetting->isActive())//TODO: delete ?
+        {
+            c->setCheckState(Qt::PartiallyChecked);
+        }
+
+        if (syncSetting->isActive())
+        {
+            localFolder->setTextColor(QColor::fromRgb(0, 255,0));
+        }
+        else
+        {
+            localFolder->setTextColor(QColor::fromRgb(255, 0,0));
+        }
+
+        if (syncSetting->isTemporaryDisabled())
+        {
+            megaFolder->setTextColor(QColor::fromRgb(125, 125, 125));
+        }
+
+        if (syncSetting->getState() == MegaSync::SYNC_FAILED)
+        {
+            megaFolder->setTextColor(QColor::fromRgb(255, 0, 0));
+        }
+#endif
+
         connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
         ui->tSyncs->setCellWidget(i, 2, c);
         QLabel *lTag = new QLabel();

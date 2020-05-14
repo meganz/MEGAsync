@@ -470,7 +470,7 @@ protected:
     void loadExcludedSyncNames();
 
     // sync related:
-    void readFolders();
+    void readFolders(); //read sync stored configuration
 
     void storeSessionInGeneral(QString session);
     QString getSessionInGeneral();
@@ -479,7 +479,10 @@ protected:
 
     // sync configuration from old syncs
     QList<SyncData> oldSyncs;
-    // loaded syncs when loggedin/entered user
+
+    // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
+    // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
+    // These are only used for retrieving values or removing at uninstall
     QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
 
     QStringList excludedSyncNames;

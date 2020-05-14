@@ -39,18 +39,9 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
         return;
     }
 
-    std::unique_ptr<MegaNode> node(api->getNodeByHandle(syncSetting->getMegaHandle())); //TODO: threadify this
-    if (!node)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid sync %1 to %2")
-                     .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
-        if (progress) progress->setFailed(MegaError::API_ENOENT);
-        return;
-    }
-
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync").toUtf8().constData());
 
-    api->removeSync(node.get(),
+    api->removeSync(syncSetting->tag(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));

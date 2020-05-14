@@ -30,6 +30,7 @@ class Model : public QObject
 
 signals:
     void syncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
+    void syncDisabled(std::shared_ptr<SyncSetting> syncSettings, bool newSync);
 
 private:
     static Model *model;
@@ -50,8 +51,7 @@ protected:
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
 
-    // loaded syncs at startup //TODO: extend docs on all these
-    QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+
     ///////////// END OF SYNCS ////////////////////
 
     void onSyncStateChanged(std::shared_ptr<mega::MegaSync> sync);
@@ -62,7 +62,7 @@ public:
 
     ///////////////// SYNCS ///////////////////////
     // TODO: doc all these
-    void updateSyncSettings(mega::MegaSync *sync, const char *remotePath = nullptr);
+    std::shared_ptr<SyncSetting> updateSyncSettings(mega::MegaSync *sync, bool addingNew = false, const char *remotePath = nullptr);
     void pickInfoFromOldSync(const SyncData &osd, int tag);
     void removeSyncedFolder(int num);
     void removeSyncedFolderByTag(int tag);

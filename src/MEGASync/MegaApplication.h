@@ -288,6 +288,8 @@ private slots:
     void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
+    void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
+    void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, bool newSync = false);
 
 protected:
     bool checkOverquotaBandwidth();

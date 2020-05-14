@@ -20,7 +20,8 @@ private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
     int mTag = 0;
     QString mName;
-    QString mMegaFolder; //TODO: this might be persisted? when to update it?
+    QString mMegaFolder;
+    bool mEnabled = false; //we need to hold this, for transitioning from old sync data, instead of simply forwarding to mSync->isEnabled
 
 public:
     SyncSetting();
@@ -38,13 +39,17 @@ public:
     QString name() const;
     void setName(const QString &name);
 
+    void setEnabled(bool value);
+
     void setSync(mega::MegaSync *sync);
 
     QString getLocalFolder() const;
     long long getLocalFingerprint() const;
     QString getMegaFolder() const;
     long long getMegaHandle() const;
-    bool isEnabled() const;
+    bool isEnabled() const; //enabled by user
+    bool isActive() const; //not disabled by user nor failed (nor being removed)
+    int getState() const;
     bool isTemporaryDisabled() const;
     int getError() const;
 
@@ -70,8 +75,3 @@ struct SyncData
     int mPos;
     QString mSyncID;
 };
-
-QDataStream& operator<<(QDataStream& out, const SyncSetting& v);
-
-QDataStream& operator>>(QDataStream& in, SyncSetting& v);
-

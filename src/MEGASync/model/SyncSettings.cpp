@@ -16,7 +16,7 @@ SyncSetting::~SyncSetting()
 }
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
-    mSync(a.getSync()->copy()), mTag(a.tag()), mName(a.name()), mMegaFolder(a.getMegaFolder())
+    mSync(a.getSync()->copy()), mTag(a.tag()), mName(a.name()), mMegaFolder(a.getMegaFolder()), mEnabled(a.isEnabled())
 {
 }
 
@@ -26,6 +26,7 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mTag = a.tag();
     mName = a.name();
     mMegaFolder = a.getMegaFolder();
+    mEnabled = a.isEnabled();
     return *this;
 }
 
@@ -38,6 +39,7 @@ SyncSetting::SyncSetting(MegaSync *sync, const char *remotePath)
 {
     setSync(sync);
     setMegaFolder(remotePath);
+    setEnabled(sync->isEnabled());
 }
 
 QString SyncSetting::name() const
@@ -48,6 +50,11 @@ QString SyncSetting::name() const
 void SyncSetting::setName(const QString &name)
 {
     mName = name;
+}
+
+void SyncSetting::setEnabled(bool value)
+{
+    mEnabled = value;
 }
 
 MegaSync * SyncSetting::getSync() const
@@ -61,6 +68,7 @@ SyncSetting::SyncSetting(QString initializer)
     int i = 0;
     if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
     if (i<parts.size()) { mName = parts.at(i++); }
+    if (i<parts.size()) { mMegaFolder = parts.at(i++); }
 
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
@@ -70,6 +78,7 @@ QString SyncSetting::toString()
     QStringList toret;
     toret.append(QString::number(mTag));
     toret.append(mName);
+    toret.append(mMegaFolder);
 
     return toret.join(QString::fromUtf8("0x1E"));
 }
@@ -86,6 +95,7 @@ void SyncSetting::setSync(MegaSync *sync)
 
         assert(mTag == 0 || mTag == sync->getTag());
         mTag = sync->getTag();
+        mEnabled = sync->isEnabled();
     }
     else
     {
@@ -106,7 +116,6 @@ long long SyncSetting::getLocalFingerprint()  const
 
 QString SyncSetting::getMegaFolder()  const
 {
-    //TODO: use remote path (stored somewhere, probably within SyncConfig)
     return mMegaFolder;
 }
 
@@ -117,7 +126,17 @@ long long SyncSetting::getMegaHandle()  const
 
 bool SyncSetting::isEnabled()  const
 {
-    return mSync->isEnabled();
+    return mEnabled;
+}
+
+bool SyncSetting::isActive()  const
+{
+    return mSync->isActive();
+}
+
+int SyncSetting::getState() const
+{
+    return mSync->getState();
 }
 
 bool SyncSetting::isTemporaryDisabled()  const
@@ -144,12 +163,3 @@ void SyncSetting::setTag(int tag)
 {
     mTag = tag;
 }
-
-
-
-
-
-
-
-
-

@@ -2214,6 +2214,7 @@ void Preferences::removeAllFolders()
     settings->beginGroup(syncsGroupByTagKey);
     settings->remove(QString::fromAscii("")); //remove group and all its settings
     settings->endGroup();
+    settings->sync();
 }
 
 QStringList Preferences::getExcludedSyncNames()
@@ -3058,6 +3059,8 @@ void Preferences::readFolders()
 {
     mutex.lock();
     assert(logged());
+
+    loadedSyncsMap.clear();
 
     settings->beginGroup(syncsGroupByTagKey);
     int numSyncs = settings->numChildGroups();
