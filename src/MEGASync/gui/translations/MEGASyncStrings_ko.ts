@@ -2760,6 +2760,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync는 계속 작동할 것이지만, Windows Vista와 이전 운영체제에 대한 업데이트는 더 이상 지원되지 않을 것입니다.</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">전송중</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4986,6 +4991,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">동기화중</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">전송중</translation>
     </message>
 </context>
 <context>

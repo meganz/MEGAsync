@@ -2760,6 +2760,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync seguirá funcionando, sin embargo las actualizaciones pronto dejarán de ser compatibles con la versión de Windows Vista y sistemas operativos anteriores.</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">Transfiriendo</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3541,14 +3546,14 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- Nuevos mensajes de alerta personalizados.
-- Eliminados logs retroactivos al cerrar sesión.
-- Corregidos ciertos problemas que deshabilitaban la extensión del Finder.
-- Soporte para la verificación por correo electrónico para cuentas bloqueadas.
-- Soporte para la verificación por SMS para cuentas bloqueadas.
-- Suporte para el programa de recomendaciones.
-- Incluida la opción de enviar logs desde el diálogo de reporte de errores.
-- Otros arreglos de interfaz de usuario y ajustes.
-- Mejoras de rendimiento.</translation>
+ - Eliminados logs retroactivos al cerrar sesión.
+ - Corregidos ciertos problemas que deshabilitaban la extensión del Finder.
+ - Soporte para la verificación por correo electrónico para cuentas bloqueadas.
+ - Soporte para la verificación por SMS para cuentas bloqueadas.
+ - Suporte para el programa de recomendaciones.
+ - Incluida la opción de enviar logs desde el diálogo de reporte de errores.
+ - Otros arreglos de interfaz de usuario y ajustes.
+ - Mejoras de rendimiento.</translation>
     </message>
 </context>
 <context>
@@ -4986,6 +4991,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">Sincronizando</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">Transfiriendo</translation>
     </message>
 </context>
 <context>
