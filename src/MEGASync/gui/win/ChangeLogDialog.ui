@@ -273,26 +273,20 @@ border-bottom: 1px solid #EFEFEC;
    </item>
    <item>
     <widget class="QWidget" name="wLinks" native="true">
-     <layout class="QFormLayout" name="formLayout">
-      <property name="horizontalSpacing">
-       <number>0</number>
-      </property>
-      <property name="verticalSpacing">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
        <number>0</number>
       </property>
       <property name="leftMargin">
        <number>17</number>
       </property>
-      <property name="topMargin">
-       <number>12</number>
-      </property>
       <property name="rightMargin">
        <number>17</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
-      <item row="0" column="0">
+      <item>
        <widget class="QWidget" name="wTermsPolicy" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -302,7 +296,7 @@ border-bottom: 1px solid #EFEFEC;
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <property name="spacing">
-          <number>2</number>
+          <number>-1</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -319,9 +313,18 @@ border-bottom: 1px solid #EFEFEC;
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QPushButton" name="bTerms">
-             <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+            <widget class="ClickableLabel" name="bTerms">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>135</width>
+               <height>0</height>
+              </size>
              </property>
              <property name="layoutDirection">
               <enum>Qt::LeftToRight</enum>
@@ -332,6 +335,9 @@ border-bottom: 1px solid #EFEFEC;
              <property name="text">
               <string>Terms of Service</string>
              </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -341,7 +347,7 @@ border-bottom: 1px solid #EFEFEC;
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>0</width>
                <height>20</height>
               </size>
              </property>
@@ -352,15 +358,27 @@ border-bottom: 1px solid #EFEFEC;
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
-            <widget class="QPushButton" name="bPolicy">
-             <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+            <widget class="ClickableLabel" name="bPolicy">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>135</width>
+               <height>0</height>
+              </size>
              </property>
              <property name="styleSheet">
               <string notr="true"/>
              </property>
              <property name="text">
               <string>Privacy Policy</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -371,7 +389,7 @@ border-bottom: 1px solid #EFEFEC;
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>0</width>
                <height>20</height>
               </size>
              </property>
@@ -382,7 +400,7 @@ border-bottom: 1px solid #EFEFEC;
         </layout>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item>
        <widget class="QWidget" name="wAck" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -404,7 +422,7 @@ border-bottom: 1px solid #EFEFEC;
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <property name="spacing">
-          <number>2</number>
+          <number>-1</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -421,12 +439,24 @@ border-bottom: 1px solid #EFEFEC;
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_8">
            <item>
-            <widget class="QPushButton" name="bAck">
-             <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+            <widget class="ClickableLabel" name="bAck">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>135</width>
+               <height>0</height>
+              </size>
              </property>
              <property name="text">
               <string>Credits</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -437,7 +467,7 @@ border-bottom: 1px solid #EFEFEC;
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>0</width>
                <height>20</height>
               </size>
              </property>
@@ -448,12 +478,24 @@ border-bottom: 1px solid #EFEFEC;
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_7">
            <item>
-            <widget class="QPushButton" name="bGDPR">
-             <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+            <widget class="ClickableLabel" name="bGDPR">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>135</width>
+               <height>0</height>
+              </size>
              </property>
              <property name="text">
               <string>Data Protection Regulation</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -464,7 +506,7 @@ border-bottom: 1px solid #EFEFEC;
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>0</width>
                <height>20</height>
               </size>
              </property>
@@ -595,6 +637,13 @@ border-bottom: 1px solid #EFEFEC;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">Utilities.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>bMEGAlogo</tabstop>
   <tabstop>lVersion</tabstop>
