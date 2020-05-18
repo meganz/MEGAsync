@@ -743,7 +743,84 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QPlatformTheme", "&Yes");
     QT_TRANSLATE_NOOP("QPlatformTheme", "&No");
     QT_TRANSLATE_NOOP("QPlatformTheme", "OK");
-    QT_TRANSLATE_NOOP("QPlatformTheme", "Cancel"):
+    QT_TRANSLATE_NOOP("QPlatformTheme", "Cancel");
+
+    QT_TRANSLATE_NOOP("QFileDialog", "Look in:");
+    QT_TRANSLATE_NOOP("QFileDialog", "Back");
+    QT_TRANSLATE_NOOP("QFileDialog", "Go back");
+    QT_TRANSLATE_NOOP("QFileDialog", "Alt+Left");
+    QT_TRANSLATE_NOOP("QFileDialog", "Forward");
+    QT_TRANSLATE_NOOP("QFileDialog", "Go forward");
+    QT_TRANSLATE_NOOP("QFileDialog", "Alt+Right");
+    QT_TRANSLATE_NOOP("QFileDialog", "Parent Directory");
+    QT_TRANSLATE_NOOP("QFileDialog", "Go to the parent directory");
+    QT_TRANSLATE_NOOP("QFileDialog", "Alt+Up");
+    QT_TRANSLATE_NOOP("QFileDialog", "Create New Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "Create a New Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "List View");
+    QT_TRANSLATE_NOOP("QFileDialog", "Change to list view mode");
+    QT_TRANSLATE_NOOP("QFileDialog", "Detail View");
+    QT_TRANSLATE_NOOP("QFileDialog", "Change to detail view mode");
+    QT_TRANSLATE_NOOP("QFileDialog", "Sidebar");
+    QT_TRANSLATE_NOOP("QFileDialog", "List of places and bookmarks");
+    QT_TRANSLATE_NOOP("QFileDialog", "Files");
+    QT_TRANSLATE_NOOP("QFileDialog", "Files of type:");
+    QT_TRANSLATE_NOOP("QFileDialog", "Find Directory");
+    QT_TRANSLATE_NOOP("QFileDialog", "Open");
+    QT_TRANSLATE_NOOP("QFileDialog", "Save As");
+    QT_TRANSLATE_NOOP("QFileDialog", "Directory:");
+    QT_TRANSLATE_NOOP("QFileDialog", "File &amp;name:");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Open");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Choose");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Save");
+    QT_TRANSLATE_NOOP("QFileDialog", "All Files (*)");
+    QT_TRANSLATE_NOOP("QFileDialog", "Show ");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Rename");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Delete");
+    QT_TRANSLATE_NOOP("QFileDialog", "Show &amp;hidden files");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;New Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "All files (*)");
+    QT_TRANSLATE_NOOP("QFileDialog", "Directories");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1
+Please verify the correct directory name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.
+Do you want to replace it?");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1
+Please verify the correct file name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "New Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "Delete");
+    QT_TRANSLATE_NOOP("QFileDialog", "&apos;%1&apos; is write protected.
+Do you want to delete it anyway?");
+    QT_TRANSLATE_NOOP("QFileDialog", "Are you sure you want to delete &apos;%1&apos;?");
+    QT_TRANSLATE_NOOP("QFileDialog", "Could not delete directory.");
+    QT_TRANSLATE_NOOP("QFileDialog", "Recent Places");
+    QT_TRANSLATE_NOOP("QFileDialog", "Remove");
+    QT_TRANSLATE_NOOP("QFileDialog", "My Computer");
+    QT_TRANSLATE_NOOP("QFileDialog", "Drive");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 File");
+    QT_TRANSLATE_NOOP("QFileDialog", "File");
+    QT_TRANSLATE_NOOP("QFileDialog", "File Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "Alias");
+    QT_TRANSLATE_NOOP("QFileDialog", "Shortcut");
+    QT_TRANSLATE_NOOP("QFileDialog", "Unknown");
+
+    QT_TRANSLATE_NOOP("QFileSystemModel", "%1 TB");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "%1 GB");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "%1 MB");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "%1 KB");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "%1 bytes");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "Invalid filename");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "Name");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "Size");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "Kind");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "Type");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "Date Modified");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "My Computer");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "Computer");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "%1 byte(s)");
+
     QT_TRANSLATE_NOOP("Installer", "Choose Users");
     QT_TRANSLATE_NOOP("Installer", "Choose for which users you want to install $(^NameDA).");
     QT_TRANSLATE_NOOP("Installer", "Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)");
