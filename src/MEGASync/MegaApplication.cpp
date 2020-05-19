@@ -5372,13 +5372,21 @@ void MegaApplication::updateTrayIconMenu()
 {
     if (trayIcon)
     {
+#if defined(Q_OS_MACX)
+        if (infoDialog && !amIOverTemporalQuotaBandwidth())
+        {
+            trayIcon->setContextMenu(&emptyMenu);
+        }
+        else
+        {
+            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
+        }
+#else
         if (preferences && preferences->logged() && getRootNode()
                 && !amIOverTemporalQuotaBandwidth() && !blockState)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
             trayIcon->setContextMenu(windowsMenu?windowsMenu.get():&emptyMenu);
-#elif defined(Q_OS_MACX)
-            trayIcon->setContextMenu(&emptyMenu);
 #else
             trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
 #endif
@@ -5387,6 +5395,8 @@ void MegaApplication::updateTrayIconMenu()
         {
             trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
         }
+    }
+#endif
     }
 }
 
