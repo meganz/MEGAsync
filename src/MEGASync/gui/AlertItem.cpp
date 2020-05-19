@@ -380,6 +380,10 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                         notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
                                 .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
                     }
+                    else
+                    {
+                        notificationContent = tr("Your publicly shared has been taken down");
+                    }
 
                     delete node;
                 }
@@ -403,6 +407,10 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                     {
                         notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
                                 .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+                    else
+                    {
+                        notificationContent = tr("Your taken down has been reinstated");
                     }
 
                     delete node;
