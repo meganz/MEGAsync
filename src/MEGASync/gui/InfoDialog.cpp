@@ -505,23 +505,27 @@ void InfoDialog::updateTransfersCount()
     int currentDownload = totalDownloads - remainingDownloads + 1;
     int currentUpload = totalUploads - remainingUploads + 1;
 
-    if (remainingDownloads <= 0)
+    if (remainingDownloads <= 0 && !remainingDownloadsTimerRunning)
     {
+        remainingDownloadsTimerRunning = true;
         QTimer::singleShot(5000, this, [this] () {
             if (remainingDownloads <= 0)
             {
                 ui->bTransferManager->setCompletedDownloads(0);
                 ui->bTransferManager->setTotalDownloads(0);
+                remainingDownloadsTimerRunning = false;
             }
         });
     }
-    if (remainingUploads <= 0)
+    if (remainingUploads <= 0 && !remainingUploadsTimerRunning)
     {
+        remainingUploadsTimerRunning = true;
         QTimer::singleShot(5000, this, [this] () {
             if (remainingUploads <= 0)
             {
                 ui->bTransferManager->setCompletedUploads(0);
                 ui->bTransferManager->setTotalUploads(0);
+                remainingUploadsTimerRunning = false;
             }
         });
     }

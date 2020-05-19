@@ -40,7 +40,7 @@ set (USE_FFMPEG 1 CACHE STRING "")
 set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1 CACHE STRING "")
-
+set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
