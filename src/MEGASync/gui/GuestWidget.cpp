@@ -32,6 +32,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     }
     ui->lEmail->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
     ui->lPassword->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
+    ui->leCode->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
 
     reset_UI_props();
 
@@ -46,6 +47,11 @@ GuestWidget::GuestWidget(QWidget *parent) :
 
     ui->sPages->setCurrentWidget(ui->pLogin);
     state = GuestWidgetState::LOGIN;
+
+    ui->lError->setText(ui->lError->text().toUpper());
+    ui->lError->hide();
+    connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLogin2FaHelp_clicked()));
+    connect(ui->leCode, SIGNAL(textChanged(QString)), this, SLOT(login2FaInputCodeChanged()));
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(fetchNodesAfterBlock()), this, SLOT(fetchNodesAfterBlockCallbak()));
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(setupWizardCreated()), this, SLOT(connectToSetupWizard()));
@@ -148,25 +154,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
-                    QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
-                    int result = verification->exec();
-                    if (!dialog || !verification || result != QDialog::Accepted)
-                    {
-                        if (dialog)
-                        {
-                            megaApi->localLogout();
-                            page_login();
-                            loggingStarted = false;
-                        }
-                        delete verification;
-                        return;
-                    }
-
-                    QString pin = verification->pinCode();
-                    delete verification;
-
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
+                    page_login2FA();
                     return;
                 }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
@@ -187,26 +175,8 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
-                    QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
-                    verification->invalidCode(true);
-                    int result = verification->exec();
-                    if (!dialog || !verification || result != QDialog::Accepted)
-                    {
-                        if (dialog)
-                        {
-                            megaApi->localLogout();
-                            page_login();
-                            loggingStarted = false;
-                        }
-                        delete verification;
-                        return;
-                    }
-
-                    QString pin = verification->pinCode();
-                    delete verification;
-
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
+                    ui->lError->show();
+                    page_login2FA();
                     return;
                 }
                 else if (error->getErrorCode() != MegaError::API_ESSL)
@@ -356,6 +326,11 @@ void GuestWidget::resetPageAfterBlock()
         page_settingUp();
         break;
     }
+    case GuestWidgetState::LOGIN2FA:
+    {
+        page_login2FA();
+        break;
+    }
     default:
         assert(false && "Unexpected state to reset Guest Widget to");
         break;
@@ -388,8 +363,8 @@ void GuestWidget::setBlockState(int lockType)
 
 void GuestWidget::on_bLogin_clicked()
 {
-    QString email = ui->lEmail->text().toLower().trimmed();
-    QString password = ui->lPassword->text();
+    email = ui->lEmail->text().toLower().trimmed();
+    password = ui->lPassword->text();
 
     if (!email.length())
     {
@@ -641,6 +616,24 @@ void GuestWidget::page_lockedSMSAccount()
     ui->sPages->setCurrentWidget(ui->pVerifySMSAccount);
 }
 
+void GuestWidget::page_login2FA()
+{
+    if (ui->sPages->currentWidget() == ui->pLogin2FA)
+    {
+        return;
+    }
+
+
+    ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
+                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style='color:#666666; text-decoration:none; font-size:11px; font-family: \"Lato\"'>"))
+                               .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+
+    ui->sPages->setCurrentWidget(ui->pLogin2FA);
+    ui->leCode->setFocus();
+    ui->bLogin2FaNext->setDefault(true);
+    state = GuestWidgetState::LOGIN2FA;
+}
+
 void GuestWidget::reset_UI_props()
 {
     ui->lEmailSent->setVisible(false);
@@ -654,4 +647,37 @@ void GuestWidget::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
+}
+
+void GuestWidget::on_bLogin2FaNext_clicked()
+{
+    QRegExp re(QString::fromUtf8("\\d\\d\\d\\d\\d\\d"));
+    const auto pin{ui->leCode->text().trimmed()};
+    if (pin.isEmpty() || !re.exactMatch(pin))
+    {
+        ui->lError->show();
+    }
+    else
+    {
+        const auto pin{ui->leCode->text().trimmed().toUtf8().constData()};
+        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8(), pin);
+    }
+}
+
+void GuestWidget::on_bLoging2FaCancel_clicked()
+{
+    megaApi->localLogout();
+    page_login();
+    loggingStarted = false;
+}
+
+void GuestWidget::login2FaInputCodeChanged()
+{
+    ui->lError->hide();
+}
+
+void GuestWidget::on_bLogin2FaHelp_clicked()
+{
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
