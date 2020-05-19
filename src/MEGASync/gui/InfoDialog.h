@@ -177,6 +177,8 @@ private:
 
     int activeDownloadState, activeUploadState;
     int remainingUploads, remainingDownloads;
+    bool remainingUploadsTimerRunning = false;
+    bool remainingDownloadsTimerRunning = false;
     int totalUploads, totalDownloads;
     long long leftUploadBytes, completedUploadBytes;
     long long leftDownloadBytes, completedDownloadBytes;
