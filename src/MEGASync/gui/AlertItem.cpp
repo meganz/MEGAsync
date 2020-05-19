@@ -370,12 +370,18 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
                 if (node)
                 {
-                    notificationContent = tr("Your publicly shared [%1] ([%2]) has been taken down")
-                            .replace(QString::fromUtf8("[%1]"), node->getType() == MegaNode::TYPE_FILE ? tr("file")
-                                       : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
-                                       : QString::fromUtf8(""))
-                            .replace(QString::fromUtf8("[%2]"), formatRichString(QString::fromUtf8(node->getName())));
-                      delete node;
+                    if (node->getType() == MegaNode::TYPE_FILE)
+                    {
+                        notificationContent = tr("Your publicly shared file ([A]) has been taken down")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+                    else if (node->getType() == MegaNode::TYPE_FOLDER)
+                    {
+                        notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+
+                    delete node;
                 }
                 else
                 {
@@ -388,11 +394,17 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
                 if (node)
                 {
-                    notificationContent = tr("Your publicly shared [A] ([B]) has been reinstated")
-                            .replace(QString::fromUtf8("[A]"), node->getType() == MegaNode::TYPE_FILE ? tr("file")
-                                       : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
-                                       : QString::fromUtf8(""))
-                            .replace(QString::fromUtf8("[B]"), formatRichString(QString::fromUtf8(node->getName())));
+                    if (node->getType() == MegaNode::TYPE_FILE)
+                    {
+                        notificationContent = tr("Your publicly shared file ([A]) has been reinstated")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+                    else if (node->getType() == MegaNode::TYPE_FOLDER)
+                    {
+                        notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+
                     delete node;
                 }
                 else
