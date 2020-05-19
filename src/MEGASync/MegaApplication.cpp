@@ -5395,7 +5395,6 @@ void MegaApplication::updateTrayIconMenu()
         {
             trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
         }
-    }
 #endif
     }
 }
