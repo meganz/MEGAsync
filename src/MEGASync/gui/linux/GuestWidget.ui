@@ -2120,14 +2120,14 @@ image: none;</string>
               <widget class="QPushButton" name="bShield">
                <property name="minimumSize">
                 <size>
-                 <width>48</width>
-                 <height>48</height>
+                 <width>60</width>
+                 <height>60</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>48</width>
-                 <height>48</height>
+                 <width>60</width>
+                 <height>60</height>
                 </size>
                </property>
                <property name="focusPolicy">
@@ -2138,13 +2138,13 @@ image: none;</string>
                </property>
                <property name="icon">
                 <iconset>
-                 <normalon>:/images/shield.png</normalon>
+                 <normalon>:/images/Shield_big.png</normalon>
                 </iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>48</width>
-                 <height>48</height>
+                 <width>60</width>
+                 <height>60</height>
                 </size>
                </property>
               </widget>
@@ -2164,6 +2164,19 @@ image: none;</string>
              </item>
             </layout>
            </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <widget class="QWidget" name="wDesc" native="true">
@@ -2198,6 +2211,19 @@ image: none;</string>
              </item>
             </layout>
            </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <widget class="QWidget" name="w2FACode" native="true">
