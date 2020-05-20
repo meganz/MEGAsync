@@ -130,14 +130,14 @@ background-color:  rgba(0, 0, 0, 10%);
        <widget class="QPushButton" name="bShield">
         <property name="minimumSize">
          <size>
-          <width>48</width>
-          <height>48</height>
+          <width>60</width>
+          <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>48</width>
-          <height>48</height>
+          <width>60</width>
+          <height>60</height>
          </size>
         </property>
         <property name="focusPolicy">
@@ -148,13 +148,13 @@ background-color:  rgba(0, 0, 0, 10%);
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/images/shield.png</normalon>
+          <normalon>:/images/Shield_big.png</normalon>
          </iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>48</width>
-          <height>48</height>
+          <width>60</width>
+          <height>60</height>
          </size>
         </property>
        </widget>
@@ -538,7 +538,7 @@ background-color:  rgba(0, 0, 0, 10%);
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -642,7 +642,7 @@ background-color:  rgba(0, 0, 0, 10%);
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
