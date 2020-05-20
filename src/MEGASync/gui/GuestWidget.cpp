@@ -273,6 +273,12 @@ void GuestWidget::resetFocus()
     }
 
     ui->bLogin->setDefault(true);
+
+    if(state == GuestWidgetState::LOGIN2FA)
+    {
+        ui->leCode->setFocus();
+        ui->bLogin2FaNext->setDefault(true);
+    }
 }
 
 void GuestWidget::disableListener()
@@ -629,9 +635,8 @@ void GuestWidget::page_login2FA()
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 
     ui->sPages->setCurrentWidget(ui->pLogin2FA);
-    ui->leCode->setFocus();
-    ui->bLogin2FaNext->setDefault(true);
     state = GuestWidgetState::LOGIN2FA;
+    resetFocus();
 }
 
 void GuestWidget::reset_UI_props()
