@@ -16,7 +16,8 @@ SyncSetting::~SyncSetting()
 }
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
-    mSync(a.getSync()->copy()), mTag(a.tag()), mName(a.name()), mMegaFolder(a.getMegaFolder()), mEnabled(a.isEnabled())
+    mSync(a.getSync()->copy()), mTag(a.tag()), mName(a.name()),
+    mMegaFolder(a.getMegaFolder()), mSyncID(a.getSyncID()), mEnabled(a.isEnabled())
 {
 }
 
@@ -25,9 +26,20 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mSync.reset(a.getSync()->copy());
     mTag = a.tag();
     mName = a.name();
+    mSyncID = a.getSyncID();
     mMegaFolder = a.getMegaFolder();
     mEnabled = a.isEnabled();
     return *this;
+}
+
+QString SyncSetting::getSyncID() const
+{
+    return mSyncID;
+}
+
+void SyncSetting::setSyncID(const QString &syncID)
+{
+    mSyncID = syncID;
 }
 
 SyncSetting::SyncSetting()
@@ -69,6 +81,7 @@ SyncSetting::SyncSetting(QString initializer)
     if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
     if (i<parts.size()) { mName = parts.at(i++); }
     if (i<parts.size()) { mMegaFolder = parts.at(i++); }
+    if (i<parts.size()) { mSyncID = parts.at(i++); }
 
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
@@ -79,6 +92,7 @@ QString SyncSetting::toString()
     toret.append(QString::number(mTag));
     toret.append(mName);
     toret.append(mMegaFolder);
+    toret.append(mSyncID);
 
     return toret.join(QString::fromUtf8("0x1E"));
 }
@@ -91,6 +105,7 @@ void SyncSetting::setSync(MegaSync *sync)
         {
             mName = QFileInfo(QString::fromUtf8(sync->getLocalFolder())).fileName();
         }
+
         mSync.reset(sync->copy());
 
         assert(mTag == 0 || mTag == sync->getTag());

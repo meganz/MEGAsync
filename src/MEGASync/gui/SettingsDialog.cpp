@@ -84,6 +84,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncDeleted(std::shared_ptr<SyncSetting>)));
 
     syncsChanged = false;
     excludedNamesChanged = false;
@@ -405,41 +407,49 @@ void SettingsDialog::fileVersioningStateChanged()
 
 void SettingsDialog::syncStateChanged(int state)
 {
-    if (state)
-    {
-        Platform::prepareForSync();
-        QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
-        for (int j = 0; j < ui->tSyncs->rowCount(); j++)
-        {
-            if (ui->tSyncs->cellWidget(j, 2) == c)
-            {
-                QString newLocalPath = ui->tSyncs->item(j, 0)->text();
-                QFileInfo fi(newLocalPath);
-                if (!fi.exists() || !fi.isDir())
-                {
-                    c->setCheckState(Qt::Unchecked);
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                       tr("This sync can't be enabled because the local folder doesn't exist"));
-                    return;
-                }
+    //TODO: Note for reviewer: if this code is enabled, it will disallow the option to "disable" a tristate checkbox
+    // we should rather handle error only when `saving` changes.
 
-                QString newMegaPath = ui->tSyncs->item(j, 1)->text();
-                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
-                if (!n)
-                {
-                    c->setCheckState(Qt::Unchecked);
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                       tr("This sync can't be enabled because the remote folder doesn't exist"));
-                    return;
-                }
-                delete n;
-                break;
-            }
-        }
-    }
+//    if (state)
+//    {
+//        Platform::prepareForSync();
+//        QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
+//        for (int j = 0; j < ui->tSyncs->rowCount(); j++)
+//        {
+//            if (ui->tSyncs->cellWidget(j, 2) == c)
+//            {
+//                QString newLocalPath = ui->tSyncs->item(j, 0)->text();
+//                QFileInfo fi(newLocalPath);
+//                if (!fi.exists() || !fi.isDir())
+//                {
+//                    c->setCheckState(Qt::Unchecked);
+//                    QMegaMessageBox::critical(nullptr, tr("Error"),
+//                       tr("This sync can't be enabled because the local folder doesn't exist"));
+//                    return;
+//                }
+
+//                QString newMegaPath = ui->tSyncs->item(j, 1)->text();
+//                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+//                if (!n)
+//                {
+//                    c->setCheckState(Qt::Unchecked);
+//                    QMegaMessageBox::critical(nullptr, tr("Error"),
+//                       tr("This sync can't be enabled because the remote folder doesn't exist"));
+//                    return;
+//                }
+//                delete n;
+//                break;
+//            }
+//        }
+//    }
 
     syncsChanged = true;
     stateChanged();
+}
+
+void SettingsDialog::onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting)
+{
+    QMegaMessageBox::critical(nullptr, tr("Error"), tr("Unexpected error disabling sync %1").arg(syncSetting->name()));
 }
 
 // errorCode referrs to the requestErrorCode.
@@ -483,9 +493,9 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
         break;
     }
 
-
     default:
     {
+        //TODO: Have a full sentence here
         QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
            tr(MegaSync::getMegaSyncErrorCode(errorCode))); //TODO: incluye local path and the like
         break;
@@ -518,6 +528,11 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 }
 
 void SettingsDialog::onSyncStateChanged(std::shared_ptr<SyncSetting>)
+{
+    loadSyncSettings();
+}
+
+void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 {
     loadSyncSettings();
 }
@@ -1436,17 +1451,22 @@ int SettingsDialog::saveSettings()
                     {
                         if (disabled && syncSetting->isEnabled()) //sync disabled
                         {
-//                            Platform::syncFolderRemoved(model->getLocalFolder(i),
-//                                                        model->getSyncName(i),
-//                                                        model->getSyncID(i));
-////                            preferences->setSyncState(i, enabled);
-//                            //TODO: ensure this is handled in onSyncDeleted!
-
                             ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
                                                                                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
                             saveSettingsProgress->addStep(disableSyncStep);
+
+                            connect(disableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
+                            {
+                                if (error->getErrorCode())
+                                {
+                                    QObject temporary;
+                                    QObject::connect(&temporary, &QObject::destroyed, this, [this, syncSetting](){
+                                        onDisableSyncFailed(syncSetting); //Note: this might get executed before onSyncStateChanged!
+                                    }, Qt::QueuedConnection);
+                                }
+                            }, Qt::DirectConnection); //Note, we need direct connection to use request & error
+
                             controller->disableSync(syncSetting, disableSyncStep);
-                            //TODO: ensure a failure is well processed
                         }
 #ifdef SYNC_ADVANCED_TEST_MODE
                         else if (enabled && !syncSetting->isActive()) //sync re-enabled!

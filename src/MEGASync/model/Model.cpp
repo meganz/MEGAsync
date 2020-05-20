@@ -28,23 +28,35 @@ Model::Model() : QObject(), mutex(QMutex::Recursive)
     preferences = Preferences::instance();
 }
 
-
 void Model::removeSyncedFolder(int num)
 {
-    mutex.lock();
+    QMutexLocker qm(&mutex);
+    auto cs = configuredSyncsMap[configuredSyncs.at(num)];
+    if (cs->isActive())
+    {
+        deactivateSync(cs);
+    }
+
     assert(preferences->logged());
-    preferences->removeSyncSetting(configuredSyncsMap[configuredSyncs.at(num)]);
+    preferences->removeSyncSetting(cs);
     configuredSyncsMap.remove(configuredSyncs.at(num));
     configuredSyncs.removeAt(num);
-    mutex.unlock();
+
+    emit syncRemoved(cs);
 }
 
 void Model::removeSyncedFolderByTag(int tag)
 {
-    mutex.lock();
+    QMutexLocker qm(&mutex);
+    auto cs = configuredSyncsMap[tag];
+
+    if (cs->isActive())
+    {
+        deactivateSync(cs);
+    }
     assert(preferences->logged());
 
-    preferences->removeSyncSetting(configuredSyncsMap[tag]);
+    preferences->removeSyncSetting(cs);
     configuredSyncsMap.remove(tag);
 
     auto it = configuredSyncs.begin();
@@ -60,7 +72,7 @@ void Model::removeSyncedFolderByTag(int tag)
         }
     }
 
-    mutex.unlock();
+    emit syncRemoved(cs);
 }
 
 void Model::removeAllFolders()
@@ -81,7 +93,37 @@ void Model::removeAllFolders()
     configuredSyncsMap.clear();
 }
 
-std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, bool addingNew, const char *remotePath)
+void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
+{
+    // set sync name if none.
+    if (syncSetting->name().isEmpty()) //TODO: find other points of setting name and review consistency
+    {
+        QFileInfo localFolderInfo(syncSetting->getLocalFolder());
+        QString syncName = localFolderInfo.fileName();
+        if (syncName.isEmpty())
+        {
+            syncName = QDir::toNativeSeparators(syncSetting->getLocalFolder());
+        }
+        syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+        syncSetting->setName(syncName);
+    }
+
+    assert( syncSetting->getLocalFolder() == QDir::toNativeSeparators(QFileInfo(syncSetting->getLocalFolder()).canonicalFilePath()) );
+
+    if (syncSetting->getSyncID().isEmpty())
+    {
+        syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
+    }
+
+    Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
+}
+
+void Model::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
+{
+    Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
+}
+
+std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState, const char *remotePath)
 {
     if (!sync)
     {
@@ -92,12 +134,16 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, bool addi
     assert(preferences->logged());
 
     std::shared_ptr<SyncSetting> cs;
-    bool wasEnabled = true; //TODO: review this, for failed syncs being added again as failed
+    bool wasEnabled = true;
+    bool wasActive = false;
+    bool wasInactive = false;
 
-    if (configuredSyncsMap.contains(sync->getTag())) //existing configuration (can have been picked from old sync config)
+    if (configuredSyncsMap.contains(sync->getTag())) //existing configuration (an update or a resume after picked from old sync config)
     {
         cs = configuredSyncsMap[sync->getTag()];
         wasEnabled = cs->isEnabled();
+        wasActive = cs->isActive();
+        wasInactive = !cs->isActive(); //beware: empty MEGAsync's are in INITIAL_SYNC: i.e: active! [problematic for picked configs]
         cs->setSync(sync);
 
         assert(remotePath || cs->getMegaFolder().size()); //updated syncs should always have a remote path
@@ -106,9 +152,9 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, bool addi
             cs->setMegaFolder(remotePath);
         }
     }
-    else
+    else //new configuration (new or resumed)
     {
-        assert(addingNew && "!addingnew and didn't find previously configured sync");
+        assert(addingState && "!addingState and didn't find previously configured sync");
 
         auto loaded = preferences->getLoadedSyncsMap();
         if (loaded.contains(sync->getTag())) //existing configuration from previous executions (we get the data that the sdk might not be providing from our cache)
@@ -129,11 +175,26 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, bool addi
         configuredSyncs.append(sync->getTag());
     }
 
+    if (addingState) //new or resumed
+    {
+        wasActive = (addingState == MegaSync::SyncAdded::FROM_CACHE && cs->isActive() )
+                || addingState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME;
+
+        wasInactive =  (addingState == MegaSync::SyncAdded::FROM_CACHE && !cs->isActive() )
+                || addingState == MegaSync::SyncAdded::NEW || addingState == MegaSync::SyncAdded::FROM_CACHE_REENABLED
+                || addingState == MegaSync::SyncAdded::REENABLED_FAILED;
+    }
+
     preferences->writeSyncSetting(cs);
 
-    if (!cs->isActive() && wasEnabled)
+    if (cs->isActive() && wasInactive)
     {
-        emit syncDisabled(cs, addingNew);
+        activateSync(cs);
+    }
+
+    if (!cs->isActive() && wasActive )
+    {
+        deactivateSync(cs);
     }
 
     emit syncStateChanged(cs);
@@ -152,6 +213,7 @@ void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
     }
     cs->setTag(tag);
     cs->setName(osd.mName);
+    cs->setSyncID(osd.mSyncID);
     cs->setEnabled(osd.mEnabled);
 
     configuredSyncs.append(tag);
@@ -189,7 +251,7 @@ QString Model::getSyncID(int num)
     {
         return QString();
     }
-    return QString::number(configuredSyncsMap[configuredSyncs.at(num)]->tag());
+    return configuredSyncsMap[configuredSyncs.at(num)]->getSyncID();
 }
 
 QString Model::getLocalFolder(int num)
@@ -317,3 +379,15 @@ std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
     QMutexLocker qm(&mutex);
     return configuredSyncsMap[configuredSyncs.at(num)];
 }
+
+
+std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(int tag)
+{
+    QMutexLocker qm(&mutex);
+    if (configuredSyncsMap.contains(tag))
+    {
+        return configuredSyncsMap[tag];
+    }
+    return nullptr;
+}
+

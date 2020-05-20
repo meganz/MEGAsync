@@ -52,8 +52,10 @@ public slots:
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
     void onSyncStateChanged(std::shared_ptr<SyncSetting>);
+    void onSyncDeleted(std::shared_ptr<SyncSetting>);
     void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
-    
+    void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
+
 private slots:
 
     void onSavingSettingsProgress(double progress);

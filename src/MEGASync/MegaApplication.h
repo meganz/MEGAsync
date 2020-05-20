@@ -134,7 +134,8 @@ public:
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
     virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
 
-    virtual void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync);
+    virtual void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState);
+    virtual void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync);
     virtual void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync);
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
@@ -289,6 +290,7 @@ private slots:
     void registerUserActivity();
     void PSAseen(int id);
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
+    void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
     void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, bool newSync = false);
 
 protected:

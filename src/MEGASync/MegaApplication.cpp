@@ -349,9 +349,7 @@ void setScaleFactors()
 
 void removeSyncData(const QString &localFolder, const QString & name, const QString &syncID)
 {
-    Platform::syncFolderRemoved(localFolder,
-                                name,
-                                syncID);
+    Platform::syncFolderRemoved(localFolder, name, syncID);
 
     #ifdef WIN32
         QString debrisPath = QDir::toNativeSeparators(localFolder +
@@ -409,7 +407,7 @@ int main(int argc, char *argv[])
                 auto loadedSyncs = preferences->getLoadedSyncsMap();
                 for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
                 {
-                    removeSyncData(it.value()->getLocalFolder(), it.value()->name(), QString::number(it.value()->tag()));
+                    removeSyncData(it.value()->getLocalFolder(), it.value()->name(), it.value()->getSyncID());
                 }
 
                 preferences->leaveUser();
@@ -1161,8 +1159,8 @@ void MegaApplication::initialize()
 
     connect(model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-    connect(model, SIGNAL(syncDisabled(std::shared_ptr<SyncSetting>, bool)),
-            this, SLOT(onSyncDisabled(std::shared_ptr<SyncSetting>, bool)));
+    connect(model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncDeleted(std::shared_ptr<SyncSetting>)));
 
     if (preferences->error())
     {
@@ -4699,6 +4697,11 @@ void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettin
     createAppMenus();
 }
 
+void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings)
+{
+    createAppMenus();
+}
+
 void MegaApplication::migrateSyncConfToSdk()
 {
     if (preferences->logged())
@@ -7852,6 +7855,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //            {
 //                QString localFolder = model->getLocalFolder(i);
 
+        //TODO: ensure this is handled (see fat errors)
 //        #ifdef WIN32
 //                string path, fsname;
 //                path.resize(MAX_PATH * sizeof(WCHAR));
@@ -8841,7 +8845,13 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
 
 void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, bool newSync)
 {
-    if (syncSetting->getState() == MegaSync::SYNC_FAILED) //resumed sync failure
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("onSyncDisabled for non existing sync").toUtf8().constData());
+        return;
+    }
+
+    if (syncSetting->getState() == MegaSync::SYNC_FAILED) //resumed sync failure //TODO: handle SYNC_DISABLED (temporary disabled)
     {
         switch(syncSetting->getError())
         {
@@ -8883,7 +8893,10 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
 
             if (megaApi->isLoggedIn()) //TODO: this was executed when ADD_SYNC returned API_EACCESS. Not sure why
             {
-                fetchNodes();
+                if (!mFetchingNodes) //The error might come when resuming syncs while fetching nodes
+                {
+                    fetchNodes();
+                }
             }
             break;
         case MegaSync::Error::LOCAL_FINGERPRINT_MISMATCH:
@@ -8905,7 +8918,17 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
     }
 }
 
-void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
+void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
+{
+    if (appfinished || !sync)
+    {
+        return;
+    }
+
+    onSyncDisabled(model->getSyncSettingByTag(sync->getTag()));
+}
+
+void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
 {
     if (appfinished)
     {
@@ -8916,7 +8939,12 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
     std::unique_ptr<MegaNode> node (api->getNodeByHandle(sync->getMegaHandle()) );
     std::unique_ptr< char[]> path (api->getNodePath(node.get()) ); //TODO: review api value!
 
-    auto syncSetting = model->updateSyncSettings(sync, true, path.get());
+    auto syncSetting = model->updateSyncSettings(sync, additionState, path.get());
+
+    if (additionState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME)
+    {
+        onSyncDisabled(syncSetting);
+    }
 
     ///////////////// TODO: review the older code: //////////////
 
@@ -9075,8 +9103,6 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync)
     {
         settingsDialog->loadSyncSettings();
     }
-
-
 
     onGlobalSyncStateChanged(api);
 }

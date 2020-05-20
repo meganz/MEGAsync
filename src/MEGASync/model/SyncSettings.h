@@ -21,6 +21,7 @@ private:
     int mTag = 0;
     QString mName;
     QString mMegaFolder;
+    QString mSyncID;
     bool mEnabled = false; //we need to hold this, for transitioning from old sync data, instead of simply forwarding to mSync->isEnabled
 
 public:
@@ -59,6 +60,8 @@ public:
 
     QString toString();
 
+    QString getSyncID() const;
+    void setSyncID(const QString &syncID);
 };
 
 Q_DECLARE_METATYPE(SyncSetting);

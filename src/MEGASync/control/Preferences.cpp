@@ -3087,7 +3087,8 @@ void Preferences::readFolders()
 
 
 SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, long long localfp, bool enabled, int pos, QString syncID)
-    : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mLocalfp(localfp), mEnabled(enabled), mPos(pos), mSyncID(syncID)
+    : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mLocalfp(localfp),
+      mEnabled(enabled), mPos(pos), mSyncID(syncID)
 {
 
 }
