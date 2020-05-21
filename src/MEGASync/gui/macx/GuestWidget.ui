@@ -46,7 +46,7 @@
 	border: none;
 }
 
-#lError
+#lError, #lLoginError
 {
     border: 1px solid rgba(218,49,53,0.5);
     border-radius: 2px;
@@ -99,6 +99,8 @@ QPushButton#bSettings:hover
 }
 #lLogin
 {
+  border-radius: 2px;
+  padding: 6px 12px 6px 12px;
   font-family: &quot;Lato&quot;;
   font-size: 16px;
   color: #333333;
@@ -391,30 +393,6 @@ image: none;</string>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lLogin">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background: transparent;
-image: none;
-padding-top: 50px;</string>
-            </property>
-            <property name="text">
-             <string>Login to MEGA</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QWidget" name="wFormContainer" native="true">
             <property name="styleSheet">
              <string notr="true">image: none;</string>
@@ -456,6 +434,85 @@ padding-top: 50px;</string>
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
+                <item>
+                 <widget class="QWidget" name="wLoginErrors" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>73</height>
+                   </size>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout">
+                   <item row="1" column="2">
+                    <spacer name="horizontalSpacer_23">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLabel" name="lLogin">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::NoFocus</enum>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">image: none;</string>
+                     </property>
+                     <property name="text">
+                      <string>Login to MEGA</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <spacer name="horizontalSpacer_22">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item row="0" column="1">
+                    <spacer name="verticalSpacer_8">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
                 <item>
                  <widget class="QWidget" name="widget" native="true">
                   <layout class="QVBoxLayout" name="verticalLayout_9">

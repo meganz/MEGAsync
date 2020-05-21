@@ -50,8 +50,11 @@ GuestWidget::GuestWidget(QWidget *parent) :
 
     ui->lError->setText(ui->lError->text().toUpper());
     ui->lError->hide();
+
     connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLogin2FaHelp_clicked()));
-    connect(ui->leCode, SIGNAL(textChanged(QString)), this, SLOT(login2FaInputCodeChanged()));
+    connect(ui->leCode, &QLineEdit::textChanged, [&](){ui->leCode->hide();});
+    connect(ui->lEmail, &QLineEdit::textChanged, this, &GuestWidget::resetLoginErrorMessage);
+    connect(ui->lPassword, &QLineEdit::textChanged, this, &GuestWidget::resetLoginErrorMessage);
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(fetchNodesAfterBlock()), this, SLOT(fetchNodesAfterBlockCallbak()));
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(setupWizardCreated()), this, SLOT(connectToSetupWizard()));
@@ -343,6 +346,22 @@ void GuestWidget::resetPageAfterBlock()
     }
 }
 
+void GuestWidget::showLoginError(const QString &errorMessage) const
+{
+    ui->lLogin->setObjectName(QStringLiteral("lLoginError"));
+    ui->lLogin->setText(errorMessage);
+    ui->lLogin->style()->unpolish(ui->lLogin);
+    ui->lLogin->style()->polish(ui->lLogin);
+}
+
+void GuestWidget::resetLoginErrorMessage() const
+{
+    ui->lLogin->setObjectName(QStringLiteral("lLogin"));
+    ui->lLogin->setText(QStringLiteral("Login to MEGA"));
+    ui->lLogin->style()->unpolish(ui->lLogin);
+    ui->lLogin->style()->polish(ui->lLogin);
+}
+
 void GuestWidget::setBlockState(int lockType)
 {
     switch(lockType)
@@ -374,19 +393,20 @@ void GuestWidget::on_bLogin_clicked()
 
     if (!email.length())
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+        showLoginError(tr("Please, enter your e-mail address"));
         return;
     }
 
     if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+        showLoginError(tr("Please, enter a valid e-mail address"));
         return;
     }
 
     if (!password.length())
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+        showLoginError(tr("Please, enter your password"));
+        ui->lPassword->setFocus();
         return;
     }
 
@@ -548,6 +568,7 @@ void GuestWidget::page_login()
     ui->sPages->setCurrentWidget(ui->pLogin);
 
     resetFocus();
+    resetLoginErrorMessage();
 
     state = GuestWidgetState::LOGIN;
 
@@ -674,11 +695,6 @@ void GuestWidget::on_bLoging2FaCancel_clicked()
     megaApi->localLogout();
     page_login();
     loggingStarted = false;
-}
-
-void GuestWidget::login2FaInputCodeChanged()
-{
-    ui->lError->hide();
 }
 
 void GuestWidget::on_bLogin2FaHelp_clicked()

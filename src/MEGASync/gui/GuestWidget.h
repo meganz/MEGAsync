@@ -74,7 +74,7 @@ private slots:
     void on_bLogin2FaNext_clicked();
     void on_bLoging2FaCancel_clicked();
     void on_bLogin2FaHelp_clicked();
-    void login2FaInputCodeChanged();
+    void resetLoginErrorMessage() const;
 
 private:
     Ui::GuestWidget *ui;
@@ -83,6 +83,7 @@ private:
 
     GuestWidgetState state = GuestWidgetState::NONE;
     void resetPageAfterBlock();
+    void showLoginError(const QString& errorMessage) const;
 
 
 protected:
