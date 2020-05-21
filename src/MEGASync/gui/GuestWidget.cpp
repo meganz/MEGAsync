@@ -15,7 +15,8 @@ using namespace mega;
 
 GuestWidget::GuestWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::GuestWidget)
+    ui(new Ui::GuestWidget),
+    incorrectCredentialsMessageEnabled{false}
 {
     ui->setupUi(this);
 
@@ -153,7 +154,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    QMegaMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
+                    incorrectCredentialsMessageEnabled = true;
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
@@ -355,7 +356,7 @@ void GuestWidget::showLoginError(const QString &errorMessage) const
     Utilities::animatePartialFadein(ui->lLogin, 300);
 }
 
-void GuestWidget::resetLoginErrorMessage() const
+void GuestWidget::resetLoginErrorMessage()
 {
     ui->lLogin->setObjectName(QStringLiteral("lLogin"));
     ui->lLogin->setText(QStringLiteral("Login to MEGA"));
@@ -569,10 +570,18 @@ void GuestWidget::page_login()
     ui->sPages->setCurrentWidget(ui->pLogin);
 
     resetFocus();
-    resetLoginErrorMessage();
+
+    if(incorrectCredentialsMessageEnabled)
+    {
+        incorrectCredentialsMessageEnabled = false;
+        showLoginError(tr("Incorrect email and/or password."));
+    }
+    else
+    {
+       resetLoginErrorMessage();
+    }
 
     state = GuestWidgetState::LOGIN;
-
     emit onPageLogin();
 }
 
