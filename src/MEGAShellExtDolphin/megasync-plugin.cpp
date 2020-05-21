@@ -4,7 +4,9 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QString>
+#if QT_VERSION >= 0x050000
 #include <QStandardPaths>
+#endif
 
 #ifndef WITH_KF5
 #include <kaction.h>
@@ -66,8 +68,13 @@ MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
     KAbstractFileItemActionPlugin(parent)
 {
     Q_UNUSED(args);
+#if QT_VERSION < 0x050000
+    sockPath = QDir::home().path();
+    sockPath.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/mega.socket");
+#else
     sockPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     sockPath.append(QDir::separator()).append("data/Mega Limited/MEGAsync/mega.socket");
+#endif
     sock.connectToServer(sockPath);
 }
 

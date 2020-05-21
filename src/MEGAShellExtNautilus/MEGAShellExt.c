@@ -1,4 +1,17 @@
+#ifdef __has_include                           // Check if __has_include is present
+#if __has_include(<nautilus-extension.h>)
 #include <nautilus-extension.h>
+#define __NAUTILUS_MAIN_HEADER_INCLUDED
+#endif
+#endif
+
+#ifndef __NAUTILUS_MAIN_HEADER_INCLUDED
+#include <libnautilus-extension/nautilus-extension-types.h>
+#include <libnautilus-extension/nautilus-file-info.h>
+#include <libnautilus-extension/nautilus-menu-provider.h>
+#include <libnautilus-extension/nautilus-info-provider.h>
+#endif
+
 #include "MEGAShellExt.h"
 #include "mega_ext_client.h"
 #include "mega_notify_client.h"

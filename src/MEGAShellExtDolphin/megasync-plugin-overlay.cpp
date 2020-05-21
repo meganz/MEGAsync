@@ -15,7 +15,9 @@
 #include <QDir>
 #include <QMetaEnum>
 #include <QtNetwork/QAbstractSocket>
+#if QT_VERSION >= 0x050000
 #include <QStandardPaths>
+#endif
 
 typedef enum {
     FILE_ERROR = 0,
@@ -137,12 +139,22 @@ public:
         connect(&sockExtServer, SIGNAL(error(QLocalSocket::LocalSocketError)),
                 this, SLOT(sockExtServer_error(QLocalSocket::LocalSocketError)));
 
+#if QT_VERSION < 0x050000
+        sockPathNofityServer = QDir::home().path();
+        sockPathNofityServer.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/notify.socket");
+#else
         sockPathNofityServer = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
         sockPathNofityServer.append(QDir::separator()).append("data/Mega Limited/MEGAsync/notify.socket");
+#endif
         sockNotifyServer.connectToServer(sockPathNofityServer);
 
+#if QT_VERSION < 0x050000
+        sockPathExtServer = QDir::home().path();
+        sockPathExtServer.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/mega.socket");
+#else
         sockPathExtServer = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
         sockPathExtServer.append(QDir::separator()).append("data/Mega Limited/MEGAsync/mega.socket");
+#endif
         sockExtServer.connectToServer(sockPathExtServer);
     }
 
