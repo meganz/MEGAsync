@@ -176,6 +176,7 @@ public:
     static void adjustToScreenFunc(QPoint position, QWidget *what);
 
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
+    static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
 
 private:

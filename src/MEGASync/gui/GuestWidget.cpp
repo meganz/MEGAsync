@@ -352,6 +352,7 @@ void GuestWidget::showLoginError(const QString &errorMessage) const
     ui->lLogin->setText(errorMessage);
     ui->lLogin->style()->unpolish(ui->lLogin);
     ui->lLogin->style()->polish(ui->lLogin);
+    Utilities::animatePartialFadein(ui->lLogin, 300);
 }
 
 void GuestWidget::resetLoginErrorMessage() const
