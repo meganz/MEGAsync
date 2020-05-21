@@ -53,7 +53,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->lError->hide();
 
     connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLogin2FaHelp_clicked()));
-    connect(ui->leCode, &QLineEdit::textChanged, [&](){ui->leCode->hide();});
+    connect(ui->leCode, &QLineEdit::textChanged, [&](){ui->lError->hide();});
     connect(ui->lEmail, &QLineEdit::textChanged, this, &GuestWidget::resetLoginErrorMessage);
     connect(ui->lPassword, &QLineEdit::textChanged, this, &GuestWidget::resetLoginErrorMessage);
 
@@ -565,7 +565,6 @@ void GuestWidget::page_login()
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
 
-    ui->lEmail->clear();
     ui->lPassword->clear();
     ui->sPages->setCurrentWidget(ui->pLogin);
 
