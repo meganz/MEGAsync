@@ -595,6 +595,9 @@
         <file>images/login_background.png</file>
         <file>images/login_background@2x.png</file>
         <file>images/login_background@3x.png</file>
+        <file>images/login_plain_background.png</file>
+        <file>images/login_plain_background@2x.png</file>
+        <file>images/login_plain_background@3x.png</file>
         <file>images/login_intermediate.png</file>
         <file>images/login_intermediate@2x.png</file>
         <file>images/login_intermediate@3x.png</file>

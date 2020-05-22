@@ -665,6 +665,7 @@ void GuestWidget::page_login2FA()
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 
     ui->sPages->setCurrentWidget(ui->pLogin2FA);
+    ui->sPages->setStyleSheet(QStringLiteral("image: url(\":/images/login_plain_background.png\");"));
     state = GuestWidgetState::LOGIN2FA;
     resetFocus();
 }
