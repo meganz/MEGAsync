@@ -136,6 +136,7 @@ public:
 
     virtual void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState);
     virtual void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync);
+    virtual void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync);
     virtual void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync);
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
@@ -292,6 +293,7 @@ private slots:
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
     void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
     void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, bool newSync = false);
+    void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
 
 protected:
     bool checkOverquotaBandwidth();
@@ -304,7 +306,8 @@ protected:
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
-    void disableSyncs();
+//    void disableSyncs(); //TODO: delete
+    void enableSyncs();
     void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);

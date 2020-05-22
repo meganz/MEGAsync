@@ -88,6 +88,8 @@ void Model::removeAllFolders()
     {
         //TODO: reuse this one whenevere else syncFolderRemoved needs to be called!
         Platform::syncFolderRemoved(it.value()->getLocalFolder(), it.value()->name(), QString::number(it.value()->tag()));
+
+        //TODO: notifyItemChange?
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
@@ -121,6 +123,8 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
 void Model::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
 {
     Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
+    //TODO: notifyItemChange?
+
 }
 
 std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState, const char *remotePath)

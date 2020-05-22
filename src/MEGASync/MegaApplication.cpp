@@ -2145,8 +2145,6 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
             {
                 almostOQ = false;
 
-                //Disable syncs
-                disableSyncs();
                 if (!infoOverQuota)
                 {
                     infoOverQuota = true;
@@ -2192,7 +2190,6 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                         infoDialogMenu->close();
                     }
 
-                    restoreSyncs();
                     onGlobalSyncStateChanged(megaApi);
                 }
             }
@@ -2306,41 +2303,41 @@ void MegaApplication::unityFix()
 
 
 //TODO: ondisabledSyncs() //do at least the error message and other staff in here
-void MegaApplication::disableSyncs()
-{
-    if (appfinished)
-    {
-        return;
-    }
+//void MegaApplication::disableSyncs()
+//{
+//    if (appfinished)
+//    {
+//        return;
+//    }
 
-    bool syncsModified = false;
-    for (int i = 0; i < model->getNumSyncedFolders(); i++)
-    {
-       if (!model->isFolderActive(i))
-       {
-           continue;
-       }
+//    bool syncsModified = false;
+//    for (int i = 0; i < model->getNumSyncedFolders(); i++)
+//    {
+//       if (!model->isFolderActive(i))
+//       {
+//           continue;
+//       }
 
-       Platform::syncFolderRemoved(model->getLocalFolder(i),
-                                   model->getSyncName(i),
-                                   model->getSyncID(i));
-       notifyItemChange(model->getLocalFolder(i), MegaApi::STATE_NONE);
-       //TODO: this should be done in callback: onSyncDisabled
+//       Platform::syncFolderRemoved(model->getLocalFolder(i),
+//                                   model->getSyncName(i),
+//                                   model->getSyncID(i));
+//       notifyItemChange(model->getLocalFolder(i), MegaApi::STATE_NONE);
+//       //TODO: this should be done in callback: onSyncDisabled
 
-       syncsModified = true;
-       MegaNode *node = megaApi->getNodeByHandle(model->getMegaFolderHandle(i));
-       megaApi->disableSync(node);
-       delete node;
-    }
+//       syncsModified = true;
+//       MegaNode *node = megaApi->getNodeByHandle(model->getMegaFolderHandle(i));
+//       megaApi->disableSync(node); //this should be temporary disabled!
+//       delete node;
+//    }
 
-    if (syncsModified)
-    {
-        createAppMenus();
-        showErrorMessage(tr("Your syncs have been temporarily disabled"));
-    }
-}
+//    if (syncsModified)
+//    {
+//        createAppMenus();
+//        showErrorMessage(tr("Your syncs have been temporarily disabled"));
+//    }
+//}
 
-void MegaApplication::restoreSyncs() //TODO: this shouldn't even exist
+void MegaApplication::restoreSyncs() //TODO: review all in here gets processed
 {
 //    if (appfinished)
 //    {
@@ -3842,7 +3839,7 @@ void MegaApplication::setupWizardFinished(int result)
     }
 
     loggedIn(true);
-    startSyncs();
+    startSyncs(); //TODO: problem: we set the sync here, and we might not have been logged into preferences. //TODO: review case
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -7087,13 +7084,6 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                         QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     }
                 }
-
-                if (preferences->logged()
-                        && businessStatus != -2
-                        && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
-                {
-                    restoreSyncs();
-                }
                 break;
             }
             case MegaApi::BUSINESS_STATUS_EXPIRED:
@@ -7138,17 +7128,11 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.exec();
                 }
 
-                disableSyncs();
                 break;
             }
             case MegaApi::BUSINESS_STATUS_ACTIVE:
             {
-                if (preferences->logged()
-                        && businessStatus != -2
-                        && businessStatus != event->getNumber())
-                {
-                    restoreSyncs();
-                }
+
                 break;
             }
             default:
@@ -7198,7 +7182,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
         sendBusinessWarningNotification();
-        disableSyncs();
     }
     
     switch (request->getType())
@@ -7586,7 +7569,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     //If we have got the filesystem, start the app
                     loggedIn(false);
-                    restoreSyncs();
                 }
                 else
                 {
@@ -8280,17 +8262,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && transfer->isForeignOverquota())
-    {
-        disableSyncs();
-    }
-
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
         sendBusinessWarningNotification();
-        disableSyncs();
     }
 
     //Show the transfer in the "recently updated" list
@@ -8851,8 +8827,12 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
         return;
     }
 
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, tr("Your sync \"%1\" has been disabled. State = %2. Errror = %3")
+                 .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
+
     if (syncSetting->getState() == MegaSync::SYNC_FAILED) //resumed sync failure //TODO: handle SYNC_DISABLED (temporary disabled)
     {
+        //TODO: review missing cases
         switch(syncSetting->getError())
         {
         case MegaSync::Error::NO_ERROR:
@@ -8880,10 +8860,11 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
                             .arg(syncSetting->name()));
             break;
-        case MegaSync::Error::INITIAL_SCAN_FAILED:
-        case MegaSync::Error::STORAGE_OVERQUOTA:
-        case MegaSync::Error::FOREIGN_TARGET_OVERSTORAGE:
-        case MegaSync::Error::REMOTE_PATH_HAS_CHANGED:
+//        case MegaSync::Error::INITIAL_SCAN_FAILED:
+//        case MegaSync::Error::STORAGE_OVERQUOTA:
+//        case MegaSync::Error::FOREIGN_TARGET_OVERSTORAGE:
+//        case MegaSync::Error::REMOTE_PATH_HAS_CHANGED:
+
         case MegaSync::Error::SHARE_NON_FULL_ACCESS:
             showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
                              .arg(syncSetting->name()));
@@ -8926,6 +8907,32 @@ void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
     }
 
     onSyncDisabled(model->getSyncSettingByTag(sync->getTag()));
+}
+
+void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
+{
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("onSyncEnabled for non existing sync").toUtf8().constData());
+        return;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, tr("Your sync \"%1\" has been re-enabled. State = %2. Errror = %3")
+                 .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
+
+
+    showErrorMessage(tr("Your sync \"%1\" has been re-enabled") //TODO: improve error msg?
+                     .arg(syncSetting->name()));
+}
+
+void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
+{
+    if (appfinished || !sync)
+    {
+        return;
+    }
+
+    onSyncEnabled(model->getSyncSettingByTag(sync->getTag()));
 }
 
 void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
