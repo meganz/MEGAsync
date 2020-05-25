@@ -9,6 +9,7 @@
 #include <functional>
 #include <QEasingCurve>
 #include "megaapi.h"
+#include "ThreadPool.h"
 
 #include <sys/stat.h>
 
@@ -160,6 +161,23 @@ private:
     std::vector<IAccountObserver*> accountObservers;
 };
 
+class ThreadPoolSingleton
+{
+    private:
+        static std::unique_ptr<ThreadPool> instance;
+        ThreadPoolSingleton() {}
+
+    public:
+        static ThreadPool* getInstance()
+        {
+            if (instance == nullptr)
+            {
+                instance.reset(new ThreadPool(1));
+            }
+
+            return instance.get();
+        }
+};
 
 class Utilities
 {
