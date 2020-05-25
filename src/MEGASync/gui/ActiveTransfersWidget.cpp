@@ -3,6 +3,7 @@
 #include "control/Utilities.h"
 #include "HighDpiResize.h"
 #include "Preferences.h"
+#include "MegaApplication.h"
 #include <QMessageBox>
 
 using namespace mega;
@@ -222,14 +223,31 @@ void ActiveTransfersWidget::pausedUpTransfers(bool paused)
 
 void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
+    QPointer<ActiveTransfersWidget> activeTransfersWidget = this;
+
     if (totalDownloads && activeDownload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
-        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
-        if (nextTransfer)
-        {
-            onTransferUpdate(megaApi, nextTransfer);
-            delete nextTransfer;
-        }
+        ThreadPoolSingleton::getInstance()->push([this, activeTransfersWidget]()
+        {//thread pool function
+            if (!activeTransfersWidget)
+            {
+                return;
+            }
+
+            MegaTransfer *nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+
+            Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
+            {//queued function
+
+                if (activeTransfersWidget && nextTransfer)
+                {
+                    onTransferUpdate(megaApi, nextTransfer);
+                    delete nextTransfer;
+                }
+
+            });//end of queued function
+
+        });// end of thread pool function;
     }
 
     if (Preferences::instance()->getDownloadsPaused())
@@ -266,14 +284,31 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
 void ActiveTransfersWidget::updateUpSpeed(long long speed)
 {
+    QPointer<ActiveTransfersWidget> activeTransfersWidget = this;
+
     if (totalUploads && activeUpload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
-        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
-        if (nextTransfer)
-        {
-            onTransferUpdate(megaApi, nextTransfer);
-            delete nextTransfer;
-        }
+        ThreadPoolSingleton::getInstance()->push([this, activeTransfersWidget]()
+        {//thread pool function
+            if (!activeTransfersWidget)
+            {
+                return;
+            }
+
+            MegaTransfer *nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+
+            Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
+            {//queued function
+
+                if (activeTransfersWidget && nextTransfer)
+                {
+                    onTransferUpdate(megaApi, nextTransfer);
+                    delete nextTransfer;
+                }
+
+            });//end of queued function
+
+        });// end of thread pool function;
     }
 
     if (Preferences::instance()->getUploadsPaused())
