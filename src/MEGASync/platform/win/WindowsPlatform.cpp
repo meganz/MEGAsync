@@ -17,6 +17,7 @@
 #include <QtWin>
 #endif
 
+#if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
 // and it indeed works
 #ifndef SHFOLDERCUSTOMSETTINGS
@@ -58,6 +59,7 @@ typedef struct
 
 // Gets/Sets the Folder Custom Settings for pszPath based on dwReadWrite. dwReadWrite can be FCS_READ/FCS_WRITE/FCS_FORCEWRITE
 SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In_ PCWSTR pszPath, DWORD dwReadWrite);
+#endif
 #endif
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
