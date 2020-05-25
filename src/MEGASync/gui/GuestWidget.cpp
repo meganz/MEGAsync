@@ -16,7 +16,7 @@ using namespace mega;
 GuestWidget::GuestWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GuestWidget),
-    incorrectCredentialsMessageEnabled{false}
+    incorrectCredentialsMessageReceived{false}
 {
     ui->setupUi(this);
 
@@ -49,13 +49,13 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->sPages->setCurrentWidget(ui->pLogin);
     state = GuestWidgetState::LOGIN;
 
-    ui->lError->setText(ui->lError->text().toUpper());
-    ui->lError->hide();
+    ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
+    ui->lLogin2FAError->hide();
 
     connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLogin2FaHelp_clicked()));
-    connect(ui->leCode, &QLineEdit::textChanged, [&](){ui->lError->hide();});
-    connect(ui->lEmail, &QLineEdit::textChanged, this, &GuestWidget::resetLoginErrorMessage);
-    connect(ui->lPassword, &QLineEdit::textChanged, this, &GuestWidget::resetLoginErrorMessage);
+    connect(ui->leCode, &QLineEdit::textChanged, this, &GuestWidget::hide2FaLoginError);
+    connect(ui->lEmail, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);
+    connect(ui->lPassword, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(fetchNodesAfterBlock()), this, SLOT(fetchNodesAfterBlockCallbak()));
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(setupWizardCreated()), this, SLOT(connectToSetupWizard()));
@@ -154,7 +154,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    incorrectCredentialsMessageEnabled = true;
+                    incorrectCredentialsMessageReceived = true;
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
@@ -179,7 +179,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
-                    ui->lError->show();
+                    showLogin2FaError();
                     page_login2FA();
                     return;
                 }
@@ -349,19 +349,38 @@ void GuestWidget::resetPageAfterBlock()
 
 void GuestWidget::showLoginError(const QString &errorMessage) const
 {
-    ui->lLogin->setObjectName(QStringLiteral("lLoginError"));
-    ui->lLogin->setText(errorMessage);
-    ui->lLogin->style()->unpolish(ui->lLogin);
-    ui->lLogin->style()->polish(ui->lLogin);
-    Utilities::animatePartialFadein(ui->lLogin, 300);
+    constexpr auto animationTimeMillis{300};
+    ui->lLoginErrors->setText(errorMessage);
+    ui->sLoginTitle->setCurrentWidget(ui->pLoginErrors);
+    Utilities::animatePartialFadein(ui->lLoginErrors, animationTimeMillis);
 }
 
-void GuestWidget::resetLoginErrorMessage()
+void GuestWidget::showLogin2FaError() const
 {
-    ui->lLogin->setObjectName(QStringLiteral("lLogin"));
-    ui->lLogin->setText(QStringLiteral("Login to MEGA"));
-    ui->lLogin->style()->unpolish(ui->lLogin);
-    ui->lLogin->style()->polish(ui->lLogin);
+    constexpr auto animationTimeMillis{300};
+    Utilities::animatePartialFadein(ui->lLogin2FAError, animationTimeMillis);
+    ui->lLogin2FAError->show();
+}
+
+void GuestWidget::hideLoginError()
+{
+    const auto isLoginErrorBeingShowed{ui->sLoginTitle->currentWidget() == ui->pLoginErrors};
+    if(isLoginErrorBeingShowed)
+    {
+        constexpr auto transitionTimeMillis{100};
+        Utilities::animatePartialFadeout(ui->lLoginErrors, transitionTimeMillis);
+        QTimer::singleShot(transitionTimeMillis, this, [&](){ui->sLoginTitle->setCurrentWidget(ui->pLoginTitle);});
+    }
+}
+
+void GuestWidget::hide2FaLoginError()
+{
+    if(ui->lLogin2FAError->isVisible())
+    {
+        constexpr auto animationTimeMillis{100};
+        QTimer::singleShot(animationTimeMillis, this, [&](){ui->lLogin2FAError->hide();});
+        Utilities::animatePartialFadeout(ui->lLogin2FAError, animationTimeMillis);
+    }
 }
 
 void GuestWidget::setBlockState(int lockType)
@@ -570,14 +589,14 @@ void GuestWidget::page_login()
 
     resetFocus();
 
-    if(incorrectCredentialsMessageEnabled)
+    if(incorrectCredentialsMessageReceived)
     {
-        incorrectCredentialsMessageEnabled = false;
+        incorrectCredentialsMessageReceived = false;
         showLoginError(tr("Incorrect email and/or password."));
     }
     else
     {
-       resetLoginErrorMessage();
+       hideLoginError();
     }
 
     state = GuestWidgetState::LOGIN;
@@ -659,7 +678,6 @@ void GuestWidget::page_login2FA()
         return;
     }
 
-
     ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style='color:#666666; text-decoration:none; font-size:11px; font-family: \"Lato\"'>"))
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
@@ -691,7 +709,7 @@ void GuestWidget::on_bLogin2FaNext_clicked()
     const auto pin{ui->leCode->text().trimmed()};
     if (pin.isEmpty() || !re.exactMatch(pin))
     {
-        ui->lError->show();
+        showLogin2FaError();
     }
     else
     {

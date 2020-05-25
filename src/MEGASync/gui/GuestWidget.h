@@ -74,17 +74,19 @@ private slots:
     void on_bLogin2FaNext_clicked();
     void on_bLoging2FaCancel_clicked();
     void on_bLogin2FaHelp_clicked();
-    void resetLoginErrorMessage();
+    void hideLoginError();
+    void hide2FaLoginError();
 
 private:
     Ui::GuestWidget *ui;
     MegaApplication *app;
     QString email, password;
-    bool incorrectCredentialsMessageEnabled;
+    bool incorrectCredentialsMessageReceived;
 
     GuestWidgetState state = GuestWidgetState::NONE;
     void resetPageAfterBlock();
     void showLoginError(const QString& errorMessage) const;
+    void showLogin2FaError() const;
 
 
 protected:
