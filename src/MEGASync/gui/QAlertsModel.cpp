@@ -100,6 +100,13 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                             unSeenNotifications[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
                         }
                     }
+
+                    AlertItem *udpatedAlertItem = alertItems[alert->getId()];
+                    if (udpatedAlertItem)
+                    {
+                        udpatedAlertItem->setAlertData(alert);
+                    }
+
                     delete old;
 
                     //update row element
@@ -260,4 +267,22 @@ int QAlertsModel::checkAlertType(int alertType) const
     }
 
     return -1;
+}
+
+void QAlertsModel::refreshAlertItem(unsigned id)
+{
+    int row = 0;
+    for (alert_it it = alertOrder.begin(); it != alertOrder.end() && *it != id; ++it)
+    {
+        ++row;
+    }
+
+    assert(row < alertOrder.size());
+    if (row >= alertOrder.size())
+    {
+        return;
+    }
+
+    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+
 }
