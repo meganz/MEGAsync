@@ -1,7 +1,17 @@
+#ifdef __has_include                           // Check if __has_include is present
+#if __has_include(<nautilus-extension.h>)
+#include <nautilus-extension.h>
+#define __NAUTILUS_MAIN_HEADER_INCLUDED
+#endif
+#endif
+
+#ifndef __NAUTILUS_MAIN_HEADER_INCLUDED
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-file-info.h>
 #include <libnautilus-extension/nautilus-menu-provider.h>
 #include <libnautilus-extension/nautilus-info-provider.h>
+#endif
+
 #include "MEGAShellExt.h"
 #include "mega_ext_client.h"
 #include "mega_notify_client.h"
@@ -9,12 +19,12 @@
 
 static GObjectClass *parent_class;
 
-static void mega_ext_class_init(MEGAExtClass *class)
+static void mega_ext_class_init(MEGAExtClass *class, G_GNUC_UNUSED gpointer class_data)
 {
     parent_class = g_type_class_peek_parent(class);
 }
 
-static void mega_ext_instance_init(MEGAExt *mega_ext)
+static void mega_ext_instance_init(MEGAExt *mega_ext, G_GNUC_UNUSED gpointer g_class)
 {
     mega_ext->srv_sock = -1;
     mega_ext->notify_sock = -1;
@@ -119,8 +129,7 @@ void mega_ext_on_sync_del(MEGAExt *mega_ext, const gchar *path)
     g_hash_table_remove(mega_ext->h_syncs, path);
 }
 
-
-void expanselocalpath(char *path, char *absolutepath)
+void expanselocalpath(const char *path, char *absolutepath)
 {
     if (strlen(path) && path[0] == '/')
     {
@@ -461,6 +470,8 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     GFile *fp;
     FileState state;
 
+    // invalidate current emblems.
+    nautilus_file_info_invalidate_extension_info(file);
 
     fp = nautilus_file_info_get_location(file);
     if (!fp)
@@ -493,9 +504,6 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     g_debug("mega_ext_update_file_info. File: %s  State: %s", path, file_state_to_str(state));
     g_free(path);
 
-    // reset
-    nautilus_file_info_invalidate_extension_info(file);
-
     if (state == FILE_ERROR || state == FILE_NOTFOUND)
     {
         return NAUTILUS_OPERATION_COMPLETE;
@@ -519,12 +527,12 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     return NAUTILUS_OPERATION_COMPLETE;
 }
 
-static void mega_ext_menu_provider_iface_init(NautilusMenuProviderIface *iface)
+static void mega_ext_menu_provider_iface_init(NautilusMenuProviderIface *iface, G_GNUC_UNUSED gpointer iface_data)
 {
     iface->get_file_items = mega_ext_get_file_items;
 }
 
-static void mega_ext_info_provider_iface_init(NautilusInfoProviderIface *iface)
+static void mega_ext_info_provider_iface_init(NautilusInfoProviderIface *iface, G_GNUC_UNUSED gpointer iface_data)
 {
     iface->update_file_info = mega_ext_update_file_info;
 }
