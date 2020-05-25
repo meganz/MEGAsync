@@ -32,33 +32,47 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     settingsAction = NULL;
     this->megaApi = megaApi; 
 
-    static_cast<MegaApplication*>(qApp)->pushToThreadPool([=]()
+    QPointer<TransferManager> transferManager = this;
+
+    static_cast<MegaApplication*>(qApp)->pushToThreadPool([this, transferManager]()
     {//thread pool function
 
-        MegaTransferData *transferData = this->megaApi->getTransferData();
+        if (!transferManager)
+        {
+            return;
+        }
 
+        MegaApi *api = ((MegaApplication *)qApp)->getMegaApi();
+        std::shared_ptr<MegaTransferData> transferData(api->getTransferData());
 
-        Utilities::queueFunctionInAppThread([=]()
+        MegaTransfer *firstUpload = nullptr;
+        MegaTransfer *firstDownload = nullptr;
+        if (transferData->getNumUploads())
+        {
+            firstUpload = api->getTransferByTag(transferData->getUploadTag(0));
+        }
+        if (transferData->getNumDownloads())
+        {
+            firstDownload = api->getTransferByTag(transferData->getDownloadTag(0));
+        }
+
+        Utilities::queueFunctionInAppThread([this, firstDownload, firstUpload, transferData, transferManager]()
         {//queued function
+
+            if (!transferManager) //Check if this is not deleted
+            {
+                delete firstUpload;
+                delete firstDownload;
+                return;
+            }
 
             notificationNumber = transferData->getNotificationNumber();
             ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
             ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
 
-            MegaTransfer *firstUpload = NULL;
-            MegaTransfer *firstDownload = NULL;
-            if (transferData->getNumUploads())
-            {
-                firstUpload = megaApi->getTransferByTag(transferData->getUploadTag(0));
-            }
-            if (transferData->getNumDownloads())
-            {
-                firstDownload = megaApi->getTransferByTag(transferData->getDownloadTag(0));
-            }
-            ui->wActiveTransfers->init(megaApi, firstUpload, firstDownload);
+            ui->wActiveTransfers->init(this->megaApi, firstUpload, firstDownload);
             delete firstUpload;
             delete firstDownload;
-            delete transferData;
 
         });//end of queued function
 
@@ -125,8 +139,17 @@ void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    ui->wUploads->getModel()->onTransferStart(api, transfer);
-    ui->wDownloads->getModel()->onTransferStart(api, transfer);
+    QTransfersModel *upModel = ui->wUploads->getModel();
+    if (upModel)
+    {
+        upModel->onTransferStart(api, transfer);
+    }
+
+    QTransfersModel *downModel = ui->wDownloads->getModel();
+    if (downModel)
+    {
+        downModel->onTransferStart(api, transfer);
+    }
 }
 
 void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -151,8 +174,17 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
         return;
     }
 
-    ui->wUploads->getModel()->onTransferFinish(api, transfer, e);
-    ui->wDownloads->getModel()->onTransferFinish(api, transfer, e);
+    QTransfersModel *upModel = ui->wUploads->getModel();
+    if (upModel)
+    {
+        upModel->onTransferFinish(api, transfer, e);
+    }
+
+    QTransfersModel *downModel = ui->wDownloads->getModel();
+    if (downModel)
+    {
+        downModel->onTransferFinish(api, transfer, e);
+    }
 }
 
 void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
@@ -170,8 +202,17 @@ void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    ui->wUploads->getModel()->onTransferUpdate(api, transfer);
-    ui->wDownloads->getModel()->onTransferUpdate(api, transfer);
+    QTransfersModel *upModel = ui->wUploads->getModel();
+    if (upModel)
+    {
+        upModel->onTransferUpdate(api, transfer);
+    }
+
+    QTransfersModel *downModel = ui->wDownloads->getModel();
+    if (downModel)
+    {
+        downModel->onTransferUpdate(api, transfer);
+    }
 }
 
 void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -189,8 +230,17 @@ void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         return;
     }
 
-    ui->wUploads->getModel()->onTransferTemporaryError(api, transfer, e);
-    ui->wDownloads->getModel()->onTransferTemporaryError(api, transfer, e);
+    QTransfersModel *upModel = ui->wUploads->getModel();
+    if (upModel)
+    {
+        upModel->onTransferTemporaryError(api, transfer, e);
+    }
+
+    QTransfersModel *downModel = ui->wDownloads->getModel();
+    if (downModel)
+    {
+        downModel->onTransferTemporaryError(api, transfer, e);
+    }
 }
 
 void TransferManager::createAddMenu()
