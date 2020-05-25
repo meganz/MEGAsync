@@ -23,7 +23,7 @@ private:
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
     static MacXExtServer *extServer;
-    static std::unique_ptr<QThread> thread;
+    static std::unique_ptr<QThread> threadExtServer;
 
 public:
     static void initialize(int argc, char *argv[]);
