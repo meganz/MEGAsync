@@ -10,50 +10,82 @@ QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedT
     int numTransfers = finishedTransfers.size();
     if (numTransfers)
     {
-        beginInsertRows(QModelIndex(), 0, numTransfers - 1);
         for (int i = 0; i < numTransfers; i++)
         {
             MegaTransfer *transfer = finishedTransfers.at(i);
-            TransferItemData *item = new TransferItemData();
-            item->tag = transfer->getTag();
-            item->priority = transfer->getPriority();
-            transfers.insert(item->tag, item);
-            transferOrder.push_front(item);
+            insertTransfer(transfer);
         }
-        endInsertRows();
     }
 }
 
-void QFinishedTransfersModel::insertTransfer(MegaTransfer *transfer)
+void QFinishedTransfersModel::insertTransfer(MegaTransfer *t, bool needsTransferCopy)
 {
-    TransferItemData *item = new TransferItemData();
-    item->tag = transfer->getTag();
-    item->priority = transfer->getPriority();
+    QPointer<QFinishedTransfersModel> model = this;
+    MegaTransfer *transfer = needsTransferCopy ? t->copy() : t; //Check if we need a copy or t comes from finishedtransfers QList
 
-    if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
-    {
-        TransferItemData *t = transferOrder.back();
-        int row = transferOrder.size() - 1;
-        beginRemoveRows(QModelIndex(), row, row);
-        transfers.remove(t->tag);
-        transferOrder.pop_back();
-        transferItems.remove(t->tag);
-        endRemoveRows();
-        delete t;
-    }
+    ThreadPoolSingleton::getInstance()->push([this, model, transfer, needsTransferCopy]()
+    {//thread pool function
+        if (!model)
+        {
+            if (needsTransferCopy)
+            {
+                delete transfer;
+            }
+            return;
+        }
 
-    transfer_it it = transferOrder.begin();
-    int row = 0;
+        bool isPublicNode = false;
+        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
+        if (ownNode)
+        {
+           int access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
+           if (access == MegaShare::ACCESS_OWNER)
+           {
+               isPublicNode = true;
+           }
+           delete ownNode;
+        }
 
-    beginInsertRows(QModelIndex(), row, row);
-    transfers.insert(item->tag, item);
-    transferOrder.insert(it, item);
-    endInsertRows();
+        Utilities::queueFunctionInAppThread([this, model, isPublicNode, transfer, needsTransferCopy]()
+        {//queued function
+            if (model)
+            {
+                TransferItemData *item = new TransferItemData(transfer);
+                item->data.publicNode = isPublicNode;
 
-    if (transferOrder.size() == 1)
-    {
-        emit onTransferAdded();
-    }
+                if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
+                {
+                    TransferItemData *t = transferOrder.back();
+                    int row = transferOrder.size() - 1;
+                    beginRemoveRows(QModelIndex(), row, row);
+                    transfers.remove(t->data.tag);
+                    transferOrder.pop_back();
+                    transferItems.remove(t->data.tag);
+                    endRemoveRows();
+                    delete t;
+                }
+
+                transfer_it it = transferOrder.begin();
+                int row = 0;
+
+                beginInsertRows(QModelIndex(), row, row);
+                transfers.insert(item->data.tag, item);
+                transferOrder.insert(it, item);
+                endInsertRows();
+
+                if (transferOrder.size() == 1)
+                {
+                    emit onTransferAdded();
+                }                
+            }
+
+            if (needsTransferCopy)
+            {
+                delete transfer;
+            }
+        });//end of queued function
+
+    });// end of thread pool function;
 }
 
 void QFinishedTransfersModel::removeTransferByTag(int transferTag)
@@ -66,7 +98,7 @@ void QFinishedTransfersModel::removeTransferByTag(int transferTag)
 
     int row = 0;
     transfer_it it;
-    for (it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != transferTag; ++it)
+    for (it = transferOrder.begin(); it != transferOrder.end() && (*it)->data.tag != transferTag; ++it)
     {
         ++row;
     }
@@ -117,14 +149,14 @@ void QFinishedTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer
 {
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
-        insertTransfer(transfer);
+        insertTransfer(transfer, true);
     }
 }
 
 void QFinishedTransfersModel::refreshTransferItem(int tag)
 {
     int row = 0;
-    for (transfer_it it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != tag; ++it)
+    for (transfer_it it = transferOrder.begin(); it != transferOrder.end() && (*it)->data.tag != tag; ++it)
     {
         ++row;
     }

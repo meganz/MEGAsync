@@ -344,7 +344,7 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
 
 void ActiveTransfersWidget::on_bDownCancel_clicked()
 {
-    MegaTransfer *transfer = NULL;
+    MegaTransfer *transfer = nullptr;
     transfer = megaApi->getTransferByTag(activeDownload.tag);
     if (!transfer)
     {
@@ -368,7 +368,7 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
 
 void ActiveTransfersWidget::on_bUpCancel_clicked()
 {
-    MegaTransfer *transfer = NULL;
+    MegaTransfer *transfer = nullptr;
     transfer = megaApi->getTransferByTag(activeUpload.tag);
     if (!transfer)
     {
