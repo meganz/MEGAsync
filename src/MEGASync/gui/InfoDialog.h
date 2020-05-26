@@ -92,12 +92,10 @@ public:
 
     void setUnseenNotifications(long long value);
     void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
-
     long long getUnseenNotifications() const;
-
     void closeSyncsMenu();
-
     int getLoggedInMode() const;
+    void setTransferOverquotaState(Preferences::TransferOverquotaState state);
 
 private:
     void drawAvatar(QString email);
@@ -155,7 +153,8 @@ private slots:
 
 signals:
     void openTransferManager(int tab);
-    void dismissOQ(bool oq);
+    void dismissStorageOverquota(bool oq);
+    void dismissTransferOverquota();
     void userActivity();
 
 private:
@@ -191,7 +190,9 @@ private:
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
+    bool transferOverquotaDismissed;
     int storageState;
+    Preferences::TransferOverquotaState transferOverquotaState;
     int actualAccountType;
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;

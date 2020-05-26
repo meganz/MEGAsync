@@ -145,6 +145,7 @@ public:
     void setAlmostOverStorageDismissExecution(long long timestamp);
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
+    void setTransferOverquotaDismissExecution(long long timestamp);
 
     int getStorageState();
     void setStorageState(int value);
@@ -398,6 +399,13 @@ public:
         STATE_OVER_STORAGE_DISMISSED
     };
 
+    enum class TransferOverquotaState
+    {
+        ok,
+        warning,
+        full
+    };
+
     enum {
         STATE_NOT_INITIATED = 0,
         STATE_LOGGED_OK = 1,
@@ -503,6 +511,7 @@ protected:
     long long almostOverStorageNotificationExecution;
     long long almostOverStorageDismissExecution;
     long long overStorageDismissExecution;
+    long long overTransferDismissExecution;
     long long lastTransferNotification;
 
     static const QString currentAccountKey;
@@ -535,6 +544,7 @@ protected:
     static const QString almostOverStorageNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
+    static const QString overTransferDismissExecutionKey;
     static const QString storageStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;

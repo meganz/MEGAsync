@@ -247,6 +247,7 @@ const QString Preferences::overStorageNotificationExecutionKey = QString::fromAs
 const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
+const QString Preferences::overTransferDismissExecutionKey = QString::fromAscii("overTransferDismissExecution");
 const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLight");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
@@ -1093,6 +1094,16 @@ void Preferences::setOverStorageDismissExecution(long long timestamp)
     assert(logged());
     settings->setValue(overStorageDismissExecutionKey, timestamp);
     setCachedValue(overStorageDismissExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+void Preferences::setTransferOverquotaDismissExecution(long long timestamp)
+{
+    overTransferDismissExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(overTransferDismissExecutionKey, timestamp);
+    setCachedValue(overTransferDismissExecutionKey, timestamp);
     mutex.unlock();
 }
 

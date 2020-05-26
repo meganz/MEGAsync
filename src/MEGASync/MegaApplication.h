@@ -113,26 +113,25 @@ public:
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
 
-    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onAccountUpdate(mega::MegaApi *api);
-    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list);
-    virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
-    virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
-    virtual void onReloadNeeded(mega::MegaApi* api);
-    virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
-    virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
-    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
+    void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
+    void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    void onAccountUpdate(mega::MegaApi *api) override;
+    void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
+    void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
+    void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
+    void onReloadNeeded(mega::MegaApi* api) override;
+    void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
+    void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
+    void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
     virtual void onCheckDeferredPreferencesSync(bool timeout);
 
     mega::MegaApi *getMegaApi() { return megaApi; }
-
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
     void cleanLocalCaches(bool all = false);
@@ -160,14 +159,11 @@ public:
     void removeAllFinishedTransfers();
     void showVerifyAccountInfo();
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
-
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
-
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
-
     MegaSyncLogger& getLogger() const;
     SetupWizard *getSetupWizard() const;
     void fetchNodes();
@@ -193,7 +189,7 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openInfoWizard();
-    void openBwOverquotaDialog();
+    void openBandwidthOverquotaDialog();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -264,7 +260,8 @@ public slots:
     void checkOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
-    void onDismissOQ(bool overStorage);
+    void onDismissStorageOverquota(bool overStorage);
+    void onDismissTransferOverquota();
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
     void onHttpServerConnectionError();
@@ -282,7 +279,7 @@ private slots:
     void PSAseen(int id);
 
 protected:
-    bool checkOverquotaBandwidth();
+    void checkOverquotaBandwidth();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -410,10 +407,10 @@ protected:
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
-    long long bwOverquotaTimestamp;
-    UpgradeDialog *bwOverquotaDialog;
+    long long bandwidthOverquotaTimestamp;
+    UpgradeDialog *bandwithOverquotaDialog;
     UpgradeOverStorage *storageOverquotaDialog;
-    bool bwOverquotaEvent;
+    bool bandwithOverquotaEvent;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;

@@ -1022,10 +1022,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     downloadNodeSelector = NULL;
     notificator = NULL;
     pricing = NULL;
-    bwOverquotaTimestamp = 0;
-    bwOverquotaDialog = NULL;
+    bandwidthOverquotaTimestamp = 0;
+    bandwithOverquotaDialog = NULL;
     storageOverquotaDialog = NULL;
-    bwOverquotaEvent = false;
+    bandwithOverquotaEvent = false;
     infoWizard = NULL;
     noKeyDetected = 0;
     isFirstSyncDone = false;
@@ -1578,7 +1578,7 @@ void MegaApplication::updateTrayIcon()
                     + QString::fromAscii("\n")
                     + tr("Syncing");
         }
-        else if (waiting || (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000))
+        else if (waiting || (bandwidthOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000))
         {
             tooltip = QCoreApplication::applicationName()
                     + QString::fromAscii(" ")
@@ -1709,7 +1709,7 @@ void MegaApplication::start()
     whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
-    bwOverquotaTimestamp = 0;
+    bandwidthOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
     for (unsigned i = 3; i--; )
@@ -1817,8 +1817,9 @@ void MegaApplication::start()
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
-            connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
-            connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+            connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
+            connect(infoDialog, &InfoDialog::dismissTransferOverquota, this, &MegaApplication::onDismissTransferOverquota);
+            connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
 
             if (!QSystemTrayIcon::isSystemTrayAvailable())
             {
@@ -1994,8 +1995,9 @@ void MegaApplication::loggedIn(bool fromWizard)
     if (!infoDialog)
     {
         infoDialog = new InfoDialog(this);
-        connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
-        connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+        connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
+        connect(infoDialog, &InfoDialog::dismissTransferOverquota, this, &MegaApplication::onDismissTransferOverquota);
+        connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
 
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
@@ -2428,8 +2430,8 @@ void MegaApplication::closeDialogs(bool bwoverquota)
 
     if (!bwoverquota)
     {
-        delete bwOverquotaDialog;
-        bwOverquotaDialog = NULL;
+        delete bandwithOverquotaDialog;
+        bandwithOverquotaDialog = NULL;
     }
 
     delete storageOverquotaDialog;
@@ -2945,6 +2947,7 @@ void MegaApplication::periodicTasks()
             megaApi->update();
 
             checkOverStorageStates();
+            checkOverquotaBandwidth();
         }
 
         onGlobalSyncStateChanged(megaApi);
@@ -3001,8 +3004,8 @@ void MegaApplication::cleanAll()
     removeAllFinishedTransfers();
     clearViewedTransfers();
 
-    delete bwOverquotaDialog;
-    bwOverquotaDialog = NULL;
+    delete bandwithOverquotaDialog;
+    bandwithOverquotaDialog = NULL;
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
     delete infoWizard;
@@ -3113,24 +3116,21 @@ void MegaApplication::onInstallUpdateClicked()
     }
 }
 
-/**
- * @brief MegaApplication::checkOverquotaBandwidth
- * @return true if OverquotaDialog is opened
- */
-bool MegaApplication::checkOverquotaBandwidth()
+void MegaApplication::checkOverquotaBandwidth()
 {
-    if (!bwOverquotaTimestamp)
+    if (!bandwidthOverquotaTimestamp)
     {
-        return false;
+        return;
     }
 
-    if (QDateTime::currentMSecsSinceEpoch() / 1000 > bwOverquotaTimestamp) //we have waited enough
+    if (QDateTime::currentMSecsSinceEpoch() / 1000 > bandwidthOverquotaTimestamp) //we have waited enough
     {
-        bwOverquotaTimestamp = 0;
+        bandwidthOverquotaTimestamp = 0;
+        infoDialog->setTransferOverquotaState(Preferences::TransferOverquotaState::ok);
         preferences->clearTemporalBandwidth();
-        if (bwOverquotaDialog)
+        if (bandwithOverquotaDialog)
         {
-            bwOverquotaDialog->refreshAccountDetails();
+            bandwithOverquotaDialog->refreshAccountDetails();
         }
 #ifdef __MACH__
         trayIcon->setContextMenu(&emptyMenu);
@@ -3138,13 +3138,6 @@ bool MegaApplication::checkOverquotaBandwidth()
         trayIcon->setContextMenu(windowsMenu.get());
 #endif
     }
-    else //still OQ
-    {
-        openBwOverquotaDialog();
-        return true;
-    }
-
-    return false;
 }
 
 void MegaApplication::showInfoDialog()
@@ -3179,14 +3172,9 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        if (bwOverquotaTimestamp && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
+        if (bandwidthOverquotaTimestamp && bandwidthOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
-        }
-
-        if (checkOverquotaBandwidth())
-        {
-            return;
         }
     }
 
@@ -3846,10 +3834,10 @@ void MegaApplication::overquotaDialogFinished(int)
         return;
     }
 
-    if (bwOverquotaDialog)
+    if (bandwithOverquotaDialog)
     {
-        bwOverquotaDialog->deleteLater();
-        bwOverquotaDialog = NULL;
+        bandwithOverquotaDialog->deleteLater();
+        bandwithOverquotaDialog = NULL;
     }
 
     if (storageOverquotaDialog)
@@ -4710,7 +4698,7 @@ std::shared_ptr<MegaNode> MegaApplication::getRootNode(bool forceReset)
     return mRootNode;
 }
 
-void MegaApplication::onDismissOQ(bool overStorage)
+void MegaApplication::onDismissStorageOverquota(bool overStorage)
 {
     if (overStorage)
     {
@@ -4720,6 +4708,11 @@ void MegaApplication::onDismissOQ(bool overStorage)
     {
         preferences->setAlmostOverStorageDismissExecution(QDateTime::currentMSecsSinceEpoch());
     }
+}
+
+void MegaApplication::onDismissTransferOverquota()
+{
+    preferences->setTransferOverquotaDismissExecution(QDateTime::currentMSecsSinceEpoch());
 }
 
 void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, bool force, int source)
@@ -6325,34 +6318,34 @@ void MegaApplication::openInfoWizard()
     infoWizard->show();
 }
 
-void MegaApplication::openBwOverquotaDialog()
+void MegaApplication::openBandwidthOverquotaDialog()
 {
     if (appfinished)
     {
         return;
     }
 
-    if (!bwOverquotaDialog)
+    if (!bandwithOverquotaDialog)
     {
-        bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
-        connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
-        Platform::activateBackgroundWindow(bwOverquotaDialog);
-        bwOverquotaDialog->show();
+        bandwithOverquotaDialog = new UpgradeDialog(megaApi, pricing);
+        connect(bandwithOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+        Platform::activateBackgroundWindow(bandwithOverquotaDialog);
+        bandwithOverquotaDialog->show();
 
-        if (!bwOverquotaEvent)
+        if (!bandwithOverquotaEvent)
         {
             megaApi->sendEvent(99506, "Bandwidth overquota");
-            bwOverquotaEvent = true;
+            bandwithOverquotaEvent = true;
         }
     }
-    else if (!bwOverquotaDialog->isVisible())
+    else if (!bandwithOverquotaDialog->isVisible())
     {
-        bwOverquotaDialog->activateWindow();
-        bwOverquotaDialog->raise();
+        bandwithOverquotaDialog->activateWindow();
+        bandwithOverquotaDialog->raise();
     }
 
-    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
-    bwOverquotaDialog->refreshAccountDetails();
+    bandwithOverquotaDialog->setTimestamp(bandwidthOverquotaTimestamp);
+    bandwithOverquotaDialog->refreshAccountDetails();
 }
 
 void MegaApplication::openSettings(int tab)
@@ -6379,11 +6372,6 @@ void MegaApplication::openSettings(int tab)
     if (preferences && !proxyOnly)
     {
         updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);
-
-        if (checkOverquotaBandwidth())
-        {
-            return;
-        }
     }
 #endif
 
@@ -6924,9 +6912,9 @@ void MegaApplication::refreshStorageUIs()
 
     notifyStorageObservers(); //Ideally this should be the only call here
 
-    if (bwOverquotaDialog)
+    if (bandwithOverquotaDialog)
     {
-        bwOverquotaDialog->refreshAccountDetails();
+        bandwithOverquotaDialog->refreshAccountDetails();
     }
 
     if (storageOverquotaDialog)
@@ -7184,9 +7172,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 delete pricing;
             }
             pricing = request->getPricing();
-            if (bwOverquotaDialog)
+            if (bandwithOverquotaDialog)
             {
-                bwOverquotaDialog->setPricing(pricing);
+                bandwithOverquotaDialog->setPricing(pricing);
             }
 
             if (storageOverquotaDialog)
@@ -7700,16 +7688,17 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
         {
-            bwOverquotaTimestamp = 0;
+            bandwidthOverquotaTimestamp = 0;
+            infoDialog->setTransferOverquotaState(Preferences::TransferOverquotaState::ok);
             preferences->clearTemporalBandwidth();
 #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
 #elif defined(_WIN32)
             trayIcon->setContextMenu(windowsMenu.get());
 #endif
-            if (bwOverquotaDialog)
+            if (bandwithOverquotaDialog)
             {
-                bwOverquotaDialog->close();
+                bandwithOverquotaDialog->close();
             }
         }
 
@@ -7734,9 +7723,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             infoDialog->setAccountType(preferences->accountType());
         }
 
-        if (bwOverquotaDialog)
+        if (bandwithOverquotaDialog)
         {
-            bwOverquotaDialog->refreshAccountDetails();
+            bandwithOverquotaDialog->refreshAccountDetails();
         }
 
         if (storageOverquotaDialog)
@@ -8448,19 +8437,20 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
                              .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
 
         }
-        else if (e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
+        else if (e->getValue() && bandwidthOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
         {
             preferences->clearTemporalBandwidth();
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
-            bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
-            assert(bwOverquotaTimestamp > 0);
+            bandwidthOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
+            assert(bandwidthOverquotaTimestamp > 0);
 
 #if defined(__MACH__) || defined(_WIN32)
             trayIcon->setContextMenu(initialMenu.get());
 #endif
-            closeDialogs(true);
-            openBwOverquotaDialog();
+            //closeDialogs(true);
+            infoDialog->setTransferOverquotaState(Preferences::TransferOverquotaState::full);
+            openBandwidthOverquotaDialog();
         }
     }
 }
@@ -8473,9 +8463,9 @@ void MegaApplication::onAccountUpdate(MegaApi *)
     }
 
     preferences->clearTemporalBandwidth();
-    if (bwOverquotaDialog)
+    if (bandwithOverquotaDialog)
     {
-        bwOverquotaDialog->refreshAccountDetails();
+        bandwithOverquotaDialog->refreshAccountDetails();
     }
 
     updateUserStats(true, true, true, true, USERSTATS_ACCOUNTUPDATE);
