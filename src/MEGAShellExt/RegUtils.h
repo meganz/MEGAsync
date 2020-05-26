@@ -2,6 +2,7 @@
 #define REGUTILS_H
 
 #include <windows.h>
+#include <combaseapi.h>
 
 BOOL IsWow64();
 
