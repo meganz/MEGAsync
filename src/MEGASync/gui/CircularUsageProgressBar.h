@@ -13,20 +13,18 @@ const char DEFAULT_OQCOLOR[] = "#DF4843";
 const char DEFAULT_ALMOSTOQCOLOR[] = "#FF6F00";
 const char DEFAULT_FGCOLOR_QUOTA[] = "#4A90E2";
 
-
 class CircularUsageProgressBar : public QWidget
 {
     Q_OBJECT
 public:
     static const int MAXVALUE = 100;
     static const int MINVALUE = 0;
-
-
     explicit CircularUsageProgressBar(QWidget *parent = 0);
-    ~CircularUsageProgressBar();
 
     int getValue() const;
-    void setValue(int value, bool unknownTotal = false );
+    void setValue(int value);
+    void setEmptyBarTotalValueUnknown();
+    void setFullBarTotalValueUnkown();
 
     QColor getBkColor() const;
     void setBkColor(const QColor &color);
@@ -44,14 +42,12 @@ protected:
     void paintEvent(QPaintEvent *event);
     void drawBackgroundBar(QPainter &p, QRectF &baseRect);
     void drawArcValue(QPainter &p, const QRectF &baseRect, double arcLength);
-    void drawText(QPainter &p, const QRectF &innerRect, double innerRadius, double pbValue);
-
+    void drawText(QPainter &p, const QRectF &innerRect, double innerRadius, double progressBarValue);
     void setPenColor(QPen &pen, QColor color, bool forceRepaint = true);
 
-    int pbValue = -1;
+    int progressBarValue = -1;
     double penWidth;
     double outerRadius;
-
     QString textValue;
 
     QColor bkColor;
@@ -63,7 +59,8 @@ protected:
     QPen bkPen;
     QPen fgPen;
 
-    QIcon mark_warning;
+    QIcon markWarning;
+    QIcon markFull;
 };
 
 #endif // CIRCULARUSAGEPROGRESSBAR_H

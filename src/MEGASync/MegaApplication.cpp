@@ -8448,7 +8448,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 #if defined(__MACH__) || defined(_WIN32)
             trayIcon->setContextMenu(initialMenu.get());
 #endif
-            //closeDialogs(true);
             infoDialog->setTransferOverquotaState(Preferences::TransferOverquotaState::full);
             openBandwidthOverquotaDialog();
         }

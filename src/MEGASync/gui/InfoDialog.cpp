@@ -420,7 +420,7 @@ void InfoDialog::setUsage()
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
-        ui->wCircularStorage->setValue(0, true);
+        ui->wCircularStorage->setEmptyBarTotalValueUnknown();
         usedQuota = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style='color: #333333; font-size:20px; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
 
@@ -428,16 +428,28 @@ void InfoDialog::setUsage()
     else if(accType == Preferences::ACCOUNT_TYPE_FREE)
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
-        ui->wCircularQuota->setValue(0, true);
-        usedQuota = tr("%1 used").arg(QString::fromUtf8("<span style='color:#666666; font-family: Lato; text-decoration:none;'>%1</span>")
-                                     .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+        QString usageColor;
+        if(transferOverquotaState == Preferences::TransferOverquotaState::ok)
+        {
+            ui->wCircularQuota->setEmptyBarTotalValueUnknown();
+            usageColor = QString::fromUtf8("#666666");
+        }
+        else
+        {
+            ui->wCircularQuota->setFullBarTotalValueUnkown();
+            usageColor = QString::fromUtf8("#DF4843");
+        }
+
+        usedQuota = tr("%1 used").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
+                                      .arg(usageColor)
+                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         if (preferences->totalBandwidth() == 0)
         {
-            ui->wCircularQuota->setValue(0, true);
+            ui->wCircularQuota->setEmptyBarTotalValueUnknown();
             usedQuota = Utilities::getSizeString(preferences->totalBandwidth());
         }
         else

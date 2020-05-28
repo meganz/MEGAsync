@@ -3,8 +3,10 @@
 #include <QDebug>
 #include <math.h>
 
+static const QString hyphenUtf8Code{QString::fromUtf8("\xe2\x80\x94")};
+
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
-    QWidget(parent), outerRadius(0), penWidth(0)
+    QWidget(parent), penWidth(0), outerRadius(0)
 {
     setPenColor(bkPen, QColor(QString::fromUtf8(DEFAULT_BKCOLOR)));
     setPenColor(fgPen, QColor(QString::fromUtf8(DEFAULT_FGCOLOR)));
@@ -15,17 +17,13 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     almostOqColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
 
     currentColor = fgColor;
-    textValue = QString::fromUtf8("\xe2\x80\x94");
+    textValue = hyphenUtf8Code;
 
-    mark_warning.addFile(QString::fromUtf8(":/images/strong_mark.png"));
+    markFull.addFile(QString::fromUtf8(":/images/icon_error.png"));
+    markWarning.addFile(QString::fromUtf8(":/images/icon_warning.png"));
 }
 
-CircularUsageProgressBar::~CircularUsageProgressBar()
-{
-
-}
-
-void CircularUsageProgressBar::paintEvent(QPaintEvent *event)
+void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 {
     double updatedOuterRadius = qMin(width(), height());
     if (updatedOuterRadius != outerRadius)
@@ -34,10 +32,10 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent *event)
         penWidth = outerRadius / 352.0 * 37;
 
         setPenColor(bkPen, bkColor, false);
-        bkPen.setWidth(penWidth);
+        bkPen.setWidth(static_cast<int>(penWidth));
 
         setPenColor(fgPen, currentColor, false);
-        fgPen.setWidth(penWidth);
+        fgPen.setWidth(static_cast<int>(penWidth));
     }
 
     QRectF baseRect(penWidth / 2, penWidth / 2, outerRadius - penWidth, outerRadius - penWidth);
@@ -52,20 +50,22 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent *event)
     drawBackgroundBar(painter, baseRect);
 
     // Draw value arc
-    double arcStep = 3.60 * pbValue;
+    double arcStep = 3.60 * progressBarValue;
     drawArcValue(painter, baseRect, arcStep);
 
     //Draw percentage text
     double innerRadius = outerRadius - penWidth / 2;
     double delta = (outerRadius - innerRadius) / 2;
     QRectF innerRect    = QRectF(delta, delta, innerRadius, innerRadius);
-    drawText(painter, innerRect, innerRadius, pbValue);
+    drawText(painter, innerRect, innerRadius, progressBarValue);
 
-    if (pbValue >= ALMOSTOVERQUOTA_VALUE) // If value higher than almost oq threshold show warning image
+    if (progressBarValue >= ALMOSTOVERQUOTA_VALUE) // If value higher than almost oq threshold show warning image
     {
+        const auto icon{progressBarValue >= CircularUsageProgressBar::MAXVALUE ? markFull : markWarning};
         int pixWidth =  outerRadius / 44.0 * 19;
         int padding =  outerRadius / 44.0;
-        painter.drawPixmap(outerRadius - pixWidth / 2 + padding, 0 + padding , pixWidth - 2 * padding, pixWidth - 2 * padding, mark_warning.pixmap(pixWidth - 2 * padding, pixWidth - 2));
+        painter.drawPixmap(outerRadius - pixWidth / 2 + padding, 0 + padding , pixWidth - 2 * padding,
+                           pixWidth - 2 * padding, icon.pixmap(pixWidth - 2 * padding, pixWidth - 2));
     }
 }
 
@@ -139,29 +139,20 @@ void CircularUsageProgressBar::setOqColor(const QColor &color)
 
 int CircularUsageProgressBar::getValue() const
 {
-    return pbValue;
+    return progressBarValue;
 }
 
-void CircularUsageProgressBar::setValue(int value, bool unknownTotal)
+void CircularUsageProgressBar::setValue(int value)
 {
     if (value < CircularUsageProgressBar::MINVALUE)
     {
         value = CircularUsageProgressBar::MINVALUE;
     }
-    if (pbValue != value || pbValue == -1
-            || (textValue == QString::fromUtf8("\xe2\x80\x94") && !unknownTotal)
-            || (textValue != QString::fromUtf8("\xe2\x80\x94") && unknownTotal)
-            )
+
+    if (progressBarValue != value)
     {
-        if (unknownTotal)
-        {
-            textValue = QString::fromUtf8("\xe2\x80\x94");
-        }
-        else
-        {
-            textValue = QString::number(value).append(QString::fromUtf8("%"));
-        }
-        pbValue = value;
+        textValue = QString::number(value).append(QString::fromUtf8("%"));
+        progressBarValue = value;
         if (value >= CircularUsageProgressBar::MAXVALUE)
         {
             currentColor = oqColor;
@@ -179,6 +170,25 @@ void CircularUsageProgressBar::setValue(int value, bool unknownTotal)
         }
         update();
     }
+}
+
+void CircularUsageProgressBar::setEmptyBarTotalValueUnknown()
+{
+    textValue = hyphenUtf8Code;
+    progressBarValue = 0;
+    currentColor = fgColor;
+    setPenColor(fgPen, currentColor, false);
+    update();
+
+}
+
+void CircularUsageProgressBar::setFullBarTotalValueUnkown()
+{
+    textValue = hyphenUtf8Code;
+    progressBarValue = CircularUsageProgressBar::MAXVALUE;
+    currentColor = oqColor;
+    setPenColor(fgPen, currentColor, false);
+    update();
 }
 
 QColor CircularUsageProgressBar::getFgColor() const
