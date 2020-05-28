@@ -8,15 +8,15 @@ static const QString hyphenUtf8Code{QString::fromUtf8("\xe2\x80\x94")};
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     QWidget(parent), penWidth(0), outerRadius(0)
 {
-    setPenColor(bkPen, QColor(QString::fromUtf8(DEFAULT_BKCOLOR)));
-    setPenColor(fgPen, QColor(QString::fromUtf8(DEFAULT_FGCOLOR)));
+    setPenColor(backgroundPen, QColor(QString::fromUtf8(DEFAULT_BKCOLOR)));
+    setPenColor(foregroundPen, QColor(QString::fromUtf8(DEFAULT_FGCOLOR)));
 
-    bkColor = QColor(QString::fromUtf8(DEFAULT_BKCOLOR));
-    fgColor = QColor(QString::fromUtf8(DEFAULT_FGCOLOR));
-    oqColor = QColor(QString::fromUtf8(DEFAULT_OQCOLOR));
-    almostOqColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
+    backgroundColor = QColor(QString::fromUtf8(DEFAULT_BKCOLOR));
+    foregroundColor = QColor(QString::fromUtf8(DEFAULT_FGCOLOR));
+    overquotaColor = QColor(QString::fromUtf8(DEFAULT_OQCOLOR));
+    almostOverquotaColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
 
-    currentColor = fgColor;
+    currentColor = foregroundColor;
     textValue = hyphenUtf8Code;
 
     markFull.addFile(QString::fromUtf8(":/images/icon_error.png"));
@@ -31,11 +31,11 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
         outerRadius = updatedOuterRadius;
         penWidth = outerRadius / 352.0 * 37;
 
-        setPenColor(bkPen, bkColor, false);
-        bkPen.setWidth(static_cast<int>(penWidth));
+        setPenColor(backgroundPen, backgroundColor, false);
+        backgroundPen.setWidth(static_cast<int>(penWidth));
 
-        setPenColor(fgPen, currentColor, false);
-        fgPen.setWidth(static_cast<int>(penWidth));
+        setPenColor(foregroundPen, currentColor, false);
+        foregroundPen.setWidth(static_cast<int>(penWidth));
     }
 
     QRectF baseRect(penWidth / 2, penWidth / 2, outerRadius - penWidth, outerRadius - penWidth);
@@ -71,14 +71,14 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 
 void CircularUsageProgressBar::drawBackgroundBar(QPainter &p, QRectF &baseRect)
 {
-    p.setPen(bkPen);
+    p.setPen(backgroundPen);
     p.setBrush(Qt::white);
     p.drawArc(baseRect, 90 * 16, -100 * 3.60 * 16); //360º
 }
 
 void CircularUsageProgressBar::drawArcValue(QPainter &p, const QRectF &baseRect, double arcLength)
 {
-    p.setPen(fgPen);
+    p.setPen(foregroundPen);
     p.setBrush(Qt::white);
     p.drawArc(baseRect, 90 * 16, -arcLength * 16);
 }
@@ -115,25 +115,25 @@ void CircularUsageProgressBar::setPenColor(QPen &pen, QColor color, bool forceRe
     }
 }
 
-QColor CircularUsageProgressBar::getAlmostOqColor() const
+QColor CircularUsageProgressBar::getAlmostOverquotaColor() const
 {
-    return almostOqColor;
+    return almostOverquotaColor;
 }
 
-void CircularUsageProgressBar::setAlmostOqColor(const QColor &color)
+void CircularUsageProgressBar::setAlmostOverquotaColor(const QColor &color)
 {
-    almostOqColor = color;
+    almostOverquotaColor = color;
     update();
 }
 
-QColor CircularUsageProgressBar::getOqColor() const
+QColor CircularUsageProgressBar::getOverquotaColor() const
 {
-    return oqColor;
+    return overquotaColor;
 }
 
-void CircularUsageProgressBar::setOqColor(const QColor &color)
+void CircularUsageProgressBar::setOverquotaColor(const QColor &color)
 {
-    oqColor = color;
+    overquotaColor = color;
     update();
 }
 
@@ -155,18 +155,18 @@ void CircularUsageProgressBar::setValue(int value)
         progressBarValue = value;
         if (value >= CircularUsageProgressBar::MAXVALUE)
         {
-            currentColor = oqColor;
-            setPenColor(fgPen, oqColor, false);
+            currentColor = overquotaColor;
+            setPenColor(foregroundPen, overquotaColor, false);
         }
         else if (value >= ALMOSTOVERQUOTA_VALUE)
         {
-            currentColor = almostOqColor;
-            setPenColor(fgPen, almostOqColor, false);
+            currentColor = almostOverquotaColor;
+            setPenColor(foregroundPen, almostOverquotaColor, false);
         }
         else
         {
-            currentColor = fgColor;
-            setPenColor(fgPen, currentColor, false);
+            currentColor = foregroundColor;
+            setPenColor(foregroundPen, currentColor, false);
         }
         update();
     }
@@ -176,8 +176,8 @@ void CircularUsageProgressBar::setEmptyBarTotalValueUnknown()
 {
     textValue = hyphenUtf8Code;
     progressBarValue = 0;
-    currentColor = fgColor;
-    setPenColor(fgPen, currentColor, false);
+    currentColor = foregroundColor;
+    setPenColor(foregroundPen, currentColor, false);
     update();
 
 }
@@ -186,29 +186,29 @@ void CircularUsageProgressBar::setFullBarTotalValueUnkown()
 {
     textValue = hyphenUtf8Code;
     progressBarValue = CircularUsageProgressBar::MAXVALUE;
-    currentColor = oqColor;
-    setPenColor(fgPen, currentColor, false);
+    currentColor = overquotaColor;
+    setPenColor(foregroundPen, currentColor, false);
     update();
 }
 
-QColor CircularUsageProgressBar::getFgColor() const
+QColor CircularUsageProgressBar::getForegroundColor() const
 {
-    return fgColor;
+    return foregroundColor;
 }
 
-void CircularUsageProgressBar::setFgColor(const QColor &color)
+void CircularUsageProgressBar::setForegroundColor(const QColor &color)
 {
-    fgColor = color;
+    foregroundColor = color;
     update();
 }
 
-QColor CircularUsageProgressBar::getBkColor() const
+QColor CircularUsageProgressBar::getBackgroundColor() const
 {
-    return bkColor;
+    return backgroundColor;
 }
 
-void CircularUsageProgressBar::setBkColor(const QColor &color)
+void CircularUsageProgressBar::setBackgroundColor(const QColor &color)
 {
-    bkColor = color;
+    backgroundColor = color;
     update();
 }

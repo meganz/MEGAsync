@@ -26,17 +26,17 @@ public:
     void setEmptyBarTotalValueUnknown();
     void setFullBarTotalValueUnkown();
 
-    QColor getBkColor() const;
-    void setBkColor(const QColor &color);
+    QColor getBackgroundColor() const;
+    void setBackgroundColor(const QColor &color);
 
-    QColor getFgColor() const;
-    void setFgColor(const QColor &color);
+    QColor getForegroundColor() const;
+    void setForegroundColor(const QColor &color);
 
-    QColor getOqColor() const;
-    void setOqColor(const QColor &color);
+    QColor getOverquotaColor() const;
+    void setOverquotaColor(const QColor &color);
 
-    QColor getAlmostOqColor() const;
-    void setAlmostOqColor(const QColor &color);
+    QColor getAlmostOverquotaColor() const;
+    void setAlmostOverquotaColor(const QColor &color);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -50,14 +50,14 @@ protected:
     double outerRadius;
     QString textValue;
 
-    QColor bkColor;
-    QColor fgColor;
-    QColor oqColor;
-    QColor almostOqColor;
+    QColor backgroundColor;
+    QColor foregroundColor;
+    QColor overquotaColor;
+    QColor almostOverquotaColor;
     QColor currentColor;
 
-    QPen bkPen;
-    QPen fgPen;
+    QPen backgroundPen;
+    QPen foregroundPen;
 
     QIcon markWarning;
     QIcon markFull;
