@@ -752,6 +752,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
         <translation type="unfinished">Too many requests. Please wait.</translation>
     </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
+        <translation type="unfinished">You have entered your current password, please enter a new password.</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmSSLexception</name>
@@ -2742,6 +2747,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
         <translation type="unfinished">Your account has been disabled by your administrator. Please contact your business account administrator for further details.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
     </message>
 </context>
 <context>
