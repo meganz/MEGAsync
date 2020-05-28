@@ -556,12 +556,14 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
   
+!ifdef BUILD_X64_VERSION
   SetOutPath "$INSTDIR\styles"
   File "${QT_PATH}\plugins\styles\qwindowsvistastyle.dll"
   AccessControl::SetFileOwner "$INSTDIR\styles" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\styles" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
 
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
