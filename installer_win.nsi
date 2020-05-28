@@ -555,6 +555,13 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\platforms" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  SetOutPath "$INSTDIR\styles"
+  File "${QT_PATH}\plugins\styles\qwindowsvistastyle.dll"
+  AccessControl::SetFileOwner "$INSTDIR\styles" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\styles" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME" "GenericRead + GenericWrite"
 
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
@@ -876,6 +883,7 @@ Section Uninstall
   Delete "$INSTDIR\accessible\qtaccessiblewidgets4.dll"
   Delete "$INSTDIR\iconengines\qsvgicon.dll"
   Delete "$INSTDIR\platforms\qwindows.dll"
+  Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
   Delete "$INSTDIR\bearer\qgenericbearer.dll"
   Delete "$INSTDIR\bearer\qnativewifibearer.dll"
 
