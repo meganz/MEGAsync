@@ -2743,10 +2743,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
         <translation type="unfinished">Your account has been disabled by your administrator. Please contact your business account administrator for further details.</translation>
     </message>
-    <message>
-        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4294,7 +4290,8 @@ when the application starts again</source>
     </message>
     <message>
         <source>Backup Recovery Key</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label to export master key of the current user. </translatorcomment>
+        <translation type="unfinished">Backup Recovery Key</translation>
     </message>
 </context>
 <context>
