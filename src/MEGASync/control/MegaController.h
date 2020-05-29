@@ -150,7 +150,12 @@ public:
     void setFailed(int errorCode, mega::MegaRequest *request = nullptr,  mega::MegaError *error = nullptr); //note, this will call SetComplete() & hence emit a completion signal
 
 signals:
+    /**
+     * @brief to be emited when the action fails (it might not even have reached to a request)
+     * @param errorCode
+     */
     void failed(int errorCode);
+
     /**
      * @brief to be emited when a request fails
      * @param request. ActionProgress simply forwards the pointer to the request, this signal should be connected

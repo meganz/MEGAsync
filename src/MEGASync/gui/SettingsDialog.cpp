@@ -495,9 +495,9 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
 
     default:
     {
-        //TODO: Have a full sentence here
         QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
-           tr(MegaSync::getMegaSyncErrorCode(errorCode))); //TODO: incluye local path and the like
+           tr("This sync can't be enabled. Reason: %1")
+          .arg(tr(MegaSync::getMegaSyncErrorCode(errorCode)))); //TODO: include local path and the like
         break;
     }
     }
@@ -1462,6 +1462,7 @@ int SettingsDialog::saveSettings()
                                     QObject temporary;
                                     QObject::connect(&temporary, &QObject::destroyed, this, [this, syncSetting](){
                                         onDisableSyncFailed(syncSetting); //Note: this might get executed before onSyncStateChanged!
+                                        loadSyncSettings(); //to no longer show the failed line
                                     }, Qt::QueuedConnection);
                                 }
                             }, Qt::DirectConnection); //Note, we need direct connection to use request & error
@@ -1486,6 +1487,9 @@ int SettingsDialog::saveSettings()
                                     QObject::connect(&temporary, &QObject::destroyed, this, [this, syncError, syncSetting](){
                                         onEnableSyncFailed(syncError, syncSetting); //Note: this might get executed before onSyncStateChanged!
                                         //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
+
+                                        loadSyncSettings(); //to no longer show the failed line
+
                                     }, Qt::QueuedConnection);
                                 }
                             }, Qt::DirectConnection); //Note, we need direct connection to use request & error
@@ -1507,24 +1511,8 @@ int SettingsDialog::saveSettings()
                                                                         .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
                     saveSettingsProgress->addStep(removeSyncStep);
                     controller->removeSync(syncSetting, removeSyncStep);
-
-//                    bool active = model->isFolderActive(i);
-//                    MegaNode *node = megaApi->getNodeByHandle(megaHandle);
-////                    if (active) //That no longer makes sense: we need to delete regardless if active or not
-////                    {
-//                        //TODO: do this in onSyncDeleted
-////                        Platform::syncFolderRemoved(model->getLocalFolder(i),
-////                                                    model->getSyncName(i),
-////                                                    model->getSyncID(i));
-//                        megaApi->removeSync(node);
-////                    }
-////                    preferences->removeSyncedFolder(i); //TODO: delete this and add upon onDeletedSync
-//                    delete node;
                 }
             }
-
-
-            //TODO: still need to connect to changes in settings and reload configuration (loadSettings recall should be enough)
 
             //look for new syncs
             for (int j = 0; j < ui->tSyncs->rowCount(); j++)
@@ -1537,7 +1525,8 @@ int SettingsDialog::saveSettings()
                     {
                         QString localFolderPath = ui->tSyncs->item(j, 0)->text();
                         QString megaFolderPath = ui->tSyncs->item(j, 1)->text();
-                        std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(megaFolderPath.toUtf8().constData())); //TODO: store handle in some column
+                        std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(megaFolderPath.toUtf8().constData()));
+                        //TODO: store handle in some column ?
 
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync from Settings: %1 - %2")
                                      .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
@@ -1546,7 +1535,39 @@ int SettingsDialog::saveSettings()
                         ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1 - %2")
                                                                          .arg(localFolderPath).arg(megaFolderPath));
                         saveSettingsProgress->addStep(addSyncStep);
-                        controller->addSync(localFolderPath, node->getHandle(), addSyncStep);
+
+                        //Connect failing signals
+                        connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath, megaFolderPath](int errorCode)
+                        {
+                            static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath, megaFolderPath);
+                            loadSyncSettings(); //to no longer show the failed line
+                        }, Qt::QueuedConnection);
+
+                        connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath, megaFolderPath](MegaRequest *request, MegaError *error)
+                        {
+                            if (error->getErrorCode())
+                            {
+                                auto reqCopy = request->copy();
+                                auto errCopy = error->copy();
+
+                                QObject temporary;
+                                QObject::connect(&temporary, &QObject::destroyed, this, [this, reqCopy, errCopy, localFolderPath, megaFolderPath](){
+
+                                    // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
+                                    static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath, megaFolderPath);
+                                    loadSyncSettings();  //to no longer show the failed line
+
+                                    delete reqCopy;
+                                    delete errCopy;
+                                    //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
+                                }, Qt::QueuedConnection);
+                            }
+                        }, Qt::DirectConnection); //Note, we need direct connection to use request & error
+
+
+
+
+                        controller->addSync(localFolderPath, node?node->getHandle():INVALID_HANDLE, addSyncStep);
                     }
                     else
                     {
@@ -1570,6 +1591,7 @@ int SettingsDialog::saveSettings()
             }
             else
             {
+                // TODO: loop via configSettings
                 for (int i = 0; i < model->getNumSyncedFolders(); i++)
                 {
                     Platform::addSyncToLeftPane(model->getLocalFolder(i),

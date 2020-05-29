@@ -12,8 +12,7 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
 {
     assert(api);
 
-    std::unique_ptr<MegaNode> node(api->getNodeByHandle(remoteHandle)); //TODO: threadify this
-    if (!localFolder.size() || !node)
+    if (!localFolder.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Adding invalid sync %1").arg(localFolder).toUtf8().constData());
         if (progress) progress->setFailed(MegaError::API_EARGS);
@@ -22,10 +21,9 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
 
-    api->syncFolder(localFolder.toUtf8().constData(), node.get(),
+    api->syncFolder(localFolder.toUtf8().constData(), remoteHandle,
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
-                        //TODO: consider moving onReqFinish handling from MegaApplication to here.
     }));
 }
 
@@ -221,7 +219,10 @@ void ActionProgress::setFailed(int errorCode, MegaRequest *request, MegaError *e
     {
         emit failedRequest(request, e);
     }
-    emit failed(errorCode);
+    else
+    {
+        emit failed(errorCode);
+    }
     setComplete();
 }
 

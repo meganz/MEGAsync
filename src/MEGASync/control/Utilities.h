@@ -23,6 +23,8 @@
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
 
+#define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
+
 struct PlanInfo
 {
     int amount;
@@ -223,6 +225,8 @@ public:
     // shows a ProgressDialog while some progress goes on. it returns a copy of the objet,
     // but the object will be deleted when the progress closes
     static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
+
+    static void delayFirstSyncStart();
 
 private:
     Utilities() {}

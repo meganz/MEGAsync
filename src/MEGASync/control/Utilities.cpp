@@ -872,6 +872,18 @@ QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, Q
     return progressDialog;
 }
 
+void Utilities::delayFirstSyncStart()
+{
+#ifdef __APPLE__
+    double time = Platform::getUpTime();
+
+    if (time >= 0 && time < Preferences::MAX_FIRST_SYNC_DELAY_S)
+    {
+        sleep(std::min(Preferences::MIN_FIRST_SYNC_DELAY_S, Preferences::MAX_FIRST_SYNC_DELAY_S - (int)time));
+    }
+#endif
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;

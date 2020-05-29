@@ -22,10 +22,39 @@ Model *Model::instance()
     return Model::model;
 }
 
-
 Model::Model() : QObject(), mutex(QMutex::Recursive)
 {
     preferences = Preferences::instance();
+}
+
+void Model::updateNodePath(mega::MegaHandle handle)
+{
+    for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
+    {
+        auto cs = it.value();
+        if (cs->getMegaHandle() == handle)
+        {
+            //TODO: threadify this.
+            std::unique_ptr<char []> remotePath{static_cast<MegaApplication *>(qApp)->getMegaApi()->getNodePathByNodeHandle(handle)};
+
+            if (remotePath && cs->getMegaFolder() != QString::fromUtf8(remotePath.get()))
+            {
+                cs->setMegaFolder(remotePath.get());
+                preferences->writeSyncSetting(cs);
+                emit syncStateChanged(cs);
+            }
+        }
+    }
+}
+
+void Model::onNodeMoved(mega::MegaHandle handle)
+{
+    updateNodePath(handle);
+}
+
+void Model::onNodeAttributesChanged(mega::MegaHandle handle)
+{
+    updateNodePath(handle);
 }
 
 void Model::removeSyncedFolder(int num)
@@ -124,7 +153,6 @@ void Model::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
 {
     Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
     //TODO: notifyItemChange?
-
 }
 
 std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState, const char *remotePath)
@@ -145,6 +173,7 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     if (configuredSyncsMap.contains(sync->getTag())) //existing configuration (an update or a resume after picked from old sync config)
     {
         cs = configuredSyncsMap[sync->getTag()];
+
         wasEnabled = cs->isEnabled();
         wasActive = cs->isActive();
         wasInactive = !cs->isActive(); //beware: empty MEGAsync's are in INITIAL_SYNC: i.e: active! [problematic for picked configs]
@@ -200,6 +229,17 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     {
         deactivateSync(cs);
     }
+
+#ifdef WIN32
+    // handle transition from MEGAsync <= 3.0.1.
+    // if resumed from cache and the previous version did not have left pane icons, add them
+    if (MegaSyncApp->getPrevVersion() && MegaSyncApp->getPrevVersion() <= 3001
+            && !preferences->leftPaneIconsDisabled()
+            && addingState == MegaSync::SyncAdded::FROM_CACHE && cs->isActive())
+    {
+        Platform::addSyncToLeftPane(cs->getLocalFolder(), cs->name(), cs->getSyncID());
+    }
+#endif
 
     emit syncStateChanged(cs);
     return cs;

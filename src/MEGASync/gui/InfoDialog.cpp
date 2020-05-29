@@ -922,7 +922,36 @@ void InfoDialog::addSync(MegaHandle h)
 
 
    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-   controller->addSync(localFolderPath, handle);
+
+   ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1")
+                                                    .arg(localFolderPath));
+
+   //Connect failing signals
+   connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
+   {
+       static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
+   }, Qt::QueuedConnection);
+   connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath](MegaRequest *request, MegaError *error)
+   {
+       if (error->getErrorCode())
+       {
+           auto reqCopy = request->copy();
+           auto errCopy = error->copy();
+
+           QObject temporary;
+           QObject::connect(&temporary, &QObject::destroyed, this, [reqCopy, errCopy, localFolderPath](){
+
+               // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
+               static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath);
+
+               delete reqCopy;
+               delete errCopy;
+               //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
+           }, Qt::QueuedConnection);
+       }
+   }, Qt::DirectConnection); //Note, we need direct connection to use request & error
+
+   controller->addSync(localFolderPath, handle, addSyncStep);
 }
 
 #ifdef __APPLE__

@@ -48,6 +48,9 @@ protected:
     void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
     void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
 
+    void updateNodePath(mega::MegaHandle handle);
+
+
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
 
@@ -55,6 +58,10 @@ protected:
     ///////////// END OF SYNCS ////////////////////
 
     void onSyncStateChanged(std::shared_ptr<mega::MegaSync> sync);
+
+public slots:
+    void onNodeMoved(mega::MegaHandle handle);
+    void onNodeAttributesChanged(mega::MegaHandle handle);
 
 public:
     void reset();

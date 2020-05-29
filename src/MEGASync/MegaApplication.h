@@ -141,6 +141,9 @@ public:
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
 
+    void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
+    void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
+
     mega::MegaApi *getMegaApi() { return megaApi; }
 
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
@@ -194,6 +197,8 @@ signals:
     void closeSetupWizard(int);
     void setupWizardCreated();
     void unblocked();
+    void nodeMoved(mega::MegaHandle handle);
+    void nodeAttributesChanged(mega::MegaHandle handle);
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -306,9 +311,6 @@ protected:
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
-//    void disableSyncs(); //TODO: delete
-    void enableSyncs();
-    void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
@@ -524,6 +526,8 @@ class MEGASyncDelegateListener: public mega::QTMegaListener
 public:
     MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent = NULL, MegaApplication *app = NULL);
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+
+    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *e) override;
 
 protected:
     MegaApplication *app;
