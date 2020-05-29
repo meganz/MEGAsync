@@ -9,7 +9,8 @@ using namespace mega;
 
 ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ActiveTransfersWidget)
+    ui(new Ui::ActiveTransfersWidget),
+    previousTotalUploads{0}, previousTotalDownloads{0}
 {
     ui->setupUi(this);
 
@@ -518,16 +519,37 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
 void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
 {
     totalUploads = api->getNumPendingUploads();
-    totalDownloads = api->getNumPendingDownloads();
-
-    ui->lRemainingDownloads->setText(QString::fromUtf8("%1").arg(totalDownloads));
-    const auto remainingDownText{totalDownloads == 1 ? tr("Remaining Download"): tr("Remaining Downloads")};
-    ui->lDescRemainingDown->setText(remainingDownText);
-
     ui->lRemainingUploads->setText(QString::fromUtf8("%1").arg(totalUploads));
-    const auto remainingUpText{totalUploads == 1 ? tr("Remaining Upload"): tr("Remaining Uploads")};
-    ui->lDescRemainingUp->setText(remainingUpText);
 
+    totalDownloads = api->getNumPendingDownloads();
+    ui->lRemainingDownloads->setText(QString::fromUtf8("%1").arg(totalDownloads));
+
+    const auto totalDownloadsChangeFromOne{previousTotalDownloads == 1 && totalDownloads != 1};
+    if(totalDownloadsChangeFromOne)
+    {
+        ui->lDescRemainingDown->setText(tr("Remaining Downloads"));
+    }
+
+    const auto totalDownloadsChangeToOne{previousTotalDownloads != 1 && totalDownloads == 1};
+    if(totalDownloadsChangeToOne)
+    {
+        ui->lDescRemainingDown->setText(tr("Remaining Download"));
+    }
+
+    const auto totalUploadsChangeFromOne{previousTotalUploads == 1 && totalUploads != 1};
+    if(totalUploadsChangeFromOne)
+    {
+        ui->lDescRemainingUp->setText(tr("Remaining Uploads"));
+    }
+
+    const auto totalUploadsChangeToOne{previousTotalUploads != 1 && totalUploads == 1};
+    if(totalUploadsChangeToOne)
+    {
+        ui->lDescRemainingUp->setText(tr("Remaining Upload"));
+    }
+
+    previousTotalDownloads = totalDownloads;
+    previousTotalUploads = totalUploads;
 
     if (totalDownloads)
     {
