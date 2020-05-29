@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>InfoDialog</class>
  <widget class="QDialog" name="InfoDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>576</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
@@ -1011,13 +1019,13 @@ margin-right: 4px;
                               <property name="minimumSize">
                                <size>
                                 <width>52</width>
-                                <height>44</height>
+                                <height>50</height>
                                </size>
                               </property>
                               <property name="maximumSize">
                                <size>
                                 <width>52</width>
-                                <height>44</height>
+                                <height>50</height>
                                </size>
                               </property>
                               <property name="currentIndex">
@@ -1027,7 +1035,7 @@ margin-right: 4px;
                                <property name="minimumSize">
                                 <size>
                                  <width>52</width>
-                                 <height>44</height>
+                                 <height>50</height>
                                 </size>
                                </property>
                                <property name="maximumSize">

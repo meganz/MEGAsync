@@ -7,11 +7,12 @@
 
 #define ALMOSTOVERQUOTA_VALUE 90
 
-const char DEFAULT_FGCOLOR[] = "#5969BD";
+const char DEFAULT_FGCOLOR[] = "#00BFA5";
 const char DEFAULT_BKCOLOR[] = "#E5E5E5";
 const char DEFAULT_OQCOLOR[] = "#DF4843";
-const char DEFAULT_ALMOSTOQCOLOR[] = "#FF6F00";
-const char DEFAULT_FGCOLOR_QUOTA[] = "#4A90E2";
+const char DEFAULT_ALMOSTOQCOLOR[] = "#F98400";
+const char DEFAULT_FGCOLOR_QUOTA[] = "#8DD0EF";
+const char DEFAULT_TEXT_COLOR[] = "#000000";
 
 class CircularUsageProgressBar : public QWidget
 {

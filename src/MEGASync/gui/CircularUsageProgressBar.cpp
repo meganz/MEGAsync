@@ -25,7 +25,8 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
 
 void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 {
-    double updatedOuterRadius = qMin(width(), height());
+    constexpr auto padingPixels{6};
+    double updatedOuterRadius = qMin(width(), height()) - padingPixels;
     if (updatedOuterRadius != outerRadius)
     {
         outerRadius = updatedOuterRadius;
@@ -38,7 +39,7 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
         foregroundPen.setWidth(static_cast<int>(penWidth));
     }
 
-    QRectF baseRect(penWidth / 2, penWidth / 2, outerRadius - penWidth, outerRadius - penWidth);
+    QRectF baseRect(penWidth / 2, (penWidth / 2)+padingPixels/2, outerRadius - penWidth, outerRadius - penWidth);
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
@@ -56,16 +57,24 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     //Draw percentage text
     double innerRadius = outerRadius - penWidth / 2;
     double delta = (outerRadius - innerRadius) / 2;
-    QRectF innerRect    = QRectF(delta, delta, innerRadius, innerRadius);
+    QRectF innerRect = QRectF(delta, delta+padingPixels/2, innerRadius, innerRadius);
     drawText(painter, innerRect, innerRadius, progressBarValue);
 
     if (progressBarValue >= ALMOSTOVERQUOTA_VALUE) // If value higher than almost oq threshold show warning image
     {
+        constexpr auto nativeOuterRadius{44.0};
+        const auto ratio{outerRadius / nativeOuterRadius};
+        constexpr auto iconSizePixels{24};
+        const auto pixmapTotalSideLength{ratio * iconSizePixels};
+        constexpr auto iconPaddingX{3};
+        const auto x{outerRadius - (pixmapTotalSideLength / 2) - iconPaddingX};
+        constexpr auto iconPaddingY{5};
+        const auto y{padingPixels/2 -iconPaddingY};
+        const auto width{pixmapTotalSideLength};
+        const auto height{pixmapTotalSideLength};
         const auto icon{progressBarValue >= CircularUsageProgressBar::MAXVALUE ? markFull : markWarning};
-        int pixWidth =  outerRadius / 44.0 * 19;
-        int padding =  outerRadius / 44.0;
-        painter.drawPixmap(outerRadius - pixWidth / 2 + padding, 0 + padding , pixWidth - 2 * padding,
-                           pixWidth - 2 * padding, icon.pixmap(pixWidth - 2 * padding, pixWidth - 2));
+        const auto pixmap{icon.pixmap(iconSizePixels, iconSizePixels)};
+        painter.drawPixmap(x, y, width, height, pixmap);
     }
 }
 
@@ -100,7 +109,7 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
     p.setFont(f);
 
     QRectF textRect(innerRect);
-    p.setPen(currentColor);
+    p.setPen(DEFAULT_TEXT_COLOR);
     p.drawText(textRect, Qt::AlignCenter, textValue);
 }
 
