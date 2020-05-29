@@ -6203,12 +6203,12 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             return;
         }
 
-#ifdef _WIN32
+#ifndef __APPLE__
         if (reason == QSystemTrayIcon::Context)
         {
             return;
         }
-#endif
+#endif /* ! __APPLE__ */
 
 #ifndef __APPLE__
         if (isLinux)
