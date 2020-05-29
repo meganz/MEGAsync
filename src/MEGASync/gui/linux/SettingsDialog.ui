@@ -946,6 +946,10 @@ background:transparent;</string>
                     <height>23</height>
                    </size>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">padding-right: 12px;
+padding-left: 12px;</string>
+                  </property>
                   <property name="text">
                    <string>Change password</string>
                   </property>
