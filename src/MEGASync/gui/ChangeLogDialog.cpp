@@ -37,10 +37,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
                           "}"
                  ""));
 
-    auto copyRightText{ui->lCopyright->text().arg(QDate::currentDate().year())};
-    copyRightText.replace(QStringLiteral("Copyright"), tr("Copyright"));
-    copyRightText.replace(QStringLiteral("All rights reserved"), tr("All rights reserved"));
-    ui->lCopyright->setText(copyRightText);
+    setTranslatedCopyrightMessage();
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
@@ -58,11 +55,19 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 {
     QString changelog = QCoreApplication::translate("Preferences", notes.toUtf8().constData());
     ui->tChangelog->setHtml(QString::fromUtf8("<p style='line-height: 119%;'><span style='margin: 16px; font-family: Lato; font-size:11px; color: #333333;'>") +
-                             tr("New in this version:") +
-                             QString::fromUtf8("</span></p>") +
-                             QString::fromUtf8("<p style=' line-height: 146%;'><span style='font-family: Lato; font-size:11px; color: #666666;'>") +
-                             changelog.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
-                             QString::fromUtf8("</span></p>"));
+                            tr("New in this version:") +
+                            QString::fromUtf8("</span></p>") +
+                            QString::fromUtf8("<p style=' line-height: 146%;'><span style='font-family: Lato; font-size:11px; color: #666666;'>") +
+                            changelog.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
+                            QString::fromUtf8("</span></p>"));
+}
+
+void ChangeLogDialog::setTranslatedCopyrightMessage() const
+{
+    auto copyRightText{ui->lCopyright->text().arg(QDate::currentDate().year())};
+    copyRightText.replace(QStringLiteral("Copyright"), tr("Copyright"));
+    copyRightText.replace(QStringLiteral("All rights reserved"), tr("All rights reserved"));
+    ui->lCopyright->setText(copyRightText);
 }
 
 void ChangeLogDialog::on_bTerms_clicked()
@@ -95,6 +100,7 @@ void ChangeLogDialog::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
         setChangeLogNotes(Preferences::CHANGELOG);
+        setTranslatedCopyrightMessage();
     }
     QDialog::changeEvent(event);
 }

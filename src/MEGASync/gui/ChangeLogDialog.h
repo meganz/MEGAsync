@@ -22,6 +22,7 @@ private:
     HighDpiResize highDpiResize;
 
     void setChangeLogNotes(QString notes);
+    void setTranslatedCopyrightMessage() const;
 
 protected:
     void changeEvent(QEvent *event);
