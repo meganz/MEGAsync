@@ -1147,6 +1147,8 @@ void InfoDialog::reset()
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
     ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
+    ui->bTransferManager->reset();
+
     ui->wBlocked->hide();
     shownBlockedError = false;
 
