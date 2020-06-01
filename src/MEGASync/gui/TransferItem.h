@@ -85,7 +85,7 @@ protected:
     bool cancelButtonEnabled;
     bool isSyncTransfer;
     long long dsFinishedTime;
-    bool transferFinishedWhileBlocked;
+    bool mTransferFinishedWhileBlocked;
 
 };
 
