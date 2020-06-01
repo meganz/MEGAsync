@@ -752,6 +752,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
         <translation type="unfinished">Too many requests. Please wait.</translation>
     </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
+        <translation type="unfinished">You have entered your current password, please enter a new password.</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmSSLexception</name>
