@@ -1715,6 +1715,8 @@ void MegaApplication::start()
     bwOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
+    finishedBlockedTransfers.clear();
+
     for (unsigned i = 3; i--; )
     {
         inflightUserStats[i] = false;
@@ -4925,6 +4927,16 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
             infoDialog->updateDialogState();
         }
     }
+}
+
+void MegaApplication::removeFinishedBlockedTransfer(int transferTag)
+{
+    finishedBlockedTransfers.remove(transferTag);
+}
+
+bool MegaApplication::finishedTransfersWhileBlocked(int transferTag)
+{
+    return finishedBlockedTransfers.contains(transferTag);
 }
 
 void MegaApplication::removeAllFinishedTransfers()
@@ -8281,6 +8293,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed(),
                                              QString::fromUtf8(transfer->getPath()));
+    }
+
+    if (blockState)
+    {
+        finishedBlockedTransfers.insert(transfer->getTag());
     }
 
     if (transferManager)
