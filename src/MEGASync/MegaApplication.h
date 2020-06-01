@@ -160,6 +160,10 @@ public:
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
     void showVerifyAccountInfo();
+
+    void removeFinishedBlockedTransfer(int transferTag);
+    bool finishedTransfersWhileBlocked(int transferTag);
+
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
@@ -460,6 +464,7 @@ protected:
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
+    QSet<int> finishedBlockedTransfers;
 
     QHash<unsigned long long, TransferMetaData*> transferAppData;
 
