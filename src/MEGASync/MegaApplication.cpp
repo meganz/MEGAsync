@@ -5179,7 +5179,7 @@ void MegaApplication::uploadActionClicked()
     multiUploadFileDialog = NULL;
 }
 
-void MegaApplication::addSyncActionClicked()
+bool MegaApplication::showSyncOverquotaDialog()
 {
     const auto bandwidthFull{bandwidthOverquotaState == Preferences::OverquotaState::full};
     const auto storageFull{storageState == MegaApi::STORAGE_STATE_RED};
@@ -5193,7 +5193,7 @@ void MegaApplication::addSyncActionClicked()
         const auto result{dialog->exec()};
         if(result == QDialog::Rejected)
         {
-            return;
+            return false;
         }
     }
 
@@ -5206,27 +5206,24 @@ void MegaApplication::addSyncActionClicked()
         const auto result{dialog->exec()};
         if(result == QDialog::Rejected)
         {
-            return;
+            return false;
         }
     }
 
     timeDiff = std::chrono::system_clock::now() - preferences->getWhenStorageAndBandwidthFullSyncDialogWasShown();
     dialogEnabled = timeDiff > overquotaDialogDisableTime;
-    if(storageFull && bandwidthFull)
+    if(storageFull && bandwidthFull && dialogEnabled)
     {
         preferences->setWhenStorageAndBandwidthFullSyncDialogWasShown(std::chrono::system_clock::now());
         const auto dialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::storageAndBandwidthFullSyncs)};
         const auto result{dialog->exec()};
         if(result == QDialog::Rejected)
         {
-            return;
+            return false;
         }
     }
 
-    if(infoDialog)
-    {
-        infoDialog->addSync();
-    }
+    return true;
 }
 
 void MegaApplication::downloadActionClicked()
@@ -6037,7 +6034,9 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
         return;
     }
 
-    if (infoDialog)
+    const auto dissmised{showSyncOverquotaDialog()};
+
+    if (infoDialog && !dissmised)
     {
         infoDialog->addSync(targetFolder);
     }
@@ -6766,7 +6765,7 @@ void MegaApplication::createAppMenus()
     if (num == 0)
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync_folder.png")), true);
-        connect(addSyncAction, &MenuItemAction::triggered, this, &MegaApplication::addSyncActionClicked, Qt::QueuedConnection);
+        connect(addSyncAction, &MenuItemAction::triggered, infoDialog, QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
     }
     else
     {
@@ -6819,7 +6818,7 @@ void MegaApplication::createAppMenus()
         if (!activeFolders)
         {
             addSyncAction->setLabelText(tr("Add Sync"));
-            connect(addSyncAction, &MenuItemAction::triggered, this, &MegaApplication::addSyncActionClicked, Qt::QueuedConnection);
+            connect(addSyncAction, &MenuItemAction::triggered, infoDialog, QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
         }
         else
         {
@@ -6836,8 +6835,7 @@ void MegaApplication::createAppMenus()
                 if ((num > 1) || (firstSyncHandle != rootHandle))
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
-                    connect(addAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
-                    connect(addAction, &MenuItemAction::triggered, this, &MegaApplication::addSyncActionClicked);
+                    connect(addAction, &MenuItemAction::triggered, infoDialog, QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 
                     if (activeFolders)
                     {

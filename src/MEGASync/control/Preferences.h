@@ -14,7 +14,7 @@
 
 Q_DECLARE_METATYPE(QList<long long>)
 Q_DECLARE_METATYPE(std::chrono::steady_clock::time_point)
-constexpr auto overquotaDialogDisableTime{std::chrono::seconds{15}};
+constexpr auto overquotaDialogDisableTime{std::chrono::hours{12}};
 
 class Preferences : public QObject
 {

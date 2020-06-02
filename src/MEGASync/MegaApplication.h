@@ -168,6 +168,7 @@ public:
     SetupWizard *getSetupWizard() const;
     void fetchNodes();
     void whyAmIBlocked(bool periodicCall = false);
+    bool showSyncOverquotaDialog();
 
 signals:
     void startUpdaterThread();
@@ -196,7 +197,6 @@ public slots:
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
-    void addSyncActionClicked();
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
