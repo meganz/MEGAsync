@@ -692,6 +692,8 @@ void GuestWidget::reset_UI_props()
 {
     ui->lEmailSent->setVisible(false);
     ui->bVerifyEmail->setEnabled(true);
+
+    ui->leCode->clear();
 }
 
 void GuestWidget::changeEvent(QEvent *event)
