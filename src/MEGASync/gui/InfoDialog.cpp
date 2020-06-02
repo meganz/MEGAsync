@@ -812,6 +812,7 @@ void InfoDialog::updateDialogState()
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("You're running out of storage space."));
         ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
+        ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
@@ -824,6 +825,7 @@ void InfoDialog::updateDialogState()
         ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
                                 + QString::fromUtf8("<br>")
                                 + tr("Please upgrade to PRO."));
+        ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
@@ -836,6 +838,7 @@ void InfoDialog::updateDialogState()
         ui->lOQTitle->setText(tr("Limited available transfer quota"));
         ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota available for your IP"
                                 " address and can therefore be interrupted."));
+        ui->bBuyQuota->setText(tr("Upgrade"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
@@ -849,6 +852,7 @@ void InfoDialog::updateDialogState()
         ui->lOQDesc->setText(tr("All downloads are currently disabled.")
                                 + QString::fromUtf8("<br>")
                                 + tr("Please upgrade to PRO."));
+        ui->bBuyQuota->setText(tr("Upgrade"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();

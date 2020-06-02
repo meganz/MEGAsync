@@ -26,6 +26,9 @@ public:
 
 private:
     Ui::OverquotaFullDialog *ui;
+
+private slots:
+    void onUpgradeClicked();
 };
 
 #endif // STORAGEFULLDIALOG_H

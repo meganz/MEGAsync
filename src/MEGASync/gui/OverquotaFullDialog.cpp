@@ -1,13 +1,17 @@
 #include "OverquotaFullDialog.h"
 #include "ui_OverquotaFullDialog.h"
 #include "mega/types.h"
+#include "Utilities.h"
+#include <QtConcurrent/QtConcurrent>
+#include <QDesktopServices>
 
 OverquotaFullDialog::OverquotaFullDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OverquotaFullDialog)
 {
     ui->setupUi(this);
-    connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::close);
+    connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::accept);
+    connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverquotaFullDialog::onUpgradeClicked);
 }
 
 OverquotaFullDialog::~OverquotaFullDialog()
@@ -89,4 +93,12 @@ std::unique_ptr<OverquotaFullDialog> OverquotaFullDialog::createDialog(Overquota
     }
 
     return dialog;
+}
+
+void OverquotaFullDialog::onUpgradeClicked()
+{
+    auto url{QString::fromUtf8("mega://#pro")};
+    Utilities::getPROurlWithParameters(url);
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    QDialog::reject();
 }
