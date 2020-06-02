@@ -2,6 +2,7 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialog.cpp \
+    $$PWD/OverquotaFullDialog.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -69,6 +70,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
+    $$PWD/OverquotaFullDialog.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -188,7 +190,8 @@ win32 {
                 $$PWD/win/AlertFilterType.ui \
                 $$PWD/win/BugReportDialog.ui \
                 $$PWD/win/LockedPopOver.ui \
-                $$PWD/win/VerifyLockMessage.ui
+                $$PWD/win/VerifyLockMessage.ui \
+                $$PWD/win/OverquotaFullDialog.ui
 }
 
 macx {
@@ -241,7 +244,8 @@ macx {
                 $$PWD/macx/AlertFilterType.ui \
                 $$PWD/macx/BugReportDialog.ui \
                 $$PWD/macx/LockedPopOver.ui \
-                $$PWD/macx/VerifyLockMessage.ui
+                $$PWD/macx/VerifyLockMessage.ui \
+                $$PWD/macx/OverquotaFullDialog.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -307,7 +311,8 @@ unix:!macx {
                 $$PWD/linux/AlertFilterType.ui \
                 $$PWD/linux/BugReportDialog.ui \
                 $$PWD/linux/LockedPopOver.ui \
-                $$PWD/linux/VerifyLockMessage.ui
+                $$PWD/linux/VerifyLockMessage.ui \
+                $$PWD/linux/OverquotaFullDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

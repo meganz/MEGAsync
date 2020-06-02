@@ -250,6 +250,14 @@ const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("
 const QString Preferences::overTransferDismissExecutionKey = QString::fromAscii("overTransferDismissExecution");
 const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLight");
 
+const QString Preferences::whenBandwidthFullSyncDialogWasShownKey = QString::fromAscii("whenBandwidthFullSyncDialogWasShown");
+const QString Preferences::whenBandwidthFullDownloadsDialogWasShownKey = QString::fromAscii("whenBandwidthFullDownloadsDialogWasShown");
+const QString Preferences::whenBandwidthFullImportLinksDialogWasShownKey = QString::fromAscii("whenBandwidthFullImportLinksDialogWasShown");
+const QString Preferences::whenBandwidthFullStreamDialogWasShownKey = QString::fromAscii("whenBandwidthFullStreamDialogWasShown");
+const QString Preferences::whenStorageFullUploadsDialogWasShownKey = QString::fromAscii("whenStorageFullUploadsDialogWasShown");
+const QString Preferences::whenStorageFullSyncsDialogWasShownKey = QString::fromAscii("whenStorageFullSyncsDialogWasShown");
+const QString Preferences::whenStorageAndBandwidthFullSyncDialogWasShownKey = QString::fromAscii("whenStorageAndBandwidthFullSyncDialogWasShown");
+
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
@@ -481,6 +489,13 @@ Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
     almostOverStorageDismissExecution = -1;
     overStorageDismissExecution = -1;
     lastTransferNotification = 0;
+    whenBandwidthFullSyncDialogWasShown = std::chrono::system_clock::time_point();
+    whenBandwidthFullDownloadsDialogWasShown = std::chrono::system_clock::time_point();
+    whenBandwidthFullImportLinksDialogWasShown = std::chrono::system_clock::time_point();
+    whenBandwidthFullStreamDialogWasShown = std::chrono::system_clock::time_point();
+    whenStorageFullUploadsDialogWasShown = std::chrono::system_clock::time_point();
+    whenStorageFullSyncsDialogWasShown = std::chrono::system_clock::time_point();
+    whenStorageAndBandwidthFullSyncDialogWasShown = std::chrono::system_clock::time_point();
     clearTemporalBandwidth();
 }
 
@@ -1105,6 +1120,168 @@ void Preferences::setTransferOverquotaDismissExecution(long long timestamp)
     settings->setValue(overTransferDismissExecutionKey, timestamp);
     setCachedValue(overTransferDismissExecutionKey, timestamp);
     mutex.unlock();
+}
+
+std::chrono::system_clock::time_point getTimePoint(const QString& key, EncryptedSettings * settings)
+{
+    const auto defaultTimePoint{std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::time_point()).time_since_epoch().count()};
+    auto value{settings->value(key, static_cast<long long>(defaultTimePoint)).toLongLong()};
+    std::chrono::milliseconds durationMillis(value);
+    return std::chrono::system_clock::time_point{durationMillis};
+}
+
+std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullSyncDialogWasShown()
+{
+    if(whenBandwidthFullSyncDialogWasShown != std::chrono::system_clock::time_point())
+    {
+        return whenBandwidthFullSyncDialogWasShown;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    whenBandwidthFullSyncDialogWasShown = getTimePoint(whenBandwidthFullSyncDialogWasShownKey, settings);
+    return whenBandwidthFullSyncDialogWasShown;
+}
+
+void Preferences::setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(whenBandwidthFullSyncDialogWasShownKey, static_cast<long long>(timePointMillis));
+    setCachedValue(whenBandwidthFullSyncDialogWasShownKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullDownloadsDialogWasShown()
+{
+    if(whenBandwidthFullDownloadsDialogWasShown != std::chrono::system_clock::time_point())
+    {
+        return whenBandwidthFullDownloadsDialogWasShown;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    whenBandwidthFullDownloadsDialogWasShown = getTimePoint(whenBandwidthFullDownloadsDialogWasShownKey, settings);
+    return whenBandwidthFullDownloadsDialogWasShown;
+}
+
+void Preferences::setWhenBandwidthFullDownloadsDialogWasShown(std::chrono::system_clock::time_point timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(whenBandwidthFullDownloadsDialogWasShownKey, static_cast<long long>(timePointMillis));
+    setCachedValue(whenBandwidthFullDownloadsDialogWasShownKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullImportLinksDialogWasShown()
+{
+    if(whenBandwidthFullImportLinksDialogWasShown != std::chrono::system_clock::time_point())
+    {
+        return whenBandwidthFullImportLinksDialogWasShown;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    whenBandwidthFullImportLinksDialogWasShown = getTimePoint(whenBandwidthFullImportLinksDialogWasShownKey, settings);
+    return whenBandwidthFullImportLinksDialogWasShown;
+}
+
+void Preferences::setWhenBandwidthFullImportLinksDialogWasShown(std::chrono::system_clock::time_point timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(whenBandwidthFullImportLinksDialogWasShownKey, static_cast<long long>(timePointMillis));
+    setCachedValue(whenBandwidthFullImportLinksDialogWasShownKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullStreamDialogWasShown()
+{
+    if(whenBandwidthFullStreamDialogWasShown != std::chrono::system_clock::time_point())
+    {
+        return whenBandwidthFullStreamDialogWasShown;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    whenBandwidthFullStreamDialogWasShown = getTimePoint(whenBandwidthFullStreamDialogWasShownKey, settings);
+    return whenBandwidthFullStreamDialogWasShown;
+}
+
+void Preferences::setWhenBandwidthFullStreamDialogWasShown(std::chrono::system_clock::time_point timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(whenBandwidthFullStreamDialogWasShownKey, static_cast<long long>(timePointMillis));
+    setCachedValue(whenBandwidthFullStreamDialogWasShownKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getWhenStorageFullUploadsDialogWasShown()
+{
+    if(whenStorageFullUploadsDialogWasShown != std::chrono::system_clock::time_point())
+    {
+        return whenStorageFullUploadsDialogWasShown;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    whenStorageFullUploadsDialogWasShown = getTimePoint(whenStorageFullUploadsDialogWasShownKey, settings);
+    return whenStorageFullUploadsDialogWasShown;
+}
+
+void Preferences::setWhenStorageFullUploadsDialogWasShown(std::chrono::system_clock::time_point timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(whenStorageFullUploadsDialogWasShownKey, static_cast<long long>(timePointMillis));
+    setCachedValue(whenStorageFullUploadsDialogWasShownKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getWhenStorageFullSyncsDialogWasShown()
+{
+    if(whenStorageFullSyncsDialogWasShown != std::chrono::system_clock::time_point())
+    {
+        return whenStorageFullSyncsDialogWasShown;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    whenStorageFullSyncsDialogWasShown = getTimePoint(whenStorageFullSyncsDialogWasShownKey, settings);
+    return whenStorageFullSyncsDialogWasShown;
+}
+
+void Preferences::setWhenStorageFullSyncsDialogWasShown(std::chrono::system_clock::time_point timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(whenStorageFullSyncsDialogWasShownKey, static_cast<long long>(timePointMillis));
+    setCachedValue(whenStorageFullSyncsDialogWasShownKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getWhenStorageAndBandwidthFullSyncDialogWasShown()
+{
+    if(whenStorageAndBandwidthFullSyncDialogWasShown != std::chrono::system_clock::time_point())
+    {
+        return whenStorageAndBandwidthFullSyncDialogWasShown;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    whenStorageAndBandwidthFullSyncDialogWasShown = getTimePoint(whenStorageAndBandwidthFullSyncDialogWasShownKey, settings);
+    return whenStorageAndBandwidthFullSyncDialogWasShown;
+}
+
+void Preferences::setWhenStorageAndBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(whenStorageAndBandwidthFullSyncDialogWasShownKey, static_cast<long long>(timePointMillis));
+    setCachedValue(whenStorageAndBandwidthFullSyncDialogWasShownKey, static_cast<long long>(timePointMillis));
 }
 
 

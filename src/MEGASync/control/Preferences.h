@@ -10,8 +10,11 @@
 #include "control/EncryptedSettings.h"
 #include <assert.h>
 #include "megaapi.h"
+#include <chrono>
 
 Q_DECLARE_METATYPE(QList<long long>)
+Q_DECLARE_METATYPE(std::chrono::steady_clock::time_point)
+constexpr auto overquotaDialogDisableTime{std::chrono::seconds{15}};
 
 class Preferences : public QObject
 {
@@ -146,6 +149,21 @@ public:
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
     void setTransferOverquotaDismissExecution(long long timestamp);
+
+    std::chrono::system_clock::time_point getWhenBandwidthFullSyncDialogWasShown();
+    void setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getWhenBandwidthFullDownloadsDialogWasShown();
+    void setWhenBandwidthFullDownloadsDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getWhenBandwidthFullImportLinksDialogWasShown();
+    void setWhenBandwidthFullImportLinksDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getWhenBandwidthFullStreamDialogWasShown();
+    void setWhenBandwidthFullStreamDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getWhenStorageFullUploadsDialogWasShown();
+    void setWhenStorageFullUploadsDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getWhenStorageFullSyncsDialogWasShown();
+    void setWhenStorageFullSyncsDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getWhenStorageAndBandwidthFullSyncDialogWasShown();
+    void setWhenStorageAndBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint);
 
     int getStorageState();
     void setStorageState(int value);
@@ -399,7 +417,7 @@ public:
         STATE_OVER_STORAGE_DISMISSED
     };
 
-    enum class TransferOverquotaState
+    enum class OverquotaState
     {
         ok,
         warning,
@@ -513,6 +531,13 @@ protected:
     long long overStorageDismissExecution;
     long long overTransferDismissExecution;
     long long lastTransferNotification;
+    std::chrono::system_clock::time_point whenBandwidthFullSyncDialogWasShown;
+    std::chrono::system_clock::time_point whenBandwidthFullDownloadsDialogWasShown;
+    std::chrono::system_clock::time_point whenBandwidthFullImportLinksDialogWasShown;
+    std::chrono::system_clock::time_point whenBandwidthFullStreamDialogWasShown;
+    std::chrono::system_clock::time_point whenStorageFullUploadsDialogWasShown;
+    std::chrono::system_clock::time_point whenStorageFullSyncsDialogWasShown;
+    std::chrono::system_clock::time_point whenStorageAndBandwidthFullSyncDialogWasShown;
 
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
@@ -546,6 +571,13 @@ protected:
     static const QString overStorageDismissExecutionKey;
     static const QString overTransferDismissExecutionKey;
     static const QString storageStateQKey;
+    static const QString whenBandwidthFullSyncDialogWasShownKey;
+    static const QString whenBandwidthFullDownloadsDialogWasShownKey;
+    static const QString whenBandwidthFullImportLinksDialogWasShownKey;
+    static const QString whenBandwidthFullStreamDialogWasShownKey;
+    static const QString whenStorageFullUploadsDialogWasShownKey;
+    static const QString whenStorageFullSyncsDialogWasShownKey;
+    static const QString whenStorageAndBandwidthFullSyncDialogWasShownKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;

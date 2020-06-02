@@ -73,7 +73,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     QDialog(parent),
     ui(new Ui::InfoDialog),
     transferOverquotaDismissed{false},
-    transferOverquotaState{Preferences::TransferOverquotaState::ok}
+    transferOverquotaState{Preferences::OverquotaState::ok}
 {
     ui->setupUi(this);
 
@@ -333,7 +333,7 @@ void InfoDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 }
 
-void InfoDialog::setTransferOverquotaState(Preferences::TransferOverquotaState state)
+void InfoDialog::setTransferOverquotaState(Preferences::OverquotaState state)
 {
     transferOverquotaState = state;
 }
@@ -429,7 +429,7 @@ void InfoDialog::setUsage()
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         QString usageColor;
-        if(transferOverquotaState == Preferences::TransferOverquotaState::ok)
+        if(transferOverquotaState == Preferences::OverquotaState::ok)
         {
             ui->wCircularQuota->setEmptyBarTotalValueUnknown();
             usageColor = QString::fromUtf8("#666666");
@@ -828,7 +828,7 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferOverquotaState == Preferences::TransferOverquotaState::warning &&
+    else if(transferOverquotaState == Preferences::OverquotaState::warning &&
             !transferOverquotaDismissed)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
@@ -840,7 +840,7 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferOverquotaState == Preferences::TransferOverquotaState::full &&
+    else if(transferOverquotaState == Preferences::OverquotaState::full &&
             !transferOverquotaDismissed)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));

@@ -196,6 +196,7 @@ public slots:
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
+    void addSyncActionClicked();
     void loginActionClicked();
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
@@ -401,6 +402,7 @@ protected:
     long long lastTsErrorMessageShown;
     bool almostOQ;
     int storageState;
+    Preferences::OverquotaState bandwidthOverquotaState;
     int appliedStorageState;
     long long receivedStorageSum;
     long long maxMemoryUsage;

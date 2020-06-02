@@ -8,6 +8,7 @@
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
+#include "OverquotaFullDialog.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -16,7 +17,6 @@
 #include <QNetworkProxy>
 #include <QSettings>
 #include <QToolTip>
-
 
 #include <assert.h>
 
@@ -824,7 +824,8 @@ void MegaApplication::loadDataPath()
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
-    QApplication(argc, argv)
+    QApplication(argc, argv),
+    bandwidthOverquotaState(Preferences::OverquotaState::ok)
 {
 #ifdef _WIN32
     for (QScreen *s: this->screens() )
@@ -3126,7 +3127,7 @@ void MegaApplication::checkOverquotaBandwidth()
     if (QDateTime::currentMSecsSinceEpoch() / 1000 > bandwidthOverquotaTimestamp) //we have waited enough
     {
         bandwidthOverquotaTimestamp = 0;
-        infoDialog->setTransferOverquotaState(Preferences::TransferOverquotaState::ok);
+        infoDialog->setTransferOverquotaState(Preferences::OverquotaState::ok);
         preferences->clearTemporalBandwidth();
         if (bandwithOverquotaDialog)
         {
@@ -4969,6 +4970,14 @@ void MegaApplication::importLinks()
         return;
     }
 
+    auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenBandwidthFullImportLinksDialogWasShown()};
+    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(bandwidthOverquotaState == Preferences::OverquotaState::full && dialogEnabled)
+    {
+        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullImportLink)};
+        bandwidthFullDialog->exec();
+    }
+
     if (!preferences->logged())
     {
         openInfoWizard();
@@ -5083,6 +5092,15 @@ void MegaApplication::uploadActionClicked()
         return;
     }
 
+    const auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenStorageFullUploadsDialogWasShown()};
+    const auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(storageState == MegaApi::STORAGE_STATE_RED && dialogEnabled)
+    {
+        preferences->setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::now());
+        const auto storageFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::storageFullUploads)};
+        storageFullDialog->exec();
+    }
+
     #ifdef __APPLE__
          if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_7)
          {
@@ -5152,11 +5170,54 @@ void MegaApplication::uploadActionClicked()
     multiUploadFileDialog = NULL;
 }
 
+void MegaApplication::addSyncActionClicked()
+{
+    const auto bandwidthFull{bandwidthOverquotaState == Preferences::OverquotaState::full};
+    const auto storageFull{storageState == MegaApi::STORAGE_STATE_RED};
+
+    auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenBandwidthFullSyncDialogWasShown()};
+    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(bandwidthFull && !storageFull && dialogEnabled)
+    {
+        const auto dialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullSync)};
+        dialog->exec();
+    }
+
+    timeDiff = std::chrono::system_clock::now() - preferences->getWhenStorageFullSyncsDialogWasShown();
+    dialogEnabled = timeDiff > overquotaDialogDisableTime;
+    if(storageFull && !bandwidthFull && dialogEnabled)
+    {
+        const auto dialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::storageFullSyncs)};
+        dialog->exec();
+    }
+
+    timeDiff = std::chrono::system_clock::now() - preferences->getWhenStorageAndBandwidthFullSyncDialogWasShown();
+    dialogEnabled = timeDiff > overquotaDialogDisableTime;
+    if(storageFull && bandwidthFull)
+    {
+        const auto dialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::storageAndBandwidthFullSyncs)};
+        dialog->exec();
+    }
+
+    if(infoDialog)
+    {
+        infoDialog->addSync();
+    }
+}
+
 void MegaApplication::downloadActionClicked()
 {
     if (appfinished)
     {
         return;
+    }
+
+    auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenBandwidthFullDownloadsDialogWasShown()};
+    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(bandwidthOverquotaState == Preferences::OverquotaState::full && dialogEnabled)
+    {
+        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullDownlads)};
+        bandwidthFullDialog->exec();
     }
 
     if (downloadNodeSelector)
@@ -5202,6 +5263,14 @@ void MegaApplication::streamActionClicked()
     if (appfinished)
     {
         return;
+    }
+
+    auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenBandwidthFullStreamDialogWasShown()};
+    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(bandwidthOverquotaState == Preferences::OverquotaState::full && dialogEnabled)
+    {
+        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullStream)};
+        bandwidthFullDialog->exec();
     }
 
     if (streamSelector)
@@ -6663,7 +6732,7 @@ void MegaApplication::createAppMenus()
     if (num == 0)
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync_folder.png")), true);
-        connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()),Qt::QueuedConnection);
+        connect(addSyncAction, &MenuItemAction::triggered, this, &MegaApplication::addSyncActionClicked, Qt::QueuedConnection);
     }
     else
     {
@@ -6716,7 +6785,7 @@ void MegaApplication::createAppMenus()
         if (!activeFolders)
         {
             addSyncAction->setLabelText(tr("Add Sync"));
-            connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
+            connect(addSyncAction, &MenuItemAction::triggered, this, &MegaApplication::addSyncActionClicked, Qt::QueuedConnection);
         }
         else
         {
@@ -6734,6 +6803,7 @@ void MegaApplication::createAppMenus()
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
                     connect(addAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
+                    connect(addAction, &MenuItemAction::triggered, this, &MegaApplication::addSyncActionClicked);
 
                     if (activeFolders)
                     {
@@ -7689,7 +7759,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
         {
             bandwidthOverquotaTimestamp = 0;
-            infoDialog->setTransferOverquotaState(Preferences::TransferOverquotaState::ok);
+            infoDialog->setTransferOverquotaState(Preferences::OverquotaState::ok);
             preferences->clearTemporalBandwidth();
 #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
@@ -8448,7 +8518,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 #if defined(__MACH__) || defined(_WIN32)
             trayIcon->setContextMenu(initialMenu.get());
 #endif
-            infoDialog->setTransferOverquotaState(Preferences::TransferOverquotaState::full);
+            infoDialog->setTransferOverquotaState(Preferences::OverquotaState::full);
+            bandwidthOverquotaState = Preferences::OverquotaState::full;
             openBandwidthOverquotaDialog();
         }
     }

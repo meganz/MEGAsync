@@ -95,7 +95,7 @@ public:
     long long getUnseenNotifications() const;
     void closeSyncsMenu();
     int getLoggedInMode() const;
-    void setTransferOverquotaState(Preferences::TransferOverquotaState state);
+    void setTransferOverquotaState(Preferences::OverquotaState state);
 
 private:
     void drawAvatar(QString email);
@@ -192,7 +192,7 @@ private:
     bool overQuotaState;
     bool transferOverquotaDismissed;
     int storageState;
-    Preferences::TransferOverquotaState transferOverquotaState;
+    Preferences::OverquotaState transferOverquotaState;
     int actualAccountType;
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;
