@@ -679,7 +679,7 @@ void GuestWidget::page_login2FA()
     }
 
     ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
-                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style='color:#666666; text-decoration:none; font-size:11px; font-family: \"Lato\"'>"))
+                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style='color:#333333; text-decoration:none; font-size:13px; font-family: \"SF UI Text\"'>"))
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 
     ui->sPages->setCurrentWidget(ui->pLogin2FA);
