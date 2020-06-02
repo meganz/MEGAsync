@@ -8123,7 +8123,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             emit unblocked();
 
-            requestUserData();
+            requestUserData(); // querying some user attributes might have been rejected: we query them again            
             restoreSyncs();
 
             //in any case we reflect the change in the InfoDialog
