@@ -1905,6 +1905,27 @@ void MegaApplication::start()
     }
 }
 
+void MegaApplication::requestUserData()
+{
+    if (!megaApi)
+    {
+        return;
+    }
+
+    megaApi->getPricing();
+    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
+    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
+    megaApi->getFileVersionsOption();
+    megaApi->getPSA();
+
+    const char *email = megaApi->getMyEmail();
+    if (email)
+    {
+        megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
+        delete [] email;
+    }
+}
+
 void MegaApplication::loggedIn(bool fromWizard)
 {
     if (appfinished)
@@ -1935,18 +1956,7 @@ void MegaApplication::loggedIn(bool fromWizard)
     // ask for storage on first login (fromWizard), or when cached value is invalid
     updateUserStats(fromWizard || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN, true, true, true, fromWizard ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
 
-    megaApi->getPricing();
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
-    megaApi->getFileVersionsOption();
-    megaApi->getPSA();
-
-    const char *email = megaApi->getMyEmail();
-    if (email)
-    {
-        megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-        delete [] email;
-    }
+    requestUserData();
 
     if (settingsDialog)
     {
@@ -8113,6 +8123,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             emit unblocked();
 
+            requestUserData(); // querying some user attributes might have been rejected: we query them again            
             restoreSyncs();
 
             //in any case we reflect the change in the InfoDialog
