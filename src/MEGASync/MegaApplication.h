@@ -314,6 +314,7 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+    void requestUserData();
 
     // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
     bool amIOverTemporalQuotaBandwidth();
