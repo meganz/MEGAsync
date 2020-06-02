@@ -314,7 +314,7 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
-    void requestUserData();
+    void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
 
     // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
     bool amIOverTemporalQuotaBandwidth();
