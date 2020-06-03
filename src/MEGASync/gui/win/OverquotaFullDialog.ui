@@ -195,12 +195,12 @@
          </property>
          <property name="icon">
           <iconset resource="../Resources_win.qrc">
-           <normaloff>:/images/transfer_empty_100.png</normaloff>:/images/transfer_empty_100.png</iconset>
+           <normaloff>:/images/transfers_empty.png</normaloff>:/images/transfers_empty.png</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>100</width>
-           <height>100</height>
+           <width>94</width>
+           <height>94</height>
           </size>
          </property>
         </widget>
