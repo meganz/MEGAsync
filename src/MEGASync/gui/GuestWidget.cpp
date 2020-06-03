@@ -49,8 +49,6 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->sPages->setCurrentWidget(ui->pLogin);
     state = GuestWidgetState::LOGIN;
 
-    ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
-    ui->lLogin2FAError->hide();
 
     connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLogin2FaHelp_clicked()));
     connect(ui->leCode, &QLineEdit::textChanged, this, &GuestWidget::hide2FaLoginError);
@@ -683,6 +681,9 @@ void GuestWidget::page_login2FA()
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 
     ui->sPages->setCurrentWidget(ui->pLogin2FA);
+    ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
+    ui->lLogin2FAError->hide();
+
     ui->sPages->setStyleSheet(QStringLiteral("image: url(\":/images/login_plain_background.png\");"));
     state = GuestWidgetState::LOGIN2FA;
     resetFocus();
