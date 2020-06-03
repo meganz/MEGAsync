@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 4303;
 const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.3");
-QString Preferences::SDK_ID = QString::fromAscii("29cc212");
+QString Preferences::SDK_ID = QString::fromAscii("610f41b");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- New customized message boxes.\n"
     "- Clean retroactive logs when logout.\n"
