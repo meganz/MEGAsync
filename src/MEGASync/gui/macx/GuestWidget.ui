@@ -2487,7 +2487,7 @@ image: none;</string>
            </spacer>
           </item>
           <item>
-           <widget class="CocoaHelpButton" name="wHelp" native="true">
+           <widget class="CocoaHelpButton" name="bLogin2FaHelp" native="true">
             <property name="minimumSize">
              <size>
               <width>20</width>

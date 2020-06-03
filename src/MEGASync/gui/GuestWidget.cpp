@@ -49,8 +49,6 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->sPages->setCurrentWidget(ui->pLogin);
     state = GuestWidgetState::LOGIN;
 
-
-    connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLogin2FaHelp_clicked()));
     connect(ui->leCode, &QLineEdit::textChanged, this, &GuestWidget::hide2FaLoginError);
     connect(ui->lEmail, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);
     connect(ui->lPassword, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);

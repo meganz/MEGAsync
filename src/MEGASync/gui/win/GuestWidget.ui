@@ -2537,7 +2537,7 @@ background-color: #F0373A;
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="wHelp">
+             <widget class="QPushButton" name="bLogin2FaHelp">
               <property name="minimumSize">
                <size>
                 <width>0</width>
