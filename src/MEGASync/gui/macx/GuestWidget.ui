@@ -2620,7 +2620,7 @@ image: none;</string>
              </size>
             </property>
             <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
+             <cursorShape>ArrowCursor</cursorShape>
             </property>
             <property name="styleSheet">
              <string notr="true">#bLoging2FaCancel
@@ -2650,7 +2650,7 @@ color: #333333;
              </size>
             </property>
             <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
+             <cursorShape>ArrowCursor</cursorShape>
             </property>
             <property name="styleSheet">
              <string notr="true">#bLogin2FaNext
