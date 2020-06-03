@@ -596,6 +596,8 @@ void GuestWidget::page_login()
     }
 
     state = GuestWidgetState::LOGIN;
+    resetFocus();
+
     emit onPageLogin();
 }
 
