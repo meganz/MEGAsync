@@ -131,10 +131,12 @@
     </message>
     <message>
         <source>Remaining Download</source>
+        <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remaining Upload</source>
+        <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4308,7 +4310,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>KB/s</source>
-	<translatorcomment>Label to indicate kilobyte per second data transfer rate.</translatorcomment>
+        <translatorcomment>Label to indicate kilobyte per second data transfer rate.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5534,6 +5536,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation type="unfinished">Bytes</translation>
     </message>
 </context>
