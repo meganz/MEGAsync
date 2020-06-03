@@ -49,6 +49,8 @@ GuestWidget::GuestWidget(QWidget *parent) :
     ui->sPages->setCurrentWidget(ui->pLogin);
     state = GuestWidgetState::LOGIN;
 
+    ui->lLogin2FAError->hide();
+
     connect(ui->leCode, &QLineEdit::textChanged, this, &GuestWidget::hide2FaLoginError);
     connect(ui->lEmail, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);
     connect(ui->lPassword, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);
@@ -355,6 +357,7 @@ void GuestWidget::showLogin2FaError() const
 {
     constexpr auto animationTimeMillis{300};
     Utilities::animatePartialFadein(ui->lLogin2FAError, animationTimeMillis);
+    ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
     ui->lLogin2FAError->show();
 }
 
@@ -581,9 +584,7 @@ void GuestWidget::page_login()
     ui->sPages->style()->polish(ui->sPages);
 
     ui->lPassword->clear();
-    ui->sPages->setCurrentWidget(ui->pLogin);
-
-    resetFocus();
+    ui->sPages->setCurrentWidget(ui->pLogin);   
 
     if(incorrectCredentialsMessageReceived)
     {
@@ -681,8 +682,6 @@ void GuestWidget::page_login2FA()
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 
     ui->sPages->setCurrentWidget(ui->pLogin2FA);
-    ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
-    ui->lLogin2FAError->hide();
 
     ui->sPages->setStyleSheet(QStringLiteral("image: url(\":/images/login_plain_background.png\");"));
     state = GuestWidgetState::LOGIN2FA;
@@ -695,6 +694,7 @@ void GuestWidget::reset_UI_props()
     ui->bVerifyEmail->setEnabled(true);
 
     ui->leCode->clear();
+    ui->lLogin2FAError->hide();
 }
 
 void GuestWidget::changeEvent(QEvent *event)
