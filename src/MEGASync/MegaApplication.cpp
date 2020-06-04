@@ -781,16 +781,12 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileDialog", "&amp;New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "All files (*)");
     QT_TRANSLATE_NOOP("QFileDialog", "Directories");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1
-Please verify the correct directory name was given.");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.
-Do you want to replace it?");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1
-Please verify the correct file name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct directory name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.Do you want to replace it?");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct file name was given.");
     QT_TRANSLATE_NOOP("QFileDialog", "New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "Delete");
-    QT_TRANSLATE_NOOP("QFileDialog", "&apos;%1&apos; is write protected.
-Do you want to delete it anyway?");
+    QT_TRANSLATE_NOOP("QFileDialog", "&apos;%1&apos; is write protected. Do you want to delete it anyway?");
     QT_TRANSLATE_NOOP("QFileDialog", "Are you sure you want to delete &apos;%1&apos;?");
     QT_TRANSLATE_NOOP("QFileDialog", "Could not delete directory.");
     QT_TRANSLATE_NOOP("QFileDialog", "Recent Places");
