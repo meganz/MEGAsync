@@ -37,6 +37,9 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
                           "}"
                  ""));
 
+    copyrightTailMessageEnglish = QStringLiteral("All rights reserved");
+    copyrightTailMessageTranslated = tr("All rights reserved");
+    ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     setTranslatedCopyrightMessage();
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->lVersion->setText(version);
@@ -62,12 +65,13 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
                             QString::fromUtf8("</span></p>"));
 }
 
-void ChangeLogDialog::setTranslatedCopyrightMessage() const
+void ChangeLogDialog::setTranslatedCopyrightMessage()
 {
-    auto copyRightText{ui->lCopyright->text().arg(QDate::currentDate().year())};
-    copyRightText.replace(QStringLiteral("Copyright"), tr("Copyright"));
-    copyRightText.replace(QStringLiteral("All rights reserved"), tr("All rights reserved"));
-    ui->lCopyright->setText(copyRightText);
+    auto copyrightText{ui->lCopyright->text()};
+    const auto translated{tr(copyrightTailMessageEnglish.toUtf8())};
+    copyrightText.replace(copyrightTailMessageTranslated, translated);
+    copyrightTailMessageTranslated = translated;
+    ui->lCopyright->setText(copyrightText);
 }
 
 void ChangeLogDialog::on_bTerms_clicked()

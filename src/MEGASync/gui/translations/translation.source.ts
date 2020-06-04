@@ -692,6 +692,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
         <translation type="unfinished">Data Protection Regulation</translation>
     </message>
+    <message>
+        <source>All rights reserved</source>
+	<translatorcomment>Used in About MEGASync</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
