@@ -1132,7 +1132,9 @@ bool WindowsPlatform::registerUpdateJob()
     LocalFree(stringSID);
     QString MEGAupdaterPath = QDir::toNativeSeparators(QDir(MegaApplication::applicationDirPath()).filePath(QString::fromUtf8("MEGAupdater.exe")));
 
-    if (SUCCEEDED(CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL))
+    HRESULT initializeSecurityResult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL);
+
+    if ( (SUCCEEDED(initializeSecurityResult) || initializeSecurityResult == RPC_E_TOO_LATE /* already called */ )
             && SUCCEEDED(CoCreateInstance(CLSID_TaskScheduler, NULL, CLSCTX_INPROC_SERVER, IID_ITaskService, (void**)&pService))
             && SUCCEEDED(pService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()))
             && SUCCEEDED(pService->GetFolder(_bstr_t( L"\\"), &pRootFolder)))
@@ -1303,7 +1305,10 @@ void WindowsPlatform::uninstall()
     }
     _bstr_t taskName = taskBaseName + stringSID;
 
-    if (SUCCEEDED(CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL))
+
+    HRESULT initializeSecurityResult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL);
+
+    if ( (SUCCEEDED(initializeSecurityResult) || initializeSecurityResult == RPC_E_TOO_LATE /* already called */)
             && SUCCEEDED(CoCreateInstance(CLSID_TaskScheduler, NULL, CLSCTX_INPROC_SERVER, IID_ITaskService, (void**)&pService))
             && SUCCEEDED(pService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()))
             && SUCCEEDED(pService->GetFolder(_bstr_t( L"\\"), &pRootFolder)))

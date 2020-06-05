@@ -400,7 +400,15 @@ int main(int argc, char *argv[])
         }
 
         Utilities::removeRecursively(MegaApplication::applicationDataPath());
-        Platform::uninstall();
+
+        {
+#ifdef _WIN32
+            //this is required, otherwise CoInitializeSecurity fails to CO_E_NOTINITIALIZED(undocumented)
+            // creating a bare app seems to solve that
+            QGuiApplication app{argc, nullptr};
+#endif
+            Platform::uninstall();
+        }
 
 #ifdef WIN32
         if (preferences->installationTime() != -1)
