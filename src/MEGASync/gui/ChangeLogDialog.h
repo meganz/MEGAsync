@@ -20,11 +20,8 @@ public:
 private:
     Ui::ChangeLogDialog *ui;
     HighDpiResize highDpiResize;
-    QString copyrightTailMessageTranslated;
-    QString copyrightTailMessageEnglish;
 
     void setChangeLogNotes(QString notes);
-    void setTranslatedCopyrightMessage();
 
 protected:
     void changeEvent(QEvent *event);

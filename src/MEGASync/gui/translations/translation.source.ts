@@ -693,9 +693,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Data Protection Regulation</translation>
     </message>
     <message>
-        <source>All rights reserved</source>
-	<translatorcomment>Used in About MEGASync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;All rights reserved.&lt;/html&gt;</source>
+        <translatorcomment>Tail part of the footer message after copyright year Mega Limited.</translatorcomment>
+        <translation type="unfinished">&lt;html&gt;All rights reserved.&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
