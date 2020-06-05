@@ -1308,6 +1308,13 @@ void WindowsPlatform::uninstall()
 
     HRESULT initializeSecurityResult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL);
 
+    if (initializeSecurityResult == CO_E_NOTINITIALIZED)
+    {
+        if (SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)))
+        {
+            initializeSecurityResult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL);
+        }
+    }
     if ( (SUCCEEDED(initializeSecurityResult) || initializeSecurityResult == RPC_E_TOO_LATE /* already called */)
             && SUCCEEDED(CoCreateInstance(CLSID_TaskScheduler, NULL, CLSCTX_INPROC_SERVER, IID_ITaskService, (void**)&pService))
             && SUCCEEDED(pService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()))
