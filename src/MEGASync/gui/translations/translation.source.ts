@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US" sourcelanguage="en">
+<TS version="2.1" language="[LANG]" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -3794,27 +3794,27 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <name>QFileSystemModel</name>
     <message>
         <source>%1 TB</source>
-        <translatorcomment>File size meassure in terabytes</translatorcomment>
+        <translatorcomment>File size measured in terabytes</translatorcomment>
         <translation type="unfinished">%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
-        <translatorcomment>File size meassure in gigabytes</translatorcomment>
+        <translatorcomment>File size measured in gigabytes</translatorcomment>
         <translation type="unfinished">%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
-        <translatorcomment>File size meassure in megabytes</translatorcomment>
+        <translatorcomment>File size measured in megabytes</translatorcomment>
         <translation type="unfinished">%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
-        <translatorcomment>File size meassure in kilobytes</translatorcomment>
+        <translatorcomment>File size measured in kilobytes</translatorcomment>
         <translation type="unfinished">%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
-        <translatorcomment>File size meassure in bytes</translatorcomment>
+        <translatorcomment>File size measured in bytes</translatorcomment>
         <translation type="unfinished">%1 bytes</translation>
     </message>
     <message>
@@ -3864,7 +3864,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     </message>
     <message>
         <source>%1 byte(s)</source>
-        <translatorcomment>File size meassure in bytes</translatorcomment>
+        <translatorcomment>File size measured in bytes</translatorcomment>
         <translation type="unfinished">%1 byte(s)</translation>
     </message>
 </context>
@@ -3872,7 +3872,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;No</translation>
+        <translation type="unfinished">&amp;Yes</translation>
     </message>
     <message>
         <source>&amp;No</source>
