@@ -255,7 +255,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     }
 }
 
-void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
+void GuestWidget::onRequestUpdate(MegaApi*, MegaRequest *request)
 {
     if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
     {
@@ -269,12 +269,14 @@ void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
 
 void GuestWidget::resetFocus()
 {
-    if (!ui->lEmail->text().size())
+    if(state == GuestWidgetState::LOGIN)
     {
-        ui->lEmail->setFocus();
+        if (ui->lEmail->text().isEmpty())
+        {
+            ui->lEmail->setFocus();
+        }
+        ui->bLogin->setDefault(true);
     }
-
-    ui->bLogin->setDefault(true);
 
     if(state == GuestWidgetState::LOGIN2FA)
     {
@@ -682,7 +684,6 @@ void GuestWidget::page_login2FA()
                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 
     ui->sPages->setCurrentWidget(ui->pLogin2FA);
-
     ui->sPages->setStyleSheet(QStringLiteral("image: url(\":/images/login_plain_background.png\");"));
     state = GuestWidgetState::LOGIN2FA;
     resetFocus();
