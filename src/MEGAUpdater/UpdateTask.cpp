@@ -6,7 +6,6 @@
 #include <sstream>
 #include <iostream>
 #include <cstdio>
-#include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
 
@@ -25,6 +24,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #endif
+
+#include <cstdlib>
 
 #include "UpdateTask.h"
 #include "Preferences.h"
@@ -264,7 +265,13 @@ int mkdir_p(const char *path)
 UpdateTask::UpdateTask()
 {
     isPublic = false;
-    signatureChecker = new SignatureChecker((const char *)UPDATE_PUBLIC_KEY);
+    string updatePublicKey = UPDATE_PUBLIC_KEY;
+    if (std::getenv("MEGA_UPDATE_PUBLIC_KEY"))
+    {
+        updatePublicKey = getenv("MEGA_UPDATE_PUBLIC_KEY");
+    }
+
+    signatureChecker = new SignatureChecker(updatePublicKey.c_str());
     currentFile = 0;
     appDataFolder = getAppDataDir();
     appFolder = getAppDir();
@@ -313,7 +320,13 @@ void UpdateTask::checkForUpdates()
 
     string appData = appDataFolder;
     string updateFile = appData.append(UPDATE_FILENAME);
-    if (downloadFile((char *)((string(UPDATE_CHECK_URL) + randomSec).c_str()), updateFile.c_str()))
+
+    string updateURL = UPDATE_CHECK_URL;
+    if (std::getenv("MEGA_UPDATE_CHECK_URL"))
+    {
+        updateURL = getenv("MEGA_UPDATE_CHECK_URL");
+    }
+    if (downloadFile((char *)((updateURL + randomSec).c_str()), updateFile.c_str()))
     {
         FILE * pFile;
         pFile = mega_fopen(updateFile.c_str(), "r");
@@ -690,7 +703,12 @@ bool UpdateTask::alreadyDownloaded(string relativePath, string fileSignature)
 
 bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
 {
-    SignatureChecker tmpHash((const char *)UPDATE_PUBLIC_KEY);
+    string updatePublicKey = UPDATE_PUBLIC_KEY;
+    if (std::getenv("MEGA_UPDATE_PUBLIC_KEY"))
+    {
+        updatePublicKey = getenv("MEGA_UPDATE_PUBLIC_KEY");
+    }
+    SignatureChecker tmpHash(updatePublicKey.c_str());
     char *buffer;
     long fileLength;
     FILE * pFile = mega_fopen(absolutePath.c_str(), "rb");
