@@ -46,6 +46,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     delegateListener = new QTMegaRequestListener(megaApi, this);
     megaApi->addRequestListener(delegateListener);
 
+    ui->sLoginTitle->setCurrentWidget(ui->pLoginTitle);
     ui->sPages->setCurrentWidget(ui->pLogin);
     state = GuestWidgetState::LOGIN;
 
