@@ -377,8 +377,8 @@ void GuestWidget::hide2FaLoginError()
     if(ui->lLogin2FAError->isVisible())
     {
         constexpr auto animationTimeMillis{100};
-        QTimer::singleShot(animationTimeMillis, this, [&](){ui->lLogin2FAError->hide();});
         Utilities::animatePartialFadeout(ui->lLogin2FAError, animationTimeMillis);
+        QTimer::singleShot(animationTimeMillis, this, [&](){ui->lLogin2FAError->hide();});
     }
 }
 
