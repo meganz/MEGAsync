@@ -266,7 +266,7 @@ UpdateTask::UpdateTask()
 {
     isPublic = false;
     string updatePublicKey = UPDATE_PUBLIC_KEY;
-    if (std::getenv("MEGA_UPDATE_PUBLIC_KEY"))
+    if (getenv("MEGA_UPDATE_PUBLIC_KEY"))
     {
         updatePublicKey = getenv("MEGA_UPDATE_PUBLIC_KEY");
     }
@@ -322,7 +322,7 @@ void UpdateTask::checkForUpdates()
     string updateFile = appData.append(UPDATE_FILENAME);
 
     string updateURL = UPDATE_CHECK_URL;
-    if (std::getenv("MEGA_UPDATE_CHECK_URL"))
+    if (getenv("MEGA_UPDATE_CHECK_URL"))
     {
         updateURL = getenv("MEGA_UPDATE_CHECK_URL");
     }
@@ -704,7 +704,7 @@ bool UpdateTask::alreadyDownloaded(string relativePath, string fileSignature)
 bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
 {
     string updatePublicKey = UPDATE_PUBLIC_KEY;
-    if (std::getenv("MEGA_UPDATE_PUBLIC_KEY"))
+    if (getenv("MEGA_UPDATE_PUBLIC_KEY"))
     {
         updatePublicKey = getenv("MEGA_UPDATE_PUBLIC_KEY");
     }
