@@ -712,7 +712,7 @@ void MegaTransferView::showInMEGAClicked()
             transfer = model->getTransferByTag(transferTagSelected[i]);
             if (transfer)
             {
-                MegaHandle handle = transfer->getNodeHandle();
+                MegaHandle handle = transfer->getParentHandle();
                 if (handle != INVALID_HANDLE)
                 {
                     const auto app{((MegaApplication *)qApp)};
