@@ -320,15 +320,14 @@ int LinkProcessor::getCurrentIndex()
 
 bool LinkProcessor::atLeastOneLinkValidAndSelected() const
 {
-    auto output{false};
     for (int iLink = 0; iLink < size(); iLink++)
     {
         const auto isValid{linkNode.at(iLink)};
         const auto isSelected{linkSelected.at(iLink)};
         if(isValid && isSelected)
         {
-            output = true;
+            return true;
         }
     }
-    return output;
+    return false;
 }

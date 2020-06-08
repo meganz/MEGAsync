@@ -160,16 +160,14 @@ QString ImportMegaLinksDialog::getDownloadPath()
 
 void ImportMegaLinksDialog::on_cDownload_clicked()
 {
+    enableLocalFolder(ui->cDownload->isChecked());
     enableOkButton();
-    ui->bLocalFolder->setEnabled(ui->cDownload->isChecked());
-    ui->eLocalFolder->setEnabled(ui->cDownload->isChecked());
 }
 
 void ImportMegaLinksDialog::on_cImport_clicked()
 {
+    enableMegaFolder(ui->cImport->isChecked());
     enableOkButton();
-    ui->bMegaFolder->setEnabled(ui->cImport->isChecked());
-    ui->eMegaFolder->setEnabled(ui->cImport->isChecked());
 }
 
 void ImportMegaLinksDialog::on_bLocalFolder_clicked()
@@ -295,13 +293,13 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 {
     finished = true;
-    enableOkButton();
+    checkLinkValidAndSelected();
 }
 
 void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
 {
     linkProcessor->setSelected(id, state);
-    enableOkButton();
+    checkLinkValidAndSelected();
 }
 
 void ImportMegaLinksDialog::changeEvent(QEvent *event)
@@ -319,7 +317,28 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
 void ImportMegaLinksDialog::enableOkButton() const
 {
     const auto downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
-    const auto atLeastOneLinkValidAndSelected{linkProcessor->atLeastOneLinkValidAndSelected()};
-    const auto enable{finished && downloadOrImportChecked && atLeastOneLinkValidAndSelected};
+    const auto enable{finished && downloadOrImportChecked && linkProcessor->atLeastOneLinkValidAndSelected()};
     ui->bOk->setEnabled(enable);
+}
+
+void ImportMegaLinksDialog::enableLocalFolder(bool enable)
+{
+    ui->bLocalFolder->setEnabled(enable);
+    ui->eLocalFolder->setEnabled(enable);
+}
+
+void ImportMegaLinksDialog::enableMegaFolder(bool enable)
+{
+    ui->bMegaFolder->setEnabled(enable);
+    ui->eMegaFolder->setEnabled(enable);
+}
+
+void ImportMegaLinksDialog::checkLinkValidAndSelected()
+{
+    const auto enable{linkProcessor->atLeastOneLinkValidAndSelected()};
+    ui->cDownload->setEnabled(enable);
+    ui->cImport->setEnabled(enable);
+    enableOkButton();
+    enableLocalFolder(enable && ui->cDownload->isChecked());
+    enableMegaFolder(enable && ui->cImport->isChecked());
 }
