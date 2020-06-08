@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -113,15 +113,16 @@ QPushButton#bSettings:hover
 
 #lDesc
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 18px;
-  color:rgba(51, 51, 51, 0.7);
+  color: rgba(0,0,0,0.85);
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 #lCode
 {
     color: #333333;
-        font-family: &quot;Lato&quot;;
+  font-family: &quot;SF UI Text&quot;;
         font-size: 13px;
 }
 
@@ -157,9 +158,9 @@ QPushButton#bSettings:hover
 
 #lLostAuthCode
 {
-    color: #666666;
-        font-family: &quot;Lato&quot;;
-        font-size: 11px;
+  color: #333333;
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
 }
 
 QPushButton
@@ -318,7 +319,7 @@ margin-top: -1px;</string>
 </string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="pLogin">
          <property name="minimumSize">
@@ -2546,7 +2547,7 @@ background-color: #F0373A;
               </property>
               <property name="maximumSize">
                <size>
-                <width>16777215</width>
+                <width>24</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -2579,7 +2580,7 @@ background-color: #F0373A;
               </property>
               <property name="minimumSize">
                <size>
-                <width>187</width>
+                <width>207</width>
                 <height>0</height>
                </size>
               </property>

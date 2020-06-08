@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,21 +18,32 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wGuestWidgetIn
+   <string notr="true">#wHeader
+{
+ background-color:  #FAFAFA;
+ border-top-left-radius: 16px;
+ border-top-right-radius: 16px;
+}
+#bMEGA, #bLogoLogging, #bLogoLogin, #bLogoSettingUp, #bShield
+{
+	border: none;
+}
+
+#wGuestWidgetIn
 {
  border: 1px solid rgba(100, 100, 100);
  border-radius: 16px;
@@ -54,12 +65,6 @@ QPushButton, QLabel
 font-size: 13px;
 }
 
-#wHeader
-{
- background-color:  #FAFAFA;
- border-top-left-radius: 16px;
- border-top-right-radius: 16px;
-}
 
 #bLogin, #bVerifyEmail, #bVerifySMS
 {
@@ -83,11 +88,6 @@ color: #ffffff;
  font-size: 14px;
  color: #333333;
 
-}
-
-#bMEGA, #bLogoLogging, #bLogoLogin, #bLogoSettingUp, #bShield
-{
-	border: none;
 }
 
 #bForgotPassword
@@ -114,16 +114,17 @@ QPushButton#bSettings:hover
 
 #lDesc
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 18px;
-  color:rgba(51, 51, 51, 0.7);
+  color: rgba(0,0,0,0.85);
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 #lCode
 {
-    color: #333333;
-        font-family: &quot;Lato&quot;;
-        font-size: 13px;
+  color: #333333;
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
 }
 
 #lDescLogin
@@ -135,10 +136,11 @@ QPushButton#bSettings:hover
 
 #lLogin
 {
+  border-radius: 2px;
+  padding: 6px 12px 6px 12px;
   font-family: &quot;Lato&quot;;
   font-size: 16px;
   color: #333333;
-  padding: 6px 12px 6px 12px;
 }
 
 #lProgress
@@ -157,9 +159,9 @@ QPushButton#bSettings:hover
 
 #lLostAuthCode
 {
-    color: #666666;
-        font-family: &quot;Lato&quot;;
-        font-size: 11px;
+  color: #333333;
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
 }
 
 </string>
@@ -185,7 +187,7 @@ QPushButton#bSettings:hover
      <property name="minimumSize">
       <size>
        <width>402</width>
-       <height>394</height>
+       <height>392</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -314,7 +316,7 @@ margin-top: -1px;</string>
 </string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="pLogin">
          <property name="minimumSize">
@@ -2120,6 +2122,9 @@ image: none;</string>
              <string notr="true">background: transparent;</string>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>8</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -2530,7 +2535,7 @@ image: none;</string>
               </property>
               <property name="minimumSize">
                <size>
-                <width>187</width>
+                <width>210</width>
                 <height>0</height>
                </size>
               </property>
