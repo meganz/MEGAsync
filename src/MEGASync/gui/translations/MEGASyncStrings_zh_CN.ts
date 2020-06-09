@@ -491,22 +491,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Your publicly shared file ([A]) has been taken down</translation>
+        <translation type="unfinished">您的公共共享文件([A])已被删除</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared folder ([A]) has been taken down</translation>
+        <translation type="unfinished">您的公共共享文件夹([A])已被删除</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Your publicly shared file ([A]) has been reinstated</translation>
+        <translation type="unfinished">您的公共共享文件([A])已恢复</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared folder ([A]) has been reinstated</translation>
+        <translation type="unfinished">您的公共共享文件夹([A])已恢复</translation>
     </message>
 </context>
 <context>
@@ -2782,7 +2782,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transferring</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
-        <translation type="unfinished">Transferring</translation>
+        <translation type="unfinished">传输中</translation>
     </message>
 </context>
 <context>
@@ -3565,14 +3565,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- 全新自定义消息框。
-- 注销时清除追溯日志。
-- 修复了在某些情况下禁用Finder扩展程序的问题。
-- 锁定帐户的电子邮件验证。
-- 锁定帐户的短信验证。
-- 支持引荐计划。
-- 添加从崩溃报告对话框发送日志的选项。
-- 其他用户界面修复和调整。
-- 其他性能改进和调整。</translation>
+ - 登出时清除追溯日志。
+ - 修复了在某些情况下禁用Finder扩展程序的问题。
+ - 针对锁定帐户的电子邮件验证。
+ - 针对锁定帐户的短信验证。
+ - 支持引荐计划。
+ - 包含从崩溃报告对话框发送日志的选项。
+ - 其他用户界面的修复与调整。
+ - 其他性能的改进与调整。</translation>
     </message>
 </context>
 <context>
@@ -5013,7 +5013,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transferring</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation type="unfinished">Transferring</translation>
+        <translation type="unfinished">传输中</translation>
     </message>
 </context>
 <context>

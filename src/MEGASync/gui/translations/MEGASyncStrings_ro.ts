@@ -2782,7 +2782,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transferring</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
-        <translation type="unfinished">Transferring</translation>
+        <translation type="unfinished">Transfer în curs</translation>
     </message>
 </context>
 <context>
@@ -5013,7 +5013,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transferring</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation type="unfinished">Transferring</translation>
+        <translation type="unfinished">Transfer în curs</translation>
     </message>
 </context>
 <context>
