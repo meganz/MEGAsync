@@ -18,11 +18,22 @@
 #include "megaapi.h"
 
 class Preferences;
+
 /**
  * @brief The Model class
  *
- * The idea is to encapsulate here all the use-cases in the app
- * and hold any state variable data.
+ * The idea of this class is to hold any state variable data.
+ * and proceed to to persist that data when required.
+ * It indens to alliviate Preferences from that burden.
+ *
+ * The Model would cover the funcionality related with with
+ * updating of the data it manages (e.g: when a SyncConfiguration is updated,
+ * it will call platform specific callbacks that deal with that)
+ *
+ *
+ * The model will be updated when required and trigger events
+ * when changes occur that should be noted by UI classes.
+ *
  */
 class Model : public QObject
 {
@@ -39,17 +50,15 @@ private:
     ///////////////// SYNCS ///////////////////////
     std::map<QString, QVariant> cache;
     Preferences *preferences;
+    bool isFirstSyncDone = false;
     ///////////// END OF SYNCS ////////////////////
 
 protected:
-    QMutex mutex; //TODO: rename to syncMutex
+    QMutex syncMutex;
 
     ///////////////// SYNCS ///////////////////////
     void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
     void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
-
-    void updateNodePath(mega::MegaHandle handle);
-
 
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
@@ -59,10 +68,6 @@ protected:
 
     void onSyncStateChanged(std::shared_ptr<mega::MegaSync> sync);
 
-public slots:
-    void onNodeMoved(mega::MegaHandle handle);
-    void onNodeAttributesChanged(mega::MegaHandle handle);
-
 public:
     void reset();
     static Model *instance();
@@ -70,7 +75,7 @@ public:
     ///////////////// SYNCS ///////////////////////
     // TODO: doc all these
 
-    std::shared_ptr<SyncSetting> updateSyncSettings(mega::MegaSync *sync, int addingState = 0, const char *remotePath = nullptr);
+    std::shared_ptr<SyncSetting> updateSyncSettings(mega::MegaSync *sync, int addingState = 0);
     void activateSync(std::shared_ptr<SyncSetting> cs);
     void deactivateSync(std::shared_ptr<SyncSetting> cs);
 
@@ -88,28 +93,11 @@ public:
 
     int getNumSyncedFolders();
 
-    //TODO: try to get rid of the following and use SyncSetting objects
-    QString getSyncName(int num);
-    QString getSyncID(int num);
-    QString getLocalFolder(int num);
-    QString getMegaFolder(int num);
-    long long getLocalFingerprint(int num);
-    mega::MegaHandle getMegaFolderHandle(int num);
-    bool isFolderActive(int num);
-    bool isTemporaryInactiveFolder(int num);
-
     QStringList getSyncNames();
     QStringList getSyncIDs();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
     QList<long long> getMegaFolderHandles();
-
-    // when login/entering some user settins.
-
-//    QStringList getExcludedSyncNames();
-//    void setExcludedSyncNames(QStringList names);
-//    QStringList getExcludedSyncPaths();
-//    void setExcludedSyncPaths(QStringList paths);
 
     ///////////// END OF SYNCS ////////////////////
 

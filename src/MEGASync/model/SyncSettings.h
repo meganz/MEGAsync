@@ -20,7 +20,6 @@ private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
     int mTag = 0;
     QString mName;
-    QString mMegaFolder;
     QString mSyncID;
     bool mEnabled = false; //we need to hold this, for transitioning from old sync data, instead of simply forwarding to mSync->isEnabled
 
@@ -34,7 +33,7 @@ public:
     SyncSetting& operator=(SyncSetting&& a) = default;
 
 
-    SyncSetting(mega::MegaSync *sync, const char *value = nullptr);
+    SyncSetting(mega::MegaSync *sync);
     int tag() const;
     void setTag(int tag);
     QString name() const;
@@ -53,8 +52,6 @@ public:
     int getState() const;
     bool isTemporaryDisabled() const;
     int getError() const;
-
-    void setMegaFolder(const char *value);
 
     mega::MegaSync* getSync() const;
 

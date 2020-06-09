@@ -119,7 +119,7 @@ void BindFolderDialog::on_bOK_clicked()
         MegaNode *n = megaApi->getNodeByHandle(megaFolderHandles[i]);
         if (n)
         {
-            const char *cPath = megaApi->getNodePath(node);
+            const char *cPath = megaApi->getNodePath(node); //TODO: model MegaFolders should be updated: we dont need to query (lock sdk) here again
             if (!cPath)
             {
                 delete n;

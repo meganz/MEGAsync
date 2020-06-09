@@ -22,44 +22,14 @@ Model *Model::instance()
     return Model::model;
 }
 
-Model::Model() : QObject(), mutex(QMutex::Recursive)
+Model::Model() : QObject(), syncMutex(QMutex::Recursive)
 {
     preferences = Preferences::instance();
 }
 
-void Model::updateNodePath(mega::MegaHandle handle)
-{
-    for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
-    {
-        auto cs = it.value();
-        if (cs->getMegaHandle() == handle)
-        {
-            //TODO: threadify this.
-            std::unique_ptr<char []> remotePath{static_cast<MegaApplication *>(qApp)->getMegaApi()->getNodePathByNodeHandle(handle)};
-
-            if (remotePath && cs->getMegaFolder() != QString::fromUtf8(remotePath.get()))
-            {
-                cs->setMegaFolder(remotePath.get());
-                preferences->writeSyncSetting(cs);
-                emit syncStateChanged(cs);
-            }
-        }
-    }
-}
-
-void Model::onNodeMoved(mega::MegaHandle handle)
-{
-    updateNodePath(handle);
-}
-
-void Model::onNodeAttributesChanged(mega::MegaHandle handle)
-{
-    updateNodePath(handle);
-}
-
 void Model::removeSyncedFolder(int num)
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     auto cs = configuredSyncsMap[configuredSyncs.at(num)];
     if (cs->isActive())
     {
@@ -76,7 +46,7 @@ void Model::removeSyncedFolder(int num)
 
 void Model::removeSyncedFolderByTag(int tag)
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     auto cs = configuredSyncsMap[tag];
 
     if (cs->isActive())
@@ -106,7 +76,7 @@ void Model::removeSyncedFolderByTag(int tag)
 
 void Model::removeAllFolders()
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     assert(preferences->logged());
 
     //remove all configured syncs
@@ -117,8 +87,8 @@ void Model::removeAllFolders()
     {
         //TODO: reuse this one whenevere else syncFolderRemoved needs to be called!
         Platform::syncFolderRemoved(it.value()->getLocalFolder(), it.value()->name(), QString::number(it.value()->tag()));
+        MegaSyncApp->notifyItemChange(it.value()->getLocalFolder(), MegaApi::STATE_NONE);
 
-        //TODO: notifyItemChange?
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
@@ -146,23 +116,32 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
         syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
     }
 
+    //send event for the first sync
+    if (!isFirstSyncDone && !preferences->isFirstSyncDone())
+    {
+        MegaSyncApp->getMegaApi()->sendEvent(99501, "MEGAsync first sync");
+    }
+    isFirstSyncDone = true;
+
+
     Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
 }
 
 void Model::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
 {
     Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
-    //TODO: notifyItemChange?
+    MegaSyncApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
+
 }
 
-std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState, const char *remotePath)
+std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState)
 {
     if (!sync)
     {
         return nullptr;
     }
 
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     assert(preferences->logged());
 
     std::shared_ptr<SyncSetting> cs;
@@ -178,12 +157,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
         wasActive = cs->isActive();
         wasInactive = !cs->isActive(); //beware: empty MEGAsync's are in INITIAL_SYNC: i.e: active! [problematic for picked configs]
         cs->setSync(sync);
-
-        assert(remotePath || cs->getMegaFolder().size()); //updated syncs should always have a remote path
-        if (remotePath)
-        {
-            cs->setMegaFolder(remotePath);
-        }
     }
     else //new configuration (new or resumed)
     {
@@ -194,15 +167,10 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
         {
             cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(*loaded[sync->getTag()].get());
             cs->setSync(sync);
-            assert(remotePath || cs->getMegaFolder().size()); //updated syncs should always have a remote path
-            if (remotePath)
-            {
-                cs->setMegaFolder(remotePath);
-            }
         }
         else // new addition (no reference in the cache)
         {
-            cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync, remotePath);
+            cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync);
         }
 
         configuredSyncs.append(sync->getTag());
@@ -247,7 +215,7 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
 void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     assert(preferences->logged());
     std::shared_ptr<SyncSetting> cs;
 
@@ -268,104 +236,18 @@ void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
 void Model::reset()
 {
     configuredSyncs.clear();
+    isFirstSyncDone = false;
 }
 
 int Model::getNumSyncedFolders()
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     return  configuredSyncs.size();
-}
-
-QString Model::getSyncName(int num)
-{
-    QMutexLocker qm(&mutex);
-    assert(preferences->logged() && (configuredSyncs.size()>num));
-    if (num >= configuredSyncs.size())
-    {
-        return QString();
-    }
-    return configuredSyncsMap[configuredSyncs.at(num)]->name();
-}
-
-QString Model::getSyncID(int num)
-{
-    QMutexLocker qm(&mutex);
-    assert(preferences->logged() && (configuredSyncs.size() > num));
-    if (num >= configuredSyncs.size())
-    {
-        return QString();
-    }
-    return configuredSyncsMap[configuredSyncs.at(num)]->getSyncID();
-}
-
-QString Model::getLocalFolder(int num)
-{
-    QMutexLocker qm(&mutex);
-    assert(preferences->logged() && (configuredSyncs.size()>num));
-    if (num >= configuredSyncs.size())
-    {
-        return QString();
-    }
-    return configuredSyncsMap[configuredSyncs.at(num)]->getLocalFolder();
-}
-
-QString Model::getMegaFolder(int num)
-{
-    QMutexLocker qm(&mutex);
-    assert(preferences->logged() && (configuredSyncs.size()>num)/* && configuredSyncs.at(num).sync()*/); //TODO: add the same check in all similar asserts?
-    if (num >= configuredSyncs.size())
-    {
-        return QString();
-    }
-    return configuredSyncsMap[configuredSyncs.at(num)]->getMegaFolder();
-}
-
-long long Model::getLocalFingerprint(int num)
-{
-    QMutexLocker qm(&mutex);
-    assert(preferences->logged() && (configuredSyncs.size()>num));
-    if (num >= configuredSyncs.size())
-    {
-        return 0;
-    }
-    return configuredSyncsMap[configuredSyncs.at(num)]->getLocalFingerprint();
-}
-
-MegaHandle Model::getMegaFolderHandle(int num)
-{
-    QMutexLocker qm(&mutex);
-    assert(preferences->logged() && (configuredSyncs.size()>num));
-    if (num >= configuredSyncs.size())
-    {
-        return mega::INVALID_HANDLE;
-    }
-
-    return configuredSyncsMap[configuredSyncs.at(num)]->getMegaHandle();
-}
-
-bool Model::isFolderActive(int num) //TODO: study usages of this one
-{
-    QMutexLocker qm(&mutex);
-    if (num >= configuredSyncs.size())
-    {
-        return false;
-    }
-    return configuredSyncsMap[configuredSyncs.at(num)]->isEnabled();
-}
-
-bool Model::isTemporaryInactiveFolder(int num)
-{
-    QMutexLocker qm(&mutex);
-    if (num >= configuredSyncs.size())
-    {
-        return false;
-    }
-    return configuredSyncsMap[configuredSyncs.at(num)]->isTemporaryDisabled();
 }
 
 QStringList Model::getSyncNames()
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     QStringList value;
     for (auto &cs : configuredSyncs)
     {
@@ -376,7 +258,7 @@ QStringList Model::getSyncNames()
 
 QStringList Model::getSyncIDs()
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     QStringList value;
     for (auto &cs : configuredSyncs)
     {
@@ -387,7 +269,7 @@ QStringList Model::getSyncIDs()
 
 QStringList Model::getMegaFolders()
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     QStringList value;
     for (auto &cs : configuredSyncs)
     {
@@ -398,7 +280,7 @@ QStringList Model::getMegaFolders()
 
 QStringList Model::getLocalFolders()
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     QStringList value;
     for (auto &cs : configuredSyncs)
     {
@@ -409,7 +291,7 @@ QStringList Model::getLocalFolders()
 
 QList<long long> Model::getMegaFolderHandles()
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     QList<long long> value;
     for (auto &cs : configuredSyncs)
     {
@@ -420,14 +302,14 @@ QList<long long> Model::getMegaFolderHandles()
 
 std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     return configuredSyncsMap[configuredSyncs.at(num)];
 }
 
 
 std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(int tag)
 {
-    QMutexLocker qm(&mutex);
+    QMutexLocker qm(&syncMutex);
     if (configuredSyncsMap.contains(tag))
     {
         return configuredSyncsMap[tag];

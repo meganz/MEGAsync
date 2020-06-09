@@ -114,7 +114,6 @@ void ProgressHelper::setPercentage(double value)
 {
     mPercentage = value;
     emit progress(mPercentage);
-    qDebug() << " Task <" << description() << "> addvanced to " << percentage() << endl; //TODO: delete
 }
 
 void ProgressHelper::setComplete()
@@ -128,7 +127,6 @@ void ProgressHelper::setComplete()
     {
         this->deleteLater();
     }
-    qDebug() << " Task <" << description() << "> completed!"<< endl; //TODO: delete
 }
 
 ProgressHelper *ProgressHelper::addStep(const QString &description, double weight)
@@ -155,8 +153,6 @@ void ProgressHelper::addStep(ProgressHelper *task, double weight)
 
 void ProgressHelper::onStepProgress(double percentage, int position)
 {
-    qDebug() << "Step " << position << ": <" << steps[position].task()->description()
-             << "> addvanced to " << percentage << endl; //TODO: delete
     double weightsSum = 0;
     double newCompleted = 0.0;
     foreach(ProgressStep step, steps)
@@ -171,8 +167,6 @@ void ProgressHelper::onStepProgress(double percentage, int position)
 
 void ProgressHelper::onStepCompleted(int position)
 {
-    qDebug() << "Step " << position << ": <" << steps[position].task()->description()
-             << "> completed " << endl; //TODO: delete
     completedtasks++;
     checkCompletion();
 }

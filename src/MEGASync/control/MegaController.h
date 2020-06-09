@@ -11,9 +11,17 @@ class ProgressStep;
 class ActionProgress;
 
 /**
- * @brief The Controller class
- * TODO: complete docs
+ * @brief Controller class
  *
+ * This class intends to serve the most common use cases derived from
+ * user interaction and thus alliviate MegaApplication of those.
+ *
+ * Currently it holds sync use cases.
+ *
+ * It uses Progress Helper classes to provide callers with progress updates
+ *  and the chance to configure actions to be taken in case of failures.
+ *
+ * For further info: see ActionProgress.
  *
  */
 class Controller
@@ -24,8 +32,6 @@ public:
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
-
-
 
     static Controller *instance();
     void setApi(mega::MegaApi *value);
@@ -40,9 +46,10 @@ private:
 
 
 /**
- * @brief A listener that receives an ActionProgress object to manage progress/completion/failure of a reuequest
- *
- *
+ * @brief A listener that holds an ActionProgress object
+ * to manage progress/completion/failure of a MegaRequest
+ * and a function to be executed upon onRequestFinish
+ * *
  */
 class ProgressFuncExecuterListener : public mega::MegaRequestListener
 {
@@ -57,7 +64,7 @@ private:
 public:
 
     /**
-     * @brief ProgressFuncExecuterListener
+     * @brief ProgressFuncExecuterListener constructor
      * @param func to call upon onRequestFinish
      * @param autoremove whether this should be deleted after func is called
      */
@@ -76,10 +83,19 @@ public:
 
 
 /**
- * @brief The ProgressHelper class
- * TODO:complete a little bit
+ * @brief Progress Helper
  *
- * objects of this class will be deleted after emiting completion
+ * An object of this type can be used to manage the progress of a task.
+ * It allows for setting progress/completion and wil emit signals when
+ * progress advances and upon completion too, so that client classes
+ * can connect to them and interact accordingly
+ *
+ * It features a hierarchical structure of steps (ProgressStep) with
+ * different weights, so that progress is advanced automatically
+ * according to the progress of child steps.
+ *
+ * Objects of this class will be deleted after emiting completion
+ * unless otherwise specified (see Constructor)
  */
 class ProgressHelper : public QObject
 {
@@ -137,6 +153,19 @@ public:
     }
 };
 
+
+/**
+ * @brief Action progress helper
+ *
+ * This is an special ProgressHelper that can be used to track
+ * the progress of a Request.
+ *
+ * It will emit `failedRequest` or `failed` in case the caller sets it as failed.
+ * `failed` will be emmited only in the abscense of MegaRequest/MegaError.
+ *
+ * You probably want to connect for both signals in case you wan to handle
+ * all errors.
+ */
 class ActionProgress : public ProgressHelper
 {
     Q_OBJECT
@@ -151,7 +180,7 @@ public:
 
 signals:
     /**
-     * @brief to be emited when the action fails (it might not even have reached to a request)
+     * @brief to be emited when the action fails without a MegaRequest/MegaError (it might not even have reached to a request)
      * @param errorCode
      */
     void failed(int errorCode);
@@ -167,7 +196,12 @@ signals:
 };
 
 
-
+/**
+ * @brief Progress step
+ *
+ * A combination of a ProgressHelper object (a task)
+ * and its weight
+ */
 class ProgressStep
 {
 public:

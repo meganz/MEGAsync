@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "model/Model.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
 
@@ -3078,7 +3078,6 @@ void Preferences::readFolders()
             MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii("Reading invalid Sync Setting!").toUtf8().constData());
         }
 
-        // TODO: review temporaryInactiveFolders vs activeFolders
         settings->endGroup();
     }
     settings->endGroup();
@@ -3124,7 +3123,8 @@ QList<SyncData> Preferences::readOldCachedSyncs()
     {
         settings->beginGroup(i);
 
-        oldSyncs.push_back(SyncData(settings->value(syncNameKey).toString(), settings->value(localFolderKey).toString(),
+        oldSyncs.push_back(SyncData(settings->value(syncNameKey).toString(),
+                                    settings->value(localFolderKey).toString(),
                                     settings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
                                     settings->value(localFingerprintKey, 0).toLongLong(),
                                     settings->value(folderActiveKey, true).toBool(),
@@ -3178,7 +3178,8 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
     QMutexLocker qm(&mutex);
     assert(logged() && syncSettings);
     if (!syncSettings)
-    {//TODO: log warn
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid Sync Setting!").toUtf8().constData());
         return;
     }
 
@@ -3186,7 +3187,7 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
     settings->beginGroup(QString::number(syncSettings->tag()));
 
-    settings->remove(QString::fromAscii("")); //remove group and all its settingsings));
+    settings->remove(QString::fromAscii("")); //removes group and all its settingsings
 
     settings->endGroup();
 
@@ -3199,7 +3200,6 @@ void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
     QMutexLocker qm(&mutex);
     assert(logged());
 
-    //TODO: review persistence of these
     settings->beginGroup(syncsGroupByTagKey);
 
     settings->beginGroup(QString::number(syncSettings->tag()));

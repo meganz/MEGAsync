@@ -39,7 +39,8 @@ long long calculateCacheSize()
     long long cacheSize = 0;
     for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
-        QString syncPath = model->getLocalFolder(i);
+        auto syncSetting = model->getSyncSetting(i);
+        QString syncPath = syncSetting->getLocalFolder();
         if (!syncPath.isEmpty())
         {
             Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER), &cacheSize);
@@ -1704,7 +1705,8 @@ int SettingsDialog::saveSettings()
             #else
             for (int i = 0; i < model->getNumSyncedFolders(); i++)
             {
-                app->notifyItemChange(model->getLocalFolder(i), MegaApi::STATE_NONE);
+                auto syncSetting = model->getSyncSetting(i);
+                app->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
             }
             #endif
         }
@@ -2406,14 +2408,14 @@ QString SettingsDialog::getFormatLimitDays()
 void SettingsDialog::on_bClearCache_clicked()
 {
     QString syncs;
-    int numFolders = model->getNumSyncedFolders();
-    for (int i = 0; i < numFolders; i++)
+    for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
-        QFileInfo fi(model->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+        auto syncSetting = model->getSyncSetting(i);
+        QFileInfo fi(syncSetting->getLocalFolder() + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
             syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>")
-                    .arg(fi.absoluteFilePath() + QDir::separator()).arg(model->getSyncName(i));
+                    .arg(fi.absoluteFilePath() + QDir::separator()).arg(syncSetting->name());
         }
     }
 

@@ -306,7 +306,7 @@ protected:
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn(bool fromWizard);
-    void startSyncs(); //initializes syncs configured in the setup wizard
+    void startSyncs(QList<PreConfiguredSync> syncs); //initializes syncs configured in the setup wizard
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);

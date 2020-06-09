@@ -17,7 +17,7 @@ SyncSetting::~SyncSetting()
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
     mSync(a.getSync()->copy()), mTag(a.tag()), mName(a.name()),
-    mMegaFolder(a.getMegaFolder()), mSyncID(a.getSyncID()), mEnabled(a.isEnabled())
+    mSyncID(a.getSyncID()), mEnabled(a.isEnabled())
 {
 }
 
@@ -27,7 +27,6 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mTag = a.tag();
     mName = a.name();
     mSyncID = a.getSyncID();
-    mMegaFolder = a.getMegaFolder();
     mEnabled = a.isEnabled();
     return *this;
 }
@@ -47,10 +46,9 @@ SyncSetting::SyncSetting()
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
-SyncSetting::SyncSetting(MegaSync *sync, const char *remotePath)
+SyncSetting::SyncSetting(MegaSync *sync)
 {
     setSync(sync);
-    setMegaFolder(remotePath);
     setEnabled(sync->isEnabled());
 }
 
@@ -80,7 +78,6 @@ SyncSetting::SyncSetting(QString initializer)
     int i = 0;
     if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
     if (i<parts.size()) { mName = parts.at(i++); }
-    if (i<parts.size()) { mMegaFolder = parts.at(i++); }
     if (i<parts.size()) { mSyncID = parts.at(i++); }
 
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
@@ -91,7 +88,6 @@ QString SyncSetting::toString()
     QStringList toret;
     toret.append(QString::number(mTag));
     toret.append(mName);
-    toret.append(mMegaFolder);
     toret.append(mSyncID);
 
     return toret.join(QString::fromUtf8("0x1E"));
@@ -131,7 +127,8 @@ long long SyncSetting::getLocalFingerprint()  const
 
 QString SyncSetting::getMegaFolder()  const
 {
-    return mMegaFolder;
+    auto folder = mSync->getMegaFolder();
+    return folder ? QString::fromUtf8(folder) : QString();
 }
 
 long long SyncSetting::getMegaHandle()  const
@@ -162,11 +159,6 @@ bool SyncSetting::isTemporaryDisabled()  const
 int SyncSetting::getError() const
 {
     return mSync->getError();
-}
-
-void SyncSetting::setMegaFolder(const char *value)
-{
-    mMegaFolder = QString::fromUtf8(value);
 }
 
 int SyncSetting::tag() const
