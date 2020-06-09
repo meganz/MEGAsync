@@ -413,10 +413,11 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
 {
     if (ts != -1)
     {
+        const auto language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
         QDateTime date;
         date.setMSecsSinceEpoch(ts * 1000);
-        ui->lTimeStamp->setText(date.toString(QString::fromUtf8("h:mm ap, d MMMM yyyy")));
-
+        const auto dateTranslated{QLocale(language).toString(date, QLocale::LongFormat)};
+        ui->lTimeStamp->setText(dateTranslated);
     }
     else
     {
