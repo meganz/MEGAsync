@@ -413,11 +413,26 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
 {
     if (ts != -1)
     {
+        QString dateTimeFormat;
+        const auto dateTime{QDateTime::fromSecsSinceEpoch(ts)};
+        const auto sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
+        const auto sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
+
+        if(sameWeek && sameYear)
+        {
+            dateTimeFormat.append(QStringLiteral("dddd, "));
+        }
+        dateTimeFormat.append(QStringLiteral("d MMMM "));
+
+        if(!sameYear)
+        {
+            dateTimeFormat.append(QStringLiteral("yyyy "));
+        }
+
         const auto language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
-        QDateTime date;
-        date.setMSecsSinceEpoch(ts * 1000);
-        const auto dateTranslated{QLocale(language).toString(date, QLocale::LongFormat)};
-        ui->lTimeStamp->setText(dateTranslated);
+        dateTimeFormat.append(QLocale(language).timeFormat(QLocale::ShortFormat));
+        const auto dateTimeTranslated{QLocale(language).toString(dateTime, dateTimeFormat)};
+        ui->lTimeStamp->setText(dateTimeTranslated);
     }
     else
     {
