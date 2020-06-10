@@ -190,7 +190,7 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openInfoWizard();
-    void openBandwidthOverquotaDialog();
+    void launchBandwidthOverquotaAlerts();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -301,6 +301,7 @@ protected:
     void refreshStorageUIs();
 
     void sendOverStorageNotification(int state);
+    void sendOverBandwithNotification(Preferences::OverquotaState state);
     void sendBusinessWarningNotification();
 
     bool eventFilter(QObject *obj, QEvent *e);
