@@ -71,9 +71,7 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
-    ui(new Ui::InfoDialog),
-    transferOverquotaDismissed{false},
-    transferOverquotaState{Preferences::OverquotaState::ok}
+    ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
 
@@ -336,6 +334,18 @@ void InfoDialog::showEvent(QShowEvent *event)
 void InfoDialog::setTransferOverquotaState(Preferences::OverquotaState state)
 {
     transferOverquotaState = state;
+}
+
+void InfoDialog::enableTransferOverquotaAlert()
+{
+    transferOverquotaAlertEnabled = true;
+    updateDialogState();
+}
+
+void InfoDialog::enableTransferAlmostOverquotaAlert()
+{
+    transferAlmostOverquotaAlertEnabled = true;
+    updateDialogState();
 }
 
 void InfoDialog::hideEvent(QHideEvent *event)
@@ -835,7 +845,7 @@ void InfoDialog::updateDialogState()
         ui->wPSA->hidePSA();
     }
     else if(transferOverquotaState == Preferences::OverquotaState::warning &&
-            !transferOverquotaDismissed)
+            transferAlmostOverquotaAlertEnabled)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
@@ -848,7 +858,7 @@ void InfoDialog::updateDialogState()
         ui->wPSA->hidePSA();
     }
     else if(transferOverquotaState == Preferences::OverquotaState::full &&
-            !transferOverquotaDismissed)
+            transferOverquotaAlertEnabled)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
@@ -1186,6 +1196,10 @@ void InfoDialog::reset()
     {
         filterMenu->reset();
     }
+
+    transferOverquotaAlertEnabled = false;
+    transferAlmostOverquotaAlertEnabled = false;
+    transferOverquotaState = Preferences::OverquotaState::ok;
 }
 
 QCustomTransfersModel *InfoDialog::stealModel()
@@ -1768,12 +1782,18 @@ void InfoDialog::on_bDiscard_clicked()
     {
         updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
         emit dismissStorageOverquota(overQuotaState);
-    }else
+    }
+    else if(transferOverquotaState == Preferences::OverquotaState::full)
     {
-        transferOverquotaDismissed = true;
-        updateDialogState();
+        transferOverquotaAlertEnabled = false;
         emit dismissTransferOverquota();
     }
+    else if(transferOverquotaState == Preferences::OverquotaState::warning)
+    {
+        transferAlmostOverquotaAlertEnabled = false;
+        emit dismissTransferAlmostOverquota();
+    }
+    updateDialogState();
 }
 
 void InfoDialog::on_bBuyQuota_clicked()

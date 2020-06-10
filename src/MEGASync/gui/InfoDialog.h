@@ -96,6 +96,8 @@ public:
     void closeSyncsMenu();
     int getLoggedInMode() const;
     void setTransferOverquotaState(Preferences::OverquotaState state);
+    void enableTransferOverquotaAlert();
+    void enableTransferAlmostOverquotaAlert();
 
 private:
     void drawAvatar(QString email);
@@ -155,6 +157,7 @@ signals:
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
     void dismissTransferOverquota();
+    void dismissTransferAlmostOverquota();
     void userActivity();
 
 private:
@@ -190,7 +193,8 @@ private:
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
-    bool transferOverquotaDismissed;
+    bool transferOverquotaAlertEnabled;
+    bool transferAlmostOverquotaAlertEnabled;
     int storageState;
     Preferences::OverquotaState transferOverquotaState;
     int actualAccountType;
