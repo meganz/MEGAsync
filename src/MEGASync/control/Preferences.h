@@ -148,7 +148,17 @@ public:
     void setAlmostOverStorageDismissExecution(long long timestamp);
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
-    void setTransferOverquotaDismissExecution(long long timestamp);
+
+    long long getOverBandwidthDialogExecution();
+    void setOverBandwidthDialogExecution(long long timestamp);
+    long long getOverBandwidthNotificationExecution();
+    void setOverBandwidthNotificationExecution(long long timestamp);
+    long long getAlmostOverBandwidthNotificationExecution();
+    void setAlmostOverBandwidthNotificationExecution(long long timestamp);
+    long long getAlmostOverBandwidthDismissExecution();
+    void setAlmostOverBandwidthDismissExecution(long long timestamp);
+    long long getOverBandwidthDismissExecution();
+    void setOverBandwidthDismissExecution(long long timestamp);
 
     std::chrono::system_clock::time_point getWhenBandwidthFullSyncDialogWasShown();
     void setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint);
@@ -529,7 +539,11 @@ protected:
     long long almostOverStorageNotificationExecution;
     long long almostOverStorageDismissExecution;
     long long overStorageDismissExecution;
-    long long overTransferDismissExecution;
+    long long overBandwidthDialogExecution;
+    long long overBandwidthNotificationExecution;
+    long long almostOverBandwidthNotificationExecution;
+    long long almostOverBandwidthDismissExecution;
+    long long overBandwidthDismissExecution;
     long long lastTransferNotification;
     std::chrono::system_clock::time_point whenBandwidthFullSyncDialogWasShown;
     std::chrono::system_clock::time_point whenBandwidthFullDownloadsDialogWasShown;
@@ -569,7 +583,11 @@ protected:
     static const QString almostOverStorageNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
-    static const QString overTransferDismissExecutionKey;
+    static const QString overBandwidthDialogExecutionKey;
+    static const QString overBandwidthNotificationExecutionKey;
+    static const QString almostOverBandwidthNotificationExecutionKey;
+    static const QString almostOverBandwidthDismissExecutionKey;
+    static const QString overBandwidthDismissExecutionKey;
     static const QString storageStateQKey;
     static const QString whenBandwidthFullSyncDialogWasShownKey;
     static const QString whenBandwidthFullDownloadsDialogWasShownKey;
