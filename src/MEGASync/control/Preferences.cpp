@@ -254,6 +254,7 @@ const QString Preferences::overBandwidthNotificationExecutionKey = QString::from
 const QString Preferences::almostOverBandwidthNotificationExecutionKey = QString::fromAscii("almostOverBandwidthNotificationExecution");
 const QString Preferences::almostOverBandwidthDismissExecutionKey = QString::fromAscii("almostOverBandwidthDismissExecution");
 const QString Preferences::overBandwidthDismissExecutionKey = QString::fromAscii("overBandwidthDismissExecution");
+const QString Preferences::overBandwidthStateKey = QString::fromAscii("overBandwidthStateKey");
 
 const QString Preferences::whenBandwidthFullSyncDialogWasShownKey = QString::fromAscii("whenBandwidthFullSyncDialogWasShown");
 const QString Preferences::whenBandwidthFullDownloadsDialogWasShownKey = QString::fromAscii("whenBandwidthFullDownloadsDialogWasShown");
@@ -1429,6 +1430,21 @@ void Preferences::setStorageState(int value)
     settings->setValue(storageStateQKey, value);
     setCachedValue(storageStateQKey, value);
     mutex.unlock();
+}
+
+Preferences::OverquotaState Preferences::getBandwithOverquotaState()
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    int value = getValue<int>(overBandwidthStateKey, static_cast<int>(Preferences::OverquotaState::ok));
+    return static_cast<Preferences::OverquotaState>(value);
+}
+
+void Preferences::setBandwidthOverquotaState(OverquotaState state)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    settings->setValue(overBandwidthStateKey, static_cast<int>(state));
 }
 
 void Preferences::setTemporalBandwidthValid(bool value)

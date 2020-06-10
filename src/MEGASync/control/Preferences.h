@@ -178,6 +178,16 @@ public:
     int getStorageState();
     void setStorageState(int value);
 
+    enum class OverquotaState
+    {
+        ok,
+        warning,
+        full
+    };
+
+    OverquotaState getBandwithOverquotaState();
+    void setBandwidthOverquotaState(OverquotaState state);
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -427,13 +437,6 @@ public:
         STATE_OVER_STORAGE_DISMISSED
     };
 
-    enum class OverquotaState
-    {
-        ok,
-        warning,
-        full
-    };
-
     enum {
         STATE_NOT_INITIATED = 0,
         STATE_LOGGED_OK = 1,
@@ -588,6 +591,7 @@ protected:
     static const QString almostOverBandwidthNotificationExecutionKey;
     static const QString almostOverBandwidthDismissExecutionKey;
     static const QString overBandwidthDismissExecutionKey;
+    static const QString overBandwidthStateKey;
     static const QString storageStateQKey;
     static const QString whenBandwidthFullSyncDialogWasShownKey;
     static const QString whenBandwidthFullDownloadsDialogWasShownKey;

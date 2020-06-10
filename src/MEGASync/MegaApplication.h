@@ -190,7 +190,7 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openInfoWizard();
-    void launchBandwidthOverquotaAlerts();
+    void checkBandwidthOverquotaAlerts();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -281,7 +281,7 @@ private slots:
     void PSAseen(int id);
 
 protected:
-    void checkOverquotaBandwidth();
+    void checkBandwidthOverquotaTimeStamp();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
