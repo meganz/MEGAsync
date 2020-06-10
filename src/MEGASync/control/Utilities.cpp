@@ -25,6 +25,11 @@ using namespace mega;
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, QString> Utilities::languageNames;
 
+const unsigned long long KB = 1024;
+const unsigned long long MB = 1024 * KB;
+const unsigned long long GB = 1024 * MB;
+const unsigned long long TB = 1024 * GB;
+
 void Utilities::initializeExtensions()
 {
     extensionIcons[QString::fromAscii("3ds")] = extensionIcons[QString::fromAscii("3dm")]  = extensionIcons[QString::fromAscii("max")] =
@@ -515,11 +520,6 @@ QString Utilities::getFinishedTimeString(long long secs)
 
 QString Utilities::getSizeString(unsigned long long bytes)
 {
-    unsigned long long KB = 1024;
-    unsigned long long MB = 1024 * KB;
-    unsigned long long GB = 1024 * MB;
-    unsigned long long TB = 1024 * GB;
-
     QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
     QLocale locale(language);
     if (bytes >= TB)
@@ -826,6 +826,67 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
             what->move(newx, newy);
         }
     }
+}
+
+QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
+{
+    if (!pricing)
+    {
+        return QString::fromUtf8("PRO");
+    }
+
+    int it = 0;
+    int products = pricing->getNumProducts();
+    for (; it < products; it++)
+    {
+        if (pricing->getMonths(it) == 1)
+        {
+            if (usedStorage < (pricing->getGBStorage(it) * GB))
+                break;
+        }
+    }
+
+    switch (pricing->getProLevel(it))
+    {
+        case MegaAccountDetails::ACCOUNT_TYPE_LITE:
+            return QString::fromUtf8("PRO LITE");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROI:
+            return QString::fromUtf8("PRO I");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROII:
+            return QString::fromUtf8("PRO II");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
+            return QString::fromUtf8("PRO III");
+            break;
+    }
+
+    return QString::fromUtf8("PRO");
+}
+
+QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
+{
+    if (!list || !list->size())
+    {
+        return QString();
+    }
+
+    QString readableTimes;
+    int it = 0;
+    for (it = 0; it < list->size() ; it++)
+    {
+        int64_t ts = list->get(it);
+        QDateTime date = QDateTime::fromTime_t(ts);
+        readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
+
+        if (it != list->size() - 1)
+        {
+            readableTimes.append(QStringLiteral(", "));
+        }
+    }
+
+    return readableTimes;
 }
 
 void Utilities::animatePartialFadeout(QWidget *object, int msecs)
