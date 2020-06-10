@@ -182,6 +182,8 @@ public:
 
     void updateTrayIconMenu();
 
+    mega::MegaPricing *getPricing() const;
+
 signals:
     void startUpdaterThread();
     void tryUpdate();

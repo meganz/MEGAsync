@@ -3613,6 +3613,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     return QApplication::eventFilter(obj, e);
 }
 
+MegaPricing *MegaApplication::getPricing() const
+{
+    return pricing;
+}
+
 int MegaApplication::getBlockState() const
 {
     return blockState;
