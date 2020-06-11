@@ -1,5 +1,6 @@
 #include "SizeLimitDialog.h"
 #include "ui_SizeLimitDialog.h"
+#include "QMegaMessageBox.h"
 
 SizeLimitDialog::SizeLimitDialog(QWidget *parent) :
     QDialog(parent),
@@ -122,7 +123,7 @@ void SizeLimitDialog::on_bOK_clicked()
     if ((upperSizeLimit() && !upperSizeLimitValue())
             || (lowerSizeLimit() && !lowerSizeLimitValue()))
     {
-        QMessageBox::warning(NULL, tr("Warning"), tr("Size limits cannot be zero"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Warning"), tr("Size limits cannot be zero"), QMessageBox::Ok);
         return;
     }
     accept();

@@ -47,6 +47,9 @@ private:
 private slots:
     void frameChanged(int);
 
+private:
+    void updateFinishedIco(bool transferErrors);
+
 protected:
     QMovie *animation;
     QPixmap loadIconResource;

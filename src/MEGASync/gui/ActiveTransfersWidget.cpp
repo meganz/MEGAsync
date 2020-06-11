@@ -321,8 +321,6 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);
-    warning.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                                       : QString::fromUtf8(":/images/mbox-warning@2x.png")));
     warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     warning.setDefaultButton(QMessageBox::No);
     int result = warning.exec();
@@ -347,8 +345,6 @@ void ActiveTransfersWidget::on_bUpCancel_clicked()
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);
-    warning.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                                       : QString::fromUtf8(":/images/mbox-warning@2x.png")));
     warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     warning.setDefaultButton(QMessageBox::No);
     int result = warning.exec();

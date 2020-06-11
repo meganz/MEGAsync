@@ -27,7 +27,9 @@ public:
         PAGE_INITIAL = 0,
         PAGE_NEW_ACCOUNT = 1,
         PAGE_LOGIN = 2,
-        PAGE_MODE = 3
+        PAGE_MODE = 3,
+        PAGE_LOGOUT = 4,
+        PAGE_PROGRESS = 5
     };
 
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
@@ -60,6 +62,9 @@ private slots:
 
 private:
     QPropertyAnimation *m_animation;
+
+signals:
+    void pageChanged(int page);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

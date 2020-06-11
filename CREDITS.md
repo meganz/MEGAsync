@@ -15,7 +15,11 @@ QT is framework for cross-platform develppment
 QT is the framework used by MEGAsync to get cross platform compatibility 
 
 ######  License: 
-Dual license: Open Source + Commercial
+Dual license: LGPL 3
+
+https://www.gnu.org/licenses/lgpl-3.0.html
+
+https://www.gnu.org/licenses/licenses.html
 
 http://www.qt.io/licensing/
 
@@ -196,6 +200,17 @@ License: MIT
 
 https://github.com/libuv/libuv/blob/v1.x/LICENSE
 
+#### NSPopover+MISSINGBackgroundView
+Copyright (c) 2015 Valentin Shergin
+
+A very tiny library that allows to access (and customize) background view of NSPopover.
+
+https://github.com/shergin/NSPopover-MISSINGBackgroundView
+
+License: MIT
+
+https://github.com/shergin/NSPopover-MISSINGBackgroundView/blob/master/LICENSE
+
 #### LibRaw
 Copyright © 2008-2018 LibRaw LLC (info@libraw.org)
 
@@ -218,6 +233,17 @@ https://opensource.google.com/projects/pdfium
 License: BSD 3-clause
 
 https://pdfium.googlesource.com/pdfium/+/master/LICENSE
+
+#### FFmpeg
+This software uses code of <a href=http://ffmpeg.org>FFmpeg</a> licensed under the <a href=http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>LGPLv2.1</a> and its source can be downloaded <a href=https://www.ffmpeg.org/download.html>here</a>
+
+FFmpeg is a library for working with many video formats, we use it to generate thumbnails and preview images for relevant files.
+
+https://www.ffmpeg.org/about.html
+
+License: LGPLv2.1
+
+http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
 --------------------------------------------------------------------
 

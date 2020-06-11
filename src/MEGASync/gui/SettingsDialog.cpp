@@ -346,23 +346,11 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 void SettingsDialog::setOverQuotaMode(bool mode)
 {
     if (mode)
-    {
-        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-        Preferences *preferences = Preferences::instance();
-        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-        {
-            MegaHandle aff = preferences->lastPublicHandle();
-            if (aff != INVALID_HANDLE)
-            {
-                char *base64aff = MegaApi::handleToBase64(aff);
-                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-                delete [] base64aff;
-            }
-        }
-
+    {      
+        QString url = QString::fromUtf8("mega://#pro");
+        Utilities::getPROurlWithParameters(url);
         ui->lOQWarning->setText(tr("Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]")
-                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
+                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
                                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
         ui->wOQError->show();
     }
@@ -392,10 +380,10 @@ void SettingsDialog::stateChanged()
 void SettingsDialog::fileVersioningStateChanged()
 {
     QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
-    if (ui->cDisableFileVersioning->isChecked() && (QMegaMessageBox::warning(NULL,
+    if (ui->cDisableFileVersioning->isChecked() && (QMegaMessageBox::warning(nullptr,
                              QString::fromUtf8("MEGAsync"),
                              tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
-                             Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
             || !dialog))
     {
         if (dialog)
@@ -424,7 +412,7 @@ void SettingsDialog::syncStateChanged(int state)
                 if (!fi.exists() || !fi.isDir())
                 {
                     c->setCheckState(Qt::Unchecked);
-                    QMessageBox::critical(NULL, tr("Error"),
+                    QMegaMessageBox::critical(nullptr, tr("Error"),
                        tr("This sync can't be enabled because the local folder doesn't exist"));
                     return;
                 }
@@ -434,7 +422,7 @@ void SettingsDialog::syncStateChanged(int state)
                 if (!n)
                 {
                     c->setCheckState(Qt::Unchecked);
-                    QMessageBox::critical(NULL, tr("Error"),
+                    QMegaMessageBox::critical(nullptr, tr("Error"),
                        tr("This sync can't be enabled because the remote folder doesn't exist"));
                     return;
                 }
@@ -885,40 +873,14 @@ void SettingsDialog::on_rNoProxy_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-    Preferences *preferences = Preferences::instance();
-    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-    {
-        MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != INVALID_HANDLE)
-        {
-            char *base64aff = MegaApi::handleToBase64(aff);
-            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-            delete [] base64aff;
-        }
-    }
-
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    QString url = QString::fromUtf8("mega://#pro");
+    Utilities::getPROurlWithParameters(url);
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
-    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-    Preferences *preferences = Preferences::instance();
-    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-    {
-        MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != INVALID_HANDLE)
-        {
-            char *base64aff = MegaApi::handleToBase64(aff);
-            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-            delete [] base64aff;
-        }
-    }
-
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
+    on_bUpgrade_clicked();
 }
 
 void SettingsDialog::on_rUploadAutoLimit_clicked()
@@ -1232,10 +1194,10 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
         else
         {
             int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
-            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
+            ui->pStorage->setValue(percentage > ui->pStorage->maximum() ? ui->pStorage->maximum() : percentage);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
-                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(QString::number(percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -1572,7 +1534,6 @@ int SettingsDialog::saveSettings()
             preferences->setCrashed(true);
             QMegaMessageBox::information(this, tr("Warning"),
                                          tr("The new excluded file sizes will be taken into account when the application starts again."),
-                                         Utilities::getDevicePixelRatio(),
                                          QMessageBox::Ok);
             sizeLimitsChanged = false;
         }
@@ -1908,7 +1869,7 @@ void SettingsDialog::on_bApply_clicked()
 void SettingsDialog::on_bUnlink_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
-    if (QMessageBox::question(NULL, tr("Logout"),
+    if (QMegaMessageBox::question(nullptr, tr("Logout"),
             tr("Synchronization will stop working.") + QString::fromAscii(" ") + tr("Are you sure?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
@@ -1944,7 +1905,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
     {
-        QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString(), Utilities::getDevicePixelRatio());
+        QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString());
         return;
     }
 
@@ -1958,7 +1919,6 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     QMegaMessageBox::information(this, tr("Warning"),
                                  tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.") + QString::fromUtf8("\n")
                                  + tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."),
-                                 Utilities::getDevicePixelRatio(),
                                  QMessageBox::Ok);
 }
 
@@ -2051,7 +2011,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
         QTemporaryFile test(fPath + QDir::separator());
         if (!test.open())
         {
-            QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
+            QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
             delete dialog;
             return;
         }
@@ -2274,9 +2234,6 @@ void SettingsDialog::on_bClearCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                                : QString::fromUtf8(":/images/mbox-warning@2x.png")));
-
     warningDel->setWindowTitle(tr("Clear local backup"));
     warningDel->setTextFormat(Qt::RichText);
 
@@ -2330,8 +2287,6 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                                : QString::fromUtf8(":/images/mbox-warning@2x.png")));
     warningDel->setWindowTitle(tr("Clear remote backup"));
     warningDel->setTextFormat(Qt::RichText);
 
@@ -2370,10 +2325,10 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 void SettingsDialog::on_bClearFileVersions_clicked()
 {
     QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
-    if (QMegaMessageBox::warning(NULL,
+    if (QMegaMessageBox::warning(nullptr,
                              QString::fromUtf8("MEGAsync"),
                              tr("You are about to permanently remove all file versions. Would you like to proceed?"),
-                             Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
             || !dialog)
     {
         return;
@@ -2485,7 +2440,7 @@ void SettingsDialog::onProxyTestError()
         delete proxyTestProgressDialog;
         proxyTestProgressDialog = NULL;
         ui->bApply->setEnabled(true);
-        QMessageBox::critical(NULL, tr("Error"), tr("Your proxy settings are invalid or the proxy doesn't respond"));
+        QMegaMessageBox::critical(nullptr, tr("Error"), tr("Your proxy settings are invalid or the proxy doesn't respond"));
     }
 
     shouldClose = false;
@@ -2550,8 +2505,8 @@ void SettingsDialog::on_bFullCheck_clicked()
 {
     preferences->setCrashed(true);
     QPointer<SettingsDialog> currentDialog = this;
-    if (QMessageBox::warning(NULL, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders when it starts.\n\nDo you want to restart MEGAsync now?"),
-                         QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+    if (QMegaMessageBox::warning(nullptr, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders when it starts.\n\nDo you want to restart MEGAsync now?"),
+                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
         if (currentDialog)
         {

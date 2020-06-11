@@ -39,6 +39,7 @@
 #include "QTMegaListener.h"
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
+#include "gui/VerifyLockMessage.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -97,6 +98,8 @@ class MegaApplication : public QApplication, public mega::MegaListener, public S
     void setTrayIconFromTheme(QString icon);
 #endif
 
+    static void loadDataPath();
+
 public:
 
     explicit MegaApplication(int &argc, char **argv);
@@ -109,6 +112,7 @@ public:
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
+    void repositionInfoDialog();
 
     virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
     virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
@@ -132,7 +136,6 @@ public:
 
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
-    void unlink();
     void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
     void showWarningMessage(QString message, QString title = tr("MEGAsync"));
@@ -156,6 +159,11 @@ public:
     int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
+    void showVerifyAccountInfo();
+
+    void removeFinishedBlockedTransfer(int transferTag);
+    bool finishedTransfersWhileBlocked(int transferTag);
+
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
@@ -163,8 +171,16 @@ public:
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
+    std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
 
     MegaSyncLogger& getLogger() const;
+    SetupWizard *getSetupWizard() const;
+    void fetchNodes();
+    void whyAmIBlocked(bool periodicCall = false);
+
+    int getBlockState() const;
+
+    void updateTrayIconMenu();
 
 signals:
     void startUpdaterThread();
@@ -173,8 +189,14 @@ signals:
     void unityFixSignal();
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
+    void fetchNodesAfterBlock();
+    void closeSetupWizard(int);
+    void setupWizardCreated();
+    void unblocked();
+    void blocked();
 
 public slots:
+    void unlink(bool keepLogs = false);
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
@@ -236,6 +258,7 @@ public slots:
     void onConnectivityCheckError();
     void proExpirityTimedOut();
     void userAction(int action);
+    void showSetupWizard(int action);
     void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
@@ -267,6 +290,9 @@ private slots:
     void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
+    void onBlocked();
+    void onUnblocked();
+
 
 protected:
     bool checkOverquotaBandwidth();
@@ -288,6 +314,10 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+    void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
+
+    // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
+    bool amIOverTemporalQuotaBandwidth();
 
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
@@ -312,6 +342,7 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
+    std::unique_ptr<VerifyLockMessage> verifyEmail;
     std::unique_ptr<QMenu> infoDialogMenu;
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
@@ -357,6 +388,8 @@ protected:
     QFilterAlertsModel *notificationsProxyModel;
     QAlertsModel *notificationsModel;
     MegaAlertDelegate *notificationsDelegate;
+    std::unique_ptr<QObject> context{new QObject};
+    QString crashReportFilePath;
 
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
@@ -371,6 +404,9 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
+    std::shared_ptr<mega::MegaNode> mRootNode;
+    bool mFetchingNodes = false;
+    bool mQueringWhyAmIBlocked = false;
     int numTransfers[2];
     int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
@@ -429,6 +465,7 @@ protected:
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
+    QSet<int> finishedBlockedTransfers;
 
     QHash<unsigned long long, TransferMetaData*> transferAppData;
 
@@ -439,6 +476,7 @@ protected:
     bool waiting;
     bool syncing; //if any sync is in syncing state
     bool updated;
+    bool transferring; //if there is any regular transfer in progress
     bool checkupdate;
     bool updateBlocked;
     long long lastExit;
@@ -457,6 +495,8 @@ protected:
     long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
+    int blockState;
+    bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
 };
 

@@ -593,7 +593,7 @@ void MegaTransferView::cancelTransferClicked()
     QPointer<MegaTransferView> view = QPointer<MegaTransferView>(this);
     if (QMegaMessageBox::warning(0,
                              QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel this transfer?"), Utilities::getDevicePixelRatio(),
+                             tr("Are you sure you want to cancel this transfer?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
             || !view)
     {

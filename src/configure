@@ -88,6 +88,7 @@ cd MEGASync/mega
     -t \
     -s \
     -v \
+    -I \
     -u \
     -p $root_dir/MEGASync/mega/bindings/qt/3rdparty
 

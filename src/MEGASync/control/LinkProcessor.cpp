@@ -1,6 +1,7 @@
 #include "LinkProcessor.h"
 #include "Utilities.h"
 #include "Preferences.h"
+#include "MegaApplication.h"
 #include <QDir>
 #include <QDateTime>
 #include <QApplication>
@@ -170,7 +171,7 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
                 rootNode = megaApiFolders->getNodeByHandle(handle);
             }
 
-            Preferences::instance()->setLastPublicHandle(request->getNodeHandle());
+            Preferences::instance()->setLastPublicHandle(request->getNodeHandle(), MegaApi::AFFILIATE_TYPE_FILE_FOLDER);
             linkNode[currentIndex] = megaApiFolders->authorizeNode(rootNode);
             delete rootNode;
         }
@@ -222,15 +223,14 @@ void LinkProcessor::importLinks(QString megaPath)
     }
     else
     {
-        MegaNode *rootNode = megaApi->getRootNode();
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
         if (!rootNode)
         {
             emit onLinkImportFinish();
             return;
         }
 
-        megaApi->createFolder("MEGAsync Imports", rootNode, delegateListener);
-        delete rootNode;
+        megaApi->createFolder("MEGAsync Imports", rootNode.get(), delegateListener);
     }
 }
 

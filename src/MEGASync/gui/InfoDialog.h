@@ -36,9 +36,21 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_INDEXING,
         STATE_UPDATED,
         STATE_SYNCING,
+        STATE_TRANSFERRING,
     };
 
+
+
 public:
+
+    enum {
+        STATE_NONE = -1,
+        STATE_LOGOUT = 0,
+        STATE_LOGGEDIN = 1,
+        STATE_LOCKED_EMAIL = mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL,
+        STATE_LOCKED_SMS = mega::MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS
+    };
+
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0, InfoDialog* olddialog = nullptr);
     ~InfoDialog();
 
@@ -51,6 +63,7 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setSyncing(bool value);
+    void setTransferring(bool value);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void addSync(mega::MegaHandle h);
@@ -73,7 +86,7 @@ public:
 #endif
 
     void on_bStorageDetails_clicked();
-    void regenerateLayout(InfoDialog* olddialog = nullptr);
+    void regenerateLayout(int blockState = mega::MegaApi::ACCOUNT_NOT_BLOCKED, InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
@@ -85,6 +98,8 @@ public:
     long long getUnseenNotifications() const;
 
     void closeSyncsMenu();
+
+    int getLoggedInMode() const;
 
 private:
     void drawAvatar(QString email);
@@ -115,13 +130,13 @@ private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
     void openFolder(QString path);
-    void on_bChats_clicked();
     void onOverlayClicked();
     void on_bTransferManager_clicked();
     void on_bAddSync_clicked();
     void on_bUpload_clicked();
     void on_bDownload_clicked();
     void onUserAction(int action);
+    void resetLoggedInMode();
 
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
@@ -162,6 +177,8 @@ private:
 
     int activeDownloadState, activeUploadState;
     int remainingUploads, remainingDownloads;
+    bool remainingUploadsTimerRunning = false;
+    bool remainingDownloadsTimerRunning = false;
     int totalUploads, totalDownloads;
     long long leftUploadBytes, completedUploadBytes;
     long long leftDownloadBytes, completedDownloadBytes;
@@ -175,12 +192,13 @@ private:
     bool indexing; //scanning
     bool waiting;
     bool syncing; //if any sync is in syncing state
+    bool transferring; // if there are ongoing regular transfers
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
     int storageState;
     int actualAccountType;
-    bool loggedInMode = true;
+    int loggedInMode = STATE_NONE;
     bool notificationsReady = false;
     bool isShown = false;
     long long unseenNotifications = 0;

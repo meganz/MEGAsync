@@ -159,16 +159,19 @@ void TransferManagerItem::setTransferState(int value)
 
 void TransferManagerItem::finishTransfer()
 {
+    ui->lCompleted->setIconSize(QSize(12, 12));
     ui->sTransferState->setCurrentWidget(ui->stateCompleted);
-    if (transferState == MegaTransfer::STATE_COMPLETED)
+    if (transferError < 0)
     {
-        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
+        updateFinishedIco(true);
     }
     else
     {
-        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
+        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+        updateFinishedIco(false);
     }
-    ui->lCompleted->setIconSize(QSize(12, 12));
+
     ui->lTotalCompleted->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
 }
 
@@ -348,6 +351,28 @@ void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
     }
 
     emit refreshTransfer(this->getTransferTag());
+}
+
+void TransferManagerItem::updateFinishedIco(bool transferErrors)
+{
+    QIcon iconCompleted;
+
+    switch (type)
+    {
+        case MegaTransfer::TYPE_UPLOAD:
+            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/upload_fail_item_ico.png")
+                                                                      : QString::fromUtf8(":/images/uploaded_item_ico.png"));
+            break;
+        case MegaTransfer::TYPE_DOWNLOAD:
+            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/download_fail_item_ico.png")
+                                                                      : QString::fromUtf8(":/images/downloaded_item_ico.png"));
+            break;
+        default:
+            break;
+    }
+
+    ui->lTransferTypeCompleted->setIcon(iconCompleted);
+    ui->lTransferTypeCompleted->setIconSize(QSize(ui->lTransferTypeCompleted->width(), ui->lTransferTypeCompleted->height()));
 }
 
 void TransferManagerItem::loadDefaultTransferIcon()

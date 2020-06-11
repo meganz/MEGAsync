@@ -209,7 +209,7 @@ void TransferManager::createAddMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")));
+    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")));
     connect(importLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
@@ -514,10 +514,10 @@ void TransferManager::on_bClearAll_clicked()
 
     if (w != ui->wCompleted)
     {
-        if (QMegaMessageBox::warning(NULL,
+        if (QMegaMessageBox::warning(nullptr,
                                  QString::fromUtf8("MEGAsync"),
                                  tr("Are you sure you want to cancel all transfers?"),
-                                 Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
                 || !dialog)
         {
             return;
