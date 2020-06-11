@@ -1322,8 +1322,6 @@ void MegaApplication::initialize()
         }
     }
 
-    bandwidthOverquotaState = preferences->getBandwithOverquotaState();
-
     periodicTasksTimer = new QTimer(this);
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
     connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
@@ -2080,6 +2078,7 @@ void MegaApplication::loggedIn(bool fromWizard)
         applyStorageState(cachedStorageState, true);
     }
 
+    bandwidthOverquotaState = preferences->getBandwithOverquotaState();
 }
 
 void MegaApplication::startSyncs()
@@ -2850,7 +2849,7 @@ void MegaApplication::checkOverStorageStates()
         if (infoDialog)
         {
             if (!preferences->getOverStorageDismissExecution()
-                    || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::OS_INTERVAL_MS))
+                    || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::OQ_UI_MESSAGE_INTERVAL_MS))
             {
                 if (infoDialog->updateOverStorageState(Preferences::STATE_OVER_STORAGE))
                 {
@@ -2867,8 +2866,8 @@ void MegaApplication::checkOverStorageStates()
     {
         if (infoDialog)
         {
-            if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
-                         && (!preferences->getAlmostOverStorageDismissExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)))
+            if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
+                         && (!preferences->getAlmostOverStorageDismissExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageDismissExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)))
             {
                 if (infoDialog->updateOverStorageState(Preferences::STATE_ALMOST_OVER_STORAGE))
                 {
@@ -2882,9 +2881,9 @@ void MegaApplication::checkOverStorageStates()
         }
 
         bool pendingTransfers = megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads();
-        if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
-                              && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
-                              && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS))
+        if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
+                              && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
+                              && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS))
         {
             preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
             megaApi->sendEvent(99522, "Almost overstorage notification shown");
@@ -6514,7 +6513,7 @@ void MegaApplication::checkBandwidthOverquotaAlerts()
 
             // Ui alert
             const auto uiAlertLastDismissInterval{QDateTime::currentMSecsSinceEpoch() - preferences->getOverBandwidthDismissExecution()};
-            const auto uiAlertEnabled{uiAlertLastDismissInterval > Preferences::OS_INTERVAL_MS};
+            const auto uiAlertEnabled{uiAlertLastDismissInterval > Preferences::OQ_UI_MESSAGE_INTERVAL_MS};
             const auto executeAlert{!preferences->getOverBandwidthDismissExecution() || uiAlertEnabled};
             if (executeAlert)
             {
@@ -6526,7 +6525,7 @@ void MegaApplication::checkBandwidthOverquotaAlerts()
         {
             // Ui almost alert
             const auto uiAlertLastDismissInterval{QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverBandwidthDismissExecution()};
-            const auto uiAlertEnabled{uiAlertLastDismissInterval > Preferences::OS_INTERVAL_MS};
+            const auto uiAlertEnabled{uiAlertLastDismissInterval > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS};
             const auto executeAlert{!preferences->getAlmostOverBandwidthDismissExecution() || uiAlertEnabled};
             if (executeAlert)
             {
@@ -7922,6 +7921,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     bandwidthOverquotaState = Preferences::OverquotaState::ok;
                 }
+                infoDialog->setTransferOverquotaState(bandwidthOverquotaState);
                 preferences->setBandwidthOverquotaState(bandwidthOverquotaState);
                 checkBandwidthOverquotaAlerts();
             }

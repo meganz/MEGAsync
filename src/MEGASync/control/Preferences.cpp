@@ -31,8 +31,8 @@ int Preferences::MIN_FIRST_SYNC_DELAY_S = 40; // Min delay time to wait for loca
 
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
-long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
-long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
+long long Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS = 259200000; // 72 hours
+long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
 long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
@@ -3757,8 +3757,8 @@ void Preferences::overridePreferences(const QSettings &settings)
 {
     overridePreference(settings, QString::fromUtf8("OQ_DIALOG_INTERVAL_MS"), Preferences::OQ_DIALOG_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("OQ_NOTIFICATION_INTERVAL_MS"), Preferences::OQ_NOTIFICATION_INTERVAL_MS);
-    overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS);
-    overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OQ_UI_MESSAGE_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
     overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
 

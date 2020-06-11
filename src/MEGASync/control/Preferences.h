@@ -451,8 +451,8 @@ public:
     static long long MIN_UPDATE_STATS_INTERVAL;
     static long long OQ_DIALOG_INTERVAL_MS;
     static long long OQ_NOTIFICATION_INTERVAL_MS;
-    static long long ALMOST_OS_INTERVAL_MS;
-    static long long OS_INTERVAL_MS;
+    static long long ALMOST_OQ_UI_MESSAGE_INTERVAL_MS;
+    static long long OQ_UI_MESSAGE_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
 
