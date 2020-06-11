@@ -772,6 +772,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
         <translation type="unfinished">Too many requests. Please wait.</translation>
     </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
+        <translation type="unfinished">You have entered your current password, please enter a new password.</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmSSLexception</name>
@@ -4154,7 +4159,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Export Key</translation>
+        <translation type="obsolete">Export Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -4377,6 +4382,11 @@ when the application starts again</source>
         <source>Bug report</source>
         <translatorcomment>Button label to show the bug report form.</translatorcomment>
         <translation type="unfinished">Report issue</translation>
+    </message>
+    <message>
+        <source>Backup Recovery Key</source>
+        <translatorcomment>Button label to export master key of the current user. </translatorcomment>
+        <translation type="unfinished">Backup Recovery Key</translation>
     </message>
 </context>
 <context>

@@ -1,3 +1,10 @@
+nemo-megasync (5.0.0) stable; urgency=low
+
+  * Change in version numbering
+  * Compute the correct path to the MEGASync client sockets.
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 20 May 2020 13:05:10 +0200
+
 nemo-megasync (1.0.29) beta; urgency=low
 
   * First Public Beta
