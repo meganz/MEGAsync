@@ -1998,24 +1998,14 @@ void MegaApplication::loggedIn(bool fromWizard)
         preferences->setStartOnStartup(!startOnStartup);
     }
 
-#ifdef WIN32
-    if (!preferences->lastExecutionTime())
-    {
-        showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
-    }
-#else
+if (!preferences->lastExecutionTime())
+{
     #ifdef __APPLE__
-        if (!preferences->lastExecutionTime())
-        {
-            showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
-        }
+        showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
     #else
-        if (!preferences->lastExecutionTime())
-        {
-            showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
-        }
+        showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
     #endif
-#endif
+}
 
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
     QDateTime now = QDateTime::currentDateTime();
@@ -6202,12 +6192,12 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             return;
         }
 
-#ifdef _WIN32
+#ifndef __APPLE__
         if (reason == QSystemTrayIcon::Context)
         {
             return;
         }
-#endif
+#endif /* ! __APPLE__ */
 
 #ifndef __APPLE__
         if (isLinux)
