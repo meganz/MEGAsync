@@ -7903,10 +7903,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             notifyBandwidthObservers();
 
-            if(!Preferences::ACCOUNT_TYPE_FREE)
+            if(preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
             {
                 constexpr auto warningUsagePercent{90};
-                const auto bandwidthUsagePercent{std::floor((100.0 * preferences->usedStorage() / preferences->totalStorage()))};
+                const auto bandwidthUsagePercent{std::floor((100.0 * preferences->usedBandwidth() / preferences->totalBandwidth()))};
                 const auto bandwidthUsageWarning{bandwidthUsagePercent >= warningUsagePercent};
                 constexpr auto fullUsagePercent{100};
                 const auto bandwidthUsageFull{bandwidthUsagePercent >= fullUsagePercent};
