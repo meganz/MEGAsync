@@ -1526,6 +1526,8 @@ int SettingsDialog::saveSettings()
                     {
                         QString localFolderPath = ui->tSyncs->item(j, 0)->text();
                         QString megaFolderPath = ui->tSyncs->item(j, 1)->text();
+                        QString syncName = syncNames.at(j); //TODO: store in column?
+
                         std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(megaFolderPath.toUtf8().constData()));
                         //TODO: store handle in some column ?
 
@@ -1568,7 +1570,7 @@ int SettingsDialog::saveSettings()
 
 
 
-                        controller->addSync(localFolderPath, node?node->getHandle():INVALID_HANDLE, addSyncStep);
+                        controller->addSync(localFolderPath, node?node->getHandle():INVALID_HANDLE, syncName, addSyncStep);
                     }
                     else
                     {

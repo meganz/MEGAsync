@@ -99,7 +99,13 @@ void SyncSetting::setSync(MegaSync *sync)
     {
         if (!mName.size())
         {
-            mName = QFileInfo(QString::fromUtf8(sync->getLocalFolder())).fileName();
+            QFileInfo localFolderInfo(QString::fromUtf8(sync->getLocalFolder()));
+            mName = localFolderInfo.fileName();
+            if (mName.isEmpty())
+            {
+                mName = QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder()));
+            }
+            mName.remove(QChar::fromAscii(':')).remove(QDir::separator());
         }
 
         mSync.reset(sync->copy());

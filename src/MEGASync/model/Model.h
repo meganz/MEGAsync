@@ -1,16 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <QString>
-#include <QLocale>
-#include <QStringList>
-#include <QMutex>
-#include <QDataStream>
-
-#include <assert.h>
 #include <memory>
 
-//TODO: reduce includes
+#include <QString>
+#include <QStringList>
+#include <QMutex>
 
 #include "control/Preferences.h"
 #include "SyncSettings.h"
@@ -48,7 +42,6 @@ private:
     Model();
 
     ///////////////// SYNCS ///////////////////////
-    std::map<QString, QVariant> cache;
     Preferences *preferences;
     bool isFirstSyncDone = false;
     ///////////// END OF SYNCS ////////////////////
@@ -62,32 +55,39 @@ protected:
 
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
-
-
+    QMap<int, QString> unconfiguredSyncsNames;
     ///////////// END OF SYNCS ////////////////////
 
-    void onSyncStateChanged(std::shared_ptr<mega::MegaSync> sync);
 
 public:
     void reset();
     static Model *instance();
 
     ///////////////// SYNCS ///////////////////////
-    // TODO: doc all these
 
+    /**
+     * @brief Updates sync model
+     * @param sync MegaSync object with the required information
+     * @param addingState to distinguish adding cases (from onSyncAdded)
+     * @return
+     */
     std::shared_ptr<SyncSetting> updateSyncSettings(mega::MegaSync *sync, int addingState = 0);
+    void setSyncName(int tag, const QString &newName);
+
+    // transition sync to active: will trigger platform dependent behaviour
     void activateSync(std::shared_ptr<SyncSetting> cs);
+    // transition sync to inactive: will trigger platform dependent behaviour
     void deactivateSync(std::shared_ptr<SyncSetting> cs);
 
+    // load into sync model the information from an old cached sync
     void pickInfoFromOldSync(const SyncData &osd, int tag);
+
+    // remove syncs from model
     void removeSyncedFolder(int num);
     void removeSyncedFolderByTag(int tag);
     void removeAllFolders();
 
-    void removeOldCachedSync(int position);
-    QList<SyncData> readOldCachedSyncs();//get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
-    void saveOldCachedSyncs(); //save the old cache (intended to clean them)
-
+    // Getters
     std::shared_ptr<SyncSetting> getSyncSetting(int num);
     std::shared_ptr<SyncSetting> getSyncSettingByTag(int num);
 

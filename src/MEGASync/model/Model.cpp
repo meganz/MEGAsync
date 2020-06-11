@@ -82,13 +82,9 @@ void Model::removeAllFolders()
     //remove all configured syncs
     preferences->removeAllFolders();
 
-
     for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
     {
-        //TODO: reuse this one whenevere else syncFolderRemoved needs to be called!
-        Platform::syncFolderRemoved(it.value()->getLocalFolder(), it.value()->name(), QString::number(it.value()->tag()));
-        MegaSyncApp->notifyItemChange(it.value()->getLocalFolder(), MegaApi::STATE_NONE);
-
+        deactivateSync(it.value());
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
@@ -97,7 +93,7 @@ void Model::removeAllFolders()
 void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
 {
     // set sync name if none.
-    if (syncSetting->name().isEmpty()) //TODO: find other points of setting name and review consistency
+    if (syncSetting->name().isEmpty())
     {
         QFileInfo localFolderInfo(syncSetting->getLocalFolder());
         QString syncName = localFolderInfo.fileName();
@@ -111,6 +107,7 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
 
     assert( syncSetting->getLocalFolder() == QDir::toNativeSeparators(QFileInfo(syncSetting->getLocalFolder()).canonicalFilePath()) );
 
+    // set sync UID
     if (syncSetting->getSyncID().isEmpty())
     {
         syncSetting->setSyncID(QUuid::createUuid().toString().toUpper());
@@ -123,6 +120,20 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
     }
     isFirstSyncDone = true;
 
+    if ( !preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Error::LOCAL_IS_FAT)
+    {
+        QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
+         tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
+         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
+         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
+        preferences->setFatWarningShown();
+    }
+    else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Error::LOCAL_IS_HGFS)
+    {
+        QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
+            tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage."));
+        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
+    }
 
     Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
 }
@@ -131,7 +142,6 @@ void Model::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
 {
     Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
     MegaSyncApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
-
 }
 
 std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState)
@@ -173,8 +183,17 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
             cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync);
         }
 
+        //override the name if there's one preconfigured
+        auto syncNamePair = unconfiguredSyncsNames.find(sync->getTag());
+        if (syncNamePair != unconfiguredSyncsNames.end())
+        {
+            cs->setName(syncNamePair.value());
+            unconfiguredSyncsNames.erase(syncNamePair);
+        }
+
         configuredSyncs.append(sync->getTag());
     }
+
 
     if (addingState) //new or resumed
     {
@@ -186,8 +205,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
                 || addingState == MegaSync::SyncAdded::REENABLED_FAILED;
     }
 
-    preferences->writeSyncSetting(cs);
-
     if (cs->isActive() && wasInactive)
     {
         activateSync(cs);
@@ -197,6 +214,8 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     {
         deactivateSync(cs);
     }
+
+    preferences->writeSyncSetting(cs); // we store MEGAsync specific fields into cache
 
 #ifdef WIN32
     // handle transition from MEGAsync <= 3.0.1.
@@ -211,6 +230,32 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
     emit syncStateChanged(cs);
     return cs;
+}
+
+void Model::setSyncName(int tag, const QString &newName)
+{
+    if (!newName.size())
+    {
+        return;
+    }
+    QMutexLocker qm(&syncMutex);
+    assert(preferences->logged());
+
+    if (configuredSyncsMap.contains(tag))
+    {
+        auto cs = configuredSyncsMap[tag];
+        if (newName.compare(cs->name())) //name differs
+        {
+            cs->setName(newName);
+            preferences->writeSyncSetting(cs);
+        }
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromAscii("setting sync name %1 for unexisting sync %2")
+                     .arg(newName).arg(tag).toUtf8().constData());
+        unconfiguredSyncsNames[tag] = newName;
+    }
 }
 
 void Model::pickInfoFromOldSync(const SyncData &osd, int tag)

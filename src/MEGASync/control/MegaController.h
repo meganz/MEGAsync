@@ -1,11 +1,12 @@
 #pragma once
 
+#include <memory>
+#include <QString>
+#include <QList>
+
 #include "model/Model.h"
 #include "megaapi.h"
 
-#include <QString>
-#include <QList>
-#include <memory>
 
 class ProgressStep;
 class ActionProgress;
@@ -28,7 +29,7 @@ class Controller
 {
 public:
 
-    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle, ActionProgress *progress = nullptr);
+    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle, QString syncName = QString(), ActionProgress *progress = nullptr);
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
@@ -37,8 +38,6 @@ public:
     void setApi(mega::MegaApi *value);
 
 private:
-
-    static Controller *model;
 
     mega::MegaApi *api;
     static Controller *controller;

@@ -1,16 +1,9 @@
 #pragma once
 
-#include <iostream>
-#include <QString>
-#include <QLocale>
-#include <QStringList>
-#include <QMutex>
-#include <QDataStream>
-
-#include <assert.h>
 #include <memory>
 
-//TODO: reduce includes
+#include <QString>
+#include <QDataStream>
 
 #include "megaapi.h"
 

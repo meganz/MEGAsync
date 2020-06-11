@@ -916,7 +916,7 @@ void InfoDialog::addSync(MegaHandle h)
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     MegaHandle handle = dialog->getMegaFolder();
-    QString syncName = dialog->getSyncName(); //TODO: shouldn't this be used?
+    QString syncName = dialog->getSyncName();
     delete dialog;
     dialog = NULL;
 
@@ -951,7 +951,7 @@ void InfoDialog::addSync(MegaHandle h)
        }
    }, Qt::DirectConnection); //Note, we need direct connection to use request & error
 
-   controller->addSync(localFolderPath, handle, addSyncStep);
+   controller->addSync(localFolderPath, handle, syncName, addSyncStep);
 }
 
 #ifdef __APPLE__

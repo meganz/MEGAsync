@@ -8,7 +8,7 @@ using namespace mega;
 
 Controller *Controller::controller = NULL;
 
-void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle, ActionProgress *progress)
+void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle, QString syncName, ActionProgress *progress)
 {
     assert(api);
 
@@ -22,8 +22,16 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
 
     api->syncFolder(localFolder.toUtf8().constData(), remoteHandle,
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+        new ProgressFuncExecuterListener(progress,  true, [syncName](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
+                        if (e->getErrorCode() == MegaError::API_OK)
+                        {
+                            if (syncName.size())
+                            {
+                                Model::instance()->setSyncName(request->getTransferTag(), syncName);
+                            }
+                        }
+
     }));
 }
 
