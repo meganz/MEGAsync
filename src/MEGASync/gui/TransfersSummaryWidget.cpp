@@ -193,6 +193,14 @@ void TransfersSummaryWidget::initialize()
 
 }
 
+void TransfersSummaryWidget::reset()
+{
+    setCompletedDownloads(0);
+    setCompletedUploads(0);
+    setTotalDownloads(0);
+    setTotalUploads(0);
+}
+
 void TransfersSummaryWidget::resizeAnimation()
 {
     if (originalwidth == -1) //first time here

@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+
+cmake_minimum_required(VERSION 3.15)
+cmake_policy(SET CMP0091 NEW) 
 
 set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will declare and append 32/64")
 set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
@@ -40,12 +42,14 @@ set (USE_FFMPEG 1 CACHE STRING "")
 set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1 CACHE STRING "")
-
+set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
+set(MEGAupdaterDir "${RepoDir}/src/MEGAUpdater") 
+set(MEGAShellExtDir "${RepoDir}/src/MEGAShellExt")
 
 get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
 
@@ -159,6 +163,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
     ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
+    ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
+    ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
     )
 
 
@@ -255,6 +261,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
+    ${MEGAsyncDir}/gui/MegaInfoMessage.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -383,6 +390,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/Login2FA.cpp
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
+    ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -529,7 +537,7 @@ else()
 endif()
 
 
-add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -DNTDDI_VERSION=0x05010000 -D_WIN32_WINNT=0x0501 -DQT_WIDGETS_LIB )
+add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -DQT_WIDGETS_LIB )
 add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DMEGA_QT_LOGGING -DQT_NO_CAST_FROM_ASCII -DPSAPI_VERSION=1 -DQT_WINEXTRAS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB )
  #TODO: remove UNICODE (in config.h) and use the WIN32 definition accordingly only for Windows
 
@@ -539,6 +547,10 @@ endif()
 
 if(WIN32)
     add_definitions( -DUNICODE -D_UNICODE )  # needed for visual studio projects to use the unicode runtime libraries
+
+    #supported windows version: 7 and beyond
+    add_definitions( -DNTDDI_VERSION=NTDDI_WIN7 )
+    add_definitions( -D_WIN32_WINNT=0x0601 ) # 0601: windows 7
 endif()
 
 
@@ -553,6 +565,7 @@ if(CMAKE_HOST_APPLE)
     set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAsync WIN32 ${SRCS} ${QM_FILES})
+    set_property(TARGET MEGAsync PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 else()
     add_executable(MEGAsync ${SRCS} ${QM_FILES})
 endif()
@@ -646,3 +659,48 @@ if(FULLREQUIREMENTS)
     endif()
 
 endif(FULLREQUIREMENTS)
+
+
+#-------------- MEGA updater --------------------
+
+set (UPDATER_FILES
+    ${MEGAupdaterDir}/MegaUpdater.cpp
+    ${MEGAupdaterDir}/UpdateTask.cpp
+)
+
+ImportStdVcpkgLibrary(cryptopp-staticcrt        cryptopp-staticcrt cryptopp-staticcrt libcryptopp libcryptopp)
+
+if(CMAKE_HOST_APPLE)
+#    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATER_FILES} ) 
+elseif(CMAKE_HOST_WIN32)
+    #add_executable(MEGAupdater WIN32 ${UPDATER_FILES} )
+    add_executable(MEGAupdater ${UPDATER_FILES} )
+    target_link_libraries(MEGAupdater cryptopp-staticcrt Urlmon.lib Shlwapi.lib)
+    set_property(TARGET MEGAupdater PROPERTY AUTOMOC OFF)
+    set_property(TARGET MEGAupdater PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    #set_target_properties(MEGAupdater  PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE  /ENTRY:WinMain ") #/LARGEADDRESSAWARE /SAFESEH:NO /DEBUG " )
+endif()
+
+#-------------- MEGA Shell Extension  --------------------
+
+set (SHELLEXT_FILES
+    ${MEGAShellExtDir}/ShellExt.cpp
+    ${MEGAShellExtDir}/RegUtils.cpp
+    ${MEGAShellExtDir}/dllmain.cpp
+    ${MEGAShellExtDir}/ContextMenuExt.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtSyncing.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtSynced.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtPending.cpp
+    ${MEGAShellExtDir}/ClassFactoryContextMenuExt.cpp
+    ${MEGAShellExtDir}/ClassFactory.cpp
+    ${MEGAShellExtDir}/MegaInterface.cpp
+    ${MEGAShellExtDir}/MEGAShellExt.rc
+    ${MEGAShellExtDir}/GlobalExportFunctions.def
+)
+
+if(CMAKE_HOST_WIN32)
+    add_library(MEGAShellExt SHARED  ${SHELLEXT_FILES} )
+    target_link_libraries(MEGAShellExt user32.lib ole32.lib oleaut32.lib gdi32.lib uuid.lib Advapi32.lib Shell32.lib)
+    set_property(TARGET MEGAShellExt PROPERTY AUTOMOC OFF)
+    set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
