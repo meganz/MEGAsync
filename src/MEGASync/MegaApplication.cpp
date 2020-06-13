@@ -2829,7 +2829,7 @@ void MegaApplication::checkOverStorageStates()
             if (!storageOverquotaDialog)
             {
                 storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
-                connect(storageOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+                connect(storageOverquotaDialog, SIGNAL(finished(int)), this, SLOT(storageOverquotaDialogFinished(int)));
                 storageOverquotaDialog->show();
             }
             else
@@ -2838,7 +2838,7 @@ void MegaApplication::checkOverStorageStates()
                 storageOverquotaDialog->raise();
             }
         }
-        else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
+        else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
@@ -3864,7 +3864,21 @@ void MegaApplication::setupWizardFinished(int result)
     startSyncs();
 }
 
-void MegaApplication::overquotaDialogFinished(int)
+void MegaApplication::storageOverquotaDialogFinished(int)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (storageOverquotaDialog)
+    {
+        storageOverquotaDialog->deleteLater();
+        storageOverquotaDialog = NULL;
+    }
+}
+
+void MegaApplication::transferOverquotaDialogFinished(int)
 {
     if (appfinished)
     {
@@ -3875,12 +3889,6 @@ void MegaApplication::overquotaDialogFinished(int)
     {
         bandwithOverquotaDialog->deleteLater();
         bandwithOverquotaDialog = NULL;
-    }
-
-    if (storageOverquotaDialog)
-    {
-        storageOverquotaDialog->deleteLater();
-        storageOverquotaDialog = NULL;
     }
 }
 
@@ -6464,8 +6472,8 @@ void MegaApplication::openInfoWizard()
 void MegaApplication::checkBandwidthOverquotaAlerts()
 {
     const auto infoDialogVisible{infoDialog && infoDialog->isVisible()};
-    const auto bandwidthAlertsEnabled{!appfinished && preferences->logged() &&
-                infoDialogVisible && Platform::isUserActive()};
+    const auto allowAlerts{infoDialogVisible || storageOverquotaDialog || Platform::isUserActive()};
+    const auto bandwidthAlertsEnabled{!appfinished && preferences->logged() && allowAlerts};
     if (bandwidthAlertsEnabled)
     {
         if(bandwidthOverquotaState == Preferences::OverquotaState::full)
@@ -6480,7 +6488,7 @@ void MegaApplication::checkBandwidthOverquotaAlerts()
                 if (!bandwithOverquotaDialog)
                 {
                     bandwithOverquotaDialog = new UpgradeDialog(megaApi, pricing);
-                    connect(bandwithOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+                    connect(bandwithOverquotaDialog, SIGNAL(finished(int)), this, SLOT(transferOverquotaDialogFinished(int)));
                     Platform::activateBackgroundWindow(bandwithOverquotaDialog);
                     bandwithOverquotaDialog->show();
 
@@ -7877,8 +7885,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
         {
             bandwidthOverquotaTimestamp = 0;
-            infoDialog->setTransferOverquotaState(Preferences::OverquotaState::ok);
             preferences->clearTemporalBandwidth();
+            bandwidthOverquotaState = Preferences::OverquotaState::ok;
+            infoDialog->setTransferOverquotaState(bandwidthOverquotaState);
+            preferences->setBandwidthOverquotaState(bandwidthOverquotaState);
 #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
 #elif defined(_WIN32)
@@ -8662,7 +8672,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 #endif
             bandwidthOverquotaState = Preferences::OverquotaState::full;
             preferences->setBandwidthOverquotaState(bandwidthOverquotaState);
-            infoDialog->setTransferOverquotaState(Preferences::OverquotaState::full);
+            infoDialog->setTransferOverquotaState(bandwidthOverquotaState);
             checkBandwidthOverquotaAlerts();
         }
     }

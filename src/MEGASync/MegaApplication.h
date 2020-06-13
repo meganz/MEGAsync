@@ -238,7 +238,8 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);
-    void overquotaDialogFinished(int result);
+    void storageOverquotaDialogFinished(int result);
+    void transferOverquotaDialogFinished(int result);
     void infoWizardDialogFinished(int result);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
