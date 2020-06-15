@@ -38,6 +38,7 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_INDEXING,
         STATE_UPDATED,
         STATE_SYNCING,
+        STATE_TRANSFERRING,
     };
 
 
@@ -64,6 +65,7 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setSyncing(bool value);
+    void setTransferring(bool value);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void addSync(mega::MegaHandle h);
@@ -177,6 +179,8 @@ private:
 
     int activeDownloadState, activeUploadState;
     int remainingUploads, remainingDownloads;
+    bool remainingUploadsTimerRunning = false;
+    bool remainingDownloadsTimerRunning = false;
     int totalUploads, totalDownloads;
     long long leftUploadBytes, completedUploadBytes;
     long long leftDownloadBytes, completedDownloadBytes;
@@ -190,6 +194,7 @@ private:
     bool indexing; //scanning
     bool waiting;
     bool syncing; //if any sync is in syncing state
+    bool transferring; // if there are ongoing regular transfers
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;

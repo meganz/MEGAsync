@@ -116,6 +116,7 @@ public:
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
+    void repositionInfoDialog();
 
     virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
     virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
@@ -172,6 +173,10 @@ public:
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
     void showVerifyAccountInfo();
+
+    void removeFinishedBlockedTransfer(int transferTag);
+    bool finishedTransfersWhileBlocked(int transferTag);
+
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
@@ -186,6 +191,10 @@ public:
     void fetchNodes();
     void whyAmIBlocked(bool periodicCall = false);
 
+    int getBlockState() const;
+
+    void updateTrayIconMenu();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -199,6 +208,7 @@ signals:
     void unblocked();
     void nodeMoved(mega::MegaHandle handle);
     void nodeAttributesChanged(mega::MegaHandle handle);
+    void blocked();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -299,6 +309,8 @@ private slots:
     void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
     void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, bool newSync = false);
     void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
+    void onBlocked();
+    void onUnblocked();
 
 protected:
     bool checkOverquotaBandwidth();
@@ -318,6 +330,10 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+    void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
+
+    // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
+    bool amIOverTemporalQuotaBandwidth();
 
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
@@ -467,6 +483,7 @@ protected:
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
+    QSet<int> finishedBlockedTransfers;
 
     QHash<unsigned long long, TransferMetaData*> transferAppData;
 
@@ -477,6 +494,7 @@ protected:
     bool waiting;
     bool syncing; //if any sync is in syncing state
     bool updated;
+    bool transferring; //if there is any regular transfer in progress
     bool checkupdate;
     bool updateBlocked;
     long long lastExit;

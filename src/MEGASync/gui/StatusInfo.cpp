@@ -94,6 +94,17 @@ void StatusInfo::setState(int state)
             ui->lStatusDesc->setText(tr("Scanning")+QString::fromUtf8("..."));
             break;
         }
+        case STATE_TRANSFERRING:
+        {
+            if (!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
+
+            ui->lStatusDesc->setText(tr("Transferring")+QString::fromUtf8("..."));
+            break;
+        }
         default:
             break;
     }

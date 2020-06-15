@@ -17,6 +17,7 @@
 #include <QtWin>
 #endif
 
+#if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
 // and it indeed works
 #ifndef SHFOLDERCUSTOMSETTINGS
@@ -58,6 +59,7 @@ typedef struct
 
 // Gets/Sets the Folder Custom Settings for pszPath based on dwReadWrite. dwReadWrite can be FCS_READ/FCS_WRITE/FCS_FORCEWRITE
 SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In_ PCWSTR pszPath, DWORD dwReadWrite);
+#endif
 #endif
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
@@ -1140,7 +1142,9 @@ bool WindowsPlatform::registerUpdateJob()
     LocalFree(stringSID);
     QString MEGAupdaterPath = QDir::toNativeSeparators(QDir(MegaApplication::applicationDirPath()).filePath(QString::fromUtf8("MEGAupdater.exe")));
 
-    if (SUCCEEDED(CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL))
+    HRESULT initializeSecurityResult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL);
+
+    if ( (SUCCEEDED(initializeSecurityResult) || initializeSecurityResult == RPC_E_TOO_LATE /* already called */ )
             && SUCCEEDED(CoCreateInstance(CLSID_TaskScheduler, NULL, CLSCTX_INPROC_SERVER, IID_ITaskService, (void**)&pService))
             && SUCCEEDED(pService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()))
             && SUCCEEDED(pService->GetFolder(_bstr_t( L"\\"), &pRootFolder)))
@@ -1311,7 +1315,17 @@ void WindowsPlatform::uninstall()
     }
     _bstr_t taskName = taskBaseName + stringSID;
 
-    if (SUCCEEDED(CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL))
+
+    HRESULT initializeSecurityResult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL);
+
+    if (initializeSecurityResult == CO_E_NOTINITIALIZED)
+    {
+        if (SUCCEEDED(CoInitializeEx(NULL, COINIT_APARTMENTTHREADED)))
+        {
+            initializeSecurityResult = CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL);
+        }
+    }
+    if ( (SUCCEEDED(initializeSecurityResult) || initializeSecurityResult == RPC_E_TOO_LATE /* already called */)
             && SUCCEEDED(CoCreateInstance(CLSID_TaskScheduler, NULL, CLSCTX_INPROC_SERVER, IID_ITaskService, (void**)&pService))
             && SUCCEEDED(pService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()))
             && SUCCEEDED(pService->GetFolder(_bstr_t( L"\\"), &pRootFolder)))

@@ -21,6 +21,7 @@ TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
     transferState = 0;
     transferTag = 0;
     dsFinishedTime = 0;
+    mTransferFinishedWhileBlocked = false;
 }
 
 void TransferItem::setFileName(QString fileName)
@@ -169,4 +170,14 @@ int TransferItem::getNodeAccess()
 void TransferItem::setNodeAccess(int value)
 {
     nodeAccess = value;
+}
+
+bool TransferItem::getTransferFinishedWhileBlocked() const
+{
+    return mTransferFinishedWhileBlocked;
+}
+
+void TransferItem::setTransferFinishedWhileBlocked(bool value)
+{
+    mTransferFinishedWhileBlocked = value;
 }

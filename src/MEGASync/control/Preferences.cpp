@@ -12,14 +12,22 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.2.0";
-const int Preferences::VERSION_CODE = 4302;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.3.0";
+const int Preferences::VERSION_CODE = 4303;
+const int Preferences::BUILD_ID = 5;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.2");
-QString Preferences::SDK_ID = QString::fromAscii("660dafe");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.3");
+QString Preferences::SDK_ID = QString::fromAscii("b2948c7");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fix crash issue for OSX 10.9."));
+    "- New customized message boxes.\n"
+    "- Clean retroactive logs when logout.\n"
+    "- Fixed issues that disable Finder extension under some circumstances.\n"
+    "- Email verification for locked accounts.\n"
+    "- SMS verification for locked accounts.\n"
+    "- Support for affiliate program.\n"
+    "- Included option to send logs from crash report dialog.\n"
+    "- Other UI fixes and adjustments.\n"
+    "- Other performance improvements and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -1481,7 +1489,7 @@ bool Preferences::needsFetchNodesInGeneral()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    bool value = getValue<int>(needsFetchNodesKey, defaultNeedsFetchNodes);
+    bool value = getValue<bool>(needsFetchNodesKey, defaultNeedsFetchNodes);
 
     if (!currentAccount.isEmpty())
     {

@@ -725,7 +725,7 @@ void SetupWizard::on_bLocalFolder_clicked()
         QTemporaryFile test(path + QDir::separator());
         if (test.open() || QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You don't have write permissions in this local folder.") +
                     QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.") + QString::fromUtf8("\n") + tr("Do you want to continue?"),
-                    QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
             ui->eLocalFolder->setText(path);
         }

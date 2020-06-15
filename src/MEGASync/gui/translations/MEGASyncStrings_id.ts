@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">file</translation>
+        <translation type="obsolete">file</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">folder</translation>
+        <translation type="obsolete">folder</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">[A] ([B]) Anda yang dibagikan secara publik telah dipulihkan</translation>
+        <translation type="obsolete">[A] ([B]) Anda yang dibagikan secara publik telah dipulihkan</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -466,7 +466,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="obsolete">(unknown shared folder)</translation>
+        <translation type="obsolete">(folder bersama tidak dikenal)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -476,17 +476,37 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+        <translation type="obsolete">[%1] ([%2]) yang dibagikan secara publik telah dihapus</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Activity</translation>
+        <translation type="unfinished">Kegiatan Folder Bersama</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">Akses ke folder berbagi telah dihapus</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">File anda yang dibagikan secara publik ([A]) telah dihapus</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Folder anda yang dibagikan secara publik ([A]) telah diturunkan</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">File anda yang dibagikan secara publik ([A]) telah dipulihkan</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Folder anda yang dibagikan secara publik ([A]) telah dipulihkan</translation>
     </message>
 </context>
 <context>
@@ -662,7 +682,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation type="unfinished">Please wait until the current upload is completed.</translation>
+        <translation type="unfinished">Harap tunggu hingga unggahan saat ini selesai.</translation>
     </message>
 </context>
 <context>
@@ -670,7 +690,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">persyaratan layanan</translation>
+        <translation type="unfinished">Persyaratan Layanan</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -812,6 +832,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Kirim laporan</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
+        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
+        <translation type="unfinished">Lampirkan file log diagnostik untuk membantu debugging 
+(dalam beberapa kasus mungkin berisi detail tentang data anda, seperti nama file atau folder)</translation>
     </message>
 </context>
 <context>
@@ -1159,7 +1185,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">Tidak bisa mendapatkan filesystem. Tolong, coba lagi. Jika masalah berlanjut, silakan hubungi kami di bug@mega.nz</translation>
+        <translation type="obsolete">Tidak bisa mendapatkan filesystem. Tolong, coba lagi. Jika masalah berlanjut, silakan hubungi kami di bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1180,6 +1206,56 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
         <translation type="unfinished">Keluar…</translation>
+    </message>
+    <message>
+        <source>Locked Account</source>
+        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
+        <translation type="unfinished">Akun Terkunci</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Akun anda telah dikunci sementara untuk keselamatan anda. Harap verifikasi email anda dan ikuti langkah-langkahnya untuk membuka akun anda kembali.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <translation type="unfinished">Keluar</translation>
+    </message>
+    <message>
+        <source>Verify email</source>
+        <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
+        <translation type="obsolete">Verifikasi email</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Akun anda telah dikunci sementara untuk kemungkinan penyalahgunaan. Harap verifikasi nomor telepon anda untuk membuka akun anda kembali.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
+        <translation type="unfinished">Verifikasi sekarang</translation>
+    </message>
+    <message>
+        <source>Creating account...</source>
+        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translation type="unfinished">Membuat akun…</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Mengapa saya melihat ini?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Kirim ulang email</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email terkirim</translation>
     </message>
 </context>
 <context>
@@ -1203,7 +1279,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation>Import link</translation>
+        <translation type="vanished">Import link</translation>
     </message>
     <message>
         <source>Download to my computer</source>
@@ -1267,6 +1343,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
+        <translation type="unfinished">Buka tautan</translation>
     </message>
 </context>
 <context>
@@ -1867,6 +1948,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>LockedPopOver</name>
+    <message>
+        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">[A]Mungkin saja anda menggunakan kata sandi yang sama untuk akun MEGA anda seperti untuk layanan lain, dan bahwa setidaknya salah satu dari layanan lain ini telah mengalami pelanggaran data.[/A]</translation>
+    </message>
+    <message>
+        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">[A]Kata sandi anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun anda, termasuk, namun tidak terbatas pada, akun MEGA anda.[/A]</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Akun Terkunci</translation>
+    </message>
+</context>
+<context>
     <name>Login2FA</name>
     <message>
         <source>Login Verification</source>
@@ -2010,7 +2109,7 @@ Exit anyway?</source>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Import link</translation>
+        <translation type="vanished">Import link</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -2114,7 +2213,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation type="vanished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -2132,7 +2231,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Tidak bisa mendapatkan filesystem. Tolong, coba lagi. Jika masalah berlanjut, silakan hubungi kami di bug@mega.nz</translation>
+        <translation type="unfinished">Tidak bisa mendapatkan filesystem. Tolong, coba lagi. Jika masalah berlanjut, silakan hubungi kami di bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2628,7 +2727,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">Please resolve your payment issue to avoid suspension of your business account.</translation>
+        <translation type="unfinished">Harap selesaikan masalah pembayaran Anda untuk menghindari penangguhan akun bisnis Anda.</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2638,27 +2737,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished">This month’s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</translation>
+        <translation type="unfinished">Pembayaran bulan ini gagal. Harap selesaikan masalah pembayaran Anda sesegera mungkin untuk menghindari penangguhan akun bisnis Anda.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation type="unfinished">Account Suspended</translation>
+        <translation type="unfinished">Akun Ditangguhkan</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished">Your account is currently [A]suspended[/A]. You can only browse your data.</translation>
+        <translation type="unfinished">Akun Ditangguhkan Akun Anda saat ini [A]ditangguhkan[/A]. Anda hanya dapat menelusuri data Anda.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation type="unfinished">Your upload(s) cannot proceed because %1’s account is full.</translation>
+        <translation type="unfinished">Upload Anda tidak dapat dilanjutkan karena akun %1 penuh.</translation>
     </message>
     <message>
         <source>contact</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation type="unfinished">Kontak</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
+        <translation type="unfinished">Akun Terkunci</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Buka tautan</translation>
+    </message>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translation type="unfinished">Akun Anda telah dinonaktifkan oleh administrator Anda. Anda dapat menghubungi administrator akun bisnis Anda untuk rincian lebih lanjut.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync akan terus bekerja, namun, pembaruan tidak akan lagi didukung untuk Windows Vista dan sistem operasi yang lebih lama segera.</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">Mentransfer</translation>
     </message>
 </context>
 <context>
@@ -2793,7 +2917,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Akun Anda dihentikan karena melanggar Ketentuan Layanan Mega, seperti penyalahgunaan hak orang lain; berbagi dan / atau mengimpor data ilegal; atau penyalahgunaan sistem.</translation>
+        <translation type="unfinished">Akun anda dihentikan karena pelanggaran terhadap Ketentuan Layanan MEGA, seperti penyalahgunaan hak orang lain; berbagi dan / atau mengimpor data ilegal; atau penyalahgunaan sistem.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2819,6 +2943,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">Transfer gagal karena struktur direktori rekursif</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Mengapa saya melihat ini?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">Tutup</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Akun Terkunci</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">Ada kemungkinan bahwa Anda menggunakan kata sandi yang sama untuk akun MEGA Anda seperti untuk layanan lain, dan bahwa setidaknya salah satu dari layanan lain ini telah mengalami pelanggaran data.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">Kata sandi Anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun Anda, termasuk, namun tidak terbatas pada, akun MEGA Anda.</translation>
     </message>
 </context>
 <context>
@@ -3142,7 +3294,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation>Import link</translation>
+        <translation type="vanished">Import link</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -3178,6 +3330,11 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">Link MEGA salah</translation>
+    </message>
+    <message>
+        <source>Enter links</source>
+        <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
+        <translation type="unfinished">Masukkan tautan</translation>
     </message>
 </context>
 <context>
@@ -3268,7 +3425,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Storage and transfers</source>
         <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
-        <translation type="unfinished">Storage and Transfer</translation>
+        <translation type="unfinished">Penyimpanan dan Transfer</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -3278,7 +3435,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">per pengguna %1</translation>
     </message>
 </context>
 <context>
@@ -3382,15 +3539,40 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
+        <translation type="obsolete">- Dukungan untuk pemberitahuan pengguna.
+- Laporan bug sekarang dapat dikirim dari dialog pengaturan.
+- Mengisi kembali dialog utama.
+- Peningkatan kinerja ketika berhadapan dengan sejumlah besar sinkronisasi dan transfer.
+ -Peningkatan kegunaan akun bisnis.
+- Menambahkan dukungan untuk tautan ke file dan folder di dalam tautan folder publik.
+- Peningkatan untuk sinkronisasi dengan sistem file FAT32.
+- Peningkatan kinerja lainnya, perbaikan dan penyesuaian UI.</translation>
+    </message>
+    <message>
+        <source>- Fix crash issue for OSX 10.9.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
+        <translation type="obsolete">- Memperbaiki masalah kerusakan untuk OSX 10.9.</translation>
+    </message>
+    <message>
+        <source>- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
 - Other UI fixes and adjustments.
-- Other performance improvements, UI fixes and adjustments.</translation>
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
+        <translation type="unfinished">- Kotak pesan baru yang disesuaikan. 
+- Bersihkan log retroaktif saat logout.
+- Memperbaiki masalah yang menonaktifkan ekstensi Finder dalam beberapa keadaan.
+- Verifikasi email untuk akun yang terkunci.
+- Verifikasi SMS untuk akun yang terkunci.
+- Dukungan untuk program afiliasi.
+- Opsi yang disertakan untuk mengirim log dari dialog laporan kerusakan.
+- Perbaikan dan penyesuaian UI lainnya.
+- Peningkatan dan penyesuaian kinerja lainnya.</translation>
     </message>
 </context>
 <context>
@@ -3597,7 +3779,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>GRATIS</translation>
+        <translation>Gratis</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -4189,7 +4371,7 @@ when the application starts again</source>
     <message>
         <source>Please let us know if you find a bug</source>
         <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
-        <translation type="unfinished">Please let us know if you find an issue.</translation>
+        <translation type="unfinished">Beri tahu kami jika Anda menemukan masalah.</translation>
     </message>
     <message>
         <source>Bug report</source>
@@ -4828,6 +5010,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">Mensinkronisasikan</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">Mentransfer</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -5048,7 +5235,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Import link</translation>
+        <translation type="obsolete">Import link</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -5096,6 +5283,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translation type="unfinished">Unduh</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Buka tautan</translation>
     </message>
 </context>
 <context>
@@ -5406,6 +5598,59 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyLockMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Mengapa saya melihat ini?</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <translation type="unfinished">Keluar</translation>
+    </message>
+    <message>
+        <source>Verify your email</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
+        <translation type="unfinished">Verifikasi email anda</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
+        <translation type="unfinished">Akun Terkunci</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
+        <translation type="unfinished">Akun anda telah dikunci sementara untuk keselamatan anda. Harap verifikasi email anda dan ikuti langkah-langkahnya untuk membuka akun anda kembali.</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Kirim ulang email</translation>
+    </message>
+    <message>
+        <source>Verify your account</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
+        <translation type="unfinished">verifikasi akun anda</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
+        <translation type="unfinished">Akun anda telah dikunci sementara untuk kemungkinan penyalahgunaan. Harap verifikasi nomor telepon anda untuk membuka akun anda kembali.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
+        <translation type="unfinished">Verifikasi sekarang</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email terkirim</translation>
     </message>
 </context>
 <context>
