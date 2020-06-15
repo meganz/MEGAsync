@@ -141,6 +141,8 @@ public:
     void setOverStorageNotificationExecution(long long timestamp);
     long long getAlmostOverStorageNotificationExecution();
     void setAlmostOverStorageNotificationExecution(long long timestamp);
+    long long getPayWallNotificationExecution();
+    void setPayWallNotificationExecution(long long timestamp);
     long long getAlmostOverStorageDismissExecution();
     void setAlmostOverStorageDismissExecution(long long timestamp);
     long long getOverStorageDismissExecution();
@@ -414,6 +416,7 @@ public:
     static long long OQ_DIALOG_INTERVAL_MS;
     static long long OQ_NOTIFICATION_INTERVAL_MS;
     static long long ALMOST_OS_INTERVAL_MS;
+    static long long PAYWALL_NOTIFICATION_INTERVAL_MS;
     static long long OS_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
@@ -501,6 +504,7 @@ protected:
     long long diffTimeWithSDK;
     long long overStorageDialogExecution;
     long long overStorageNotificationExecution;
+    long long payWallNotificationExecution;
     long long almostOverStorageNotificationExecution;
     long long almostOverStorageDismissExecution;
     long long overStorageDismissExecution;
@@ -534,6 +538,7 @@ protected:
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
+    static const QString payWallNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
     static const QString storageStateQKey;

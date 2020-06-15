@@ -40,6 +40,7 @@ int Preferences::MIN_FIRST_SYNC_DELAY_S = 40; // Min delay time to wait for loca
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
+long long Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS = 86400000; //24 hours
 long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
@@ -253,6 +254,7 @@ const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBa
 const QString Preferences::overStorageDialogExecutionKey = QString::fromAscii("overStorageDialogExecution");
 const QString Preferences::overStorageNotificationExecutionKey = QString::fromAscii("overStorageNotificationExecution");
 const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
+const QString Preferences::payWallNotificationExecutionKey = QString::fromAscii("payWallNotificationExecution");
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
 const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLight");
@@ -484,6 +486,7 @@ Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
     diffTimeWithSDK = 0;
     overStorageDialogExecution = -1;
     overStorageNotificationExecution = -1;
+    payWallNotificationExecution = -1;
     almostOverStorageNotificationExecution = -1;
     almostOverStorageDismissExecution = -1;
     overStorageDismissExecution = -1;
@@ -1053,6 +1056,30 @@ void Preferences::setAlmostOverStorageNotificationExecution(long long timestamp)
     assert(logged());
     settings->setValue(almostOverStorageNotificationExecutionKey, timestamp);
     setCachedValue(almostOverStorageNotificationExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getPayWallNotificationExecution()
+{
+    if (payWallNotificationExecution != -1)
+    {
+        return payWallNotificationExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    payWallNotificationExecution = settings->value(payWallNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return payWallNotificationExecution;
+}
+
+void Preferences::setPayWallNotificationExecution(long long timestamp)
+{
+    payWallNotificationExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(payWallNotificationExecutionKey, timestamp);
+    setCachedValue(payWallNotificationExecutionKey, timestamp);
     mutex.unlock();
 }
 
@@ -3433,6 +3460,7 @@ void Preferences::overridePreferences(const QSettings &settings)
 {
     overridePreference(settings, QString::fromUtf8("OQ_DIALOG_INTERVAL_MS"), Preferences::OQ_DIALOG_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("OQ_NOTIFICATION_INTERVAL_MS"), Preferences::OQ_NOTIFICATION_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("PAYWALL_NOTIFICATION_INTERVAL_MS"), Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
