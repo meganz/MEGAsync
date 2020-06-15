@@ -810,27 +810,24 @@ void InfoDialog::updateDialogState()
     {
         case Preferences::STATE_PAYWALL:
         {
-
             MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
             const char *email = megaApi->getMyEmail();
 
-            ui->lOverDiskQuotaLabel->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
+            QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
                     .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                     .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
                     .replace(QString::fromUtf8("[C]"), QString::number(megaApi->getNumNodes()))
                     .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
                     .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(static_cast<MegaApplication *>(qApp)->getPricing(), preferences->usedStorage()))
-                    + QString::fromUtf8("</p>"));
+                    + QString::fromUtf8("</p>");
+            ui->lOverDiskQuotaLabel->setText(overDiskText);
 
-            QDateTime currentDate(QDateTime::currentDateTime());
-            QDateTime tsOQ = QDateTime::fromMSecsSinceEpoch(megaApi->getOverquotaDeadlineTs() * 1000);
-            int daysExpired = currentDate.daysTo(tsOQ);
-
-            if (daysExpired > 0)
+            const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
+            if (daysToExpire > 0)
             {
                 ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                        .replace(QString::fromUtf8("[B]"), QString::number(daysExpired))
+                        .replace(QString::fromUtf8("[B]"), QString::number(daysToExpire))
                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                         + QString::fromUtf8("</p>"));
                 ui->wWarningOverDiskQuota->show();
