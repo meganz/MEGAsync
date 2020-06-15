@@ -908,6 +908,11 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
 
 int Utilities::getDaysToTimestamp(int64_t msecsTimestamps)
 {
+    if (!msecsTimestamps)
+    {
+        return -1;
+    }
+
     QDateTime currentDate(QDateTime::currentDateTime());
     QDateTime tsOQ = QDateTime::fromMSecsSinceEpoch(msecsTimestamps);
     int daysExpired = currentDate.daysTo(tsOQ);
