@@ -873,8 +873,7 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     }
 
     QString readableTimes;
-    int it = 0;
-    for (it = 0; it < list->size() ; it++)
+    for (int it = 0; it < list->size() ; it++)
     {
         int64_t ts = list->get(it);
         QDateTime date = QDateTime::fromTime_t(ts);
@@ -882,7 +881,8 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
 
         if (it != list->size() - 1)
         {
-            readableTimes.append(QStringLiteral(", "));
+            it == list->size() - 2 ? readableTimes.append(QStringLiteral(" ") + QCoreApplication::translate("Utilities","and") + QStringLiteral(" "))
+                                   : readableTimes.append(QStringLiteral(", "));
         }
     }
 
@@ -904,7 +904,16 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
     animation->setEndValue(endValue);
     animation->setEasingCurve(curve);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
-};
+}
+
+int Utilities::getDaysToTimestamp(int64_t msecsTimestamps)
+{
+    QDateTime currentDate(QDateTime::currentDateTime());
+    QDateTime tsOQ = QDateTime::fromMSecsSinceEpoch(msecsTimestamps);
+    int daysExpired = currentDate.daysTo(tsOQ);
+
+    return daysExpired;//Negative if tsOQ is earlier than currentDate
+}
 
 long long Utilities::getSystemsAvailableMemory()
 {
