@@ -4394,7 +4394,7 @@ void MegaApplication::notifyItemChange(QString path, int newState)
 #ifdef _WIN32
     if (path.startsWith(QString::fromAscii("\\\\?\\")))
     {
-        path = syncPath.mid(4);
+        path = path.mid(4);
     }
 
     localPath.assign((const char *)path.utf16(), path.size() * sizeof(wchar_t));
@@ -8710,7 +8710,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
         //TODO: review missing cases
         switch(syncSetting->getError())
         {
-        case MegaSync::Error::NO_ERROR:
+        case MegaSync::Error::NO_SYNC_ERROR:
         {
             assert(false && "unexpected no error after onSyncAdded failed");
             return;

@@ -105,7 +105,19 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
         syncSetting->setName(syncName);
     }
 
-    assert( syncSetting->getLocalFolder() == QDir::toNativeSeparators(QFileInfo(syncSetting->getLocalFolder()).canonicalFilePath()) );
+#ifndef NDEBUG
+    {
+        auto sl = syncSetting->getLocalFolder();
+#ifdef _WIN32
+        if (sl.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            sl = sl.mid(4);
+        }
+#endif
+        auto slc = QDir::toNativeSeparators(QFileInfo(sl).canonicalFilePath());
+        assert(sl == slc);
+    }
+#endif
 
     // set sync UID
     if (syncSetting->getSyncID().isEmpty())

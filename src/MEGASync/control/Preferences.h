@@ -17,7 +17,7 @@
 Q_DECLARE_METATYPE(QList<long long>)
 
 class SyncSetting;
-class SyncData;
+struct SyncData;
 class Preferences : public QObject
 {
     Q_OBJECT

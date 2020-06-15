@@ -107,7 +107,7 @@ void WindowsPlatform::prepareForSync()
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
                                     .arg(networkName).arg(driveName).toUtf8().constData());
 
-                        QStringList localFolders = model->getLocalFolders();
+                        QStringList localFolders = Model::instance()->getLocalFolders();
                         for (int i = 0; i < localFolders.size(); i++)
                         {
                             QString localFolder = localFolders.at(i);

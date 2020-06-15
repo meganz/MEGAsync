@@ -458,22 +458,7 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
 {
     switch (errorCode)
     {
-    //        TODO: this should address the possible failures of addSync:
-    //            NO_ERROR = 0,
-    //            UNKNOWN_ERROR = 1,
-    //            UNSUPPORTED_FILE_SYSTEM = 2,
-    //            INVALID_REMOTE_TYPE = 3,
-    //            INVALID_LOCAL_TYPE = 4,
-    //            INITIAL_SCAN_FAILED = 5,
-    //            LOCAL_PATH_TEMPORARY_UNAVAILABLE = 6, //Note, this is fatal when adding a sync! TODO: review
-    //            LOCAL_PATH_UNAVAILABLE = 7,
-    //            REMOTE_NODE_NOT_FOUND = 8,
-    //            STORAGE_OVERQUOTA = 9,
-    //            BUSINESS_EXPIRED = 10,
-    //            FOREIGN_TARGET_OVERSTORAGE = 11,
-    //            REMOTE_PATH_HAS_CHANGED = 12,
-
-    case MegaSync::Error::NO_ERROR:
+    case MegaSync::Error::NO_SYNC_ERROR:
     {
         assert(false && "unexpected no error after enabling failed");
         return;
@@ -1594,12 +1579,12 @@ int SettingsDialog::saveSettings()
             }
             else
             {
-                // TODO: loop via configSettings
                 for (int i = 0; i < model->getNumSyncedFolders(); i++)
                 {
-                    Platform::addSyncToLeftPane(model->getLocalFolder(i),
-                                                model->getSyncName(i),
-                                                model->getSyncID(i));
+                    auto syncSetting = model->getSyncSetting(i);
+                    Platform::addSyncToLeftPane(syncSetting->getLocalFolder(),
+                                                syncSetting->name(),
+                                                syncSetting->getSyncID());
                 }
             }
             preferences->disableLeftPaneIcons(iconsDisabled);
@@ -1890,11 +1875,18 @@ void SettingsDialog::loadSyncSettings()
         }
 
         QTableWidgetItem *localFolder = new QTableWidgetItem();
-        localFolder->setText(syncSetting->getLocalFolder());
+        QString localFolderQString = syncSetting->getLocalFolder();
+#ifdef WIN32
+if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
+{
+    localFolderQString = localFolderQString.mid(4);
+}
+#endif
+        localFolder->setText(localFolderQString);
         QTableWidgetItem *megaFolder = new QTableWidgetItem();
         assert(syncSetting->getMegaFolder().size() && "remote folder lacks path");
         megaFolder->setText(syncSetting->getMegaFolder().size()?syncSetting->getMegaFolder():QString::fromUtf8("---"));
-        localFolder->setToolTip(syncSetting->getLocalFolder());
+        localFolder->setToolTip(localFolderQString);
         ui->tSyncs->setItem(i, 0, localFolder);
         megaFolder->setToolTip(syncSetting->getMegaFolder());
         ui->tSyncs->setItem(i, 1, megaFolder);
