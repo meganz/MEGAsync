@@ -458,6 +458,7 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
 {
     switch (errorCode)
     {
+    //        TODO: this should address all possible failures of addSync:
     case MegaSync::Error::NO_SYNC_ERROR:
     {
         assert(false && "unexpected no error after enabling failed");
@@ -525,13 +526,10 @@ void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 
 void SettingsDialog::onSavingSettingsProgress(double progress)
 {
-    qDebug() << " Saving settings advanced: " << progress << endl; //TODO: delete
-
 }
 
 void SettingsDialog::onSavingSettingsCompleted()
 {
-    qDebug() << " Saving settings completed!"<< endl; //TODO: delete
 }
 
 void SettingsDialog::storageChanged()
