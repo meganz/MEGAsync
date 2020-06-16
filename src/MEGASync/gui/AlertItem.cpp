@@ -414,7 +414,7 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
     if (ts != -1)
     {
         QString dateTimeFormat;
-        const auto dateTime{QDateTime::fromSecsSinceEpoch(ts)};
+        const auto dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
         const auto sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
         const auto sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
 
