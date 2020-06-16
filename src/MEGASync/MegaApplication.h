@@ -383,7 +383,6 @@ protected:
 #ifdef _WIN32
     QMap<QString, double> lastCheckedScreens;
 #endif
-    bool infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
@@ -421,9 +420,9 @@ protected:
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
     long long lastTsErrorMessageShown;
-    bool almostOQ;
     int storageState;
     int appliedStorageState;
+    bool getUserDataRequestReady;
     long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;

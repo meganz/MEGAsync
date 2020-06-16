@@ -938,7 +938,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     numTransfers[MegaTransfer::TYPE_UPLOAD] = 0;
     exportOps = 0;
     infoDialog = NULL;
-    infoOverQuota = false;
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     setupWizard = NULL;
     settingsDialog = NULL;
@@ -1044,12 +1043,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     nUnviewedTransfers = 0;
     completedTabActive = false;
     nodescurrent = false;
-    almostOQ = false;
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
+    getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
-    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
+    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
 
     for (unsigned i = 3; i--; )
     {
@@ -1419,7 +1418,8 @@ void MegaApplication::updateTrayIcon()
     QString tooltip;
     QString icon;
 
-    if (infoOverQuota)
+    if (appliedStorageState == MegaApi::STORAGE_STATE_RED
+            || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
     {
         tooltip = QCoreApplication::applicationName()
                 + QString::fromAscii(" ")
@@ -1705,13 +1705,12 @@ void MegaApplication::start()
     indexing = false;
     paused = false;
     nodescurrent = false;
-    infoOverQuota = false;
-    almostOQ = false;
+    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
+    getUserDataRequestReady = false;
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
-    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
@@ -2057,6 +2056,16 @@ void MegaApplication::loggedIn(bool fromWizard)
         megaApi->getPublicNode(link.toUtf8().constData());
     }
 
+    // Reload sync settings before applyStorageState
+    // to not override if called after loggedIn()
+    if (fromWizard)
+    {
+        startSyncs();
+    }
+    else
+    {
+        restoreSyncs();
+    }
 
     if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
     {
@@ -2153,16 +2162,12 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
             {
                 updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
             }
-            if (state == MegaApi::STORAGE_STATE_RED)
+            if (storageState == MegaApi::STORAGE_STATE_RED)
             {
-                almostOQ = false;
-
                 //Disable syncs
                 disableSyncs();
-                if (!infoOverQuota)
+                if (appliedStorageState != MegaApi::STORAGE_STATE_RED)
                 {
-                    infoOverQuota = true;
-
                     if (infoDialogMenu && infoDialogMenu->isVisible())
                     {
                         infoDialogMenu->close();
@@ -2180,24 +2185,26 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                 }
                 onGlobalSyncStateChanged(megaApi);
             }
+            else if (storageState == MegaApi::STORAGE_STATE_PAYWALL)
+            {
+                //Disable syncs
+                disableSyncs();
+
+                if (megaApi)
+                {
+                    getUserDataRequestReady = false;
+                    megaApi->getUserData();
+                }
+            }
             else
             {
-                if (state == MegaApi::STORAGE_STATE_GREEN)
-                {
-                    almostOQ = false;
-                }
-                else if (state == MegaApi::STORAGE_STATE_ORANGE)
-                {
-                    almostOQ = true;
-                }
-
-                if (infoOverQuota)
+                if (appliedStorageState == MegaApi::STORAGE_STATE_RED
+                        || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
                 {
                     if (settingsDialog)
                     {
                         settingsDialog->setOverQuotaMode(false);
                     }
-                    infoOverQuota = false;
 
                     if (infoDialogMenu && infoDialogMenu->isVisible())
                     {
@@ -2208,10 +2215,9 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                     onGlobalSyncStateChanged(megaApi);
                 }
             }
-            checkOverStorageStates();
 
             appliedStorageState = storageState;
-
+            checkOverStorageStates();            
         }
     }
 }
@@ -2817,7 +2823,7 @@ void MegaApplication::checkOverStorageStates()
         return;
     }
 
-    if (infoOverQuota)
+    if (appliedStorageState == MegaApi::STORAGE_STATE_RED)
     {
         if (!preferences->getOverStorageDialogExecution()
                 || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
@@ -2860,7 +2866,7 @@ void MegaApplication::checkOverStorageStates()
             }
         }
     }
-    else if (almostOQ)
+    else if (appliedStorageState == MegaApi::STORAGE_STATE_ORANGE)
     {
         if (infoDialog)
         {
@@ -2894,6 +2900,30 @@ void MegaApplication::checkOverStorageStates()
             storageOverquotaDialog = NULL;
         }
     }
+    else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL && getUserDataRequestReady)
+    {
+        if (infoDialog)
+        {
+            infoDialog->updateOverStorageState(Preferences::STATE_PAYWALL);
+        }
+
+        if ((!preferences->getPayWallNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getPayWallNotificationExecution()) > Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS)))
+        {
+            const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
+            if (daysToExpire > 0) //Only show notification if at least there is one day left
+            {
+                preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+                megaApi->sendEvent(99530, "Paywall notification shown");
+                sendOverStorageNotification(Preferences::STATE_PAYWALL);
+            }
+        }
+
+        if (storageOverquotaDialog)
+        {
+            storageOverquotaDialog->deleteLater();
+            storageOverquotaDialog = NULL;
+        }
+    }
     else
     {
         if (infoDialog)
@@ -2910,7 +2940,8 @@ void MegaApplication::checkOverStorageStates()
 
     if (infoDialog)
     {
-        infoDialog->setOverQuotaMode(infoOverQuota);
+        infoDialog->setOverQuotaMode(appliedStorageState == MegaApi::STORAGE_STATE_RED
+                                     || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL);
     }
 }
 
@@ -3549,6 +3580,16 @@ void MegaApplication::sendOverStorageNotification(int state)
             notificator->notify(notification);
             break;
         }
+        case Preferences::STATE_PAYWALL:
+        {
+            MegaNotification *notification = new MegaNotification();
+            notification->setTitle(tr("Your data is at risk"));
+            notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))));
+            notification->setActions(QStringList() << tr("Get PRO"));
+            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+            notificator->notify(notification);
+            break;
+        }
         default:
             break;
     }
@@ -3865,7 +3906,6 @@ void MegaApplication::setupWizardFinished(int result)
     }
 
     loggedIn(true);
-    startSyncs();
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -6474,7 +6514,7 @@ void MegaApplication::openSettings(int tab)
         {
             if (!proxyOnly)
             {
-                settingsDialog->setOverQuotaMode(infoOverQuota); //TODO: use observer pattern for this!
+                settingsDialog->setOverQuotaMode(appliedStorageState == MegaApi::STORAGE_STATE_RED); //TODO: use observer pattern for this!
                 settingsDialog->openSettingsTab(tab);
             }
 
@@ -6495,7 +6535,7 @@ void MegaApplication::openSettings(int tab)
 
     if (!proxyOnly)
     {
-        settingsDialog->setOverQuotaMode(infoOverQuota);
+        settingsDialog->setOverQuotaMode(appliedStorageState == MegaApi::STORAGE_STATE_RED);
         settingsDialog->openSettingsTab(tab);
     }
 
@@ -7241,6 +7281,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         sendBusinessWarningNotification();
         disableSyncs();
     }
+
+    if (e->getErrorCode() == MegaError::API_EPAYWALL)
+    {
+        if (appliedStorageState != MegaApi::STORAGE_STATE_PAYWALL)
+        {
+            applyStorageState(MegaApi::STORAGE_STATE_PAYWALL);
+        }
+    }
     
     switch (request->getType())
     {
@@ -7626,7 +7674,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     //If we have got the filesystem, start the app
                     loggedIn(false);
-                    restoreSyncs();
                 }
                 else
                 {
@@ -8144,6 +8191,15 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
 
         mQueringWhyAmIBlocked = false;
+        break;
+    }
+    case MegaRequest::TYPE_GET_USER_DATA:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            getUserDataRequestReady = true;
+            checkOverStorageStates();
+        }
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:
