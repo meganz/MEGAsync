@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">fichier</translation>
+        <translation type="obsolete">fichier</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">dossier</translation>
+        <translation type="obsolete">dossier</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Votre [A] ([B]) partagé publiquement a été rétabli</translation>
+        <translation type="obsolete">Votre [A] ([B]) partagé publiquement a été rétabli</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +476,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Votre [%1] ([%2]) partagé publiquement a été retiré</translation>
+        <translation type="obsolete">Votre [%1] ([%2]) partagé publiquement a été retiré</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -487,6 +487,26 @@
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">L’accès à un dossier partagé a été supprimé</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Votre fichier ([A]) partagé publiquement a été retiré</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Votre dossier ([A]) partagé publiquement a été retiré</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Votre fichier ([A]) partagé publiquement a été rétabli</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Votre dossier ([A]) partagé publiquement a été rétabli</translation>
     </message>
 </context>
 <context>
@@ -617,7 +637,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation type="unfinished">Votre problème a été envoyé, un courriel de confirmation vous sera envoyé.</translation>
+        <translation type="unfinished">Votre problème a été envoyé, vous recevrez un courriel de confirmation.</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
@@ -2759,6 +2779,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à Windows 7.</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">Transfert</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3539,14 +3564,14 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">– Nouvelles fenêtres de message personnalisées. 
-– Nettoyage rétroactif des journaux à la déconnexion. 
-– Correctif de problèmes qui désactivaient l’extension Finder dans certaines circonstances. 
-– Confirmation par courriel pour les comptes verrouillés. 
-– Confirmation par texto pour les comptes verrouillés. 
-– Prise en charge du programme de parrainage. 
-– Ajout d’une option d’envoi des journaux dans la fenêtre de signalement d’un plantage. 
-– Autres correctifs de l’interface utilisateur et ajustements. 
+        <translation type="unfinished">– Nouvelles fenêtres de message personnalisées.
+– Nettoyage rétroactif des journaux à la déconnexion.
+– Correctif de problèmes qui désactivaient l’extension Finder dans certaines circonstances.
+– Confirmation par courriel pour les comptes verrouillés.
+– Confirmation par texto pour les comptes verrouillés.
+– Prise en charge du programme de parrainage.
+– Ajout d’une option d’envoi des journaux dans la fenêtre de signalement d’un plantage.
+– Autres correctifs et ajustements de l’interface utilisateur.
 – Autres améliorations des performances et ajustements.</translation>
     </message>
 </context>
@@ -4984,6 +5009,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">Synchronisation</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">Transfert</translation>
     </message>
 </context>
 <context>

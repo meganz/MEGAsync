@@ -160,6 +160,10 @@ public:
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
     void showVerifyAccountInfo();
+
+    void removeFinishedBlockedTransfer(int transferTag);
+    bool finishedTransfersWhileBlocked(int transferTag);
+
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
@@ -310,6 +314,7 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+    void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
 
     // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
     bool amIOverTemporalQuotaBandwidth();
@@ -460,6 +465,7 @@ protected:
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
+    QSet<int> finishedBlockedTransfers;
 
     QHash<unsigned long long, TransferMetaData*> transferAppData;
 

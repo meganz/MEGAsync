@@ -32,6 +32,7 @@ CustomTransferItem::CustomTransferItem(QWidget *parent) :
 
     actionButtonsEnabled = false;
     dsFinishedTime = 0;
+    mTransferFinishedWhileBlocked = false;
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
     ui->lShowInFolder->hide();
@@ -266,7 +267,7 @@ void CustomTransferItem::finishTransfer()
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
         ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError",
                                                                                                        MegaError::getErrorString(transferError,
-                                                                                                                                 this->getType() == MegaTransfer::TYPE_DOWNLOAD && !static_cast<MegaApplication*>qApp->getBlockState()
+                                                                                                                                 this->getType() == MegaTransfer::TYPE_DOWNLOAD && !mTransferFinishedWhileBlocked
                                                                                                                                  ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
         updateFinishedIco(type, true);
     }

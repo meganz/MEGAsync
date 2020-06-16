@@ -266,7 +266,7 @@ QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
         return QString();
     }
 
-    QString line = contents.at(contents.size() - 1);
+    QString line = contents.first();
     int index = line.indexOf(QChar::fromAscii('%'));
     int size = -1;
     if (index != -1)

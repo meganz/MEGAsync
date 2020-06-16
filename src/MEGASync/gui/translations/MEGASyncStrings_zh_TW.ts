@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">文件</translation>
+        <translation type="obsolete">文件</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">資料夾</translation>
+        <translation type="obsolete">資料夾</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">您公開分享的[A] ([B]) 已經恢復</translation>
+        <translation type="obsolete">您公開分享的[A] ([B]) 已經恢復</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +476,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">您公開分享的[%1] ([%2])已被移除</translation>
+        <translation type="obsolete">您公開分享的[%1] ([%2])已被移除</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -487,6 +487,26 @@
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">已被移除共享資料夾的存取權限</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">您公開分享的檔案([A])已被移除</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">您公開分享的資料夾([A])已被移除</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">您公開分享的檔案([A])已經復原</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">您公開分享的資料夾([A])已經復原</translation>
     </message>
 </context>
 <context>
@@ -2759,6 +2779,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync將可持續運作，然而將不再為Windows Vista與更早版本作業系統提供更新支援。</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">傳輸中</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4984,6 +5009,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">同步中</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">傳輸中</translation>
     </message>
 </context>
 <context>

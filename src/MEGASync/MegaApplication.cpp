@@ -1715,6 +1715,8 @@ void MegaApplication::start()
     bwOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
+    finishedBlockedTransfers.clear();
+
     for (unsigned i = 3; i--; )
     {
         inflightUserStats[i] = false;
@@ -1903,6 +1905,27 @@ void MegaApplication::start()
     }
 }
 
+void MegaApplication::requestUserData()
+{
+    if (!megaApi)
+    {
+        return;
+    }
+
+    megaApi->getPricing();
+    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
+    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
+    megaApi->getFileVersionsOption();
+    megaApi->getPSA();
+
+    const char *email = megaApi->getMyEmail();
+    if (email)
+    {
+        megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
+        delete [] email;
+    }
+}
+
 void MegaApplication::loggedIn(bool fromWizard)
 {
     if (appfinished)
@@ -1933,18 +1956,7 @@ void MegaApplication::loggedIn(bool fromWizard)
     // ask for storage on first login (fromWizard), or when cached value is invalid
     updateUserStats(fromWizard || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN, true, true, true, fromWizard ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
 
-    megaApi->getPricing();
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
-    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
-    megaApi->getFileVersionsOption();
-    megaApi->getPSA();
-
-    const char *email = megaApi->getMyEmail();
-    if (email)
-    {
-        megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-        delete [] email;
-    }
+    requestUserData();
 
     if (settingsDialog)
     {
@@ -1961,24 +1973,14 @@ void MegaApplication::loggedIn(bool fromWizard)
         preferences->setStartOnStartup(!startOnStartup);
     }
 
-#ifdef WIN32
-    if (!preferences->lastExecutionTime())
-    {
-        showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
-    }
-#else
+if (!preferences->lastExecutionTime())
+{
     #ifdef __APPLE__
-        if (!preferences->lastExecutionTime())
-        {
-            showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
-        }
+        showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
     #else
-        if (!preferences->lastExecutionTime())
-        {
-            showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
-        }
+        showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
     #endif
-#endif
+}
 
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
     QDateTime now = QDateTime::currentDateTime();
@@ -4927,6 +4929,16 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
     }
 }
 
+void MegaApplication::removeFinishedBlockedTransfer(int transferTag)
+{
+    finishedBlockedTransfers.remove(transferTag);
+}
+
+bool MegaApplication::finishedTransfersWhileBlocked(int transferTag)
+{
+    return finishedBlockedTransfers.contains(transferTag);
+}
+
 void MegaApplication::removeAllFinishedTransfers()
 {
     qDeleteAll(finishedTransfers);
@@ -5372,13 +5384,24 @@ void MegaApplication::updateTrayIconMenu()
 {
     if (trayIcon)
     {
+#if defined(Q_OS_MACX)
+        if (infoDialog && !amIOverTemporalQuotaBandwidth())
+        {
+            trayIcon->setContextMenu(&emptyMenu);
+        }
+        else
+        {
+            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
+        }
+#else
+
+        trayIcon->setContextMenu(nullptr); //prevents duplicated context menu in qt 5.12.8 64 bits
+
         if (preferences && preferences->logged() && getRootNode()
                 && !amIOverTemporalQuotaBandwidth() && !blockState)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
             trayIcon->setContextMenu(windowsMenu?windowsMenu.get():&emptyMenu);
-#elif defined(Q_OS_MACX)
-            trayIcon->setContextMenu(&emptyMenu);
 #else
             trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
 #endif
@@ -5387,6 +5410,7 @@ void MegaApplication::updateTrayIconMenu()
         {
             trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
         }
+#endif
     }
 }
 
@@ -8089,6 +8113,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             emit unblocked();
 
+            requestUserData(); // querying some user attributes might have been rejected: we query them again            
             restoreSyncs();
 
             //in any case we reflect the change in the InfoDialog
@@ -8269,6 +8294,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed(),
                                              QString::fromUtf8(transfer->getPath()));
+    }
+
+    if (blockState)
+    {
+        finishedBlockedTransfers.insert(transfer->getTag());
     }
 
     if (transferManager)

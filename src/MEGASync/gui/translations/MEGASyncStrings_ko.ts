@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">파일</translation>
+        <translation type="obsolete">파일</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">폴더</translation>
+        <translation type="obsolete">폴더</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">공개 공유한 [A] ([B])가 복구되었습니다</translation>
+        <translation type="obsolete">공개 공유한 [A] ([B])가 복구되었습니다</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +476,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">당신의 공개 공유 [%1] ([%2])가 게시 중단 되었습니다</translation>
+        <translation type="obsolete">당신의 공개 공유 [%1] ([%2])가 게시 중단 되었습니다</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -487,6 +487,26 @@
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">공유된 폴더의 접근이 삭제되었습니다</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 파일([A])이 게시중단 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 폴더([A])가 게시중단 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 파일([A])이 재게시 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 폴더([A])이 재게시 되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -2760,6 +2780,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync는 계속 작동할 것이지만, Windows Vista와 이전 운영체제에 대한 업데이트는 더 이상 지원되지 않을 것입니다.</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">전송중</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4986,6 +5011,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">동기화중</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">전송중</translation>
     </message>
 </context>
 <context>

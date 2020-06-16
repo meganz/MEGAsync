@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">ไฟล์</translation>
+        <translation type="obsolete">ไฟล์</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">โฟลเดอร์</translation>
+        <translation type="obsolete">โฟลเดอร์</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">[A] ([B]) ที่คุณแชร์แบบสาธารณะได้รับการคืนสถานะแล้ว</translation>
+        <translation type="obsolete">[A] ([B]) ที่คุณแชร์แบบสาธารณะได้รับการคืนสถานะแล้ว</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +476,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">[%1] ([%2]) ที่คุณแชร์แบบสาธารณะถูกลบออกแล้ว</translation>
+        <translation type="obsolete">[%1] ([%2]) ที่คุณแชร์แบบสาธารณะถูกลบออกแล้ว</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -487,6 +487,26 @@
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">การเข้าถึงโฟลเดอร์ที่แชร์ถูกนำออกแล้ว</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Your publicly shared file ([A]) has been taken down</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared folder ([A]) has been taken down</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Your publicly shared file ([A]) has been reinstated</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared folder ([A]) has been reinstated</translation>
     </message>
 </context>
 <context>
@@ -2759,6 +2779,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync ยังคงใช้งานได้ต่อไป อย่างไรก็ตาม การปรับปรุงจะไม่ได้รับการสนับสนุนสำหรับ Windows Vista และระบบปฏิบัติการรุ่นเก่าในเร็ว ๆ นี้</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">กำลังถ่ายโอน</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4984,6 +5009,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">กำลังซิงค์</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">กำลังถ่ายโอน</translation>
     </message>
 </context>
 <context>

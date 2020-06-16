@@ -760,6 +760,8 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
 
         foreach (QFileInfo i, logFiles)
         {
+            --nLogFiles;
+
             if (timestampSince)
             {
                 if ( i.lastModified() < *timestampSince && i.fileName() != QString::fromUtf8("MEGAsync.0.log")) //keep at least the last log
@@ -771,9 +773,9 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
             try
             {
 #ifdef _WIN32
-                gzcopy(i.absoluteFilePath().toStdWString().c_str(), --nLogFiles, &crc, &tot, pFile);
+                gzcopy(i.absoluteFilePath().toStdWString().c_str(), nLogFiles, &crc, &tot, pFile);
 #else
-                gzcopy(i.absoluteFilePath().toUtf8().constData(), --nLogFiles, &crc, &tot, pFile);
+                gzcopy(i.absoluteFilePath().toUtf8().constData(), nLogFiles, &crc, &tot, pFile);
 #endif
             }
             catch (const std::exception& e)

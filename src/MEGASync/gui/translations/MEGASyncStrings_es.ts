@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">archivo</translation>
+        <translation type="obsolete">archivo</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">carpeta</translation>
+        <translation type="obsolete">carpeta</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">La carpeta que has compartido públicamente [A] ([B]) ha sido restaurada.</translation>
+        <translation type="obsolete">La carpeta que has compartido públicamente [A] ([B]) ha sido restaurada.</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +476,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Tu [%1] ([%2]) que has compartido públicamente ha sido retirado/a.</translation>
+        <translation type="obsolete">Tu [%1] ([%2]) que has compartido públicamente ha sido retirado/a.</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -487,6 +487,26 @@
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">Se ha eliminado el acceso a una carpeta compartida</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Tu archivo ([A]) que has compartido públicamente ha sido retirado.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Tu carpeta ([A]) que has compartido públicamente ha sido retirada.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Tu archivo ([A]) que has compartido públicamente ha sido restaurado.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Tu carpeta ([A]) que has compartido públicamente ha sido restaurada.</translation>
     </message>
 </context>
 <context>
@@ -2760,6 +2780,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync seguirá funcionando, sin embargo las actualizaciones pronto dejarán de ser compatibles con la versión de Windows Vista y sistemas operativos anteriores.</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">Transfiriendo</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3541,14 +3566,14 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
         <translation type="unfinished">- Nuevos mensajes de alerta personalizados.
-- Eliminados logs retroactivos al cerrar sesión.
-- Corregidos ciertos problemas que deshabilitaban la extensión del Finder.
-- Soporte para la verificación por correo electrónico para cuentas bloqueadas.
-- Soporte para la verificación por SMS para cuentas bloqueadas.
-- Suporte para el programa de recomendaciones.
-- Incluida la opción de enviar logs desde el diálogo de reporte de errores.
-- Otros arreglos de interfaz de usuario y ajustes.
-- Mejoras de rendimiento.</translation>
+ - Eliminados logs retroactivos al cerrar sesión.
+ - Corregidos ciertos problemas que deshabilitaban la extensión del Finder.
+ - Soporte para la verificación por correo electrónico para cuentas bloqueadas.
+ - Soporte para la verificación por SMS para cuentas bloqueadas.
+ - Suporte para el programa de recomendaciones.
+ - Incluida la opción de enviar logs desde el diálogo de reporte de errores.
+ - Otros arreglos de interfaz de usuario y ajustes.
+ - Mejoras de rendimiento.</translation>
     </message>
 </context>
 <context>
@@ -4986,6 +5011,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">Sincronizando</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">Transfiriendo</translation>
     </message>
 </context>
 <context>
