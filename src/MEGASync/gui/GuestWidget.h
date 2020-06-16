@@ -7,6 +7,9 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "Preferences.h"
+#include "gui/MegaInfoMessage.h"
+
+#include <memory>
 
 namespace Ui {
 class GuestWidget;
@@ -63,6 +66,7 @@ private slots:
     void on_bVerifyEmailLogout_clicked();
     void on_bVerifyEmail_clicked();
     void on_bVerifySMS_clicked();
+    void on_bWhyAmIseen_clicked();
     void fetchNodesAfterBlockCallbak();
     void connectToSetupWizard();
     void onSetupWizardPageChanged(int page);
@@ -81,6 +85,8 @@ protected:
     bool closing;
     bool loggingStarted;
 
+    std::unique_ptr<MegaInfoMessage> whyAmISeeingThisDialog;
+
     void page_login();
     void page_fetchnodes();
     void page_progress();
@@ -88,6 +94,8 @@ protected:
     void page_logout();
     void page_lockedEmailAccount();
     void page_lockedSMSAccount();
+
+    void reset_UI_props();
 
     void changeEvent(QEvent * event);
 };

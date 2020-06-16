@@ -61,6 +61,9 @@ public:
     virtual void setStateLabel(QString labelState) = 0;
     virtual QString getTransferName() = 0;
 
+    virtual bool getTransferFinishedWhileBlocked() const;
+    virtual void setTransferFinishedWhileBlocked(bool value);
+
 signals:
     void refreshTransfer(int tag);
 
@@ -82,6 +85,7 @@ protected:
     bool cancelButtonEnabled;
     bool isSyncTransfer;
     long long dsFinishedTime;
+    bool mTransferFinishedWhileBlocked;
 
 };
 

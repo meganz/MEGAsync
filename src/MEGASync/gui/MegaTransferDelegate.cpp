@@ -58,6 +58,14 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
             if (transfer)
             {
+                //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
+                bool blockedTransfer = static_cast<MegaApplication*>(qApp)->finishedTransfersWhileBlocked(transfer->getTag());
+                if (blockedTransfer)
+                {
+                    ti->setTransferFinishedWhileBlocked(blockedTransfer);
+                    static_cast<MegaApplication*>(qApp)->removeFinishedBlockedTransfer(transfer->getTag());
+                }
+
                 ti->setType(transfer->getType(), transfer->isSyncTransfer());
                 ti->setFileName(QString::fromUtf8(transfer->getFileName()));
                 ti->setTotalSize(transfer->getTotalBytes());

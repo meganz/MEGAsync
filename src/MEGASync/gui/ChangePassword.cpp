@@ -120,20 +120,27 @@ ChangePassword::~ChangePassword()
 
 void ChangePassword::on_bOk_clicked()
 {
-    bool emptyField = newPassword().isEmpty() || confirmNewPassword().isEmpty();
-    bool equalPasswords = !newPassword().compare(confirmNewPassword());
+    const auto fieldIsEmpty{newPassword().isEmpty() || confirmNewPassword().isEmpty()};
+    const auto passwordsAreEqual{!newPassword().compare(confirmNewPassword())};
+    const auto newAndOldPasswordsAreTheSame{megaApi->checkPassword(newPassword().toUtf8())};
+    const auto passwordIsWeak{megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
-    if (emptyField)
+    if (fieldIsEmpty)
     {
         QMegaMessageBox::warning(this, tr("Error"), tr("Please enter your password"));
         return;
     }
-    else if (!equalPasswords)
+    else if (!passwordsAreEqual)
     {
         QMegaMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"));
         return;
     }
-    else if (megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK)
+    else if (newAndOldPasswordsAreTheSame)
+    {
+        QMegaMessageBox::warning(this, tr("Error"), tr("You have entered your current password, please enter a new password."));
+        return;
+    }
+    else if (passwordIsWeak)
     {
         QMegaMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"));
         return;

@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QDir>
 #include <QIcon>
+#include <QLabel>
 #include <QEasingCurve>
 #include "megaapi.h"
 
@@ -159,6 +160,42 @@ private:
     std::vector<IAccountObserver*> accountObservers;
 };
 
+
+class ClickableLabel : public QLabel {
+    Q_OBJECT
+
+public:
+    explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
+        : QLabel(parent)
+    {
+#ifndef __APPLE__
+        setMouseTracking(true);
+#endif
+    }
+
+    ~ClickableLabel() {}
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent* event)
+    {
+        emit clicked();
+    }
+#ifndef __APPLE__
+    void enterEvent(QEvent *event)
+    {
+        setCursor(Qt::PointingHandCursor);
+    }
+
+    void leaveEvent(QEvent *event)
+    {
+        setCursor(Qt::ArrowCursor);
+    }
+#endif
+
+};
 
 class Utilities
 {

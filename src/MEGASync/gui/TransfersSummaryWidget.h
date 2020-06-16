@@ -53,6 +53,7 @@ public:
     void setCompletedUploads(long long  value);
 
     void initialize();
+    void reset();
 
     void showAnimated();
     void setPaused(bool value);

@@ -19,6 +19,7 @@ class StatusInfo : public QWidget
         STATE_INDEXING,
         STATE_UPDATED,
         STATE_SYNCING,
+        STATE_TRANSFERRING,
     };
 
 public:
