@@ -64,7 +64,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     {
         ui->sHeader->setCurrentWidget(ui->pUsedData);
         int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->pUsageStorage->setValue(percentage);
+        ui->pUsageStorage->setValue(percentage > ui->pUsageStorage->maximum() ? ui->pUsageStorage->maximum() : percentage);
         if (percentage > 100)
         {
             ui->pUsageStorage->setProperty("crossedge", true);

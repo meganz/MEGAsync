@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QDir>
 #include <QIcon>
+#include <QLabel>
 #include <QEasingCurve>
 #include "megaapi.h"
 
@@ -160,6 +161,42 @@ private:
 };
 
 
+class ClickableLabel : public QLabel {
+    Q_OBJECT
+
+public:
+    explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
+        : QLabel(parent)
+    {
+#ifndef __APPLE__
+        setMouseTracking(true);
+#endif
+    }
+
+    ~ClickableLabel() {}
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent* event)
+    {
+        emit clicked();
+    }
+#ifndef __APPLE__
+    void enterEvent(QEvent *event)
+    {
+        setCursor(Qt::PointingHandCursor);
+    }
+
+    void leaveEvent(QEvent *event)
+    {
+        setCursor(Qt::ArrowCursor);
+    }
+#endif
+
+};
+
 class Utilities
 {
 public:
@@ -176,6 +213,7 @@ public:
     static void adjustToScreenFunc(QPoint position, QWidget *what);
 
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
+    static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
 
 private:

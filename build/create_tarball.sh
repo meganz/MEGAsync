@@ -155,8 +155,8 @@ cd ../src/MEGAShellExtNautilus/
 make distclean 2> /dev/null || true
 cd ../../build
 
-# extension uses the same version number as MEGASync app
-export EXT_VERSION=$MEGASYNC_VERSION
+#Get current version
+export EXT_VERSION=`cat MEGAsync/MEGAShellExtNautilus/debian.changelog | head -1 | sed -e 's#[^(]*(\([^)]*\))[^)]*#\1#g'`
 export EXT_NAME=nautilus-megasync-$EXT_VERSION
 rm -rf $EXT_NAME.tar.gz
 rm -rf $EXT_NAME
@@ -208,8 +208,8 @@ cd ../src/MEGAShellExtNemo/
 make distclean 2> /dev/null || true
 cd ../../build
 
-# extension uses the same version number as MEGASync app
-export EXT_VERSION=$MEGASYNC_VERSION
+#Get current version
+export EXT_VERSION=`cat MEGAsync/MEGAShellExtNemo/debian.changelog | head -1 | sed -e 's#[^(]*(\([^)]*\))[^)]*#\1#g'`
 export EXT_NAME=nemo-megasync-$EXT_VERSION
 rm -rf $EXT_NAME.tar.gz
 rm -rf $EXT_NAME
@@ -260,8 +260,8 @@ cd ../src/MEGAShellExtThunar/
 make distclean 2> /dev/null || true
 cd ../../build
 
-# extension uses the same version number as MEGASync app
-export EXT_VERSION=$MEGASYNC_VERSION
+#Get current version
+export EXT_VERSION=`cat MEGAsync/MEGAShellExtThunar/debian.changelog | head -1 | sed -e 's#[^(]*(\([^)]*\))[^)]*#\1#g'`
 export EXT_NAME=thunar-megasync-$EXT_VERSION
 rm -rf $EXT_NAME.tar.gz
 rm -rf $EXT_NAME
@@ -311,8 +311,8 @@ cd ../src/MEGAShellExtDolphin/
 make distclean 2> /dev/null || true
 cd ../../build
 
-# extension uses the same version number as MEGASync app
-export EXT_VERSION=$MEGASYNC_VERSION
+#Get current version
+export EXT_VERSION=`cat MEGAsync/MEGAShellExtDolphin/debian.changelog | head -1 | sed -e 's#[^(]*(\([^)]*\))[^)]*#\1#g'`
 export EXT_NAME=dolphin-megasync-$EXT_VERSION
 rm -rf $EXT_NAME.tar.gz
 rm -rf $EXT_NAME
@@ -324,11 +324,11 @@ rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.dsc
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.spec > MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec
 #sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
 
-for dist in xUbuntu_1{2,3,4,5,6,7,8,9}.{04,10} Debian_{7,8,9,10}.0; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{7,8,9,10}.0; do
 if [ -f templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc ]; then
-	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/MEGAShellExtDolphin-$dist.dsc
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc
 else
-	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/MEGAShellExtDolphin-$dist.dsc
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc
 fi
 done
 

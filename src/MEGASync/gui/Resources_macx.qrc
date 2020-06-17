@@ -406,6 +406,8 @@
         <file>images/upload_to_mega@2x.png</file>
         <file>images/login_background.png</file>
         <file>images/login_background@2x.png</file>
+        <file>images/login_plain_background.png</file>
+        <file>images/login_plain_background@2x.png</file>
         <file>images/login_intermediate.png</file>
         <file>images/login_intermediate@2x.png</file>
         <file>images/confirmation_link.png</file>
@@ -420,8 +422,8 @@
         <file>images/login_setup_step2@2x.png</file>
         <file>images/login_setup_step3.png</file>
         <file>images/login_setup_step3@2x.png</file>
-        <file>images/shield.png</file>
-        <file>images/shield@2x.png</file>
+        <file>images/Shield_big.png</file>
+        <file>images/Shield_big@2x.png</file>
         <file>images/init_scanning.png</file>
         <file>images/init_scanning@2x.png</file>
         <file>images/avatar_frame.png</file>

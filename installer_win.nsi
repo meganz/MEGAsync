@@ -26,10 +26,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2019"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "4.3.1.0"
-VIAddVersionKey "FileVersion" "4.3.1.0"
-VIAddVersionKey "ProductVersion" "4.3.1.0"
-!define PRODUCT_VERSION "4.3.1"
+VIProductVersion "4.3.3.0"
+VIAddVersionKey "FileVersion" "4.3.3.0"
+VIAddVersionKey "ProductVersion" "4.3.3.0"
+!define PRODUCT_VERSION "4.3.3"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -44,7 +44,7 @@ VIAddVersionKey "ProductVersion" "4.3.1.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH "C:\Qt\Qt5.12.6\5.12.6\msvc2017_64"
+!define QT_PATH "C:\QtOnline\Qt5.12.8\5.12.8\msvc2017_64"
 !else
 !define QT_PATH "C:\Qt\Qt5.6.3\5.6.3\msvc2015"
 !endif
@@ -53,8 +53,12 @@ VIAddVersionKey "ProductVersion" "4.3.1.0"
 !define VCPKG
 !endif
 
+!ifdef BUILD_X64_VERSION
+!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_8_MSVC2017_64bit-Release"
+!else
 !define BUILDPATH_X86 "build-MEGA-Desktop_Qt_5_6_3_MSVC2015_32bit-Release"
-!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_6_MSVC2017_64bit-Release"
+!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_6_3_MSVC2015_64bit-Release"
+!endif
 
 !ifdef BUILD_X64_VERSION
 !define SRCDIR_MEGASYNC "${BUILDPATH_X64}\MEGAsync\release"
@@ -551,6 +555,15 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\platforms" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+!ifdef BUILD_X64_VERSION
+  SetOutPath "$INSTDIR\styles"
+  File "${QT_PATH}\plugins\styles\qwindowsvistastyle.dll"
+  AccessControl::SetFileOwner "$INSTDIR\styles" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\styles" "$USERNAME" "GenericRead + GenericWrite"
+  AccessControl::SetFileOwner "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\styles\qwindowsvistastyle.dll" "$USERNAME" "GenericRead + GenericWrite"
+!endif
 
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
@@ -872,6 +885,7 @@ Section Uninstall
   Delete "$INSTDIR\accessible\qtaccessiblewidgets4.dll"
   Delete "$INSTDIR\iconengines\qsvgicon.dll"
   Delete "$INSTDIR\platforms\qwindows.dll"
+  Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
   Delete "$INSTDIR\bearer\qgenericbearer.dll"
   Delete "$INSTDIR\bearer\qnativewifibearer.dll"
 

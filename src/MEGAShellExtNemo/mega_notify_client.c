@@ -31,7 +31,7 @@ static gboolean mega_notify_client_try_connect(MEGAExt *mega_ext)
     gchar *sock_path;
     const gchar sock_file[] = "notify.socket";
     // XXX: current path MEGASync uses to store private data
-    const gchar sock_path_hardcode[] = ".local/share/data/Mega Limited/MEGAsync";
+    const gchar sock_path_hardcode[] = "data/Mega Limited/MEGAsync";
 
     if ((mega_ext->notify_sock = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
         g_warning("socket() failed: %s", strerror(errno));
@@ -39,7 +39,7 @@ static gboolean mega_notify_client_try_connect(MEGAExt *mega_ext)
         return FALSE;
     }
 
-    sock_path = g_build_filename(g_get_home_dir(), sock_path_hardcode, sock_file, NULL);
+    sock_path = g_build_filename(g_get_user_data_dir(), sock_path_hardcode, sock_file, NULL);
 
     remote.sun_family = AF_UNIX;
     strncpy(remote.sun_path, sock_path, sizeof(remote.sun_path));
