@@ -1711,6 +1711,7 @@ void MegaApplication::start()
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
+    eventsPendingLoggedIn.clear();
     bwOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
@@ -2056,6 +2057,13 @@ void MegaApplication::loggedIn(bool fromWizard)
         megaApi->getPublicNode(link.toUtf8().constData());
     }
 
+    // Apply all pending events that arrived before its time
+    for (auto & event: eventsPendingLoggedIn)
+    {
+        onEvent(megaApi, event.get());
+    }
+    eventsPendingLoggedIn.clear();
+
     // Reload sync settings before applyStorageState
     // to not override if called after loggedIn()
     if (fromWizard)
@@ -2201,11 +2209,6 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                 if (appliedStorageState == MegaApi::STORAGE_STATE_RED
                         || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
                 {
-                    if (settingsDialog)
-                    {
-                        settingsDialog->setOverQuotaMode(false);
-                    }
-
                     if (infoDialogMenu && infoDialogMenu->isVisible())
                     {
                         infoDialogMenu->close();
@@ -2217,6 +2220,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
             }
 
             appliedStorageState = storageState;
+            emit storageStateChanged(appliedStorageState);
             checkOverStorageStates();            
         }
     }
@@ -3652,6 +3656,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     }
 
     return QApplication::eventFilter(obj, e);
+}
+
+int MegaApplication::getAppliedStorageState() const
+{
+    return appliedStorageState;
 }
 
 MegaPricing *MegaApplication::getPricing() const
@@ -6514,7 +6523,6 @@ void MegaApplication::openSettings(int tab)
         {
             if (!proxyOnly)
             {
-                settingsDialog->setOverQuotaMode(appliedStorageState == MegaApi::STORAGE_STATE_RED); //TODO: use observer pattern for this!
                 settingsDialog->openSettingsTab(tab);
             }
 
@@ -6535,7 +6543,6 @@ void MegaApplication::openSettings(int tab)
 
     if (!proxyOnly)
     {
-        settingsDialog->setOverQuotaMode(appliedStorageState == MegaApi::STORAGE_STATE_RED);
         settingsDialog->openSettingsTab(tab);
     }
 
@@ -7118,7 +7125,15 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
-        applyStorageState(event->getNumber());
+        if (preferences->logged())
+        {
+            applyStorageState(event->getNumber());
+        }
+        else //event arrived too soon, we will apply it later
+        {
+            std::unique_ptr<MegaEvent> eventCopy{event->copy()};
+            eventsPendingLoggedIn.push_back(std::move(eventCopy));
+        }
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
     {

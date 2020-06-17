@@ -184,6 +184,8 @@ public:
 
     mega::MegaPricing *getPricing() const;
 
+    int getAppliedStorageState() const;
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -196,6 +198,7 @@ signals:
     void setupWizardCreated();
     void unblocked();
     void blocked();
+    void storageStateChanged(int);
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -317,6 +320,7 @@ protected:
     void initLocalServer();
     void refreshStorageUIs();
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
+    std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
     // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
     bool amIOverTemporalQuotaBandwidth();
