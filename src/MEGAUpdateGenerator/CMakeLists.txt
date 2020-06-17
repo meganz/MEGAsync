@@ -35,7 +35,7 @@ get_property(ALL_BUILDSYSTEM_TARGETS DIRECTORY PROPERTY BUILDSYSTEM_TARGETS)
 foreach (TARG IN LISTS ALL_BUILDSYSTEM_TARGETS)
     message(STATUS "Excluding from build:  ${TARG}")
     set_target_properties(${TARG} PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)
-endforeach(PKG)
+endforeach(TARG)
 
 add_definitions( -DSHOW_LOGS -D_CRT_SECURE_NO_WARNINGS -DPSAPI_VERSION=1 )
 add_definitions( -DUSE_CRYPTOPP )
@@ -49,7 +49,7 @@ if (CMAKE_HOST_WIN32)
 endif()
 
 set (UPDATEGENERATOR_FILES
-    ${MEGAupdateGeneratorDir}/MegaUpdateGenerator.cpp
+    ${MEGAupdateGeneratorDir}/MEGAUpdateGenerator.cpp
     ${SDKDir}/src/crypto/cryptopp.cpp
     ${SDKDir}/src/base64.cpp
     ${SDKDir}/src/logging.cpp
@@ -59,14 +59,20 @@ ImportStdVcpkgLibrary(cryptopp-staticcrt cryptopp-staticcrt cryptopp-staticcrt l
 
 if(CMAKE_HOST_APPLE)
     add_executable(MEGAUpdateGenerator MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATEGENERATOR_FILES} )
-elseif(CMAKE_HOST_WIN32)
+    target_link_libraries(MEGAUpdateGenerator cryptopp-staticcrt)
+    target_include_directories(MEGAUpdateGenerator PRIVATE ${SDKDir}/include/mega/posix)
+else(CMAKE_HOST_APPLE)
     add_executable(MEGAUpdateGenerator ${UPDATEGENERATOR_FILES} )
+    if(CMAKE_HOST_WIN32)
+        target_link_libraries(MEGAUpdateGenerator cryptopp-staticcrt ws2_32 Urlmon.lib Shlwapi.lib)
+        target_include_directories(MEGAUpdateGenerator PRIVATE ${SDKDir}/include/mega/win32)
+        set_property(TARGET MEGAUpdateGenerator PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    else(CMAKE_HOST_WIN32)
+        target_link_libraries(MEGAUpdateGenerator cryptopp-staticcrt)
+        target_include_directories(MEGAUpdateGenerator PRIVATE ${SDKDir}/include/mega/posix)
+    endif(CMAKE_HOST_WIN32)
+endif(CMAKE_HOST_APPLE)
 
-    target_include_directories(MEGAUpdateGenerator PRIVATE ${SDKDir}/include)
-    target_include_directories(MEGAUpdateGenerator PRIVATE ${SDKDir}/include/mega/win32)
+target_include_directories(MEGAUpdateGenerator PRIVATE ${SDKDir}/include)
 
-    target_link_libraries(MEGAUpdateGenerator cryptopp-staticcrt ws2_32 Urlmon.lib Shlwapi.lib)
 
-    set_property(TARGET MEGAUpdateGenerator PROPERTY AUTOMOC OFF)
-    set_property(TARGET MEGAUpdateGenerator PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-endif()
