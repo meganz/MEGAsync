@@ -44,6 +44,7 @@ DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD ../MEGASync/mega/bindings/qt/3rdparty/include \
                 ../MEGASync/mega/bindings/qt/3rdparty/include/cryptopp \
                 ../MEGASync/mega/bindings/qt/3rdparty/include/cares \
+                ../MEGASync/mega/bindings/qt/3rdparty/include/libsodium \
                 ../MEGASync/mega/include/
 
 win32 {
