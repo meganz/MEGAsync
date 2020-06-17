@@ -14,7 +14,6 @@ CONFIG -= qt
 
 SOURCES += ../MEGASync/mega/src/crypto/cryptopp.cpp \
             ../MEGASync/mega/src/base64.cpp \
-            ../MEGASync/mega/src/utils.cpp \
             ../MEGASync/mega/src/logging.cpp
 
 LIBS += -lcryptopp
@@ -30,6 +29,8 @@ win32 {
     INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
     LIBS += -lws2_32
     DEFINES += USE_CURL
+    DEFINES += NOMINMAX
+
 }
 
 macx {
