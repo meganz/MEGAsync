@@ -5841,12 +5841,19 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
         return;
     }
 
-    char *base64handle = node->getBase64Handle();
-    QString url = QString::fromUtf8("fm%1/%2").arg(versions ? QString::fromUtf8("/versions") : QString::fromUtf8(""))
-                                              .arg(QString::fromUtf8(base64handle));
-    megaApi->getSessionTransferURL(url.toUtf8().constData());
-    delete [] base64handle;
+    shellViewOnMega(node->getHandle(), versions);
     delete node;
+}
+
+void MegaApplication::shellViewOnMega(MegaHandle handle, bool versions)
+{
+    const auto handleBase64Pointer{MegaApi::handleToBase64(handle)};
+    const auto handleArgument{QString::fromUtf8(handleBase64Pointer)};
+    delete [] handleBase64Pointer;
+    const auto versionsArgument{versions ? QString::fromUtf8("/versions") : QString::fromUtf8("")};
+    const auto url{QString::fromUtf8("fm%1/%2").arg(versionsArgument).arg(handleArgument)};
+    megaApi->getSessionTransferURL(url.toUtf8().constData());
+
 }
 
 void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
