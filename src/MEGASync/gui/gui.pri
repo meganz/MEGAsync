@@ -66,7 +66,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/VerifyLockMessage.cpp
+    $$PWD/VerifyLockMessage.cpp \
+    $$PWD/BandwidthOverquotaPopOver.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -134,7 +135,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/VerifyLockMessage.h
+    $$PWD/VerifyLockMessage.h \
+    $$PWD/BandwidthOverquotaPopOver.h
 
 INCLUDEPATH += $$PWD
 
@@ -312,7 +314,8 @@ unix:!macx {
                 $$PWD/linux/BugReportDialog.ui \
                 $$PWD/linux/LockedPopOver.ui \
                 $$PWD/linux/VerifyLockMessage.ui \
-                $$PWD/linux/OverquotaFullDialog.ui
+                $$PWD/linux/OverquotaFullDialog.ui \
+                $$PWD/linux/BandwidthOverquotaPopOver.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

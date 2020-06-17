@@ -7,6 +7,8 @@
 #include <QHBoxLayout>
 #include <megaapi.h>
 #include "HighDpiResize.h"
+#include "BandwidthOverquotaPopOver.h"
+#include <memory>
 
 namespace Ui {
 class UpgradeDialog;
@@ -32,6 +34,9 @@ private:
     void updatePlans();
     QString convertCurrency(const char *currency);
     void clearPlans();
+    void mousePressEvent(QMouseEvent *event) override;
+
+    std::unique_ptr<BandwidthOverquotaPopOver> mPopOver;
 
 private slots:
     void unitTimeElapsed();

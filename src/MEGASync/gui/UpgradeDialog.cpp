@@ -5,12 +5,15 @@
 #include <QDateTime>
 #include <QUrl>
 #include "HighDpiResize.h"
+#include <QMouseEvent>
+#include "mega/types.h"
 
 using namespace mega;
 
-UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::UpgradeDialog)
+UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent)
+    :QDialog(parent),
+    ui(new Ui::UpgradeDialog),
+    mPopOver{mega::make_unique<BandwidthOverquotaPopOver>(this)}
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -79,16 +82,21 @@ void UpgradeDialog::refreshAccountDetails()
     {
         QString url = QString::fromUtf8("mega://#pro");
         Utilities::getPROurlWithParameters(url);
-//        ui->lDescRecommendation->setText(tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. ")
-//                                        .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
-//                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
-//                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
-//                                        .replace(QString::fromUtf8(" 6 "), QString::fromUtf8(" ").append(QString::number(preferences->temporalBandwidthInterval())).append(QString::fromUtf8(" ")))
-//                                         + QString::fromUtf8("</p>"));
+
+        mPopOver->updateMessage(tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours,"
+                                   " which took you over our current limit. To remove this limit,"
+                                   " you can [A]upgrade to PRO[/A], which will give you your own transfer quota"
+                                   " package and also ample extra storage space. ")
+                           .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
+                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
+                           .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
+                           .replace(QString::fromUtf8(" 6 "), QString::fromUtf8(" ").append(QString::number(preferences->temporalBandwidthInterval())).append(QString::fromUtf8(" ")))
+                           + QString::fromUtf8("</p>"));
+        ui->toolButtonQuestion->setVisible(true);
     }
     else
     {
-//        ui->lDescRecommendation->setText(QString());
+        ui->toolButtonQuestion->setVisible(false);
     }
 }
 
@@ -134,6 +142,43 @@ void UpgradeDialog::clearPlans()
             delete widget;
         }
         delete item;
+    }
+}
+
+void UpgradeDialog::mousePressEvent(QMouseEvent *event)
+{
+    const auto mousePositionButtonRelated{ui->toolButtonQuestion->mapFrom(this, event->pos())};
+    if (ui->toolButtonQuestion->rect().contains(mousePositionButtonRelated))
+    {
+#ifdef __APPLE__
+        showPopOverRelativeToRect(winId(), m_popover, event->localPos());
+#else
+
+        const auto mouseGlobalPosition{event->globalPos()};
+
+        mPopOver->show();
+        mPopOver->ensurePolished();
+        mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width()/2, mPopOver->height() + 10));
+        Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
+
+        const auto initialWidth{mPopOver->width()};
+        const auto initialHeight{mPopOver->height()};
+
+        // size might be incorrect the first time it's shown. This works around that and repositions at the expected position afterwards
+        QTimer::singleShot(1, this, [this, mouseGlobalPosition, initialWidth, initialHeight] ()
+        {
+            mPopOver->update();
+            mPopOver->ensurePolished();
+
+            const auto sizeChanged{initialWidth != mPopOver->width() || initialHeight != mPopOver->height()};
+            if (sizeChanged)
+            {
+                mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width()/2, mPopOver->height()));
+                Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
+                mPopOver->update();
+            }
+        });
+#endif
     }
 }
 
