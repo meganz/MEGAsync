@@ -2543,7 +2543,7 @@ image: none;</string>
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>Lost your authenticator device?</string>
+               <string>[A]Lost your authenticator device?[/A]</string>
               </property>
               <property name="textFormat">
                <enum>Qt::RichText</enum>
