@@ -803,5 +803,11 @@
         <file>images/icon_warning.png</file>
         <file>images/icon_warning@2x.png</file>
         <file>images/icon_warning@3x.png</file>
+        <file>images/dynamic transfer icon.png</file>
+        <file>images/dynamic transfer icon@2x.png</file>
+        <file>images/dynamic transfer icon@3x.png</file>
+        <file>images/icon_question_white.png</file>
+        <file>images/icon_question_white@2x.png</file>
+        <file>images/icon_question_white@3x.png</file>
     </qresource>
 </RCC>

@@ -42,7 +42,7 @@ private slots:
     void unitTimeElapsed();
 
 protected:
-    void changeEvent(QEvent* event);
+    void changeEvent(QEvent* event) override;
 
     mega::MegaPricing *pricing;
     mega::MegaApi *megaApi;
