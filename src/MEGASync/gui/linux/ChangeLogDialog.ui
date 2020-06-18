@@ -51,6 +51,12 @@ background-color: #FFFFFF;
   border: none;
   text-decoration: underline;
 }
+#lCopyright, #labelAllRightsReserved
+{
+  font-family: &quot;Helvetica&quot;;
+  font-size: 11px;
+  color: #666666;
+}
 
 </string>
   </property>
@@ -575,65 +581,77 @@ border-bottom: 1px solid #EFEFEC;
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="wCopyright" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <property name="spacing">
+      <number>0</number>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
+     <property name="leftMargin">
+      <number>17</number>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>17</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>17</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="lCopyright">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#lCopyright
+     <property name="rightMargin">
+      <number>17</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="lCopyright">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#lCopyright
 {
   font-family: &quot;Helvetica&quot;;
   font-size: 11px;
   color: #333333;
 }
 </string>
-        </property>
-        <property name="text">
-         <string notr="true">&lt;html&gt;&amp;copy; %1 Mega Limited. All rights reserved.&lt;/html&gt;</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+       </property>
+       <property name="text">
+        <string notr="true">&lt;html&gt;&amp;copy; %1 Mega Limited. &lt;/html&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelAllRightsReserved">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#labelAllRightsReserved
+{
+  font-family: &quot;Helvetica&quot;;
+  font-size: 11px;
+  color: #333333;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>All rights reserved.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

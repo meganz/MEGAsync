@@ -712,13 +712,12 @@ void MegaTransferView::showInMEGAClicked()
             transfer = model->getTransferByTag(transferTagSelected[i]);
             if (transfer)
             {
-                MegaHandle handle = transfer->getNodeHandle();
+                MegaHandle handle = transfer->getParentHandle();
                 if (handle != INVALID_HANDLE)
                 {
-                    const char *b64handle = MegaApi::handleToBase64(handle);
-                    QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromUtf8(b64handle);
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                    delete [] b64handle;
+                    const auto app{((MegaApplication *)qApp)};
+                    constexpr auto versions{false};
+                    app->shellViewOnMega(handle, versions);
                 }
                 delete transfer;
             }

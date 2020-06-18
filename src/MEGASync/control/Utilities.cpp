@@ -889,6 +889,11 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     return readableTimes;
 }
 
+void Utilities::animatePartialFadein(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 0.5, 1.0);
+}
+
 void Utilities::animatePartialFadeout(QWidget *object, int msecs)
 {
     animateProperty(object, msecs, "opacity", 1.0, 0.5);

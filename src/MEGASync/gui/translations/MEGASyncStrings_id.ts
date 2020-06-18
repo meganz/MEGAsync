@@ -491,22 +491,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Your publicly shared file ([A]) has been taken down</translation>
+        <translation type="unfinished">File anda yang dibagikan secara publik ([A]) telah dihapus</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared folder ([A]) has been taken down</translation>
+        <translation type="unfinished">Folder anda yang dibagikan secara publik ([A]) telah diturunkan</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Your publicly shared file ([A]) has been reinstated</translation>
+        <translation type="unfinished">File anda yang dibagikan secara publik ([A]) telah dipulihkan</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared folder ([A]) has been reinstated</translation>
+        <translation type="unfinished">Folder anda yang dibagikan secara publik ([A]) telah dipulihkan</translation>
     </message>
 </context>
 <context>
@@ -2782,7 +2782,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transferring</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
-        <translation type="unfinished">Transferring</translation>
+        <translation type="unfinished">Mentransfer</translation>
     </message>
 </context>
 <context>
@@ -3564,10 +3564,10 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- Kotak pesan baru yang disesuaikan.
+        <translation type="unfinished">- Kotak pesan baru yang disesuaikan. 
 - Bersihkan log retroaktif saat logout.
 - Memperbaiki masalah yang menonaktifkan ekstensi Finder dalam beberapa keadaan.
-- Verifikasi email untuk akun yang dikunci.
+- Verifikasi email untuk akun yang terkunci.
 - Verifikasi SMS untuk akun yang terkunci.
 - Dukungan untuk program afiliasi.
 - Opsi yang disertakan untuk mengirim log dari dialog laporan kerusakan.
@@ -5013,7 +5013,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transferring</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation type="unfinished">Transferring</translation>
+        <translation type="unfinished">Mentransfer</translation>
     </message>
 </context>
 <context>
