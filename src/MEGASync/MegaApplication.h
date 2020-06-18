@@ -185,7 +185,7 @@ public:
     mega::MegaPricing *getPricing() const;
 
     int getAppliedStorageState() const;
-
+    bool isAppliedStorageOverquota() const;
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -501,6 +501,7 @@ protected:
     bool nodescurrent;
     int businessStatus = -2;
     int blockState;
+    bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
 };

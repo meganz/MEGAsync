@@ -258,6 +258,8 @@ const QString Preferences::payWallNotificationExecutionKey = QString::fromAscii(
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
 const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLight");
+const QString Preferences::businessStateQKey = QString::fromAscii("businessState");
+const QString Preferences::blockedStateQKey = QString::fromAscii("blockedState");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
@@ -1147,6 +1149,42 @@ void Preferences::setStorageState(int value)
     assert(logged());
     settings->setValue(storageStateQKey, value);
     setCachedValue(storageStateQKey, value);
+    mutex.unlock();
+}
+
+int Preferences::getBusinessState()
+{
+    mutex.lock();
+    assert(logged());
+    int value = getValue<int>(businessStateQKey, -2);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setBusinessState(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(businessStateQKey, value);
+    setCachedValue(businessStateQKey, value);
+    mutex.unlock();
+}
+
+int Preferences::getBlockedState()
+{
+    mutex.lock();
+    assert(logged());
+    int value = getValue<int>(blockedStateQKey, -2);
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setBlockedState(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(blockedStateQKey, value);
+    setCachedValue(blockedStateQKey, value);
     mutex.unlock();
 }
 

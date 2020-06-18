@@ -150,6 +150,11 @@ public:
 
     int getStorageState();
     void setStorageState(int value);
+    int getBusinessState();
+    void setBusinessState(int value);
+    int getBlockedState();
+    void setBlockedState(int value);
+
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -542,6 +547,8 @@ protected:
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
     static const QString storageStateQKey;
+    static const QString businessStateQKey;
+    static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;

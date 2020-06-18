@@ -939,6 +939,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exportOps = 0;
     infoDialog = NULL;
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+    blockStateSet = false;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -1701,6 +1702,7 @@ void MegaApplication::start()
     }
 
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
+    blockStateSet = false;
 
     indexing = false;
     paused = false;
@@ -2064,16 +2066,6 @@ void MegaApplication::loggedIn(bool fromWizard)
     }
     eventsPendingLoggedIn.clear();
 
-    // Reload sync settings before applyStorageState
-    // to not override if called after loggedIn()
-    if (fromWizard)
-    {
-        startSyncs();
-    }
-    else
-    {
-        restoreSyncs();
-    }
 
     if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
     {
@@ -3663,6 +3655,11 @@ int MegaApplication::getAppliedStorageState() const
     return appliedStorageState;
 }
 
+bool MegaApplication::isAppliedStorageOverquota() const
+{
+    return appliedStorageState == MegaApi::STORAGE_STATE_RED || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
+}
+
 MegaPricing *MegaApplication::getPricing() const
 {
     return pricing;
@@ -3915,6 +3912,7 @@ void MegaApplication::setupWizardFinished(int result)
     }
 
     loggedIn(true);
+    startSyncs();
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -7084,6 +7082,11 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             {
                 blockState = event->getNumber();
                 emit blocked();
+                blockStateSet = true;
+                if (preferences->logged())
+                {
+                    preferences->setBlockedState(blockState);
+                }
 
                 if (verifyEmail)
                 {
@@ -7252,6 +7255,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
         }
 
         businessStatus = event->getNumber();
+        if (preferences->logged())
+        {
+            preferences->setBusinessState(businessStatus);
+        }
     }
 }
 
@@ -7689,6 +7696,34 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     //If we have got the filesystem, start the app
                     loggedIn(false);
+
+
+                    // onEvent with EVENT_BUSINESS_STATUS might have been received before logged, hence not written to cache yet.
+                    // we fix that here:
+                    auto cachedBusinessState = preferences->getBusinessState();
+                    if (businessStatus != -2 && cachedBusinessState != businessStatus)
+                    {
+                        preferences->setBusinessState(businessStatus);
+                    }
+
+                    auto cachedBlockedState = preferences->getBlockedState();
+                    if (blockStateSet && cachedBlockedState != blockStateSet)
+                    {
+                        preferences->setBlockedState(blockState);
+                    }
+
+                    auto businessState = preferences->getBusinessState();
+                    bool businessExpired = businessState != -2 && businessState != MegaApi::BUSINESS_STATUS_EXPIRED;
+                    auto blockedState = preferences->getBlockedState();
+                    bool accountBlocked = blockedState != -2 && blockedState;
+
+                    //Restore temporarily disabled syncs for cases that don't have a transition that triggers restoreSyncs
+                    if (!isAppliedStorageOverquota()
+                            && !accountBlocked
+                            && businessExpired)
+                    {
+                        restoreSyncs();
+                    }
                 }
                 else
                 {
@@ -8189,6 +8224,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
             emit unblocked();
+            blockStateSet = true;
+            if (preferences->logged())
+            {
+                preferences->setBlockedState(blockState);
+            }
 
             requestUserData(); // querying some user attributes might have been rejected: we query them again            
             restoreSyncs();
