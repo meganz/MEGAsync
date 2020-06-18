@@ -40,6 +40,7 @@
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
+#include "BandwidthOverquota.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -169,6 +170,8 @@ public:
     void fetchNodes();
     void whyAmIBlocked(bool periodicCall = false);
     bool showSyncOverquotaDialog();
+    bool finished() const;
+    bool isInfoDialogVisible() const;
 
 signals:
     void startUpdaterThread();
@@ -190,7 +193,6 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openInfoWizard();
-    void checkBandwidthOverquotaAlerts();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -239,7 +241,6 @@ public slots:
     void scanningAnimationStep();
     void setupWizardFinished(int result);
     void storageOverquotaDialogFinished(int result);
-    void transferOverquotaDialogFinished(int result);
     void infoWizardDialogFinished(int result);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
@@ -270,19 +271,18 @@ public slots:
     void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
+    void redirectToUpgrade(int activationButton);
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
 private slots:
     void showInFolder(int activationButton);
     void openFolderPath(QString path);
-    void redirectToUpgrade(int activationButton);
     void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
 
 protected:
-    void checkBandwidthOverquotaTimeStamp();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -294,7 +294,7 @@ protected:
     void unityFix();
     void disableSyncs();
     void restoreSyncs();
-    void closeDialogs(bool bwoverquota = false);
+    void closeDialogs();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
@@ -303,7 +303,6 @@ protected:
     void refreshStorageUIs();
 
     void sendOverStorageNotification(int state);
-    void sendOverBandwithNotification(Preferences::OverquotaState state);
     void sendBusinessWarningNotification();
 
     bool eventFilter(QObject *obj, QEvent *e);
@@ -405,17 +404,13 @@ protected:
     long long lastTsErrorMessageShown;
     bool almostOQ;
     int storageState;
-    Preferences::OverquotaState bandwidthOverquotaState;
     int appliedStorageState;
     long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
-    long long bandwidthOverquotaTimestamp;
-    UpgradeDialog *bandwithOverquotaDialog;
     UpgradeOverStorage *storageOverquotaDialog;
-    bool bandwithOverquotaEvent;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
@@ -481,6 +476,7 @@ protected:
     int blockState;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
+    std::unique_ptr<BandwidthOverquota> bandwidthOverquota;
 };
 
 class DeferPreferencesSyncForScope

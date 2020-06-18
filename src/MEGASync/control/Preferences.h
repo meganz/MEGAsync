@@ -27,6 +27,7 @@ signals:
 private:
     static Preferences *preferences;
     Preferences();
+    friend class MockPreferences;
 
     std::map<QString, QVariant> cache;
 
@@ -81,7 +82,7 @@ public:
     void setEmailAndGeneralSettings(const QString &email);
 
     //Thread safe functions
-    bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
+    virtual bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
@@ -149,16 +150,18 @@ public:
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
 
-    long long getOverBandwidthDialogExecution();
-    void setOverBandwidthDialogExecution(long long timestamp);
-    long long getOverBandwidthNotificationExecution();
-    void setOverBandwidthNotificationExecution(long long timestamp);
-    long long getAlmostOverBandwidthNotificationExecution();
-    void setAlmostOverBandwidthNotificationExecution(long long timestamp);
-    long long getAlmostOverBandwidthDismissExecution();
-    void setAlmostOverBandwidthDismissExecution(long long timestamp);
-    long long getOverBandwidthDismissExecution();
-    void setOverBandwidthDismissExecution(long long timestamp);
+    virtual std::chrono::system_clock::time_point getOverBandwidthDialogDisabledUntil();
+    virtual void setOverBandwidthDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getOverBandwidthNotificationDisabledUntil();
+    virtual void setOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getOverBandwidthUiMessageDisabledUntil();
+    virtual void setOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getAlmostOverBandwidthNotificationDisabledUntil();
+    virtual void setAlmostOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getAlmostOverBandwidthUiMessageDisableUntil();
+    void setAlmostOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getOverBandwidthWaitUntil();
+    virtual void setOverBandwidthWaitUntil(std::chrono::system_clock::time_point timepoint);
 
     std::chrono::system_clock::time_point getWhenBandwidthFullSyncDialogWasShown();
     void setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint);
@@ -185,8 +188,8 @@ public:
         full
     };
 
-    OverquotaState getBandwithOverquotaState();
-    void setBandwidthOverquotaState(OverquotaState state);
+    virtual OverquotaState getBandwidthOverquotaState();
+    virtual void setBandwidthOverquotaState(OverquotaState state);
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -456,6 +459,12 @@ public:
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
 
+    static std::chrono::minutes overquotaDialogDisableDuration;
+    static std::chrono::minutes overquotaNotificationDisableDuration;
+    static std::chrono::minutes overquotaUiMessageDisableDuration;
+    static std::chrono::minutes almostOverquotaUiMessageDisableDuration;
+    static std::chrono::minutes almostOverquotaOsNotificationDisableDuration;
+
     static int STATE_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
 
@@ -542,11 +551,12 @@ protected:
     long long almostOverStorageNotificationExecution;
     long long almostOverStorageDismissExecution;
     long long overStorageDismissExecution;
-    long long overBandwidthDialogExecution;
-    long long overBandwidthNotificationExecution;
-    long long almostOverBandwidthNotificationExecution;
-    long long almostOverBandwidthDismissExecution;
-    long long overBandwidthDismissExecution;
+    std::chrono::system_clock::time_point overBandwidthDialogExecution;
+    std::chrono::system_clock::time_point overBandwidthNotificationExecution;
+    std::chrono::system_clock::time_point almostOverBandwidthNotificationExecution;
+    std::chrono::system_clock::time_point almostOverBandwidthDismissExecution;
+    std::chrono::system_clock::time_point overBandwidthDismissExecution;
+    std::chrono::system_clock::time_point overBandwidthWaitUntil;
     long long lastTransferNotification;
     std::chrono::system_clock::time_point whenBandwidthFullSyncDialogWasShown;
     std::chrono::system_clock::time_point whenBandwidthFullDownloadsDialogWasShown;
@@ -592,6 +602,7 @@ protected:
     static const QString almostOverBandwidthDismissExecutionKey;
     static const QString overBandwidthDismissExecutionKey;
     static const QString overBandwidthStateKey;
+    static const QString overBandwidthWaitUntilKey;
     static const QString storageStateQKey;
     static const QString whenBandwidthFullSyncDialogWasShownKey;
     static const QString whenBandwidthFullDownloadsDialogWasShownKey;

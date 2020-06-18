@@ -35,6 +35,12 @@ long long Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS = 259200000; // 72 hours
 long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
+std::chrono::minutes Preferences::overquotaDialogDisableDuration{std::chrono::hours(7*24)};
+std::chrono::minutes Preferences::overquotaNotificationDisableDuration{std::chrono::hours(36)};
+std::chrono::minutes Preferences::almostOverquotaUiMessageDisableDuration{std::chrono::hours(72)};
+std::chrono::minutes Preferences::overquotaUiMessageDisableDuration{std::chrono::hours(36)};
+std::chrono::minutes Preferences::almostOverquotaOsNotificationDisableDuration{std::chrono::hours(36)};
+
 long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
 long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
@@ -255,6 +261,7 @@ const QString Preferences::almostOverBandwidthNotificationExecutionKey = QString
 const QString Preferences::almostOverBandwidthDismissExecutionKey = QString::fromAscii("almostOverBandwidthDismissExecution");
 const QString Preferences::overBandwidthDismissExecutionKey = QString::fromAscii("overBandwidthDismissExecution");
 const QString Preferences::overBandwidthStateKey = QString::fromAscii("overBandwidthStateKey");
+const QString Preferences::overBandwidthWaitUntilKey = QString::fromAscii("overBandwidthWaitUntilKey");
 
 const QString Preferences::whenBandwidthFullSyncDialogWasShownKey = QString::fromAscii("whenBandwidthFullSyncDialogWasShown");
 const QString Preferences::whenBandwidthFullDownloadsDialogWasShownKey = QString::fromAscii("whenBandwidthFullDownloadsDialogWasShown");
@@ -494,19 +501,7 @@ Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
     almostOverStorageNotificationExecution = -1;
     almostOverStorageDismissExecution = -1;
     overStorageDismissExecution = -1;
-    overBandwidthDialogExecution = -1;
-    overBandwidthNotificationExecution = -1;
-    almostOverBandwidthNotificationExecution = -1;
-    almostOverBandwidthDismissExecution = -1;
-    overBandwidthDismissExecution = -1;
     lastTransferNotification = 0;
-    whenBandwidthFullSyncDialogWasShown = std::chrono::system_clock::time_point();
-    whenBandwidthFullDownloadsDialogWasShown = std::chrono::system_clock::time_point();
-    whenBandwidthFullImportLinksDialogWasShown = std::chrono::system_clock::time_point();
-    whenBandwidthFullStreamDialogWasShown = std::chrono::system_clock::time_point();
-    whenStorageFullUploadsDialogWasShown = std::chrono::system_clock::time_point();
-    whenStorageFullSyncsDialogWasShown = std::chrono::system_clock::time_point();
-    whenStorageAndBandwidthFullSyncDialogWasShown = std::chrono::system_clock::time_point();
     clearTemporalBandwidth();
 }
 
@@ -1123,132 +1118,150 @@ void Preferences::setOverStorageDismissExecution(long long timestamp)
     mutex.unlock();
 }
 
-long long Preferences::getOverBandwidthDialogExecution()
-{
-    if (overBandwidthDialogExecution != -1)
-    {
-        return overBandwidthDialogExecution;
-    }
-
-    mutex.lock();
-    assert(logged());
-    overBandwidthDialogExecution = settings->value(overBandwidthDialogExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return overBandwidthDialogExecution;
-}
-
-void Preferences::setOverBandwidthDialogExecution(long long timestamp)
-{
-    overBandwidthDialogExecution = timestamp;
-    mutex.lock();
-    assert(logged());
-    settings->setValue(overBandwidthDialogExecutionKey, timestamp);
-    setCachedValue(overBandwidthDialogExecutionKey, timestamp);
-    mutex.unlock();
-}
-
-long long Preferences::getOverBandwidthNotificationExecution()
-{
-    if (overBandwidthNotificationExecution != -1)
-    {
-        return overBandwidthNotificationExecution;
-    }
-
-    mutex.lock();
-    assert(logged());
-    overBandwidthNotificationExecution = settings->value(overBandwidthNotificationExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return overBandwidthNotificationExecution;
-}
-
-void Preferences::setOverBandwidthNotificationExecution(long long timestamp)
-{
-    overBandwidthNotificationExecution = timestamp;
-    mutex.lock();
-    assert(logged());
-    settings->setValue(overBandwidthNotificationExecutionKey, timestamp);
-    setCachedValue(overBandwidthNotificationExecutionKey, timestamp);
-    mutex.unlock();
-}
-
-long long Preferences::getAlmostOverBandwidthNotificationExecution()
-{
-    if (almostOverBandwidthNotificationExecution != -1)
-    {
-        return almostOverBandwidthNotificationExecution;
-    }
-
-    mutex.lock();
-    assert(logged());
-    almostOverBandwidthNotificationExecution = settings->value(almostOverBandwidthNotificationExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return almostOverBandwidthNotificationExecution;
-}
-
-void Preferences::setAlmostOverBandwidthNotificationExecution(long long timestamp)
-{
-    almostOverBandwidthNotificationExecution = timestamp;
-    mutex.lock();
-    assert(logged());
-    settings->setValue(almostOverBandwidthNotificationExecutionKey, timestamp);
-    setCachedValue(almostOverBandwidthNotificationExecutionKey, timestamp);
-    mutex.unlock();
-}
-
-long long Preferences::getAlmostOverBandwidthDismissExecution()
-{
-    if (almostOverBandwidthDismissExecution != -1)
-    {
-        return almostOverBandwidthDismissExecution;
-    }
-
-    mutex.lock();
-    assert(logged());
-    almostOverBandwidthDismissExecution = settings->value(almostOverBandwidthDismissExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return almostOverBandwidthDismissExecution;
-}
-
-void Preferences::setAlmostOverBandwidthDismissExecution(long long timestamp)
-{
-    almostOverBandwidthDismissExecution = timestamp;
-    mutex.lock();
-    assert(logged());
-    settings->setValue(almostOverBandwidthDismissExecutionKey, timestamp);
-    setCachedValue(almostOverBandwidthDismissExecutionKey, timestamp);
-    mutex.unlock();
-}
-
-long long Preferences::getOverBandwidthDismissExecution()
-{
-    if (overBandwidthDismissExecution != -1)
-    {
-        return overBandwidthDismissExecution;
-    }
-
-    mutex.lock();
-    assert(logged());
-    overBandwidthDismissExecution = settings->value(overBandwidthDismissExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return overBandwidthDismissExecution;
-}
-
-void Preferences::setOverBandwidthDismissExecution(long long timestamp)
-{
-    overBandwidthDismissExecution = timestamp;
-    mutex.lock();
-    assert(logged());
-    settings->setValue(overBandwidthDismissExecutionKey, timestamp);
-    setCachedValue(overBandwidthDismissExecutionKey, timestamp);
-    mutex.unlock();
-}
-
 std::chrono::system_clock::time_point getTimePoint(const QString& key, EncryptedSettings * settings)
 {
     const auto defaultTimePoint{std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::time_point()).time_since_epoch().count()};
     auto value{settings->value(key, static_cast<long long>(defaultTimePoint)).toLongLong()};
     std::chrono::milliseconds durationMillis(value);
     return std::chrono::system_clock::time_point{durationMillis};
+}
+
+std::chrono::system_clock::time_point Preferences::getOverBandwidthDialogDisabledUntil()
+{
+    if(overBandwidthDialogExecution != std::chrono::system_clock::time_point())
+    {
+        return overBandwidthDialogExecution;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    overBandwidthDialogExecution = getTimePoint(overBandwidthDialogExecutionKey, settings);
+    return overBandwidthDialogExecution;
+}
+
+void Preferences::setOverBandwidthDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+{
+    overBandwidthDialogExecution = timepoint;
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    settings->setValue(overBandwidthDialogExecutionKey, static_cast<long long>(timePointMillis));
+    setCachedValue(overBandwidthDialogExecutionKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getOverBandwidthNotificationDisabledUntil()
+{
+    if(overBandwidthNotificationExecution != std::chrono::system_clock::time_point())
+    {
+        return overBandwidthNotificationExecution;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    overBandwidthNotificationExecution = getTimePoint(overBandwidthNotificationExecutionKey, settings);
+    return overBandwidthNotificationExecution;
+}
+
+void Preferences::setOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint)
+{
+    overBandwidthNotificationExecution = timepoint;
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    settings->setValue(overBandwidthNotificationExecutionKey, static_cast<long long>(timePointMillis));
+    setCachedValue(overBandwidthNotificationExecutionKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getAlmostOverBandwidthNotificationDisabledUntil()
+{
+    if(almostOverBandwidthNotificationExecution != std::chrono::system_clock::time_point())
+    {
+        return almostOverBandwidthNotificationExecution;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    almostOverBandwidthNotificationExecution = getTimePoint(almostOverBandwidthNotificationExecutionKey, settings);
+    return almostOverBandwidthNotificationExecution;
+}
+
+void Preferences::setAlmostOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint)
+{
+    almostOverBandwidthNotificationExecution = timepoint;
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    settings->setValue(almostOverBandwidthNotificationExecutionKey, static_cast<long long>(timePointMillis));
+    setCachedValue(almostOverBandwidthNotificationExecutionKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getAlmostOverBandwidthUiMessageDisableUntil()
+{
+    if(almostOverBandwidthDismissExecution != std::chrono::system_clock::time_point())
+    {
+        return almostOverBandwidthDismissExecution;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    almostOverBandwidthDismissExecution = getTimePoint(almostOverBandwidthDismissExecutionKey, settings);
+    return almostOverBandwidthDismissExecution;
+}
+
+void Preferences::setAlmostOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::time_point timepoint)
+{
+    almostOverBandwidthDismissExecution = timepoint;
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    settings->setValue(almostOverBandwidthDismissExecutionKey, static_cast<long long>(timePointMillis));
+    setCachedValue(almostOverBandwidthDismissExecutionKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getOverBandwidthWaitUntil()
+{
+    if(overBandwidthWaitUntil != std::chrono::system_clock::time_point())
+    {
+        return overBandwidthWaitUntil;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    overBandwidthWaitUntil = getTimePoint(overBandwidthWaitUntilKey, settings);
+    return overBandwidthWaitUntil;
+}
+
+void Preferences::setOverBandwidthWaitUntil(std::chrono::system_clock::time_point timepoint)
+{
+    overBandwidthWaitUntil = timepoint;
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    settings->setValue(overBandwidthWaitUntilKey, static_cast<long long>(timePointMillis));
+    setCachedValue(overBandwidthWaitUntilKey, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getOverBandwidthUiMessageDisabledUntil()
+{
+    if(overBandwidthDismissExecution != std::chrono::system_clock::time_point())
+    {
+        return overBandwidthDismissExecution;
+    }
+
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    overBandwidthDismissExecution = getTimePoint(overBandwidthDismissExecutionKey, settings);
+    return overBandwidthDismissExecution;
+}
+
+void Preferences::setOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::time_point timepoint)
+{
+    overBandwidthDismissExecution = timepoint;
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    settings->setValue(overBandwidthDismissExecutionKey, static_cast<long long>(timePointMillis));
+    setCachedValue(overBandwidthDismissExecutionKey, static_cast<long long>(timePointMillis));
 }
 
 std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullSyncDialogWasShown()
@@ -1432,7 +1445,7 @@ void Preferences::setStorageState(int value)
     mutex.unlock();
 }
 
-Preferences::OverquotaState Preferences::getBandwithOverquotaState()
+Preferences::OverquotaState Preferences::getBandwidthOverquotaState()
 {
     QMutexLocker locker(&mutex);
     assert(logged());

@@ -95,11 +95,10 @@ public:
     long long getUnseenNotifications() const;
     void closeSyncsMenu();
     int getLoggedInMode() const;
-    void setTransferOverquotaState(Preferences::OverquotaState state);
-    void enableTransferOverquotaAlert();
-    void enableTransferAlmostOverquotaAlert();
 
 private:
+    InfoDialog() = default;
+    friend class MockInfoDialog;
     void drawAvatar(QString email);
     void animateStates(bool opt);
     void updateTransfersCount();
@@ -124,6 +123,10 @@ public slots:
    void onAllTransfersFinished();
    void updateDialogState();
 
+   void enableTransferOverquotaAlert();
+   void enableTransferAlmostOverquotaAlert();
+   void setBandwidthOverquotaState(Preferences::OverquotaState state);
+
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
@@ -138,7 +141,6 @@ private slots:
 
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
-
     void on_bActualFilter_clicked();
     void applyFilterOption(int opt);
     void on_bNotificationsSettings_clicked();

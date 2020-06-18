@@ -331,7 +331,7 @@ void InfoDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 }
 
-void InfoDialog::setTransferOverquotaState(Preferences::OverquotaState state)
+void InfoDialog::setBandwidthOverquotaState(Preferences::OverquotaState state)
 {
     transferOverquotaState = state;
 }

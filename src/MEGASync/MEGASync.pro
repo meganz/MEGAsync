@@ -117,8 +117,12 @@ INCLUDEPATH += $$PWD
 
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
-SOURCES += MegaApplication.cpp
-HEADERS += MegaApplication.h
+SOURCES += MegaApplication.cpp \
+    BandwidthOverquota.cpp \
+    Time.cpp
+HEADERS += MegaApplication.h \
+    BandwidthOverquota.h \
+    Time.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
