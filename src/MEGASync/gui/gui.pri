@@ -193,7 +193,8 @@ win32 {
                 $$PWD/win/BugReportDialog.ui \
                 $$PWD/win/LockedPopOver.ui \
                 $$PWD/win/VerifyLockMessage.ui \
-                $$PWD/win/OverquotaFullDialog.ui
+                $$PWD/win/OverquotaFullDialog.ui \
+                $$PWD/win/BandwidthOverquotaPopOver.ui
 }
 
 macx {
@@ -247,7 +248,8 @@ macx {
                 $$PWD/macx/BugReportDialog.ui \
                 $$PWD/macx/LockedPopOver.ui \
                 $$PWD/macx/VerifyLockMessage.ui \
-                $$PWD/macx/OverquotaFullDialog.ui
+                $$PWD/macx/OverquotaFullDialog.ui \
+                $$PWD/macx/BandwidthOverquotaPopOver.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
