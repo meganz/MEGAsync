@@ -3,17 +3,104 @@
 #include <vector>
 #include <string>
 
-#include "mega.h"
+namespace mega {
+// within ::mega namespace, byte is unsigned char (avoids ambiguity when std::byte from c++17 and perhaps other defined ::byte are available)
+#if defined(USE_CRYPTOPP) && (CRYPTOPP_VERSION >= 600) && ((__cplusplus >= 201103L) || (__RPCNDR_H_VERSION__ == 500))
+using byte = CryptoPP::byte;
+#elif __RPCNDR_H_VERSION__ != 500
+typedef unsigned char byte;
+#endif
+}
+
+// signed 64-bit generic offset
+typedef int64_t m_off_t;
+
+#ifndef MEGA_API
+ #define MEGA_API
+#endif
+#define USE_CRYPTOPP 1
+#include "mega/crypto/cryptopp.h"
+#include "mega/base64.h"
 
 #define KEY_LENGTH 4096
 #define SIGNATURE_LENGTH 512
 
 using namespace mega;
 using std::string;
+using std::ostringstream;
+using std::vector;
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::ifstream;
+
+class HashSignature
+{
+    Hash* hash;
+
+public:
+    // add data
+    void add(const byte*, unsigned);
+
+    // generate signature
+    unsigned get(AsymmCipher*, byte*, unsigned);
+
+    // verify signature
+    bool checksignature(AsymmCipher*, const byte*, unsigned);
+
+    HashSignature(Hash*);
+    ~HashSignature();
+};
+
+// cryptographic signature generation/verification
+HashSignature::HashSignature(Hash* h)
+{
+    hash = h;
+}
+
+HashSignature::~HashSignature()
+{
+    delete hash;
+}
+
+void HashSignature::add(const byte* data, unsigned len)
+{
+    hash->add(data, len);
+}
+
+unsigned HashSignature::get(AsymmCipher* privk, byte* sigbuf, unsigned sigbuflen)
+{
+    string h;
+
+    hash->get(&h);
+
+    return privk->rawdecrypt((const byte*)h.data(), h.size(), sigbuf, sigbuflen);
+}
+
+bool HashSignature::checksignature(AsymmCipher* pubk, const byte* sig, unsigned len)
+{
+    string h, s;
+    unsigned size;
+
+    hash->get(&h);
+
+    s.resize(h.size());
+
+    if (!(size = pubk->rawencrypt(sig, len, (byte*)s.data(), s.size())))
+    {
+        return 0;
+    }
+
+    if (size < h.size())
+    {
+        // left-pad with 0
+        s.insert(0, h.size() - size, 0);
+        s.resize(h.size());
+    }
+
+    return s == h;
+}
+
 
 void printUsage(const char* appname)
 {

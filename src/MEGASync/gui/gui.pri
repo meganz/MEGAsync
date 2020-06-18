@@ -65,7 +65,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/VerifyLockMessage.cpp
+    $$PWD/VerifyLockMessage.cpp \
+    $$PWD/MegaInfoMessage.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -132,7 +133,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/VerifyLockMessage.h
+    $$PWD/VerifyLockMessage.h \
+    $$PWD/MegaInfoMessage.h
 
 INCLUDEPATH += $$PWD
 
@@ -188,7 +190,8 @@ win32 {
                 $$PWD/win/AlertFilterType.ui \
                 $$PWD/win/BugReportDialog.ui \
                 $$PWD/win/LockedPopOver.ui \
-                $$PWD/win/VerifyLockMessage.ui
+                $$PWD/win/VerifyLockMessage.ui \
+                $$PWD/win/MegaInfoMessage.ui
 }
 
 macx {
@@ -241,7 +244,8 @@ macx {
                 $$PWD/macx/AlertFilterType.ui \
                 $$PWD/macx/BugReportDialog.ui \
                 $$PWD/macx/LockedPopOver.ui \
-                $$PWD/macx/VerifyLockMessage.ui
+                $$PWD/macx/VerifyLockMessage.ui \
+                $$PWD/macx/MegaInfoMessage.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -307,7 +311,8 @@ unix:!macx {
                 $$PWD/linux/AlertFilterType.ui \
                 $$PWD/linux/BugReportDialog.ui \
                 $$PWD/linux/LockedPopOver.ui \
-                $$PWD/linux/VerifyLockMessage.ui
+                $$PWD/linux/VerifyLockMessage.ui \
+                $$PWD/linux/MegaInfoMessage.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

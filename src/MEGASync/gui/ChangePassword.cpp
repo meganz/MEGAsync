@@ -40,7 +40,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                 if (request->getFlag()) //2FA enabled
                 {
                     QPointer<ChangePassword> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
+                    QPointer<Login2FA> verification = new Login2FA(this);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
@@ -78,7 +78,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             else if (e->getErrorCode() == MegaError::API_EFAILED || e->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 QPointer<ChangePassword> dialog = this;
-                QPointer<Login2FA> verification = new Login2FA();
+                QPointer<Login2FA> verification = new Login2FA(this);
                 verification->invalidCode(true);
                 int result = verification->exec();
                 if (!dialog || !verification || result != QDialog::Accepted)

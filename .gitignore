@@ -52,8 +52,13 @@ Makefile
 
 #build stuff
 /src/MEGAShellExtDolphin/megasync-plugin-overlay.moc
-build-MEGA-*
+build-MEGA*
+build-cmake*
 
+.vs
+
+CMakeLists.txt.user*
+CMakeSettings.json
 CMakeFiles
 CMakeCache.txt
 CMakeTmp
