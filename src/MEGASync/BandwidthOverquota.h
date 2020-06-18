@@ -40,6 +40,9 @@ public:
     void setOverquotaDialogPricing(mega::MegaPricing *pricing);
     void closeDialogs();
     void checkStateAndAlerts();
+    bool checkImportLinksAlertDismissed();
+    bool checkDownloadAlertDismissed();
+    bool checkStreamingAlertDismissed();
 
 private:
     mega::MegaApi* megaApi;

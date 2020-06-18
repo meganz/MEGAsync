@@ -4943,17 +4943,9 @@ void MegaApplication::importLinks()
         return;
     }
 
-    auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenBandwidthFullImportLinksDialogWasShown()};
-    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
-    if(bandwidthOverquota->isStateFull() && dialogEnabled)
+    if(!bandwidthOverquota->checkImportLinksAlertDismissed())
     {
-        preferences->setWhenBandwidthFullImportLinksDialogWasShown(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullImportLink)};
-        const auto result{bandwidthFullDialog->exec()};
-        if(result == QDialog::Rejected)
-        {
-            return;
-        }
+        return;
     }
 
     if (!preferences->logged())
@@ -5215,17 +5207,9 @@ void MegaApplication::downloadActionClicked()
         return;
     }
 
-    auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenBandwidthFullDownloadsDialogWasShown()};
-    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
-    if(bandwidthOverquota->isStateFull() && dialogEnabled)
+    if(!bandwidthOverquota->checkDownloadAlertDismissed())
     {
-        preferences->setWhenBandwidthFullDownloadsDialogWasShown(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullDownlads)};
-        const auto result{bandwidthFullDialog->exec()};
-        if(result == QDialog::Rejected)
-        {
-            return;
-        }
+        return;
     }
 
     if (downloadNodeSelector)
@@ -5273,17 +5257,9 @@ void MegaApplication::streamActionClicked()
         return;
     }
 
-    auto timeDiff{std::chrono::system_clock::now() - preferences->getWhenBandwidthFullStreamDialogWasShown()};
-    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
-    if(bandwidthOverquota->isStateFull() && dialogEnabled)
+    if(!bandwidthOverquota->checkStreamingAlertDismissed())
     {
-        preferences->setWhenBandwidthFullStreamDialogWasShown(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullStream)};
-        const auto result{bandwidthFullDialog->exec()};
-        if(result == QDialog::Rejected)
-        {
-            return;
-        }
+        return;
     }
 
     if (streamSelector)

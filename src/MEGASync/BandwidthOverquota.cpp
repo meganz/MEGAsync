@@ -1,6 +1,7 @@
 #include "BandwidthOverquota.h"
 #include "mega/types.h"
 #include "platform/Platform.h"
+#include "OverquotaFullDialog.h"
 
 BandwidthOverquota::BandwidthOverquota(mega::MegaApi* megaApi, Preferences *preferences, Notificator *notificator)
     :BandwidthOverquota{megaApi, preferences, notificator, mega::make_unique<Time>()}
@@ -205,6 +206,48 @@ void BandwidthOverquota::checkStateAndAlerts()
 {
     checkState();
     checkExecuteAlerts();
+}
+
+bool BandwidthOverquota::checkImportLinksAlertDismissed()
+{
+    auto dismissed{true};
+    auto timeDiff{time->now() - preferences->getWhenBandwidthFullImportLinksDialogWasShown()};
+    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(isStateFull() && dialogEnabled)
+    {
+        preferences->setWhenBandwidthFullImportLinksDialogWasShown(time->now());
+        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullImportLink)};
+        dismissed = bandwidthFullDialog->exec() == QDialog::Accepted;
+    }
+    return dismissed;
+}
+
+bool BandwidthOverquota::checkDownloadAlertDismissed()
+{
+    auto dismissed{true};
+    auto timeDiff{time->now() - preferences->getWhenBandwidthFullDownloadsDialogWasShown()};
+    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(isStateFull() && dialogEnabled)
+    {
+        preferences->setWhenBandwidthFullDownloadsDialogWasShown(time->now());
+        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullDownlads)};
+        dismissed = bandwidthFullDialog->exec() == QDialog::Accepted;
+    }
+    return dismissed;
+}
+
+bool BandwidthOverquota::checkStreamingAlertDismissed()
+{
+    auto dismissed{true};
+    auto timeDiff{time->now() - preferences->getWhenBandwidthFullStreamDialogWasShown()};
+    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    if(isStateFull() && dialogEnabled)
+    {
+        preferences->setWhenBandwidthFullStreamDialogWasShown(time->now());
+        const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullStream)};
+        dismissed = bandwidthFullDialog->exec() == QDialog::Accepted;
+    }
+    return dismissed;
 }
 
 void BandwidthOverquota::sendNotification(const QString &title)
