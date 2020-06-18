@@ -264,8 +264,6 @@ public slots:
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
-    void onDismissTransferOverquota();
-    void onDismissTransferAlmostOverquota();
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
     void onHttpServerConnectionError();

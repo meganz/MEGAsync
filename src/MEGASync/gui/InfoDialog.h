@@ -68,7 +68,6 @@ public:
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
-
     void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
 
     void reset();

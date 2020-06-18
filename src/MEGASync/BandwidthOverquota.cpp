@@ -211,11 +211,10 @@ void BandwidthOverquota::checkStateAndAlerts()
 bool BandwidthOverquota::checkImportLinksAlertDismissed()
 {
     auto dismissed{true};
-    auto timeDiff{time->now() - preferences->getWhenBandwidthFullImportLinksDialogWasShown()};
-    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    const auto dialogEnabled{time->now() >= preferences->getBandwidthFullImportLinksDialogDisabledUntil()};
     if(isStateFull() && dialogEnabled)
     {
-        preferences->setWhenBandwidthFullImportLinksDialogWasShown(time->now());
+        preferences->setBandwidthFullImportLinksDialogDisabledUntil(time->now()+overquotaDialogDisableTime);
         const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullImportLink)};
         dismissed = bandwidthFullDialog->exec() == QDialog::Accepted;
     }
@@ -225,11 +224,10 @@ bool BandwidthOverquota::checkImportLinksAlertDismissed()
 bool BandwidthOverquota::checkDownloadAlertDismissed()
 {
     auto dismissed{true};
-    auto timeDiff{time->now() - preferences->getWhenBandwidthFullDownloadsDialogWasShown()};
-    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    const auto dialogEnabled{time->now() >= preferences->getBandwidthFullDownloadsDialogDisabledUntil()};
     if(isStateFull() && dialogEnabled)
     {
-        preferences->setWhenBandwidthFullDownloadsDialogWasShown(time->now());
+        preferences->setBandwidthFullDownloadsDialogDisabledUntil(time->now()+overquotaDialogDisableTime);
         const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullDownlads)};
         dismissed = bandwidthFullDialog->exec() == QDialog::Accepted;
     }
@@ -239,11 +237,10 @@ bool BandwidthOverquota::checkDownloadAlertDismissed()
 bool BandwidthOverquota::checkStreamingAlertDismissed()
 {
     auto dismissed{true};
-    auto timeDiff{time->now() - preferences->getWhenBandwidthFullStreamDialogWasShown()};
-    auto dialogEnabled{timeDiff > overquotaDialogDisableTime};
+    const auto dialogEnabled{time->now() >= preferences->getBandwidthFullStreamDialogDisabledUntil()};
     if(isStateFull() && dialogEnabled)
     {
-        preferences->setWhenBandwidthFullStreamDialogWasShown(time->now());
+        preferences->setBandwidthFullStreamDialogDisabledUntil(time->now()+overquotaDialogDisableTime);
         const auto bandwidthFullDialog{OverquotaFullDialog::createDialog(OverquotaFullDialogType::bandwidthFullStream)};
         dismissed = bandwidthFullDialog->exec() == QDialog::Accepted;
     }
@@ -280,4 +277,14 @@ void BandwidthOverquota::upgradeDialogFinished(int)
         upgradeDialog->deleteLater();
         upgradeDialog = nullptr;
     }
+}
+
+void BandwidthOverquota::onDismissUiMessageFullOverquota()
+{
+    preferences->setOverBandwidthUiMessageDisabledUntil(time->now()+Preferences::overquotaUiMessageDisableDuration);
+}
+
+void BandwidthOverquota::onDismissUiMessageAlmostOverquota()
+{
+    preferences->setAlmostOverBandwidthUiMessageDisabledUntil(time->now()+Preferences::almostOverquotaUiMessageDisableDuration);
 }

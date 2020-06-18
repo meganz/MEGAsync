@@ -1817,8 +1817,8 @@ void MegaApplication::start()
         {
             infoDialog = new InfoDialog(this);
             connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-            connect(infoDialog, &InfoDialog::dismissTransferOverquota, this, &MegaApplication::onDismissTransferOverquota);
-            connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, this, &MegaApplication::onDismissTransferAlmostOverquota);
+            connect(infoDialog, &InfoDialog::dismissTransferOverquota, bandwidthOverquota.get(), &BandwidthOverquota::onDismissUiMessageFullOverquota);
+            connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, bandwidthOverquota.get(), &BandwidthOverquota::onDismissUiMessageAlmostOverquota);
             connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
             connect(bandwidthOverquota.get(), &BandwidthOverquota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
             connect(bandwidthOverquota.get(), &BandwidthOverquota::overquotaUiMessageEnabled, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
@@ -1999,7 +1999,8 @@ void MegaApplication::loggedIn(bool fromWizard)
     {
         infoDialog = new InfoDialog(this);
         connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-        connect(infoDialog, &InfoDialog::dismissTransferOverquota, this, &MegaApplication::onDismissTransferOverquota);
+        connect(infoDialog, &InfoDialog::dismissTransferOverquota, bandwidthOverquota.get(), &BandwidthOverquota::onDismissUiMessageFullOverquota);
+        connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, bandwidthOverquota.get(), &BandwidthOverquota::onDismissUiMessageAlmostOverquota);
         connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
         connect(bandwidthOverquota.get(), &BandwidthOverquota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
         connect(bandwidthOverquota.get(), &BandwidthOverquota::overquotaUiMessageEnabled, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
@@ -4677,16 +4678,6 @@ void MegaApplication::onDismissStorageOverquota(bool overStorage)
     {
         preferences->setAlmostOverStorageDismissExecution(QDateTime::currentMSecsSinceEpoch());
     }
-}
-
-void MegaApplication::onDismissTransferOverquota()
-{
-    preferences->setOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::now());
-}
-
-void MegaApplication::onDismissTransferAlmostOverquota()
-{
-    preferences->setAlmostOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::now());
 }
 
 void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, bool force, int source)

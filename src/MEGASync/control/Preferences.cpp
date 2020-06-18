@@ -1288,7 +1288,7 @@ void Preferences::setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clo
     setCachedValue(whenBandwidthFullSyncDialogWasShownKey, static_cast<long long>(timePointMillis));
 }
 
-std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullDownloadsDialogWasShown()
+std::chrono::system_clock::time_point Preferences::getBandwidthFullDownloadsDialogDisabledUntil()
 {
     if(whenBandwidthFullDownloadsDialogWasShown != std::chrono::system_clock::time_point())
     {
@@ -1301,7 +1301,7 @@ std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullDownloads
     return whenBandwidthFullDownloadsDialogWasShown;
 }
 
-void Preferences::setWhenBandwidthFullDownloadsDialogWasShown(std::chrono::system_clock::time_point timepoint)
+void Preferences::setBandwidthFullDownloadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
     whenBandwidthFullDownloadsDialogWasShown = timepoint;
     const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
@@ -1311,7 +1311,7 @@ void Preferences::setWhenBandwidthFullDownloadsDialogWasShown(std::chrono::syste
     setCachedValue(whenBandwidthFullDownloadsDialogWasShownKey, static_cast<long long>(timePointMillis));
 }
 
-std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullImportLinksDialogWasShown()
+std::chrono::system_clock::time_point Preferences::getBandwidthFullImportLinksDialogDisabledUntil()
 {
     if(whenBandwidthFullImportLinksDialogWasShown != std::chrono::system_clock::time_point())
     {
@@ -1324,7 +1324,7 @@ std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullImportLin
     return whenBandwidthFullImportLinksDialogWasShown;
 }
 
-void Preferences::setWhenBandwidthFullImportLinksDialogWasShown(std::chrono::system_clock::time_point timepoint)
+void Preferences::setBandwidthFullImportLinksDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
     whenBandwidthFullImportLinksDialogWasShown = timepoint;
     const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
@@ -1334,7 +1334,7 @@ void Preferences::setWhenBandwidthFullImportLinksDialogWasShown(std::chrono::sys
     setCachedValue(whenBandwidthFullImportLinksDialogWasShownKey, static_cast<long long>(timePointMillis));
 }
 
-std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullStreamDialogWasShown()
+std::chrono::system_clock::time_point Preferences::getBandwidthFullStreamDialogDisabledUntil()
 {
     if(whenBandwidthFullStreamDialogWasShown != std::chrono::system_clock::time_point())
     {
@@ -1347,7 +1347,7 @@ std::chrono::system_clock::time_point Preferences::getWhenBandwidthFullStreamDia
     return whenBandwidthFullStreamDialogWasShown;
 }
 
-void Preferences::setWhenBandwidthFullStreamDialogWasShown(std::chrono::system_clock::time_point timepoint)
+void Preferences::setBandwidthFullStreamDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
     whenBandwidthFullStreamDialogWasShown = timepoint;
     const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};

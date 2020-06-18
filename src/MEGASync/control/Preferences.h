@@ -165,12 +165,12 @@ public:
 
     std::chrono::system_clock::time_point getWhenBandwidthFullSyncDialogWasShown();
     void setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getWhenBandwidthFullDownloadsDialogWasShown();
-    void setWhenBandwidthFullDownloadsDialogWasShown(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getWhenBandwidthFullImportLinksDialogWasShown();
-    void setWhenBandwidthFullImportLinksDialogWasShown(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getWhenBandwidthFullStreamDialogWasShown();
-    void setWhenBandwidthFullStreamDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getBandwidthFullDownloadsDialogDisabledUntil();
+    void setBandwidthFullDownloadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getBandwidthFullImportLinksDialogDisabledUntil();
+    void setBandwidthFullImportLinksDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getBandwidthFullStreamDialogDisabledUntil();
+    void setBandwidthFullStreamDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
     std::chrono::system_clock::time_point getWhenStorageFullUploadsDialogWasShown();
     void setWhenStorageFullUploadsDialogWasShown(std::chrono::system_clock::time_point timepoint);
     std::chrono::system_clock::time_point getWhenStorageFullSyncsDialogWasShown();

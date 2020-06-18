@@ -66,6 +66,8 @@ private:
 
 public slots:
     void upgradeDialogFinished(int result);
+    void onDismissUiMessageFullOverquota();
+    void onDismissUiMessageAlmostOverquota();
 
 signals:
     void almostOverquotaUiMessageEnabled();
