@@ -17,6 +17,7 @@ UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *pa
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    ui->toolButtonQuestion->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     this->megaApi = megaApi;
     if (pricing)
