@@ -148,6 +148,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     indexing = false;
     waiting = false;
     syncing = false;
+    transferring = false;
     activeDownload = NULL;
     activeUpload = NULL;
     cloudItem = NULL;
@@ -532,23 +533,27 @@ void InfoDialog::updateTransfersCount()
     int currentDownload = totalDownloads - remainingDownloads + 1;
     int currentUpload = totalUploads - remainingUploads + 1;
 
-    if (remainingDownloads <= 0)
+    if (remainingDownloads <= 0 && !remainingDownloadsTimerRunning)
     {
+        remainingDownloadsTimerRunning = true;
         QTimer::singleShot(5000, this, [this] () {
             if (remainingDownloads <= 0)
             {
                 ui->bTransferManager->setCompletedDownloads(0);
                 ui->bTransferManager->setTotalDownloads(0);
+                remainingDownloadsTimerRunning = false;
             }
         });
     }
-    if (remainingUploads <= 0)
+    if (remainingUploads <= 0 && !remainingUploadsTimerRunning)
     {
+        remainingUploadsTimerRunning = true;
         QTimer::singleShot(5000, this, [this] () {
             if (remainingUploads <= 0)
             {
                 ui->bTransferManager->setCompletedUploads(0);
                 ui->bTransferManager->setTotalUploads(0);
+                remainingUploadsTimerRunning = false;
             }
         });
     }
@@ -616,6 +621,11 @@ void InfoDialog::setWaiting(bool waiting)
 void InfoDialog::setSyncing(bool value)
 {
     this->syncing = value;
+}
+
+void InfoDialog::setTransferring(bool value)
+{
+    this->transferring = value;
 }
 
 void InfoDialog::setOverQuotaMode(bool state)
@@ -756,6 +766,14 @@ void InfoDialog::updateState()
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
+                animateStates(true);
+            }
+        }
+        else if (transferring)
+        {
+            if (state != STATE_TRANSFERRING)
+            {
+                state = STATE_TRANSFERRING;
                 animateStates(true);
             }
         }
@@ -1188,6 +1206,8 @@ void InfoDialog::reset()
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
     ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
+    ui->bTransferManager->reset();
+
     ui->wBlocked->hide();
     shownBlockedError = false;
 
@@ -1548,8 +1568,8 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
             adjustSize();
             break;
         }
-
     }
+    app->repositionInfoDialog();
 
     app->onGlobalSyncStateChanged(NULL);
 }

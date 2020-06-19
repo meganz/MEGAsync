@@ -113,6 +113,7 @@ public:
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
+    void repositionInfoDialog();
 
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
     void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
@@ -159,6 +160,10 @@ public:
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
     void showVerifyAccountInfo();
+
+    void removeFinishedBlockedTransfer(int transferTag);
+    bool finishedTransfersWhileBlocked(int transferTag);
+
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
     bool notificationsAreFiltered();
@@ -173,6 +178,10 @@ public:
     bool finished() const;
     bool isInfoDialogVisible() const;
 
+    int getBlockState() const;
+
+    void updateTrayIconMenu();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -184,6 +193,7 @@ signals:
     void closeSetupWizard(int);
     void setupWizardCreated();
     void unblocked();
+    void blocked();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -210,6 +220,7 @@ public slots:
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
     void shellViewOnMega(QByteArray localPath, bool versions);
+    void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
@@ -279,6 +290,9 @@ private slots:
     void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
+    void onBlocked();
+    void onUnblocked();
+
 
 protected:
     void createTrayIcon();
@@ -299,6 +313,7 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+    void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
 
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
@@ -443,6 +458,7 @@ protected:
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
+    QSet<int> finishedBlockedTransfers;
 
     QHash<unsigned long long, TransferMetaData*> transferAppData;
 
@@ -453,6 +469,7 @@ protected:
     bool waiting;
     bool syncing; //if any sync is in syncing state
     bool updated;
+    bool transferring; //if there is any regular transfer in progress
     bool checkupdate;
     bool updateBlocked;
     long long lastExit;

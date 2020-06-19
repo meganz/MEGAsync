@@ -20,6 +20,8 @@ message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
 
+win32:!contains(QMAKE_TARGET.arch, x86_64):DEFINES += PDFIUM_DELAY_LOAD_DLL=1
+
 debug_and_release {
     CONFIG -= debug_and_release
     CONFIG += debug_and_release

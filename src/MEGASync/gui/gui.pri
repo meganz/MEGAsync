@@ -67,7 +67,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
-    $$PWD/BandwidthOverquotaPopOver.cpp
+    $$PWD/BandwidthOverquotaPopOver.cpp \
+    $$PWD/MegaInfoMessage.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -136,7 +137,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
     $$PWD/VerifyLockMessage.h \
-    $$PWD/BandwidthOverquotaPopOver.h
+    $$PWD/BandwidthOverquotaPopOver.h \
+    $$PWD/MegaInfoMessage.h
 
 INCLUDEPATH += $$PWD
 
@@ -194,7 +196,8 @@ win32 {
                 $$PWD/win/LockedPopOver.ui \
                 $$PWD/win/VerifyLockMessage.ui \
                 $$PWD/win/OverquotaFullDialog.ui \
-                $$PWD/win/BandwidthOverquotaPopOver.ui
+                $$PWD/win/BandwidthOverquotaPopOver.ui \
+                $$PWD/win/MegaInfoMessage.ui
 }
 
 macx {
@@ -249,7 +252,8 @@ macx {
                 $$PWD/macx/LockedPopOver.ui \
                 $$PWD/macx/VerifyLockMessage.ui \
                 $$PWD/macx/OverquotaFullDialog.ui \
-                $$PWD/macx/BandwidthOverquotaPopOver.ui
+                $$PWD/macx/BandwidthOverquotaPopOver.ui \
+                $$PWD/macx/MegaInfoMessage.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -317,7 +321,8 @@ unix:!macx {
                 $$PWD/linux/LockedPopOver.ui \
                 $$PWD/linux/VerifyLockMessage.ui \
                 $$PWD/linux/OverquotaFullDialog.ui \
-                $$PWD/linux/BandwidthOverquotaPopOver.ui
+                $$PWD/linux/BandwidthOverquotaPopOver.ui \
+                $$PWD/linux/MegaInfoMessage.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

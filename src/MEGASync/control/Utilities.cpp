@@ -760,6 +760,8 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
 
         foreach (QFileInfo i, logFiles)
         {
+            --nLogFiles;
+
             if (timestampSince)
             {
                 if ( i.lastModified() < *timestampSince && i.fileName() != QString::fromUtf8("MEGAsync.0.log")) //keep at least the last log
@@ -771,9 +773,9 @@ QString Utilities::joinLogZipFiles(MegaApi *megaApi, const QDateTime *timestampS
             try
             {
 #ifdef _WIN32
-                gzcopy(i.absoluteFilePath().toStdWString().c_str(), --nLogFiles, &crc, &tot, pFile);
+                gzcopy(i.absoluteFilePath().toStdWString().c_str(), nLogFiles, &crc, &tot, pFile);
 #else
-                gzcopy(i.absoluteFilePath().toUtf8().constData(), --nLogFiles, &crc, &tot, pFile);
+                gzcopy(i.absoluteFilePath().toUtf8().constData(), nLogFiles, &crc, &tot, pFile);
 #endif
             }
             catch (const std::exception& e)
@@ -824,6 +826,11 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
             what->move(newx, newy);
         }
     }
+}
+
+void Utilities::animatePartialFadein(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 0.5, 1.0);
 }
 
 void Utilities::animatePartialFadeout(QWidget *object, int msecs)

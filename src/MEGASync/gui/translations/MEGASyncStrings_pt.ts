@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">arquivo</translation>
+        <translation type="obsolete">arquivo</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">pasta</translation>
+        <translation type="obsolete">pasta</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">O seu compartilhamento público ([A] [B]) foi restabelecido</translation>
+        <translation type="obsolete">O seu compartilhamento público ([A] [B]) foi restabelecido</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,17 +476,37 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">O seu compartilhamento público [%1] ([%2]) foi removido</translation>
+        <translation type="obsolete">O seu compartilhamento público [%1] ([%2]) foi removido</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Activity</translation>
+        <translation type="unfinished">Atividade na pasta compartilhada</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">O acesso a uma pasta compartilhada foi removido</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">O seu arquivo compartilhado ([A]) foi removido</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">A sua pasta compartilhada ([A]) foi removida</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">A remoção do seu arquivo compartilhado ([A]) foi revogada.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">A remoção da sua pasta compartilhada ([A]) foi revogada.</translation>
     </message>
 </context>
 <context>
@@ -553,7 +573,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Pasta local grande demais (esta versão está limitada a %1 pastas ou %2 arquivos). Por favor, selecione outra pasta.</translation>
+        <translation type="obsolete">A pasta local é grande demais (esta versão está limitada a %1 pastas ou %2 arquivos). Por favor, selecione outra pasta.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -587,7 +607,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation type="unfinished">Anexe arquivos de log de diagnóstico para ajudar na depuração</translation>
+        <translation type="unfinished">Anexar arquivos de log de diagnóstico para ajudar na depuração</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -745,7 +765,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">Por favor, digite uma senha mais forte</translation>
+        <translation type="unfinished">Por favor, digite uma senha mais segura</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -813,6 +833,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Enviar relatório</translation>
     </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
+        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
+        <translation type="unfinished">Anexar arquivos de log de diagnóstico para ajudar na depuração
+(estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos ou pastas)</translation>
+    </message>
 </context>
 <context>
     <name>CustomTransferItem</name>
@@ -839,7 +865,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
-        <translation type="unfinished">enfileiradas</translation>
+        <translation type="unfinished">em fila</translation>
     </message>
     <message>
         <source>retrying...</source>
@@ -1159,7 +1185,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">Não foi possível acessar o sistema de arquivos. Por favor, tente novamente. Se o problema persistir, entre em contato conosco pelo email bug@mega.nz</translation>
+        <translation type="obsolete">Não foi possível acessar o sistema de arquivos. Por favor, tente novamente. Se o problema persistir, entre em contato conosco pelo email bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1180,6 +1206,56 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
         <translation type="unfinished">Fazendo logout...</translation>
+    </message>
+    <message>
+        <source>Locked Account</source>
+        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
+        <translation type="unfinished">Conta bloqueada</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueadaa para a sua segurança. Por favor, confirme o seu email e siga os passos indicados para desbloquear a sua conta.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <translation type="unfinished">Fazer logout</translation>
+    </message>
+    <message>
+        <source>Verify email</source>
+        <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
+        <translation type="obsolete">Confirmar email</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueada devido a uma suspeita de infração. Por favor, confirme o seu número de telefone para desbloquear a sua conta.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
+        <translation type="unfinished">Confirmar agora</translation>
+    </message>
+    <message>
+        <source>Creating account...</source>
+        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translation type="unfinished">Criando conta...</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Por que estou vendo isso?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Reenviar email</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email enviado</translation>
     </message>
 </context>
 <context>
@@ -1203,7 +1279,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation>Importar links</translation>
+        <translation type="vanished">Importar links</translation>
     </message>
     <message>
         <source>Download to my computer</source>
@@ -1267,6 +1343,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Você não possui permissões nesta pasta local.</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
+        <translation type="unfinished">Abrir links</translation>
     </message>
 </context>
 <context>
@@ -1867,6 +1948,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>LockedPopOver</name>
+    <message>
+        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">[A]É possível que você esteja usando no MEGA a mesma senha que usa em outros serviços, e que pelo menos um desses outros serviços tenha sofrido uma filtração de dados.[/A]</translation>
+    </message>
+    <message>
+        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">[A]A sua senha foi comprometida, e agora está sendo usada por pessoas mal intencionadas para fazer login nas suas contas, incluindo a sua conta no MEGA (mas não se limitando a ela).[/A]</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Contas bloqueadas</translation>
+    </message>
+</context>
+<context>
     <name>Login2FA</name>
     <message>
         <source>Login Verification</source>
@@ -2010,7 +2109,7 @@ Exit anyway?</source>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Importar links</translation>
+        <translation type="vanished">Importar links</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -2114,7 +2213,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation type="vanished">Erro</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -2132,7 +2231,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Não foi possível acessar o sistema de arquivos. Por favor, tente novamente. Se o problema persistir, entre em contato conosco pelo email bug@mega.nz</translation>
+        <translation type="unfinished">Não foi possível acessar o sistema de arquivos. Por favor, tente novamente. Se o problema persistir, entre em contato conosco pelo email bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2660,6 +2759,31 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation type="unfinished">contato</translation>
     </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
+        <translation type="unfinished">Conta bloqueada</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Abrir links</translation>
+    </message>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translation type="unfinished">A sua conta foi desativada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">O MEGAsync vai continuar funcionando, porém já não será possível atualizá-lo no Windows Vista ou em outros sistemas operacionais mais antigos.</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">Transferências em andamento</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2793,7 +2917,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">A sua conta foi encerrada por infringir os Termos de serviço do MEGA, como o desrespeito aos direitos de terceiros, compartilhamento e/ou importação de dados ilegais ou abusos do sistema.</translation>
+        <translation type="unfinished">A sua conta foi encerrada por infringir os Termos de serviço do MEGA, como desrespeitar os direitos de terceiros, compartilhar e/ou importar dados ilegais ou abusos do sistema.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2819,6 +2943,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">Não foi possível fazer a transferência devido a uma estrutura de diretório recursiva</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Por que estou vendo isso?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">Fechar</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Contas bloqueadas</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">É possível que você esteja usando no MEGA a mesma senha que usa em outros serviços, e que pelo menos um desses outros serviços tenha sofrido uma filtração de dados.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">A sua senha foi comprometida, e agora está sendo usada por pessoas mal intencionadas para fazer login nas suas contas, incluindo a sua conta no MEGA (mas não se limitando a ela).</translation>
     </message>
 </context>
 <context>
@@ -3061,7 +3213,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Não é possível sincronizar esta pasta. Por favor, certifique-se de que você não usa caracteres como ‘\’, ‘/’  ou ‘:’ nos nomes das suas pastas.</translation>
+        <translation type="unfinished">Não é possível sincronizar esta pasta. Por favor, certifique-se de que você não usa caracteres como ‘\’, ‘/’ ou ‘:’ nos nomes das suas pastas.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3112,7 +3264,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Nome de pasta inválido.
+        <translation type="unfinished">Este não é um nome de pasta válido.
 Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;:&apos; nos nomes das suas pastas.</translation>
     </message>
 </context>
@@ -3142,7 +3294,7 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation>Importar links</translation>
+        <translation type="vanished">Importar links</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -3178,6 +3330,11 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">Mega link inválido</translation>
+    </message>
+    <message>
+        <source>Enter links</source>
+        <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
+        <translation type="unfinished">Digitar links</translation>
     </message>
 </context>
 <context>
@@ -3382,15 +3539,40 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Suporte a notificações de usuários.
+        <translation type="obsolete">- Suporte a notificações de usuários.
 - Suporte ao envio de relatórios de erros a partir da caixa de diálogo de configurações.
 - Novo estilo da caixa de diálogo principal.
 - Melhorias no desempenho de um grande número de sincronizações e transferências. 
 -Melhoria no suporte a contas Business.
  - Suporte a links de arquivos e pastas localizados dentro de um link público.
 - Melhorias na sincronização com sistemas de arquivos FAT32.
-- Outras correções e ajustes da interface do usuário.
 - Outras melhorias no desempenho, correções e ajustes da interface do usuário.</translation>
+    </message>
+    <message>
+        <source>- Fix crash issue for OSX 10.9.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
+        <translation type="obsolete">- Correcao de falha no OSX 10.9.</translation>
+    </message>
+    <message>
+        <source>- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
+        <translation type="unfinished">- Caixas de mensagem personalizadas.
+ - Eliminação dos logs retroativos ao fazer logout.
+ - Correção de problemas que desativavam a extensão do Finder em alguns casos.
+ - Verificação de email para contas bloqueadas.
+ - Verificação de SMS para contas bloqueadas.
+ - Suporte para o programa de indicação.
+ - Possibilidade de enviar logs da caixa de diálogo de relatório de erro.
+ - Outras correções e ajustes da interface do usuário.
+ - Aprimoramentos e ajustes de desempenho.</translation>
     </message>
 </context>
 <context>
@@ -3597,7 +3779,7 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>GRATUITA</translation>
+        <translation>Grátis</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -3928,7 +4110,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Default folders</source>
         <translatorcomment>Label to indicate the default path for Uploads and Downloads.</translatorcomment>
-        <translation>Pastas padrões:</translation>
+        <translation>Pastas padrão:</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -4028,7 +4210,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups de versões anteriores de arquivos que tenham sido sincronizados no MEGA serão excluídas permanentemente. Por favor, verifique a pasta [A] na Lixeira da sua conta no MEGA para ver se você precisa recuperar algo antes de continuar.</translation>
+        <translation type="unfinished">Os backups das versões anteriores de arquivos que tiverem sido sincronizados no MEGA serão excluídos permanentemente. Por favor, verifique a pasta [A], na Lixeira da sua conta do MEGA, para checar se você precisa recuperar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -4393,7 +4575,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Por favor, digite uma senha mais forte</translation>
+        <translation>Por favor, digite uma senha mais segura</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
@@ -4437,7 +4619,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Pasta local grande demais (esta versão está limitada a %1 pastas ou %2 arquivos). Por favor, selecione outra pasta.</translation>
+        <translation type="obsolete">A pasta local é grande demais (esta versão está limitada a %1 pastas ou %2 arquivos). Por favor, selecione outra pasta.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -4554,7 +4736,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Strong</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation type="unfinished">Forte</translation>
+        <translation type="unfinished">Segura</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -4828,6 +5010,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">Sincronizando</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">Transferências em andamento</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -4869,7 +5056,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation type="unfinished">aplicativo padrão</translation>
+        <translation type="unfinished">Aplicativo padrão</translation>
     </message>
     <message>
         <source>Choose application</source>
@@ -4937,7 +5124,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">enfileiradas</translation>
+        <translation type="obsolete">em fila</translation>
     </message>
     <message>
         <source>retrying</source>
@@ -5048,7 +5235,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Importar links</translation>
+        <translation type="obsolete">Importar links</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -5097,6 +5284,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Download</source>
         <translation type="unfinished">Fazer download</translation>
     </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Abrir links</translation>
+    </message>
 </context>
 <context>
     <name>TransferManagerItem</name>
@@ -5113,7 +5305,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
-        <translation type="unfinished">enfileiradas</translation>
+        <translation type="unfinished">em fila</translation>
     </message>
     <message>
         <source>retrying</source>
@@ -5406,6 +5598,59 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyLockMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Por que estou vendo isso?</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <translation type="unfinished">Fazer logout</translation>
+    </message>
+    <message>
+        <source>Verify your email</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
+        <translation type="unfinished">Confirme o seu email</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
+        <translation type="unfinished">Conta bloqueada</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueadaa para a sua segurança. Por favor, confirme o seu email e siga os passos indicados para desbloquear a sua conta.</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Reenviar email</translation>
+    </message>
+    <message>
+        <source>Verify your account</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
+        <translation type="unfinished">Confirme a sua conta</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
+        <translation type="unfinished">A sua conta foi temporariamente bloqueada devido a uma suspeita de infração. Por favor, confirme o seu número de telefone para desbloquear a sua conta.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
+        <translation type="unfinished">Confirmar agora</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email enviado</translation>
     </message>
 </context>
 <context>
