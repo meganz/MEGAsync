@@ -2072,6 +2072,18 @@ void MegaApplication::loggedIn(bool fromWizard)
     {
         applyStorageState(cachedStorageState, true);
     }
+
+    preferences->setOverBandwidthDialogDisabledUntil(std::chrono::system_clock::now()-Preferences::overquotaDialogDisableDuration);
+    preferences->setOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::now()-Preferences::overquotaNotificationDisableDuration);
+    preferences->setOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::now()-Preferences::overquotaUiMessageDisableDuration);
+    preferences->setAlmostOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::now()-Preferences::almostOverquotaOsNotificationDisableDuration);
+    preferences->setAlmostOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::now()-Preferences::almostOverquotaUiMessageDisableDuration);
+    preferences->setBandwidthFullDownloadsDialogDisabledUntil(std::chrono::system_clock::now()-overquotaDialogDisableTime);
+    preferences->setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::now()-overquotaDialogDisableTime);
+    preferences->setBandwidthFullStreamDialogDisabledUntil(std::chrono::system_clock::now()-overquotaDialogDisableTime);
+    preferences->setBandwidthFullImportLinksDialogDisabledUntil(std::chrono::system_clock::now()-overquotaDialogDisableTime);
+    preferences->setBandwidthOverquotaState(Preferences::OverquotaState::ok);
+    preferences->setOverBandwidthWaitUntil(std::chrono::system_clock::now());
 }
 
 void MegaApplication::startSyncs()
@@ -6683,7 +6695,14 @@ void MegaApplication::createAppMenus()
     if (num == 0)
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync_folder.png")), true);
-        connect(addSyncAction, &MenuItemAction::triggered, infoDialog, QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
+
+#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
+        connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
+#else
+        connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
+#endif
+
     }
     else
     {
@@ -6736,7 +6755,13 @@ void MegaApplication::createAppMenus()
         if (!activeFolders)
         {
             addSyncAction->setLabelText(tr("Add Sync"));
-            connect(addSyncAction, &MenuItemAction::triggered, infoDialog, QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
+#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
+            connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                    QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
+#else
+            connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                    static_cast<void(InfoDialog::*)()>(&InfoDialog::addSync), Qt::QueuedConnection);
+#endif
         }
         else
         {
@@ -6753,7 +6778,13 @@ void MegaApplication::createAppMenus()
                 if ((num > 1) || (firstSyncHandle != rootHandle))
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
-                    connect(addAction, &MenuItemAction::triggered, infoDialog, QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
+#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
+                    connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                            QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
+#else
+                    connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                            static_cast<void(InfoDialog::*)()>(&InfoDialog::addSync), Qt::QueuedConnection);
+#endif
 
                     if (activeFolders)
                     {
