@@ -1,25 +1,12 @@
 #pragma once
+
 #include "InfoDialog.h"
 #include "Preferences.h"
 #include "notificator.h"
-#include "Time.h"
+#include "MegaTime.h"
 #include <memory>
 #include "UpgradeDialog.h"
-#include "megaapi.h"
 #include <QObject>
-
-// Events
-constexpr auto eventIdTransferQuotaDialogExecuted{98526};
-constexpr auto eventMessageTransferQuotaDialogExecuted{"Bandwidth overquota full dialog shown"};
-constexpr auto eventIdTransferQuotaOsNotificationExecuted{98527};
-constexpr auto eventMessageTransferQuotaOsNotificationExecuted{"Bandwidth overquota full os notification shown"};
-constexpr auto eventIdTransferQuotaUiDialogExecuted{98528};
-constexpr auto eventMessageTransferQuotaUiDialogExecuted{"Bandwidth overquota full ui message shown"};
-constexpr auto eventIdTransferAlmostQuotaUiDialogExecuted{98529};
-constexpr auto eventMessageTransferAlmostQuotaUiDialogExecuted{"Bandwidth almost overquota ui message shown"};
-constexpr auto eventIdTransferAlmostQuotaNotificationExecuted{98531};
-constexpr auto eventMessageTransferAlmostQuotaNotificationExecuted{"Bandwidth almost overquota os notification shown"};
-constexpr auto warningPercent{90};
 
 class BandwidthOverquota: public QObject
 {

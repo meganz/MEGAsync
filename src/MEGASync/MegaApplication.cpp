@@ -1,3 +1,4 @@
+#include "mega/types.h"
 #include "MegaApplication.h"
 #include "gui/CrashReportDialog.h"
 #include "gui/MegaProxyStyle.h"
@@ -9,7 +10,6 @@
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "OverquotaFullDialog.h"
-#include "mega/types.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -1310,7 +1310,7 @@ void MegaApplication::initialize()
         }
     }
 
-    bandwidthOverquota = mega::make_unique<BandwidthOverquota>(megaApi, preferences, notificator);
+    bandwidthOverquota = ::mega::make_unique<BandwidthOverquota>(megaApi, preferences, notificator);
 
     periodicTasksTimer = new QTimer(this);
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
@@ -5415,8 +5415,7 @@ void MegaApplication::createTrayIcon()
     }
 
 #ifdef _WIN32
-    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
-            && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
+    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable())
     {
         trayIcon->setContextMenu(windowsMenu.get());
     }

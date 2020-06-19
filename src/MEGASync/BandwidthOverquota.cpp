@@ -1,10 +1,23 @@
-#include "BandwidthOverquota.h"
 #include "mega/types.h"
+#include "BandwidthOverquota.h"
 #include "platform/Platform.h"
 #include "OverquotaFullDialog.h"
 
+// Events
+constexpr auto eventIdTransferQuotaDialogExecuted{98526};
+constexpr auto eventMessageTransferQuotaDialogExecuted{"Bandwidth overquota full dialog shown"};
+constexpr auto eventIdTransferQuotaOsNotificationExecuted{98527};
+constexpr auto eventMessageTransferQuotaOsNotificationExecuted{"Bandwidth overquota full os notification shown"};
+constexpr auto eventIdTransferQuotaUiDialogExecuted{98528};
+constexpr auto eventMessageTransferQuotaUiDialogExecuted{"Bandwidth overquota full ui message shown"};
+constexpr auto eventIdTransferAlmostQuotaUiDialogExecuted{98529};
+constexpr auto eventMessageTransferAlmostQuotaUiDialogExecuted{"Bandwidth almost overquota ui message shown"};
+constexpr auto eventIdTransferAlmostQuotaNotificationExecuted{98531};
+constexpr auto eventMessageTransferAlmostQuotaNotificationExecuted{"Bandwidth almost overquota os notification shown"};
+constexpr auto warningPercent{90};
+
 BandwidthOverquota::BandwidthOverquota(mega::MegaApi* megaApi, Preferences *preferences, Notificator *notificator)
-    :BandwidthOverquota{megaApi, preferences, notificator, mega::make_unique<Time>()}
+    :BandwidthOverquota{megaApi, preferences, notificator, ::mega::make_unique<Time>()}
 {
 }
 
