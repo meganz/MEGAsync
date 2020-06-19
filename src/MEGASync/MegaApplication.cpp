@@ -2269,6 +2269,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                         infoDialogMenu->close();
                     }
 
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("restoring syncs: no longer on storage OQ").toUtf8().constData());
                     restoreSyncs();
                     onGlobalSyncStateChanged(megaApi);
                 }
@@ -7257,10 +7258,12 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     }
                 }
 
-                if (preferences->logged()
-                        && businessStatus != -2
-                        && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
+                if (preferences->logged() &&
+                        ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
+                          || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
+                        ))
                 {
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("restoring syncs: no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
                     restoreSyncs();
                 }
                 break;
@@ -7310,12 +7313,15 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 disableSyncs();
                 break;
             }
-            case MegaApi::BUSINESS_STATUS_ACTIVE:
+        case MegaApi::BUSINESS_STATUS_ACTIVE:
+        case MegaApi::BUSINESS_STATUS_INACTIVE:
             {
-                if (preferences->logged()
-                        && businessStatus != -2
-                        && businessStatus != event->getNumber())
+            if (preferences->logged() &&
+                    ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
+                      || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
+                    ))
                 {
+                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("restoring syncs: no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
                     restoreSyncs();
                 }
                 break;
@@ -7773,13 +7779,24 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     auto cachedBusinessState = preferences->getBusinessState();
                     if (businessStatus != -2 && cachedBusinessState != businessStatus)
                     {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached business states %1 differs from applied businessStatus %2. Overriding cache")
+                                     .arg(cachedBusinessState).arg(businessStatus).toUtf8().constData());
                         preferences->setBusinessState(businessStatus);
                     }
 
                     auto cachedBlockedState = preferences->getBlockedState();
-                    if (blockStateSet && cachedBlockedState != blockStateSet)
+                    if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
                     {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 differs from applied blockedStatus %2. Overriding cache")
+                                     .arg(cachedBlockedState).arg(blockState).toUtf8().constData());
                         preferences->setBlockedState(blockState);
+                    }
+                    else if (!blockStateSet && cachedBlockedState != -2 && cachedBlockedState) //block state not received in this execution, and cached says we were blocked last time
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
+                                     .arg(cachedBlockedState).toUtf8().constData());
+
+                        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
                     }
 
                     auto businessState = preferences->getBusinessState();
@@ -7792,6 +7809,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                             && !accountBlocked
                             && businessExpired)
                     {
+                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("restoring syncs after loggedIn").toUtf8().constData());
                         restoreSyncs();
                     }
                 }
@@ -8301,6 +8319,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             requestUserData(); // querying some user attributes might have been rejected: we query them again            
+
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("restoring syncs: no longer blocked").toUtf8().constData());
             restoreSyncs();
 
             //in any case we reflect the change in the InfoDialog
