@@ -823,19 +823,13 @@ void InfoDialog::updateDialogState()
             ui->lOverDiskQuotaLabel->setText(overDiskText);
 
             const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
-            if (daysToExpire > 0)
-            {
-                ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
-                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                        .replace(QString::fromUtf8("[B]"), QString::number(daysToExpire))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                        + QString::fromUtf8("</p>"));
-                ui->wWarningOverDiskQuota->show();
-            }
-            else
-            {
-                ui->wWarningOverDiskQuota->hide();
-            }
+            const auto numberOfDays{daysToExpire > 0 ? daysToExpire : 0};
+            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
+                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                    .replace(QString::fromUtf8("[B]"), QString::number(numberOfDays))
+                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                    + QString::fromUtf8("</p>"));
+
 
             delete tsWarnings;
             delete [] email;
