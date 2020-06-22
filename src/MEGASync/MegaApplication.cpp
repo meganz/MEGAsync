@@ -2147,18 +2147,6 @@ if (!preferences->lastExecutionTime())
     {
         applyStorageState(cachedStorageState, true);
     }
-
-    preferences->setOverBandwidthDialogDisabledUntil(std::chrono::system_clock::now()-Preferences::overquotaDialogDisableDuration);
-    preferences->setOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::now()-Preferences::overquotaNotificationDisableDuration);
-    preferences->setOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::now()-Preferences::overquotaUiMessageDisableDuration);
-    preferences->setAlmostOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::now()-Preferences::almostOverquotaOsNotificationDisableDuration);
-    preferences->setAlmostOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::now()-Preferences::almostOverquotaUiMessageDisableDuration);
-    preferences->setBandwidthFullDownloadsDialogDisabledUntil(std::chrono::system_clock::now()-overquotaDialogDisableTime);
-    preferences->setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::now()-overquotaDialogDisableTime);
-    preferences->setBandwidthFullStreamDialogDisabledUntil(std::chrono::system_clock::now()-overquotaDialogDisableTime);
-    preferences->setBandwidthFullImportLinksDialogDisabledUntil(std::chrono::system_clock::now()-overquotaDialogDisableTime);
-    preferences->setBandwidthOverquotaState(Preferences::OverquotaState::ok);
-    preferences->setOverBandwidthWaitUntil(std::chrono::system_clock::now());
 }
 
 void MegaApplication::startSyncs()
