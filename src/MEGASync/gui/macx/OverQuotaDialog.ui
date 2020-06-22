@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>540</width>
-    <height>332</height>
+    <height>357</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>540</width>
-    <height>332</height>
+    <height>357</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>540</width>
-    <height>332</height>
+    <height>357</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,30 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>26</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QWidget" name="widgetHeader" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>36</height>
+      </size>
+     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="topMargin">
+       <number>1</number>
+      </property>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -81,16 +104,23 @@
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>16777215</height>
+          <height>24</height>
         </size>
        </property>
        <property name="font">
         <font>
-         <pointsize>18</pointsize>
+          <family>SF UI Text</family>
+          <pointsize>-1</pointsize>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true"/>
+         <string notr="true">#labelTitle
+{
+  color: #333333;
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 20px;
+  line-height: 24px;
+}</string>
        </property>
        <property name="text">
         <string>Syncs are temporarily disable</string>
@@ -111,6 +141,20 @@
       </spacer>
      </item>
     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>18</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item alignment="Qt::AlignHCenter">
     <widget class="QStackedWidget" name="stackedWidgetBigIcons">
@@ -210,6 +254,19 @@
     </widget>
    </item>
    <item>
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>24</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QLabel" name="labelMessage">
      <property name="minimumSize">
       <size>
@@ -227,16 +284,32 @@
       <string notr="true">#labelMessage
 {
 	color: #242424;
-	font-family: &quot;Lato&quot;;
+	font-family: &quot;SF UI Text&quot;;
 	font-size: 12px;
-	line-height:50;
+	line-height:120;
 	qproperty-alignment: AlignCenter;
 }</string>
      </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You have exceed the available storage space for your account. You can add &lt;br&gt; syncs but they will remain disable until there is enought space in your&lt;br&gt;account.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_5">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>25</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QWidget" name="widgetButtons" native="true">
@@ -256,6 +329,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="buttonDismiss">
+        <property name="minimumSize">
+         <size>
+          <width>98</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">#buttonDismiss
 {
@@ -276,6 +355,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="buttonUpgrade">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">#buttonUpgrade
 {
@@ -310,6 +395,19 @@ boder-color:#00AC94;
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>24</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
