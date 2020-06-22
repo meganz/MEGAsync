@@ -835,34 +835,26 @@ QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
         return QString::fromUtf8("PRO");
     }
 
-    int it = 0;
+    int planNeeded = -1;
+    int amountPlanNeeded = 0;
     int products = pricing->getNumProducts();
-    for (; it < products; it++)
+    for (int i = 0; i < products; i++)
     {
-        if (pricing->getMonths(it) == 1)
+        if (pricing->getMonths(i) == 1)
         {
-            if (usedStorage < (pricing->getGBStorage(it) * GB))
-                break;
+            if (usedStorage < (pricing->getGBStorage(i) * GB))
+            {
+                int currentAmountMonth = pricing->getAmountMonth(i);
+                if (planNeeded == -1 || currentAmountMonth < amountPlanNeeded)
+                {
+                    planNeeded = i;
+                    amountPlanNeeded = currentAmountMonth;
+                }
+            }
         }
     }
 
-    switch (pricing->getProLevel(it))
-    {
-        case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QString::fromUtf8("PRO LITE");
-            break;
-        case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QString::fromUtf8("PRO I");
-            break;
-        case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QString::fromUtf8("PRO II");
-            break;
-        case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QString::fromUtf8("PRO III");
-            break;
-    }
-
-    return QString::fromUtf8("PRO");
+    return getReadablePROplanFromId(pricing->getProLevel(planNeeded));
 }
 
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
@@ -887,6 +879,27 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     }
 
     return readableTimes;
+}
+
+QString Utilities::getReadablePROplanFromId(int identifier)
+{
+    switch (identifier)
+    {
+        case MegaAccountDetails::ACCOUNT_TYPE_LITE:
+            return QString::fromUtf8("PRO LITE");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROI:
+            return QString::fromUtf8("PRO I");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROII:
+            return QString::fromUtf8("PRO II");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
+            return QString::fromUtf8("PRO III");
+            break;
+    }
+
+    return QString::fromUtf8("PRO");
 }
 
 void Utilities::animatePartialFadein(QWidget *object, int msecs)

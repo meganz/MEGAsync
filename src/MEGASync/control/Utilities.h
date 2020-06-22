@@ -19,11 +19,6 @@
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
 
-extern const unsigned long long KB;
-extern const unsigned long long MB;
-extern const unsigned long long GB;
-extern const unsigned long long TB;
-
 struct PlanInfo
 {
     int amount;
@@ -218,6 +213,7 @@ public:
     static void adjustToScreenFunc(QPoint position, QWidget *what);
     static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
+    static QString getReadablePROplanFromId(int identifier);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
