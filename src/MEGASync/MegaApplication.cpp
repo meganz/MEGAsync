@@ -2960,8 +2960,13 @@ void MegaApplication::checkOverStorageStates()
             storageOverquotaDialog = NULL;
         }
     }
-    else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL && getUserDataRequestReady)
+    else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
     {
+        if (!getUserDataRequestReady)
+        {
+            return;
+        }
+
         if (infoDialog)
         {
             infoDialog->updateOverStorageState(Preferences::STATE_PAYWALL);
