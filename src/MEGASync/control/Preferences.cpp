@@ -486,12 +486,6 @@ void Preferences::initialize(QString dataPath)
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
     diffTimeWithSDK = 0;
-    overStorageDialogExecution = -1;
-    overStorageNotificationExecution = -1;
-    payWallNotificationExecution = -1;
-    almostOverStorageNotificationExecution = -1;
-    almostOverStorageDismissExecution = -1;
-    overStorageDismissExecution = -1;
     lastTransferNotification = 0;
     clearTemporalBandwidth();
 }
@@ -991,21 +985,15 @@ void Preferences::setDsDiffTimeWithSDK(long long diffTime)
 
 long long Preferences::getOverStorageDialogExecution()
 {
-    if (overStorageDialogExecution != -1)
-    {
-        return overStorageDialogExecution;
-    }
-
     mutex.lock();
     assert(logged());
-    overStorageDialogExecution = settings->value(overStorageDialogExecutionKey, defaultTimeStamp).toLongLong();
+    long long overStorageDialogExecution = getValue<long long>(overStorageDialogExecutionKey, defaultTimeStamp);
     mutex.unlock();
     return overStorageDialogExecution;
 }
 
 void Preferences::setOverStorageDialogExecution(long long timestamp)
 {
-    overStorageDialogExecution = timestamp;
     mutex.lock();
     assert(logged());
     settings->setValue(overStorageDialogExecutionKey, timestamp);
@@ -1015,21 +1003,15 @@ void Preferences::setOverStorageDialogExecution(long long timestamp)
 
 long long Preferences::getOverStorageNotificationExecution()
 {
-    if (overStorageNotificationExecution != -1)
-    {
-        return overStorageNotificationExecution;
-    }
-
     mutex.lock();
     assert(logged());
-    overStorageNotificationExecution = settings->value(overStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    long long overStorageNotificationExecution = getValue<long long>(overStorageNotificationExecutionKey, defaultTimeStamp);
     mutex.unlock();
     return overStorageNotificationExecution;
 }
 
 void Preferences::setOverStorageNotificationExecution(long long timestamp)
 {
-    overStorageNotificationExecution = timestamp;
     mutex.lock();
     assert(logged());
     settings->setValue(overStorageNotificationExecutionKey, timestamp);
@@ -1039,21 +1021,15 @@ void Preferences::setOverStorageNotificationExecution(long long timestamp)
 
 long long Preferences::getAlmostOverStorageNotificationExecution()
 {
-    if (almostOverStorageNotificationExecution != -1)
-    {
-        return almostOverStorageNotificationExecution;
-    }
-
     mutex.lock();
     assert(logged());
-    almostOverStorageNotificationExecution = settings->value(almostOverStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    long long almostOverStorageNotificationExecution = getValue<long long>(almostOverStorageNotificationExecutionKey, defaultTimeStamp);
     mutex.unlock();
     return almostOverStorageNotificationExecution;
 }
 
 void Preferences::setAlmostOverStorageNotificationExecution(long long timestamp)
 {
-    almostOverStorageNotificationExecution = timestamp;
     mutex.lock();
     assert(logged());
     settings->setValue(almostOverStorageNotificationExecutionKey, timestamp);
@@ -1063,21 +1039,15 @@ void Preferences::setAlmostOverStorageNotificationExecution(long long timestamp)
 
 long long Preferences::getPayWallNotificationExecution()
 {
-    if (payWallNotificationExecution != -1)
-    {
-        return payWallNotificationExecution;
-    }
-
     mutex.lock();
     assert(logged());
-    payWallNotificationExecution = settings->value(payWallNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    long long payWallNotificationExecution = getValue<long long>(payWallNotificationExecutionKey, defaultTimeStamp);
     mutex.unlock();
     return payWallNotificationExecution;
 }
 
 void Preferences::setPayWallNotificationExecution(long long timestamp)
 {
-    payWallNotificationExecution = timestamp;
     mutex.lock();
     assert(logged());
     settings->setValue(payWallNotificationExecutionKey, timestamp);
@@ -1087,21 +1057,15 @@ void Preferences::setPayWallNotificationExecution(long long timestamp)
 
 long long Preferences::getAlmostOverStorageDismissExecution()
 {
-    if (almostOverStorageDismissExecution != -1)
-    {
-        return almostOverStorageDismissExecution;
-    }
-
     mutex.lock();
     assert(logged());
-    almostOverStorageDismissExecution = settings->value(almostOverStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
+    long long almostOverStorageDismissExecution = getValue<long long>(almostOverStorageDismissExecutionKey, defaultTimeStamp);
     mutex.unlock();
     return almostOverStorageDismissExecution;
 }
 
 void Preferences::setAlmostOverStorageDismissExecution(long long timestamp)
 {
-    almostOverStorageDismissExecution = timestamp;
     mutex.lock();
     assert(logged());
     settings->setValue(almostOverStorageDismissExecutionKey, timestamp);
@@ -1111,28 +1075,21 @@ void Preferences::setAlmostOverStorageDismissExecution(long long timestamp)
 
 long long Preferences::getOverStorageDismissExecution()
 {
-    if (overStorageDismissExecution != -1)
-    {
-        return overStorageDismissExecution;
-    }
-
     mutex.lock();
     assert(logged());
-    overStorageDismissExecution = settings->value(overStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
+    long long overStorageDismissExecution = getValue<long long>(overStorageDismissExecutionKey, defaultTimeStamp);
     mutex.unlock();
     return overStorageDismissExecution;
 }
 
 void Preferences::setOverStorageDismissExecution(long long timestamp)
 {
-    overStorageDismissExecution = timestamp;
     mutex.lock();
     assert(logged());
     settings->setValue(overStorageDismissExecutionKey, timestamp);
     setCachedValue(overStorageDismissExecutionKey, timestamp);
     mutex.unlock();
 }
-
 
 int Preferences::getStorageState()
 {

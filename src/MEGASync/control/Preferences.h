@@ -507,12 +507,6 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
-    long long overStorageDialogExecution;
-    long long overStorageNotificationExecution;
-    long long payWallNotificationExecution;
-    long long almostOverStorageNotificationExecution;
-    long long almostOverStorageDismissExecution;
-    long long overStorageDismissExecution;
     long long lastTransferNotification;
 
     static const QString currentAccountKey;
