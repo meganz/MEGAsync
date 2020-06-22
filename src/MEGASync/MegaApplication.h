@@ -40,7 +40,7 @@
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
-#include "BandwidthOverquota.h"
+#include "TransferQuota.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -491,7 +491,7 @@ protected:
     int blockState;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
-    std::unique_ptr<BandwidthOverquota> bandwidthOverquota;
+    std::unique_ptr<TransferQuota> transferQuota;
 };
 
 class DeferPreferencesSyncForScope

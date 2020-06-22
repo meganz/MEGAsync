@@ -1,6 +1,5 @@
-#include "BandwidthOverquotaPopOver.h"
-#include "ui_LockedPopOver.h"
-
+#include "DynamicTransferQuotaPopOver.h"
+#include "ui_DynamicTransferQuotaPopOver.h"
 #include <QMouseEvent>
 #include <QPropertyAnimation>
 #include <QTimer>
@@ -10,21 +9,21 @@
 
 using namespace mega;
 
-BandwidthOverquotaPopOver::BandwidthOverquotaPopOver(QDialog *parent) :
-    ui(new Ui::BandwidthOverquotaPopOver)
+DynamicTransferQuotaPopOver::DynamicTransferQuotaPopOver(QDialog *parent) :
+    ui(new Ui::DynamicTransferQuotaPopOver)
 {
     ui->setupUi(this);
     tweakStrings();
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 }
 
-void BandwidthOverquotaPopOver::updateMessage(const QString &message)
+void DynamicTransferQuotaPopOver::updateMessage(const QString &message)
 {
     ui->labelMessage->setText(message);
 }
 
 
-void BandwidthOverquotaPopOver::changeEvent(QEvent *event)
+void DynamicTransferQuotaPopOver::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -34,7 +33,7 @@ void BandwidthOverquotaPopOver::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void BandwidthOverquotaPopOver::tweakStrings()
+void DynamicTransferQuotaPopOver::tweakStrings()
 {
     ui->labelMessage->setText(ui->labelMessage->text()
                                  .replace(QString::fromUtf8("[A]"),
@@ -44,7 +43,7 @@ void BandwidthOverquotaPopOver::tweakStrings()
 }
 
 
-void BandwidthOverquotaPopOver::showEvent(QShowEvent* event)
+void DynamicTransferQuotaPopOver::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
 

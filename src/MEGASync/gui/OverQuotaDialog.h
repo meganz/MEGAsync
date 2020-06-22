@@ -15,14 +15,14 @@ enum class OverquotaFullDialogType
     storageAndBandwidthFullSyncs
 };
 
-class OverquotaFullDialog : public QDialog
+class OverQuotaDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit OverquotaFullDialog(QWidget *parent = nullptr);
-    ~OverquotaFullDialog();
-    static std::unique_ptr<OverquotaFullDialog> createDialog(OverquotaFullDialogType type);
+    explicit OverQuotaDialog(QWidget *parent = nullptr);
+    ~OverQuotaDialog();
+    static std::unique_ptr<OverQuotaDialog> createDialog(OverquotaFullDialogType type);
 
 private:
     Ui::OverquotaFullDialog *ui;

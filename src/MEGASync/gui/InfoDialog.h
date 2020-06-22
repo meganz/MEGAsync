@@ -126,7 +126,7 @@ public slots:
 
    void enableTransferOverquotaAlert();
    void enableTransferAlmostOverquotaAlert();
-   void setBandwidthOverquotaState(Preferences::OverquotaState state);
+   void setBandwidthOverquotaState(Preferences::QuotaState state);
 
 private slots:
     void on_bSettings_clicked();
@@ -202,7 +202,7 @@ private:
     bool transferOverquotaAlertEnabled;
     bool transferAlmostOverquotaAlertEnabled;
     int storageState;
-    Preferences::OverquotaState transferOverquotaState;
+    Preferences::QuotaState transferOverquotaState;
     int actualAccountType;
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;

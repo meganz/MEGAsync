@@ -150,46 +150,46 @@ public:
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
 
-    virtual std::chrono::system_clock::time_point getOverBandwidthDialogDisabledUntil();
-    virtual void setOverBandwidthDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    virtual std::chrono::system_clock::time_point getOverBandwidthNotificationDisabledUntil();
-    virtual void setOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    virtual std::chrono::system_clock::time_point getOverBandwidthUiMessageDisabledUntil();
-    virtual void setOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    virtual std::chrono::system_clock::time_point getAlmostOverBandwidthNotificationDisabledUntil();
-    virtual void setAlmostOverBandwidthNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    virtual std::chrono::system_clock::time_point getAlmostOverBandwidthUiMessageDisableUntil();
-    void setAlmostOverBandwidthUiMessageDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    virtual std::chrono::system_clock::time_point getOverBandwidthWaitUntil();
-    virtual void setOverBandwidthWaitUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaDialogDisabledUntil();
+    virtual void setTransferOverQuotaDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaOsNotificationDisabledUntil();
+    virtual void setTransferOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaUiAlertDisabledUntil();
+    virtual void setTransferOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferAlmostOverQuotaOsNotificationDisabledUntil();
+    virtual void setTransferAlmostOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferAlmostOverQuotaUiAlertDisableUntil();
+    void setTransferAlmostOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaWaitUntil();
+    virtual void setTransferOverQuotaWaitUntil(std::chrono::system_clock::time_point timepoint);
 
-    std::chrono::system_clock::time_point getWhenBandwidthFullSyncDialogWasShown();
-    void setWhenBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getBandwidthFullDownloadsDialogDisabledUntil();
-    void setBandwidthFullDownloadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getBandwidthFullImportLinksDialogDisabledUntil();
-    void setBandwidthFullImportLinksDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getBandwidthFullStreamDialogDisabledUntil();
-    void setBandwidthFullStreamDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getWhenStorageFullUploadsDialogWasShown();
-    void setWhenStorageFullUploadsDialogWasShown(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getWhenStorageFullSyncsDialogWasShown();
-    void setWhenStorageFullSyncsDialogWasShown(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getWhenStorageAndBandwidthFullSyncDialogWasShown();
-    void setWhenStorageAndBandwidthFullSyncDialogWasShown(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaSyncDialogDisableUntil();
+    virtual void setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaDownloadsDialogDisabledUntil();
+    virtual void setTransferOverQuotaDownloadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaImportLinksDialogDisabledUntil();
+    virtual void setTransferOverQuotaImportLinksDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaStreamDialogDisabledUntil();
+    virtual void setTransferOverQuotaStreamDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getStorageOverQuotaUploadsDialogDisabledUntil();
+    void setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getStorageOverQuotaSyncsDialogDisabledUntil();
+    void setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getStorageAndTransferOverQuotaSyncDialogDisabledUntil();
+    void setStorageAndTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
 
     int getStorageState();
     void setStorageState(int value);
 
-    enum class OverquotaState
+    enum class QuotaState
     {
         ok,
         warning,
         full
     };
 
-    virtual OverquotaState getBandwidthOverquotaState();
-    virtual void setBandwidthOverquotaState(OverquotaState state);
+    virtual QuotaState getTransferQuotaState();
+    virtual void setTransferQuotaState(QuotaState state);
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -551,20 +551,20 @@ protected:
     long long almostOverStorageNotificationExecution;
     long long almostOverStorageDismissExecution;
     long long overStorageDismissExecution;
-    std::chrono::system_clock::time_point overBandwidthDialogExecution;
-    std::chrono::system_clock::time_point overBandwidthNotificationExecution;
-    std::chrono::system_clock::time_point almostOverBandwidthNotificationExecution;
-    std::chrono::system_clock::time_point almostOverBandwidthDismissExecution;
-    std::chrono::system_clock::time_point overBandwidthDismissExecution;
-    std::chrono::system_clock::time_point overBandwidthWaitUntil;
+    std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;
+    std::chrono::system_clock::time_point transferAlmostOverQuotaOsNotificationDisabledUntil;
+    std::chrono::system_clock::time_point transferAlmostOverQuotaUiAlertDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaUiAlertDisableUntil;
+    std::chrono::system_clock::time_point transferOverQuotaWaitUntil;
     long long lastTransferNotification;
-    std::chrono::system_clock::time_point whenBandwidthFullSyncDialogWasShown;
-    std::chrono::system_clock::time_point whenBandwidthFullDownloadsDialogWasShown;
-    std::chrono::system_clock::time_point whenBandwidthFullImportLinksDialogWasShown;
-    std::chrono::system_clock::time_point whenBandwidthFullStreamDialogWasShown;
-    std::chrono::system_clock::time_point whenStorageFullUploadsDialogWasShown;
-    std::chrono::system_clock::time_point whenStorageFullSyncsDialogWasShown;
-    std::chrono::system_clock::time_point whenStorageAndBandwidthFullSyncDialogWasShown;
+    std::chrono::system_clock::time_point transferOverQuotaSyncDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaDownloadsDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaImportLinksDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaStreamDialogDisabledUntil;
+    std::chrono::system_clock::time_point storageOverQuotaUploadsDialogDisabledUntil;
+    std::chrono::system_clock::time_point storageOverQuotaSyncsDialogDisabledUntil;
+    std::chrono::system_clock::time_point storageAndTransferOverQuotaSyncDialogDisabledUntil;
 
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
@@ -596,21 +596,21 @@ protected:
     static const QString almostOverStorageNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
-    static const QString overBandwidthDialogExecutionKey;
-    static const QString overBandwidthNotificationExecutionKey;
-    static const QString almostOverBandwidthNotificationExecutionKey;
-    static const QString almostOverBandwidthDismissExecutionKey;
-    static const QString overBandwidthDismissExecutionKey;
-    static const QString overBandwidthStateKey;
-    static const QString overBandwidthWaitUntilKey;
+    static const QString transferOverQuotaDialogDisabledUntilKey;
+    static const QString transferOverQuotaOsNotificationDisabledUntilKey;
+    static const QString transferAlmostOverQuotaOsNotificationDisabledUntilKey;
+    static const QString transferAlmostOverQuotaUiAlertDisabledUntilKey;
+    static const QString transferOverQuotaUiAlertDisableUntilKey;
+    static const QString transferQuotaStateKey;
+    static const QString transferOverQuotaWaitUntilKey;
     static const QString storageStateQKey;
-    static const QString whenBandwidthFullSyncDialogWasShownKey;
-    static const QString whenBandwidthFullDownloadsDialogWasShownKey;
-    static const QString whenBandwidthFullImportLinksDialogWasShownKey;
-    static const QString whenBandwidthFullStreamDialogWasShownKey;
-    static const QString whenStorageFullUploadsDialogWasShownKey;
-    static const QString whenStorageFullSyncsDialogWasShownKey;
-    static const QString whenStorageAndBandwidthFullSyncDialogWasShownKey;
+    static const QString transferOverQuotaSyncDialogDisabledUntilKey;
+    static const QString transferOverQuotaDownloadsDialogDisabledUntilKey;
+    static const QString transferOverQuotaImportLinksDialogDisabledUntilKey;
+    static const QString transferOverQuotaStreamDialogDisabledUntilKey;
+    static const QString storageOverQuotaUploadsDialogDisabledUntilKey;
+    static const QString storageOverQuotaSyncsDialogDisabledUntilKey;
+    static const QString storageAndTransferOverQuotaSyncDialogDisabledUntilKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;

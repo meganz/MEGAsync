@@ -1,27 +1,27 @@
-#include "OverquotaFullDialog.h"
-#include "ui_OverquotaFullDialog.h"
+#include "OverQuotaDialog.h"
+#include "ui_OverQuotaDialog.h"
 #include "mega/types.h"
 #include "Utilities.h"
 #include <QtConcurrent/QtConcurrent>
 #include <QDesktopServices>
 
-OverquotaFullDialog::OverquotaFullDialog(QWidget *parent) :
+OverQuotaDialog::OverQuotaDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OverquotaFullDialog)
 {
     ui->setupUi(this);
     connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::accept);
-    connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverquotaFullDialog::onUpgradeClicked);
+    connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
 }
 
-OverquotaFullDialog::~OverquotaFullDialog()
+OverQuotaDialog::~OverQuotaDialog()
 {
     delete ui;
 }
 
-std::unique_ptr<OverquotaFullDialog> OverquotaFullDialog::createDialog(OverquotaFullDialogType type)
+std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDialogType type)
 {
-    auto dialog{mega::make_unique<OverquotaFullDialog>()};
+    auto dialog{mega::make_unique<OverQuotaDialog>()};
     if(type == OverquotaFullDialogType::storageFullSyncs)
     {
         dialog->setWindowTitle(tr("Storage full"));
@@ -95,7 +95,7 @@ std::unique_ptr<OverquotaFullDialog> OverquotaFullDialog::createDialog(Overquota
     return dialog;
 }
 
-void OverquotaFullDialog::onUpgradeClicked()
+void OverQuotaDialog::onUpgradeClicked()
 {
     auto url{QString::fromUtf8("mega://#pro")};
     Utilities::getPROurlWithParameters(url);

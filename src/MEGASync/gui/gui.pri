@@ -1,8 +1,9 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
+    $$PWD/DynamicTransferQuotaPopOver.cpp \
     $$PWD/InfoDialog.cpp \
-    $$PWD/OverquotaFullDialog.cpp \
+    $$PWD/OverQuotaDialog.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -67,12 +68,12 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
-    $$PWD/BandwidthOverquotaPopOver.cpp \
     $$PWD/MegaInfoMessage.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/DynamicTransferQuotaPopOver.h \
     $$PWD/InfoDialog.h \
-    $$PWD/OverquotaFullDialog.h \
+    $$PWD/OverQuotaDialog.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -137,7 +138,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
     $$PWD/VerifyLockMessage.h \
-    $$PWD/BandwidthOverquotaPopOver.h \
     $$PWD/MegaInfoMessage.h
 
 INCLUDEPATH += $$PWD
@@ -195,9 +195,9 @@ win32 {
                 $$PWD/win/BugReportDialog.ui \
                 $$PWD/win/LockedPopOver.ui \
                 $$PWD/win/VerifyLockMessage.ui \
-                $$PWD/win/OverquotaFullDialog.ui \
-                $$PWD/win/BandwidthOverquotaPopOver.ui \
-                $$PWD/win/MegaInfoMessage.ui
+                $$PWD/win/MegaInfoMessage.ui \
+                $$PWD/win/DynamicTransferQuotaPopOver.ui \
+                $$PWD/win/OverQuotaDialog.ui
 }
 
 macx {
@@ -251,9 +251,9 @@ macx {
                 $$PWD/macx/BugReportDialog.ui \
                 $$PWD/macx/LockedPopOver.ui \
                 $$PWD/macx/VerifyLockMessage.ui \
-                $$PWD/macx/OverquotaFullDialog.ui \
-                $$PWD/macx/BandwidthOverquotaPopOver.ui \
-                $$PWD/macx/MegaInfoMessage.ui
+                $$PWD/macx/MegaInfoMessage.ui \
+                $$PWD/macx/DynamicTransferQuotaPopOver.ui \
+                $$PWD/macx/OverQuotaDialog.ui \
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -320,9 +320,9 @@ unix:!macx {
                 $$PWD/linux/BugReportDialog.ui \
                 $$PWD/linux/LockedPopOver.ui \
                 $$PWD/linux/VerifyLockMessage.ui \
-                $$PWD/linux/OverquotaFullDialog.ui \
-                $$PWD/linux/BandwidthOverquotaPopOver.ui \
-                $$PWD/linux/MegaInfoMessage.ui
+                $$PWD/linux/MegaInfoMessage.ui \
+                $$PWD/linux/DynamicTransferQuotaPopOver.ui \
+                $$PWD/linux/OverQuotaDialog.ui \
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

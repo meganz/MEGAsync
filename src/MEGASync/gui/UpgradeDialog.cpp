@@ -13,7 +13,7 @@ using namespace mega;
 UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent)
     :QDialog(parent),
     ui(new Ui::UpgradeDialog),
-    mPopOver{mega::make_unique<BandwidthOverquotaPopOver>(this)}
+    mPopOver{mega::make_unique<DynamicTransferQuotaPopOver>(this)}
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
