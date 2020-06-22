@@ -165,6 +165,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
+    ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
+    ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
     )
 
 
@@ -184,6 +186,8 @@ endif()
 
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
+    ${MEGAsyncDir}/TimeWrapper.h
+    ${MEGAsyncDir}/TransferQuota.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -262,6 +266,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
+    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
+    ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -318,6 +324,8 @@ endif()
 
 set (SRCS 
     ${MEGAsyncDir}/MegaApplication.cpp
+    ${MEGAsyncDir}/TimeWrapper.cpp
+    ${MEGAsyncDir}/TransferQuota.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -391,6 +399,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
+    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
+    ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
