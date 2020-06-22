@@ -3291,7 +3291,7 @@ void MegaApplication::showInfoDialog()
     }
 #endif
 
-    const auto loggedAndNotBandwidthOverquota{preferences && preferences->logged() && transferQuota->isOverQuota()};
+    const auto loggedAndNotBandwidthOverquota{preferences && preferences->logged() && !transferQuota->isOverQuota()};
     if (loggedAndNotBandwidthOverquota)
     {
         updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
@@ -6124,7 +6124,6 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
     }
 
     const auto dissmised{showSyncOverquotaDialog()};
-
     if (infoDialog && !dissmised)
     {
         infoDialog->addSync(targetFolder);
@@ -6909,10 +6908,10 @@ void MegaApplication::createAppMenus()
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
 #if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
-                    connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                    connect(addAction, &MenuItemAction::triggered, infoDialog,
                             QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
-                    connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                    connect(addAction, &MenuItemAction::triggered, infoDialog,
                             static_cast<void(InfoDialog::*)()>(&InfoDialog::addSync), Qt::QueuedConnection);
 #endif
 
