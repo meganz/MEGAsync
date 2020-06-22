@@ -2962,31 +2962,29 @@ void MegaApplication::checkOverStorageStates()
     }
     else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
     {
-        if (!getUserDataRequestReady)
+        if (getUserDataRequestReady)
         {
-            return;
-        }
-
-        if (infoDialog)
-        {
-            infoDialog->updateOverStorageState(Preferences::STATE_PAYWALL);
-        }
-
-        if ((!preferences->getPayWallNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getPayWallNotificationExecution()) > Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS)))
-        {
-            const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
-            if (daysToExpire > 0) //Only show notification if at least there is one day left
+            if (infoDialog)
             {
-                preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
-                megaApi->sendEvent(99530, "Paywall notification shown");
-                sendOverStorageNotification(Preferences::STATE_PAYWALL);
+                infoDialog->updateOverStorageState(Preferences::STATE_PAYWALL);
             }
-        }
 
-        if (storageOverquotaDialog)
-        {
-            storageOverquotaDialog->deleteLater();
-            storageOverquotaDialog = NULL;
+            if ((!preferences->getPayWallNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getPayWallNotificationExecution()) > Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS)))
+            {
+                const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
+                if (daysToExpire > 0) //Only show notification if at least there is one day left
+                {
+                    preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+                    megaApi->sendEvent(99530, "Paywall notification shown");
+                    sendOverStorageNotification(Preferences::STATE_PAYWALL);
+                }
+            }
+
+            if (storageOverquotaDialog)
+            {
+                storageOverquotaDialog->deleteLater();
+                storageOverquotaDialog = NULL;
+            }
         }
     }
     else
