@@ -71,7 +71,13 @@ void UpdateTask::startUpdateThread()
     connect(m_WebCtrl, SIGNAL(finished(QNetworkReply*)), this, SLOT(downloadFinished(QNetworkReply*)));
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
-    signatureChecker = new MegaHashSignature((const char *)Preferences::UPDATE_PUBLIC_KEY);
+    string updatePublicKey = Preferences::UPDATE_PUBLIC_KEY;
+    if (getenv("MEGA_UPDATE_PUBLIC_KEY"))
+    {
+        updatePublicKey = getenv("MEGA_UPDATE_PUBLIC_KEY");
+    }
+
+    signatureChecker = new MegaHashSignature(updatePublicKey.c_str());
 
     updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
     QTimer::singleShot(Preferences::UPDATE_INITIAL_DELAY_SECS*1000, this, SLOT(tryUpdate()));
@@ -94,7 +100,13 @@ void UpdateTask::tryUpdate()
         randomSequence += QChar::fromAscii('A'+(rand() % 26));
     }
 
-    downloadFile(Preferences::UPDATE_CHECK_URL + randomSequence);
+    QString updateURL = Preferences::UPDATE_CHECK_URL;
+    if (getenv("MEGA_UPDATE_CHECK_URL"))
+    {
+        updateURL = QString::fromUtf8(getenv("MEGA_UPDATE_CHECK_URL"));
+    }
+
+    downloadFile(updateURL + randomSequence);
 }
 
 void UpdateTask::onTimeout()

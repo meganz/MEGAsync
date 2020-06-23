@@ -82,26 +82,18 @@ win32 {
     }
 
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
-    vcpkg:LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptopp-static
+    vcpkg:LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptopp-staticcrt
     else:LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptoppmt
 
     QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
     QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
 
-    !vcpkg {
-        QMAKE_CXXFLAGS_RELEASE += -MT
-        QMAKE_CXXFLAGS_DEBUG += -MTd
+    QMAKE_CXXFLAGS_RELEASE += -MT
+    QMAKE_CXXFLAGS_DEBUG += -MTd
 
-        QMAKE_CXXFLAGS_RELEASE -= -MD
-        QMAKE_CXXFLAGS_DEBUG -= -MDd
-    }
-    else {
-        QMAKE_CXXFLAGS_RELEASE += -MD
-        QMAKE_CXXFLAGS_DEBUG += -MDd
+    QMAKE_CXXFLAGS_RELEASE -= -MD
+    QMAKE_CXXFLAGS_DEBUG -= -MDd
 
-        QMAKE_CXXFLAGS_RELEASE -= -MT
-        QMAKE_CXXFLAGS_DEBUG -= -MTd
-    }
     RC_FILE = icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01

@@ -431,12 +431,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">파일</translation>
+        <translation type="obsolete">파일</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">폴더</translation>
+        <translation type="obsolete">폴더</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +446,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">공개 공유한 [A] ([B])가 복구되었습니다</translation>
+        <translation type="obsolete">공개 공유한 [A] ([B])가 복구되었습니다</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +476,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">당신의 공개 공유 [%1] ([%2])가 게시 중단 되었습니다</translation>
+        <translation type="obsolete">당신의 공개 공유 [%1] ([%2])가 게시 중단 되었습니다</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -487,6 +487,26 @@
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">공유된 폴더의 접근이 삭제되었습니다</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 파일([A])이 게시중단 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 폴더([A])가 게시중단 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 파일([A])이 재게시 되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">당신의 공개 공유 폴더([A])이 재게시 되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -812,6 +832,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>보고서 발송</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
+        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
+        <translation type="unfinished">디버깅을 도우려면 진단 로그 파일을 첨부하세요
+(일부의 경우 파일 또는 폴더명 같은 당신의 데이터에 대한 세부 정보가 포함될 수 있습니다)</translation>
     </message>
 </context>
 <context>
@@ -1160,7 +1186,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
+        <translation type="obsolete">파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1181,6 +1207,56 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
         <translation type="unfinished">로그아웃 중...</translation>
+    </message>
+    <message>
+        <source>Locked Account</source>
+        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
+        <translation type="unfinished">잠긴 계정</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">당신의 안전을 위해 계정을 일시적으로 잠갔습니다. 계정을 잠금 해제하려면 이메일을 인증하고 절차를 따라주세요.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <translation type="unfinished">로그아웃</translation>
+    </message>
+    <message>
+        <source>Verify email</source>
+        <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
+        <translation type="obsolete">이메일 인증</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">당신의 계정이 잠재적 오남용으로 인하여 잠겼습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
+        <translation type="unfinished">지금 인증</translation>
+    </message>
+    <message>
+        <source>Creating account...</source>
+        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translation type="unfinished">계정 생성 중...</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">이게 왜 보여지나요?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">이메일 재발송</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">이메일 발송됨</translation>
     </message>
 </context>
 <context>
@@ -1204,7 +1280,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation>링크 들여오기</translation>
+        <translation type="vanished">링크 들여오기</translation>
     </message>
     <message>
         <source>Download to my computer</source>
@@ -1268,6 +1344,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>당신은 이 로컬 폴더에 쓰기 권한을 가지고 있지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
+        <translation type="unfinished">링크 열기</translation>
     </message>
 </context>
 <context>
@@ -1868,6 +1949,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>LockedPopOver</name>
+    <message>
+        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">[A]MEGA 계정에 다른 서비스에서 사용중인 같은 비밀번호를 사용하고 있으며, 그 서비스들 중 하나가 데이터 유출 피해를 겪었을 수 있습니다.[/A]</translation>
+    </message>
+    <message>
+        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">[A]당신의 비밀번호가 유출되었으며, 나쁜 사람들이 MEGA 계정뿐만 아니라, 다른 서비스까지 포함하여 당신의 계정에 로그인하는데에 사용하고 있습니다.[/A]</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">잠긴 계정들</translation>
+    </message>
+</context>
+<context>
     <name>Login2FA</name>
     <message>
         <source>Login Verification</source>
@@ -2011,7 +2110,7 @@ Exit anyway?</source>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
-        <translation>링크 들여오기</translation>
+        <translation type="vanished">링크 들여오기</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -2115,7 +2214,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation type="vanished">오류</translation>
+        <translation>오류</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -2133,7 +2232,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
+        <translation type="unfinished">파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2661,6 +2760,31 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation type="unfinished">연락처</translation>
     </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
+        <translation type="unfinished">잠긴 계정</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">링크 열기</translation>
+    </message>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translation type="unfinished">당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync는 계속 작동할 것이지만, Windows Vista와 이전 운영체제에 대한 업데이트는 더 이상 지원되지 않을 것입니다.</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">전송중</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2794,7 +2918,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">당신의 계정이 다른 이들의 권리를 침해, 불법 데이터의 공유 또는 들여오기, 시스템 오남용 등 MEGA의 이용 약관을 위반하여 제거되었습니다.</translation>
+        <translation type="unfinished">당신의 계정이 타인의 권리를 침해; 불법 데이터의 공유 또는 들여오기; 시스템 오남용 등, MEGA의 이용 약관을 위반하여 제거되었습니다.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2820,6 +2944,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">재귀적 경로 구조로 인하여 전송 실패</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">이게 왜 보여지나요?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">닫기</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">잠긴 계정들</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -3143,7 +3295,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation>링크 들여오기</translation>
+        <translation type="vanished">링크 들여오기</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -3179,6 +3331,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">잘못된 MEGA 링크</translation>
+    </message>
+    <message>
+        <source>Enter links</source>
+        <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
+        <translation type="unfinished">링크 입력</translation>
     </message>
 </context>
 <context>
@@ -3383,15 +3540,40 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- 이용자 알림 지원.
-- 설정 대화창에서 버그 리포트 전송 지원.
+        <translation type="obsolete">- 이용자 알림 지원.
+- 이제 설정 대화창에서 버그 보고서를 전송할 수 있음.
 - 주 대화창 스타일 변경
 - 대량의 동기화와 전송을 다룰 때 성능 향상.
-- 비즈니스 계정 지원 향상.
+- 비즈니스 계정 유용성 향상.
 - 공개 폴더 링크 내부의 파일과 폴더 링크 지원.
 - FAT32 파일시스템과의 동기화 향상.
-- 기타 UI 수정 및 조정
 - 기타 성능 향상, UI 수정 그리고 조정.</translation>
+    </message>
+    <message>
+        <source>- Fix crash issue for OSX 10.9.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
+        <translation type="obsolete">- OS X 10.9에서 충돌 문제 수정</translation>
+    </message>
+    <message>
+        <source>- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
+        <translation type="unfinished">- 새로운 맞춤 메시지 박스.
+- 로그아웃 할 때 지난 로그 정리.
+- 특정 상황에서 Finder 확장 프로그램의 해제 문제 해결.
+- 잠긴 계정에 대한 이메일 인증.
+- 잠근 계정에 대한 SMS 인증.
+- 추천 프로그램 지원.
+- 충돌 보고 대화상자에서 로그 전송 옵션 포함.
+- 기타 UI 수정 및 조정.
+- 기타 성능 향상 및 조정.</translation>
     </message>
 </context>
 <context>
@@ -4830,6 +5012,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">동기화중</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">전송중</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -5050,7 +5237,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">링크 들여오기</translation>
+        <translation type="obsolete">링크 들여오기</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -5098,6 +5285,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translation type="unfinished">다운로드</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">링크 열기</translation>
     </message>
 </context>
 <context>
@@ -5408,6 +5600,59 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyLockMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">이게 왜 보여지나요?</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <translation type="unfinished">로그아웃</translation>
+    </message>
+    <message>
+        <source>Verify your email</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
+        <translation type="unfinished">이메일 인증</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
+        <translation type="unfinished">잠긴 계정</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
+        <translation type="unfinished">당신의 안전을 위해 계정을 일시적으로 잠갔습니다. 계정을 잠금 해제하려면 이메일을 인증하고 절차를 따라주세요.</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">이메일 재발송</translation>
+    </message>
+    <message>
+        <source>Verify your account</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
+        <translation type="unfinished">계정을 인증하세요</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
+        <translation type="unfinished">당신의 계정이 잠재적 오남용으로 인하여 잠겼습니다. 계정을 해제하려면 전화번호를 인증하세요.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
+        <translation type="unfinished">지금 인증</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">이메일 발송됨</translation>
     </message>
 </context>
 <context>
