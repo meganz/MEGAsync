@@ -827,7 +827,7 @@ void InfoDialog::updateDialogState()
             {
                 ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                        .replace(QString::fromUtf8("[B]"), QString::number(numberOfDays))
+                        .replace(QString::fromUtf8("[B]"), QString::number(daysToExpire))
                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                         + QString::fromUtf8("</p>"));
             }
