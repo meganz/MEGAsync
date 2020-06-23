@@ -27,7 +27,6 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ChangeLogDialog.h"
-#include "gui/UpgradeDialog.h"
 #include "gui/InfoWizard.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"

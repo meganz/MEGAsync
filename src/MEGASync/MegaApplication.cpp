@@ -5497,7 +5497,7 @@ void MegaApplication::updateTrayIconMenu()
     if (trayIcon)
     {
 #if defined(Q_OS_MACX)
-        if (infoDialog && !amIOverTemporalQuotaBandwidth())
+        if (infoDialog && preferences->logged() && !transferQuota->isOverQuota())
         {
             trayIcon->setContextMenu(&emptyMenu);
         }

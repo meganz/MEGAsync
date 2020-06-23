@@ -7,7 +7,13 @@
 #include <QHBoxLayout>
 #include <megaapi.h>
 #include "HighDpiResize.h"
-#include "DynamicTransferQuotaPopOver.h"
+#ifdef __APPLE__
+    #include "macx/DynamicTransferQuotaPopOver.h"
+    #import <objc/runtime.h>
+#else
+    #include "DynamicTransferQuotaPopOver.h"
+#endif
+
 #include <memory>
 
 namespace Ui {
@@ -36,7 +42,12 @@ private:
     void clearPlans();
     void mousePressEvent(QMouseEvent *event) override;
 
-    std::unique_ptr<DynamicTransferQuotaPopOver> mPopOver;
+#ifdef __APPLE__
+    std::unique_ptr<DynamicTransferQuotaPopOver> mPopOver{new DynamicTransferQuotaPopOver()};
+    id m_NativePopOver;
+#else
+    std::unique_ptr<DynamicTransferQuotaPopOver> mPopOver{new DynamicTransferQuotaPopOver(this)};
+#endif
 
 private slots:
     void unitTimeElapsed();

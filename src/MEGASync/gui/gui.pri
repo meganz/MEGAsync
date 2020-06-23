@@ -1,7 +1,6 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
-    $$PWD/DynamicTransferQuotaPopOver.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/SetupWizard.cpp \
@@ -71,7 +70,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaInfoMessage.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
-    $$PWD/DynamicTransferQuotaPopOver.h \
     $$PWD/InfoDialog.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/SetupWizard.h \
@@ -265,8 +263,10 @@ macx {
                $$PWD/PermissionsWidget.cpp
 }
  else {
-    HEADERS += $$PWD/LockedPopOver.h
-    SOURCES += $$PWD/LockedPopOver.cpp
+    HEADERS += $$PWD/LockedPopOver.h \
+               $$PWD/DynamicTransferQuotaPopOver.h
+    SOURCES += $$PWD/LockedPopOver.cpp \
+               $$PWD/DynamicTransferQuotaPopOver.cpp
 }
 
 unix:!macx {

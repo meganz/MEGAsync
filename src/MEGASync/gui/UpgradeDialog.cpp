@@ -1,4 +1,7 @@
 #include "UpgradeDialog.h"
+#ifdef __APPLE__
+#include "macx/MacXFunctions.h"
+#endif
 #include "ui_UpgradeDialog.h"
 #include "Utilities.h"
 #include "Preferences.h"
@@ -12,8 +15,7 @@ using namespace mega;
 
 UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent)
     :QDialog(parent),
-    ui(new Ui::UpgradeDialog),
-    mPopOver{mega::make_unique<DynamicTransferQuotaPopOver>(this)}
+    ui(new Ui::UpgradeDialog)
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -48,6 +50,12 @@ UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *pa
     timer->setSingleShot(false);
     connect(timer, SIGNAL(timeout()), this, SLOT(unitTimeElapsed()));
     highDpiResize.init(this);
+
+#ifdef __APPLE__
+    QSize size = mPopOver->size();
+    m_NativePopOver = allocatePopOverWithView(mPopOver->nativeView(), size);
+    mPopOver->show();
+#endif
 }
 
 void UpgradeDialog::setTimestamp(long long time)
@@ -152,7 +160,7 @@ void UpgradeDialog::mousePressEvent(QMouseEvent *event)
     if (ui->toolButtonQuestion->rect().contains(mousePositionButtonRelated))
     {
 #ifdef __APPLE__
-        showPopOverRelativeToRect(winId(), m_popover, event->localPos());
+        showPopOverRelativeToRect(winId(), m_NativePopOver, event->localPos());
 #else
 
         const auto mouseGlobalPosition{event->globalPos()};
