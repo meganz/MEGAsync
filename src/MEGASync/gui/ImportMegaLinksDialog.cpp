@@ -99,7 +99,6 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
                 testNode = rootNode->copy();
             }
         }
-        this->on_cDownload_clicked();
     }
     else
     {
