@@ -823,12 +823,18 @@ void InfoDialog::updateDialogState()
             ui->lOverDiskQuotaLabel->setText(overDiskText);
 
             const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
-            const auto numberOfDays{daysToExpire > 0 ? daysToExpire : 0};
-            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
-                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                    .replace(QString::fromUtf8("[B]"), QString::number(numberOfDays))
-                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                    + QString::fromUtf8("</p>"));
+            if (daysToExpire > 0)
+            {
+                ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
+                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                        .replace(QString::fromUtf8("[B]"), QString::number(numberOfDays))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                        + QString::fromUtf8("</p>"));
+            }
+            else
+            {
+                ui->lWarningOverDiskQuota->setText(tr("You must act immediately to save your data"));
+            }
 
 
             delete tsWarnings;

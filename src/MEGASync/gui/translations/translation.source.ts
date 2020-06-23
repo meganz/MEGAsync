@@ -1807,6 +1807,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
         <translation type="unfinished">Upgrade account</translation>
     </message>
+    <message>
+        <source>You must act immediately to save your data</source>
+        <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
+        <translation type="unfinished">You must act immediately to save your data</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
