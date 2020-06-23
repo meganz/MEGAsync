@@ -1398,12 +1398,10 @@ int SettingsDialog::saveSettings()
 
         preferences->setHasDefaultDownloadFolder(hasDefaultDownloadOption);
 
-        //TODO: change order to: 1 remove removed, 2 enable/disable changed, 3 add new
-
         //Syncs
         if (syncsChanged)
         {
-            //Check for removed or disabled folders
+            // 1 - loop through the syncs in the model to remove or update
             for (int i = 0; i < model->getNumSyncedFolders(); i++)
             {
                 auto syncSetting = model->getSyncSetting(i);
@@ -1413,12 +1411,31 @@ int SettingsDialog::saveSettings()
                     continue;
                 }
 
+                // 1.1 - remove no longer present:
+                bool found = false;
+                for (int j = 0; j < ui->tSyncs->rowCount(); j++)
+                {
+                    auto tagItem = ui->tSyncs->cellWidget(j,3);
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toInt() == syncSetting->tag())
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) //sync no longer found in settings: needs removing
+                {
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(syncSetting->name()).toUtf8().constData());
+                    ActionProgress *removeSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
+                                                                        .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
+                    saveSettingsProgress->addStep(removeSyncStep);
+                    controller->removeSync(syncSetting, removeSyncStep);
+                }
+
+                // 1.2 - enable/disable changed syncs
                 QString localPath = syncSetting->getLocalFolder();
                 QString megaPath = syncSetting->getMegaFolder();
                 MegaHandle megaHandle = syncSetting->getMegaHandle();
-
-                int j;
-                for (j = 0; j < ui->tSyncs->rowCount(); j++)
+                for (int j = 0; j < ui->tSyncs->rowCount(); j++)
                 {
                     QString newLocalPath = ui->tSyncs->item(j, 0)->text();
                     QString newMegaPath = ui->tSyncs->item(j, 1)->text();
@@ -1487,18 +1504,9 @@ int SettingsDialog::saveSettings()
                         assert("paths changed for an already configured sync");
                     }
                 }
-
-                if (j == ui->tSyncs->rowCount()) //sync no longer found in settings: needs removing
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(syncSetting->name()).toUtf8().constData());
-                    ActionProgress *removeSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
-                                                                        .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
-                    saveSettingsProgress->addStep(removeSyncStep);
-                    controller->removeSync(syncSetting, removeSyncStep);
-                }
             }
 
-            //look for new syncs
+            // 2 - look for new syncs
             for (int j = 0; j < ui->tSyncs->rowCount(); j++)
             {
                 auto tagItem = ui->tSyncs->cellWidget(j, 3);
@@ -1509,10 +1517,8 @@ int SettingsDialog::saveSettings()
                     {
                         QString localFolderPath = ui->tSyncs->item(j, 0)->text();
                         QString megaFolderPath = ui->tSyncs->item(j, 1)->text();
-                        QString syncName = syncNames.at(j); //TODO: store in column?
-
-                        std::unique_ptr<MegaNode> node(megaApi->getNodeByPath(megaFolderPath.toUtf8().constData()));
-                        //TODO: store handle in some column ?
+                        MegaHandle nodeHandle = static_cast<QLabel *>(ui->tSyncs->cellWidget(j, 4))->text().toLongLong();
+                        QString syncName =static_cast<QLabel *>(ui->tSyncs->cellWidget(j, 5))->text();
 
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync from Settings: %1 - %2")
                                      .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
@@ -1550,10 +1556,7 @@ int SettingsDialog::saveSettings()
                             }
                         }, Qt::DirectConnection); //Note, we need direct connection to use request & error
 
-
-
-
-                        controller->addSync(localFolderPath, node?node->getHandle():INVALID_HANDLE, syncName, addSyncStep);
+                        controller->addSync(localFolderPath, nodeHandle, syncName, addSyncStep);
                     }
                     else
                     {
@@ -1564,7 +1567,6 @@ int SettingsDialog::saveSettings()
                 }
             }
 
-            app->createAppMenus(); //TODO: this makes no sense here, but in callbacks
             syncsChanged = false;
         }
 #ifdef _WIN32
@@ -1859,9 +1861,11 @@ void SettingsDialog::loadSyncSettings()
     int numFolders = model->getNumSyncedFolders();
     ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
     ui->tSyncs->setRowCount(numFolders);
-    ui->tSyncs->setColumnCount(4);
+    ui->tSyncs->setColumnCount(6);
     ui->tSyncs->setColumnWidth(2, 21);
     ui->tSyncs->setColumnHidden(3, true); //hidden tag
+    ui->tSyncs->setColumnHidden(4, true); //hidden handle
+    ui->tSyncs->setColumnHidden(5, true); //hidden name
 
     for (int i = 0; i < numFolders; i++)
     {
@@ -1880,23 +1884,25 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
     localFolderQString = localFolderQString.mid(4);
 }
 #endif
+        // Col 1: Local folder
         localFolder->setText(localFolderQString);
+        localFolder->setToolTip(localFolderQString);
+        ui->tSyncs->setItem(i, 0, localFolder);
+
+        // Col 2: Mega Folder
         QTableWidgetItem *megaFolder = new QTableWidgetItem();
         assert(syncSetting->getMegaFolder().size() && "remote folder lacks path");
         megaFolder->setText(syncSetting->getMegaFolder().size()?syncSetting->getMegaFolder():QString::fromUtf8("---"));
-        localFolder->setToolTip(localFolderQString);
-        ui->tSyncs->setItem(i, 0, localFolder);
         megaFolder->setToolTip(syncSetting->getMegaFolder());
         ui->tSyncs->setItem(i, 1, megaFolder);
-        syncNames.append(syncSetting->name());
+
+        // Col 3: Enabled/Disabled checkbox
         QCheckBox *c = new QCheckBox();
-        c->setChecked(syncSetting->isEnabled()); //note: this refers to enable/disabled by the user. It can be temporary disabled or even failed. This should e shown in the UI
+        c->setChecked(syncSetting->isEnabled()); //note: this refers to enable/disabled by the user. It can be temporary disabled or even failed. This should be shown in the UI
         c->setToolTip(tr("Enable / disable"));
 
-
 #ifdef SYNC_ADVANCED_TEST_MODE
-
-        if (syncSetting->isEnabled() && !syncSetting->isActive())//TODO: delete ?
+        if (syncSetting->isEnabled() && !syncSetting->isActive())
         {
             c->setCheckState(Qt::PartiallyChecked);
         }
@@ -1920,12 +1926,25 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
             megaFolder->setTextColor(QColor::fromRgb(255, 0, 0));
         }
 #endif
-
         connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
         ui->tSyncs->setCellWidget(i, 2, c);
+
+        // Col 4: tag. HIDDEN
         QLabel *lTag = new QLabel();
         lTag->setText(QString::number(syncSetting->tag()));
         ui->tSyncs->setCellWidget(i, 3, lTag);
+
+        // Col 5: MegaHandle. HIDDEN
+        QLabel *lHandle = new QLabel();
+        lHandle->setText(QString::number(syncSetting->getMegaHandle()));
+        ui->tSyncs->setCellWidget(i, 4, lHandle);
+
+        // Col 6: SyncName. HIDDEN
+        QLabel *lName = new QLabel();
+        lName->setText(syncSetting->name());
+        ui->tSyncs->setCellWidget(i, 5, lName);
+
+        syncNames.append(syncSetting->name());
     }
 }
 
@@ -1971,24 +1990,15 @@ void SettingsDialog::on_bPermissions_clicked()
 void SettingsDialog::on_bAdd_clicked()
 {
     QStringList currentLocalFolders;
-    QList<long long> currentMegaFolders;
+    QStringList currentMegaFoldersPaths;
     for (int i = 0; i < ui->tSyncs->rowCount(); i++)
     {
-        QString localFolder = ui->tSyncs->item(i, 0)->text();
-        currentLocalFolders.append(localFolder);
-
-        QString newMegaPath = ui->tSyncs->item(i, 1)->text();
-        MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
-        if (!n)
-        {
-            continue;
-        }
-
-        currentMegaFolders.append(n->getHandle());
-        delete n;
+        //notice: this also takes into account !active ones
+        currentLocalFolders.append(ui->tSyncs->item(i, 0)->text());
+        currentMegaFoldersPaths.append(ui->tSyncs->item(i, 1)->text());
     }
 
-    QPointer<BindFolderDialog> dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFolders, this);
+    QPointer<BindFolderDialog> dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFoldersPaths, this);
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)
     {
@@ -1998,31 +2008,22 @@ void SettingsDialog::on_bAdd_clicked()
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     MegaHandle handle = dialog->getMegaFolder();
-    MegaNode *node = megaApi->getNodeByHandle(handle);
-    if (!localFolderPath.length() || !node)
+    if (!localFolderPath.length() != !dialog->getMegaPath().size())
     {
         delete dialog;
-        delete node;
         return;
     }
 
     QTableWidgetItem *localFolder = new QTableWidgetItem();
     localFolder->setText(localFolderPath);
     QTableWidgetItem *megaFolder = new QTableWidgetItem();
-    const char *nPath = megaApi->getNodePath(node);
-    if (!nPath)
-    {
-        delete dialog;
-        delete node;
-        return;
-    }
 
-    megaFolder->setText(QString::fromUtf8(nPath));
+    megaFolder->setText(dialog->getMegaPath());
     int pos = ui->tSyncs->rowCount();
     ui->tSyncs->setRowCount(pos+1);
     localFolder->setToolTip(localFolderPath);
     ui->tSyncs->setItem(pos, 0, localFolder);
-    megaFolder->setToolTip(QString::fromUtf8(nPath));
+    megaFolder->setToolTip(dialog->getMegaPath());
     ui->tSyncs->setItem(pos, 1, megaFolder);
 
     QCheckBox *c = new QCheckBox();
@@ -2031,10 +2032,19 @@ void SettingsDialog::on_bAdd_clicked()
     connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
     ui->tSyncs->setCellWidget(pos, 2, c);
 
+    // Col 5: MegaHandle. HIDDEN
+    QLabel *lHandle = new QLabel();
+    lHandle->setText(QString::number(handle));
+    ui->tSyncs->setCellWidget(pos, 4, lHandle);
+
+    // Col 6: SyncName. HIDDEN
+    QLabel *lName = new QLabel();
+    lName->setText(dialog->getSyncName());
+    ui->tSyncs->setCellWidget(pos, 5, lName);
+
     syncNames.append(dialog->getSyncName());
-    delete [] nPath;
+
     delete dialog;
-    delete node;
 
     syncsChanged = true;
     stateChanged();
