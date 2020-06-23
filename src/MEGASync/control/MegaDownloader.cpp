@@ -61,7 +61,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
                     data->localPath = QDir::toNativeSeparators(path);
                     if (data->totalTransfers == 1)
                     {
-                        char *escapedName = megaApi->escapeFsIncompatible(node->getName());
+                        char *escapedName = megaApi->escapeFsIncompatible(node->getName(), currentPath.toStdString().c_str());
                         QString nodeName = QString::fromUtf8(escapedName);
                         delete [] escapedName;
                         data->localPath += QDir::separator() + nodeName;
@@ -102,7 +102,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, QString appData)
         }
         else
         {
-            char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
+            char *escapedName = megaApi->escapeFsIncompatible(parent->getName(), currentPath.toStdString().c_str());
             QString nodeName = QString::fromUtf8(escapedName);
             delete [] escapedName;
 
