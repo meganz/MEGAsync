@@ -58,7 +58,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>216</height>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -154,65 +154,92 @@ background: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #FFFFFF, stop:1 #F2F2F
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="labelTitle">
+         <widget class="QWidget" name="wDepletedQuota" native="true">
           <property name="minimumSize">
            <size>
-            <width>189</width>
-            <height>24</height>
+            <width>50</width>
+            <height>58</height>
            </size>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>189</width>
-            <height>24</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: #333333;
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="labelTitle">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">#labelTitle
+{
+color: #333333;
 font-family: Lato;
-font-size: 16px;</string>
-          </property>
-          <property name="text">
-           <string>Depleted transfer quota</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QToolButton" name="toolButtonQuestion">
-          <property name="minimumSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">#toolButtonQuestion
+font-size: 18px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Depleted transfer quota</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="toolButtonQuestion">
+             <property name="minimumSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">#toolButtonQuestion
 {
 	border: none;
 }</string>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../Resources_linux.qrc">
-            <normaloff>:/images/icon_question_white.png</normaloff>:/images/icon_question_white.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>24</width>
-            <height>24</height>
-           </size>
-          </property>
+             </property>
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../Resources_macx.qrc">
+               <normaloff>:/images/icon_question_white.png</normaloff>:/images/icon_question_white.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
@@ -241,7 +268,7 @@ font-size: 16px;</string>
         <property name="maximumSize">
          <size>
           <width>640</width>
-          <height>48</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -250,7 +277,6 @@ font-size: 16px;</string>
     color: #333333;
 	font-family: Lato;
 	font-size: 13px;
-	line-height: 24px;
 }</string>
         </property>
         <property name="text">
@@ -374,7 +400,7 @@ font-size: 16px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
