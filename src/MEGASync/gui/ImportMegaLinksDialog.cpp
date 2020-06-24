@@ -99,22 +99,6 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
                 testNode = rootNode->copy();
             }
         }
-
-        MegaNode *p = testNode;
-        while (p)
-        {
-            if (megaApi->isSynced(p))
-            {
-                ui->cDownload->setChecked(false);
-                this->on_cDownload_clicked();
-                delete p;
-                break;
-            }
-
-            testNode = p;
-            p = megaApi->getParentNode(testNode);
-            delete testNode;
-        }
     }
     else
     {
