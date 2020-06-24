@@ -29,118 +29,137 @@
    <string notr="true">background-color: #FAFAFA;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>26</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>38</number>
+   </property>
+   <property name="topMargin">
+    <number>22</number>
+   </property>
+   <property name="rightMargin">
+    <number>38</number>
+   </property>
+   <property name="bottomMargin">
+    <number>17</number>
+   </property>
    <item>
     <widget class="QWidget" name="widgetHeader" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>36</height>
+       <height>16777215</height>
       </size>
      </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="topMargin">
-       <number>1</number>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>15</number>
       </property>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonWarning">
-       <property name="maximumSize">
-        <size>
-         <width>36</width>
-         <height>36</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resources_win.qrc">
-         <normaloff>:/images/icon_warning.png</normaloff>:/images/icon_warning.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>36</width>
-         <height>36</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelTitle">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-          <height>24</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="buttonWarning">
+        <property name="maximumSize">
+         <size>
+          <width>36</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_macx.qrc">
+          <normaloff>:/images/icon_warning.png</normaloff>:/images/icon_warning.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>36</width>
+          <height>36</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelTitle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>335</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
           <family>SF UI Text</family>
           <pointsize>-1</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
+         </font>
+        </property>
+        <property name="styleSheet">
          <string notr="true">#labelTitle
 {
   color: #333333;
   font-family: &quot;SF UI Text&quot;;
   font-size: 20px;
-  line-height: 24px;
 }</string>
-       </property>
-       <property name="text">
-        <string>Syncs are temporarily disable</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -171,16 +190,37 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageStorageFull">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
         <height>100</height>
        </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QPushButton" name="buttonBigIcon">
          <property name="minimumSize">
@@ -202,7 +242,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_win.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/storage_full_100.png</normaloff>:/images/storage_full_100.png</iconset>
          </property>
          <property name="iconSize">
@@ -217,18 +257,33 @@
      </widget>
      <widget class="QWidget" name="pageBandwidthFull">
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="minimumSize">
           <size>
-           <width>100</width>
-           <height>100</height>
+           <width>94</width>
+           <height>94</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>100</width>
-           <height>100</height>
+           <width>94</width>
+           <height>94</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -238,7 +293,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_win.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/transfers_empty.png</normaloff>:/images/transfers_empty.png</iconset>
          </property>
          <property name="iconSize">
@@ -277,7 +332,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>60</height>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -286,12 +341,14 @@
 	color: #242424;
 	font-family: &quot;SF UI Text&quot;;
 	font-size: 12px;
-	line-height:120;
 	qproperty-alignment: AlignCenter;
 }</string>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You have exceed the available storage space for your account. You can add &lt;br&gt; syncs but they will remain disable until there is enought space in your&lt;br&gt;account.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string/>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
      <property name="margin">
       <number>0</number>
@@ -314,6 +371,15 @@
    <item>
     <widget class="QWidget" name="widgetButtons" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>22</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
       <item>
        <spacer name="horizontalSpacer_3">
         <property name="orientation">
@@ -396,23 +462,10 @@ boder-color:#00AC94;
      </layout>
     </widget>
    </item>
-   <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>24</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
