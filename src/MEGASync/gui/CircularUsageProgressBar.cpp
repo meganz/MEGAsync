@@ -94,7 +94,7 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
         factor *= factor_decrease;
         aux = aux / 10;
     }
-    int pixelSize = innerRadius * 0.33;
+    int pixelSize = innerRadius * 0.30;
     f.setPixelSize( std::max(5.0, floor(pixelSize * factor)) );
     f.setFamily(QString::fromUtf8("Lato"));
     p.setFont(f);
@@ -159,7 +159,7 @@ void CircularUsageProgressBar::setValue(int value, bool unknownTotal)
         }
         else
         {
-            textValue = QString::number(value).append(QString::fromUtf8("%"));
+            textValue = tr("[A]%").replace(QStringLiteral("[A]"), QString::number(value));
         }
         pbValue = value;
         if (value >= CircularUsageProgressBar::MAXVALUE)
