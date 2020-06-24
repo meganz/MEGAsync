@@ -21,14 +21,18 @@ OverQuotaDialog::~OverQuotaDialog()
 
 std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDialogType type)
 {
+    QString styleLabelAperture{QString::fromUtf8("<p style=\"line-height: 20px;\">")};
+    QString styleLabelClosure{QString::fromUtf8("</p>")};
+
     auto dialog{mega::make_unique<OverQuotaDialog>()};
     if(type == OverquotaFullDialogType::storageFullSyncs)
     {
         dialog->setWindowTitle(tr("Storage full"));
         dialog->ui->labelTitle->setText(tr("Download syncs are temporarily disabled."));
-        dialog->ui->labelMessage->setText(tr("<html><head/><body><p>You have exceed the available storage space for your account."
-                                 " You can add<br>syncs but download transfers will remain queued until there is enought space"
-                                 " in your<br>account.</p></body></html>"));
+        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available storage space for your account."
+                                " You can add syncs but download transfers will remain queued until there is enough space"
+                                " in your account.")
+                                + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Buy more space"));
         dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageStorageFull);
     }
@@ -36,9 +40,10 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDial
     {
         dialog->setWindowTitle(tr("Storage full"));
         dialog->ui->labelTitle->setText(tr("Uploads are temporarily disabled."));
-        dialog->ui->labelMessage->setText(tr("<html><head/><body><p>You have exceed the available storage space for your account."
-                                 " You can add<br>uploads but transfers will remain queued until there is enough space"
-                                 " in your<br>account.</p></body></html>"));
+        dialog->ui->labelMessage->setText(styleLabelAperture +  tr("You have exceeded the available storage space for your account."
+                                 " You can add uploads but transfers will remain queued until there is enough space"
+                                 " in your account.")
+                                 + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Buy more space"));
         dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageStorageFull);
     }
@@ -46,18 +51,20 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDial
     {
         dialog->setWindowTitle(tr("Empty transfer quota"));
         dialog->ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
-        dialog->ui->labelMessage->setText(tr("<html><head/><body><p>You have exceed the available transfer quota for your account."
-                                 " You can add<br>syncs but downloads transfers will remain queued until there is enough bandwidth"
-                                 " in your<br>account.</p></body></html>"));
+        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+                                 " You can add syncs but downloads transfers will remain queued until there is enough bandwidth"
+                                 " in your account.")
+                                 + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
     }
     else if(type == OverquotaFullDialogType::bandwidthFullImportLink)
     {
         dialog->setWindowTitle(tr("Empty transfer quota"));
         dialog->ui->labelTitle->setText(tr("Importing links is temporarily disabled."));
-        dialog->ui->labelMessage->setText(tr("<html><head/><body><p>You have exceed the available transfer quota for your account."
-                                 " You can<br>import links but transfers will remain queued until there is enough bandwidth"
-                                 " in your<br>account.</p></body></html>"));
+        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+                                 " You can import links but transfers will remain queued until there is enough bandwidth"
+                                 " in your account.")
+                                 + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
         dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
     }
@@ -65,9 +72,10 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDial
     {
         dialog->setWindowTitle(tr("Empty transfer quota"));
         dialog->ui->labelTitle->setText(tr("Downloads are temporarily disabled."));
-        dialog->ui->labelMessage->setText(tr("<html><head/><body><p>You have exceed the available transfer quota for your account."
-                                 " You can add<br>downloads but transfers will remain queued until there is enough bandwidth"
-                                 " in your<br>account.</p></body></html>"));
+        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+                                 " You can add downloads but transfers will remain queued until there is enough bandwidth"
+                                 " in your account.")
+                                 + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
         dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
     }
@@ -75,9 +83,10 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDial
     {
         dialog->setWindowTitle(tr("Empty transfer quota"));
         dialog->ui->labelTitle->setText(tr("Streams are temporarily disabled."));
-        dialog->ui->labelMessage->setText(tr("<html><head/><body><p>You have exceed the available transfer quota for your account."
-                                 " You can add<br>streams but transfers will remain queued until there is enough bandwidth"
-                                 " in your<br>account.</p></body></html>"));
+        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+                                 " You can add streams but transfers will remain queued until there is enough bandwidth"
+                                 " in your account.")
+                                 + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
         dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
     }
@@ -85,9 +94,10 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDial
     {
         dialog->setWindowTitle(tr("Empty transfer quota and storage full"));
         dialog->ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
-        dialog->ui->labelMessage->setText(tr("<html><head/><body><p>You have exceed the available transfer quota for your account."
-                                 " You can add<br>syncs but transfers will remain queued until there is enough bandwidth"
-                                 " in your<br>account.</p></body></html>"));
+        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+                                 " You can add syncs but transfers will remain queued until there is enough bandwidth"
+                                 " in your account.")
+                                 + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
         dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageStorageFull);
     }
