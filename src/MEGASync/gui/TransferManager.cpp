@@ -372,7 +372,6 @@ void TransferManager::on_bAdd_clicked()
     emit userActivity();
 
     auto menuWidthInitialPopup = addMenu->sizeHint().width();
-    auto displayedMenu = addMenu;
     QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
     QPoint p = !point.isNull() ? point - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
 
@@ -388,15 +387,14 @@ void TransferManager::on_bAdd_clicked()
     // Menu width might be incorrect the first time it's shown. This works around that and repositions the menu at the expected position afterwards
     if (!point.isNull())
     {
-        QPoint pointValue = point;
-        QTimer::singleShot(1, displayedMenu, [displayedMenu, pointValue, menuWidthInitialPopup] () {
-            displayedMenu->update();
-            displayedMenu->ensurePolished();
-            if (menuWidthInitialPopup != displayedMenu->sizeHint().width())
+        QTimer::singleShot(1, addMenu, [=] () {
+            addMenu->update();
+            addMenu->ensurePolished();
+            if (menuWidthInitialPopup != addMenu->sizeHint().width())
             {
-                QPoint p = pointValue  - QPoint(displayedMenu->sizeHint().width(), 0);
-                displayedMenu->update();
-                displayedMenu->popup(p);
+                QPoint p = point  - QPoint(addMenu->sizeHint().width(), 0);
+                addMenu->update();
+                addMenu->popup(p);
             }
         });
     }
