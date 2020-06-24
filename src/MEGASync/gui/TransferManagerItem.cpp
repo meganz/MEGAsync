@@ -263,19 +263,19 @@ void TransferManagerItem::updateTransfer()
 
     // Update transferred bytes
     const auto totalBytesText{Utilities::getSizeString(totalSize)};
-    const auto totoalBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalBytesText)};
+    const auto totalBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalBytesText)};
     if(totalTransferredBytes)
     {
         const auto totalTransferredBytesText{Utilities::getSizeString(totalTransferredBytes)};
         const auto totalTransferredBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalTransferredBytesText)};
         auto transferredBytesText{tr("%1 of %2")};
         transferredBytesText.replace(QStringLiteral("%1"), totalTransferredBytesStyled);
-        transferredBytesText.replace(QStringLiteral("%2"), totoalBytesStyled);
+        transferredBytesText.replace(QStringLiteral("%2"), totalBytesStyled);
         ui->lTotal->setText(transferredBytesText);
     }
     else
     {
-        ui->lTotal->setText(totoalBytesStyled);
+        ui->lTotal->setText(totalBytesStyled);
     }
 
 }
