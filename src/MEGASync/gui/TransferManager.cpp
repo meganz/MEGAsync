@@ -190,12 +190,14 @@ void TransferManager::createAddMenu()
         {
             addMenu->removeAction(actions[i]);
         }
+#ifdef _WIN32
+        addMenu->deleteLater();
+#endif
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
 #endif
     {
-        addMenu->deleteLater();
         addMenu = new QMenu(this);
 #ifdef __APPLE__
         addMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
