@@ -195,6 +195,7 @@ void TransferManager::createAddMenu()
     else
 #endif
     {
+        addMenu->deleteLater();
         addMenu = new QMenu(this);
 #ifdef __APPLE__
         addMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
@@ -371,13 +372,15 @@ void TransferManager::on_bAdd_clicked()
 {
     emit userActivity();
 
-    auto menuWidthInitialPopup = addMenu->sizeHint().width();
-    QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
-    QPoint p = !point.isNull() ? point - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
-
 #ifdef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     createAddMenu();
 #endif
+
+    auto menuWidthInitialPopup = addMenu->sizeHint().width();
+    auto displayedMenu = addMenu;
+    QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
+    QPoint p = !point.isNull() ? point - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
+
 
 #ifdef __APPLE__
     addMenu->exec(p);
@@ -387,14 +390,15 @@ void TransferManager::on_bAdd_clicked()
     // Menu width might be incorrect the first time it's shown. This works around that and repositions the menu at the expected position afterwards
     if (!point.isNull())
     {
-        QTimer::singleShot(1, addMenu, [=] () {
-            addMenu->update();
-            addMenu->ensurePolished();
-            if (menuWidthInitialPopup != addMenu->sizeHint().width())
+        QPoint pointValue = point;
+        QTimer::singleShot(1, displayedMenu, [displayedMenu, pointValue, menuWidthInitialPopup] () {
+            displayedMenu->update();
+            displayedMenu->ensurePolished();
+            if (menuWidthInitialPopup != displayedMenu->sizeHint().width())
             {
-                QPoint p = point  - QPoint(addMenu->sizeHint().width(), 0);
-                addMenu->update();
-                addMenu->popup(p);
+                QPoint p = pointValue - QPoint(displayedMenu->sizeHint().width(), 0);
+                displayedMenu->update();
+                displayedMenu->popup(p);
             }
         });
     }
