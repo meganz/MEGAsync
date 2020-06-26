@@ -39,7 +39,7 @@ border: 1px solid rgba(0,0,0,0.05);
     <number>12</number>
    </property>
    <property name="topMargin">
-    <number>32</number>
+    <number>15</number>
    </property>
    <property name="rightMargin">
     <number>12</number>
