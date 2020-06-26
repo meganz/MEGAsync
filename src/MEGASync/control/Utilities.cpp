@@ -865,7 +865,7 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     }
 
     QString readableTimes;
-    for (int it = 0; it < list->size() ; it++)
+    for (int it = qMax(0, list->size() - 3); it < list->size() ; it++)//Display only the most recet 3 times
     {
         int64_t ts = list->get(it);
         QDateTime date = QDateTime::fromTime_t(ts);
@@ -873,8 +873,7 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
 
         if (it != list->size() - 1)
         {
-            it == list->size() - 2 ? readableTimes.append(QStringLiteral(" ") + QCoreApplication::translate("Utilities","and") + QStringLiteral(" "))
-                                   : readableTimes.append(QStringLiteral(", "));
+            readableTimes.append(QStringLiteral(", "));
         }
     }
 
