@@ -6888,8 +6888,7 @@ void MegaApplication::createAppMenus()
             connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
                     QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
 #else
-            connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
-                    static_cast<void(InfoDialog::*)()>(&InfoDialog::addSync), Qt::QueuedConnection);
+            connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
 #endif
         }
         else
