@@ -784,6 +784,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>CircularUsageProgressBar</name>
+    <message>
+        <source>[A]%</source>
+        <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
+        <translation type="unfinished">[A]%</translation>
+    </message>
+</context>
+<context>
     <name>ConfirmSSLexception</name>
     <message>
         <source>Warning</source>
