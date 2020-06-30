@@ -796,5 +796,8 @@
         <file>images/icon_warning.png</file>
         <file>images/icon_warning@2x.png</file>
         <file>images/icon_warning@3x.png</file>
+        <file>images/icon_paywall_warning.png</file>
+        <file>images/icon_paywall_warning@2x.png</file>
+        <file>images/icon_paywall_warning@3x.png</file>
     </qresource>
 </RCC>

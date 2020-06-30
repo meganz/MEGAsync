@@ -1795,6 +1795,31 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 used</translation>
     </message>
+    <message>
+        <source>Your data is at risk!</source>
+        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation type="unfinished">Your data is at risk!</translation>
+    </message>
+    <message>
+        <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
+        <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
+        <translation type="unfinished">We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</translation>
+    </message>
+    <message>
+        <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to informa about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of days left to upgrade.</translatorcomment>
+        <translation type="unfinished">You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+    </message>
+    <message>
+        <source>Upgrade account</source>
+        <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
+        <translation type="unfinished">Upgrade account</translation>
+    </message>
+    <message>
+        <source>You must act immediately to save your data</source>
+        <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
+        <translation type="unfinished">You must act immediately to save your data</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -2826,6 +2851,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Transferring</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
         <translation type="unfinished">Transferring</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation type="unfinished">Your data is at risk</translation>
+    </message>
+    <message>
+        <source>You have [A] days left to save your data</source>
+        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
+        <translation type="unfinished">You have [A] days left to save your data</translation>
     </message>
 </context>
 <context>
@@ -6002,6 +6037,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>and</source>
+        <translatorcomment>Conjunction</translatorcomment>
+        <translation type="unfinished">and</translation>
     </message>
 </context>
 <context>

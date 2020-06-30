@@ -25,6 +25,11 @@ using namespace mega;
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, QString> Utilities::languageNames;
 
+const unsigned long long KB = 1024;
+const unsigned long long MB = 1024 * KB;
+const unsigned long long GB = 1024 * MB;
+const unsigned long long TB = 1024 * GB;
+
 void Utilities::initializeExtensions()
 {
     extensionIcons[QString::fromAscii("3ds")] = extensionIcons[QString::fromAscii("3dm")]  = extensionIcons[QString::fromAscii("max")] =
@@ -515,11 +520,6 @@ QString Utilities::getFinishedTimeString(long long secs)
 
 QString Utilities::getSizeString(unsigned long long bytes)
 {
-    unsigned long long KB = 1024;
-    unsigned long long MB = 1024 * KB;
-    unsigned long long GB = 1024 * MB;
-    unsigned long long TB = 1024 * GB;
-
     QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
     QLocale locale(language);
     if (bytes >= TB)
@@ -828,6 +828,79 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
     }
 }
 
+QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
+{
+    if (!pricing)
+    {
+        return QString::fromUtf8("PRO");
+    }
+
+    int planNeeded = -1;
+    int amountPlanNeeded = 0;
+    int products = pricing->getNumProducts();
+    for (int i = 0; i < products; i++)
+    {
+        if (pricing->getMonths(i) == 1)
+        {
+            if (usedStorage < (pricing->getGBStorage(i) * GB))
+            {
+                int currentAmountMonth = pricing->getAmountMonth(i);
+                if (planNeeded == -1 || currentAmountMonth < amountPlanNeeded)
+                {
+                    planNeeded = i;
+                    amountPlanNeeded = currentAmountMonth;
+                }
+            }
+        }
+    }
+
+    return getReadablePROplanFromId(pricing->getProLevel(planNeeded));
+}
+
+QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
+{
+    if (!list || !list->size())
+    {
+        return QString();
+    }
+
+    QString readableTimes;
+    for (int it = qMax(0, list->size() - 3); it < list->size() ; it++)//Display only the most recet 3 times
+    {
+        int64_t ts = list->get(it);
+        QDateTime date = QDateTime::fromTime_t(ts);
+        readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
+
+        if (it != list->size() - 1)
+        {
+            readableTimes.append(QStringLiteral(", "));
+        }
+    }
+
+    return readableTimes;
+}
+
+QString Utilities::getReadablePROplanFromId(int identifier)
+{
+    switch (identifier)
+    {
+        case MegaAccountDetails::ACCOUNT_TYPE_LITE:
+            return QString::fromUtf8("PRO LITE");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROI:
+            return QString::fromUtf8("PRO I");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROII:
+            return QString::fromUtf8("PRO II");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
+            return QString::fromUtf8("PRO III");
+            break;
+    }
+
+    return QString::fromUtf8("PRO");
+}
+
 void Utilities::animatePartialFadein(QWidget *object, int msecs)
 {
     animateProperty(object, msecs, "opacity", 0.5, 1.0);
@@ -848,7 +921,21 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
     animation->setEndValue(endValue);
     animation->setEasingCurve(curve);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
-};
+}
+
+int Utilities::getDaysToTimestamp(int64_t msecsTimestamps)
+{
+    if (!msecsTimestamps)
+    {
+        return -1;
+    }
+
+    QDateTime currentDate(QDateTime::currentDateTime());
+    QDateTime tsOQ = QDateTime::fromMSecsSinceEpoch(msecsTimestamps);
+    int daysExpired = currentDate.daysTo(tsOQ);
+
+    return daysExpired;//Negative if tsOQ is earlier than currentDate
+}
 
 long long Utilities::getSystemsAvailableMemory()
 {

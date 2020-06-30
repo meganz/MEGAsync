@@ -808,6 +808,43 @@ void InfoDialog::updateDialogState()
     updateState();
     switch (storageState)
     {
+        case Preferences::STATE_PAYWALL:
+        {
+            MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
+            const char *email = megaApi->getMyEmail();
+
+            QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
+                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
+                    .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
+                    .replace(QString::fromUtf8("[C]"), QString::number(megaApi->getNumNodes()))
+                    .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
+                    .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(static_cast<MegaApplication *>(qApp)->getPricing(), preferences->usedStorage()))
+                    + QString::fromUtf8("</p>");
+            ui->lOverDiskQuotaLabel->setText(overDiskText);
+
+            const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
+            if (daysToExpire > 0)
+            {
+                ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
+                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                        .replace(QString::fromUtf8("[B]"), QString::number(daysToExpire))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                        + QString::fromUtf8("</p>"));
+            }
+            else
+            {
+                ui->lWarningOverDiskQuota->setText(tr("You must act immediately to save your data"));
+            }
+
+
+            delete tsWarnings;
+            delete [] email;
+
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverDiskQuotaPaywall);
+            overlay->setVisible(false);
+            ui->wPSA->hidePSA();
+            break;
+        }
         case Preferences::STATE_ALMOST_OVER_STORAGE:
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
             ui->bOQIcon->setIconSize(QSize(64,64));
@@ -888,6 +925,11 @@ void InfoDialog::on_bUpgrade_clicked()
     QString url = QString::fromUtf8("mega://#pro");
     Utilities::getPROurlWithParameters(url);
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+}
+
+void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
+{
+    on_bUpgrade_clicked();
 }
 
 void InfoDialog::openFolder(QString path)
