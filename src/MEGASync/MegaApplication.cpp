@@ -2279,9 +2279,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                 }
             }
             checkOverStorageStates();
-
             appliedStorageState = storageState;
-
         }
     }
 }
@@ -2902,7 +2900,7 @@ void MegaApplication::checkOverStorageStates()
                 storageOverquotaDialog->raise();
             }
         }
-        else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
+        else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
