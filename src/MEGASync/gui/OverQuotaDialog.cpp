@@ -10,7 +10,7 @@ OverQuotaDialog::OverQuotaDialog(QWidget *parent) :
     ui(new Ui::OverquotaFullDialog)
 {
     ui->setupUi(this);
-    connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::accept);
+    connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::reject);
     connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
 }
 
@@ -111,5 +111,5 @@ void OverQuotaDialog::onUpgradeClicked()
     auto url{QString::fromUtf8("mega://#pro")};
     Utilities::getPROurlWithParameters(url);
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-    QDialog::reject();
+    QDialog::accept();
 }

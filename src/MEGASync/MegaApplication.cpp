@@ -5171,7 +5171,7 @@ void MegaApplication::uploadActionClicked()
         preferences->setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::now()+overquotaDialogDisableTime);
         const auto storageFullDialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::storageFullUploads)};
         const auto result{storageFullDialog->exec()};
-        if(result == QDialog::Rejected)
+        if(result == QDialog::Accepted)
         {
             return;
         }
@@ -5256,7 +5256,7 @@ bool MegaApplication::showSyncOverquotaDialog()
         preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+overquotaDialogDisableTime);
         const auto dialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::bandwidthFullSync)};
         const auto result{dialog->exec()};
-        if(result == QDialog::Rejected)
+        if(result == QDialog::Accepted)
         {
             return false;
         }
@@ -5268,7 +5268,7 @@ bool MegaApplication::showSyncOverquotaDialog()
         preferences->setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::now()+overquotaDialogDisableTime);
         const auto dialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::storageFullSyncs)};
         const auto result{dialog->exec()};
-        if(result == QDialog::Rejected)
+        if(result == QDialog::Accepted)
         {
             return false;
         }
@@ -5280,7 +5280,7 @@ bool MegaApplication::showSyncOverquotaDialog()
         preferences->setStorageAndTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+overquotaDialogDisableTime);
         const auto dialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::storageAndBandwidthFullSyncs)};
         const auto result{dialog->exec()};
-        if(result == QDialog::Rejected)
+        if(result == QDialog::Accepted)
         {
             return false;
         }
