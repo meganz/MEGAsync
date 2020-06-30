@@ -69,7 +69,7 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDial
         dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
         dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
     }
-    else if(type == OverquotaFullDialogType::bandwidthFullDownlads)
+    else if(type == OverquotaFullDialogType::bandwidthFullDownloads)
     {
         dialog->setWindowTitle(tr("Empty transfer quota"));
         dialog->ui->labelTitle->setText(tr("Downloads are temporarily disabled."));

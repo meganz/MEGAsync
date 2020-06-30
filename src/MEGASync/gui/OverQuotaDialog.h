@@ -11,7 +11,7 @@ class OverquotaFullDialog;
 enum class OverquotaFullDialogType
 {
     storageFullUploads, storageFullSyncs,
-    bandwidthFullDownlads, bandwidthFullImportLink, bandwidthFullSync, bandwidthFullStream,
+    bandwidthFullDownloads, bandwidthFullImportLink, bandwidthFullSync, bandwidthFullStream,
     storageAndBandwidthFullSyncs
 };
 

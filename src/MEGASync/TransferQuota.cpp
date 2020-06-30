@@ -221,7 +221,7 @@ bool TransferQuota::checkDownloadAlertDismissed()
     if(isOverQuota() && dialogEnabled)
     {
         preferences->setTransferOverQuotaDownloadsDialogDisabledUntil(time->now()+overquotaDialogDisableTime);
-        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::bandwidthFullDownlads)};
+        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::bandwidthFullDownloads)};
         dismissed = bandwidthFullDialog->exec() == QDialog::Accepted;
     }
     return dismissed;

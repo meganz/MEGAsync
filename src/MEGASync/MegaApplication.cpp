@@ -2506,7 +2506,10 @@ void MegaApplication::closeDialogs()
     delete sslKeyPinningError;
     sslKeyPinningError = NULL;
 
-    transferQuota->closeDialogs();
+    if(transferQuota)
+    {
+        transferQuota->closeDialogs();
+    }
 
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
@@ -3078,7 +3081,6 @@ void MegaApplication::cleanAll()
     removeAllFinishedTransfers();
     clearViewedTransfers();
 
-    transferQuota->closeDialogs();
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
     delete infoWizard;
@@ -5508,7 +5510,7 @@ void MegaApplication::updateTrayIconMenu()
         trayIcon->setContextMenu(nullptr); //prevents duplicated context menu in qt 5.12.8 64 bits
 
         if (preferences && preferences->logged() && getRootNode()
-                && !transferQuota->isOverQuota() && !blockState)
+                && transferQuota && !transferQuota->isOverQuota() && !blockState)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
             trayIcon->setContextMenu(windowsMenu?windowsMenu.get():&emptyMenu);
