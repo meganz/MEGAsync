@@ -56,6 +56,7 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDial
                                  " in your account.")
                                  + styleLabelClosure);
         dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
+        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
     }
     else if(type == OverquotaFullDialogType::bandwidthFullImportLink)
     {
