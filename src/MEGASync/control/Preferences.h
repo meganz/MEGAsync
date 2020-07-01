@@ -157,8 +157,6 @@ public:
     virtual void setTransferAlmostOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint);
     virtual std::chrono::system_clock::time_point getTransferAlmostOverQuotaUiAlertDisableUntil();
     void setTransferAlmostOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    virtual std::chrono::system_clock::time_point getTransferOverQuotaWaitUntil();
-    virtual void setTransferOverQuotaWaitUntil(std::chrono::system_clock::time_point timepoint);
 
     virtual std::chrono::system_clock::time_point getTransferOverQuotaSyncDialogDisableUntil();
     virtual void setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
@@ -177,16 +175,6 @@ public:
 
     int getStorageState();
     void setStorageState(int value);
-
-    enum class QuotaState
-    {
-        OK = 0,
-        WARNING,
-        FULL
-    };
-
-    virtual QuotaState getTransferQuotaState();
-    virtual void setTransferQuotaState(QuotaState state);
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -456,11 +444,11 @@ public:
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
 
-    static std::chrono::minutes overquotaDialogDisableDuration;
-    static std::chrono::minutes overquotaNotificationDisableDuration;
-    static std::chrono::minutes overquotaUiMessageDisableDuration;
-    static std::chrono::minutes almostOverquotaUiMessageDisableDuration;
-    static std::chrono::minutes almostOverquotaOsNotificationDisableDuration;
+    static std::chrono::minutes OVERQUOTA_DIALOG_DISABLE_DURATION;
+    static std::chrono::minutes OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::minutes OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
+    static std::chrono::minutes ALMOST_OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
+    static std::chrono::minutes ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
 
     static int STATE_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
@@ -553,7 +541,6 @@ protected:
     std::chrono::system_clock::time_point transferAlmostOverQuotaOsNotificationDisabledUntil;
     std::chrono::system_clock::time_point transferAlmostOverQuotaUiAlertDisabledUntil;
     std::chrono::system_clock::time_point transferOverQuotaUiAlertDisableUntil;
-    std::chrono::system_clock::time_point transferOverQuotaWaitUntil;
     long long lastTransferNotification;
     std::chrono::system_clock::time_point transferOverQuotaSyncDialogDisabledUntil;
     std::chrono::system_clock::time_point transferOverQuotaDownloadsDialogDisabledUntil;
@@ -598,7 +585,6 @@ protected:
     static const QString transferAlmostOverQuotaOsNotificationDisabledUntilKey;
     static const QString transferAlmostOverQuotaUiAlertDisabledUntilKey;
     static const QString transferOverQuotaUiAlertDisableUntilKey;
-    static const QString transferQuotaStateKey;
     static const QString transferOverQuotaWaitUntilKey;
     static const QString storageStateQKey;
     static const QString transferOverQuotaSyncDialogDisabledUntilKey;

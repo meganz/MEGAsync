@@ -1,6 +1,5 @@
 #pragma once
 
-#include "InfoDialog.h"
 #include "Preferences.h"
 #include "notificator.h"
 #include <memory>
@@ -20,6 +19,13 @@ constexpr auto EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{98531};
 constexpr auto EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{"Transfer almost over quota os notification shown"};
 constexpr auto ALMOST_OVER_QUOTA_PER_CENT{90};
 constexpr auto OVER_QUOTA_DIALOGS_DISABLE_TIME{std::chrono::hours{12}};
+
+enum class QuotaState
+{
+    OK = 0,
+    WARNING,
+    FULL
+};
 
 class TransferQuota: public QObject
 {
@@ -48,6 +54,8 @@ private:
     Notificator *notificator;
     UpgradeDialog* upgradeDialog;
     bool upgradeDialogEventEnabled;
+    QuotaState quotaState;
+    std::chrono::system_clock::time_point waitTimeUntil;
 
     void sendNotification(const QString& title);
     void sendQuotaWarningOsNotification();
@@ -67,5 +75,5 @@ public slots:
 signals:
     void almostOverQuotaUiMessage();
     void overQuotaUiMessage();
-    void sendState(Preferences::QuotaState state);
+    void sendState(QuotaState state);
 };

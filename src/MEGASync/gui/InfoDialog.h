@@ -15,6 +15,7 @@
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
+#include "TransferQuota.h"
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
@@ -125,7 +126,7 @@ public slots:
 
    void enableTransferOverquotaAlert();
    void enableTransferAlmostOverquotaAlert();
-   void setBandwidthOverquotaState(Preferences::QuotaState state);
+   void setBandwidthOverquotaState(QuotaState state);
 
 private slots:
     void on_bSettings_clicked();
@@ -201,7 +202,7 @@ private:
     bool transferOverquotaAlertEnabled;
     bool transferAlmostOverquotaAlertEnabled;
     int storageState;
-    Preferences::QuotaState transferOverquotaState;
+    QuotaState transferOverquotaState;
     int actualAccountType;
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;
