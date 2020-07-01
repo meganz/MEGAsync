@@ -13,8 +13,6 @@
 #include <chrono>
 
 Q_DECLARE_METATYPE(QList<long long>)
-Q_DECLARE_METATYPE(std::chrono::steady_clock::time_point)
-constexpr auto overquotaDialogDisableTime{std::chrono::hours{12}};
 
 class Preferences : public QObject
 {
@@ -27,7 +25,6 @@ signals:
 private:
     static Preferences *preferences;
     Preferences();
-    friend class MockPreferences;
 
     std::map<QString, QVariant> cache;
 
@@ -183,9 +180,9 @@ public:
 
     enum class QuotaState
     {
-        ok,
-        warning,
-        full
+        OK = 0,
+        WARNING,
+        FULL
     };
 
     virtual QuotaState getTransferQuotaState();

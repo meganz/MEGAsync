@@ -440,7 +440,7 @@ void InfoDialog::setUsage()
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         QString usageColor;
-        if(transferOverquotaState == Preferences::QuotaState::ok)
+        if(transferOverquotaState == Preferences::QuotaState::OK)
         {
             ui->wCircularQuota->setEmptyBarTotalValueUnknown();
             usageColor = QString::fromUtf8("#666666");
@@ -862,7 +862,7 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferOverquotaState == Preferences::QuotaState::warning &&
+    else if(transferOverquotaState == Preferences::QuotaState::WARNING &&
             transferAlmostOverquotaAlertEnabled)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfers_empty.png")));
@@ -875,7 +875,7 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferOverquotaState == Preferences::QuotaState::full &&
+    else if(transferOverquotaState == Preferences::QuotaState::FULL &&
             transferOverquotaAlertEnabled)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfers_empty.png")));
@@ -1219,7 +1219,7 @@ void InfoDialog::reset()
 
     transferOverquotaAlertEnabled = false;
     transferAlmostOverquotaAlertEnabled = false;
-    transferOverquotaState = Preferences::QuotaState::ok;
+    transferOverquotaState = Preferences::QuotaState::OK;
 }
 
 QCustomTransfersModel *InfoDialog::stealModel()
@@ -1803,12 +1803,12 @@ void InfoDialog::on_bDiscard_clicked()
         updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
         emit dismissStorageOverquota(overQuotaState);
     }
-    else if(transferOverquotaState == Preferences::QuotaState::full)
+    else if(transferOverquotaState == Preferences::QuotaState::FULL)
     {
         transferOverquotaAlertEnabled = false;
         emit dismissTransferOverquota();
     }
-    else if(transferOverquotaState == Preferences::QuotaState::warning)
+    else if(transferOverquotaState == Preferences::QuotaState::WARNING)
     {
         transferAlmostOverquotaAlertEnabled = false;
         emit dismissTransferAlmostOverquota();

@@ -3,23 +3,23 @@
 #include "InfoDialog.h"
 #include "Preferences.h"
 #include "notificator.h"
-#include "TimeWrapper.h"
 #include <memory>
 #include "UpgradeDialog.h"
 #include <QObject>
 
 // Events
-constexpr auto eventIdTransferOverQuotaDialog{98526};
-constexpr auto eventMessageTransferOverQuotaDialog{"Transfer over quota dialog shown"};
-constexpr auto eventIdTransferOverQuotaOsNotification{98527};
-constexpr auto eventMessageTransferOverQuotaOsNotification{"Transfer over quota os notification shown"};
-constexpr auto eventIdTransferOverQuotaUiAlert{98528};
-constexpr auto eventMessageTransferOverQuotaUiAlert{"Transfer over quota ui message shown"};
-constexpr auto eventIdTransferAlmostOverQuotaUiAlert{98529};
-constexpr auto eventMessageTransferAlmostQuotaUiAlert{"Transfer almost over quota ui message shown"};
-constexpr auto eventIdTransferAlmostOverQuotaOsNotification{98531};
-constexpr auto eventMessageTransferAlmostOverQuotaOsNotification{"Transfer almost over quota os notification shown"};
-constexpr auto almostOverquotaPercent{90};
+constexpr auto EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG{98526};
+constexpr auto EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG{"Transfer over quota dialog shown"};
+constexpr auto EVENT_ID_TRANSFER_OVER_QUOTA_OS_NOTIFICATION{98527};
+constexpr auto EVENT_MESSAGE_TRANSFER_OVER_QUOTA_OS_NOTIFICATION{"Transfer over quota os notification shown"};
+constexpr auto EVENT_ID_TRANSFER_OVER_QUOTA_UI_ALERT{98528};
+constexpr auto EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT{"Transfer over quota ui message shown"};
+constexpr auto EVENT_ID_TRANSFER_ALMOST_QUOTA_UI_ALERT{98529};
+constexpr auto EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT{"Transfer almost over quota ui message shown"};
+constexpr auto EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{98531};
+constexpr auto EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{"Transfer almost over quota os notification shown"};
+constexpr auto ALMOST_OVER_QUOTA_PER_CENT{90};
+constexpr auto OVER_QUOTA_DIALOGS_DISABLE_TIME{std::chrono::hours{12}};
 
 class TransferQuota: public QObject
 {
@@ -27,8 +27,6 @@ class TransferQuota: public QObject
 public:
     TransferQuota(mega::MegaApi* megaApi, Preferences *preferences,
                        Notificator *notificator);
-    TransferQuota(mega::MegaApi* megaApi, Preferences *preferences,
-                       Notificator *notificator, std::shared_ptr<Time> time);
 
     void setOverQuota(std::chrono::milliseconds waitTime);
     void setQuotaOk();
@@ -48,7 +46,6 @@ private:
     mega::MegaPricing* pricing;
     Preferences* preferences;
     Notificator *notificator;
-    std::shared_ptr<Time> time;
     UpgradeDialog* upgradeDialog;
     bool upgradeDialogEventEnabled;
 

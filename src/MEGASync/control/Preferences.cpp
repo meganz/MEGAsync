@@ -1457,7 +1457,7 @@ Preferences::QuotaState Preferences::getTransferQuotaState()
 {
     QMutexLocker locker(&mutex);
     assert(logged());
-    int value = getValue<int>(transferQuotaStateKey, static_cast<int>(Preferences::QuotaState::ok));
+    int value = getValue<int>(transferQuotaStateKey, static_cast<int>(Preferences::QuotaState::OK));
     return static_cast<Preferences::QuotaState>(value);
 }
 

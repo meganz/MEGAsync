@@ -99,7 +99,6 @@ public:
 
 private:
     InfoDialog() = default;
-    friend class MockInfoDialog;
     void drawAvatar(QString email);
     void animateStates(bool opt);
     void updateTransfersCount();

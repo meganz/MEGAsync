@@ -184,7 +184,6 @@ endif()
 
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
-    ${MEGAsyncDir}/TimeWrapper.h
     ${MEGAsyncDir}/TransferQuota.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
@@ -322,12 +321,12 @@ endif()
 
 set (SRCS 
     ${MEGAsyncDir}/MegaApplication.cpp
-    ${MEGAsyncDir}/TimeWrapper.cpp
-    ${MEGAsyncDir}/TransferQuota.cpp
 
     ${FORMS}
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
+
+    ${MEGAsyncDir}/TransferQuota.cpp
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
