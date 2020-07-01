@@ -1041,7 +1041,7 @@ margin-right: 4px;
                                <property name="maximumSize">
                                 <size>
                                  <width>52</width>
-                                 <height>44</height>
+                                 <height>50</height>
                                 </size>
                                </property>
                               </widget>
@@ -1215,29 +1215,29 @@ margin-bottom: 12px;
                               <property name="minimumSize">
                                <size>
                                 <width>52</width>
-                                <height>44</height>
+                                <height>50</height>
                                </size>
                               </property>
                               <property name="maximumSize">
                                <size>
                                 <width>52</width>
-                                <height>44</height>
+                                <height>50</height>
                                </size>
                               </property>
                               <property name="currentIndex">
-                               <number>1</number>
+                               <number>0</number>
                               </property>
                               <widget class="CircularUsageProgressBar" name="wCircularQuota">
                                <property name="minimumSize">
                                 <size>
                                  <width>52</width>
-                                 <height>44</height>
+                                 <height>50</height>
                                 </size>
                                </property>
                                <property name="maximumSize">
                                 <size>
                                  <width>52</width>
-                                 <height>44</height>
+                                 <height>50</height>
                                 </size>
                                </property>
                               </widget>
