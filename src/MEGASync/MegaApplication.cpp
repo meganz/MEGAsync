@@ -4299,17 +4299,16 @@ void MegaApplication::checkFirstTransfer()
         {//thread pool function
 
             MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+            if (nextTransfer)
+            {
+                Utilities::queueFunctionInAppThread([=]()
+                {//queued function
 
-            Utilities::queueFunctionInAppThread([=]()
-            {//queued function
-
-                if (nextTransfer)
-                {
                     onTransferUpdate(megaApi, nextTransfer);
                     delete nextTransfer;
-                }
-            });//end of queued function
 
+                });//end of queued function
+            }
         });// end of thread pool function
     }
 }
