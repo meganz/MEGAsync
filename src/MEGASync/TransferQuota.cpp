@@ -204,7 +204,7 @@ bool TransferQuota::checkImportLinksAlertDismissed()
     if(isOverQuota() && dialogEnabled)
     {
         preferences->setTransferOverQuotaImportLinksDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::bandwidthFullImportLink)};
+        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK)};
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
     return dismissed;
@@ -217,7 +217,7 @@ bool TransferQuota::checkDownloadAlertDismissed()
     if(isOverQuota() && dialogEnabled)
     {
         preferences->setTransferOverQuotaDownloadsDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::bandwidthFullDownloads)};
+        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD)};
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
     return dismissed;
@@ -230,7 +230,7 @@ bool TransferQuota::checkStreamingAlertDismissed()
     if(isOverQuota() && dialogEnabled)
     {
         preferences->setTransferOverQuotaStreamDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::bandwidthFullStream)};
+        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_STREAM)};
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
     return dismissed;

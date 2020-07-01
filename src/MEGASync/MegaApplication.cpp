@@ -5169,7 +5169,7 @@ void MegaApplication::uploadActionClicked()
     if(storageState == MegaApi::STORAGE_STATE_RED && dialogEnabled)
     {
         preferences->setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto storageFullDialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::storageFullUploads)};
+        const auto storageFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_UPLOAD)};
         const auto result{storageFullDialog->exec()};
         if(result == QDialog::Accepted)
         {
@@ -5254,7 +5254,7 @@ bool MegaApplication::showSyncOverquotaDialog()
     if(transferQuota->isOverQuota() && !storageFull && dialogEnabled)
     {
         preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto dialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::bandwidthFullSync)};
+        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWITH_SYNC)};
         const auto result{dialog->exec()};
         if(result == QDialog::Accepted)
         {
@@ -5266,7 +5266,7 @@ bool MegaApplication::showSyncOverquotaDialog()
     if(storageFull && !transferQuota->isOverQuota() && dialogEnabled)
     {
         preferences->setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto dialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::storageFullSyncs)};
+        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_SYNCS)};
         const auto result{dialog->exec()};
         if(result == QDialog::Accepted)
         {
@@ -5278,7 +5278,7 @@ bool MegaApplication::showSyncOverquotaDialog()
     if(storageFull && transferQuota->isOverQuota() && dialogEnabled)
     {
         preferences->setStorageAndTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto dialog{OverQuotaDialog::createDialog(OverquotaFullDialogType::storageAndBandwidthFullSyncs)};
+        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_BANDWIDTH_SYNC)};
         const auto result{dialog->exec()};
         if(result == QDialog::Accepted)
         {

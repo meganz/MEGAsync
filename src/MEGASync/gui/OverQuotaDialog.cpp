@@ -5,13 +5,15 @@
 #include <QtConcurrent/QtConcurrent>
 #include <QDesktopServices>
 
-OverQuotaDialog::OverQuotaDialog(QWidget *parent) :
+OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OverquotaFullDialog)
 {
     ui->setupUi(this);
     connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::reject);
     connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
+
+    configureDialog(type);
 }
 
 OverQuotaDialog::~OverQuotaDialog()
@@ -19,91 +21,93 @@ OverQuotaDialog::~OverQuotaDialog()
     delete ui;
 }
 
-std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverquotaFullDialogType type)
+std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverQuotaDialogType type)
 {
-    QString styleLabelAperture{QString::fromUtf8("<p style=\"line-height: 20px;\">")};
-    QString styleLabelClosure{QString::fromUtf8("</p>")};
+    return mega::make_unique<OverQuotaDialog>(type);
+}
 
-    auto dialog{mega::make_unique<OverQuotaDialog>()};
-    if(type == OverquotaFullDialogType::storageFullSyncs)
+void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
+{
+    const QString styleLabelAperture{QString::fromUtf8("<p style=\"line-height: 20px;\">")};
+    const QString styleLabelClosure{QString::fromUtf8("</p>")};
+
+    if(type == OverQuotaDialogType::STORAGE_SYNCS)
     {
-        dialog->setWindowTitle(tr("Storage full"));
-        dialog->ui->labelTitle->setText(tr("Download syncs are temporarily disabled."));
-        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available storage space for your account."
+        setWindowTitle(tr("Storage full"));
+        ui->labelTitle->setText(tr("Download syncs are temporarily disabled."));
+        ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available storage space for your account."
                                 " You can add syncs but download transfers will remain queued until there is enough space"
                                 " in your account.")
                                 + styleLabelClosure);
-        dialog->ui->buttonUpgrade->setText(tr("Buy more space"));
-        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageStorageFull);
+        ui->buttonUpgrade->setText(tr("Buy more space"));
+        ui->stackedWidgetBigIcons->setCurrentWidget(ui->pageStorageFull);
     }
-    else if(type == OverquotaFullDialogType::storageFullUploads)
+    else if(type == OverQuotaDialogType::STORAGE_UPLOAD)
     {
-        dialog->setWindowTitle(tr("Storage full"));
-        dialog->ui->labelTitle->setText(tr("Uploads are temporarily disabled."));
-        dialog->ui->labelMessage->setText(styleLabelAperture +  tr("You have exceeded the available storage space for your account."
+        setWindowTitle(tr("Storage full"));
+        ui->labelTitle->setText(tr("Uploads are temporarily disabled."));
+        ui->labelMessage->setText(styleLabelAperture +  tr("You have exceeded the available storage space for your account."
                                  " You can add uploads but transfers will remain queued until there is enough space"
                                  " in your account.")
                                  + styleLabelClosure);
-        dialog->ui->buttonUpgrade->setText(tr("Buy more space"));
-        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageStorageFull);
+        ui->buttonUpgrade->setText(tr("Buy more space"));
+        ui->stackedWidgetBigIcons->setCurrentWidget(ui->pageStorageFull);
     }
-    else if(type == OverquotaFullDialogType::bandwidthFullSync)
+    else if(type == OverQuotaDialogType::BANDWITH_SYNC)
     {
-        dialog->setWindowTitle(tr("Empty transfer quota"));
-        dialog->ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
-        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+        setWindowTitle(tr("Empty transfer quota"));
+        ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
+        ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can add syncs but downloads transfers will remain queued until there is enough bandwidth"
                                  " in your account.")
                                  + styleLabelClosure);
-        dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
-        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
+        ui->buttonUpgrade->setText(tr("Upgrade Account"));
+        ui->stackedWidgetBigIcons->setCurrentWidget(ui->pageBandwidthFull);
     }
-    else if(type == OverquotaFullDialogType::bandwidthFullImportLink)
+    else if(type == OverQuotaDialogType::BANDWIDTH_IMPORT_LINK)
     {
-        dialog->setWindowTitle(tr("Empty transfer quota"));
-        dialog->ui->labelTitle->setText(tr("Importing links is temporarily disabled."));
-        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+        setWindowTitle(tr("Empty transfer quota"));
+        ui->labelTitle->setText(tr("Importing links is temporarily disabled."));
+        ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can import links but transfers will remain queued until there is enough bandwidth"
                                  " in your account.")
                                  + styleLabelClosure);
-        dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
-        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
+        ui->buttonUpgrade->setText(tr("Upgrade Account"));
+        ui->stackedWidgetBigIcons->setCurrentWidget(ui->pageBandwidthFull);
     }
-    else if(type == OverquotaFullDialogType::bandwidthFullDownloads)
+    else if(type == OverQuotaDialogType::BANDWIDTH_DOWNLOAD)
     {
-        dialog->setWindowTitle(tr("Empty transfer quota"));
-        dialog->ui->labelTitle->setText(tr("Downloads are temporarily disabled."));
-        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+        setWindowTitle(tr("Empty transfer quota"));
+        ui->labelTitle->setText(tr("Downloads are temporarily disabled."));
+        ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can add downloads but transfers will remain queued until there is enough bandwidth"
                                  " in your account.")
                                  + styleLabelClosure);
-        dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
-        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
+        ui->buttonUpgrade->setText(tr("Upgrade Account"));
+        ui->stackedWidgetBigIcons->setCurrentWidget(ui->pageBandwidthFull);
     }
-    else if(type == OverquotaFullDialogType::bandwidthFullStream)
+    else if(type == OverQuotaDialogType::BANDWIDTH_STREAM)
     {
-        dialog->setWindowTitle(tr("Empty transfer quota"));
-        dialog->ui->labelTitle->setText(tr("Streams are temporarily disabled."));
-        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+        setWindowTitle(tr("Empty transfer quota"));
+        ui->labelTitle->setText(tr("Streams are temporarily disabled."));
+        ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can add streams but transfers will remain queued until there is enough bandwidth"
                                  " in your account.")
                                  + styleLabelClosure);
-        dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
-        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageBandwidthFull);
+        ui->buttonUpgrade->setText(tr("Upgrade Account"));
+        ui->stackedWidgetBigIcons->setCurrentWidget(ui->pageBandwidthFull);
     }
-    else if(type == OverquotaFullDialogType::storageAndBandwidthFullSyncs)
+    else if(type == OverQuotaDialogType::STORAGE_BANDWIDTH_SYNC)
     {
-        dialog->setWindowTitle(tr("Empty transfer quota and storage full"));
-        dialog->ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
-        dialog->ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
+        setWindowTitle(tr("Empty transfer quota and storage full"));
+        ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
+        ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can add syncs but transfers will remain queued until there is enough bandwidth"
                                  " in your account.")
                                  + styleLabelClosure);
-        dialog->ui->buttonUpgrade->setText(tr("Upgrade Account"));
-        dialog->ui->stackedWidgetBigIcons->setCurrentWidget(dialog->ui->pageStorageFull);
+        ui->buttonUpgrade->setText(tr("Upgrade Account"));
+        ui->stackedWidgetBigIcons->setCurrentWidget(ui->pageStorageFull);
     }
-
-    return dialog;
 }
 
 void OverQuotaDialog::onUpgradeClicked()
