@@ -136,7 +136,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 
         // New Download transfer, update name, size and tag
         if (activeDownload.tag != transfer->getTag())
-        {           
+        {
             activeDownload.tag = transfer->getTag();
             setType(&activeDownload, type, transfer->isSyncTransfer());
             activeDownload.fileName = QString::fromUtf8(transfer->getFileName());
@@ -296,17 +296,20 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
             }
 
             MegaTransfer *nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+            if (nextTransfer)
+            {
+                Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
+                {//queued function
 
-            Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
-            {//queued function
+                    if (activeTransfersWidget)
+                    {
+                        onTransferUpdate(megaApi, nextTransfer);
+                    }
 
-                if (activeTransfersWidget && nextTransfer)
-                {
-                    onTransferUpdate(megaApi, nextTransfer);
                     delete nextTransfer;
-                }
 
-            });//end of queued function
+                });//end of queued function
+            }
 
         });// end of thread pool function;
     }
