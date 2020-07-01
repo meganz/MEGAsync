@@ -1433,7 +1433,15 @@ int SettingsDialog::saveSettings()
                                                  node->getHandle(),
                                                  syncName, enabled);
 
-                    if (enabled)
+                    if (static_cast<MegaApplication *>(qApp)->isAppliedStorageOverquota())
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync added as temporary disabled due to storage overquota: %1 - %2")
+                                     .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
+
+                        preferences->setSyncState(j, false, true);
+                        ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->setChecked(false);
+                    }
+                    else if (enabled)
                     {
                         megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
                     }

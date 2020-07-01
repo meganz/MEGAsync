@@ -993,7 +993,21 @@ void InfoDialog::addSync(MegaHandle h)
 
    preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
    delete [] nPath;
-   megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+
+
+   if (static_cast<MegaApplication *>(qApp)->isAppliedStorageOverquota())
+   {
+       MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync added as temporary disabled due to storage overquota: %1 - %2")
+                    .arg(localFolderPath).arg(QString::fromUtf8(nPath)).toUtf8().constData());
+
+       preferences->setSyncState(preferences->getNumSyncedFolders() - 1, false, true);
+       //needs updating:
+       static_cast<MegaApplication *>(qApp)->reloadSyncsInSettings();
+   }
+   else
+   {
+        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+   }
    delete node;
 }
 
