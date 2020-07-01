@@ -138,7 +138,8 @@ void TransferQuota::checkExecuteAlerts()
 {
     const auto megaApp{static_cast<MegaApplication*>(qApp)};
     const auto allowAlerts{megaApp->isInfoDialogVisible() || upgradeDialog || Platform::isUserActive()};
-    const auto bandwidthAlertsEnabled{!megaApp->finished() && preferences->logged() && allowAlerts};
+    const auto userLogged{preferences && preferences->logged()};
+    const auto bandwidthAlertsEnabled{!megaApp->finished() && userLogged && allowAlerts};
     if (bandwidthAlertsEnabled)
     {
         if(isOverQuota())
