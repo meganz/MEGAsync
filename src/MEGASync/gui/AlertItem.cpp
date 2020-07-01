@@ -46,7 +46,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     alertUser.reset(alert->copy());
     getAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
     {
-        return megaApi->getNodeByHandle(alert->getNodeHandle());
+        return megaApi->getNodeByHandle(alertUser->getNodeHandle());
     }));
 }
 
