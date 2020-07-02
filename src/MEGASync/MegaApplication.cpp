@@ -1788,7 +1788,6 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     eventsPendingLoggedIn.clear();
-    bwOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
     finishedBlockedTransfers.clear();
