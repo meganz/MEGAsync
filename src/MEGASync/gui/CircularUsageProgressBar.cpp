@@ -109,7 +109,8 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
     p.setFont(f);
 
     QRectF textRect(innerRect);
-    p.setPen(currentColor);
+    const auto penColor(value < ALMOSTOVERQUOTA_VALUE ? DEFAULT_TEXT_COLOR : currentColor);
+    p.setPen(penColor);
     p.drawText(textRect, Qt::AlignCenter, textValue);
 }
 
