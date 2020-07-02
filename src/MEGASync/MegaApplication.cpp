@@ -2157,16 +2157,6 @@ if (!preferences->lastExecutionTime())
     {
         applyStorageState(cachedStorageState, true);
     }
-
-    preferences->setTransferOverQuotaDialogDisabledUntil(std::chrono::system_clock::now()-Preferences::OVERQUOTA_DIALOG_DISABLE_DURATION);
-    preferences->setTransferOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::now()-Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);
-    preferences->setTransferOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::now()-Preferences::OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION);
-    preferences->setTransferAlmostOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::now()-Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);
-    preferences->setTransferAlmostOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::now()-Preferences::ALMOST_OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION);
-    preferences->setTransferOverQuotaDownloadsDialogDisabledUntil(std::chrono::system_clock::now()-OVER_QUOTA_DIALOGS_DISABLE_TIME);
-    preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()-OVER_QUOTA_DIALOGS_DISABLE_TIME);
-    preferences->setTransferOverQuotaStreamDialogDisabledUntil(std::chrono::system_clock::now()-OVER_QUOTA_DIALOGS_DISABLE_TIME);
-    preferences->setTransferOverQuotaImportLinksDialogDisabledUntil(std::chrono::system_clock::now()-OVER_QUOTA_DIALOGS_DISABLE_TIME);
 }
 
 void MegaApplication::startSyncs()
