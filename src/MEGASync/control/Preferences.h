@@ -142,6 +142,8 @@ public:
     void setOverStorageNotificationExecution(long long timestamp);
     long long getAlmostOverStorageNotificationExecution();
     void setAlmostOverStorageNotificationExecution(long long timestamp);
+    long long getPayWallNotificationExecution();
+    void setPayWallNotificationExecution(long long timestamp);
     long long getAlmostOverStorageDismissExecution();
     void setAlmostOverStorageDismissExecution(long long timestamp);
     long long getOverStorageDismissExecution();
@@ -175,6 +177,11 @@ public:
 
     int getStorageState();
     void setStorageState(int value);
+    int getBusinessState();
+    void setBusinessState(int value);
+    int getBlockedState();
+    void setBlockedState(int value);
+
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -422,7 +429,8 @@ public:
         STATE_BELOW_OVER_STORAGE = 0,
         STATE_ALMOST_OVER_STORAGE,
         STATE_OVER_STORAGE,
-        STATE_OVER_STORAGE_DISMISSED
+        STATE_OVER_STORAGE_DISMISSED,
+        STATE_PAYWALL
     };
 
     enum {
@@ -441,6 +449,7 @@ public:
     static long long OQ_NOTIFICATION_INTERVAL_MS;
     static long long ALMOST_OQ_UI_MESSAGE_INTERVAL_MS;
     static long long OQ_UI_MESSAGE_INTERVAL_MS;
+    static long long PAYWALL_NOTIFICATION_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
 
@@ -578,6 +587,7 @@ protected:
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
+    static const QString payWallNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
     static const QString transferOverQuotaDialogDisabledUntilKey;
@@ -594,6 +604,8 @@ protected:
     static const QString storageOverQuotaUploadsDialogDisabledUntilKey;
     static const QString storageOverQuotaSyncsDialogDisabledUntilKey;
     static const QString storageAndTransferOverQuotaSyncDialogDisabledUntilKey;
+    static const QString businessStateQKey;
+    static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;

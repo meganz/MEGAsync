@@ -31,7 +31,7 @@
 border-radius: 5px;
 background-color: #FFFFFF;
 }
-#lVersion, #lSDKVersion
+#lVersion, #lSDKVersion, #labelArchitecture
 {
   font-family: &quot;Lato&quot;;
   font-size: 11px;
@@ -200,7 +200,20 @@ background-color: #FFFFFF;
          <string/>
         </property>
         <property name="text">
-         <string notr="true">2.0.1</string>
+         <string notr="true">4.3.4</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelArchitecture">
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="text">
+         <string notr="true">-x86</string>
         </property>
        </widget>
       </item>
@@ -213,7 +226,7 @@ background-color: #FFFFFF;
          <string/>
         </property>
         <property name="text">
-         <string notr="true">(SDK)</string>
+         <string notr="true"> (SDK)</string>
         </property>
        </widget>
       </item>

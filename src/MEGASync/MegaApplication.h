@@ -181,6 +181,10 @@ public:
 
     void updateTrayIconMenu();
 
+    mega::MegaPricing *getPricing() const;
+
+    int getAppliedStorageState() const;
+    bool isAppliedStorageOverquota() const;
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -193,6 +197,7 @@ signals:
     void setupWizardCreated();
     void unblocked();
     void blocked();
+    void storageStateChanged(int);
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -313,6 +318,7 @@ protected:
     void initLocalServer();
     void refreshStorageUIs();
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
+    std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
@@ -376,7 +382,6 @@ protected:
 #ifdef _WIN32
     QMap<QString, double> lastCheckedScreens;
 #endif
-    bool infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
@@ -414,9 +419,9 @@ protected:
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
     long long lastTsErrorMessageShown;
-    bool almostOQ;
     int storageState;
     int appliedStorageState;
+    bool getUserDataRequestReady;
     long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
@@ -488,6 +493,7 @@ protected:
     bool nodescurrent;
     int businessStatus = -2;
     int blockState;
+    bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;

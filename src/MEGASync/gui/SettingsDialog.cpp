@@ -292,13 +292,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     }
 #endif
 
-    ui->lOQWarning->setText(QString::fromUtf8(""));
-    ui->wOQError->hide();
-
     highDpiResize.init(this);
     ((MegaApplication*)qApp)->attachStorageObserver(*this);
     ((MegaApplication*)qApp)->attachBandwidthObserver(*this);
     ((MegaApplication*)qApp)->attachAccountObserver(*this);
+
+    connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
+    storageStateChanged(app->getAppliedStorageState());
+
 }
 
 SettingsDialog::~SettingsDialog()
@@ -461,6 +462,11 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 void SettingsDialog::storageChanged()
 {
     onCacheSizeAvailable();
+}
+
+void SettingsDialog::storageStateChanged(int newStorageState)
+{
+     setOverQuotaMode(newStorageState == MegaApi::STORAGE_STATE_RED || newStorageState == MegaApi::STORAGE_STATE_PAYWALL);
 }
 
 void SettingsDialog::onCacheSizeAvailable()

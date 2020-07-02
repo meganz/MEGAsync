@@ -39,6 +39,10 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
 
     ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     ui->tChangelog->document()->setDocumentMargin(16.0);
+    auto architecture{QStringLiteral("")};
+    architecture = (sizeof(char*) == 4) ? QStringLiteral("-32bits") : architecture;
+    architecture = (sizeof(char*) == 8) ? QStringLiteral("-64bits") : architecture;
+    ui->labelArchitecture->setText(architecture);
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
