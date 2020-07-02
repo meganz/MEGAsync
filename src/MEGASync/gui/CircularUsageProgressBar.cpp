@@ -109,7 +109,7 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
     p.setFont(f);
 
     QRectF textRect(innerRect);
-    p.setPen(DEFAULT_TEXT_COLOR);
+    p.setPen(currentColor);
     p.drawText(textRect, Qt::AlignCenter, textValue);
 }
 

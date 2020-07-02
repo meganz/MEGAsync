@@ -46,14 +46,17 @@ bool TransferQuota::isQuotaWarning() const
 
 void TransferQuota::setQuotaOk()
 {
-    waitTimeUntil = std::chrono::system_clock::time_point();
-    quotaState = QuotaState::OK;
-    preferences->clearTemporalBandwidth(); // TODO: why this?
-    emit sendState(QuotaState::OK);
-
-    if (upgradeDialog)
+    if(quotaState != QuotaState::OK)
     {
-        upgradeDialog->close();
+        waitTimeUntil = std::chrono::system_clock::time_point();
+        quotaState = QuotaState::OK;
+        preferences->clearTemporalBandwidth(); // TODO: why this?
+        emit sendState(QuotaState::OK);
+
+        if (upgradeDialog)
+        {
+            upgradeDialog->close();
+        }
     }
 }
 
