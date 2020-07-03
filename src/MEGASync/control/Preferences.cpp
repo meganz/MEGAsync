@@ -1114,7 +1114,7 @@ void Preferences::setOverStorageDismissExecution(long long timestamp)
 std::chrono::system_clock::time_point getTimePoint(const QString& key, EncryptedSettings * settings)
 {
     constexpr auto defaultTimePoint{0};
-    auto value{settings->value(key, static_cast<long long>(defaultTimePoint)).toLongLong()};
+    const auto value{settings->value(key, static_cast<long long>(defaultTimePoint)).toLongLong()};
     std::chrono::milliseconds durationMillis(value);
     return std::chrono::system_clock::time_point{durationMillis};
 }
