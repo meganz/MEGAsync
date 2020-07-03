@@ -279,7 +279,6 @@ const QString Preferences::transferOverQuotaImportLinksDialogDisabledUntilKey = 
 const QString Preferences::transferOverQuotaStreamDialogDisabledUntilKey = QString::fromAscii("transferOverQuotaStreamDialogDisabledUntil");
 const QString Preferences::storageOverQuotaUploadsDialogDisabledUntilKey = QString::fromAscii("storageOverQuotaUploadsDialogDisabledUntil");
 const QString Preferences::storageOverQuotaSyncsDialogDisabledUntilKey = QString::fromAscii("storageOverQuotaSyncsDialogDisabledUntil");
-const QString Preferences::storageAndTransferOverQuotaSyncDialogDisabledUntilKey = QString::fromAscii("storageAndTransferOverQuotaSyncDialogDisabledUntil");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
@@ -1371,29 +1370,6 @@ void Preferences::setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::syste
     assert(logged());
     settings->setValue(storageOverQuotaSyncsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
     setCachedValue(storageOverQuotaSyncsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-}
-
-std::chrono::system_clock::time_point Preferences::getStorageAndTransferOverQuotaSyncDialogDisabledUntil()
-{
-    if(storageAndTransferOverQuotaSyncDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return storageAndTransferOverQuotaSyncDialogDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    storageAndTransferOverQuotaSyncDialogDisabledUntil = getTimePoint(storageAndTransferOverQuotaSyncDialogDisabledUntilKey, settings);
-    return storageAndTransferOverQuotaSyncDialogDisabledUntil;
-}
-
-void Preferences::setStorageAndTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
-{
-    storageAndTransferOverQuotaSyncDialogDisabledUntil = timepoint;
-    const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(storageAndTransferOverQuotaSyncDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(storageAndTransferOverQuotaSyncDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
 }
 
 int Preferences::getStorageState()

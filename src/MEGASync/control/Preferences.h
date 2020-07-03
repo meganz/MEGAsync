@@ -172,8 +172,6 @@ public:
     void setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
     std::chrono::system_clock::time_point getStorageOverQuotaSyncsDialogDisabledUntil();
     void setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
-    std::chrono::system_clock::time_point getStorageAndTransferOverQuotaSyncDialogDisabledUntil();
-    void setStorageAndTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::time_point timepoint);
 
     int getStorageState();
     void setStorageState(int value);
@@ -540,11 +538,6 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
-    long long overStorageDialogExecution;
-    long long overStorageNotificationExecution;
-    long long almostOverStorageNotificationExecution;
-    long long almostOverStorageDismissExecution;
-    long long overStorageDismissExecution;
     std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
     std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;
     std::chrono::system_clock::time_point transferAlmostOverQuotaOsNotificationDisabledUntil;
@@ -557,7 +550,6 @@ protected:
     std::chrono::system_clock::time_point transferOverQuotaStreamDialogDisabledUntil;
     std::chrono::system_clock::time_point storageOverQuotaUploadsDialogDisabledUntil;
     std::chrono::system_clock::time_point storageOverQuotaSyncsDialogDisabledUntil;
-    std::chrono::system_clock::time_point storageAndTransferOverQuotaSyncDialogDisabledUntil;
 
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
@@ -603,7 +595,6 @@ protected:
     static const QString transferOverQuotaStreamDialogDisabledUntilKey;
     static const QString storageOverQuotaUploadsDialogDisabledUntilKey;
     static const QString storageOverQuotaSyncsDialogDisabledUntilKey;
-    static const QString storageAndTransferOverQuotaSyncDialogDisabledUntilKey;
     static const QString businessStateQKey;
     static const QString blockedStateQKey;
     static const QString accountTypeKey;

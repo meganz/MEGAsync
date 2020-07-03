@@ -5308,21 +5308,8 @@ void MegaApplication::uploadActionClicked()
 bool MegaApplication::showSyncOverquotaDialog()
 {
     const auto storageFull{storageState == MegaApi::STORAGE_STATE_RED};
-
-    auto dialogEnabled{std::chrono::system_clock::now() >= preferences->getTransferOverQuotaSyncDialogDisableUntil()};
-    if(transferQuota->isOverQuota() && !storageFull && dialogEnabled)
-    {
-        preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWITH_SYNC)};
-        const auto result{dialog->exec()};
-        if(result == QDialog::Accepted)
-        {
-            return false;
-        }
-    }
-
-    dialogEnabled = std::chrono::system_clock::now() >= preferences->getStorageOverQuotaSyncsDialogDisabledUntil();
-    if(storageFull && !transferQuota->isOverQuota() && dialogEnabled)
+    const auto dialogStorageEnabled{std::chrono::system_clock::now() >= preferences->getStorageOverQuotaSyncsDialogDisabledUntil()};
+    if(dialogStorageEnabled && storageFull)
     {
         preferences->setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
         const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_SYNCS)};
@@ -5333,18 +5320,17 @@ bool MegaApplication::showSyncOverquotaDialog()
         }
     }
 
-    dialogEnabled = std::chrono::system_clock::now() >= preferences->getStorageAndTransferOverQuotaSyncDialogDisabledUntil();
-    if(storageFull && transferQuota->isOverQuota() && dialogEnabled)
+    const auto dialogTransferEnabled{std::chrono::system_clock::now() >= preferences->getTransferOverQuotaSyncDialogDisableUntil()};
+    if(dialogTransferEnabled && transferQuota->isOverQuota() && !storageFull)
     {
-        preferences->setStorageAndTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
-        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_BANDWIDTH_SYNC)};
+        preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
+        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWITH_SYNC)};
         const auto result{dialog->exec()};
         if(result == QDialog::Accepted)
         {
             return false;
         }
     }
-
     return true;
 }
 
