@@ -548,7 +548,6 @@
         <file>images/icon_question_white@2x.png</file>
         <file>images/dynamic_transfer_icon.png</file>
         <file>images/dynamic_transfer_icon@2x.png</file>
-        <file>images/dynamic_transfer_icon@3x.png</file>
         <file>images/icon_paywall_warning.png</file>
         <file>images/icon_paywall_warning@2x.png</file>
     </qresource>
