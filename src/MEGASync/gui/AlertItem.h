@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "megaapi.h"
 #include <QFutureWatcher>
+#include <memory>
 
 namespace Ui {
 class AlertItem;

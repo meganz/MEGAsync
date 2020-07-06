@@ -7,6 +7,7 @@
 #include <megaapi.h>
 #include "QTMegaTransferListener.h"
 #include <deque>
+#include <memory>
 
 struct TransferCachedData {
     //Fixme: Once initialization is completed, you can get rid off all cached data except tag and priority
