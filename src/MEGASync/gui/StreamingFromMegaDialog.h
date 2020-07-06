@@ -21,7 +21,7 @@ class StreamingFromMegaDialog : public QDialog, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    enum linkstatus {LOADING, CORRECT, WARNING, FAILED};
+    enum class LinkStatus {CORRECT, WARNING, TRANSFER_OVER_QUOTA};
 
     explicit StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
     ~StreamingFromMegaDialog();
@@ -50,7 +50,7 @@ private:
     HighDpiResize highDpiResize;
 
     bool generateStreamURL();
-    void updateFileInfo(QString fileName, linkstatus status);
+    void updateFileInfo(QString fileName, LinkStatus status);
     void onLinkInfoAvailable();
     void openStreamWithApp(QString app);
     void showStreamingError();

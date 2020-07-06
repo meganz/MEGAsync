@@ -107,7 +107,7 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
     }
     selectedMegaNode = std::unique_ptr<MegaNode>(node);
 
-    updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), CORRECT);
+    updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), LinkStatus::CORRECT);
     generateStreamURL();
     hideStreamingError();
 }
@@ -256,13 +256,13 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
         QString name = QString::fromUtf8(selectedMegaNode->getName());
         if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
         {
-            updateFileInfo(tr("Decryption error"), WARNING);
+            updateFileInfo(tr("Decryption error"), LinkStatus::WARNING);
             selectedMegaNode.reset();
             streamURL.clear();
         }
         else
         {
-            updateFileInfo(name, CORRECT);
+            updateFileInfo(name, LinkStatus::CORRECT);
             generateStreamURL();
         }
     }
@@ -303,7 +303,7 @@ void StreamingFromMegaDialog::hideStreamingError()
     ui->labelError->setVisible(false);
 }
 
-void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status)
+void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status)
 {
     ui->lFileName->ensurePolished();
     ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lFileName->maximumWidth()));
@@ -317,10 +317,16 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, linkstatus status
     QIcon statusIcon;
     switch (status)
     {
-    case LOADING:
-        break;
-    case CORRECT:
+    case LinkStatus::CORRECT:
         statusIcon.addFile(QString::fromUtf8(":/images/streaming_on_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->bOpenDefault->setEnabled(true);
+        ui->bOpenOther->setEnabled(true);
+        ui->bCopyLink->setEnabled(true);
+        ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                                                       "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+        break;
+    case LinkStatus::TRANSFER_OVER_QUOTA:
+        statusIcon.addFile(QString::fromUtf8(":/images/streaming_error_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->bOpenDefault->setEnabled(true);
         ui->bOpenOther->setEnabled(true);
         ui->bCopyLink->setEnabled(true);
@@ -367,6 +373,7 @@ void StreamingFromMegaDialog::onTransferTemporaryError(mega::MegaApi*, mega::Meg
     const auto errorIsOverQuota{e->getErrorCode() == MegaError::API_EOVERQUOTA};
     if(transfer->isStreamingTransfer() && errorIsOverQuota)
     {
+        updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), LinkStatus::TRANSFER_OVER_QUOTA);
         showStreamingError();
 
         show();
