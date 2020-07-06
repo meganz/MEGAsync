@@ -1110,266 +1110,133 @@ void Preferences::setOverStorageDismissExecution(long long timestamp)
     mutex.unlock();
 }
 
-std::chrono::system_clock::time_point getTimePoint(const QString& key, EncryptedSettings * settings)
+std::chrono::system_clock::time_point Preferences::getTimePoint(const QString& key)
 {
-    constexpr auto defaultTimePoint{0};
-    const auto value{settings->value(key, static_cast<long long>(defaultTimePoint)).toLongLong()};
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    const auto value{getValue<long long>(key, defaultTimeStamp)};
     std::chrono::milliseconds durationMillis(value);
     return std::chrono::system_clock::time_point{durationMillis};
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDialogDisabledUntil()
+void Preferences::setTimePoint(const QString& key, const std::chrono::system_clock::time_point& timepoint)
 {
-    if(transferOverQuotaDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferOverQuotaDialogDisabledUntil;
-    }
-
     QMutexLocker locker(&mutex);
     assert(logged());
-    transferOverQuotaDialogDisabledUntil = getTimePoint(transferOverQuotaDialogDisabledUntilKey, settings);
-    return transferOverQuotaDialogDisabledUntil;
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(key, static_cast<long long>(timePointMillis));
+    setCachedValue(key, static_cast<long long>(timePointMillis));
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDialogDisabledUntil()
+{
+    return getTimePoint(transferOverQuotaDialogDisabledUntilKey);
 }
 
 void Preferences::setTransferOverQuotaDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferOverQuotaDialogDisabledUntil = timepoint;
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(transferOverQuotaDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferOverQuotaDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferOverQuotaDialogDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaOsNotificationDisabledUntil()
 {
-    if(transferOverQuotaOsNotificationDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferOverQuotaOsNotificationDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferOverQuotaOsNotificationDisabledUntil = getTimePoint(transferOverQuotaOsNotificationDisabledUntilKey, settings);
-    return transferOverQuotaOsNotificationDisabledUntil;
+    return getTimePoint(transferOverQuotaOsNotificationDisabledUntilKey);
 }
 
 void Preferences::setTransferOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferOverQuotaOsNotificationDisabledUntil = timepoint;
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(transferOverQuotaOsNotificationDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferOverQuotaOsNotificationDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferOverQuotaOsNotificationDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaOsNotificationDisabledUntil()
 {
-    if(transferAlmostOverQuotaOsNotificationDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferAlmostOverQuotaOsNotificationDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferAlmostOverQuotaOsNotificationDisabledUntil = getTimePoint(transferAlmostOverQuotaOsNotificationDisabledUntilKey, settings);
-    return transferAlmostOverQuotaOsNotificationDisabledUntil;
+    return getTimePoint(transferAlmostOverQuotaOsNotificationDisabledUntilKey);
 }
 
 void Preferences::setTransferAlmostOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferAlmostOverQuotaOsNotificationDisabledUntil = timepoint;
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(transferAlmostOverQuotaOsNotificationDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferAlmostOverQuotaOsNotificationDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferAlmostOverQuotaOsNotificationDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaUiAlertDisableUntil()
 {
-    if(transferAlmostOverQuotaUiAlertDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferAlmostOverQuotaUiAlertDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferAlmostOverQuotaUiAlertDisabledUntil = getTimePoint(transferAlmostOverQuotaUiAlertDisabledUntilKey, settings);
-    return transferAlmostOverQuotaUiAlertDisabledUntil;
+    return getTimePoint(transferAlmostOverQuotaUiAlertDisabledUntilKey);
 }
 
 void Preferences::setTransferAlmostOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferAlmostOverQuotaUiAlertDisabledUntil = timepoint;
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(transferAlmostOverQuotaUiAlertDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferAlmostOverQuotaUiAlertDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferAlmostOverQuotaUiAlertDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaUiAlertDisabledUntil()
 {
-    if(transferOverQuotaUiAlertDisableUntil != std::chrono::system_clock::time_point())
-    {
-        return transferOverQuotaUiAlertDisableUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferOverQuotaUiAlertDisableUntil = getTimePoint(transferOverQuotaUiAlertDisableUntilKey, settings);
-    return transferOverQuotaUiAlertDisableUntil;
+    return getTimePoint(transferOverQuotaUiAlertDisableUntilKey);
 }
 
 void Preferences::setTransferOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferOverQuotaUiAlertDisableUntil = timepoint;
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(transferOverQuotaUiAlertDisableUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferOverQuotaUiAlertDisableUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferOverQuotaUiAlertDisableUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaSyncDialogDisableUntil()
 {
-    if(transferOverQuotaSyncDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferOverQuotaSyncDialogDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferOverQuotaSyncDialogDisabledUntil = getTimePoint(transferOverQuotaSyncDialogDisabledUntilKey, settings);
-    return transferOverQuotaSyncDialogDisabledUntil;
+    return getTimePoint(transferOverQuotaSyncDialogDisabledUntilKey);
 }
 
 void Preferences::setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferOverQuotaSyncDialogDisabledUntil = timepoint;
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-
-    settings->setValue(transferOverQuotaSyncDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferOverQuotaSyncDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferOverQuotaSyncDialogDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDownloadsDialogDisabledUntil()
 {
-    if(transferOverQuotaDownloadsDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferOverQuotaDownloadsDialogDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferOverQuotaDownloadsDialogDisabledUntil = getTimePoint(transferOverQuotaDownloadsDialogDisabledUntilKey, settings);
-    return transferOverQuotaDownloadsDialogDisabledUntil;
+    return getTimePoint(transferOverQuotaDownloadsDialogDisabledUntilKey);
 }
 
 void Preferences::setTransferOverQuotaDownloadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferOverQuotaDownloadsDialogDisabledUntil = timepoint;
-    const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());    
-    settings->setValue(transferOverQuotaDownloadsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferOverQuotaDownloadsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferOverQuotaDownloadsDialogDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaImportLinksDialogDisabledUntil()
 {
-    if(transferOverQuotaImportLinksDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferOverQuotaImportLinksDialogDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferOverQuotaImportLinksDialogDisabledUntil = getTimePoint(transferOverQuotaImportLinksDialogDisabledUntilKey, settings);
-    return transferOverQuotaImportLinksDialogDisabledUntil;
+    return getTimePoint(transferOverQuotaImportLinksDialogDisabledUntilKey);
 }
 
 void Preferences::setTransferOverQuotaImportLinksDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferOverQuotaImportLinksDialogDisabledUntil = timepoint;
-    const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(transferOverQuotaImportLinksDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferOverQuotaImportLinksDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferOverQuotaImportLinksDialogDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaStreamDialogDisabledUntil()
 {
-    if(transferOverQuotaStreamDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return transferOverQuotaStreamDialogDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    transferOverQuotaStreamDialogDisabledUntil = getTimePoint(transferOverQuotaStreamDialogDisabledUntilKey, settings);
-    return transferOverQuotaStreamDialogDisabledUntil;
+    return getTimePoint(transferOverQuotaStreamDialogDisabledUntilKey);
 }
 
 void Preferences::setTransferOverQuotaStreamDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    transferOverQuotaStreamDialogDisabledUntil = timepoint;
-    const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(transferOverQuotaStreamDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(transferOverQuotaStreamDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(transferOverQuotaStreamDialogDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getStorageOverQuotaUploadsDialogDisabledUntil()
 {
-    if(storageOverQuotaUploadsDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return storageOverQuotaUploadsDialogDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    storageOverQuotaUploadsDialogDisabledUntil = getTimePoint(storageOverQuotaUploadsDialogDisabledUntilKey, settings);
-    return storageOverQuotaUploadsDialogDisabledUntil;
+    return getTimePoint(storageOverQuotaUploadsDialogDisabledUntilKey);
 }
 
 void Preferences::setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    storageOverQuotaUploadsDialogDisabledUntil = timepoint;
-    const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(storageOverQuotaUploadsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(storageOverQuotaUploadsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
+    setTimePoint(storageOverQuotaUploadsDialogDisabledUntilKey, timepoint);
 }
 
 std::chrono::system_clock::time_point Preferences::getStorageOverQuotaSyncsDialogDisabledUntil()
 {
-    if(storageOverQuotaSyncsDialogDisabledUntil != std::chrono::system_clock::time_point())
-    {
-        return storageOverQuotaSyncsDialogDisabledUntil;
-    }
-
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    storageOverQuotaSyncsDialogDisabledUntil = getTimePoint(storageOverQuotaSyncsDialogDisabledUntilKey, settings);
-    return storageOverQuotaSyncsDialogDisabledUntil;
+    return getTimePoint(storageOverQuotaSyncsDialogDisabledUntilKey);
 }
 
 void Preferences::setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
 {
-    storageOverQuotaSyncsDialogDisabledUntil = timepoint;
-    const auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
-    QMutexLocker locker(&mutex);
-    assert(logged());
-    settings->setValue(storageOverQuotaSyncsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
-    setCachedValue(storageOverQuotaSyncsDialogDisabledUntilKey, static_cast<long long>(timePointMillis));
+
+    setTimePoint(storageOverQuotaSyncsDialogDisabledUntilKey, timepoint);
 }
 
 int Preferences::getStorageState()

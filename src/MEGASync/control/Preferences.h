@@ -521,6 +521,9 @@ protected:
     void storeSessionInGeneral(QString session);
     QString getSessionInGeneral();
 
+    std::chrono::system_clock::time_point getTimePoint(const QString& key);
+    void setTimePoint(const QString& key, const std::chrono::system_clock::time_point& timepoint);
+
     EncryptedSettings *settings;
     QStringList syncNames;
     QStringList syncIDs;
