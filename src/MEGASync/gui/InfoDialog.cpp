@@ -838,6 +838,9 @@ void InfoDialog::onAllTransfersFinished()
 void InfoDialog::updateDialogState()
 {
     updateState();
+    const auto transferOverQuotaEnabled{transferOverquotaState == QuotaState::FULL &&
+                transferOverquotaAlertEnabled};
+
     if (storageState == Preferences::STATE_PAYWALL)
     {
         MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
@@ -874,25 +877,50 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
+    else if(storageState == Preferences::STATE_OVER_STORAGE)
+    {
+        const auto userIsFree{preferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
+        if(transferOverQuotaEnabled && userIsFree)
+        {
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_FREE.png")));
+        }
+        else if(transferOverQuotaEnabled && !userIsFree)
+        {
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_PRO.png")));
+        }
+        else
+        {
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+        }
+        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->lOQTitle->setText(tr("Your MEGA account is full."));
+        ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
+                                + QString::fromUtf8("<br>")
+                                + tr("Please upgrade to PRO."));
+        ui->bBuyQuota->setText(tr("Buy more space"));
+        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+        overlay->setVisible(false);
+        ui->wPSA->hidePSA();
+    }
+    else if(transferOverQuotaEnabled)
+    {
+        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
+        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->lOQTitle->setText(tr("Depleted transfer quota."));
+        ui->lOQDesc->setText(tr("All downloads are currently disabled.")
+                                + QString::fromUtf8("<br>")
+                                + tr("Please upgrade to PRO."));
+        ui->bBuyQuota->setText(tr("Upgrade"));
+        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+        overlay->setVisible(false);
+        ui->wPSA->hidePSA();
+    }
     else if(storageState == Preferences::STATE_ALMOST_OVER_STORAGE)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("You're running out of storage space."));
         ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
-        ui->bBuyQuota->setText(tr("Buy more space"));
-        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-        overlay->setVisible(false);
-        ui->wPSA->hidePSA();
-    }
-    else if(storageState == Preferences::STATE_OVER_STORAGE)
-    {
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
-        ui->lOQTitle->setText(tr("Your MEGA account is full."));
-        ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
-                                + QString::fromUtf8("<br>")
-                                + tr("Please upgrade to PRO."));
         ui->bBuyQuota->setText(tr("Buy more space"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
@@ -906,20 +934,6 @@ void InfoDialog::updateDialogState()
         ui->lOQTitle->setText(tr("Limited available transfer quota"));
         ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota available for your IP"
                                 " address and can therefore be interrupted."));
-        ui->bBuyQuota->setText(tr("Upgrade"));
-        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-        overlay->setVisible(false);
-        ui->wPSA->hidePSA();
-    }
-    else if(transferOverquotaState == QuotaState::FULL &&
-            transferOverquotaAlertEnabled)
-    {
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
-        ui->lOQTitle->setText(tr("Depleted transfer quota."));
-        ui->lOQDesc->setText(tr("All downloads are currently disabled.")
-                                + QString::fromUtf8("<br>")
-                                + tr("Please upgrade to PRO."));
         ui->bBuyQuota->setText(tr("Upgrade"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         overlay->setVisible(false);
@@ -1838,13 +1852,7 @@ void InfoDialog::on_bNotificationsSettings_clicked()
 
 void InfoDialog::on_bDiscard_clicked()
 {
-    if(storageState == Preferences::STATE_ALMOST_OVER_STORAGE ||
-            storageState == Preferences::STATE_OVER_STORAGE)
-    {
-        updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
-        emit dismissStorageOverquota(overQuotaState);
-    }
-    else if(transferOverquotaState == QuotaState::FULL)
+    if(transferOverquotaState == QuotaState::FULL)
     {
         transferOverquotaAlertEnabled = false;
         emit dismissTransferOverquota();
@@ -1854,7 +1862,17 @@ void InfoDialog::on_bDiscard_clicked()
         transferAlmostOverquotaAlertEnabled = false;
         emit dismissTransferAlmostOverquota();
     }
-    updateDialogState();
+
+    if(storageState == Preferences::STATE_ALMOST_OVER_STORAGE ||
+            storageState == Preferences::STATE_OVER_STORAGE)
+    {
+        updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
+        emit dismissStorageOverquota(overQuotaState);
+    }
+    else
+    {
+        updateDialogState();
+    }
 }
 
 void InfoDialog::on_bBuyQuota_clicked()
