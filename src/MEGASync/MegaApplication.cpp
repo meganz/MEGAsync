@@ -5554,8 +5554,7 @@ void MegaApplication::updateTrayIconMenu()
 
         trayIcon->setContextMenu(nullptr); //prevents duplicated context menu in qt 5.12.8 64 bits
 
-        if (preferences && preferences->logged() && getRootNode()
-                && transferQuota && !transferQuota->isOverQuota() && !blockState)
+        if (preferences && preferences->logged() && getRootNode() && !blockState)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
             trayIcon->setContextMenu(windowsMenu?windowsMenu.get():&emptyMenu);
