@@ -94,7 +94,7 @@
         </property>
         <property name="icon">
          <iconset resource="../Resources_macx.qrc">
-          <normaloff>:/images/icon_warning.png</normaloff>:/images/icon_warning.png</iconset>
+          <normaloff>:/images/icon_warning_36.png</normaloff>:/images/icon_warning_36.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -294,7 +294,7 @@
          </property>
          <property name="icon">
           <iconset resource="../Resources_win.qrc">
-           <normaloff>:/images/transfers_empty.png</normaloff>:/images/transfers_empty.png</iconset>
+           <normaloff>:/images/transfer_empty_100.png</normaloff>:/images/transfer_empty_100.png</iconset>
          </property>
          <property name="iconSize">
           <size>

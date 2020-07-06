@@ -19,8 +19,8 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     currentColor = foregroundColor;
     textValue = hyphenUtf8Code;
 
-    markFull.addFile(QString::fromUtf8(":/images/icon_error.png"));
-    markWarning.addFile(QString::fromUtf8(":/images/icon_warning.png"));
+    markFull.addFile(QString::fromUtf8(":/images/icon_error_24.png"));
+    markWarning.addFile(QString::fromUtf8(":/images/icon_warning_24.png"));
 }
 
 void CircularUsageProgressBar::paintEvent(QPaintEvent*)

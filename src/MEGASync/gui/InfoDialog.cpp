@@ -901,7 +901,7 @@ void InfoDialog::updateDialogState()
     else if(transferOverquotaState == QuotaState::WARNING &&
             transferAlmostOverquotaAlertEnabled)
     {
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfers_empty.png")));
+        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("Limited available transfer quota"));
         ui->lOQDesc->setText(tr("Your queued transfers exceed the current quota available for your IP"
@@ -914,7 +914,7 @@ void InfoDialog::updateDialogState()
     else if(transferOverquotaState == QuotaState::FULL &&
             transferOverquotaAlertEnabled)
     {
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfers_empty.png")));
+        ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
         ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("Depleted transfer quota."));
         ui->lOQDesc->setText(tr("All downloads are currently disabled.")

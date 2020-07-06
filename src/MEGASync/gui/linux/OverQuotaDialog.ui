@@ -31,10 +31,10 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
-     </property>
+   </property>
    <property name="leftMargin">
     <number>38</number>
-     </property>
+   </property>
    <property name="topMargin">
     <number>22</number>
    </property>
@@ -52,7 +52,7 @@
        <height>16777215</height>
       </size>
      </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
        <number>15</number>
       </property>
@@ -65,101 +65,101 @@
       <property name="rightMargin">
        <number>0</number>
       </property>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="buttonWarning">
-       <property name="maximumSize">
-        <size>
-         <width>36</width>
-         <height>36</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resources_win.qrc">
-         <normaloff>:/images/icon_warning.png</normaloff>:/images/icon_warning.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>36</width>
-         <height>36</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="labelTitle">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="buttonWarning">
+        <property name="maximumSize">
+         <size>
+          <width>36</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/icon_warning_36.png</normaloff>:/images/icon_warning_36.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>36</width>
+          <height>36</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelTitle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-       <property name="minimumSize">
-        <size>
+        <property name="minimumSize">
+         <size>
           <width>335</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
           <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
+         </size>
+        </property>
+        <property name="font">
+         <font>
           <family>SF UI Text</family>
           <pointsize>-1</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
+         </font>
+        </property>
+        <property name="styleSheet">
          <string notr="true">#labelTitle
 {
   color: #333333;
   font-family: &quot;SF UI Text&quot;;
   font-size: 20px;  
 }</string>
-       </property>
-       <property name="text">
+        </property>
+        <property name="text">
          <string/>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -242,7 +242,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_win.qrc">
+          <iconset resource="../Resources_linux.qrc">
            <normaloff>:/images/storage_full_100.png</normaloff>:/images/storage_full_100.png</iconset>
          </property>
          <property name="iconSize">
@@ -293,8 +293,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
-           <normaloff>:/images/transfers_empty.png</normaloff>:/images/transfers_empty.png</iconset>
+          <iconset resource="../Resources_linux.qrc">
+           <normaloff>:/images/transfer_empty_100.png</normaloff>:/images/transfer_empty_100.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -465,7 +465,7 @@ boder-color:#00AC94;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

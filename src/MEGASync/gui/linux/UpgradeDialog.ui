@@ -127,13 +127,13 @@ background: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #FFFFFF, stop:1 #F2F2F
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/images/transfers_empty.png</normalon>
+          <normalon>:/images/transfer_empty_64.png</normalon>
          </iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>94</width>
-          <height>94</height>
+          <width>64</width>
+          <height>64</height>
          </size>
         </property>
        </widget>
