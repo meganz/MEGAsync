@@ -1433,9 +1433,15 @@ int SettingsDialog::saveSettings()
                                                  node->getHandle(),
                                                  syncName, enabled);
 
-                    if (static_cast<MegaApplication *>(qApp)->isAppliedStorageOverquota())
+                    bool storageOQ = static_cast<MegaApplication *>(qApp)->isAppliedStorageOverquota();
+                    bool blocked = preferences->getBlockedState() != -2 && preferences->getBlockedState();
+                    bool businessExpired = preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED;
+                    if (storageOQ || blocked || businessExpired)
                     {
-                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync added as temporary disabled due to storage overquota: %1 - %2")
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(
+                                         " Sync added as temporary disabled due to %1: %2 - %3")
+                                     .arg(QString::fromUtf8(storageOQ ? "storage overquota" :
+                                          (blocked ? "account blocked" : "business account expired") ))
                                      .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
 
                         preferences->setSyncState(j, false, true);
