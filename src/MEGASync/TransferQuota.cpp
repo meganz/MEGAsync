@@ -65,13 +65,13 @@ void TransferQuota::checkExecuteDialog()
     if(executeDialog)
     {
         preferences->setTransferOverQuotaDialogDisabledUntil(std::chrono::system_clock::now()+Preferences::OVERQUOTA_DIALOG_DISABLE_DURATION);
+        megaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
         if (!upgradeDialog)
         {
             upgradeDialog = new UpgradeDialog(megaApi, pricing);
             QObject::connect(upgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
             Platform::activateBackgroundWindow(upgradeDialog);
             upgradeDialog->show();
-            megaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
         }
         else if (!upgradeDialog->isVisible())
         {
