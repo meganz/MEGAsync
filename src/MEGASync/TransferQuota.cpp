@@ -11,7 +11,6 @@ TransferQuota::TransferQuota(mega::MegaApi* megaApi,
       preferences{preferences},
       notificator{notificator},
       upgradeDialog{nullptr},
-      upgradeDialogEventEnabled{true},
       quotaState{QuotaState::OK}
 {
 }
@@ -72,12 +71,7 @@ void TransferQuota::checkExecuteDialog()
             QObject::connect(upgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
             Platform::activateBackgroundWindow(upgradeDialog);
             upgradeDialog->show();
-
-            if (upgradeDialogEventEnabled)
-            {
-                megaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
-                upgradeDialogEventEnabled = false;
-            }
+            megaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
         }
         else if (!upgradeDialog->isVisible())
         {

@@ -53,7 +53,6 @@ private:
     Preferences* preferences;
     Notificator *notificator;
     UpgradeDialog* upgradeDialog;
-    bool upgradeDialogEventEnabled;
     QuotaState quotaState;
     std::chrono::system_clock::time_point waitTimeUntil;
 
