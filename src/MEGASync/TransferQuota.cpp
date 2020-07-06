@@ -119,10 +119,8 @@ void TransferQuota::checkExecuteWarningOsNotification()
     if (executeNotification)
     {
         preferences->setTransferAlmostOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::now()+Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);
-        megaApi->sendEvent(EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION
-
-
-, EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION);
+        megaApi->sendEvent(EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION,
+                           EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION);
         sendQuotaWarningOsNotification();
     }
 }

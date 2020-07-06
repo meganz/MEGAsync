@@ -77,9 +77,9 @@ public:
 
     QCustomTransfersModel *stealModel();
 
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -234,9 +234,9 @@ protected:
     void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
-    void changeEvent(QEvent * event);
-    bool eventFilter(QObject *obj, QEvent *e);
-    void paintEvent( QPaintEvent * e);
+    void changeEvent(QEvent * event) override;
+    bool eventFilter(QObject *obj, QEvent *e) override;
+    void paintEvent( QPaintEvent * e) override;
 
 protected:
     QDateTime lastPopupUpdate;
