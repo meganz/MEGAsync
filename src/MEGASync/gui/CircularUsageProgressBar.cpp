@@ -39,7 +39,7 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
         foregroundPen.setWidth(static_cast<int>(penWidth));
     }
 
-    QRectF baseRect(penWidth / 2, (penWidth / 2)+padingPixels/2, outerRadius - penWidth, outerRadius - penWidth);
+    QRectF baseRect(penWidth / 2, (penWidth / 2) + padingPixels / 2, outerRadius - penWidth, outerRadius - penWidth);
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
