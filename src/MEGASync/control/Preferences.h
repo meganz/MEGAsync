@@ -451,11 +451,11 @@ public:
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
 
-    static std::chrono::minutes OVERQUOTA_DIALOG_DISABLE_DURATION;
-    static std::chrono::minutes OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
-    static std::chrono::minutes OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
-    static std::chrono::minutes ALMOST_OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
-    static std::chrono::minutes ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::milliseconds OVERQUOTA_DIALOG_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
+    static std::chrono::milliseconds ALMOST_OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
+    static std::chrono::milliseconds ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
 
     static int STATE_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;

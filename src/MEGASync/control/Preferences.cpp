@@ -44,11 +44,11 @@ long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours
 long long Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS = 86400000; //24 hours
 long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
-std::chrono::minutes Preferences::OVERQUOTA_DIALOG_DISABLE_DURATION{std::chrono::hours(7*24)};
-std::chrono::minutes Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
-std::chrono::minutes Preferences::ALMOST_OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION{std::chrono::hours(72)};
-std::chrono::minutes Preferences::OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION{std::chrono::hours(36)};
-std::chrono::minutes Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
+std::chrono::milliseconds Preferences::OVERQUOTA_DIALOG_DISABLE_DURATION{std::chrono::hours(7*24)};
+std::chrono::milliseconds Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
+std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION{std::chrono::hours(72)};
+std::chrono::milliseconds Preferences::OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION{std::chrono::hours(36)};
+std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
 
 long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
