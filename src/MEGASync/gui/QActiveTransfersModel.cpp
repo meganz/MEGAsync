@@ -30,10 +30,10 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
         int numDownloads = transferData->getNumDownloads();
         if (numDownloads)
         {
-            for (int i = 0; i < numDownloads; i++)
-            {
-                ThreadPoolSingleton::getInstance()->push([this, model, transferData, i]()
-                {//thread pool function
+            ThreadPoolSingleton::getInstance()->push([this, model, transferData, numDownloads]()
+            {//thread pool function
+                for (int i = 0; i < numDownloads; i++)
+                {
                     if (!model)
                     {
                         return;
@@ -55,9 +55,9 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
 
                         });//end of queued function
                     }
+                }
+            });// end of thread pool function;
 
-                });// end of thread pool function;
-            }
         }
     }
     else if (type == TYPE_UPLOAD)
@@ -65,10 +65,10 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
         int numUploads = transferData->getNumUploads();
         if (numUploads)
         {
-            for (int i = 0; i < numUploads; i++)
-            {
-                ThreadPoolSingleton::getInstance()->push([this, model, transferData, i]()
-                {//thread pool function
+            ThreadPoolSingleton::getInstance()->push([this, model, transferData, numUploads]()
+            {//thread pool function
+                for (int i = 0; i < numUploads; i++)
+                {
                     if (!model)
                     {
                         return;
@@ -90,9 +90,9 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
 
                         });//end of queued function
                     }
+                }
+            });// end of thread pool function;
 
-                });// end of thread pool function;
-            }
         }
     }
 
