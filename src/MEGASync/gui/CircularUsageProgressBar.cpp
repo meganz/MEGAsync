@@ -57,7 +57,7 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     //Draw percentage text
     double innerRadius = outerRadius - penWidth / 2;
     double delta = (outerRadius - innerRadius) / 2;
-    QRectF innerRect = QRectF(delta, delta+padingPixels/2, innerRadius, innerRadius);
+    QRectF innerRect = QRectF(delta, delta + padingPixels / 2, innerRadius, innerRadius);
     drawText(painter, innerRect, innerRadius, progressBarValue);
 
     if (progressBarValue >= ALMOSTOVERQUOTA_VALUE) // If value higher than almost oq threshold show warning image
@@ -69,7 +69,7 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
         constexpr auto iconPaddingX{3};
         const auto x{outerRadius - (pixmapTotalSideLength / 2) - iconPaddingX};
         constexpr auto iconPaddingY{5};
-        const auto y{padingPixels/2 -iconPaddingY};
+        const auto y{padingPixels / 2 - iconPaddingY};
         const auto width{pixmapTotalSideLength};
         const auto height{pixmapTotalSideLength};
         const auto icon{progressBarValue >= CircularUsageProgressBar::MAXVALUE ? markFull : markWarning};
@@ -190,7 +190,6 @@ void CircularUsageProgressBar::setEmptyBarTotalValueUnknown()
     currentColor = foregroundColor;
     setPenColor(foregroundPen, currentColor, false);
     update();
-
 }
 
 void CircularUsageProgressBar::setFullBarTotalValueUnkown()

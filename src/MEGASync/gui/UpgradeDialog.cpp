@@ -167,7 +167,7 @@ void UpgradeDialog::mousePressEvent(QMouseEvent *event)
 
         mPopOver->show();
         mPopOver->ensurePolished();
-        mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width()/2, mPopOver->height() + 10));
+        mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width() / 2, mPopOver->height() + 10));
         Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
 
         const auto initialWidth{mPopOver->width()};

@@ -42,7 +42,6 @@ void DynamicTransferQuotaPopOver::tweakStrings()
                                           QString::fromUtf8("</p>")));
 }
 
-
 void DynamicTransferQuotaPopOver::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
