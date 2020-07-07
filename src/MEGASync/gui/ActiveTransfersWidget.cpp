@@ -236,14 +236,16 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
             MegaTransfer *nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
 
-            Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
-            {//queued function
+            if (nextTransfer)
+            {
+                Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
+                {//queued function
 
-                if (activeTransfersWidget && nextTransfer)
-                {
-                    onTransferUpdate(megaApi, nextTransfer);
+                    if (activeTransfersWidget)
+                    {
+                        onTransferUpdate(megaApi, nextTransfer);
+                    }
                     delete nextTransfer;
-                }
 
             });//end of queued function
 
