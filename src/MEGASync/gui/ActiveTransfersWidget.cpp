@@ -247,7 +247,8 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
                     }
                     delete nextTransfer;
 
-            });//end of queued function
+                });//end of queued function
+            }
 
         });// end of thread pool function;
     }
