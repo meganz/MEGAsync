@@ -268,18 +268,18 @@ const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLig
 const QString Preferences::businessStateQKey = QString::fromAscii("businessState");
 const QString Preferences::blockedStateQKey = QString::fromAscii("blockedState");
 
-const QString Preferences::transferOverQuotaDialogDisabledUntilKey = QString::fromAscii("transferOverQuotaDialogDisabledUntil");
-const QString Preferences::transferOverQuotaOsNotificationDisabledUntilKey = QString::fromAscii("transferOverQuotaOsNotificationDisabledUntil");
-const QString Preferences::transferAlmostOverQuotaOsNotificationDisabledUntilKey = QString::fromAscii("transferAlmostOverQuotaOsNotificationDisabledUntil");
-const QString Preferences::transferAlmostOverQuotaUiAlertDisabledUntilKey = QString::fromAscii("transferAlmostOverQuotaUiAlertDisabledUntil");
-const QString Preferences::transferOverQuotaUiAlertDisableUntilKey = QString::fromAscii("transferOverQuotaUiAlertDisableUntil");
+const QString Preferences::transferOverQuotaDialogLastExecutionKey = QString::fromAscii("transferOverQuotaDialogLastExecution");
+const QString Preferences::transferOverQuotaOsNotificationLastExecutionKey = QString::fromAscii("transferOverQuotaOsNotificationLastExecution");
+const QString Preferences::transferAlmostOverQuotaOsNotificationLastExecutionKey = QString::fromAscii("transferAlmostOverQuotaOsNotificationLastExecution");
+const QString Preferences::transferAlmostOverQuotaUiAlertLastExecutionKey = QString::fromAscii("transferAlmostOverQuotaUiAlertLastExecution");
+const QString Preferences::transferOverQuotaUiAlertLastExecutionKey = QString::fromAscii("transferOverQuotaUiAlertDisableUntil");
 
-const QString Preferences::transferOverQuotaSyncDialogDisabledUntilKey = QString::fromAscii("transferOverQuotaSyncDialogDisabledUntil");
-const QString Preferences::transferOverQuotaDownloadsDialogDisabledUntilKey = QString::fromAscii("transferOverQuotaDownloadsDialogDisabledUntil");
-const QString Preferences::transferOverQuotaImportLinksDialogDisabledUntilKey = QString::fromAscii("transferOverQuotaImportLinksDialogDisabledUntil");
-const QString Preferences::transferOverQuotaStreamDialogDisabledUntilKey = QString::fromAscii("transferOverQuotaStreamDialogDisabledUntil");
-const QString Preferences::storageOverQuotaUploadsDialogDisabledUntilKey = QString::fromAscii("storageOverQuotaUploadsDialogDisabledUntil");
-const QString Preferences::storageOverQuotaSyncsDialogDisabledUntilKey = QString::fromAscii("storageOverQuotaSyncsDialogDisabledUntil");
+const QString Preferences::transferOverQuotaSyncDialogLastExecutionKey = QString::fromAscii("transferOverQuotaSyncDialogLastExecution");
+const QString Preferences::transferOverQuotaDownloadsDialogLastExecutionKey = QString::fromAscii("transferOverQuotaDownloadsDialogLastExecution");
+const QString Preferences::transferOverQuotaImportLinksDialogLastExecutionKey = QString::fromAscii("transferOverQuotaImportLinksDialogLastExecution");
+const QString Preferences::transferOverQuotaStreamDialogLastExecutionKey = QString::fromAscii("transferOverQuotaStreamDialogLastExecution");
+const QString Preferences::storageOverQuotaUploadsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaUploadsDialogLastExecution");
+const QString Preferences::storageOverQuotaSyncsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaSyncsDialogLastExecution");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
@@ -1040,115 +1040,115 @@ void Preferences::removeFromCache(const QString &key)
     cache.erase(key);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDialogDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDialogLastExecution()
 {
-    return getTimePoint(transferOverQuotaDialogDisabledUntilKey);
+    return getTimePoint(transferOverQuotaDialogLastExecutionKey);
 }
 
-void Preferences::setTransferOverQuotaDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferOverQuotaDialogDisabledUntilKey, timepoint);
+    setTimePoint(transferOverQuotaDialogLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaOsNotificationDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaOsNotificationLastExecution()
 {
-    return getTimePoint(transferOverQuotaOsNotificationDisabledUntilKey);
+    return getTimePoint(transferOverQuotaOsNotificationLastExecutionKey);
 }
 
-void Preferences::setTransferOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferOverQuotaOsNotificationDisabledUntilKey, timepoint);
+    setTimePoint(transferOverQuotaOsNotificationLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaOsNotificationDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaOsNotificationLastExecution()
 {
-    return getTimePoint(transferAlmostOverQuotaOsNotificationDisabledUntilKey);
+    return getTimePoint(transferAlmostOverQuotaOsNotificationLastExecutionKey);
 }
 
-void Preferences::setTransferAlmostOverQuotaOsNotificationDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferAlmostOverQuotaOsNotificationDisabledUntilKey, timepoint);
+    setTimePoint(transferAlmostOverQuotaOsNotificationLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaUiAlertDisableUntil()
+std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaUiAlertLastExecution()
 {
-    return getTimePoint(transferAlmostOverQuotaUiAlertDisabledUntilKey);
+    return getTimePoint(transferAlmostOverQuotaUiAlertLastExecutionKey);
 }
 
-void Preferences::setTransferAlmostOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferAlmostOverQuotaUiAlertDisabledUntilKey, timepoint);
+    setTimePoint(transferAlmostOverQuotaUiAlertLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaUiAlertDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaUiAlertLastExecution()
 {
-    return getTimePoint(transferOverQuotaUiAlertDisableUntilKey);
+    return getTimePoint(transferOverQuotaUiAlertLastExecutionKey);
 }
 
-void Preferences::setTransferOverQuotaUiAlertDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferOverQuotaUiAlertDisableUntilKey, timepoint);
+    setTimePoint(transferOverQuotaUiAlertLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaSyncDialogDisableUntil()
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaSyncDialogLastExecution()
 {
-    return getTimePoint(transferOverQuotaSyncDialogDisabledUntilKey);
+    return getTimePoint(transferOverQuotaSyncDialogLastExecutionKey);
 }
 
-void Preferences::setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferOverQuotaSyncDialogDisabledUntilKey, timepoint);
+    setTimePoint(transferOverQuotaSyncDialogLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDownloadsDialogDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDownloadsDialogLastExecution()
 {
-    return getTimePoint(transferOverQuotaDownloadsDialogDisabledUntilKey);
+    return getTimePoint(transferOverQuotaDownloadsDialogLastExecutionKey);
 }
 
-void Preferences::setTransferOverQuotaDownloadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferOverQuotaDownloadsDialogDisabledUntilKey, timepoint);
+    setTimePoint(transferOverQuotaDownloadsDialogLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaImportLinksDialogDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaImportLinksDialogLastExecution()
 {
-    return getTimePoint(transferOverQuotaImportLinksDialogDisabledUntilKey);
+    return getTimePoint(transferOverQuotaImportLinksDialogLastExecutionKey);
 }
 
-void Preferences::setTransferOverQuotaImportLinksDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferOverQuotaImportLinksDialogDisabledUntilKey, timepoint);
+    setTimePoint(transferOverQuotaImportLinksDialogLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getTransferOverQuotaStreamDialogDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaStreamDialogLastExecution()
 {
-    return getTimePoint(transferOverQuotaStreamDialogDisabledUntilKey);
+    return getTimePoint(transferOverQuotaStreamDialogLastExecutionKey);
 }
 
-void Preferences::setTransferOverQuotaStreamDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(transferOverQuotaStreamDialogDisabledUntilKey, timepoint);
+    setTimePoint(transferOverQuotaStreamDialogLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getStorageOverQuotaUploadsDialogDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getStorageOverQuotaUploadsDialogLastExecution()
 {
-    return getTimePoint(storageOverQuotaUploadsDialogDisabledUntilKey);
+    return getTimePoint(storageOverQuotaUploadsDialogLastExecutionKey);
 }
 
-void Preferences::setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::time_point timepoint)
 {
-    setTimePoint(storageOverQuotaUploadsDialogDisabledUntilKey, timepoint);
+    setTimePoint(storageOverQuotaUploadsDialogLastExecutionKey, timepoint);
 }
 
-std::chrono::system_clock::time_point Preferences::getStorageOverQuotaSyncsDialogDisabledUntil()
+std::chrono::system_clock::time_point Preferences::getStorageOverQuotaSyncsDialogLastExecution()
 {
-    return getTimePoint(storageOverQuotaSyncsDialogDisabledUntilKey);
+    return getTimePoint(storageOverQuotaSyncsDialogLastExecutionKey);
 }
 
-void Preferences::setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::time_point timepoint)
+void Preferences::setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::time_point timepoint)
 {
 
-    setTimePoint(storageOverQuotaSyncsDialogDisabledUntilKey, timepoint);
+    setTimePoint(storageOverQuotaSyncsDialogLastExecutionKey, timepoint);
 }
 
 int Preferences::getStorageState()

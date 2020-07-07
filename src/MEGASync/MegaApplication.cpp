@@ -5224,10 +5224,11 @@ void MegaApplication::uploadActionClicked()
         return;
     }
 
-    const auto dialogEnabled{std::chrono::system_clock::now() >= preferences->getStorageOverQuotaUploadsDialogDisabledUntil()};
+    const auto disabledUntil{preferences->getStorageOverQuotaUploadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
+    const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(storageState == MegaApi::STORAGE_STATE_RED && dialogEnabled)
     {
-        preferences->setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::now()+Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME);
+        preferences->setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::now());
         const auto storageFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_UPLOAD)};
         const auto upgradeButtonClicked{storageFullDialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
@@ -5308,10 +5309,11 @@ void MegaApplication::uploadActionClicked()
 bool MegaApplication::showSyncOverquotaDialog()
 {
     const auto storageFull{storageState == MegaApi::STORAGE_STATE_RED};
-    const auto dialogStorageEnabled{std::chrono::system_clock::now() >= preferences->getStorageOverQuotaSyncsDialogDisabledUntil()};
+    const auto disabledUntil{preferences->getStorageOverQuotaSyncsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
+    const auto dialogStorageEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(dialogStorageEnabled && storageFull)
     {
-        preferences->setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::now()+Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME);
+        preferences->setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::now());
         const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_SYNCS)};
         const auto upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
@@ -5320,10 +5322,11 @@ bool MegaApplication::showSyncOverquotaDialog()
         }
     }
 
-    const auto dialogTransferEnabled{std::chrono::system_clock::now() >= preferences->getTransferOverQuotaSyncDialogDisableUntil()};
+    const auto transferDialogDisabledUntil{preferences->getTransferOverQuotaSyncDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
+    const auto dialogTransferEnabled{std::chrono::system_clock::now() >= transferDialogDisabledUntil};
     if(dialogTransferEnabled && transferQuota->isOverQuota() && !storageFull)
     {
-        preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME);
+        preferences->setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::now());
         const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWITH_SYNC)};
         const auto upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
