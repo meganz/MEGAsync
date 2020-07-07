@@ -46,9 +46,15 @@
    </property>
    <item>
     <widget class="QWidget" name="widgetHeader" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>465</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>465</width>
        <height>16777215</height>
       </size>
      </property>
@@ -57,13 +63,13 @@
        <number>15</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>3</number>
       </property>
       <item>
        <spacer name="horizontalSpacer">
@@ -80,6 +86,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="buttonWarning">
+        <property name="minimumSize">
+         <size>
+          <width>36</width>
+          <height>36</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>36</width>
@@ -105,16 +117,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="labelTitle">
+       <widget class="CustomLabel" name="labelTitle">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>335</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
@@ -142,7 +154,7 @@
          <string/>
         </property>
         <property name="wordWrap">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -464,6 +476,13 @@ boder-color:#00AC94;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomLabel</class>
+   <extends>QLabel</extends>
+   <header>OverquotaDialog.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Resources_win.qrc"/>
  </resources>

@@ -1568,7 +1568,7 @@ font-size: 16px;
                           </sizepolicy>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: #FFFFFF;</string>
+                          <string notr="true">background-color: #F4F6F8;</string>
                          </property>
                          <layout class="QVBoxLayout" name="verticalLayout_2">
                           <property name="spacing">
@@ -1920,6 +1920,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                          </layout>
                         </widget>
                         <widget class="QWidget" name="pOverDiskQuotaPaywall">
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #F4F6F8;</string>
+                         </property>
                          <layout class="QVBoxLayout" name="verticalLayout_25">
                           <property name="spacing">
                            <number>0</number>
