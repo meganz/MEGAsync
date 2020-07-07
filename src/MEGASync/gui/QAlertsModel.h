@@ -8,8 +8,6 @@
 #include <QAbstractItemModel>
 #include <array>
 
-typedef std::deque<unsigned int>::iterator alert_it;
-
 class QAlertsModel : public QAbstractItemModel
 {
     Q_OBJECT

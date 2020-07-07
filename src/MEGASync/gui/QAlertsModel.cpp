@@ -272,7 +272,7 @@ int QAlertsModel::checkAlertType(int alertType) const
 void QAlertsModel::refreshAlertItem(unsigned id)
 {
     int row = 0;
-    for (alert_it it = alertOrder.begin(); it != alertOrder.end() && *it != id; ++it)
+    for (auto it = alertOrder.begin(); it != alertOrder.end() && *it != id; ++it)
     {
         ++row;
     }
