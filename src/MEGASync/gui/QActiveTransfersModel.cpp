@@ -6,40 +6,58 @@ using namespace mega;
 
 bool priority_comparator(TransferItemData* i, TransferItemData *j)
 {
-    if (i->priority < j->priority)
+    if (i->data.priority < j->data.priority)
         return true;
 
-    if (i->priority > j->priority)
+    if (i->data.priority > j->data.priority)
         return false;
 
-    return i->tag < j->tag;
+    return i->data.tag < j->data.tag;
 }
 
-QActiveTransfersModel::QActiveTransfersModel(int type, MegaTransferData *transferData, QObject *parent) :
+QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTransferData> transferData, QObject *parent) :
     QTransfersModel(type, parent)
 {
+    QPointer<QActiveTransfersModel> model = this;
+
     if (!transferData)
     {
         return;
     }
 
-    TransferItemData *itemData = NULL;
     if (type == TYPE_DOWNLOAD)
     {
         int numDownloads = transferData->getNumDownloads();
         if (numDownloads)
         {
-            beginInsertRows(QModelIndex(), 0, numDownloads - 1);
-            transferOrder.resize(numDownloads);
-            for (int i = 0; i < numDownloads; i++)
-            {
-                itemData = new TransferItemData();
-                itemData->tag = transferData->getDownloadTag(i);
-                itemData->priority = transferData->getDownloadPriority(i);
-                transfers.insert(itemData->tag, itemData);
-                transferOrder[i] = itemData;
-            }
-            endInsertRows();
+            ThreadPoolSingleton::getInstance()->push([this, model, transferData, numDownloads]()
+            {//thread pool function
+                for (int i = 0; i < numDownloads; i++)
+                {
+                    if (!model)
+                    {
+                        return;
+                    }
+
+                    MegaTransfer *nextTransfer = nullptr;
+                    nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getTransferByTag(transferData->getDownloadTag(i));
+                    if (nextTransfer)
+                    {
+                        Utilities::queueFunctionInAppThread([this, model, nextTransfer]()
+                        {//queued function
+
+                            if (model)
+                            {
+                                onTransferStart(nullptr, nextTransfer);
+                            }
+
+                            delete nextTransfer;
+
+                        });//end of queued function
+                    }
+                }
+            });// end of thread pool function;
+
         }
     }
     else if (type == TYPE_UPLOAD)
@@ -47,17 +65,34 @@ QActiveTransfersModel::QActiveTransfersModel(int type, MegaTransferData *transfe
         int numUploads = transferData->getNumUploads();
         if (numUploads)
         {
-            beginInsertRows(QModelIndex(), 0, numUploads - 1);
-            transferOrder.resize(numUploads);
-            for (int i = 0; i < numUploads; i++)
-            {
-                itemData = new TransferItemData();
-                itemData->tag = transferData->getUploadTag(i);
-                itemData->priority = transferData->getUploadPriority(i);
-                transfers.insert(itemData->tag, itemData);
-                transferOrder[i] = itemData;
-            }
-            endInsertRows();
+            ThreadPoolSingleton::getInstance()->push([this, model, transferData, numUploads]()
+            {//thread pool function
+                for (int i = 0; i < numUploads; i++)
+                {
+                    if (!model)
+                    {
+                        return;
+                    }
+
+                    MegaTransfer *nextTransfer = nullptr;
+                    nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getTransferByTag(transferData->getUploadTag(i));
+                    if (nextTransfer)
+                    {
+                        Utilities::queueFunctionInAppThread([this, model, nextTransfer]()
+                        {//queued function
+
+                            if (model)
+                            {
+                                onTransferStart(nullptr, nextTransfer);
+                            }
+
+                            delete nextTransfer;
+
+                        });//end of queued function
+                    }
+                }
+            });// end of thread pool function;
+
         }
     }
 
@@ -78,8 +113,8 @@ void QActiveTransfersModel::removeTransferByTag(int transferTag)
 
     transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
-    assert(it != transferOrder.end() && (*it)->tag == transferTag);
-    if (it == transferOrder.end() || (*it)->tag != transferTag)
+    assert(it != transferOrder.end() && (*it)->data.tag == transferTag);
+    if (it == transferOrder.end() || (*it)->data.tag != transferTag)
     {
         return;
     }
@@ -148,7 +183,7 @@ bool QActiveTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, 
     if (row != transferOrder.size())
     {
         item = transferOrder[row];
-        if (item->tag == selectedTags[0])
+        if (item->data.tag == selectedTags[0])
         {
             return false;
         }
@@ -171,7 +206,7 @@ bool QActiveTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, 
     {
         if (item)
         {
-            megaApi->moveTransferBeforeByTag(selectedTags[i], item->tag);
+            megaApi->moveTransferBeforeByTag(selectedTags[i], item->data.tag);
         }
         else
         {
@@ -190,22 +225,20 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
     if (transfer->getType() == type)
     {
-        TransferItemData *item = new TransferItemData();
-        item->tag = transfer->getTag();
-        item->priority = transfer->getPriority();
+        TransferItemData *item = new TransferItemData(transfer);
 
         transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
-        if (transfers.count(item->tag))
+        if (transfers.count(item->data.tag))
         {
             assert(false);
-            megaApi->sendEvent(99514, QString::fromUtf8("Duplicated active transfer during insertion: %1").arg(QString::number(item->tag)).toUtf8().constData());
+            megaApi->sendEvent(99514, QString::fromUtf8("Duplicated active transfer during insertion: %1").arg(QString::number(item->data.tag)).toUtf8().constData());
             delete item;
             return;
         }
 
         beginInsertRows(QModelIndex(), row, row);
-        transfers.insert(item->tag, item);
+        transfers.insert(item->data.tag, item);
         transferOrder.insert(it, item);
         endInsertRows();
 
@@ -270,13 +303,20 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
             item->setTransferError(tError, transfer->getLastError().getValue());
         }
     }
+    else
+    {
+        //Update values in case itemdata is not created yet by delegate
+        itemData->data.speed = transfer->getSpeed();
+        itemData->data.meanSpeed = transfer->getMeanSpeed();
+        itemData->data.transferredBytes = transfer->getTransferredBytes();
+    }
 
-    if (newPriority == itemData->priority)
+    if (newPriority == itemData->data.priority)
     {
         //Update modified item
         std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
-        assert(it != transferOrder.end() && (*it)->tag == itemData->tag);
+        assert(it != transferOrder.end() && (*it)->data.tag == itemData->data.tag);
         if (row >= transferOrder.size())
         {
             return;
@@ -288,29 +328,29 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         //Move item to its new position
         std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
-        assert(it != transferOrder.end() && (*it)->tag == itemData->tag);
-        if (it == transferOrder.end() || (*it)->tag != itemData->tag)
+        assert(it != transferOrder.end() && (*it)->data.tag == itemData->data.tag);
+        if (it == transferOrder.end() || (*it)->data.tag != itemData->data.tag)
         {
             return;
         }
 
         TransferItemData testItem;
-        testItem.tag = itemData->tag;
-        testItem.priority = newPriority;
+        testItem.data.tag = itemData->data.tag;
+        testItem.data.priority = newPriority;
         std::deque<TransferItemData*>::iterator newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
         int newrow = std::distance(transferOrder.begin(), newit);
 
         if (row == newrow || (row + 1) == newrow)
         {
             //Priorities are being adjusted, but there isn't an actual move operation
-            itemData->priority = newPriority;
+            itemData->data.priority = newPriority;
             emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
         }
         else
         {
             beginMoveRows(QModelIndex(), row, row, QModelIndex(), newrow);
             transferOrder.erase(it);
-            itemData->priority = newPriority;
+            itemData->data.priority = newPriority;
             std::deque<TransferItemData*>::iterator finalit = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
             transferOrder.insert(finalit, itemData);
             endMoveRows();
@@ -328,7 +368,7 @@ void QActiveTransfersModel::refreshTransferItem(int tag)
 
     std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
-    assert(it != transferOrder.end() && (*it)->tag == itemData->tag);
+    assert(it != transferOrder.end() && (*it)->data.tag == itemData->data.tag);
     if (row >= transferOrder.size())
     {
         return;

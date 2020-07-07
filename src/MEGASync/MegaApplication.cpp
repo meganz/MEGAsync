@@ -911,7 +911,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     logger->setDebug(true);
 #endif
 
-    mthreadPool.reset(new ThreadPool(1));
+    mthreadPool = ThreadPoolSingleton::getInstance();
 
     updateAvailable = false;
     networkConnectivity = true;
@@ -4291,18 +4291,25 @@ void MegaApplication::checkFirstTransfer()
             });//end of queued function
 
         });// end of thread pool function
-
-
     }
 
     if (numTransfers[MegaTransfer::TYPE_UPLOAD] && activeTransferPriority[MegaTransfer::TYPE_UPLOAD] == 0xFFFFFFFFFFFFFFFFULL)
-    {
-        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
-        if (nextTransfer)
-        {
-            onTransferUpdate(megaApi, nextTransfer);
-            delete nextTransfer;
-        }
+    {        
+        mthreadPool->push([=]()
+        {//thread pool function
+
+            MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+            if (nextTransfer)
+            {
+                Utilities::queueFunctionInAppThread([=]()
+                {//queued function
+
+                    onTransferUpdate(megaApi, nextTransfer);
+                    delete nextTransfer;
+
+                });//end of queued function
+            }
+        });// end of thread pool function
     }
 }
 
@@ -8514,6 +8521,7 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         auto callBackFunctionForQt = [=]()
         {//queued function
 
+            //CHECK it triggers a lot
             assert((!copyRequired || notificationsModel) && "onUserAlertsUpdate with !alerts should have happened before!");
 
             if (!notificationsModel)

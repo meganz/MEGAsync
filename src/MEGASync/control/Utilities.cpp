@@ -25,6 +25,8 @@ using namespace mega;
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, QString> Utilities::languageNames;
 
+std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
+
 void Utilities::initializeExtensions()
 {
     extensionIcons[QString::fromAscii("3ds")] = extensionIcons[QString::fromAscii("3dm")]  = extensionIcons[QString::fromAscii("max")] =

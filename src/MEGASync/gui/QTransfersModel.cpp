@@ -27,6 +27,10 @@ QVariant QTransfersModel::data(const QModelIndex &index, int role) const
     {
         return QVariant::fromValue(index.internalId());
     }
+    else if (role == Qt::UserRole)
+    {
+        return QVariant::fromValue(transfers.value(index.internalId()));
+    }
 
     return QVariant();
 }
@@ -38,12 +42,12 @@ QModelIndex QTransfersModel::parent(const QModelIndex &) const
 
 QModelIndex QTransfersModel::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!hasIndex(row, column, parent))
+    if (!hasIndex(row, column, parent))//Check out
     {
         return QModelIndex();
     }
 
-    return createIndex(row, column, transferOrder[row]->tag);
+    return createIndex(row, column, transferOrder[row]->data.tag);
 }
 
 void QTransfersModel::refreshTransfers()

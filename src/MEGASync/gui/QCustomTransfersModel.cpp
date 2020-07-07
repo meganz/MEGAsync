@@ -39,14 +39,12 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
         return;
     }
 
-    TransferItemData *item = new TransferItemData();
-    item->tag = transfer->getTag();
-    item->priority = transfer->getPriority();
+    TransferItemData *item = new TransferItemData(transfer);
 
     transfer_it it = getInsertPosition(transfer);
     int row = it - transferOrder.begin();
     beginInsertRows(QModelIndex(), row, row);
-    transfers.insert(item->tag, item);
+    transfers.insert(item->data.tag, item);
     transferOrder.insert(it, item);
 
     // Update model state
@@ -68,46 +66,80 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
     }
 }
 
-void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
+void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *t, MegaError *e)
 {
+    QPointer<QCustomTransfersModel> model = this;
+    MegaTransfer *transfer = t->copy();
+
     removeTransferByTag(transfer->getTag());
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
-    {
-        TransferItemData *item = new TransferItemData();
-        item->tag = transfer->getTag();
-        item->priority = transfer->getPriority();
+    {       
+        ThreadPoolSingleton::getInstance()->push([this, model, transfer]()
+        {//thread pool function
+            if (!model)
+            {
+                delete transfer;
+                return;
+            }
 
-        if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
-        {
-            TransferItemData *t = transferOrder.back();
-            int row = transferOrder.size() - 1;
-            beginRemoveRows(QModelIndex(), row, row);
-            transfers.remove(t->tag);
-            transferOrder.pop_back();
-            transferItems.remove(t->tag);
-            endRemoveRows();
-            delete t;
-        }
+            bool isPublicNode = false;
+            MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
+            if (ownNode)
+            {
+               int access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
+               if (access == MegaShare::ACCESS_OWNER)
+               {
+                   isPublicNode = true;
+               }
+               delete ownNode;
+            }
 
-        transfer_it it = getInsertPosition(transfer);
-        int row = it - transferOrder.begin();
-        beginInsertRows(QModelIndex(), row, row);
-        transfers.insert(item->tag, item);
-        transferOrder.insert(it, item);
-        endInsertRows();
-    }
+            Utilities::queueFunctionInAppThread([this, model, isPublicNode, transfer]()
+            {//queued function
 
-    if (transfers.isEmpty())
-    {
-        emit noTransfers();
-    }
-    else
-    {
-        if (transferOrder.size() == 1)
-        {
-            emit onTransferAdded();
-        }
+                if (model)
+                {
+                    TransferItemData *item = new TransferItemData(transfer);
+                    item->data.publicNode = isPublicNode;
+
+                    if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
+                    {
+                        TransferItemData *itemData = transferOrder.back();
+                        int row = transferOrder.size() - 1;
+                        beginRemoveRows(QModelIndex(), row, row);
+                        transfers.remove(itemData->data.tag);
+                        transferOrder.pop_back();
+                        transferItems.remove(itemData->data.tag);
+                        endRemoveRows();
+                        delete itemData;
+                    }
+
+                    transfer_it it = getInsertPosition(transfer);
+                    int row = it - transferOrder.begin();
+                    beginInsertRows(QModelIndex(), row, row);
+                    transfers.insert(item->data.tag, item);
+                    transferOrder.insert(it, item);
+                    endInsertRows();
+
+                    if (transfers.isEmpty())
+                    {
+                        emit noTransfers();
+                    }
+                    else
+                    {
+                        if (transferOrder.size() == 1)
+                        {
+                            emit onTransferAdded();
+                        }
+                    }
+                }
+
+                delete transfer;
+
+            });//end of queued function
+
+        });// end of thread pool function;
     }
 }
 
@@ -124,7 +156,7 @@ void QCustomTransfersModel::onTransferTemporaryError(MegaApi *api, MegaTransfer 
 void QCustomTransfersModel::refreshTransferItem(int tag)
 {
     int row = 0;
-    for (transfer_it it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != tag; ++it)
+    for (transfer_it it = transferOrder.begin(); it != transferOrder.end() && (*it)->data.tag != tag; ++it)
     {
         ++row;
     }
@@ -190,7 +222,7 @@ void QCustomTransfersModel::replaceWithTransfer(MegaTransfer *transfer)
 
     int row = 0;
     transfer_it it;
-    for (it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != transferToReplaced; ++it)
+    for (it = transferOrder.begin(); it != transferOrder.end() && (*it)->data.tag != transferToReplaced; ++it)
     {
         ++row;
     }
@@ -199,12 +231,10 @@ void QCustomTransfersModel::replaceWithTransfer(MegaTransfer *transfer)
     assert(item && row < transferOrder.size());
 
     //Generate new element and place it
-    TransferItemData *newItem = new TransferItemData();
-    newItem->tag = transfer->getTag();
-    newItem->priority = transfer->getPriority();
+    TransferItemData *newItem = new TransferItemData(transfer);
 
     beginResetModel();
-    transfers.insert(newItem->tag, newItem);
+    transfers.insert(newItem->data.tag, newItem);
     transferOrder[row] = newItem;
     transfers.remove(transferToReplaced);
     transferItems.remove(transferToReplaced);
@@ -271,7 +301,7 @@ void QCustomTransfersModel::removeTransferByTag(int transferTag)
 
     int row = 0;
     transfer_it it;
-    for (it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != transferTag; ++it)
+    for (it = transferOrder.begin(); it != transferOrder.end() && (*it)->data.tag != transferTag; ++it)
     {
         ++row;
     }

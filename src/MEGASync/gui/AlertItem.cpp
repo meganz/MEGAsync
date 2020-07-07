@@ -2,6 +2,12 @@
 #include "ui_AlertItem.h"
 #include <QDateTime>
 #include "MegaApplication.h"
+#include <QFutureWatcher>
+#include <QFuture>
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
 
 using namespace mega;
 
@@ -14,6 +20,20 @@ AlertItem::AlertItem(QWidget *parent) :
 
     ui->sIconWidget->hide();
     ui->wNotificationIcon->hide();
+    ui->lNew->hide();
+
+    connect(&getAlertNodeWatcher, &QFutureWatcher<void>::finished, this, [=](){
+
+        alertNode.reset(static_cast<MegaNode*>(getAlertNodeWatcher.result()));
+
+        setAlertType(alertUser->getType());
+        setAlertHeading(alertUser.get());
+        setAlertContent(alertUser.get());
+        setAlertTimeStamp(alertUser->getTimestamp(0));
+        alertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+
+        emit refreshAlertItem(alertUser->getId());
+        });
 }
 
 AlertItem::~AlertItem()
@@ -23,11 +43,12 @@ AlertItem::~AlertItem()
 
 void AlertItem::setAlertData(MegaUserAlert *alert)
 {
-    setAlertType(alert->getType());
-    setAlertHeading(alert);
-    setAlertContent(alert);
-    setAlertTimeStamp(alert->getTimestamp(0));
-    alert->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+    alertUser.reset(alert->copy());
+    MegaHandle handle = alertUser->getNodeHandle();
+    getAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
+    {
+        return megaApi->getNodeByHandle(handle);
+    }));
 }
 
 void AlertItem::setAlertType(int type)
@@ -187,17 +208,11 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         {
             ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
             ui->sIconWidget->show();
-            MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
-            notificationHeading = QString::fromUtf8(node ? node->getName() : alert->getName());
+            notificationHeading = QString::fromUtf8(alertNode ? alertNode->getName() : alert->getName());
 
             if (notificationHeading.isEmpty())
             {
                 notificationHeading = tr("Shared Folder Activity");
-            }
-
-            if (node)
-            {
-                delete node;
             }
             break;
         }
@@ -367,15 +382,13 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             // Takedown notifications
             case MegaUserAlert::TYPE_TAKEDOWN:
             {
-                MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
-                if (node)
+                if (alertNode)
                 {
                     notificationContent = tr("Your publicly shared [%1] ([%2]) has been taken down")
-                            .replace(QString::fromUtf8("[%1]"), node->getType() == MegaNode::TYPE_FILE ? tr("file")
-                                       : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
+                            .replace(QString::fromUtf8("[%1]"), alertNode->getType() == MegaNode::TYPE_FILE ? tr("file")
+                                       : alertNode->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
                                        : QString::fromUtf8(""))
-                            .replace(QString::fromUtf8("[%2]"), formatRichString(QString::fromUtf8(node->getName())));
-                      delete node;
+                            .replace(QString::fromUtf8("[%2]"), formatRichString(QString::fromUtf8(alertNode->getName())));
                 }
                 else
                 {
@@ -385,15 +398,13 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             }
             case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
             {
-                MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
-                if (node)
+                if (alertNode)
                 {
                     notificationContent = tr("Your publicly shared [A] ([B]) has been reinstated")
-                            .replace(QString::fromUtf8("[A]"), node->getType() == MegaNode::TYPE_FILE ? tr("file")
-                                       : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
+                            .replace(QString::fromUtf8("[A]"), alertNode->getType() == MegaNode::TYPE_FILE ? tr("file")
+                                       : alertNode->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
                                        : QString::fromUtf8(""))
-                            .replace(QString::fromUtf8("[B]"), formatRichString(QString::fromUtf8(node->getName())));
-                    delete node;
+                            .replace(QString::fromUtf8("[B]"), formatRichString(QString::fromUtf8(alertNode->getName())));
                 }
                 else
                 {

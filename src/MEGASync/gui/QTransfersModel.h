@@ -7,13 +7,58 @@
 #include <megaapi.h>
 #include "QTMegaTransferListener.h"
 #include <deque>
+#include <memory>
+
+struct TransferCachedData {
+    //Fixme: Once initialization is completed, you can get rid off all cached data except tag and priority
+    int type;
+    QString filename;    
+    int errorCode;
+    long long errorValue;
+    int state;
+    long long finishedTime;
+    long long totalSize;
+    int tag;
+    unsigned long long priority;
+    long long speed;
+    long long meanSpeed;
+    long long transferredBytes;
+    int64_t updateTime;
+    bool publicNode = false;
+    bool isSyncTransfer = false;
+};
 
 class TransferItemData
 {
 public:
-    int tag;
-    unsigned long long priority;
+    TransferItemData(mega::MegaTransfer *transfer = nullptr)
+    {
+        if (transfer)
+        {
+            data.type = transfer->getType();
+            data.filename = QString::fromUtf8(transfer->getFileName());
+            data.isSyncTransfer = transfer->isSyncTransfer();
+            data.errorCode = transfer->getLastError().getErrorCode();
+            data.errorValue = transfer->getLastError().getValue();
+            data.state = transfer->getState();
+            data.finishedTime = transfer->getUpdateTime();
+            data.totalSize = transfer->getTotalBytes();
+            data.tag = transfer->getTag();
+            data.priority = transfer->getPriority();
+            data.speed = transfer->getSpeed();
+            data.meanSpeed = transfer->getMeanSpeed();
+            data.transferredBytes = transfer->getTransferredBytes();
+            data.updateTime = transfer->getUpdateTime();
+
+            std::unique_ptr<mega::MegaNode>publicNode(transfer->getPublicMegaNode());
+            data.publicNode = publicNode ? true : false;
+        }
+    }
+
+    TransferCachedData data;
 };
+
+Q_DECLARE_METATYPE(TransferItemData*);
 
 typedef std::deque<TransferItemData*>::iterator transfer_it;
 

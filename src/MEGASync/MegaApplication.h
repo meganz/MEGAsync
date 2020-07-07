@@ -392,7 +392,7 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
-    std::unique_ptr<ThreadPool> mthreadPool;
+    ThreadPool* mthreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mInboxNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;

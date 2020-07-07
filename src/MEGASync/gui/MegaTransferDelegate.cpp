@@ -32,32 +32,8 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         int tag = index.internalId();
         int modelType = model->getModelType();
         TransferItem *ti = model->transferItems[tag];
-        bool deleteTemporaryTransferItem = false;
         if (!ti)
         {
-            bool apiLockSucceded = false;
-            if (static_cast<MegaApplication*>(qApp)->megaApiLock)
-            {
-                // We will call the SDK several times, and if there is one new transfer there may be many, and the SDK may be working a lot.
-                // Here we lock the SDK mutex so we can make all these calls back into it in one go, and get the painting done.
-                // The lock will be released at the end of the infoDialog or transferDialog paintEvent().
-#ifdef NDEBUG
-                static_cast<MegaApplication*>(qApp)->megaApiLock->lockOnce();
-                apiLockSucceded = true;
-#else
-
-                // we do a tentative lock with 100 millseconds for the entire painting attempt, otherwise we dont'add the item. The next repainting will do.
-                auto startPaintTime = std::max(0LL,static_cast<MegaApplication*>(qApp)->mStartPaintTime + 50 - QDateTime::currentMSecsSinceEpoch());
-                apiLockSucceded = static_cast<MegaApplication*>(qApp)->megaApiLock->tryLockFor(startPaintTime);
-                if (!apiLockSucceded)
-                {
-                    deleteTemporaryTransferItem = true;
-                    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get SDK lock at MegaTransferDelegate::paint").toUtf8().constData());
-                    painter->fillRect(option.rect, QColor(247, 60, 60)); //TODO: paint a blurry item for both DEBUG & NDEBUG
-                }
-#endif
-            }
-
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
                 ti = new CustomTransferItem();
@@ -69,68 +45,40 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
             ti->setTransferTag(tag);
             connect(ti, SIGNAL(refreshTransfer(int)), model, SLOT(refreshTransferItem(int)));
+            model->transferItems.insert(tag, ti);
+            TransferItemData *tData = model->data(index, Qt::UserRole).value<TransferItemData*>();
 
-            MegaTransfer *transfer = nullptr;
-            if (apiLockSucceded)
+            if (tData)
             {
-                model->transferItems.insert(tag, ti);
-                transfer = model->getTransferByTag(tag);
-            }
-            else
-            {
-                ti->setFileName(QString::fromUtf8("Loading ...."));
-            }
+                ti->setType(tData->data.type, tData->data.isSyncTransfer);
+                ti->setFileName(tData->data.filename);
+                ti->setTotalSize(tData->data.totalSize);
+                ti->setSpeed(tData->data.speed, tData->data.meanSpeed);
+                ti->setTransferredBytes(tData->data.transferredBytes, !tData->data.isSyncTransfer);
+                ti->setPriority(tData->data.priority);
 
-            if (transfer)
-            {
-                ti->setType(transfer->getType(), transfer->isSyncTransfer());
-                ti->setFileName(QString::fromUtf8(transfer->getFileName()));
-                ti->setTotalSize(transfer->getTotalBytes());
-                ti->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
-                ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());           
-                ti->setPriority(transfer->getPriority());
-
-                int tError = transfer->getLastError().getErrorCode();
+                int tError = tData->data.errorCode;
                 if (tError != MegaError::API_OK)
                 {
-                    ti->setTransferError(tError, transfer->getLastError().getValue());
+                    ti->setTransferError(tError,  tData->data.errorValue);
                 }
 
-                ti->setTransferState(transfer->getState());
+                ti->setTransferState(tData->data.state);
 
                 if (ti->isTransferFinished())
                 {
-                    if (transfer->getUpdateTime() != ti->getFinishedTime())
+                    if (!ti->getFinishedTime())
                     {
-                        ti->setFinishedTime(transfer->getUpdateTime());
+                        ti->setFinishedTime(tData->data.updateTime);
                         ti->updateFinishedTime(); // applies styles which can be slow - just do it when the finished time changes
                     }
 
-                    MegaNode *node = transfer->getPublicMegaNode();
-                    if (node && node->isPublic())
+                    if (tData->data.publicNode)
                     {
-                        ti->setIsLinkAvailable(true);
+                       ti->setIsLinkAvailable(true);
                     }
-                    else if (apiLockSucceded)
-                    {
-                        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
-                        if (ownNode)
-                        {
-                            int access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
-                            if (access == MegaShare::ACCESS_OWNER)
-                            {
-                                ti->setIsLinkAvailable(true);
-                            }
-
-                            ti->setNodeAccess(access);
-                            delete ownNode;
-                        }
-                    }
-                    delete node;
                 }
-
-                delete transfer;
-            }            
+            }
         }
         else
         {
@@ -194,11 +142,6 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
-        if (deleteTemporaryTransferItem)
-        {
-            delete ti;
-        }
-
     }
     else
     {
