@@ -8751,7 +8751,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
             preferences->clearTemporalBandwidth();
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
-            assert(e->getValue());
             transferQuota->setOverQuota(waitTime);
         }
     }
