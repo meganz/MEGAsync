@@ -53,7 +53,6 @@ public:
             std::unique_ptr<mega::MegaNode>publicNode(transfer->getPublicMegaNode());
             data.publicNode = publicNode ? true : false;
         }
-
     }
 
     TransferCachedData data;
