@@ -22,7 +22,7 @@ public:
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
 protected:
-    void insertTransfer(mega::MegaTransfer *t, bool needsTransferCopy = false);
+    void insertTransfer(mega::MegaTransfer *t);
 
 private slots:
     void refreshTransferItem(int tag);

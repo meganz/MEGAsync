@@ -18,19 +18,17 @@ QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedT
     }
 }
 
-void QFinishedTransfersModel::insertTransfer(MegaTransfer *t, bool needsTransferCopy)
+void QFinishedTransfersModel::insertTransfer(MegaTransfer *t)
 {
     QPointer<QFinishedTransfersModel> model = this;
-    MegaTransfer *transfer = needsTransferCopy ? t->copy() : t; //Check if we need a copy or t comes from finishedtransfers QList
+    MegaTransfer *transfer = t->copy(); //Copy transfer to avoid deletions by finishedtransfers if QMap reaches limit.
 
-    ThreadPoolSingleton::getInstance()->push([this, model, transfer, needsTransferCopy]()
+    ThreadPoolSingleton::getInstance()->push([this, model, transfer]()
     {//thread pool function
         if (!model)
         {
-            if (needsTransferCopy)
-            {
-                delete transfer;
-            }
+
+            delete transfer;
             return;
         }
 
@@ -46,7 +44,7 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *t, bool needsTransfer
            delete ownNode;
         }
 
-        Utilities::queueFunctionInAppThread([this, model, isPublicNode, transfer, needsTransferCopy]()
+        Utilities::queueFunctionInAppThread([this, model, isPublicNode, transfer]()
         {//queued function
             if (model)
             {
@@ -79,10 +77,7 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *t, bool needsTransfer
                 }                
             }
 
-            if (needsTransferCopy)
-            {
-                delete transfer;
-            }
+            delete transfer;
         });//end of queued function
 
     });// end of thread pool function;
@@ -149,7 +144,7 @@ void QFinishedTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer
 {
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
-        insertTransfer(transfer, true);
+        insertTransfer(transfer);
     }
 }
 
