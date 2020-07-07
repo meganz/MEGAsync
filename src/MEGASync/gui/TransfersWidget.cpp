@@ -17,7 +17,7 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 }
 
 void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferData, int type)
-{   
+{
     this->type = type;
     model = new QActiveTransfersModel(type, transferData);
 
