@@ -377,7 +377,7 @@ void StreamingFromMegaDialog::onTransferTemporaryError(mega::MegaApi*, mega::Meg
         showStreamingError();
 
         show();
-        activateWindow();
         raise();
+        activateWindow();
     }
 }
