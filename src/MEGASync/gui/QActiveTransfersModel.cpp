@@ -76,18 +76,20 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
 
                     MegaTransfer *nextTransfer = nullptr;
                     nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getTransferByTag(transferData->getUploadTag(i));
+                    if (nextTransfer)
+                    {
+                        Utilities::queueFunctionInAppThread([this, model, nextTransfer]()
+                        {//queued function
 
-                    Utilities::queueFunctionInAppThread([this, model, nextTransfer]()
-                    {//queued function
+                            if (model)
+                            {
+                                onTransferStart(nullptr, nextTransfer);
+                            }
 
-                        if (model && nextTransfer)
-                        {
-                            onTransferStart(nullptr, nextTransfer);
-                        }
+                            delete nextTransfer;
 
-                        delete nextTransfer;
-
-                    });//end of queued function
+                        });//end of queued function
+                    }
 
                 });// end of thread pool function;
             }
