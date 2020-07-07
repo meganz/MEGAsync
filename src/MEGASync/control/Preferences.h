@@ -31,51 +31,7 @@ private:
 public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
-
     void initialize(QString dataPath);
-
-    template<typename T>
-    T getValue (const QString &key)
-    {
-        auto cf = cache.find(key);
-        if (cf != cache.end())
-        {
-            assert(cf->second.value<T>() == settings->value(key).value<T>());
-            return cf->second.value<T>();
-        }
-        else return settings->value(key).value<T>();
-    }
-
-    template<typename T>
-    T getValue (const QString &key, const T &defaultValue)
-    {
-        auto cf = cache.find(key);
-        if (cf != cache.end())
-        {
-            assert(cf->second.value<T>() == settings->value(key, defaultValue).template value<T>());
-            return cf->second.value<T>();
-        }
-        else return settings->value(key, defaultValue).template value<T>();
-    }
-
-    void setCachedValue (const QString &key, const QVariant &value)
-    {
-        if (!key.isEmpty())
-        {
-            cache[key] = value;
-        }
-    }
-
-    void cleanCache()
-    {
-        cache.clear();
-    }
-
-    void removeFromCache(const QString &key)
-    {
-        cache.erase(key);
-    }
-
     void setEmailAndGeneralSettings(const QString &email);
 
     //Thread safe functions
@@ -179,7 +135,6 @@ public:
     void setBusinessState(int value);
     int getBlockedState();
     void setBlockedState(int value);
-
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -451,11 +406,12 @@ public:
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
 
-    static std::chrono::milliseconds OVERQUOTA_DIALOG_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_DIALOG_DISABLE_DURATION;
     static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
-    static std::chrono::milliseconds OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
-    static std::chrono::milliseconds ALMOST_OVER_QUOTA_UI_MESSAGE_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
+    static std::chrono::milliseconds ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
     static std::chrono::milliseconds ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
 
     static int STATE_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
@@ -523,6 +479,20 @@ protected:
 
     std::chrono::system_clock::time_point getTimePoint(const QString& key);
     void setTimePoint(const QString& key, const std::chrono::system_clock::time_point& timepoint);
+    template<typename T>
+    T getValue (const QString &key);
+    template<typename T>
+    T getValue (const QString &key, const T &defaultValue);
+    template<typename T>
+    T getValueConcurrent(const QString &key);
+    template<typename T>
+    T getValueConcurrent(const QString &key, const T &defaultValue);
+    void setAndCachedValue(const QString &key, const QVariant &value);
+    void setValueAndSyncConcurrent(const QString &key, const QVariant &value);
+    void setValueConcurrent(const QString &key, const QVariant &value);
+    void setCachedValue(const QString &key, const QVariant &value);
+    void cleanCache();
+    void removeFromCache(const QString &key);
 
     EncryptedSettings *settings;
     QStringList syncNames;

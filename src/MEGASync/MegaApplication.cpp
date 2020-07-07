@@ -5227,7 +5227,7 @@ void MegaApplication::uploadActionClicked()
     const auto dialogEnabled{std::chrono::system_clock::now() >= preferences->getStorageOverQuotaUploadsDialogDisabledUntil()};
     if(storageState == MegaApi::STORAGE_STATE_RED && dialogEnabled)
     {
-        preferences->setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
+        preferences->setStorageOverQuotaUploadsDialogDisabledUntil(std::chrono::system_clock::now()+Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME);
         const auto storageFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_UPLOAD)};
         const auto upgradeButtonClicked{storageFullDialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
@@ -5311,7 +5311,7 @@ bool MegaApplication::showSyncOverquotaDialog()
     const auto dialogStorageEnabled{std::chrono::system_clock::now() >= preferences->getStorageOverQuotaSyncsDialogDisabledUntil()};
     if(dialogStorageEnabled && storageFull)
     {
-        preferences->setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
+        preferences->setStorageOverQuotaSyncsDialogDisabledUntil(std::chrono::system_clock::now()+Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME);
         const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_SYNCS)};
         const auto upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
@@ -5323,7 +5323,7 @@ bool MegaApplication::showSyncOverquotaDialog()
     const auto dialogTransferEnabled{std::chrono::system_clock::now() >= preferences->getTransferOverQuotaSyncDialogDisableUntil()};
     if(dialogTransferEnabled && transferQuota->isOverQuota() && !storageFull)
     {
-        preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+OVER_QUOTA_DIALOGS_DISABLE_TIME);
+        preferences->setTransferOverQuotaSyncDialogDisabledUntil(std::chrono::system_clock::now()+Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME);
         const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWITH_SYNC)};
         const auto upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)

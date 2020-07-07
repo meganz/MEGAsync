@@ -18,7 +18,6 @@ constexpr auto EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT{"Transfer almost ove
 constexpr auto EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{98531};
 constexpr auto EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{"Transfer almost over quota os notification shown"};
 constexpr auto ALMOST_OVER_QUOTA_PER_CENT{90};
-constexpr auto OVER_QUOTA_DIALOGS_DISABLE_TIME{std::chrono::hours{12}};
 
 enum class QuotaState
 {
