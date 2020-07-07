@@ -2,7 +2,26 @@
 #define STORAGEFULLDIALOG_H
 
 #include <QDialog>
+#include <QLabel>
 #include <memory>
+
+
+class CustomLabel : public QLabel
+{
+     Q_OBJECT
+public:
+    explicit CustomLabel(QWidget * parent = nullptr) : QLabel(parent){};
+    ~CustomLabel(){};
+
+signals:
+    void labelSizeChange();
+protected slots:
+    void resizeEvent(QResizeEvent *)
+    {
+            emit labelSizeChange();
+    };
+
+};
 
 namespace Ui {
 class OverquotaFullDialog;
@@ -29,6 +48,7 @@ private:
 
 private slots:
     void onUpgradeClicked();
+    void onTitleLengthChanged();
 };
 
 #endif // STORAGEFULLDIALOG_H
