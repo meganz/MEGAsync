@@ -74,4 +74,5 @@ signals:
     void almostOverQuotaUiMessage();
     void overQuotaUiMessage();
     void sendState(QuotaState state);
+    void waitTimeIsOver();
 };

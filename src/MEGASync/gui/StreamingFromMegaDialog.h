@@ -29,6 +29,9 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
 
+public slots:
+    void updateStreamingState();
+
 protected:
     void changeEvent(QEvent * event) override;
     void closeEvent(QCloseEvent * event) override;
@@ -40,6 +43,7 @@ private slots:
     void on_bClose_clicked();
     void on_bOpenDefault_clicked();
     void on_bOpenOther_clicked();
+
 private:
     std::unique_ptr<Ui::StreamingFromMegaDialog> ui;
     mega::MegaApi *megaApi;
@@ -48,6 +52,8 @@ private:
     std::unique_ptr<mega::MegaNode> selectedMegaNode;
     QString streamURL;
     HighDpiResize highDpiResize;
+    bool lastSelectedWasFromPublicLink;
+    QString mPublicLink;
 
     bool generateStreamURL();
     void updateFileInfo(QString fileName, LinkStatus status);
@@ -55,6 +61,8 @@ private:
     void openStreamWithApp(QString app);
     void showStreamingError();
     void hideStreamingError();
+    void updateFileInfoFromNode(mega::MegaNode* node);
+    void requestPublicNodeInfo();
 };
 
 #endif // STREAMINGFROMMEGADIALOG_H

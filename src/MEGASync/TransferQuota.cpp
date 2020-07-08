@@ -51,6 +51,7 @@ void TransferQuota::setQuotaOk()
         mQuotaState = QuotaState::OK;
         mPreferences->clearTemporalBandwidth(); // TODO: why this?
         emit sendState(QuotaState::OK);
+        emit waitTimeIsOver();
 
         if (mUpgradeDialog)
         {
