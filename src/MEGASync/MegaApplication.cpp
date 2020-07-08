@@ -4673,17 +4673,24 @@ void MegaApplication::migrateSyncConfToSdk()
 {
     if (preferences->logged())
     {
-        foreach(SyncData osd, preferences->readOldCachedSyncs())
+        auto oldCachedSyncs = preferences->readOldCachedSyncs();
+        if (oldCachedSyncs.size())
+        {
+            megaApi->copyCachedStatus(MegaApi::STORAGE_STATE_RED, MegaApi::BUSINESS_STATUS_ACTIVE, MegaApi::ACCOUNT_NOT_BLOCKED); //TODO: call this with the proper cached values
+        }
+
+        foreach(SyncData osd, oldCachedSyncs)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
                          .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
 
-            megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mMegaHandle, osd.mLocalfp, osd.mEnabled,
+            megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
+                                         osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
                                          new MegaListenerFuncExecuter(true, [this, osd](MegaApi* api,  MegaRequest *request, MegaError *e)
             {
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    model->pickInfoFromOldSync(osd, request->getNumber());
+                    model->pickInfoFromOldSync(osd, request->getTransferTag());
                     preferences->removeOldCachedSync(osd.mPos);
                 }
                 else

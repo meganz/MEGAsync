@@ -58,13 +58,15 @@ Q_DECLARE_METATYPE(SyncSetting);
 
 struct SyncData
 {
-    SyncData(QString name, QString localFolder, long long  megaHandle,
-                long long localfp, bool enabled, int pos, QString syncID);
+    SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
+                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
     QString mName;
     QString mLocalFolder;
     long long mMegaHandle;
+    QString mMegaFolder;
     long long mLocalfp;
     bool mEnabled;
+    bool mTemporarilyDisabled;
     int mPos;
     QString mSyncID;
 };

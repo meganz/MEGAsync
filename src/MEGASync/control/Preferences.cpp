@@ -3093,9 +3093,9 @@ void Preferences::readFolders()
 }
 
 
-SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, long long localfp, bool enabled, int pos, QString syncID)
-    : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mLocalfp(localfp),
-      mEnabled(enabled), mPos(pos), mSyncID(syncID)
+SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID)
+    : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mMegaFolder(megaFolder), mLocalfp(localfp),
+      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID)
 {
 
 }
@@ -3134,8 +3134,10 @@ QList<SyncData> Preferences::readOldCachedSyncs()
         oldSyncs.push_back(SyncData(settings->value(syncNameKey).toString(),
                                     settings->value(localFolderKey).toString(),
                                     settings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
+                                    settings->value(megaFolderKey).toString(),
                                     settings->value(localFingerprintKey, 0).toLongLong(),
                                     settings->value(folderActiveKey, true).toBool(),
+                                    settings->value(temporaryInactiveKey, false).toBool(),
                                      i,
                                     settings->value(syncIdKey, true).toString()
                                     ));
@@ -3170,6 +3172,7 @@ void Preferences::saveOldCachedSyncs()
         settings->setValue(localFolderKey, osd.mLocalFolder);
         settings->setValue(localFingerprintKey, osd.mLocalfp);
         settings->setValue(megaFolderHandleKey, osd.mMegaHandle);
+        settings->setValue(megaFolderKey, osd.mMegaFolder);
         settings->setValue(folderActiveKey, osd.mEnabled);
         settings->setValue(syncIdKey, osd.mSyncID);
 
