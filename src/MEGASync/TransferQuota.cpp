@@ -6,29 +6,29 @@
 TransferQuota::TransferQuota(mega::MegaApi* megaApi,
                                        Preferences *preferences,
                                        Notificator *notificator)
-    :megaApi{megaApi},
-      pricing(nullptr),
-      preferences{preferences},
-      notificator{notificator},
-      upgradeDialog{nullptr},
-      quotaState{QuotaState::OK}
+    :mMegaApi{megaApi},
+      mPricing(nullptr),
+      mPreferences{preferences},
+      mNotificator{notificator},
+      mUpgradeDialog{nullptr},
+      mQuotaState{QuotaState::OK}
 {
 }
 
 void TransferQuota::setOverQuota(std::chrono::milliseconds waitTime)
 {
-    waitTimeUntil = std::chrono::system_clock::now()+waitTime;
-    quotaState = QuotaState::FULL;
+    mWaitTimeUntil = std::chrono::system_clock::now()+waitTime;
+    mQuotaState = QuotaState::FULL;
     emit sendState(QuotaState::FULL);
     checkExecuteAlerts();
 }
 
 bool TransferQuota::isOverQuota()
 {    
-    auto isOverQuota{quotaState == QuotaState::FULL};
+    auto isOverQuota{mQuotaState == QuotaState::FULL};
     if(isOverQuota)
     {
-        const auto waitTimeIsOver{std::chrono::system_clock::now() >= waitTimeUntil};
+        const auto waitTimeIsOver{std::chrono::system_clock::now() >= mWaitTimeUntil};
         if(waitTimeIsOver)
         {
             isOverQuota = false;
@@ -40,84 +40,84 @@ bool TransferQuota::isOverQuota()
 
 bool TransferQuota::isQuotaWarning() const
 {
-    return quotaState == QuotaState::WARNING;
+    return mQuotaState == QuotaState::WARNING;
 }
 
 void TransferQuota::setQuotaOk()
 {
-    if(quotaState != QuotaState::OK)
+    if(mQuotaState != QuotaState::OK)
     {
-        waitTimeUntil = std::chrono::system_clock::time_point();
-        quotaState = QuotaState::OK;
-        preferences->clearTemporalBandwidth(); // TODO: why this?
+        mWaitTimeUntil = std::chrono::system_clock::time_point();
+        mQuotaState = QuotaState::OK;
+        mPreferences->clearTemporalBandwidth(); // TODO: why this?
         emit sendState(QuotaState::OK);
 
-        if (upgradeDialog)
+        if (mUpgradeDialog)
         {
-            upgradeDialog->close();
+            mUpgradeDialog->close();
         }
     }
 }
 
 void TransferQuota::checkExecuteDialog()
 {
-    const auto disabledUntil{preferences->getTransferOverQuotaDialogLastExecution()+Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION};
+    const auto disabledUntil{mPreferences->getTransferOverQuotaDialogLastExecution()+Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION};
     const auto dialogExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(dialogExecutionEnabled)
     {
-        preferences->setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::now());
-        megaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
-        if (!upgradeDialog)
+        mPreferences->setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::now());
+        mMegaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
+        if (!mUpgradeDialog)
         {
-            upgradeDialog = new UpgradeDialog(megaApi, pricing);
-            QObject::connect(upgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
-            Platform::activateBackgroundWindow(upgradeDialog);
-            upgradeDialog->show();
+            mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing);
+            QObject::connect(mUpgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
+            Platform::activateBackgroundWindow(mUpgradeDialog);
+            mUpgradeDialog->show();
         }
-        else if (!upgradeDialog->isVisible())
+        else if (!mUpgradeDialog->isVisible())
         {
-            upgradeDialog->activateWindow();
-            upgradeDialog->raise();
+            mUpgradeDialog->activateWindow();
+            mUpgradeDialog->raise();
         }
 
-        const auto endWaitTimeSinceEpoch{waitTimeUntil.time_since_epoch()};
+        const auto endWaitTimeSinceEpoch{mWaitTimeUntil.time_since_epoch()};
         const auto endWaitTimeSinceEpochSeconds{std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count()};
-        upgradeDialog->setTimestamp(endWaitTimeSinceEpochSeconds);
-        upgradeDialog->refreshAccountDetails();
+        mUpgradeDialog->setTimestamp(endWaitTimeSinceEpochSeconds);
+        mUpgradeDialog->refreshAccountDetails();
     }
 }
 
 void TransferQuota::checkExecuteNotification()
 {
-    const auto disabledUntil{preferences->getTransferOverQuotaOsNotificationLastExecution()+Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION};
+    const auto disabledUntil{mPreferences->getTransferOverQuotaOsNotificationLastExecution()+Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION};
     const auto notificationExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (notificationExecutionEnabled)
     {
-        preferences->setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
-        megaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_OS_NOTIFICATION, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_OS_NOTIFICATION);
+        mPreferences->setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
+        mMegaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_OS_NOTIFICATION, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_OS_NOTIFICATION);
         sendOverQuotaOsNotification();
     }
 }
 
 void TransferQuota::checkExecuteUiMessage()
 {
-    const auto disabledUntil{preferences->getTransferOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION};
+    const auto disabledUntil{mPreferences->getTransferOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION};
     const auto uiAlertExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (uiAlertExecutionEnabled)
     {
-        megaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_UI_ALERT, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT);
+        mMegaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_UI_ALERT, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT);
         emit overQuotaUiMessage();
     }
 }
 
 void TransferQuota::checkExecuteWarningOsNotification()
 {
-    const auto disabledUntil{preferences->getTransferAlmostOverQuotaOsNotificationLastExecution()+Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION};
+    const auto disabledUntil{mPreferences->getTransferAlmostOverQuotaOsNotificationLastExecution()+Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION};
     const auto notificationExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (notificationExecutionEnabled)
     {
-        preferences->setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
-        megaApi->sendEvent(EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION,
+        mPreferences->setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
+        mMegaApi->sendEvent(EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION,
                            EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION);
         sendQuotaWarningOsNotification();
     }
@@ -125,11 +125,11 @@ void TransferQuota::checkExecuteWarningOsNotification()
 
 void TransferQuota::checkExecuteWarningUiMessage()
 {
-    const auto disabledUntil{preferences->getTransferAlmostOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION};
+    const auto disabledUntil{mPreferences->getTransferAlmostOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION};
     const auto executeUiWarningAlert{std::chrono::system_clock::now() >= disabledUntil};
     if (executeUiWarningAlert)
     {
-        megaApi->sendEvent(EVENT_ID_TRANSFER_ALMOST_QUOTA_UI_ALERT, EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT);
+        mMegaApi->sendEvent(EVENT_ID_TRANSFER_ALMOST_QUOTA_UI_ALERT, EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT);
         emit almostOverQuotaUiMessage();
     }
 }
@@ -137,8 +137,8 @@ void TransferQuota::checkExecuteWarningUiMessage()
 void TransferQuota::checkExecuteAlerts()
 {
     const auto megaApp{static_cast<MegaApplication*>(qApp)};
-    const auto allowAlerts{megaApp->isInfoDialogVisible() || upgradeDialog || Platform::isUserActive()};
-    const auto userLogged{preferences && preferences->logged()};
+    const auto allowAlerts{megaApp->isInfoDialogVisible() || mUpgradeDialog || Platform::isUserActive()};
+    const auto userLogged{mPreferences && mPreferences->logged()};
     const auto bandwidthAlertsEnabled{!megaApp->finished() && userLogged && allowAlerts};
     if (bandwidthAlertsEnabled)
     {
@@ -161,7 +161,7 @@ void TransferQuota::setUserProUsages(long long usedBytes, long long totalBytes)
     const auto usagePercent{std::floor(100.0 * usedBytes / totalBytes)};
     if(usagePercent >= ALMOST_OVER_QUOTA_PER_CENT)
     {
-        quotaState = QuotaState::WARNING;
+        mQuotaState = QuotaState::WARNING;
         emit sendState(QuotaState::WARNING);
         checkExecuteAlerts();
     }
@@ -169,27 +169,27 @@ void TransferQuota::setUserProUsages(long long usedBytes, long long totalBytes)
 
 void TransferQuota::refreshOverQuotaDialogDetails()
 {
-    if(upgradeDialog)
+    if(mUpgradeDialog)
     {
-        upgradeDialog->refreshAccountDetails();
+        mUpgradeDialog->refreshAccountDetails();
     }
 }
 
 void TransferQuota::setOverQuotaDialogPricing(mega::MegaPricing *pricing)
 {
-    this->pricing = pricing;
-    if(upgradeDialog)
+    this->mPricing = pricing;
+    if(mUpgradeDialog)
     {
-        upgradeDialog->setPricing(pricing);
+        mUpgradeDialog->setPricing(pricing);
     }
 }
 
 void TransferQuota::closeDialogs()
 {
-    if(upgradeDialog)
+    if(mUpgradeDialog)
     {
-        delete upgradeDialog;
-        upgradeDialog = nullptr;
+        delete mUpgradeDialog;
+        mUpgradeDialog = nullptr;
     }
 }
 
@@ -202,11 +202,11 @@ void TransferQuota::checkQuotaAndAlerts()
 bool TransferQuota::checkImportLinksAlertDismissed()
 {
     auto dismissed{true};
-    const auto disabledUntil{preferences->getTransferOverQuotaImportLinksDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
+    const auto disabledUntil{mPreferences->getTransferOverQuotaImportLinksDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
     const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(isOverQuota() && dialogEnabled)
     {
-        preferences->setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::now());
+        mPreferences->setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::now());
         const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK)};
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
@@ -216,11 +216,11 @@ bool TransferQuota::checkImportLinksAlertDismissed()
 bool TransferQuota::checkDownloadAlertDismissed()
 {
     auto dismissed{true};
-    const auto disabledUntil{preferences->getTransferOverQuotaDownloadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
+    const auto disabledUntil{mPreferences->getTransferOverQuotaDownloadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
     const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(isOverQuota() && dialogEnabled)
     {
-        preferences->setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::now());
+        mPreferences->setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::now());
         const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD)};
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
@@ -230,11 +230,11 @@ bool TransferQuota::checkDownloadAlertDismissed()
 bool TransferQuota::checkStreamingAlertDismissed()
 {
     auto dismissed{true};
-    const auto disabledUntil{preferences->getTransferOverQuotaStreamDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
+    const auto disabledUntil{mPreferences->getTransferOverQuotaStreamDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
     const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(isOverQuota() && dialogEnabled)
     {
-        preferences->setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::now());
+        mPreferences->setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::now());
         const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_STREAM)};
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
@@ -249,7 +249,7 @@ void TransferQuota::sendNotification(const QString &title)
     notification->setActions(QStringList() << tr("Get PRO"));
     const auto megaApp{static_cast<MegaApplication*>(qApp)};
     connect(notification, &MegaNotification::activated, megaApp, &MegaApplication::redirectToUpgrade);
-    notificator->notify(notification);
+    mNotificator->notify(notification);
 }
 
 void TransferQuota::sendQuotaWarningOsNotification()
@@ -266,19 +266,19 @@ void TransferQuota::sendOverQuotaOsNotification()
 
 void TransferQuota::upgradeDialogFinished(int)
 {
-    if (!static_cast<MegaApplication*>(qApp)->finished() && upgradeDialog)
+    if (!static_cast<MegaApplication*>(qApp)->finished() && mUpgradeDialog)
     {
-        upgradeDialog->deleteLater();
-        upgradeDialog = nullptr;
+        mUpgradeDialog->deleteLater();
+        mUpgradeDialog = nullptr;
     }
 }
 
 void TransferQuota::onDismissOverQuotaUiAlert()
 {
-    preferences->setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
+    mPreferences->setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
 }
 
 void TransferQuota::onDismissAlmostOverQuotaUiMessage()
 {
-    preferences->setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
+    mPreferences->setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
 }

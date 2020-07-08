@@ -30,8 +30,8 @@ class TransferQuota: public QObject
 {
     Q_OBJECT
 public:
-    TransferQuota(mega::MegaApi* megaApi, Preferences *preferences,
-                       Notificator *notificator);
+    TransferQuota(mega::MegaApi* mMegaApi, Preferences *mPreferences,
+                       Notificator *mNotificator);
 
     void setOverQuota(std::chrono::milliseconds waitTime);
     void setQuotaOk();
@@ -39,7 +39,7 @@ public:
     bool isQuotaWarning() const;
     void setUserProUsages(long long usedBytes, long long totalBytes);
     void refreshOverQuotaDialogDetails();
-    void setOverQuotaDialogPricing(mega::MegaPricing *pricing);
+    void setOverQuotaDialogPricing(mega::MegaPricing *mPricing);
     void closeDialogs();
     void checkQuotaAndAlerts();
     bool checkImportLinksAlertDismissed();
@@ -47,13 +47,13 @@ public:
     bool checkStreamingAlertDismissed();
 
 private:
-    mega::MegaApi* megaApi;
-    mega::MegaPricing* pricing;
-    Preferences* preferences;
-    Notificator *notificator;
-    UpgradeDialog* upgradeDialog;
-    QuotaState quotaState;
-    std::chrono::system_clock::time_point waitTimeUntil;
+    mega::MegaApi* mMegaApi;
+    mega::MegaPricing* mPricing;
+    Preferences* mPreferences;
+    Notificator *mNotificator;
+    UpgradeDialog* mUpgradeDialog;
+    QuotaState mQuotaState;
+    std::chrono::system_clock::time_point mWaitTimeUntil;
 
     void sendNotification(const QString& title);
     void sendQuotaWarningOsNotification();
