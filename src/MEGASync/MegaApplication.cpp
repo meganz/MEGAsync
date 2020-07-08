@@ -1492,8 +1492,10 @@ void MegaApplication::updateTrayIcon()
     QString tooltip;
     QString icon;
 
-    if (appliedStorageState == MegaApi::STORAGE_STATE_RED
-            || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
+    const auto isOverQuotaOrPaywall{appliedStorageState == MegaApi::STORAGE_STATE_RED ||
+                transferQuota->isOverQuota() ||
+                appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL};
+    if (isOverQuotaOrPaywall)
     {
         tooltip = QCoreApplication::applicationName()
                 + QString::fromAscii(" ")
