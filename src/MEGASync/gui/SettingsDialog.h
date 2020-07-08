@@ -47,6 +47,7 @@ public:
 public slots:
     void stateChanged();
     void fileVersioningStateChanged();
+    void storageStateChanged(int state);
     void syncStateChanged(int state);
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();

@@ -131,6 +131,7 @@ public slots:
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
+    void on_bUpgradeOverDiskQuota_clicked();
     void openFolder(QString path);
     void onOverlayClicked();
     void on_bTransferManager_clicked();

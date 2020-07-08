@@ -195,6 +195,12 @@ public:
 
     void updateTrayIconMenu();
 
+    mega::MegaPricing *getPricing() const;
+
+    int getAppliedStorageState() const;
+    bool isAppliedStorageOverquota() const;
+    void reloadSyncsInSettings();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -209,6 +215,7 @@ signals:
     void nodeMoved(mega::MegaHandle handle);
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
+    void storageStateChanged(int);
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -236,6 +243,7 @@ public slots:
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
     void shellViewOnMega(QByteArray localPath, bool versions);
+    void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
@@ -331,6 +339,7 @@ protected:
     void initLocalServer();
     void refreshStorageUIs();
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
+    std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
     // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
     bool amIOverTemporalQuotaBandwidth();
@@ -397,7 +406,6 @@ protected:
 #ifdef _WIN32
     QMap<QString, double> lastCheckedScreens;
 #endif
-    bool infoOverQuota;
     Preferences *preferences;
     Model *model;
     Controller *controller;
@@ -437,9 +445,9 @@ protected:
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
     long long lastTsErrorMessageShown;
-    bool almostOQ;
     int storageState;
     int appliedStorageState;
+    bool getUserDataRequestReady;
     long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
@@ -514,6 +522,7 @@ protected:
     bool nodescurrent;
     int businessStatus = -2;
     int blockState;
+    bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
 };

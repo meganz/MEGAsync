@@ -42,11 +42,11 @@ Create the installer
 --------------
 
  - In the HM NIS Edit, click on **Compile** under the menu NSIS to create the Uninstaller generator.
- - The "MEGAsyncSETUP.exe" file should be in your <project_folder> now.
+ - The "MEGAsyncSetup.exe" file should be in your <project_folder> now.
+ - Note that "MEGAsyncSetup.exe" support silent installation passing `/S` as parameter. Although using it requires admin rights.
 
 Final comments
 --------------
 
- - MEGASync is released exclusively in x86. Versions for 64 bits are generated exclusively on demand.
  - If the new installer is intended to be a public version (instead of a debug version for customers or internal usage), the file must be signed by using the MEGA certificate.
  

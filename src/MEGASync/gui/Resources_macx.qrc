@@ -194,8 +194,6 @@
         <file>translations/MEGASyncStrings_ro.qm</file>
         <file>translations/MEGASyncStrings_ru.qm</file>
         <file>translations/MEGASyncStrings_th.qm</file>
-        <file>translations/MEGASyncStrings_tl.qm</file>
-        <file>translations/MEGASyncStrings_uk.qm</file>
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
@@ -406,6 +404,8 @@
         <file>images/upload_to_mega@2x.png</file>
         <file>images/login_background.png</file>
         <file>images/login_background@2x.png</file>
+        <file>images/login_plain_background.png</file>
+        <file>images/login_plain_background@2x.png</file>
         <file>images/login_intermediate.png</file>
         <file>images/login_intermediate@2x.png</file>
         <file>images/confirmation_link.png</file>
@@ -420,8 +420,8 @@
         <file>images/login_setup_step2@2x.png</file>
         <file>images/login_setup_step3.png</file>
         <file>images/login_setup_step3@2x.png</file>
-        <file>images/shield.png</file>
-        <file>images/shield@2x.png</file>
+        <file>images/Shield_big.png</file>
+        <file>images/Shield_big@2x.png</file>
         <file>images/init_scanning.png</file>
         <file>images/init_scanning@2x.png</file>
         <file>images/avatar_frame.png</file>
@@ -542,5 +542,7 @@
         <file>images/icon_question@2x.png</file>
         <file>images/icon_warning.png</file>
         <file>images/icon_warning@2x.png</file>
+        <file>images/icon_paywall_warning.png</file>
+        <file>images/icon_paywall_warning@2x.png</file>
     </qresource>
 </RCC>

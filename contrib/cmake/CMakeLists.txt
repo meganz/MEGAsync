@@ -107,8 +107,6 @@ set (TS_FILES
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ro.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ru.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_th.ts
-    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_tl.ts
-    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_uk.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_vi.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_zh_CN.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_zh_TW.ts )

@@ -255,9 +255,13 @@ public:
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget *what);
-
+    static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
+    static QString getReadableStringFromTs(mega::MegaIntegerList* list);
+    static QString getReadablePROplanFromId(int identifier);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
+    static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
+    static int getDaysToTimestamp(int64_t msecsTimestamps);
 
     // shows a ProgressDialog while some progress goes on. it returns a copy of the objet,
     // but the object will be deleted when the progress closes
