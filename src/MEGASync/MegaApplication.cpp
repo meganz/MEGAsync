@@ -1895,14 +1895,7 @@ void MegaApplication::start()
 
         if (!infoDialog)
         {
-            infoDialog = new InfoDialog(this);
-            connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-            connect(infoDialog, &InfoDialog::dismissTransferOverquota, transferQuota.get(), &TransferQuota::onDismissOverQuotaUiAlert);
-            connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, transferQuota.get(), &TransferQuota::onDismissAlmostOverQuotaUiMessage);
-            connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
-            connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
-            connect(transferQuota.get(), &TransferQuota::overQuotaUiMessage, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
-            connect(transferQuota.get(), &TransferQuota::almostOverQuotaUiMessage, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+            createInfoDialog();
 
             if (!QSystemTrayIcon::isSystemTrayAvailable())
             {
@@ -2077,14 +2070,7 @@ if (!preferences->lastExecutionTime())
 
     if (!infoDialog)
     {
-        infoDialog = new InfoDialog(this);
-        connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-        connect(infoDialog, &InfoDialog::dismissTransferOverquota, transferQuota.get(), &TransferQuota::onDismissOverQuotaUiAlert);
-        connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, transferQuota.get(), &TransferQuota::onDismissAlmostOverQuotaUiMessage);
-        connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
-        connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
-        connect(transferQuota.get(), &TransferQuota::overQuotaUiMessage, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
-        connect(transferQuota.get(), &TransferQuota::almostOverQuotaUiMessage, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+        createInfoDialog();
 
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
@@ -3685,6 +3671,18 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
     }
 
     return QApplication::eventFilter(obj, e);
+}
+
+void MegaApplication::createInfoDialog()
+{
+    infoDialog = new InfoDialog(this);
+    connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
+    connect(infoDialog, &InfoDialog::dismissTransferOverquota, transferQuota.get(), &TransferQuota::onDismissOverQuotaUiAlert);
+    connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, transferQuota.get(), &TransferQuota::onDismissAlmostOverQuotaUiMessage);
+    connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
+    connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
+    connect(transferQuota.get(), &TransferQuota::overQuotaUiMessage, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
+    connect(transferQuota.get(), &TransferQuota::almostOverQuotaUiMessage, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
 }
 
 int MegaApplication::getAppliedStorageState() const
@@ -5420,6 +5418,7 @@ void MegaApplication::streamActionClicked()
     }
 
     streamSelector = new StreamingFromMegaDialog(megaApi);
+
     streamSelector->show();
 }
 

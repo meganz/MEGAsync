@@ -322,8 +322,8 @@ protected:
 
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
-
-    bool eventFilter(QObject *obj, QEvent *e);
+    bool eventFilter(QObject *obj, QEvent *e) override;
+    void createInfoDialog();
 
     QSystemTrayIcon *trayIcon;
 
