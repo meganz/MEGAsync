@@ -5,7 +5,6 @@
 #include <QLabel>
 #include <memory>
 
-
 class CustomLabel : public QLabel
 {
      Q_OBJECT
@@ -20,7 +19,6 @@ protected slots:
     {
             emit labelSizeChange();
     };
-
 };
 
 namespace Ui {

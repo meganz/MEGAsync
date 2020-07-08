@@ -480,7 +480,7 @@ boder-color:#00AC94;
   <customwidget>
    <class>CustomLabel</class>
    <extends>QLabel</extends>
-   <header>OverquotaDialog.h</header>
+   <header>OverQuotaDialog.h</header>
   </customwidget>
  </customwidgets>
  <resources>

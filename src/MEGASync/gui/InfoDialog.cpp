@@ -883,16 +883,18 @@ void InfoDialog::updateDialogState()
         if(transferOverQuotaEnabled && userIsFree)
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_FREE.png")));
+            ui->bOQIcon->setIconSize(QSize(96,96));
         }
         else if(transferOverQuotaEnabled && !userIsFree)
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_PRO.png")));
+            ui->bOQIcon->setIconSize(QSize(96,96));
         }
         else
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+            ui->bOQIcon->setIconSize(QSize(64,64));
         }
-        ui->bOQIcon->setIconSize(QSize(64,64));
         ui->lOQTitle->setText(tr("Your MEGA account is full."));
         ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
                                 + QString::fromUtf8("<br>")

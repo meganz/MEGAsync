@@ -729,6 +729,12 @@
         <file>images/storage_full_100.png</file>
         <file>images/storage_full_100@2x.png</file>
         <file>images/storage_full_100@3x.png</file>
+        <file>images/storage_transfer_full_FREE.png</file>
+        <file>images/storage_transfer_full_FREE@2x.png</file>
+        <file>images/storage_transfer_full_FREE@3x.png</file>
+        <file>images/storage_transfer_full_PRO.png</file>
+        <file>images/storage_transfer_full_PRO@2x.png</file>
+        <file>images/storage_transfer_full_PRO@3x.png</file>
         <file>images/streaming_error_icon.png</file>
         <file>images/streaming_error_icon@2x.png</file>
         <file>images/streaming_error_icon@3x.png</file>
