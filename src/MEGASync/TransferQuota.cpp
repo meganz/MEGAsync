@@ -49,7 +49,7 @@ void TransferQuota::setQuotaOk()
     {
         mWaitTimeUntil = std::chrono::system_clock::time_point();
         mQuotaState = QuotaState::OK;
-        mPreferences->clearTemporalBandwidth(); // TODO: why this?
+        mPreferences->clearTemporalBandwidth();
         emit sendState(QuotaState::OK);
         emit waitTimeIsOver();
 
