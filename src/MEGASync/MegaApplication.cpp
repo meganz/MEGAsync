@@ -6172,8 +6172,8 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
         return;
     }
 
-    const auto dissmised{showSyncOverquotaDialog()};
-    if (infoDialog && !dissmised)
+    const auto upgradingDissmised{showSyncOverquotaDialog()};
+    if (infoDialog && upgradingDissmised)
     {
         infoDialog->addSync(targetFolder);
     }

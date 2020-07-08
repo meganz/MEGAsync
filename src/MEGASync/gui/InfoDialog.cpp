@@ -793,8 +793,8 @@ void InfoDialog::updateState()
 
 void InfoDialog::addSync()
 {
-    const auto dismissed{app->showSyncOverquotaDialog()};
-    if(dismissed)
+    const auto upgradingDissmised{app->showSyncOverquotaDialog()};
+    if(upgradingDissmised)
     {
         addSync(INVALID_HANDLE);
         app->createAppMenus();
