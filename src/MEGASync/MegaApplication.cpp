@@ -5226,7 +5226,8 @@ void MegaApplication::uploadActionClicked()
 
     const auto disabledUntil{preferences->getStorageOverQuotaUploadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
     const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
-    if(storageState == MegaApi::STORAGE_STATE_RED && dialogEnabled)
+    const auto storageIsOverQuota{storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL};
+    if(storageIsOverQuota && dialogEnabled)
     {
         preferences->setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::now());
         const auto storageFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_UPLOAD)};
