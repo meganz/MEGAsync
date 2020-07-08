@@ -898,7 +898,7 @@ void MegaApplication::loadDataPath()
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
-    QApplication(argc, argv)
+    QApplication(argc, argv), transferOverQuotaWaitTimeExpiredReceived{false}
 {
 #ifdef _WIN32
     for (QScreen *s: this->screens() )
@@ -1389,6 +1389,7 @@ void MegaApplication::initialize()
     }
 
     transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, notificator);
+    connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
@@ -3313,9 +3314,11 @@ void MegaApplication::showInfoDialog()
     }
 #endif
 
-    const auto loggedAndNotBandwidthOverquota{preferences && preferences->logged() && !transferQuota->isOverQuota()};
-    if (loggedAndNotBandwidthOverquota)
+    const auto transferQuotaWaitTimeExpired{transferOverQuotaWaitTimeExpiredReceived && !transferQuota->isOverQuota()};
+    const auto loggedAndNotBandwidthOverquota{preferences && preferences->logged()};
+    if (loggedAndNotBandwidthOverquota && transferQuotaWaitTimeExpired)
     {
+        transferOverQuotaWaitTimeExpiredReceived = false;
         updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
     }
 
@@ -4759,6 +4762,11 @@ void MegaApplication::redirectToUpgrade(int activationButton)
         Utilities::getPROurlWithParameters(url);
         QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
+}
+
+void MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired()
+{
+    transferOverQuotaWaitTimeExpiredReceived = true;
 }
 
 void MegaApplication::redirectToPayBusiness(int activationButton)

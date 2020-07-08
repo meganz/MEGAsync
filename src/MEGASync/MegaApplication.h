@@ -285,6 +285,7 @@ public slots:
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
     void redirectToUpgrade(int activationButton);
+    void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
@@ -497,6 +498,7 @@ protected:
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
+    bool transferOverQuotaWaitTimeExpiredReceived;
 };
 
 class DeferPreferencesSyncForScope
