@@ -459,33 +459,18 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
 {
     switch (errorCode)
     {
-    //        TODO: this should address all possible failures of addSync:
     case MegaSync::Error::NO_SYNC_ERROR:
     {
         assert(false && "unexpected no error after enabling failed");
         return;
     }
-    case MegaSync::Error::INVALID_LOCAL_TYPE:
-    case MegaSync::Error::LOCAL_PATH_TEMPORARY_UNAVAILABLE:
-    case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
-    {
-        QMegaMessageBox::critical(nullptr, tr("Error"),
-           tr("This sync can't be enabled because the remote folder doesn't exist"));
-        break;
-    }
-    case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
-    case MegaSync::Error::INVALID_REMOTE_TYPE:
-    {
-        QMegaMessageBox::critical(nullptr, tr("Error"),
-           tr("This sync can't be enabled because the remote folder doesn't exist"));
-        break;
-    }
-
+    //TODO: note for reviewer: no longer using "This sync can't be enabled because the remote folder doesn't exist" & the local folder one
+    // "This" is ambiguous.
     default:
     {
         QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
-           tr("This sync can't be enabled. Reason: %1")
-          .arg(tr(MegaSync::getMegaSyncErrorCode(errorCode)))); //TODO: include local path and the like
+           tr("Your sync \"%1\" can't be enabled. Reason: %2").arg(syncSetting->name()) //TODO: note for reviewer: validate message and/or think about custom messages depending on errors. we might want to show remote path here
+          .arg(tr(MegaSync::getMegaSyncErrorCode(errorCode))));
         break;
     }
     }
@@ -1904,7 +1889,7 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
 
         // Col 3: Enabled/Disabled checkbox
         QCheckBox *c = new QCheckBox();
-        c->setChecked(syncSetting->isEnabled()); //note: this refers to enable/disabled by the user. It can be temporary disabled or even failed. This should be shown in the UI
+        c->setChecked(syncSetting->isActive()); //note: isEnabled refers to enable/disabled by the user. It could be temporary disabled or even failed. This should be shown in the UI
         c->setToolTip(tr("Enable / disable"));
 
 #ifdef SYNC_ADVANCED_TEST_MODE

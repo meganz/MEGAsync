@@ -529,7 +529,7 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
-    static const QString usedBandwidthIntervalKey;    
+    static const QString usedBandwidthIntervalKey;
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
@@ -541,7 +541,6 @@ protected:
     static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
-    static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
     static const QString startOnStartupKey;
     static const QString languageKey;
@@ -568,7 +567,7 @@ protected:
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
     static const QString configuredSyncsKey;
-    static const QString syncNameKey;//TODO: remove unused keys
+    static const QString syncNameKey;
     static const QString syncIdKey;
     static const QString localFolderKey;
     static const QString megaFolderKey;
@@ -581,11 +580,7 @@ protected:
     static const QString hasDefaultDownloadFolderKey;
     static const QString hasDefaultImportFolderKey;
     static const QString importFolderKey;
-    static const QString fileNameKey;
-    static const QString fileHandleKey;
-    static const QString localPathKey;
     static const QString localFingerprintKey;
-    static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
     static const QString excludedSyncPathsKey;

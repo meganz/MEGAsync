@@ -880,6 +880,33 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%i folders");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
     QT_TRANSLATE_NOOP("MegaNodeNames", "Cloud Drive");
+    QT_TRANSLATE_NOOP("MegaSyncError", "No error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Unknown error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "File system not supported");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node is not valid");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path is not valid");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Initial scan failed");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path temporarily unavailable");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path not available");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node not found");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Reached storage quota limit");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Business account expired");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Foreign target storage quota reached");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote path has changed");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node moved to Rubbish Bin");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Share without full access");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local fingerprint mismatch");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Put nodes error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Active sync below path");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Active sync above path");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remove node has been deleted");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remove node is inside Rubbish Bin");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Unsupported VBoxSharedFolderFS filesystem");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path collides with an existing sync");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem is FAT");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem is HGFS");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Your account is blocked");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Undefined error");
 #endif
 }
 
@@ -4801,7 +4828,26 @@ void MegaApplication::migrateSyncConfToSdk()
         auto oldCachedSyncs = preferences->readOldCachedSyncs();
         if (oldCachedSyncs.size())
         {
-            megaApi->copyCachedStatus(MegaApi::STORAGE_STATE_RED, MegaApi::BUSINESS_STATUS_ACTIVE, MegaApi::ACCOUNT_NOT_BLOCKED); //TODO: call this with the proper cached values
+
+            auto cachedBusinessState = preferences->getBusinessState();
+            if (cachedBusinessState == -2)
+            {
+                cachedBusinessState = 999;
+            }
+
+            auto cachedBlockedState = preferences->getBlockedState();
+            if (cachedBlockedState == -2)
+            {
+                cachedBlockedState = 999;
+            }
+
+            auto cachedStorageState = preferences->getStorageState();
+            if (cachedStorageState == -2)
+            {
+                cachedStorageState = 999;
+            }
+
+            megaApi->copyCachedStatus(cachedStorageState, cachedBusinessState, cachedBlockedState);
         }
 
         foreach(SyncData osd, oldCachedSyncs)
@@ -7154,12 +7200,12 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     else if (event->getType() == MegaEvent::EVENT_SYNC_RESTORED)
     {
         Platform::notifyAllSyncFoldersAdded();
-        //TODO: show message?
+        //TODO: note for reviewer: show message?
     }
     else if (event->getType() == MegaEvent::EVENT_SYNC_DISABLED)
     {
         showErrorMessage(tr("Your syncs have been temporarily disabled").append(QString::fromUtf8(": "))
-                         .append(QString::fromUtf8(MegaSync::getMegaSyncErrorCode(event->getNumber())))); //TODO: add errors to translations
+                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
@@ -8573,10 +8619,11 @@ void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString
 {
     if (errorCode != MegaError::API_OK)
     {
+        //TODO: note for reviewer: this use case sould need ux/ui validation: error adding a sync -> sync not cached: disapears from settings
         QMegaMessageBox::critical(nullptr, tr("Error adding sync"),
-                                  tr("This sync can't be added: %1. Reason: %2")
-                                  .arg(localpath)
-                                  .arg(tr(errorCode > 0 ? MegaSync::getMegaSyncErrorCode(errorCode) : MegaError::getErrorString(errorCode)))); //TODO: incluye local path and the like
+                                  tr("This sync can't be added: %1. Reason: %2").arg(localpath)
+                                  .arg( errorCode > 0 ? QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))
+                                                      : QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode))));
     }
 }
 
@@ -8934,12 +8981,11 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
     if (syncSetting->isTemporaryDisabled())
     {
         showErrorMessage(tr("Your sync \"%1\" has been temporarily disabled").arg(syncSetting->name()).append(QString::fromUtf8(": "))
-                         .append(QString::fromUtf8(MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));
+                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));
     }
 
     if (syncSetting->getState() == MegaSync::SYNC_FAILED)
     {
-        //TODO: review missing cases
         switch(syncSetting->getError())
         {
         case MegaSync::Error::NO_SYNC_ERROR:
@@ -8947,43 +8993,32 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
             assert(false && "unexpected no error after onSyncAdded failed");
             return;
         }
-        case MegaSync::Error::INVALID_LOCAL_TYPE:
-        case MegaSync::Error::LOCAL_PATH_TEMPORARY_UNAVAILABLE:
         case MegaSync::Error::LOCAL_PATH_UNAVAILABLE:
         {
-            showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist") //TODO: improve error msg?
+            showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                              .arg(syncSetting->name()));
 
             break;
         }
-        case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
-        case MegaSync::Error::INVALID_REMOTE_TYPE: //TODO: new error msg for this one
         case MegaSync::Error::REMOTE_PATH_DELETED:
         {
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                             .arg(syncSetting->name()));
             break;
         }
-        //case MegaSync::Error::UNSUPPORTED_FILE_SYSTEM: //TODO: new error msg for this one
         case MegaSync::Error::VBOXSHAREDFOLDER_UNSUPPORTED:
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
                             .arg(syncSetting->name()));
             break;
-//        case MegaSync::Error::REMOTE_NODE_INSIDE_RUBBISH: //TODO: new error msg for this one
         case MegaSync::Error::REMOTE_NODE_MOVED_TO_RUBBISH:
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder is in the rubbish bin")
                             .arg(syncSetting->name()));
             break;
-//        case MegaSync::Error::INITIAL_SCAN_FAILED:
-//        case MegaSync::Error::STORAGE_OVERQUOTA:
-//        case MegaSync::Error::FOREIGN_TARGET_OVERSTORAGE:
-//        case MegaSync::Error::REMOTE_PATH_HAS_CHANGED:
-
         case MegaSync::Error::SHARE_NON_FULL_ACCESS:
             showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
                              .arg(syncSetting->name()));
 
-            if (megaApi->isLoggedIn()) //TODO: this was executed when ADD_SYNC returned API_EACCESS. Not sure why
+            if (megaApi->isLoggedIn()) //TODO: Note for reviewer: this was executed when ADD_SYNC returned API_EACCESS. Not sure why
             {
                 if (!mFetchingNodes) //The error might come when resuming syncs while fetching nodes
                 {
@@ -8999,11 +9034,11 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
         default:
         {
             showErrorMessage(tr("Your sync \"%1\" has been disabled. Reason: %2").arg(syncSetting->name())
-                             .arg(QString::fromUtf8(MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));
+                             .arg(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));
             break;
         }
         }
-        if (newSync) //TODO: this may need to be opened always
+        if (newSync) //TODO: note for reviewer: this may need to be opened always
         {
             openSettings(SettingsDialog::SYNCS_TAB);
         }
@@ -9032,7 +9067,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
                  .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
 
 
-    showErrorMessage(tr("Your sync \"%1\" has been re-enabled") //TODO: improve error msg?
+    showErrorMessage(tr("Your sync \"%1\" has been re-enabled") //TODO: note for reviewer: improve/validate error msg?
                      .arg(syncSetting->name()));
 }
 
@@ -9055,7 +9090,8 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionStat
 
     auto syncSetting = model->updateSyncSettings(sync, additionState);
 
-    if (additionState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME)
+    if (additionState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME
+            || additionState == MegaSync::SyncAdded::NEW_TEMP_DISABLED)
     {
         onSyncDisabled(syncSetting);
     }
@@ -9095,8 +9131,6 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
     {
         return;
     }
-
-    megaApi->enableTransferResumption(); //TODO: This should rather be managed within the sdk too!
 }
 
 void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
