@@ -45,6 +45,7 @@ protected:
     void drawArcValue(QPainter &p, const QRectF &baseRect, double arcLength);
     void drawText(QPainter &p, const QRectF &innerRect, double innerRadius, double progressBarValue);
     void setPenColor(QPen &pen, QColor color, bool forceRepaint = true);
+    void setBarTotalValueUnkown(int value, const QColor& color);
 
     int progressBarValue = -1;
     double penWidth;
@@ -60,8 +61,11 @@ protected:
     QPen backgroundPen;
     QPen foregroundPen;
 
-    QIcon markWarning;
-    QIcon markFull;
+    const QIcon markWarning;
+    const QIcon markFull;
+    const QIcon dynamicTransferBlue;
+    const QIcon dynamicTransferRed;
+    bool totalValueUnkown;
 };
 
 #endif // CIRCULARUSAGEPROGRESSBAR_H

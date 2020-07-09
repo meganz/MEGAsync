@@ -149,6 +149,10 @@
         <file>images/drag_word@2x.png</file>
         <file>images/dynamic_transfer_icon.png</file>
         <file>images/dynamic_transfer_icon@2x.png</file>
+        <file>images/dynamic_transfer_icon_32.png</file>
+        <file>images/dynamic_transfer_icon_32@2x.png</file>
+        <file>images/dynamic_transfer_overquota_icon.png</file>
+        <file>images/dynamic_transfer_overquota_icon@2x.png</file>
         <file>images/empty-notifications.png</file>
         <file>images/empty-notifications@2x.png</file>
         <file>images/error.png</file>

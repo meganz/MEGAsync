@@ -3,10 +3,13 @@
 #include <QDebug>
 #include <math.h>
 
-static const QString hyphenUtf8Code{QString::fromUtf8("\xe2\x80\x94")};
-
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
-    QWidget(parent), penWidth(0), outerRadius(0)
+    QWidget(parent), penWidth(0), outerRadius(0),
+    markWarning{QStringLiteral(":/images/icon_warning_24.png")},
+    markFull{QStringLiteral(":/images/icon_error_24.png")},
+    dynamicTransferBlue{QStringLiteral(":/images/dynamic_transfer_icon_32.png")},
+    dynamicTransferRed{QStringLiteral(":/images/dynamic_transfer_overquota_icon.png")},
+    totalValueUnkown{true}
 {
     setPenColor(backgroundPen, QColor(QString::fromUtf8(DEFAULT_BKCOLOR)));
     setPenColor(foregroundPen, QColor(QString::fromUtf8(DEFAULT_FGCOLOR)));
@@ -17,10 +20,6 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     almostOverquotaColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
 
     currentColor = foregroundColor;
-    textValue = hyphenUtf8Code;
-
-    markFull.addFile(QString::fromUtf8(":/images/icon_error_24.png"));
-    markWarning.addFile(QString::fromUtf8(":/images/icon_warning_24.png"));
 }
 
 void CircularUsageProgressBar::paintEvent(QPaintEvent*)
@@ -54,11 +53,26 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     double arcStep = 3.60 * progressBarValue;
     drawArcValue(painter, baseRect, arcStep);
 
-    //Draw percentage text
-    double innerRadius = outerRadius - penWidth / 2;
-    double delta = (outerRadius - innerRadius) / 2;
-    QRectF innerRect = QRectF(delta, delta + padingPixels / 2, innerRadius, innerRadius);
-    drawText(painter, innerRect, innerRadius, progressBarValue);
+    //Draw percentage text or dynamic transfer icon
+    const auto innerRadius{outerRadius - penWidth / 2};
+    const auto delta{(outerRadius - innerRadius) / 2};
+    const auto innerRect{QRectF(delta, delta + padingPixels / 2, innerRadius, innerRadius)};
+    if(totalValueUnkown)
+    {
+        constexpr auto dynamicIconNativeSizePixels{QSize{36, 36}};
+        auto dynamicIconRect{QRectF(QPoint(0, 0), dynamicIconNativeSizePixels)};
+        dynamicIconRect.moveCenter(innerRect.center());
+        QIcon dynamicQuotaIcon{dynamicTransferBlue};
+        if(progressBarValue == CircularUsageProgressBar::MAXVALUE)
+        {
+            dynamicQuotaIcon = dynamicTransferRed;
+        }
+        painter.drawPixmap(dynamicIconRect.toRect(), dynamicQuotaIcon.pixmap(dynamicIconNativeSizePixels));
+    }
+    else
+    {
+        drawText(painter, innerRect, innerRadius, progressBarValue);
+    }
 
     if (progressBarValue >= ALMOSTOVERQUOTA_VALUE) // If value higher than almost oq threshold show warning image
     {
@@ -161,6 +175,7 @@ void CircularUsageProgressBar::setValue(int value)
 
     if (progressBarValue != value)
     {
+        totalValueUnkown = false;
         textValue = tr("[A]%").replace(QStringLiteral("[A]"), QString::number(value));
         progressBarValue = value;
 
@@ -183,22 +198,23 @@ void CircularUsageProgressBar::setValue(int value)
     }
 }
 
-void CircularUsageProgressBar::setEmptyBarTotalValueUnknown()
+void CircularUsageProgressBar::setBarTotalValueUnkown(int value, const QColor &color)
 {
-    textValue = hyphenUtf8Code;
-    progressBarValue = 0;
-    currentColor = foregroundColor;
+    totalValueUnkown = true;
+    progressBarValue = value;
+    currentColor = color;
     setPenColor(foregroundPen, currentColor, false);
     update();
 }
 
+void CircularUsageProgressBar::setEmptyBarTotalValueUnknown()
+{
+    setBarTotalValueUnkown(0, foregroundColor);
+}
+
 void CircularUsageProgressBar::setFullBarTotalValueUnkown()
 {
-    textValue = hyphenUtf8Code;
-    progressBarValue = CircularUsageProgressBar::MAXVALUE;
-    currentColor = overquotaColor;
-    setPenColor(foregroundPen, currentColor, false);
-    update();
+    setBarTotalValueUnkown(CircularUsageProgressBar::MAXVALUE, overquotaColor);
 }
 
 QColor CircularUsageProgressBar::getForegroundColor() const
