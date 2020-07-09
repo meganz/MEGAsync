@@ -112,8 +112,13 @@ void OverQuotaDialog::onUpgradeClicked()
 
 void OverQuotaDialog::onTitleLengthChanged()
 {
-    const int sizeLimitToWrap = ui->widgetHeader->width() - ui->buttonWarning->width() - ui->widgetHeader->layout()->spacing();
-    if(ui->labelTitle->width() > sizeLimitToWrap)
+    int sizeLimitToWrap = ui->widgetHeader->width() - ui->buttonWarning->width() - ui->widgetHeader->layout()->spacing() - 6;
+
+#ifdef Q_OS_LINUX
+    sizeLimitToWrap -= ui->widgetHeader->layout()->contentsMargins().left() + ui->widgetHeader->layout()->contentsMargins().right();
+#endif
+
+    if(ui->labelTitle->width() >= sizeLimitToWrap)
     {
         ui->labelTitle->setWordWrap(true);
     }
