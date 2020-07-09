@@ -242,6 +242,12 @@ bool TransferQuota::checkStreamingAlertDismissed()
     return dismissed;
 }
 
+void TransferQuota::reset()
+{
+    mQuotaState = QuotaState::OK;
+    mWaitTimeUntil = std::chrono::system_clock::time_point();
+}
+
 void TransferQuota::sendNotification(const QString &title)
 {
     MegaNotification *notification = new MegaNotification();

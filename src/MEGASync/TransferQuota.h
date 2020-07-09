@@ -43,6 +43,7 @@ public:
     bool checkImportLinksAlertDismissed();
     bool checkDownloadAlertDismissed();
     bool checkStreamingAlertDismissed();
+    void reset();
 
 private:
     mega::MegaApi* mMegaApi;

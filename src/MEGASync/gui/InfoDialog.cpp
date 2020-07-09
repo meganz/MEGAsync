@@ -879,13 +879,14 @@ void InfoDialog::updateDialogState()
     }
     else if(storageState == Preferences::STATE_OVER_STORAGE)
     {
+        const auto transferIsOverQuota{transferOverquotaState == QuotaState::FULL};
         const auto userIsFree{preferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
-        if(transferOverQuotaEnabled && userIsFree)
+        if(transferIsOverQuota && userIsFree)
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_FREE.png")));
             ui->bOQIcon->setIconSize(QSize(96,96));
         }
-        else if(transferOverQuotaEnabled && !userIsFree)
+        else if(transferIsOverQuota && !userIsFree)
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_PRO.png")));
             ui->bOQIcon->setIconSize(QSize(96,96));
@@ -1246,7 +1247,6 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
     notificationsReady = true;
     ui->tvNotifications->setModel(model);
     ui->tvNotifications->setItemDelegate(delegate);
-
     ui->sNotifications->setCurrentWidget(ui->pNotifications);
 }
 

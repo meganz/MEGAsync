@@ -325,7 +325,6 @@ protected:
     void sendBusinessWarningNotification();
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
-    void createTransferQuota();
 
     QSystemTrayIcon *trayIcon;
 
