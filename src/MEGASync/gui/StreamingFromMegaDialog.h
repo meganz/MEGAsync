@@ -21,7 +21,8 @@ class StreamingFromMegaDialog : public QDialog, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    enum class LinkStatus {CORRECT, WARNING, TRANSFER_OVER_QUOTA};
+    enum class LinkStatus {LOADING=0, CORRECT, WARNING, TRANSFER_OVER_QUOTA};
+    enum class LastStreamingSelection {NOT_SELECTED=0, FROM_LOCAL_NODE, FROM_PUBLIC_NODE};
 
     explicit StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
     ~StreamingFromMegaDialog();
@@ -52,7 +53,7 @@ private:
     std::unique_ptr<mega::MegaNode> selectedMegaNode;
     QString streamURL;
     HighDpiResize highDpiResize;
-    bool lastSelectedWasFromPublicLink;
+    LastStreamingSelection lastStreamSelection;
     QString mPublicLink;
 
     bool generateStreamURL();

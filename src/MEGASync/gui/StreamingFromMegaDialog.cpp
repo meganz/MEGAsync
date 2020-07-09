@@ -116,7 +116,7 @@ void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
         return;
     }
     mPublicLink = inputDialog->textValue();
-    lastSelectedWasFromPublicLink = true;
+    lastStreamSelection = LastStreamingSelection::FROM_PUBLIC_NODE;
     requestPublicNodeInfo();
 }
 
@@ -218,11 +218,11 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
 
 void StreamingFromMegaDialog::updateStreamingState()
 {
-    if(lastSelectedWasFromPublicLink)
+    if(lastStreamSelection == LastStreamingSelection::FROM_PUBLIC_NODE)
     {
         requestPublicNodeInfo();
     }
-    else
+    else if(lastStreamSelection == LastStreamingSelection::FROM_LOCAL_NODE)
     {
         MegaNode *node = megaApi->getNodeByHandle(selectedMegaNode->getHandle());
         updateFileInfoFromNode(node);
@@ -308,7 +308,7 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
         QMegaMessageBox::warning(nullptr, tr("Error"), tr("File not found"), QMessageBox::Ok);
         return;
     }
-    lastSelectedWasFromPublicLink = false;
+    lastStreamSelection = LastStreamingSelection::FROM_LOCAL_NODE;
     selectedMegaNode = std::unique_ptr<MegaNode>(node);
     updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), LinkStatus::CORRECT);
     generateStreamURL();
