@@ -1503,7 +1503,7 @@ int Preferences::uploadLimitKB()
 void Preferences::setUploadLimitKB(int value)
 {
     assert(logged());
-    setValueConcurrent(uploadLimitKBKey, value);
+    setValueAndSyncConcurrent(uploadLimitKBKey, value);
 }
 
 int Preferences::downloadLimitKB()
