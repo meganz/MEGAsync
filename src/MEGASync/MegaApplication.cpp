@@ -7376,6 +7376,14 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 }
 
 //Called when a request has finished
+void MegaApplication::reloadSyncsInSettings()
+{
+    if (settingsDialog)
+    {
+        settingsDialog->loadSyncSettings();
+    }
+}
+
 void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError* e)
 {
     if (appfinished)
@@ -8160,10 +8168,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         createAppMenus();
                     }
 
-                    if (settingsDialog)
-                    {
-                        settingsDialog->loadSyncSettings();
-                    }
+                    reloadSyncsInSettings();
                 }
                 else
                 {
@@ -8209,10 +8214,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        if (settingsDialog)
-        {
-            settingsDialog->loadSyncSettings();
-        }
+        reloadSyncsInSettings();
 
         break;
     }
@@ -8232,10 +8234,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             notifyItemChange(syncPath, MegaApi::STATE_NONE);
         }
 
-        if (settingsDialog)
-        {
-            settingsDialog->loadSyncSettings();
-        }
+        reloadSyncsInSettings();
 
         onGlobalSyncStateChanged(megaApi);
         break;
