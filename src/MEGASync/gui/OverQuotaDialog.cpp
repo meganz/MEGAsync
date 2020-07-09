@@ -14,7 +14,7 @@ OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
 
     connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::reject);
     connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
-    connect(ui->labelTitle, &CustomLabel::labelSizeChange,this, &OverQuotaDialog::onTitleLengthChanged);
+    connect(ui->labelTitle, &CustomLabel::labelSizeChange, this, &OverQuotaDialog::onTitleLengthChanged);
 
     configureDialog(type);
 }
@@ -118,9 +118,7 @@ void OverQuotaDialog::onTitleLengthChanged()
     sizeLimitToWrap -= ui->widgetHeader->layout()->contentsMargins().left() + ui->widgetHeader->layout()->contentsMargins().right();
 #endif
 
-    if(ui->labelTitle->width() >= sizeLimitToWrap)
-    {
-        ui->labelTitle->setWordWrap(true);
-    }
+    const auto wordWrapEnabled{ui->labelTitle->width() > sizeLimitToWrap};
+    ui->labelTitle->setWordWrap(wordWrapEnabled);
 }
 

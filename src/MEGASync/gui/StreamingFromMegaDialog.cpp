@@ -317,11 +317,11 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
 
 void StreamingFromMegaDialog::requestPublicNodeInfo()
 {
-    if (mPublicLink.isEmpty())
+    auto url{mPublicLink.trimmed()};
+    if (url.isEmpty())
     {
         return;
     }
-    auto url{mPublicLink.trimmed()};
     megaApi->getPublicNode(url.toUtf8().constData(), delegateListener.get());
     hideStreamingError();
 }
@@ -340,6 +340,8 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
     QIcon statusIcon;
     switch (status)
     {
+    case LinkStatus::LOADING:
+        break;
     case LinkStatus::CORRECT:
         statusIcon.addFile(QString::fromUtf8(":/images/streaming_on_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->bOpenDefault->setEnabled(true);
