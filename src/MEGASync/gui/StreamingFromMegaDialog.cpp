@@ -19,7 +19,8 @@ using namespace mega;
 
 StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
-    ui(::mega::make_unique<Ui::StreamingFromMegaDialog>())
+    ui(::mega::make_unique<Ui::StreamingFromMegaDialog>()),
+    lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
