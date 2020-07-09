@@ -898,7 +898,7 @@ void MegaApplication::loadDataPath()
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
-    QApplication(argc, argv), transferOverQuotaWaitTimeExpiredReceived{false}
+    QApplication(argc, argv)
 {
 #ifdef _WIN32
     for (QScreen *s: this->screens() )
@@ -1121,6 +1121,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
+    transferOverQuotaWaitTimeExpiredReceived = false;
 
     for (unsigned i = 3; i--; )
     {
