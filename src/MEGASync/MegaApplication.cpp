@@ -1388,9 +1388,6 @@ void MegaApplication::initialize()
         }
     }
 
-    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, notificator);
-    connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
-
     periodicTasksTimer = new QTimer(this);
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
     connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
@@ -1792,7 +1789,6 @@ void MegaApplication::start()
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     eventsPendingLoggedIn.clear();
     receivedStorageSum = 0;
-
     finishedBlockedTransfers.clear();
 
     for (unsigned i = 3; i--; )
@@ -1807,7 +1803,7 @@ void MegaApplication::start()
     {
         infoDialog->reset();
     }
-
+    createTransferQuota();
     updateTrayIconMenu();
 
     if(notificationsModel) notificationsModel->deleteLater();
@@ -3686,6 +3682,14 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
     connect(transferQuota.get(), &TransferQuota::overQuotaUiMessage, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaUiMessage, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+}
+
+void MegaApplication::createTransferQuota()
+{
+    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, notificator);
+    transferQuota->setOverQuotaDialogPricing(pricing);
+    transferOverQuotaWaitTimeExpiredReceived = false;
+    connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 }
 
 int MegaApplication::getAppliedStorageState() const

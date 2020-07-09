@@ -178,7 +178,7 @@ void TransferQuota::refreshOverQuotaDialogDetails()
 
 void TransferQuota::setOverQuotaDialogPricing(mega::MegaPricing *pricing)
 {
-    this->mPricing = pricing;
+    mPricing = pricing;
     if(mUpgradeDialog)
     {
         mUpgradeDialog->setPricing(pricing);

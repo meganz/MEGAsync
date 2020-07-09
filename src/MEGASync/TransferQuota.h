@@ -30,9 +30,7 @@ class TransferQuota: public QObject
 {
     Q_OBJECT
 public:
-    TransferQuota(mega::MegaApi* mMegaApi, Preferences *mPreferences,
-                       Notificator *mNotificator);
-
+    TransferQuota(mega::MegaApi* mMegaApi, Preferences *mPreferences, Notificator *mNotificator);
     void setOverQuota(std::chrono::milliseconds waitTime);
     void setQuotaOk();
     bool isOverQuota();
