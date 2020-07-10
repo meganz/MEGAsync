@@ -59,7 +59,7 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     const auto innerRect{QRectF(delta, delta + padingPixels / 2, innerRadius, innerRadius)};
     if(totalValueUnkown)
     {
-        constexpr auto dynamicIconNativeSizePixels{QSize{36, 36}};
+        constexpr auto dynamicIconNativeSizePixels{QSize{32, 32}};
         auto dynamicIconRect{QRectF(QPoint(0, 0), dynamicIconNativeSizePixels)};
         dynamicIconRect.moveCenter(innerRect.center());
         QIcon dynamicQuotaIcon{dynamicTransferBlue};
