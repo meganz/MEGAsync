@@ -574,8 +574,10 @@ border-bottom: 1px solid #EFEFEC;
 }</string>
         </property>
         <property name="text">
-         <string notr="true">&lt;html&gt;&lt;p style=&quot;line-height: 16px;&quot;&gt;This software uses Qt (&amp;copy; 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3&lt;/p&gt;&lt;/html&gt;
-</string>
+         <string notr="true">[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
