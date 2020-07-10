@@ -292,13 +292,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     }
 #endif
 
-    ui->lOQWarning->setText(QString::fromUtf8(""));
-    ui->wOQError->hide();
-
     highDpiResize.init(this);
     ((MegaApplication*)qApp)->attachStorageObserver(*this);
     ((MegaApplication*)qApp)->attachBandwidthObserver(*this);
     ((MegaApplication*)qApp)->attachAccountObserver(*this);
+
+    connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
+    storageStateChanged(app->getAppliedStorageState());
+
 }
 
 SettingsDialog::~SettingsDialog()
@@ -461,6 +462,11 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 void SettingsDialog::storageChanged()
 {
     onCacheSizeAvailable();
+}
+
+void SettingsDialog::storageStateChanged(int newStorageState)
+{
+     setOverQuotaMode(newStorageState == MegaApi::STORAGE_STATE_RED || newStorageState == MegaApi::STORAGE_STATE_PAYWALL);
 }
 
 void SettingsDialog::onCacheSizeAvailable()
@@ -1427,7 +1433,21 @@ int SettingsDialog::saveSettings()
                                                  node->getHandle(),
                                                  syncName, enabled);
 
-                    if (enabled)
+                    bool storageOQ = static_cast<MegaApplication *>(qApp)->isAppliedStorageOverquota();
+                    bool blocked = preferences->getBlockedState() != -2 && preferences->getBlockedState();
+                    bool businessExpired = preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED;
+                    if (storageOQ || blocked || businessExpired)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(
+                                         " Sync added as temporary disabled due to %1: %2 - %3")
+                                     .arg(QString::fromUtf8(storageOQ ? "storage overquota" :
+                                          (blocked ? "account blocked" : "business account expired") ))
+                                     .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
+
+                        preferences->setSyncState(j, false, true);
+                        ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->setChecked(false);
+                    }
+                    else if (enabled)
                     {
                         megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
                     }

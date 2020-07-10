@@ -488,6 +488,7 @@ void GuestWidget::on_bCancel_clicked()
     }
     else
     {
+        loggingStarted = false;
         megaApi->localLogout();
         page_login();
     }

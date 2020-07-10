@@ -252,8 +252,6 @@
         <file>translations/MEGASyncStrings_ro.qm</file>
         <file>translations/MEGASyncStrings_ru.qm</file>
         <file>translations/MEGASyncStrings_th.qm</file>
-        <file>translations/MEGASyncStrings_tl.qm</file>
-        <file>translations/MEGASyncStrings_uk.qm</file>
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
@@ -798,5 +796,8 @@
         <file>images/icon_warning.png</file>
         <file>images/icon_warning@2x.png</file>
         <file>images/icon_warning@3x.png</file>
+        <file>images/icon_paywall_warning.png</file>
+        <file>images/icon_paywall_warning@2x.png</file>
+        <file>images/icon_paywall_warning@3x.png</file>
     </qresource>
 </RCC>
