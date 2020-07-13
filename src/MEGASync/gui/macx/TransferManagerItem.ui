@@ -280,7 +280,11 @@ padding-top: 1px;</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">#lTotal
+{
+color:#777777;
+text-decoration:none;
+}</string>
                </property>
                <property name="text">
                 <string notr="true"/>

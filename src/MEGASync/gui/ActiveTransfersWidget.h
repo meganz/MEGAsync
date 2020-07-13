@@ -56,7 +56,7 @@ private slots:
 private:
     Ui::ActiveTransfersWidget *ui;
     mega::MegaApi *megaApi;
-    int totalUploads, totalDownloads;
+    int totalUploads, totalDownloads, previousTotalUploads, previousTotalDownloads;
     TransferData activeUpload, activeDownload;
     QMovie *animationDown, *animationUp;
     QPixmap loadIconResourceDown, loadIconResourceUp;
