@@ -7811,7 +7811,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     }
 
                     auto businessState = preferences->getBusinessState();
-                    bool businessExpired = businessState != -2 && businessState == MegaApi::BUSINESS_STATUS_EXPIRED;
+                    bool businessExpired = businessState == MegaApi::BUSINESS_STATUS_EXPIRED;
                     auto blockedState = preferences->getBlockedState();
                     bool accountBlocked = blockedState != -2 && blockedState;
 
