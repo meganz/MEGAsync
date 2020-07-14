@@ -1,5 +1,3 @@
-#pragma once
-
 #include "MessageBox.h"
 #include "ui_MessageBox.h"
 
