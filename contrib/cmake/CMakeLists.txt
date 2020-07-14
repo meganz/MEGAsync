@@ -136,7 +136,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/AccountDetailsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/DownloadFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/SizeLimitDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/MessageBox.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangeLogDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
@@ -234,7 +233,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaSpeedGraph.h
     ${MEGAsyncDir}/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/gui/MegaTransferView.h
-    ${MEGAsyncDir}/gui/MessageBox.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
     ${MEGAsyncDir}/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.h
@@ -355,7 +353,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/SizeLimitDialog.cpp
     ${MEGAsyncDir}/gui/UsageWidget.cpp
-    ${MEGAsyncDir}/gui/MessageBox.cpp
     ${MEGAsyncDir}/gui/QMegaModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
