@@ -7811,14 +7811,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     }
 
                     auto businessState = preferences->getBusinessState();
-                    bool businessExpired = businessState != -2 && businessState != MegaApi::BUSINESS_STATUS_EXPIRED;
+                    bool businessExpired = businessState != -2 && businessState == MegaApi::BUSINESS_STATUS_EXPIRED;
                     auto blockedState = preferences->getBlockedState();
                     bool accountBlocked = blockedState != -2 && blockedState;
 
                     //Restore temporarily disabled syncs for cases that don't have a transition that triggers restoreSyncs
                     if (!isAppliedStorageOverquota()
                             && !accountBlocked
-                            && businessExpired)
+                            && !businessExpired)
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("restoring syncs after loggedIn").toUtf8().constData());
                         restoreSyncs();
