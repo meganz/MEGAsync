@@ -1973,6 +1973,11 @@ void MegaApplication::start()
         {
             megaApi->fastLogin(theSession.toUtf8().constData());
         }
+        else //In case preferences are corrupt with empty session, just unlink and remove associated data.
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "MEGAsync preferences logged but empty session. Unlink account and fresh start.");
+            unlink();
+        }
 
         if (updated)
         {
