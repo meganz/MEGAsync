@@ -975,6 +975,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DynamicTransferQuotaPopOver</name>
+    <message>
+        <source>Dynamic transfer quota</source>
+        <translatorcomment>Title label to indicate about the dynamic transfer quota used by current account.</translatorcomment>
+        <translation type="unfinished">Dynamic transfer quota</translation>
+    </message>
+    <message>
+        <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
+        <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
+        <translation type="unfinished">[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</translation>
+    </message>
+</context>
+<context>
     <name>FilterAlertWidget</name>
     <message>
         <source>All notifications</source>
@@ -1829,6 +1842,31 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
         <translation type="unfinished">You must act immediately to save your data</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota.</source>
+        <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
+        <translation type="unfinished">Depleted transfer quota.</translation>
+    </message>
+    <message>
+        <source>All downloads are currently disabled.</source>
+        <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
+        <translation type="unfinished">All downloads are currently disabled.</translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
+        <translation type="unfinished">Upgrade</translation>
+    </message>
+    <message>
+        <source>Limited available transfer quota</source>
+        <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
+        <translation type="unfinished">Limited available transfer quota</translation>
+    </message>
+    <message>
+        <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
+        <translation type="unfinished">Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</translation>
     </message>
 </context>
 <context>
@@ -3208,33 +3246,6 @@ Are you sure?</source>
     </message>
 </context>
 <context>
-    <name>MessageBox</name>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
-        <source>Do not ask me again</source>
-        <translatorcomment>Check box label to remember the option of a user.</translatorcomment>
-        <translation type="unfinished">Do not ask me again</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
-        <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
-        <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
-        <translation type="unfinished">The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
-    </message>
-</context>
-<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3362,6 +3373,107 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
         <source>MEGAsync</source>
         <translatorcomment>Product name.</translatorcomment>
         <translation type="unfinished">MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>OverQuotaDialog</name>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
+        <translation type="unfinished">Storage Full</translation>
+    </message>
+    <message>
+        <source>Download syncs are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that syncs downloads are temporarily disabled because a situation of over transfer quota.</translatorcomment>
+        <translation type="unfinished">Download syncs are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting set syncs but disabled until there is enough free storage space within the account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</translation>
+    </message>
+    <message>
+        <source>Buy more space</source>
+        <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
+        <translation type="unfinished">Buy more space</translation>
+    </message>
+    <message>
+        <source>Uploads are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that uploads are temporarily disabled due to a storage space limit has been reached.</translatorcomment>
+        <translation type="unfinished">Uploads are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</translation>
+    </message>
+    <message>
+        <source>Empty transfer quota</source>
+        <translatorcomment>Window title for dialog that shows informative messages about a situation of depleted transfer quota.</translatorcomment>
+        <translation type="unfinished">Empty transfer quota</translation>
+    </message>
+    <message>
+        <source>Syncs are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that syncs are temporarily disabled due to transfer quota limit has been reached.</translatorcomment>
+        <translation type="unfinished">Syncs are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</translation>
+    </message>
+    <message>
+        <source>Upgrade Account</source>
+        <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
+        <translation type="unfinished">Upgrade Account</translation>
+    </message>
+    <message>
+        <source>Importing links is temporarily disabled.</source>
+        <translatorcomment>Label to indicate that import links feature is temporarily disabled due to a situation of over transfer quota. User will be able to import but not to download.</translatorcomment>
+        <translation type="unfinished">Importing links is temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</translation>
+    </message>
+    <message>
+        <source>Downloads are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that downloads are temporarily disabled due to a situation of over transfer quota.</translatorcomment>
+        <translation type="unfinished">Downloads are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</translation>
+    </message>
+    <message>
+        <source>Streams are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that streaming transfers  of MEGAsync (context menu, stream option) is temporarily disabled due to a situation of over transfer quota.</translatorcomment>
+        <translation type="unfinished">Streams are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</translation>
+    </message>
+</context>
+<context>
+    <name>OverquotaFullDialog</name>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate that current account has reached storage limit.</translatorcomment>
+        <translation type="unfinished">Storage Full</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss the warning about storage full.</translatorcomment>
+        <translation type="unfinished">Dismiss</translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
+        <translation type="unfinished">Upgrade</translation>
     </message>
 </context>
 <context>
@@ -5567,6 +5679,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">Error getting link information</translation>
     </message>
+    <message>
+        <source>Stream error: transfer overquota</source>
+        <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
+        <translation type="unfinished">Stream error: transfer overquota</translation>
+    </message>
 </context>
 <context>
     <name>TransferItem</name>
@@ -5788,6 +5905,29 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferQuota</name>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Informative label of system notification to encourage user to upgrade account.</translatorcomment>
+        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished">Get PRO</translation>
+    </message>
+    <message>
+        <source>Limited available transfer quota.</source>
+        <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
+        <translation type="unfinished">Limited available transfer quota.</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota.</source>
+        <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
+        <translation type="unfinished">Depleted transfer quota.</translation>
+    </message>
+</context>
+<context>
     <name>TransfersStateInfoWidget</name>
     <message>
         <source>No Downloads</source>
@@ -5809,7 +5949,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Free transfer quota exceeded</translation>
+        <translation type="obsolete">Free transfer quota exceeded</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -5824,6 +5964,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
         <translation type="unfinished">The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade your account[/A], which will give you your own transfer quota package and also ample extra storage space.</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota</source>
+        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
+        <translation type="unfinished">Depleted transfer quota</translation>
     </message>
 </context>
 <context>
@@ -6062,11 +6207,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation type="unfinished">Bytes</translation>
-    </message>
-    <message>
-        <source>and</source>
-        <translatorcomment>Conjunction</translatorcomment>
-        <translation type="unfinished">and</translation>
     </message>
 </context>
 <context>
