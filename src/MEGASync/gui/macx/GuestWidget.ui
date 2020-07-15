@@ -1683,7 +1683,6 @@ background-color:rgba(240, 55, 58, 0.3);
   color: #666666;
   font-family: Lato;
   font-size: 11px;
-  letter-spacing: 0;
 }</string>
                </property>
                <property name="text">
