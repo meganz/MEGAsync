@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Limited avaliable transfer quota</string>
+   <string>Limited available transfer quota</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#UpgradeDialog
