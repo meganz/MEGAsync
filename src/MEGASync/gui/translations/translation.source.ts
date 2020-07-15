@@ -3764,13 +3764,32 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- New customized message boxes.
+        <translation type="obsolete">- New customized message boxes.
 - Clean retroactive logs when logging out.
 - Fixed issues that disabled Finder extension under some circumstances.
 - Email verification for locked accounts.
 - SMS verification for locked accounts.
 - Support for the affiliate program.
 - Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
+    </message>
+    <message>
+        <source>- Improve user experience when exceeded transfer allowance.
+- Improvements in translation.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS system.
+- Stop escaping filenames when special characters are supported by target filesystem.
+- Integration of 2FA form within main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
+        <translation type="unfinished">- Improve user experience when exceeded transfer allowance.
+- Improvements in translation.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS system.
+- Stop escaping filenames when special characters are supported by target filesystem.
+- Integration of 2FA form within main dialog.
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</translation>
     </message>
