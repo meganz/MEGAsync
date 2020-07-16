@@ -192,6 +192,7 @@ double computeScale(const QScreen& screen)
         screendpi = screen.logicalDotsPerInch(); //Use Qt to get dpi value (faulty in certain environments)
     }
 
+    scale = adjustScaleWhenZoomed(scale, screen.devicePixelRatio());
     if (screendpi > base_dpi) // high dpi screen | zoom configured ...
     {
         scale = screendpi / base_dpi;
@@ -204,9 +205,7 @@ double computeScale(const QScreen& screen)
         scale = max(1., scale);
     }
 
-    scale = adjustScaleWhenZoomed(scale, screen.devicePixelRatio());
     scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
-
     return scale;
 }
 #endif
