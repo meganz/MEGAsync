@@ -1486,7 +1486,11 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::setTrayIconFromTheme(QString icon)
 {
     QString name = QString(icon).replace(QString::fromAscii("://images/"), QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
-    trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
+    const auto needsToBeUpdated{name != trayIcon->icon().name()};
+    if(needsToBeUpdated)
+    {
+        trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
+    }
 }
 #endif
 
