@@ -177,6 +177,11 @@ double getXrdbdpi( bool enforce = false)
     return calculated;
 }
 
+double adjustScaleWhenZoomed(double scale, double devicePixelRatio)
+{
+    return scale / devicePixelRatio;
+}
+
 double computeScale(const QScreen& screen)
 {
     constexpr auto base_dpi = 96.;
@@ -199,6 +204,7 @@ double computeScale(const QScreen& screen)
         scale = max(1., scale);
     }
 
+    scale = adjustScaleWhenZoomed(scale, screen.devicePixelRatio());
     scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
 
     return scale;
