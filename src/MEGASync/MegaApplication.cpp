@@ -179,9 +179,17 @@ double getXrdbdpi( bool enforce = false)
 
 double adjustScaleWhenZoomed(double scale, double devicePixelRatio)
 {
-    scale /= devicePixelRatio;
-    scale = min(3., scale);
-    scale = max(1., scale);
+    // TODO: let do this patch only in Ubuntu 20 for now on and extend it after testing with more distributions
+    const auto productType{QSysInfo::productType()};
+    const auto productVersion{QSysInfo::productVersion()};
+    const auto isUbuntu20OrHigher{productType==QStringLiteral("ubuntu") && productVersion.toDouble() > 20.0};
+    // Also accept a environtment variable for testing
+    if(isUbuntu20OrHigher || getenv("FORCE_ADJUST_SCALE_WHEN_ZOOMING"))
+    {
+        scale /= devicePixelRatio;
+        scale = min(3., scale);
+        scale = max(1., scale);
+    }
     return scale;
 }
 
@@ -207,7 +215,9 @@ double computeScale(const QScreen& screen)
         scale = max(1., scale);
     }
 
+#ifdef Q_OS_LINUX
     scale = adjustScaleWhenZoomed(scale, screen.devicePixelRatio());
+#endif
     scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
     return scale;
 }
