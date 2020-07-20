@@ -899,13 +899,15 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Put nodes error");
     QT_TRANSLATE_NOOP("MegaSyncError", "Active sync below path");
     QT_TRANSLATE_NOOP("MegaSyncError", "Active sync above path");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Remove node has been deleted");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Remove node is inside Rubbish Bin");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node has been deleted");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node is inside Rubbish Bin");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unsupported VBoxSharedFolderFS filesystem");
     QT_TRANSLATE_NOOP("MegaSyncError", "Local path collides with an existing sync");
     QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem is FAT");
     QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem is HGFS");
     QT_TRANSLATE_NOOP("MegaSyncError", "Your account is blocked");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Unknown temporary error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Too many changes in account, local state invalid");
     QT_TRANSLATE_NOOP("MegaSyncError", "Undefined error");
 #endif
 }
@@ -7197,12 +7199,12 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     {
         preferences->setUseHttpsOnly(true);
     }
-    else if (event->getType() == MegaEvent::EVENT_SYNC_RESTORED)
+    else if (event->getType() == MegaEvent::EVENT_SYNCS_RESTORED)
     {
         Platform::notifyAllSyncFoldersAdded();
         //TODO: note for reviewer: show message?
     }
-    else if (event->getType() == MegaEvent::EVENT_SYNC_DISABLED)
+    else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED)
     {
         showErrorMessage(tr("Your syncs have been temporarily disabled").append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));
