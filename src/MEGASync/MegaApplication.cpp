@@ -53,6 +53,15 @@ QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 QString MegaApplication::lastNotificationError = QString();
 
+struct LogMessage
+{
+    int logLevel;
+    QString message;
+
+    LogMessage(int logLevel, QString message):logLevel{logLevel}, message{message}{};
+};
+std::vector<LogMessage> logMessages;
+
 void msgHandler(QtMsgType type, const char *msg)
 {
     switch (type) {
@@ -77,16 +86,6 @@ bool waitForRestartSignal = false;
 std::mutex mtxcondvar;
 std::condition_variable condVarRestart;
 QString appToWaitForSignal;
-
-struct LogMessage
-{
-    int logLevel;
-    QString message;
-
-    LogMessage(int logLevel, QString message):logLevel{logLevel}, message{message}{};
-};
-
-std::vector<LogMessage> logMessages;
 
 void LinuxSignalHandler(int signum)
 {
