@@ -92,19 +92,6 @@ void Model::removeAllFolders()
 
 void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
 {
-    // set sync name if none.
-    if (syncSetting->name().isEmpty())
-    {
-        QFileInfo localFolderInfo(syncSetting->getLocalFolder());
-        QString syncName = localFolderInfo.fileName();
-        if (syncName.isEmpty())
-        {
-            syncName = QDir::toNativeSeparators(syncSetting->getLocalFolder());
-        }
-        syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
-        syncSetting->setName(syncName);
-    }
-
 #ifndef NDEBUG
     {
         auto sl = syncSetting->getLocalFolder();
@@ -195,14 +182,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
             cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync);
         }
 
-        //override the name if there's one preconfigured
-        auto syncNamePair = unconfiguredSyncsNames.find(sync->getTag());
-        if (syncNamePair != unconfiguredSyncsNames.end())
-        {
-            cs->setName(syncNamePair.value());
-            unconfiguredSyncsNames.erase(syncNamePair);
-        }
-
         configuredSyncs.append(sync->getTag());
     }
 
@@ -244,32 +223,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     return cs;
 }
 
-void Model::setSyncName(int tag, const QString &newName)
-{
-    if (!newName.size())
-    {
-        return;
-    }
-    QMutexLocker qm(&syncMutex);
-    assert(preferences->logged());
-
-    if (configuredSyncsMap.contains(tag))
-    {
-        auto cs = configuredSyncsMap[tag];
-        if (newName.compare(cs->name())) //name differs
-        {
-            cs->setName(newName);
-            preferences->writeSyncSetting(cs);
-        }
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromAscii("setting sync name %1 for unexisting sync %2")
-                     .arg(newName).arg(tag).toUtf8().constData());
-        unconfiguredSyncsNames[tag] = newName;
-    }
-}
-
 void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
 {
     QMutexLocker qm(&syncMutex);
@@ -281,7 +234,6 @@ void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
         cs = configuredSyncsMap[tag] = std::make_shared<SyncSetting>();
     }
     cs->setTag(tag);
-    cs->setName(osd.mName);
     cs->setSyncID(osd.mSyncID);
     cs->setEnabled(osd.mEnabled);
 

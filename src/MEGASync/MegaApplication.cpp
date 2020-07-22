@@ -4857,7 +4857,8 @@ void MegaApplication::migrateSyncConfToSdk()
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
                          .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
 
-            megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
+            megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
+                                         osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
                                          osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
                                          new MegaListenerFuncExecuter(true, [this, osd](MegaApi* api,  MegaRequest *request, MegaError *e)
             {

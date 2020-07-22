@@ -12,7 +12,6 @@ class SyncSetting
 private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
     int mTag = 0;
-    QString mName;
     QString mSyncID;
     bool mEnabled = false; //we need to hold this, for transitioning from old sync data, instead of simply forwarding to mSync->isEnabled
 
@@ -30,7 +29,6 @@ public:
     int tag() const;
     void setTag(int tag);
     QString name() const;
-    void setName(const QString &name);
 
     void setEnabled(bool value);
 

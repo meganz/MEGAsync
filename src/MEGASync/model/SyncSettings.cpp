@@ -16,7 +16,7 @@ SyncSetting::~SyncSetting()
 }
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
-    mSync(a.getSync()->copy()), mTag(a.tag()), mName(a.name()),
+    mSync(a.getSync()->copy()), mTag(a.tag()),
     mSyncID(a.getSyncID()), mEnabled(a.isEnabled())
 {
 }
@@ -25,7 +25,6 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
 {
     mSync.reset(a.getSync()->copy());
     mTag = a.tag();
-    mName = a.name();
     mSyncID = a.getSyncID();
     mEnabled = a.isEnabled();
     return *this;
@@ -54,12 +53,7 @@ SyncSetting::SyncSetting(MegaSync *sync)
 
 QString SyncSetting::name() const
 {
-    return mName.size()? mName : getLocalFolder();
-}
-
-void SyncSetting::setName(const QString &name)
-{
-    mName = name;
+    return QString::fromUtf8(mSync->getName());
 }
 
 void SyncSetting::setEnabled(bool value)
@@ -77,7 +71,6 @@ SyncSetting::SyncSetting(QString initializer)
     QStringList parts = initializer.split(QString::fromUtf8("0x1E"));
     int i = 0;
     if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
-    if (i<parts.size()) { mName = parts.at(i++); }
     if (i<parts.size()) { mSyncID = parts.at(i++); }
 
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
@@ -87,7 +80,6 @@ QString SyncSetting::toString()
 {
     QStringList toret;
     toret.append(QString::number(mTag));
-    toret.append(mName);
     toret.append(mSyncID);
 
     return toret.join(QString::fromUtf8("0x1E"));
@@ -97,17 +89,6 @@ void SyncSetting::setSync(MegaSync *sync)
 {
     if (sync)
     {
-        if (!mName.size())
-        {
-            QFileInfo localFolderInfo(QString::fromUtf8(sync->getLocalFolder()));
-            mName = localFolderInfo.fileName();
-            if (mName.isEmpty())
-            {
-                mName = QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder()));
-            }
-            mName.remove(QChar::fromAscii(':')).remove(QDir::separator());
-        }
-
         mSync.reset(sync->copy());
 
         assert(mTag == 0 || mTag == sync->getTag());

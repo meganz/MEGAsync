@@ -135,6 +135,12 @@ void BindFolderDialog::on_bOK_clicked()
 
    bool repeated;
    syncName = QFileInfo(localFolderPath).fileName();
+   if (syncName.isEmpty())
+   {
+       syncName = QDir::toNativeSeparators(localFolderPath);
+   }
+   syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+
    do
    {
        repeated = false;

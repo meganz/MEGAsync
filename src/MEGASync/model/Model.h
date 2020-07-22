@@ -55,7 +55,7 @@ protected:
 
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
-    QMap<int, QString> unconfiguredSyncsNames;
+
     ///////////// END OF SYNCS ////////////////////
 
 
@@ -72,7 +72,6 @@ public:
      * @return
      */
     std::shared_ptr<SyncSetting> updateSyncSettings(mega::MegaSync *sync, int addingState = 0);
-    void setSyncName(int tag, const QString &newName);
 
     // transition sync to active: will trigger platform dependent behaviour
     void activateSync(std::shared_ptr<SyncSetting> cs);
