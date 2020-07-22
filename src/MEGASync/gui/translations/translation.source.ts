@@ -3942,22 +3942,22 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>File &amp;amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file</translatorcomment>
-        <translation type="unfinished">File &amp;amp;name:</translation>
+        <translation type="obsolete">File &amp;amp;name:</translation>
     </message>
     <message>
         <source>&amp;amp;Open</source>
         <translatorcomment>Ok Button text when the dialog is executed for opening a file</translatorcomment>
-        <translation type="unfinished">&amp;amp;Open</translation>
+        <translation type="obsolete">&amp;amp;Open</translation>
     </message>
     <message>
         <source>&amp;amp;Choose</source>
         <translatorcomment>Ok Button text when the dialog is executed for choosing a directory</translatorcomment>
-        <translation type="unfinished">&amp;amp;Choose</translation>
+        <translation type="obsolete">&amp;amp;Choose</translation>
     </message>
     <message>
         <source>&amp;amp;Save</source>
         <translatorcomment>Ok Button text when the dialog is executed for saving a file</translatorcomment>
-        <translation type="unfinished">&amp;amp;Save</translation>
+        <translation type="obsolete">&amp;amp;Save</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -3972,22 +3972,22 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>&amp;amp;Rename</source>
         <translatorcomment>Contextual menu action for renaming a folder or a file</translatorcomment>
-        <translation type="unfinished">&amp;amp;Rename</translation>
+        <translation type="obsolete">&amp;amp;Rename</translation>
     </message>
     <message>
         <source>&amp;amp;Delete</source>
         <translatorcomment>Contextual menu action for deleting a folder or a file</translatorcomment>
-        <translation type="unfinished">&amp;amp;Delete</translation>
+        <translation type="obsolete">&amp;amp;Delete</translation>
     </message>
     <message>
         <source>Show &amp;amp;hidden files</source>
         <translatorcomment>Contextual menu action for showing or hidding hidden files</translatorcomment>
-        <translation type="unfinished">Show &amp;amp;hidden files</translation>
+        <translation type="obsolete">Show &amp;amp;hidden files</translation>
     </message>
     <message>
         <source>&amp;amp;New Folder</source>
         <translatorcomment>Contextual menu action for creating a new folder</translatorcomment>
-        <translation type="unfinished">&amp;amp;New Folder</translation>
+        <translation type="obsolete">&amp;amp;New Folder</translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -4012,7 +4012,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder</translatorcomment>
-        <translation type="unfinished">Are you sure you want to delete &amp;apos;%1&amp;apos;?</translation>
+        <translation type="obsolete">Are you sure you want to delete &amp;apos;%1&amp;apos;?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
@@ -4092,7 +4092,47 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished">&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</translation>
+        <translation type="obsolete">&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</translation>
+    </message>
+    <message>
+        <source>&amp;Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Choose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show &amp;hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;New Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is write protected. Do you want to delete it anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &amp;name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4130,7 +4170,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>&amp;lt;b&amp;gt;The name &amp;quot;%1&amp;quot; can not be used.&amp;lt;/b&amp;gt;&amp;lt;p&amp;gt;Try using another name, with fewer characters or no punctuations marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation type="unfinished">&amp;lt;b&amp;gt;The name &amp;quot;%1&amp;quot; can not be used.&amp;lt;/b&amp;gt;&amp;lt;p&amp;gt;Try using another name, with fewer characters or no punctuations marks.</translation>
+        <translation type="obsolete">&amp;lt;b&amp;gt;The name &amp;quot;%1&amp;quot; can not be used.&amp;lt;/b&amp;gt;&amp;lt;p&amp;gt;Try using another name, with fewer characters or no punctuations marks.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -4171,6 +4211,10 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
         <source>%1 byte(s)</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
         <translation type="unfinished">%1 byte(s)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;The name &apos;%1&apos; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
