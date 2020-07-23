@@ -844,6 +844,8 @@ Section Uninstall
   ;VC++ Redistributable
   Delete "$INSTDIR\vcruntime140.dll"
   Delete "$INSTDIR\msvcp140.dll"
+  Delete "$INSTDIR\msvcp140_1.dll"
+  Delete "$INSTDIR\msvcp140_2.dll"
   Delete "$INSTDIR\concrt140.dll"
   Delete "$INSTDIR\vccorlib140.dll"
   Delete "$INSTDIR\vcomp140.dll"
@@ -897,6 +899,8 @@ Section Uninstall
   Delete "$INSTDIR\ssleay32.dll"
   Delete "$INSTDIR\libcrypto-1_1-x64.dll"
   Delete "$INSTDIR\libssl-1_1-x64.dll"
+  Delete "$INSTDIR\libcrypto-1_1.dll"
+  Delete "$INSTDIR\libssl-1_1.dll"
   Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
