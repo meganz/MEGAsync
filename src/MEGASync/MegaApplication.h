@@ -153,6 +153,7 @@ public:
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
     void createAppMenus();
+    void createInfoDialogMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
