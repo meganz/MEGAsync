@@ -6703,6 +6703,17 @@ void MegaApplication::createAppMenus()
 #endif
 
 
+    createInfoDialogMenus();
+    updateTrayIconMenu();
+}
+
+void MegaApplication::createInfoDialogMenus()
+{
+    if (!infoDialog)
+    {
+        return;
+    }
+
 #ifdef _WIN32
     if (!windowsMenu)
     {
@@ -7056,8 +7067,6 @@ void MegaApplication::createAppMenus()
     infoDialogMenu->show();
     infoDialogMenu->hide();
 #endif
-
-    updateTrayIconMenu();
 }
 
 void MegaApplication::createGuestMenu()
