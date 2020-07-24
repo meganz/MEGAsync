@@ -963,6 +963,7 @@ Section Uninstall
   RMDir "$INSTDIR\iconengines"
   RMDir "$INSTDIR\platforms"
   RMDir "$INSTDIR\bearer"
+  RMDir "$INSTDIR\styles"
   RMDir "$INSTDIR"
   
   SetShellVarContext all
@@ -982,6 +983,7 @@ Section Uninstall
   RmDir "$INSTDIR\accessible"
   RMDir "$INSTDIR\platforms"
   RMDir "$INSTDIR\bearer"
+  RMDir "$INSTDIR\styles"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
