@@ -10,6 +10,7 @@
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "OverQuotaDialog.h"
+#include "ScaleFactorManager.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -155,254 +156,6 @@ void LinuxSignalHandler(int signum)
             break;
         }
     }
-#endif
-
-#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
-namespace {
-
-constexpr auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
-#ifdef Q_OS_LINUX
-
-double getXrdbdpi( bool enforce = false)
-{
-    static int calculated = 0;
-    if (calculated && !enforce) //avoid multiple calls
-    {
-        return calculated;
-    }
-
-    QProcess p;
-    p.start(QString::fromUtf8("bash -c \"xrdb -query | grep dpi | awk '{print $2}'\""));
-    p.waitForFinished(2000);
-    QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
-    QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    if (e.size())
-    {
-        qDebug() << "Error for \"xrdb -query\" command:" << e;
-    }
-
-    calculated = qRound(output.toDouble());
-    return calculated;
-}
-
-double adjustScaleWhenZoomed(double scale, double devicePixelRatio)
-{
-    // TODO: let do this patch only in Ubuntu 20 for now on and extend it after testing with more distributions
-    const auto productType{QSysInfo::productType()};
-    const auto productVersion{QSysInfo::productVersion()};
-    const auto isUbuntu20OrHigher{productType==QStringLiteral("ubuntu") && productVersion.toDouble() > 20.0};
-    if(isUbuntu20OrHigher)
-    {
-       logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, QStringLiteral("Ubuntu 20.04 or upper detected when setting screen scale factor"));
-    }
-
-    // Also accept a environtment variable for testing
-    const auto forceAdjustScalingWhenZooming{getenv("FORCE_ADJUST_SCALE_WHEN_ZOOMING")};
-    if(forceAdjustScalingWhenZooming)
-    {
-        logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, QStringLiteral("FORCE_ADJUST_SCALE_WHEN_ZOOMING environtment variable is set"));
-    }
-
-    if(isUbuntu20OrHigher || getenv("FORCE_ADJUST_SCALE_WHEN_ZOOMING"))
-    {
-        const auto message{QStringLiteral("Adjusting scale with devicePixelRatio: ")+QString::number(devicePixelRatio)};
-        logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, message);
-        scale /= devicePixelRatio;
-        scale = min(3., scale);
-        scale = max(1., scale);
-    }
-    return scale;
-}
-
-void logScreenInfo(const QScreen& screen, double xrdbDpi)
-{
-    const auto screenName{QStringLiteral("Screen_name=")+screen.name()};
-    const auto screenGeometry{QStringLiteral("Geometry=%1x%2").arg(screen.geometry().width()).arg(screen.geometry().height())};
-    const auto screenDevicePixelRatio{QStringLiteral("DevicePixelRatio=%1").arg(screen.devicePixelRatio())};
-    const auto screenDeviceXrdbDpi{QStringLiteral("Xrdb_dpi=%1").arg(xrdbDpi)};
-    const auto screenDeviceQtDpi{QStringLiteral("Qt_dpi=%1").arg(screen.logicalDotsPerInch())};
-    const auto separator{QStringLiteral(", ")};
-    const auto message{screenName+separator+screenGeometry+separator+screenDevicePixelRatio+separator+
-                screenDeviceXrdbDpi+separator+screenDeviceQtDpi};
-    logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, message);
-}
-
-double computeScale(const QScreen& screen)
-{
-    constexpr auto base_dpi = 96.;
-    auto scale = 1.;
-    auto screendpi = getXrdbdpi(); //the best cross platform solution found (caveat: screen agnostic)
-    logScreenInfo(screen, screendpi);
-
-    if (screendpi <= 0) //failsafe: in case xrdb fails to retrieve a valid value
-    {
-        screendpi = screen.logicalDotsPerInch(); //Use Qt to get dpi value (faulty in certain environments)
-    }
-
-    if (screendpi > base_dpi) // high dpi screen | zoom configured ...
-    {
-        scale = screendpi / base_dpi;
-        scale = min(3., scale);
-    }
-    else // low dpi screen
-    {
-        const auto geom = screen.availableGeometry();
-        scale = min(geom.width() / 1920., geom.height() / 1080.) * 0.75;
-        scale = max(1., scale);
-    }
-
-
-
-#ifdef Q_OS_LINUX
-    scale = adjustScaleWhenZoomed(scale, screen.devicePixelRatio());
-#endif
-    scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
-    return scale;
-}
-#endif
-
-void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
-{
-    QString scale_factors;
-    for (auto ss = screenscales.begin(); ss != screenscales.end(); ++ss)
-    {
-        if (scale_factors.size())
-        {
-            scale_factors += QString::fromAscii(";");
-        }
-        scale_factors += ss.key() + QString::fromAscii("=") + QString::number(ss.value());
-    }
-
-    if (scale_factors.size())
-    {
-        const auto message{QStringLiteral("Setting QT_SCREEN_SCALE_FACTORS=")+scale_factors};
-        logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, message);
-        qDebug() << "Setting QT_SCREEN_SCALE_FACTORS=" << scale_factors;
-        qputenv("QT_SCREEN_SCALE_FACTORS", scale_factors.toAscii());
-    }
-    else
-    {
-        assert(false && "No screen found");
-    }
-
-    return;
-}
-
-bool adjustScreenScaleFactors(QMap<QString, double> &screenscales)
-{
-    constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
-    constexpr auto biggestDialogHeight = minTitleBarHeight + 600; //This is the height of the biggest dialog in megassync (Settings)
-
-    bool adjusted = false;
-
-    for (auto ssname : screenscales.keys())
-    {
-        if (screenscales[ssname] > 1)
-        {
-            auto &ssvalue = screenscales[ssname];
-            auto sprevious = ssvalue;
-
-            do
-            {
-                sprevious = ssvalue;
-
-                int argc = 0;
-                QGuiApplication app{argc, nullptr};
-                const auto screens = app.screens();
-                for (const auto& s : screens)
-                {
-                    if (s->name() == ssname)
-                    {
-                        auto height = s->availableGeometry().height();
-
-                        if (biggestDialogHeight > height)
-                        {
-                            ssvalue = max(1., ssvalue - dpiScreensSuitableIncrement); //Qt doesn't like scale factors below 1
-                            qDebug() << "Screen \"" << ssname << "\" too small for calculated scaling, reducing from " << sprevious << " to " << ssvalue;
-                            setScreenScaleFactorsEnvVar(screenscales);
-#if !defined(Q_OS_LINUX)
-                            QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
-#endif
-                            adjusted = true;
-                        }
-                        break;
-                    }
-                }
-            } while(screenscales[ssname] > 1 && ssvalue != sprevious);
-        }
-    }
-
-    return adjusted;
-}
-
-void setScaleFactors()
-{
-    if (getenv("QT_SCALE_FACTOR"))
-    {
-        qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR=" << getenv("QT_SCALE_FACTOR");
-#if !defined(Q_OS_LINUX)
-        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
-#endif
-        return;
-    }
-
-    if (getenv("QT_SCREEN_SCALE_FACTORS"))
-    {
-        const QString predefScreenScaleFactors = QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));
-        int argc = 0;
-        QGuiApplication app{argc, nullptr};
-        const auto screens = app.screens();
-        bool screen_scale_factors_valid = predefScreenScaleFactors.size();
-        for (const auto& screen : screens)
-        {
-            if (!predefScreenScaleFactors.contains(screen->name()))
-            {
-                screen_scale_factors_valid = false;
-                break;
-            }
-#if !defined(Q_OS_LINUX)
-            else
-            {
-                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
-            }
-#endif
-        }
-
-        if (screen_scale_factors_valid)
-        {
-            qDebug() << "Not setting scale factors. Using predefined QT_SCREEN_SCALE_FACTORS=" << getenv("QT_SCREEN_SCALE_FACTORS");
-            return;
-        }
-    }
-
-    QMap<QString, double> screenscales;
-
-    {
-        int argc = 0;
-        QGuiApplication app{argc, nullptr};
-        const auto screens = app.screens();
-        for (const auto& screen : screens)
-        {
-#ifdef Q_OS_LINUX
-            const double computed_scale = computeScale(*screen);
-#else
-            // In windows, devicePixelRatio is calculated according to zoom level when AA_EnableHighDpiScaling
-            const double computed_scale = screen->devicePixelRatio();
-#endif
-            screenscales.insert(screen->name(), computed_scale);
-        }
-    }
-
-#ifdef Q_OS_LINUX
-    setScreenScaleFactorsEnvVar(screenscales);
-#endif
-    if (adjustScreenScaleFactors(screenscales))
-    {
-        qDebug() << "Some screen is too small to apply automatic DPI scaling, enforced QT_SCREEN_SCALE_FACTORS=" << QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));;
-    }
-}
-
-}
 #endif
 
 int main(int argc, char *argv[])
@@ -596,9 +349,14 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
-    setScaleFactors();
+#if ( defined(WIN32) && QT_VERSION >= 0x050000 )
+    ScaleFactorManager scaleFactorManager(OsType::WIN);
 #endif
+
+#if (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
+    ScaleFactorManager scaleFactorManager(OsType::LINUX);
+#endif
+    scaleFactorManager.setScaleFactorEnvironmentVariable();
 
 #if defined(Q_OS_LINUX)
 #if QT_VERSION >= 0x050000
@@ -635,6 +393,12 @@ int main(int argc, char *argv[])
         appToWaitForSignal.append(QString::fromUtf8("\""));
     }
 #endif
+
+    const auto scaleFactorLogMessages{scaleFactorManager.getLogMessages()};
+    for(const auto message : scaleFactorLogMessages)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.c_str());
+    }
 
     for(const auto message : logMessages)
     {
