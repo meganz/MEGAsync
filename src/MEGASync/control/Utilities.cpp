@@ -11,6 +11,7 @@
 #include <QDesktopWidget>
 #include "MegaApplication.h"
 #include "control/gzjoin.h"
+#include "platform/Platform.h"
 
 #ifndef WIN32
 #include "megaapi.h"
