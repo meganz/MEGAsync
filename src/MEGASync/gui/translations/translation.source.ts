@@ -4077,17 +4077,17 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>%1 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation type="unfinished">%1 Please verify the correct directory name was given.</translation>
+        <translation type="obsolete">%1 Please verify the correct directory name was given.</translation>
     </message>
     <message>
         <source>%1 already exists.Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation type="unfinished">%1 already exists.Do you want to replace it?</translation>
+        <translation type="obsolete">%1 already exists.Do you want to replace it?</translation>
     </message>
     <message>
         <source>%1 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation type="unfinished">%1 Please verify the correct file name was given.</translation>
+        <translation type="obsolete">%1 Please verify the correct file name was given.</translation>
     </message>
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
@@ -4123,15 +4123,33 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is write protected. Do you want to delete it anyway?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File &amp;name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1
+Directory not found.
+Please verify the correct directory name was given.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1
+File not found.
+Please verify the correct file name was given.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is write protected.
+Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4211,10 +4229,6 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
         <source>%1 byte(s)</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
         <translation type="unfinished">%1 byte(s)</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;The name &apos;%1&apos; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

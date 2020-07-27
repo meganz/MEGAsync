@@ -782,12 +782,12 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileDialog", "&New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "All files (*)");
     QT_TRANSLATE_NOOP("QFileDialog", "Directories");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct directory name was given.");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.Do you want to replace it?");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct file name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1\nDirectory not found.\nPlease verify the correct directory name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.\nDo you want to replace it?");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1\nFile not found.\nPlease verify the correct file name was given.");
     QT_TRANSLATE_NOOP("QFileDialog", "New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "Delete");
-    QT_TRANSLATE_NOOP("QFileDialog", "'%1' is write protected. Do you want to delete it anyway?");
+    QT_TRANSLATE_NOOP("QFileDialog", "'%1' is write protected.\nDo you want to delete it anyway?");
     QT_TRANSLATE_NOOP("QFileDialog", "Are you sure you want to delete '%1'?");
     QT_TRANSLATE_NOOP("QFileDialog", "Could not delete directory.");
     QT_TRANSLATE_NOOP("QFileDialog", "Recent Places");
@@ -808,7 +808,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 KB");
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 bytes");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Invalid filename");
-    QT_TRANSLATE_NOOP("QFileSystemModel", "<b>The name '%1' can not be used.</b><p>Try using another name, with fewer characters or no punctuations marks.");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "<b>The name "%1" can not be used.</b><p>Try using another name, with fewer characters or no punctuations marks.");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Name");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Size");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Kind");
