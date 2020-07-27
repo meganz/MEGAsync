@@ -50,17 +50,19 @@ void MacXExtServer::acceptConnection()
         m_clients.append(client);
 
         // send the list of current synced folders to the new client
-        Preferences *preferences = Preferences::instance();
+        Model *model = Model::instance();
         for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
-            QString syncPath = QDir::toNativeSeparators(QDir(model->getLocalFolder(i)).canonicalPath());
-            if (!syncPath.size() || !model->isFolderActive(i))
+            auto syncSetting = model->getSyncSetting(i);
+
+            QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
+            if (!syncPath.size() || !syncSetting->isActive())
             {
                 continue;
             }
 
             QString message = QString::fromUtf8("A:") + syncPath
-                    + QChar::fromAscii(':') + model->getSyncName(i);
+                    + QChar::fromAscii(':') + syncSetting->name();
             client->writeData(message.toUtf8().constData(), message.length());
         }        
     }
@@ -386,9 +388,8 @@ void MacXExtServer::notifyAllClients(int op)
 {
     // send the list of current synced folders to all connected clients
     // This is needed once MEGAsync switches from non-logged to logged state and vice-versa
-    Preferences *preferences = Preferences::instance();
-    assert(preferences->logged());
 
+    Model *model = Model::instance();
     QString command;
     if (op == NOTIFY_ADD_SYNCS)
     {
@@ -401,13 +402,15 @@ void MacXExtServer::notifyAllClients(int op)
 
     for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
-        QString syncPath = QDir::toNativeSeparators(QDir(model->getLocalFolder(i)).canonicalPath());
-        if (!syncPath.size() || !model->isFolderActive(i))
+        auto syncSetting = model->getSyncSetting(i);
+
+        QString syncPath = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
+        if (!syncPath.size() || !syncSetting->isActive())
         {
             continue;
         }
 
-        QString message = command + syncPath + QChar::fromAscii(':') + model->getSyncName(i);
+        QString message = command + syncPath + QChar::fromAscii(':') + syncSetting->name();
 
         emit sendToAll(message.toUtf8());
     }
