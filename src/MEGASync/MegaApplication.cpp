@@ -808,7 +808,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 KB");
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 bytes");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Invalid filename");
-    QT_TRANSLATE_NOOP("QFileSystemModel", "<b>The name "%1" can not be used.</b><p>Try using another name, with fewer characters or no punctuations marks.");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "<b>The name \"%1\" cannot be used.</b><p>Try using another name, with fewer characters or no punctuation marks.");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Name");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Size");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Kind");
