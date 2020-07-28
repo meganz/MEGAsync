@@ -31,7 +31,6 @@ public:
     std::vector<std::string> getLogMessages() const;
 
 private:
-    bool mOneScreenWithHdpiEnabledFound;
     OsType mOsType;
     ScreensInfo mScreensInfo;
     mutable std::vector<std::string> logMessages;
