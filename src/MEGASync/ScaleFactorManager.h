@@ -37,7 +37,7 @@ private:
     std::vector<double> calculatedScales;
 
     bool checkEnvirontmentVariables() const;
-    void computeScales();
+    bool computeScales();
     double computeScaleLinux(const ScreenInfo& screenInfo) const;
     double getDpiOnLinux() const;
     ScreensInfo createScreensInfo();

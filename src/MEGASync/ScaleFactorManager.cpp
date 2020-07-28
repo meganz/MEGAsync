@@ -52,19 +52,25 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
 
     if(!checkEnvirontmentVariables())
     {
-        computeScales();
-
-        if(mScreensInfo.size() > 1)
+        const auto needsRescaling{computeScales()};
+        if(needsRescaling)
         {
-            const auto screenScaleFactorVariable{createScreenScaleFactorsVariable(calculatedScales)};
-            qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.c_str());
-            logMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to "+screenScaleFactorVariable);
+            if(mScreensInfo.size() > 1)
+            {
+                const auto screenScaleFactorVariable{createScreenScaleFactorsVariable(calculatedScales)};
+                qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.c_str());
+                logMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to "+screenScaleFactorVariable);
+            }
+            else
+            {
+                const auto scaleString{QString::number(calculatedScales.front()).toAscii()};
+                qputenv("QT_SCALE_FACTOR", scaleString);
+                logMessages.emplace_back("QT_SCALE_FACTOR set to "+scaleString);
+            }
         }
         else
         {
-            const auto scaleString{QString::number(calculatedScales.front()).toAscii()};
-            qputenv("QT_SCALE_FACTOR", scaleString);
-            logMessages.emplace_back("QT_SCALE_FACTOR set to "+scaleString);
+            logMessages.emplace_back("Scaling not needed.");
         }
     }
 }
@@ -139,8 +145,9 @@ double adjustScaleByMaxHeight(double scale, const ScreenInfo& screenInfo)
     return std::min(maxScale, scale);
 }
 
-void ScaleFactorManager::computeScales()
+bool ScaleFactorManager::computeScales()
 {
+    auto needsRescaling{false};
     for(auto& screenInfo : mScreensInfo)
     {
         auto scale = 1.;
@@ -150,9 +157,14 @@ void ScaleFactorManager::computeScales()
         }
         scale = adjustScaleByMaxHeight(scale, screenInfo);
         scale = adjustScaleValueToSuitableIncrement(scale);
-        scale = adjustScaleByMaxMin(scale);
+        //scale = adjustScaleByMaxMin(scale);
+        if(scale != 1.0)
+        {
+            needsRescaling = true;
+        }
         calculatedScales.push_back(scale);
     }
+    return needsRescaling;
 }
 
 double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
