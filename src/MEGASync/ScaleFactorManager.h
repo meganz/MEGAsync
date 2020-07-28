@@ -30,6 +30,7 @@ public:
     std::vector<std::string> getLogMessages() const;
 
 private:
+    bool mOneScreenWithHdpiEnabledFound;
     OsType mOsType;
     ScreensInfo mScreensInfo;
     mutable std::vector<std::string> logMessages;
@@ -38,5 +39,5 @@ private:
     double computeScale() const;
     double computeScaleLinux(const ScreenInfo& screenInfo) const;
     double getDpiOnLinux() const;
-    ScreensInfo createScreensInfo() const;
+    ScreensInfo createScreensInfo();
 };

@@ -298,9 +298,7 @@ int main(int argc, char *argv[])
 
 #ifndef Q_OS_MACX
 #if QT_VERSION >= 0x050600
-#if !defined(Q_OS_LINUX)
    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 #endif
@@ -356,7 +354,15 @@ int main(int argc, char *argv[])
 #if (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
     ScaleFactorManager scaleFactorManager(OsType::LINUX);
 #endif
-    scaleFactorManager.setScaleFactorEnvironmentVariable();
+
+    try {
+        scaleFactorManager.setScaleFactorEnvironmentVariable();
+    } catch (const std::exception& exception)
+    {
+        QString errorMessage{QStringLiteral("Error while setting scale factor environtment variable: ")+
+                    QString::fromStdString(exception.what())};
+        logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, errorMessage);
+    }
 
 #if defined(Q_OS_LINUX)
 #if QT_VERSION >= 0x050000

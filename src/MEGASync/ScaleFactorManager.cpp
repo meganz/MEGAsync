@@ -14,12 +14,15 @@ ScaleFactorManager::ScaleFactorManager(OsType osType)
 }
 
 ScaleFactorManager::ScaleFactorManager(OsType osType, ScreensInfo screensInfo)
-    :mOsType{osType}, mScreensInfo{screensInfo}
+    :mOneScreenWithHdpiEnabledFound{false}, mOsType{osType}, mScreensInfo{screensInfo}
 {
-    if (getenv("QT_AUTO_SCREEN_SCALE_FACTOR"))
+    const auto autoScreenScaleFactor{getenv("QT_AUTO_SCREEN_SCALE_FACTOR")};
+    if (autoScreenScaleFactor)
     {
-        logMessages.emplace_back("QT_AUTO_SCREEN_SCALE_FACTOR is set");
+        logMessages.emplace_back("QT_AUTO_SCREEN_SCALE_FACTOR is set to: " + std::string(autoScreenScaleFactor));
     }
+    logMessages.emplace_back(QSysInfo::prettyProductName().toStdString());
+
     for(const auto& screenInfo : mScreensInfo)
     {
         logMessages.emplace_back("Screen detected: "+screenInfo.toString());
@@ -35,10 +38,17 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable() const
 
     if(!checkEnvirontmentVariables())
     {
-        auto scale{computeScale()};
-        const auto scaleString{QString::number(scale).toAscii()};
-        qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
-        logMessages.emplace_back("QT_SCALE_FACTOR set to "+scaleString);
+        if(mOneScreenWithHdpiEnabledFound)
+        {
+            logMessages.emplace_back("QT_SCALE_FACTOR not set because one screen with hdpi enabled was detected.");
+        }
+        else
+        {
+            auto scale{computeScale()};
+            const auto scaleString{QString::number(scale).toAscii()};
+            qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
+            logMessages.emplace_back("QT_SCALE_FACTOR set to "+scaleString);
+        }
     }
 }
 
@@ -154,12 +164,6 @@ double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
         scale = std::min(screenInfo.availableWidthPixels / baseWidthPixels,
                          screenInfo.availableHeightPixels / baseHeightPixels) * correctionFactor;
     }
-
-    const auto highDpiAutoScalingEnabled{screenInfo.devicePixelRatio > 1.};
-    if(highDpiAutoScalingEnabled)
-    {
-        scale /= screenInfo.devicePixelRatio;
-    }
     return scale;
 }
 
@@ -179,7 +183,7 @@ double ScaleFactorManager::getDpiOnLinux() const
     return qRound(output.toDouble());
 }
 
-ScreensInfo ScaleFactorManager::createScreensInfo() const
+ScreensInfo ScaleFactorManager::createScreensInfo()
 {
     const auto linuxDpi{getDpiOnLinux()};
 
@@ -190,10 +194,15 @@ ScreensInfo ScaleFactorManager::createScreensInfo() const
     for (const auto& screen : screens)
     {
         ScreenInfo screenInfo;
+        screenInfo.name = screen->name().toStdString();
         screenInfo.availableWidthPixels = screen->availableGeometry().width();
         screenInfo.availableHeightPixels = screen->availableGeometry().height();
         screenInfo.devicePixelRatio = screen->devicePixelRatio();
-        screenInfo.name = screen->name().toStdString();
+        const auto hdpiEnable{screenInfo.devicePixelRatio > 1.0};
+        if(hdpiEnable)
+        {
+            mOneScreenWithHdpiEnabledFound = true;
+        }
 
         const auto isLinuxAndDpiCalculationIsCorrect{mOsType==OsType::LINUX || linuxDpi <= 0};
         screenInfo.dotsPerInch = isLinuxAndDpiCalculationIsCorrect ? linuxDpi : screen->logicalDotsPerInch();
