@@ -58,9 +58,16 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
 
     if(!checkEnvirontmentVariables())
     {
-        if(mOneScreenWithHdpiEnabledFound)
+        const auto forceCalculateScaleVarible{getenv("FORCE_CALCULATE_SCALE")};
+        if(forceCalculateScaleVarible)
         {
-            logMessages.emplace_back("QT_SCALE_FACTOR not set because one screen with hdpi enabled was detected.");
+            logMessages.emplace_back("FORCE_CALCULATE_SCALE set to " + std::string(forceCalculateScaleVarible));
+        }
+        const auto forceCalculateScale{forceCalculateScaleVarible == std::string("1")};
+
+        if(mOneScreenWithHdpiEnabledFound && !forceCalculateScale)
+        {
+            logMessages.emplace_back("Scale factor not set because one screen with hdpi enabled was detected.");
         }
         else
         {
