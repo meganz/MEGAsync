@@ -8,7 +8,7 @@ struct ScreenInfo
     std::string name;
     int availableWidthPixels;
     int availableHeightPixels;
-    int dotsPerInch;
+    double dotsPerInch;
     double devicePixelRatio;
 
     std::string toString() const
@@ -26,8 +26,8 @@ class ScaleFactorManager
 {
 public:
     ScaleFactorManager(OsType osType);
-    ScaleFactorManager(OsType osType, ScreensInfo screensInfo);
-    void setScaleFactorEnvironmentVariable() const;
+    ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName);
+    void setScaleFactorEnvironmentVariable();
     std::vector<std::string> getLogMessages() const;
 
 private:
@@ -35,9 +35,10 @@ private:
     OsType mOsType;
     ScreensInfo mScreensInfo;
     mutable std::vector<std::string> logMessages;
+    std::vector<double> calculatedScales;
 
     bool checkEnvirontmentVariables() const;
-    double computeScale() const;
+    void computeScales();
     double computeScaleLinux(const ScreenInfo& screenInfo) const;
     double getDpiOnLinux() const;
     ScreensInfo createScreensInfo();
