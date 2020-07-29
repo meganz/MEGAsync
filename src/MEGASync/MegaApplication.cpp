@@ -298,7 +298,16 @@ int main(int argc, char *argv[])
 
 #ifndef Q_OS_MACX
 #if QT_VERSION >= 0x050600
-   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+   const auto autoScreenScaleFactor{getenv("QT_AUTO_SCREEN_SCALE_FACTOR")};
+   const auto autoScreenScaleFactorDisabled{autoScreenScaleFactor && autoScreenScaleFactor == std::string("0")};
+   if(autoScreenScaleFactorDisabled)
+   {
+       logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, QStringLiteral("auto screen scale factor disabled because of QT_AUTO_SCREEN_SCALE_FACTOR set to 0"));
+   }
+   else
+   {
+       QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+   }
    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 #endif
@@ -347,6 +356,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
+#ifndef Q_OS_MACX
 #if ( defined(WIN32) && QT_VERSION >= 0x050000 )
     ScaleFactorManager scaleFactorManager(OsType::WIN);
 #endif
@@ -363,6 +373,7 @@ int main(int argc, char *argv[])
                     QString::fromStdString(exception.what())};
         logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, errorMessage);
     }
+#endif
 
 #if defined(Q_OS_LINUX)
 #if QT_VERSION >= 0x050000
@@ -400,16 +411,18 @@ int main(int argc, char *argv[])
     }
 #endif
 
+    for(const auto message : logMessages)
+    {
+        MegaApi::log(message.logLevel, message.message.toStdString().c_str());
+    }
+
+#ifndef Q_OS_MACX
     const auto scaleFactorLogMessages{scaleFactorManager.getLogMessages()};
     for(const auto message : scaleFactorLogMessages)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.c_str());
     }
-
-    for(const auto message : logMessages)
-    {
-        MegaApi::log(message.logLevel, message.message.toStdString().c_str());
-    }
+#endif
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
     for (const auto& screen : app.screens())

@@ -16,11 +16,6 @@ ScaleFactorManager::ScaleFactorManager(OsType osType)
 ScaleFactorManager::ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName)
     :mOsType{osType}, mScreensInfo{screensInfo}
 {
-    const auto autoScreenScaleFactor{getenv("QT_AUTO_SCREEN_SCALE_FACTOR")};
-    if (autoScreenScaleFactor)
-    {
-        logMessages.emplace_back("QT_AUTO_SCREEN_SCALE_FACTOR is set to: " + std::string(autoScreenScaleFactor));
-    }
     logMessages.emplace_back(osName);
 
     for(const auto& screenInfo : mScreensInfo)
@@ -169,16 +164,8 @@ bool ScaleFactorManager::computeScales()
 
 double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
 {
-    const auto forceCalculateScaleVarible{getenv("FORCE_CALCULATE_SCALE")};
-    auto forceCalculateScale{false};
-    if(forceCalculateScaleVarible)
-    {
-        logMessages.emplace_back("FORCE_CALCULATE_SCALE set to " + std::string(forceCalculateScaleVarible));
-        forceCalculateScale = (forceCalculateScaleVarible == std::string("1"));
-    }
-
-    const auto hdpiAutoEnabled{screenInfo.devicePixelRatio > 2.0};
-    if(hdpiAutoEnabled && !forceCalculateScale)
+    const auto hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
+    if(hdpiAutoEnabled)
     {
         return 1.0;
     }
