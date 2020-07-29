@@ -369,8 +369,8 @@ int main(int argc, char *argv[])
         scaleFactorManager.setScaleFactorEnvironmentVariable();
     } catch (const std::exception& exception)
     {
-        QString errorMessage{QStringLiteral("Error while setting scale factor environtment variable: ")+
-                    QString::fromStdString(exception.what())};
+        const auto errorMessage{QString::fromStdString("Error while setting scale factor environtment variable: "+
+                    std::string(exception.what()))};
         logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, errorMessage);
     }
 #endif
@@ -418,7 +418,7 @@ int main(int argc, char *argv[])
 
 #ifndef Q_OS_MACX
     const auto scaleFactorLogMessages{scaleFactorManager.getLogMessages()};
-    for(const auto message : scaleFactorLogMessages)
+    for(const auto& message : scaleFactorLogMessages)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.c_str());
     }
