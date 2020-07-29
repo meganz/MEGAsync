@@ -3,10 +3,7 @@
 #include <QGuiApplication>
 #include <QDebug>
 #include <QProcess>
-
-#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
 #include <QScreen>
-#endif
 
 ScaleFactorManager::ScaleFactorManager(OsType osType)
     :ScaleFactorManager{osType, createScreensInfo(), QSysInfo::prettyProductName().toStdString()}
@@ -115,29 +112,22 @@ bool ScaleFactorManager::checkEnvirontmentVariables() const
     return false;
 }
 
-double adjustScaleValueToSuitableIncrement(double scale)
+double adjustScaleValueToSuitableIncrement(double scale, double maxScale)
 {
     constexpr auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
-    return qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
-}
-
-double adjustScaleByMaxMin(double scale)
-{
-    constexpr auto maxScale = 3.;
-    scale = std::min(maxScale, scale);
-
-    constexpr auto minScale = 1.;
-    scale = std::max(minScale, scale);
-
+    scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
+    if(scale > maxScale)
+    {
+        scale -= dpiScreensSuitableIncrement;
+    }
     return scale;
 }
 
-double adjustScaleByMaxHeight(double scale, const ScreenInfo& screenInfo)
+double calculateMaxScale(const ScreenInfo& screenInfo)
 {
     constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
     constexpr auto biggestDialogHeight = minTitleBarHeight + 600; //This is the height of the biggest dialog in megassync (Settings)
-    const auto maxScale = screenInfo.availableHeightPixels / static_cast<double>(biggestDialogHeight);
-    return std::min(maxScale, scale);
+    return screenInfo.availableHeightPixels / static_cast<double>(biggestDialogHeight);
 }
 
 bool ScaleFactorManager::computeScales()
@@ -150,9 +140,9 @@ bool ScaleFactorManager::computeScales()
         {
             scale = computeScaleLinux(screenInfo);
         }
-        scale = adjustScaleByMaxHeight(scale, screenInfo);
-        scale = adjustScaleValueToSuitableIncrement(scale);
-        //scale = adjustScaleByMaxMin(scale);
+        const auto maxScale{calculateMaxScale(screenInfo)};
+        scale = std::min(scale, maxScale);
+        scale = adjustScaleValueToSuitableIncrement(scale, maxScale);
         if(scale != 1.0)
         {
             needsRescaling = true;
@@ -184,6 +174,7 @@ double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
         constexpr auto correctionFactor{.75};
         scale = std::min(screenInfo.availableWidthPixels / baseWidthPixels,
                          screenInfo.availableHeightPixels / baseHeightPixels) * correctionFactor;
+        scale = std::max(scale, 1.0); // avoid problematic scales lower than 1.0 when no hdpi enabled
     }
     return scale;
 }
