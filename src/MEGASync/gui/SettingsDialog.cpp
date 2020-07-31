@@ -1464,7 +1464,7 @@ int SettingsDialog::saveSettings()
 #ifdef SYNC_ADVANCED_TEST_MODE
                         else if (enabled && !syncSetting->isActive()) //sync re-enabled!
 #else
-                        else if (enabled && !syncSetting->isEnabled()) //sync re-enabled!
+                        else if (enabled && !syncSetting->isActive()) //sync re-enabled!
 #endif
                         {
                             ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
