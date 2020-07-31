@@ -7,6 +7,14 @@
 #include <QHBoxLayout>
 #include <megaapi.h>
 #include "HighDpiResize.h"
+#ifdef __APPLE__
+    #include "macx/DynamicTransferQuotaPopOver.h"
+    #import <objc/runtime.h>
+#else
+    #include "DynamicTransferQuotaPopOver.h"
+#endif
+
+#include <memory>
 
 namespace Ui {
 class UpgradeDialog;
@@ -32,12 +40,20 @@ private:
     void updatePlans();
     QString convertCurrency(const char *currency);
     void clearPlans();
+    void mousePressEvent(QMouseEvent *event) override;
+
+#ifdef __APPLE__
+    std::unique_ptr<DynamicTransferQuotaPopOver> mPopOver{new DynamicTransferQuotaPopOver()};
+    id m_NativePopOver;
+#else
+    std::unique_ptr<DynamicTransferQuotaPopOver> mPopOver{new DynamicTransferQuotaPopOver(this)};
+#endif
 
 private slots:
     void unitTimeElapsed();
 
 protected:
-    void changeEvent(QEvent* event);
+    void changeEvent(QEvent* event) override;
 
     mega::MegaPricing *pricing;
     mega::MegaApi *megaApi;

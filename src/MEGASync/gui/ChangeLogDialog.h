@@ -25,6 +25,7 @@ private:
 
 protected:
     void changeEvent(QEvent *event);
+    void tweakStrings();
 
 private slots:
     void on_bTerms_clicked();

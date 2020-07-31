@@ -1980,6 +1980,12 @@ void SettingsDialog::on_bPermissions_clicked()
 #endif
 void SettingsDialog::on_bAdd_clicked()
 {
+    const auto dismissed{app->showSyncOverquotaDialog()};
+    if(!dismissed)
+    {
+        return;
+    }
+
     QStringList currentLocalFolders;
     QStringList currentMegaFoldersPaths;
     for (int i = 0; i < ui->tSyncs->rowCount(); i++)

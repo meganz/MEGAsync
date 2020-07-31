@@ -37,6 +37,8 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
                           "}"
                  ""));
 
+    tweakStrings();
+
     ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     ui->tChangelog->document()->setDocumentMargin(16.0);
     auto architecture{QStringLiteral("")};
@@ -95,7 +97,18 @@ void ChangeLogDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        tweakStrings();
         setChangeLogNotes(Preferences::CHANGELOG);
     }
     QDialog::changeEvent(event);
+}
+
+void ChangeLogDialog::tweakStrings()
+{
+    ui->lLGPL->setText(ui->lLGPL->text().replace(QString::fromUtf8("[A]"),
+                                              QString::fromUtf8("<html><p style='line-height: 16px;'>"))
+                                        .replace(QString::fromUtf8("[C]"),
+                                              QString::fromUtf8("&copy;"))
+                                        .replace(QString::fromUtf8("[/A]"),
+                                                QString::fromUtf8("</p></html>")));
 }

@@ -27,7 +27,6 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ChangeLogDialog.h"
-#include "gui/UpgradeDialog.h"
 #include "gui/InfoWizard.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
@@ -42,6 +41,7 @@
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
+#include "TransferQuota.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -146,7 +146,6 @@ public:
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
-
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
     void cleanLocalCaches(bool all = false);
@@ -178,18 +177,18 @@ public:
     bool finishedTransfersWhileBlocked(int transferTag);
 
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
-
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
-
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
-
     MegaSyncLogger& getLogger() const;
     SetupWizard *getSetupWizard() const;
     void fetchNodes();
     void whyAmIBlocked(bool periodicCall = false);
+    bool showSyncOverquotaDialog();
+    bool finished() const;
+    bool isInfoDialogVisible() const;
 
     int getBlockState() const;
 
@@ -225,7 +224,6 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openInfoWizard();
-    void openBwOverquotaDialog();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -274,7 +272,7 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);
-    void overquotaDialogFinished(int result);
+    void storageOverquotaDialogFinished(int result);
     void infoWizardDialogFinished(int result);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
@@ -297,19 +295,20 @@ public slots:
     void checkOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
-    void onDismissOQ(bool overStorage);
+    void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
     void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
+    void redirectToUpgrade(int activationButton);
+    void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
 private slots:
     void showInFolder(int activationButton);
     void openFolderPath(QString path);
-    void redirectToUpgrade(int activationButton);
     void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
@@ -321,7 +320,6 @@ private slots:
     void onUnblocked();
 
 protected:
-    bool checkOverquotaBandwidth();
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -331,6 +329,8 @@ protected:
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
+    void disableSyncs();
+    void restoreSyncs();
     void closeDialogs(bool bwoverquota = false);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
@@ -341,13 +341,10 @@ protected:
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
-    // returns if the last set bwOverquotaTimestamp is still in the future (we need to wait)
-    bool amIOverTemporalQuotaBandwidth();
-
     void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
-
-    bool eventFilter(QObject *obj, QEvent *e);
+    bool eventFilter(QObject *obj, QEvent *e) override;
+    void createInfoDialog();
 
     QSystemTrayIcon *trayIcon;
 
@@ -453,10 +450,7 @@ protected:
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
-    long long bwOverquotaTimestamp;
-    UpgradeDialog *bwOverquotaDialog;
     UpgradeOverStorage *storageOverquotaDialog;
-    bool bwOverquotaEvent;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
@@ -525,6 +519,8 @@ protected:
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
     friend class DeferPreferencesSyncForScope;
+    std::unique_ptr<TransferQuota> transferQuota;
+    bool transferOverQuotaWaitTimeExpiredReceived;
 };
 
 class DeferPreferencesSyncForScope

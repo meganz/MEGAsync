@@ -129,6 +129,16 @@
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
         <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
     </message>
+    <message>
+        <source>Remaining Download</source>
+        <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
+        <translation type="unfinished">Remaining Download</translation>
+    </message>
+    <message>
+        <source>Remaining Upload</source>
+        <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
+        <translation type="unfinished">Remaining Upload</translation>
+    </message>
 </context>
 <context>
     <name>AddExclusionDialog</name>
@@ -4813,6 +4823,11 @@ when the application starts again</source>
         <translation type="unfinished">Report issue</translation>
     </message>
     <message>
+        <source>KB/s</source>
+        <translatorcomment>Label to indicate kilobyte per second data transfer rate.</translatorcomment>
+        <translation type="unfinished">KB/s</translation>
+    </message>
+    <message>
         <source>Backup Recovery Key</source>
         <translatorcomment>Button label to export master key of the current user. </translatorcomment>
         <translation type="unfinished">Backup Recovery Key</translation>
@@ -5766,6 +5781,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
         <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
+        <translation type="unfinished">%1 of %2</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -6037,6 +6057,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
     </message>
     <message>
         <source>and</source>
