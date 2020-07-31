@@ -360,8 +360,14 @@ currentuser:
   StrCpy $INSTDIR "$CURRENT_USER_INSTDIR\MEGAsync"
 modeselected:
 
+  !insertmacro DEBUG_MSG "Closing MEGAsync"
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
+  Sleep 1000
+
+  !insertmacro DEBUG_MSG "Installing files"
+
   ;SetRebootFlag true
-  SetOverwrite try
+  SetOverwrite on
 
   SetOutPath "$INSTDIR"
 
@@ -464,12 +470,6 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   !endif
-
-  !insertmacro DEBUG_MSG "Closing MEGAsync"
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
-  
-  !insertmacro DEBUG_MSG "Installing files"
-  
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
 
