@@ -30,7 +30,7 @@ public:
    mega::MegaHandle megaFolderHandle() const;
 
 private:
-   mega::MegaHandle mMegaFolderHandle;
+    mega::MegaHandle mMegaFolderHandle;
     QString mLocalFolder;
     QString mSyncName;
 };

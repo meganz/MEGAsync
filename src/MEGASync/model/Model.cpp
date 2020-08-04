@@ -29,6 +29,7 @@ Model::Model() : QObject(), syncMutex(QMutex::Recursive)
 
 void Model::removeSyncedFolder(int num)
 {
+assert(num <= configuredSyncs.size() && configuredSyncsMap.contains(configuredSyncs.at(num)));
     QMutexLocker qm(&syncMutex);
     auto cs = configuredSyncsMap[configuredSyncs.at(num)];
     if (cs->isActive())
@@ -325,4 +326,3 @@ std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(int tag)
     }
     return nullptr;
 }
-

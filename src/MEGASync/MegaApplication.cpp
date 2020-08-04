@@ -9091,7 +9091,7 @@ void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
 
 void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
 {
-    if (appfinished)
+    if (appfinished || !sync)
     {
         return;
     }
@@ -9114,7 +9114,7 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionStat
 
 void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
 {
-    if (appfinished)
+    if (appfinished || !sync)
     {
         return;
     }

@@ -41,6 +41,7 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,
     this->localFolders = localFolders;
     this->megaFolderPaths = megaFolderPaths;
     ui->bOK->setDefault(true);
+    highDpiResize.init(this);
 }
 
 BindFolderDialog::~BindFolderDialog()
