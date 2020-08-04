@@ -727,6 +727,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Tail part of the footer message after copyright year Mega Limited.</translatorcomment>
         <translation type="unfinished">All rights reserved.</translation>
     </message>
+    <message>
+        <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
+        <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
+        <translation type="unfinished">[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
