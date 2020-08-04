@@ -15,7 +15,6 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     this->app = app;
-    Preferences *preferences = Preferences::instance();
     Model *model = Model::instance();
 
     syncNames = model->getSyncNames();

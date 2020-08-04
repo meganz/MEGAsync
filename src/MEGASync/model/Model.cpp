@@ -2,7 +2,6 @@
 #include "Model.h"
 #include "platform/Platform.h"
 
-//#include <QDesktopServices>
 #include <assert.h>
 
 using namespace mega;
@@ -11,15 +10,15 @@ using namespace mega;
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
-Model *Model::model = NULL;
+std::unique_ptr<Model> Model::model;
 
 Model *Model::instance()
 {
     if (!model)
     {
-        model = new Model();
+        model.reset(new Model());
     }
-    return Model::model;
+    return Model::model.get();
 }
 
 Model::Model() : QObject(), syncMutex(QMutex::Recursive)
@@ -48,6 +47,11 @@ assert(num <= configuredSyncs.size() && configuredSyncsMap.contains(configuredSy
 void Model::removeSyncedFolderByTag(int tag)
 {
     QMutexLocker qm(&syncMutex);
+    if (!configuredSyncsMap.contains(tag))
+    {
+        return;
+    }
+
     auto cs = configuredSyncsMap[tag];
 
     if (cs->isActive())
@@ -85,7 +89,10 @@ void Model::removeAllFolders()
 
     for (auto it = configuredSyncsMap.begin(); it != configuredSyncsMap.end(); it++)
     {
-        deactivateSync(it.value());
+        if (it.value()->isActive())
+        {
+            deactivateSync(it.value());
+        }
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
@@ -238,6 +245,7 @@ void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
     cs->setSyncID(osd.mSyncID);
     cs->setEnabled(osd.mEnabled);
 
+    assert(!configuredSyncs.contains(tag));
     configuredSyncs.append(tag);
 
     preferences->writeSyncSetting(cs);
@@ -245,7 +253,9 @@ void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
 
 void Model::reset()
 {
+    QMutexLocker qm(&syncMutex);
     configuredSyncs.clear();
+    configuredSyncsMap.clear();
     isFirstSyncDone = false;
 }
 

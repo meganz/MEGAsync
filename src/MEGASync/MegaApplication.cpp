@@ -4819,12 +4819,12 @@ void MegaApplication::migrateSyncConfToSdk()
             }
 
             auto cachedStorageState = preferences->getStorageState();
-            if (cachedStorageState == -2)
+            if (cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN)
             {
                 cachedStorageState = 999;
             }
 
-            megaApi->copyCachedStatus(cachedStorageState, cachedBusinessState, cachedBlockedState);
+            megaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
         }
 
         foreach(SyncData osd, oldCachedSyncs)
@@ -7224,7 +7224,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     else if (event->getType() == MegaEvent::EVENT_SYNCS_RESTORED)
     {
         Platform::notifyAllSyncFoldersAdded();
-        //TODO: note for reviewer: show message?
+        showNotificationMessage(tr("Your syncs have been enabled"));
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED)
     {

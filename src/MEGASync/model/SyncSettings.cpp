@@ -48,7 +48,6 @@ SyncSetting::SyncSetting()
 SyncSetting::SyncSetting(MegaSync *sync)
 {
     setSync(sync);
-    setEnabled(sync->isEnabled());
 }
 
 QString SyncSetting::name() const

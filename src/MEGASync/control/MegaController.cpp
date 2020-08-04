@@ -47,6 +47,14 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
 
 void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
 {
+    assert(api);
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Enabling invalid sync").toUtf8().constData());
+        if (progress) progress->setFailed(MegaError::API_EARGS);
+        return;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Enabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
@@ -58,6 +66,14 @@ void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
 
 void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
 {
+    assert(api);
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("disabling invalid sync").toUtf8().constData());
+        if (progress) progress->setFailed(MegaError::API_EARGS);
+        return;
+    }
+
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Disabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 

@@ -17,8 +17,8 @@ class Preferences;
  * @brief The Model class
  *
  * The idea of this class is to hold any state variable data.
- * and proceed to to persist that data when required.
- * It indens to alliviate Preferences from that burden.
+ * and proceed to persist that data when required.
+ * It intends to alliviate Preferences from that burden.
  *
  * The Model would cover the funcionality related with with
  * updating of the data it manages (e.g: when a SyncConfiguration is updated,
@@ -38,7 +38,7 @@ signals:
     void syncRemoved(std::shared_ptr<SyncSetting> syncSettings);
 
 private:
-    static Model *model;
+    static std::unique_ptr<Model> model;
     Model();
 
     ///////////////// SYNCS ///////////////////////
@@ -50,9 +50,6 @@ protected:
     QMutex syncMutex;
 
     ///////////////// SYNCS ///////////////////////
-    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
-    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings);
-
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
 

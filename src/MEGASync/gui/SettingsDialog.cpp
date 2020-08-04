@@ -1443,7 +1443,7 @@ int SettingsDialog::saveSettings()
                     {
                         if (disabled && syncSetting->isEnabled()) //sync disabled
                         {
-                            ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
+                            ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Disabling sync: %1 - %2")
                                                                                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
                             saveSettingsProgress->addStep(disableSyncStep);
 
@@ -1467,7 +1467,7 @@ int SettingsDialog::saveSettings()
                         else if (enabled && !syncSetting->isActive()) //sync re-enabled!
 #endif
                         {
-                            ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
+                            ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Enabling sync: %1 - %2")
                                                                                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
                             saveSettingsProgress->addStep(enableSyncStep);
                             connect(enableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
@@ -2005,7 +2005,7 @@ void SettingsDialog::on_bAdd_clicked()
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     MegaHandle handle = dialog->getMegaFolder();
-    if (!localFolderPath.length() != !dialog->getMegaPath().size())
+    if (!localFolderPath.length() || !dialog->getMegaPath().size())
     {
         delete dialog;
         return;

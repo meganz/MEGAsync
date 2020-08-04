@@ -263,7 +263,7 @@ public:
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
     static int getDaysToTimestamp(int64_t msecsTimestamps);
 
-    // shows a ProgressDialog while some progress goes on. it returns a copy of the objet,
+    // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
     // but the object will be deleted when the progress closes
     static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
 
