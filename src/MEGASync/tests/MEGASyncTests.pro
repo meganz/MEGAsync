@@ -8,10 +8,10 @@ win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_M
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 
-macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../../3rdParty
 macx:VCPKG_TRIPLET = x64-osx
 
-unix:!macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+unix:!macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../../3rdParty
 unix:!macx:VCPKG_TRIPLET = x64-linux
 
 message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
@@ -19,8 +19,6 @@ message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
 
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
-
-win32:!contains(QMAKE_TARGET.arch, x86_64):DEFINES += PDFIUM_DELAY_LOAD_DLL=1
 
 debug_and_release {
     CONFIG -= debug_and_release
@@ -46,7 +44,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 unix:!macx {
     QT += svg x11extras
-    TARGET = megasync
+    TARGET = megasync_tests
 
 #    Uncomment the following if "make install" doesn't copy megasync in /usr/bin directory
 #    isEmpty(PREFIX) {
@@ -100,12 +98,18 @@ else {
     CONFIG += USE_FFMPEG
 }
 
-include(gui/gui.pri)
-include(mega/bindings/qt/sdk.pri)
-include(control/control.pri)
-include(platform/platform.pri)
-include(google_breakpad/google_breakpad.pri)
-include(qtlockedfile/qtlockedfile.pri)
+include(../gui/gui.pri)
+include(../mega/bindings/qt/sdk.pri)
+include(../control/control.pri)
+include(../platform/platform.pri)
+include(../google_breakpad/google_breakpad.pri)
+include(../qtlockedfile/qtlockedfile.pri)
+include(3rdparty/catch/catch.pri)
+include(3rdparty/trompeloeil/trompeloeil.pri)
+
+CONFIG += c++14
+QT += testlib
+QT -= gui
 
 unix:!macx {
     GCC_VERSION = $$system("g++ -dumpversion")
@@ -115,36 +119,40 @@ unix:!macx {
 }
 
 DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD
+INCLUDEPATH += $$PWD $$PWD/..
 
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
-SOURCES += MegaApplication.cpp \
-    TransferQuota.cpp \
+SOURCES += ../MegaApplication.cpp \
+    ../TransferQuota.cpp \
+    GuestWidgetTest.cpp \
     main.cpp
-HEADERS += MegaApplication.h \
-    TransferQuota.h
+
+HEADERS += ../MegaApplication.h \
+    ../TransferQuota.h
 
 TRANSLATIONS = \
-    gui/translations/MEGASyncStrings_ar.ts \
-    gui/translations/MEGASyncStrings_de.ts \
-    gui/translations/MEGASyncStrings_en.ts \
-    gui/translations/MEGASyncStrings_es.ts \
-    gui/translations/MEGASyncStrings_fr.ts \
-    gui/translations/MEGASyncStrings_id.ts \
-    gui/translations/MEGASyncStrings_it.ts \
-    gui/translations/MEGASyncStrings_ja.ts \
-    gui/translations/MEGASyncStrings_ko.ts \
-    gui/translations/MEGASyncStrings_nl.ts \
-    gui/translations/MEGASyncStrings_pl.ts \
-    gui/translations/MEGASyncStrings_pt_BR.ts \
-    gui/translations/MEGASyncStrings_pt.ts \
-    gui/translations/MEGASyncStrings_ro.ts \
-    gui/translations/MEGASyncStrings_ru.ts \
-    gui/translations/MEGASyncStrings_th.ts \
-    gui/translations/MEGASyncStrings_vi.ts \
-    gui/translations/MEGASyncStrings_zh_CN.ts \
-    gui/translations/MEGASyncStrings_zh_TW.ts
+    ../gui/translations/MEGASyncStrings_ar.ts \
+    ../gui/translations/MEGASyncStrings_de.ts \
+    ../gui/translations/MEGASyncStrings_en.ts \
+    ../gui/translations/MEGASyncStrings_es.ts \
+    ../gui/translations/MEGASyncStrings_fr.ts \
+    ../gui/translations/MEGASyncStrings_id.ts \
+    ../gui/translations/MEGASyncStrings_it.ts \
+    ../gui/translations/MEGASyncStrings_ja.ts \
+    ../gui/translations/MEGASyncStrings_ko.ts \
+    ../gui/translations/MEGASyncStrings_nl.ts \
+    ../gui/translations/MEGASyncStrings_pl.ts \
+    ../gui/translations/MEGASyncStrings_pt_BR.ts \
+    ../gui/translations/MEGASyncStrings_pt.ts \
+    ../gui/translations/MEGASyncStrings_ro.ts \
+    ../gui/translations/MEGASyncStrings_ru.ts \
+    ../gui/translations/MEGASyncStrings_th.ts \
+    ../gui/translations/MEGASyncStrings_tl.ts \
+    ../gui/translations/MEGASyncStrings_uk.ts \
+    ../gui/translations/MEGASyncStrings_vi.ts \
+    ../gui/translations/MEGASyncStrings_zh_CN.ts \
+    ../gui/translations/MEGASyncStrings_zh_TW.ts
 
 CODECFORTR = UTF8
 
@@ -155,7 +163,7 @@ win32 {
         }
     }
 
-    RC_FILE = icon.rc
+    RC_FILE = ../icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
     QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01
