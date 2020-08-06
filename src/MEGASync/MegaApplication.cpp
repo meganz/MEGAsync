@@ -8135,6 +8135,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ADD_SYNC:
     {
+        if (e->getErrorCode() == MegaError::API_EACCESS)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Sync addition returns API_EACCESS").toUtf8().constData());
+            megaApi->sendEvent(99531, "Sync addition fails with API_EACCESS"); //this would enforce a fetchNodes in the past
+        }
         break;
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
@@ -8637,7 +8642,6 @@ void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString
 {
     if (errorCode != MegaError::API_OK)
     {
-        //TODO: note for reviewer: this use case sould need ux/ui validation: error adding a sync -> sync not cached: disapears from settings
         QMegaMessageBox::critical(nullptr, tr("Error adding sync"),
                                   tr("This sync can't be added: %1. Reason: %2").arg(localpath)
                                   .arg( errorCode > 0 ? QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(errorCode))
@@ -9025,14 +9029,6 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
         case MegaSync::Error::SHARE_NON_FULL_ACCESS:
             showErrorMessage(tr("Your sync \"%1\" has been disabled. The remote folder (or part of it) doesn't have full access")
                              .arg(syncSetting->name()));
-
-            if (megaApi->isLoggedIn()) //TODO: Note for reviewer: this was executed when ADD_SYNC returned API_EACCESS. Not sure why
-            {
-                if (!mFetchingNodes) //The error might come when resuming syncs while fetching nodes
-                {
-                    fetchNodes();
-                }
-            }
             break;
         case MegaSync::Error::LOCAL_FINGERPRINT_MISMATCH:
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder has changed")
@@ -9075,7 +9071,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
                  .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
 
 
-    showErrorMessage(tr("Your sync \"%1\" has been re-enabled") //TODO: note for reviewer: improve/validate error msg?
+    showErrorMessage(tr("Your sync \"%1\" has been enabled")
                      .arg(syncSetting->name()));
 }
 

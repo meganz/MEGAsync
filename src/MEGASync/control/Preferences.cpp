@@ -2898,7 +2898,6 @@ void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
     settings->beginGroup(QString::number(syncSettings->tag()));
 
     settings->setValue(configuredSyncsKey, syncSettings->toString());
-    setCachedValue(configuredSyncsKey, QVariant::fromValue<SyncSetting>(*syncSettings));
 
     settings->endGroup();
 

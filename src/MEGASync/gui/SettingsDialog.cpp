@@ -409,42 +409,43 @@ void SettingsDialog::fileVersioningStateChanged()
 
 void SettingsDialog::syncStateChanged(int state)
 {
-    //TODO: Note for reviewer: if this code is enabled, it will disallow the option to "disable" a tristate checkbox
-    // we should rather handle error only when `saving` changes.
+#ifndef SYNC_ADVANCED_TEST_MODE
+    //with this code enabled, it will disallow the option to "disable" a tristate checkbox for failed syncs
+    //we should rather handle error only when `saving` changes. Note, we might want to keep prepareForSync call anyway
 
-//    if (state)
-//    {
-//        Platform::prepareForSync();
-//        QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
-//        for (int j = 0; j < ui->tSyncs->rowCount(); j++)
-//        {
-//            if (ui->tSyncs->cellWidget(j, 2) == c)
-//            {
-//                QString newLocalPath = ui->tSyncs->item(j, 0)->text();
-//                QFileInfo fi(newLocalPath);
-//                if (!fi.exists() || !fi.isDir())
-//                {
-//                    c->setCheckState(Qt::Unchecked);
-//                    QMegaMessageBox::critical(nullptr, tr("Error"),
-//                       tr("This sync can't be enabled because the local folder doesn't exist"));
-//                    return;
-//                }
+    if (state)
+    {
+        Platform::prepareForSync();
+        QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
+        for (int j = 0; j < ui->tSyncs->rowCount(); j++)
+        {
+            if (ui->tSyncs->cellWidget(j, 2) == c)
+            {
+                QString newLocalPath = ui->tSyncs->item(j, 0)->text();
+                QFileInfo fi(newLocalPath);
+                if (!fi.exists() || !fi.isDir())
+                {
+                    c->setCheckState(Qt::Unchecked);
+                    QMegaMessageBox::critical(nullptr, tr("Error"),
+                       tr("This sync can't be enabled because the local folder doesn't exist"));
+                    return;
+                }
 
-//                QString newMegaPath = ui->tSyncs->item(j, 1)->text();
-//                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
-//                if (!n)
-//                {
-//                    c->setCheckState(Qt::Unchecked);
-//                    QMegaMessageBox::critical(nullptr, tr("Error"),
-//                       tr("This sync can't be enabled because the remote folder doesn't exist"));
-//                    return;
-//                }
-//                delete n;
-//                break;
-//            }
-//        }
-//    }
-
+                QString newMegaPath = ui->tSyncs->item(j, 1)->text();
+                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
+                if (!n)
+                {
+                    c->setCheckState(Qt::Unchecked);
+                    QMegaMessageBox::critical(nullptr, tr("Error"),
+                       tr("This sync can't be enabled because the remote folder doesn't exist"));
+                    return;
+                }
+                delete n;
+                break;
+            }
+        }
+    }
+#endif
     syncsChanged = true;
     stateChanged();
 }
@@ -464,12 +465,10 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
         assert(false && "unexpected no error after enabling failed");
         return;
     }
-    //TODO: note for reviewer: no longer using "This sync can't be enabled because the remote folder doesn't exist" & the local folder one
-    // "This" is ambiguous.
     default:
     {
         QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
-           tr("Your sync \"%1\" can't be enabled. Reason: %2").arg(syncSetting->name()) //TODO: note for reviewer: validate message and/or think about custom messages depending on errors. we might want to show remote path here
+           tr("Your sync \"%1\" can't be enabled. Reason: %2").arg(syncSetting->name())
           .arg(tr(MegaSync::getMegaSyncErrorCode(errorCode))));
         break;
     }
