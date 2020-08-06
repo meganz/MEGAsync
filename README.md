@@ -125,7 +125,7 @@ Release:
 
 ##### Requirements:
 * Xcode 8.3
-* Qt 5.12.8
+* Qt 5.6.3
 
 ##### Preparation:
 1.- Install Xcode in your system
