@@ -8162,6 +8162,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                         if (megaApi->isLoggedIn())
                         {
+                            megaApi->sendEvent(99531, "Sync addition fails with API_EACCESS");
                             fetchNodes();
                         }
                     }
