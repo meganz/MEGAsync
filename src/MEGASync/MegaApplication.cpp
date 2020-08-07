@@ -26,6 +26,10 @@
 #include <QtConcurrent/QtConcurrent>
 #endif
 
+#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
+#include <QScreen>
+#endif
+
 #ifndef WIN32
 //sleep
 #include <unistd.h>
