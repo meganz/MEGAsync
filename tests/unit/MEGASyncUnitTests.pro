@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2013-10-17T12:41:38
-#
-#-------------------------------------------------
-
 win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200402
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
@@ -98,14 +92,15 @@ else {
     CONFIG += USE_FFMPEG
 }
 
-include(../gui/gui.pri)
-include(../mega/bindings/qt/sdk.pri)
-include(../control/control.pri)
-include(../platform/platform.pri)
-include(../google_breakpad/google_breakpad.pri)
-include(../qtlockedfile/qtlockedfile.pri)
-include(3rdparty/catch/catch.pri)
-include(3rdparty/trompeloeil/trompeloeil.pri)
+MEGASYNC_SRC_PATH = ../../src/MEGASync
+include($$MEGASYNC_SRC_PATH/gui/gui.pri)
+include($$MEGASYNC_SRC_PATH/mega/bindings/qt/sdk.pri)
+include($$MEGASYNC_SRC_PATH/control/control.pri)
+include($$MEGASYNC_SRC_PATH/platform/platform.pri)
+include($$MEGASYNC_SRC_PATH/google_breakpad/google_breakpad.pri)
+include($$MEGASYNC_SRC_PATH/qtlockedfile/qtlockedfile.pri)
+include(../3rdparty/catch/catch.pri)
+include(../3rdparty/trompeloeil/trompeloeil.pri)
 
 CONFIG += c++14
 QT += testlib
@@ -119,40 +114,40 @@ unix:!macx {
 }
 
 DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD $$PWD/..
+INCLUDEPATH += $$PWD $$PWD/.. $$MEGASYNC_SRC_PATH
 
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
-SOURCES += ../MegaApplication.cpp \
-    ../TransferQuota.cpp \
+SOURCES += $$MEGASYNC_SRC_PATH/MegaApplication.cpp \
+    $$MEGASYNC_SRC_PATH/TransferQuota.cpp \
     GuestWidgetTest.cpp \
     main.cpp
 
-HEADERS += ../MegaApplication.h \
-    ../TransferQuota.h
+HEADERS += $$MEGASYNC_SRC_PATH/MegaApplication.h \
+    $$MEGASYNC_SRC_PATH/TransferQuota.h
 
 TRANSLATIONS = \
-    ../gui/translations/MEGASyncStrings_ar.ts \
-    ../gui/translations/MEGASyncStrings_de.ts \
-    ../gui/translations/MEGASyncStrings_en.ts \
-    ../gui/translations/MEGASyncStrings_es.ts \
-    ../gui/translations/MEGASyncStrings_fr.ts \
-    ../gui/translations/MEGASyncStrings_id.ts \
-    ../gui/translations/MEGASyncStrings_it.ts \
-    ../gui/translations/MEGASyncStrings_ja.ts \
-    ../gui/translations/MEGASyncStrings_ko.ts \
-    ../gui/translations/MEGASyncStrings_nl.ts \
-    ../gui/translations/MEGASyncStrings_pl.ts \
-    ../gui/translations/MEGASyncStrings_pt_BR.ts \
-    ../gui/translations/MEGASyncStrings_pt.ts \
-    ../gui/translations/MEGASyncStrings_ro.ts \
-    ../gui/translations/MEGASyncStrings_ru.ts \
-    ../gui/translations/MEGASyncStrings_th.ts \
-    ../gui/translations/MEGASyncStrings_tl.ts \
-    ../gui/translations/MEGASyncStrings_uk.ts \
-    ../gui/translations/MEGASyncStrings_vi.ts \
-    ../gui/translations/MEGASyncStrings_zh_CN.ts \
-    ../gui/translations/MEGASyncStrings_zh_TW.ts
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_ar.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_de.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_en.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_es.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_fr.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_id.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_it.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_ja.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_ko.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_nl.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_pl.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_pt_BR.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_pt.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_ro.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_ru.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_th.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_tl.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_uk.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_vi.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_zh_CN.ts \
+    $$MEGASYNC_SRC_PATH/gui/translations/MEGASyncStrings_zh_TW.ts
 
 CODECFORTR = UTF8
 
@@ -163,7 +158,7 @@ win32 {
         }
     }
 
-    RC_FILE = ../icon.rc
+    RC_FILE = MEGASYNC_SRC_PATH/icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
     QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01

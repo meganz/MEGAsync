@@ -2,6 +2,7 @@
 #include "gui/MegaProxyStyle.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
+#include "control/CrashHandler.h"
 
 #include <QFontDatabase>
 #include <assert.h>
