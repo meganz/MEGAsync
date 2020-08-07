@@ -3075,6 +3075,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">Transfer failed due to a recursive directory structure</translation>
     </message>
+    <message>
+        <source>Storage Quota Exceeded. Upgrade now</source>
+        <translatorcomment>Error shown when user has been above storage quota for a very long time, needing to upgrade the account to fix the issue.</translatorcomment>
+        <translation type="unfinished">Storage Quota Exceeded. Upgrade now</translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
