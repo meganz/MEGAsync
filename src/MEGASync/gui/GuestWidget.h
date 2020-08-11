@@ -37,9 +37,9 @@ public:
 
     ~GuestWidget();
 
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
+    void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) override;
 
     void resetFocus();
 
@@ -109,7 +109,7 @@ protected:
 
     void reset_UI_props();
 
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent * event) override;
 };
 
 #endif // GUESWIDGET_H
