@@ -134,7 +134,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
     $$PWD/VerifyLockMessage.h \
-    $$PWD/MegaInfoMessage.h
+    $$PWD/MegaInfoMessage.h \
+    $$PWD/QSpinningProgressIndicator.h
 
 INCLUDEPATH += $$PWD
 
@@ -250,7 +251,8 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
 
     QT += macextras
-    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
+    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm \
+                            $$PWD/QSpinningProgressIndicator.mm
     HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
@@ -262,7 +264,8 @@ macx {
     HEADERS += $$PWD/LockedPopOver.h \
                $$PWD/DynamicTransferQuotaPopOver.h
     SOURCES += $$PWD/LockedPopOver.cpp \
-               $$PWD/DynamicTransferQuotaPopOver.cpp
+               $$PWD/DynamicTransferQuotaPopOver.cpp \
+               $$PWD/QSpinningProgressIndicator.cpp
 }
 
 unix:!macx {
