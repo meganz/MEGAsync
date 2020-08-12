@@ -315,6 +315,8 @@ void GuestWidget::initialize()
 
     closing = false;
     loggingStarted = false;
+    ui->lEmail->clear();
+    resetFocus();
     page_login();
 }
 
@@ -588,7 +590,7 @@ void GuestWidget::page_login()
     ui->sPages->style()->polish(ui->sPages);
 
     ui->lPassword->clear();
-    ui->sPages->setCurrentWidget(ui->pLogin);   
+    ui->sPages->setCurrentWidget(ui->pLogin);
 
     if(incorrectCredentialsMessageReceived)
     {
