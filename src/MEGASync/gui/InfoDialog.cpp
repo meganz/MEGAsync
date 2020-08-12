@@ -1601,7 +1601,6 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
             ui->wInfoDialogIn->setVisible(false);
             dialogLayout->addWidget(gWidget);
             gWidget->setVisible(true);
-            gWidget->clearEmail();
 
             #ifdef __APPLE__
                 if (!dummy)

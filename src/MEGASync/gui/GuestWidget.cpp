@@ -79,11 +79,6 @@ std::pair<QString, QString> GuestWidget::getTexts()
     return std::make_pair(ui->lEmail->text(), ui->lPassword->text());
 }
 
-void GuestWidget::clearEmail()
-{
-    ui->lEmail->clear();
-}
-
 void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
@@ -320,6 +315,8 @@ void GuestWidget::initialize()
 
     closing = false;
     loggingStarted = false;
+    ui->lEmail->clear();
+    resetFocus();
     page_login();
 }
 
@@ -593,7 +590,7 @@ void GuestWidget::page_login()
     ui->sPages->style()->polish(ui->sPages);
 
     ui->lPassword->clear();
-    ui->sPages->setCurrentWidget(ui->pLogin);   
+    ui->sPages->setCurrentWidget(ui->pLogin);
 
     if(incorrectCredentialsMessageReceived)
     {
