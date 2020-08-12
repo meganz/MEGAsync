@@ -2015,13 +2015,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <property name="topMargin">
-                              <number>16</number>
+                              <number>10</number>
                              </property>
                              <property name="rightMargin">
                               <number>0</number>
                              </property>
                              <property name="bottomMargin">
-                              <number>16</number>
+                              <number>10</number>
                              </property>
                              <item>
                               <widget class="QLabel" name="lOverDiskQuotaLabel">
