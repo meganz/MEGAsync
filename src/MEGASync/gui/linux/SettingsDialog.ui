@@ -543,6 +543,81 @@ background:transparent;</string>
        </widget>
       </item>
       <item>
+       <widget class="QWidget" name="wSavingSync" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_30">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="wContainerSpinning" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <widget class="QSpinningProgressIndicator" name="wSpinningIndicator" native="true">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>10</y>
+              <width>18</width>
+              <height>18</height>
+             </rect>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lSavingSyncs">
+           <property name="text">
+            <string>Saving syncs...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -1995,14 +2070,14 @@ padding-left: 10px;
                <attribute name="horizontalHeaderCascadingSectionResizes">
                 <bool>true</bool>
                </attribute>
-               <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>200</number>
-               </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
                 <number>200</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
+               </attribute>
+               <attribute name="horizontalHeaderMinimumSectionSize">
+                <number>200</number>
                </attribute>
                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                 <bool>false</bool>
@@ -4489,6 +4564,14 @@ background:transparent;</string>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QSpinningProgressIndicator</class>
+   <extends>QWidget</extends>
+   <header location="global">QSpinningProgressIndicator.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>bSyncs</tabstop>
   <tabstop>bAccount</tabstop>

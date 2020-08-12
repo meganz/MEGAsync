@@ -162,7 +162,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->eMaxUploadConnections, SIGNAL(valueChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cbUseHttps, SIGNAL(clicked()), this, SLOT(stateChanged()));
 
-#ifndef WIN32    
+    ui->wSavingSync->hide();
+
+#ifndef WIN32
     #ifndef __APPLE__
     ui->rProxyAuto->hide();
     ui->cDisableIcons->hide();
@@ -268,6 +270,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bClearFileVersions->setVisible(false);
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
+
+    ui->wSavingSync->hide();
 
 #ifdef __APPLE__
     minHeightAnimation = new QPropertyAnimation();
@@ -511,10 +515,19 @@ void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 
 void SettingsDialog::onSavingSettingsProgress(double progress)
 {
+    ui->wSavingSync->show();
+    ui->wSpinningIndicator->animate(true);
+    savingSyncs(false, ui->pSyncs);
 }
 
 void SettingsDialog::onSavingSettingsCompleted()
 {
+    auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - ui->wSpinningIndicator->getStartTime()));
+    QTimer::singleShot(closeDelay, [this] () {
+        ui->wSavingSync->hide();
+        ui->wSpinningIndicator->animate(false);
+        savingSyncs(true, ui->pSyncs);
+    });
 }
 
 void SettingsDialog::storageChanged()
@@ -2550,6 +2563,24 @@ void SettingsDialog::onClearCache()
         }
     #endif
     }
+}
+
+void SettingsDialog::savingSyncs(bool option, QObject *item)
+{
+    if (!item)
+    {
+        return;
+    }
+
+    for(auto *widget : item->findChildren<QWidget *>())
+    {
+        widget->setEnabled(option);
+    }
+
+    ui->bAccount->setEnabled(option);
+    ui->bAdvanced->setEnabled(option);
+    ui->bBandwidth->setEnabled(option);
+    ui->bProxies->setEnabled(option);
 }
 
 void SettingsDialog::updateStorageElements()
