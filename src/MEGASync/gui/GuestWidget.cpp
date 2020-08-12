@@ -79,6 +79,11 @@ std::pair<QString, QString> GuestWidget::getTexts()
     return std::make_pair(ui->lEmail->text(), ui->lPassword->text());
 }
 
+void GuestWidget::clearEmail()
+{
+    ui->lEmail->clear();
+}
+
 void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
