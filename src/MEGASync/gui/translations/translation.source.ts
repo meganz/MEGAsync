@@ -730,7 +730,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation type="unfinished">[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</translation>
+        <translation type="unfinished">[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU Lesser General Public License Version 3[/A]</translation>
     </message>
 </context>
 <context>
@@ -1846,7 +1846,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation type="unfinished">You must act immediately to protect your data</translation>
+        <translation type="unfinished">You must act immediately to save your data</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
@@ -3150,7 +3150,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">Get link</translation>
+        <translation type="unfinished">Get Link</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -3430,7 +3430,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add syncs but they will remain disabled until your account has more bandwidth available.</translation>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add syncs but they will remain disabled until your account has more transfer quota available.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -3445,7 +3445,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until your account has more bandwidth available.</translation>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until your account has more transfer quota available.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
@@ -3455,7 +3455,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until your account has more bandwidth available.</translation>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until your account has more transfer quota available.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
@@ -3465,7 +3465,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until your account has more bandwidth available.</translation>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until your account has more transfer quota available.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
@@ -3799,14 +3799,14 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
-        <translation type="unfinished">– User experience improvement when the transfer quota is exceeded.
-– Updated translations.
-– Fixed issues during processing of RAW images.
-– Reduce memory usage on macOS.
-– Filenames are no longer escaped when special characters are supported by the target file system.
-– Integration of 2FA form within the main dialog.
-– Other UI fixes and adjustments.
-– Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">- User experience improvement when transfer quota is exceeded.
+- Updated translations.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS.
+- Filenames are no longer escaped when special characters are supported by the target file system.
+- Integration of 2FA form within the main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -3987,7 +3987,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder</translatorcomment>
-        <translation type="obsolete">Are you sure you want to delete ‘%1’?</translation>
+        <translation type="obsolete">Are you sure you want to delete ”%1″?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
@@ -4057,7 +4057,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="obsolete">‘%1’ is write protected. Do you want to delete it anyway?</translation>
+        <translation type="obsolete">″%1″ is write protected. Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4133,7 +4133,7 @@ Please verify the correct file name was given.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished">‘%1’ is write protected.
+        <translation type="unfinished">″%1″ is write protected.
 Do you want to delete it anyway?</translation>
     </message>
 </context>
