@@ -3469,6 +3469,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     </message>
     <message>
         <source>Depleted transfer quota</source>
+        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
         <translation type="unfinished">Depleted transfer quota</translation>
     </message>
 </context>
