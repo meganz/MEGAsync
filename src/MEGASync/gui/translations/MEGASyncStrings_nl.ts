@@ -132,12 +132,12 @@
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation type="unfinished">Remaining Download</translation>
+        <translation type="unfinished">Resterende Download</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation type="unfinished">Remaining Upload</translation>
+        <translation type="unfinished">Resterende upload</translation>
     </message>
 </context>
 <context>
@@ -150,7 +150,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Een naam invoeren, een absoluut pad (tekens * en? zijn toegestaan) of kies welk bestand of map u wilt laten uitsluiten van de synchronisatie</translation>
+        <translation type="unfinished">Een naam invoeren, een absoluut pad (tekens * en ? zijn toegestaan) of kies welk bestand of map u wilt laten uitsluiten van de synchronisatie</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -725,7 +725,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>All rights reserved.</source>
         <translatorcomment>Tail part of the footer message after copyright year Mega Limited.</translatorcomment>
-        <translation type="unfinished">All rights reserved.</translation>
+        <translation type="unfinished">Alle rechten voorbehouden.</translation>
+    </message>
+    <message>
+        <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
+        <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
+        <translation type="unfinished">[A]Deze software gebruikt Qt ([C] 2018 Het Qt Bedrijf Ltd) die wordt gedekt door GNU LESSER GENERAL PUBLIC LICENSE Versie 3[/A]</translation>
     </message>
 </context>
 <context>
@@ -979,12 +984,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Dynamic transfer quota</source>
         <translatorcomment>Title label to indicate about the dynamic transfer quota used by current account.</translatorcomment>
-        <translation type="unfinished">Dynamic transfer quota</translation>
+        <translation type="unfinished">Dynamisch transfertegoed</translation>
     </message>
     <message>
         <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
         <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation type="unfinished">[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</translation>
+        <translation type="unfinished">[A]Het IP-adres dat u gebruikt, heeft %1 van de gegevensoverdracht in de afgelopen 6 uur gebruikt, waardoor u uw huidige limiet heeft overschreden. Om deze limiet te verwijderen, kunt u upgraden naar PRO, waarmee u uw eigen transferquotapakket krijgt en ook voldoende extra opslagruimte. [/A]</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1155,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="obsolete">[A]Inloggen[/A] of [B] Creëer een account[/B] om volledig MEGA te ervaren</translation>
+        <translation type="obsolete">[A]Login[/A] of [B]Creëer een account[/B] om volledig MEGA te ervaren</translation>
     </message>
     <message>
         <source>Login to MEGA</source>
@@ -1302,12 +1307,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation type="unfinished">Please enter the code generated by your authentication app</translation>
+        <translation type="unfinished">Voer de code in die is gegenereerd door uw authenticatie-applicatie</translation>
     </message>
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation type="unfinished">6 digit code:</translation>
+        <translation type="unfinished">6-cijferige code:</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1322,7 +1327,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Bent u uw authenticatieapparaat kwijt?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1827,12 +1832,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished">We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</translation>
+        <translation type="unfinished">We hebben contact met u opgenomen via email naar [A] op [B], maar u heeft nog steeds [C] bestanden [D] die ruimte in uw MEGA account opnemen waarvoor u [E] nodig heeft.</translation>
     </message>
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to informa about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of days left to upgrade.</translatorcomment>
-        <translation type="unfinished">You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+        <translation type="unfinished">U heeft nog [A][B] dagen [/A] om te upgraden. Daarna worden uw gegevens verwijderd.</translation>
     </message>
     <message>
         <source>Upgrade account</source>
@@ -1842,17 +1847,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation type="unfinished">You must act immediately to save your data</translation>
+        <translation type="unfinished">U moet gelijk reageren om uw gegevens te beschermen</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
-        <translation type="unfinished">Depleted transfer quota.</translation>
+        <translation type="unfinished">Uitgeput overdrachtstegoed</translation>
     </message>
     <message>
         <source>All downloads are currently disabled.</source>
         <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">All downloads are currently disabled.</translation>
+        <translation type="unfinished">Alle downloads zijn momenteel uitgeschakeld.</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1867,7 +1872,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
-        <translation type="unfinished">Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</translation>
+        <translation type="unfinished">Uw wachtende overdrachten overschrijden het huidige tegoed beschikbaar voor uw IP adres en kan daarom onderbroken worden.</translation>
     </message>
 </context>
 <context>
@@ -1970,12 +1975,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Log in of creëer een account om de MEGA Desktop Applicatie te gebruiken.</translation>
+        <translation type="unfinished">Login of creëer een account om de MEGA Desktop Applicatie te gebruiken.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">U moet inloggen in uw MEGA account om de MEGA Desktop Applicatie te laten draaien.</translation>
+        <translation type="unfinished">U moet inloggen in uw MEGA account om de MEGA Desktop Applicatie te gebruiken.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2092,12 +2097,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation type="unfinished">Please enter the code generated by your authentication app</translation>
+        <translation type="unfinished">Voer de code in die is gegenereerd door uw authenticatie-applicatie</translation>
     </message>
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation type="unfinished">6 digit code:</translation>
+        <translation type="unfinished">6-cijferige code:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2117,7 +2122,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Bent u uw authenticatieapparaat kwijt?[/A]</translation>
     </message>
 </context>
 <context>
@@ -2604,7 +2609,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation type="unfinished">MEGAsync gaat door met werken, maar u ontvangt mogelijk geen nieuwe updates.</translation>
+        <translation type="unfinished">MEGAsync blijft werken, maar het kan zijn dat u geen nieuwe updates ontvangt.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -2904,12 +2909,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation type="unfinished">Your data is at risk</translation>
+        <translation type="unfinished">Uw gegevens lopen gevaar</translation>
     </message>
     <message>
         <source>You have [A] days left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation type="unfinished">You have [A] days left to save your data</translation>
+        <translation type="unfinished">U heeft nog [A] dagen om je gegevens op te slaan</translation>
     </message>
 </context>
 <context>
@@ -3070,6 +3075,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">Overdracht is mislukt vanwege een recursieve mapstructuur</translation>
+    </message>
+    <message>
+        <source>Storage Quota Exceeded. Upgrade now</source>
+        <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
+        <translation type="unfinished">Storage Quota Exceeded. Please upgrade now</translation>
     </message>
 </context>
 <context>
@@ -3386,12 +3396,12 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Download syncs are temporarily disabled.</source>
         <translatorcomment>Label to indicate that syncs downloads are temporarily disabled because a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Download syncs are temporarily disabled.</translation>
+        <translation type="unfinished">Downloadsynchronisaties zijn tijdelijk uitgeschakeld.</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting set syncs but disabled until there is enough free storage space within the account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</translation>
+        <translation type="unfinished">U heeft de beschikbare opslagruimte voor uw account overschreden. U kunt synchronisaties toevoegen, maar deze blijven uitgeschakeld totdat er voldoende ruimte in uw account is.</translation>
     </message>
     <message>
         <source>Buy more space</source>
@@ -3401,27 +3411,27 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Uploads are temporarily disabled.</source>
         <translatorcomment>Label to indicate that uploads are temporarily disabled due to a storage space limit has been reached.</translatorcomment>
-        <translation type="unfinished">Uploads are temporarily disabled.</translation>
+        <translation type="unfinished">Uploads zijn tijdelijk uitgeschakeld.</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</translation>
+        <translation type="unfinished">U heeft de beschikbare opslagruimte voor uw account overschreden. U kunt uploads toevoegen, maar overdrachten blijven in de wachtrij staan ​​totdat er voldoende ruimte in uw account is.</translation>
     </message>
     <message>
         <source>Empty transfer quota</source>
         <translatorcomment>Window title for dialog that shows informative messages about a situation of depleted transfer quota.</translatorcomment>
-        <translation type="unfinished">Empty transfer quota</translation>
+        <translation type="obsolete">Overdracht tegoed overschreden</translation>
     </message>
     <message>
         <source>Syncs are temporarily disabled.</source>
         <translatorcomment>Label to indicate that syncs are temporarily disabled due to transfer quota limit has been reached.</translatorcomment>
-        <translation type="unfinished">Syncs are temporarily disabled.</translation>
+        <translation type="unfinished">Synchronisaties zijn tijdelijk uitgeschakeld.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</translation>
+        <translation type="unfinished">U heeft het beschikbare overdrachtstegoed voor uw account overschreden. U kunt synchronisaties toevoegen, maar deze blijven uitgeschakeld totdat uw account meer beschikbare bandbreedte heeft.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -3431,32 +3441,37 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Importing links is temporarily disabled.</source>
         <translatorcomment>Label to indicate that import links feature is temporarily disabled due to a situation of over transfer quota. User will be able to import but not to download.</translatorcomment>
-        <translation type="unfinished">Importing links is temporarily disabled.</translation>
+        <translation type="unfinished">Het importeren van links is tijdelijk uitgeschakeld.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</translation>
+        <translation type="unfinished">U heeft het beschikbare overdrachtstegoed voor uw account overschreden. U kunt links importeren, maar overdrachten blijven in de wachtrij staan ​​totdat uw account meer bandbreedte beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
         <translatorcomment>Label to indicate that downloads are temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Downloads are temporarily disabled.</translation>
+        <translation type="unfinished">Downloads zijn tijdelijk uitgeschakeld.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</translation>
+        <translation type="unfinished">U heeft het beschikbare overdrachtstegoed voor uw account overschreden. U kunt downloads toevoegen, maar overdrachten blijven in de wachtrij staan ​​totdat uw account meer bandbreedte beschikbaar heeft.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
         <translatorcomment>Label to indicate that streaming transfers  of MEGAsync (context menu, stream option) is temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Streams are temporarily disabled.</translation>
+        <translation type="unfinished">Streams zijn tijdelijk uitgeschakeld.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</translation>
+        <translation type="unfinished">U heeft het beschikbare overdracht tegoed voor uw account overschreden.U kunt streams toevoegen, maar overdrachten blijven in de wachtrij staan ​​totdat uw account meer bandbreedte beschikbaar heeft.</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota</source>
+        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
+        <translation type="unfinished">Uitgeput overdrachtstegoed</translation>
     </message>
 </context>
 <context>
@@ -3765,7 +3780,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="unfinished">- Nieuwe aangepaste berichtvensters. 
+        <translation type="obsolete">- Nieuwe aangepaste berichtvensters. 
 - Opschonen van logboeken met terugwerkende kracht bij het uitloggen. 
 - Problemen opgelost die de Finder-extensie onder bepaalde omstandigheden hebben uitgeschakeld. 
 - E-mailverificatie voor vergrendelde accounts. 
@@ -3774,6 +3789,25 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Inbegrepen optie om logs te verzenden vanuit het crashrapportvenster. 
 - Andere UI fixes en aanpassingen. 
 - Andere prestatieverbeteringen en aanpassingen.</translation>
+    </message>
+    <message>
+        <source>- Improve user experience when exceeded transfer allowance.
+- Improvements in translation.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS system.
+- Stop escaping filenames when special characters are supported by target filesystem.
+- Integration of 2FA form within main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
+        <translation type="unfinished">- Verbetering van de gebruikerservaring wanneer het overdrachtstegoed wordt overschreden. 
+- Bijgewerkte vertalingen. 
+ - Herstelde problemen tijdens de verwerking van RAW-afbeeldingen. 
+ - Verminder het geheugengebruik op macOS. 
+ - Bestandsnamen worden niet langer ontlopen wanneer speciale tekens worden ondersteund door het doelbestandssysteem. 
+ - Integratie van het 2FA-formulier in het hoofdvenster. 
+ - Andere UI-fixes en aanpassingen. 
+ - Andere prestatieverbeteringen en aanpassingen.</translation>
     </message>
 </context>
 <context>
@@ -3804,7 +3838,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Look in:</source>
         <translatorcomment>Label to indicate the current filesystem path containing the files and folders that are being listed</translatorcomment>
-        <translation type="unfinished">Look in:</translation>
+        <translation type="unfinished">Kijk in:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -3814,12 +3848,12 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Go back</source>
         <translatorcomment>Back button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Go back</translation>
+        <translation type="unfinished">Ga terug</translation>
     </message>
     <message>
         <source>Alt+Left</source>
         <translatorcomment>Shortcut for Back button.It is shown in the button tooltip.</translatorcomment>
-        <translation type="unfinished">Alt+Left</translation>
+        <translation type="unfinished">Alt+Links</translation>
     </message>
     <message>
         <source>Forward</source>
@@ -3829,67 +3863,67 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Go forward</source>
         <translatorcomment>Forward button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Go forward</translation>
+        <translation type="unfinished">Ga vooruit</translation>
     </message>
     <message>
         <source>Alt+Right</source>
         <translatorcomment>Shortcut for Forward button.It is shown in the button tooltip.</translatorcomment>
-        <translation type="unfinished">Alt+Right</translation>
+        <translation type="unfinished">Alt+Rechts</translation>
     </message>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation type="unfinished">Parent Directory</translation>
+        <translation type="unfinished">Bovenliggende directory</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Go to the parent directory</translation>
+        <translation type="unfinished">Ga naar de bovenliggende directory</translation>
     </message>
     <message>
         <source>Alt+Up</source>
         <translatorcomment>Shortcut for Parent Directory button.It is shown in the button tooltip.</translatorcomment>
-        <translation type="unfinished">Alt+Up</translation>
+        <translation type="unfinished">Alt+Omhoog</translation>
     </message>
     <message>
         <source>Create New Folder</source>
         <translatorcomment>Button for creating a new folder</translatorcomment>
-        <translation type="unfinished">Create New Folder</translation>
+        <translation type="unfinished">Creëer Nieuwe Map</translation>
     </message>
     <message>
         <source>Create a New Folder</source>
         <translatorcomment>Create a new folder button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Create a New Folder</translation>
+        <translation type="unfinished">Maak een Nieuwe Map</translation>
     </message>
     <message>
         <source>List View</source>
         <translatorcomment>Button for changing to filesystem list view mode</translatorcomment>
-        <translation type="unfinished">List View</translation>
+        <translation type="unfinished">Lijstweergave</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
         <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Change to list view mode</translation>
+        <translation type="unfinished">Ga naar de lijstweergavemodus</translation>
     </message>
     <message>
         <source>Detail View</source>
         <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
-        <translation type="unfinished">Detail View</translation>
+        <translation type="unfinished">Gedetailleerde Weergave</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
         <translatorcomment>Change to detail view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Change to detail view mode</translation>
+        <translation type="unfinished">Ga naar de detailweergave</translation>
     </message>
     <message>
         <source>Sidebar</source>
         <translatorcomment>Name of the side bar area of the window</translatorcomment>
-        <translation type="unfinished">Sidebar</translation>
+        <translation type="unfinished">Zijbalk</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
         <translatorcomment>Name to indicate the list of places and bookmarks area of the window</translatorcomment>
-        <translation type="unfinished">List of places and bookmarks</translation>
+        <translation type="unfinished">Lijst met plaatsen en bladwijzers</translation>
     </message>
     <message>
         <source>Files</source>
@@ -3899,12 +3933,12 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Files of type:</source>
         <translatorcomment>Label for choosing a type for filtering files</translatorcomment>
-        <translation type="unfinished">Files of type:</translation>
+        <translation type="unfinished">Bestanden van type:</translation>
     </message>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation type="unfinished">Find Directory</translation>
+        <translation type="unfinished">Vind Locatie</translation>
     </message>
     <message>
         <source>Open</source>
@@ -3919,32 +3953,12 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation type="unfinished">Directory:</translation>
-    </message>
-    <message>
-        <source>File &amp;amp;name:</source>
-        <translatorcomment>Selected file text box label when opening a file</translatorcomment>
-        <translation type="unfinished">File &amp;name:</translation>
-    </message>
-    <message>
-        <source>&amp;amp;Open</source>
-        <translatorcomment>Ok Button text when the dialog is executed for opening a file</translatorcomment>
-        <translation type="unfinished">&amp;Open</translation>
-    </message>
-    <message>
-        <source>&amp;amp;Choose</source>
-        <translatorcomment>Ok Button text when the dialog is executed for choosing a directory</translatorcomment>
-        <translation type="unfinished">&amp;Choose</translation>
-    </message>
-    <message>
-        <source>&amp;amp;Save</source>
-        <translatorcomment>Ok Button text when the dialog is executed for saving a file</translatorcomment>
-        <translation type="unfinished">&amp;Save</translation>
+        <translation type="unfinished">Lokatie:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation type="unfinished">All Files (*)</translation>
+        <translation type="unfinished">Alle bestanden (*)</translation>
     </message>
     <message>
         <source>Show </source>
@@ -3952,34 +3966,14 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
         <translation type="unfinished">Weergeven</translation>
     </message>
     <message>
-        <source>&amp;amp;Rename</source>
-        <translatorcomment>Contextual menu action for renaming a folder or a file</translatorcomment>
-        <translation type="unfinished">&amp;Rename</translation>
-    </message>
-    <message>
-        <source>&amp;amp;Delete</source>
-        <translatorcomment>Contextual menu action for deleting a folder or a file</translatorcomment>
-        <translation type="unfinished">&amp;Delete</translation>
-    </message>
-    <message>
-        <source>Show &amp;amp;hidden files</source>
-        <translatorcomment>Contextual menu action for showing or hidding hidden files</translatorcomment>
-        <translation type="unfinished">Show &amp;hidden files</translation>
-    </message>
-    <message>
-        <source>&amp;amp;New Folder</source>
-        <translatorcomment>Contextual menu action for creating a new folder</translatorcomment>
-        <translation type="unfinished">&amp;New Folder</translation>
-    </message>
-    <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation type="unfinished">All files (*)</translation>
+        <translation type="unfinished">Alle bestanden (*)</translation>
     </message>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation type="unfinished">Directories</translation>
+        <translation type="unfinished">Lokaties</translation>
     </message>
     <message>
         <source>New Folder</source>
@@ -3994,17 +3988,17 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder</translatorcomment>
-        <translation type="unfinished">Are you sure you want to delete &apos;%1&apos;?</translation>
+        <translation type="obsolete">Weet u zeker dat u ‘%1’ wilt verwijderen?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation type="unfinished">Could not delete directory.</translation>
+        <translation type="unfinished">Kan lokatie niet verwijderen.</translation>
     </message>
     <message>
         <source>Recent Places</source>
         <translatorcomment>List of recent filesystem places</translatorcomment>
-        <translation type="unfinished">Recent Places</translation>
+        <translation type="unfinished">Recente plaatsen</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4019,7 +4013,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Drive</source>
         <translatorcomment>Label to name physical storage drives</translatorcomment>
-        <translation type="unfinished">Drive</translation>
+        <translation type="unfinished">Schijf</translation>
     </message>
     <message>
         <source>%1 File</source>
@@ -4034,7 +4028,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation type="unfinished">File Folder</translation>
+        <translation type="unfinished">Bestand Map</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -4049,7 +4043,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Shortcut</source>
         <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
-        <translation type="unfinished">Shortcut</translation>
+        <translation type="unfinished">Snelkoppeling</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -4057,24 +4051,91 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
         <translation type="unfinished">Onbekend</translation>
     </message>
     <message>
-        <source>%1 Please verify the correct directory name was given.</source>
-        <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation type="unfinished">%1 Please verify the correct directory name was given.</translation>
-    </message>
-    <message>
         <source>%1 already exists.Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation type="unfinished">%1 already exists.Do you want to replace it?</translation>
-    </message>
-    <message>
-        <source>%1 Please verify the correct file name was given.</source>
-        <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation type="unfinished">%1 Please verify the correct file name was given.</translation>
+        <translation type="obsolete">%1 bestaat al. Wilt u deze vervangen?</translation>
     </message>
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished">&apos;%1&apos; is write protected. Do you want to delete it anyway?</translation>
+        <translation type="obsolete">‘%1’ is tegen schrijven beveiligd. Wilt u het toch verwijderen?</translation>
+    </message>
+    <message>
+        <source>&amp;Open</source>
+        <translatorcomment>Ok Button text when the dialog is executed for opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Choose, &amp;Save).</translatorcomment>
+        <translation type="unfinished">&amp;Openen</translation>
+    </message>
+    <message>
+        <source>&amp;Choose</source>
+        <translatorcomment>Ok Button text when the dialog is executed for choosing a directory. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Save).</translatorcomment>
+        <translation type="unfinished">&amp;Kiezen</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translatorcomment>Ok Button text when the dialog is executed for saving a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Choose).</translatorcomment>
+        <translation type="unfinished">&amp;Opslaan</translation>
+    </message>
+    <message>
+        <source>&amp;Rename</source>
+        <translatorcomment>Contextual menu action for renaming a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Delete, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
+        <translation type="unfinished">&amp;Hernoemen</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translatorcomment>Contextual menu action for deleting a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
+        <translation type="unfinished">&amp;Verwijderen</translation>
+    </message>
+    <message>
+        <source>Show &amp;hidden files</source>
+        <translatorcomment>Contextual menu action for showing or not showing hidden files. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, &amp;New Folder).</translatorcomment>
+        <translation type="unfinished">&amp;Verborgen bestanden weergeven</translation>
+    </message>
+    <message>
+        <source>&amp;New Folder</source>
+        <translatorcomment>Contextual menu action for creating a new folder. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, Show &amp;hidden files).</translatorcomment>
+        <translation type="unfinished">&amp;Nieuwe Map</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
+        <translation type="unfinished">Weet u zeker dat u ‘%1’ wilt verwijderen?</translation>
+    </message>
+    <message>
+        <source>File &amp;name:</source>
+        <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
+        <translation type="unfinished">Bestand &amp;naam:</translation>
+    </message>
+    <message>
+        <source>%1
+Directory not found.
+Please verify the correct directory name was given.</source>
+        <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
+        <translation type="unfinished">%1
+Directory niet gevonden.
+Controleer of de juiste directory naam was gegeven.</translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
+        <translation type="unfinished">%1 bestaat al.
+ Wilt u het vervangen?</translation>
+    </message>
+    <message>
+        <source>%1
+File not found.
+Please verify the correct file name was given.</source>
+        <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
+        <translation type="unfinished">%1
+Bestand niet gevonden. 
+ Controleer of de juiste bestandsnaam is opgegeven.</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is write protected.
+Do you want to delete it anyway?</source>
+        <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
+        <translation type="unfinished">‘%1’ is tegen schrijven beveiligd.
+ Wilt u het toch verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -4107,12 +4168,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Invalid filename</source>
         <translatorcomment>Name of an invalid filename</translatorcomment>
-        <translation type="unfinished">Invalid filename</translation>
-    </message>
-    <message>
-        <source>&amp;lt;b&amp;gt;The name &amp;quot;%1&amp;quot; can not be used.&amp;lt;/b&amp;gt;&amp;lt;p&amp;gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation type="unfinished">&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</translation>
+        <translation type="unfinished">Ongeldige bestandsnaam</translation>
     </message>
     <message>
         <source>Name</source>
@@ -4127,7 +4183,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Kind</source>
         <translatorcomment>Header name of the column that shows file kind</translatorcomment>
-        <translation type="unfinished">Kind</translation>
+        <translation type="unfinished">Soort</translation>
     </message>
     <message>
         <source>Type</source>
@@ -4153,6 +4209,11 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
         <source>%1 byte(s)</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
         <translation type="unfinished">%1 byte(s)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
+        <translatorcomment>Alert message when file name is incorrect</translatorcomment>
+        <translation type="unfinished">&lt;b&gt; De naam ”%1″ kan niet worden gebruikt. &lt;/b&gt;&lt;p&gt; Probeer een andere naam, met minder tekens of zonder leestekens.</translation>
     </message>
 </context>
 <context>
@@ -5283,7 +5344,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Very Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation type="unfinished">Erg Zwak</translation>
+        <translation type="unfinished">Heel Zwak</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -5684,7 +5745,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation type="unfinished">Stream error: transfer overquota</translation>
+        <translation type="unfinished">Streaming fout: Overdracht tegoed overschreden.</translation>
     </message>
 </context>
 <context>
@@ -5921,12 +5982,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Limited available transfer quota.</source>
         <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
-        <translation type="unfinished">Limited available transfer quota.</translation>
+        <translation type="unfinished">Beperkt beschikbaar transfertegoed.</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
-        <translation type="unfinished">Depleted transfer quota.</translation>
+        <translation type="unfinished">Uitgeput overdrachtstegoed</translation>
     </message>
 </context>
 <context>
@@ -5970,7 +6031,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation type="unfinished">Depleted transfer quota</translation>
+        <translation type="unfinished">Uitgeput overdrachtstegoed</translation>
     </message>
 </context>
 <context>

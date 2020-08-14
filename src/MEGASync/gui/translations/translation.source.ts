@@ -3078,7 +3078,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished">Storage Quota Exceeded. Upgrade now</translation>
+        <translation type="unfinished">Storage Quota Exceeded. Please upgrade now</translation>
     </message>
 </context>
 <context>
@@ -3322,7 +3322,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Invalid folder for synchronization. Please ensure that you don’t use characters like ‘\’, ‘/’ or ‘:’ in your folder names.</translation>
+        <translation type="unfinished">Invalid folder for synchronization. Please ensure that you don’t use characters like “\”, “/” or “:” in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3374,7 +3374,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">Invalid folder name.
-Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+Please ensure that you don’t use characters like “\” “/” or “:” in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -3395,7 +3395,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>Download syncs are temporarily disabled.</source>
         <translatorcomment>Label to indicate that syncs downloads are temporarily disabled because a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Download syncs are temporarily disabled.</translation>
+        <translation type="obsolete">Download syncs are temporarily disabled.</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -3987,7 +3987,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder</translatorcomment>
-        <translation type="obsolete">Are you sure you want to delete ”%1″?</translation>
+        <translation type="obsolete">Are you sure you want to delete  “%1”?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
@@ -4057,7 +4057,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="obsolete">″%1″ is write protected. Do you want to delete it anyway?</translation>
+        <translation type="obsolete">”%1” is write protected. Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4097,7 +4097,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation type="unfinished">Are you sure you want to delete ‘%1’?</translation>
+        <translation type="unfinished">Are you sure you want to delete “%1”?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4133,7 +4133,7 @@ Please verify the correct file name was given.</translation>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished">″%1″ is write protected.
+        <translation type="unfinished">”%1” is write protected.
 Do you want to delete it anyway?</translation>
     </message>
 </context>
