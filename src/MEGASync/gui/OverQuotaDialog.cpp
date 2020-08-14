@@ -13,8 +13,9 @@ OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
     ui->labelTitle->setWordWrap(false);
 
     setAttribute(Qt::WA_QuitOnClose, false);
+#ifndef __APPLE__
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
+#endif
     connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::reject);
     connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
     connect(ui->labelTitle, &CustomLabel::labelSizeChange, this, &OverQuotaDialog::onTitleLengthChanged);
@@ -119,7 +120,7 @@ void OverQuotaDialog::onTitleLengthChanged()
 {
     int sizeLimitToWrap = ui->widgetHeader->width() - ui->buttonWarning->width() - ui->widgetHeader->layout()->spacing();
 
-#ifdef Q_OS_LINUX
+#ifndef Q_OS_MACOS
     sizeLimitToWrap -= ui->widgetHeader->layout()->contentsMargins().left() + ui->widgetHeader->layout()->contentsMargins().right();
 #endif
 
