@@ -39,7 +39,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
     if(type == OverQuotaDialogType::STORAGE_SYNCS)
     {
         setWindowTitle(storageFullTitle);
-        ui->labelTitle->setText(tr("Download syncs are temporarily disabled."));
+        ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
         ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available storage space for your account."
                                 " You can add syncs but they will remain disabled until there is enough space"
                                 " on your account.")
