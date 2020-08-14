@@ -12,6 +12,9 @@ OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
     ui->setupUi(this);
     ui->labelTitle->setWordWrap(false);
 
+    setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::reject);
     connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
     connect(ui->labelTitle, &CustomLabel::labelSizeChange, this, &OverQuotaDialog::onTitleLengthChanged);
@@ -125,4 +128,3 @@ void OverQuotaDialog::onTitleLengthChanged()
         ui->labelTitle->setWordWrap(true);
     }
 }
-
