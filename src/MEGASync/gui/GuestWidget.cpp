@@ -721,7 +721,7 @@ void GuestWidget::on_bLogin2FaNext_clicked()
     }
     else
     {
-        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8(), pin.toUtf8());
+        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8().constData(), pin.toUtf8().constData());
     }
 }
 
