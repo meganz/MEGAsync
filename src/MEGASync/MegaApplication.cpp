@@ -1181,6 +1181,8 @@ void MegaApplication::showInterface(QString)
     }
 }
 
+bool gCrashableForTesting = false;
+
 void MegaApplication::initialize()
 {
     if (megaApi)
@@ -1271,6 +1273,8 @@ void MegaApplication::initialize()
         {
             QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL);
         }
+
+        gCrashableForTesting = settings.value(QString::fromUtf8("crashable"), Preferences::BASE_URL).toBool();
 
         Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
@@ -2548,6 +2552,8 @@ void MegaApplication::rebootApplication(bool update)
     QApplication::exit();
 }
 
+int* testCrashPtr = nullptr;
+
 void MegaApplication::exitApplication(bool force)
 {
     if (appfinished)
@@ -2598,6 +2604,10 @@ void MegaApplication::exitApplication(bool force)
             #endif
 
             QApplication::exit();
+        } 
+        else if (gCrashableForTesting)
+        {
+            *testCrashPtr = 0;
         }
     }
     else
