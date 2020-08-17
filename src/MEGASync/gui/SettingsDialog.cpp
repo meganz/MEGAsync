@@ -301,7 +301,12 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         }
 
         ui->pProxies->hide();
-        ui->bApply->hide();
+
+    QSizePolicy sp_retain = ui->bApply->sizePolicy();
+    sp_retain.setRetainSizeWhenHidden(true);
+    ui->bApply->setSizePolicy(sp_retain);
+    ui->bApply->hide();
+
     }
 #endif
 
