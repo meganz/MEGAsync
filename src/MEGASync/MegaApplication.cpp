@@ -307,8 +307,8 @@ int main(int argc, char *argv[])
    else
    {
        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+       QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
    }
-   QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 #endif
 
