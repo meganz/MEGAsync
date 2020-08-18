@@ -10,6 +10,25 @@
 #include <QtConcurrent/QtConcurrent>
 #endif
 
+QString getArchitectureString()
+{
+    QString architecture;
+    const auto separationString{QStringLiteral(" ") + QChar(0x2022) + QStringLiteral(" ")};
+
+    constexpr auto is32bits{sizeof(char*) == 4};
+    if(is32bits)
+    {
+        architecture.append(separationString + QStringLiteral("32-bit"));
+    }
+
+    constexpr auto is64bits{sizeof(char*) == 8};
+    if(is64bits)
+    {
+        architecture.append(separationString + QStringLiteral("64-bit"));
+    }
+    return architecture;
+}
+
 ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString changeLog, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChangeLogDialog)
@@ -41,10 +60,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
 
     ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     ui->tChangelog->document()->setDocumentMargin(16.0);
-    auto architecture{QStringLiteral("")};
-    architecture = (sizeof(char*) == 4) ? QStringLiteral(" • 32-bit") : architecture;
-    architecture = (sizeof(char*) == 8) ? QStringLiteral(" • 64-bit") : architecture;
-    ui->labelArchitecture->setText(architecture);
+    ui->labelArchitecture->setText(getArchitectureString());
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
