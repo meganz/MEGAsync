@@ -18,13 +18,13 @@ QString getArchitectureString()
     constexpr auto is32bits{sizeof(char*) == 4};
     if(is32bits)
     {
-        architecture.append(separationString + QStringLiteral(" 32-bit"));
+        architecture.append(separationString + QStringLiteral("32-bit"));
     }
 
     constexpr auto is64bits{sizeof(char*) == 8};
     if(is64bits)
     {
-        architecture.append(separationString + QStringLiteral(" 64-bit"));
+        architecture.append(separationString + QStringLiteral("64-bit"));
     }
     return architecture;
 }
