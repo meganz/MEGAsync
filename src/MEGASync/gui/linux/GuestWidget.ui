@@ -211,7 +211,7 @@ QPushButton#bSettings:hover
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
