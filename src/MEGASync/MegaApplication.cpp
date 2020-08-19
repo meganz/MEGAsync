@@ -5656,7 +5656,7 @@ void MegaApplication::processUploads()
         return;
     }
 
-    if (!uploadQueue.size())
+    if (!uploadQueue.size() || blockState)
     {
         return;
     }
@@ -5736,7 +5736,7 @@ void MegaApplication::processDownloads()
         return;
     }
 
-    if (!downloadQueue.size())
+    if (!downloadQueue.size() || blockState)
     {
         return;
     }
