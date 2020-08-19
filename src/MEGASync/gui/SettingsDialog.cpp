@@ -521,7 +521,7 @@ void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 void SettingsDialog::onSavingSettingsProgress(double progress)
 {
     ui->wSavingSync->show();
-    ui->wSpinningIndicator->animate(true);
+    ui->wSpinningIndicator->start();
     savingSyncs(false, ui->pSyncs);
 }
 
@@ -530,7 +530,7 @@ void SettingsDialog::onSavingSettingsCompleted()
     auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - ui->wSpinningIndicator->getStartTime()));
     QTimer::singleShot(closeDelay, [this] () {
         ui->wSavingSync->hide();
-        ui->wSpinningIndicator->animate(false);
+        ui->wSpinningIndicator->stop();
         savingSyncs(true, ui->pSyncs);
     });
 }
