@@ -1,4 +1,4 @@
-#include "QSpinningProgressIndicator.h"
+#include "QMacSpinningProgressIndicator.h"
 
 #import "Foundation/NSAutoreleasePool.h"
 #import "AppKit/NSProgressIndicator.h"
@@ -7,15 +7,15 @@
 #include <QMacCocoaViewContainer>
 
 
-class QSpinningProgressIndicatorPrivate : public QObject
+class QMacSpinningProgressIndicatorPrivate : public QObject
 {
 public:
-    QSpinningProgressIndicatorPrivate(QSpinningProgressIndicator *qProgressIndicatorSpinning,
+    QMacSpinningProgressIndicatorPrivate(QMacSpinningProgressIndicator *qProgressIndicatorSpinning,
                                       NSProgressIndicator *nsProgressIndicator)
         : QObject(qProgressIndicatorSpinning), nsProgressIndicator(nsProgressIndicator) {}
 
 
-    ~QSpinningProgressIndicatorPrivate()
+    ~QMacSpinningProgressIndicatorPrivate()
     {
         [nsProgressIndicator release];
     }
@@ -23,14 +23,14 @@ public:
     NSProgressIndicator *nsProgressIndicator;
 };
 
-QSpinningProgressIndicator::QSpinningProgressIndicator(QWidget *parent)
+QMacSpinningProgressIndicator::QMacSpinningProgressIndicator(QWidget *parent)
     : QWidget(parent), startTime(0)
 {
     @autoreleasepool {
         NSProgressIndicator *progress = [[NSProgressIndicator alloc] init];
         [progress setStyle:NSProgressIndicatorSpinningStyle];
 
-        pImpl.reset(new QSpinningProgressIndicatorPrivate(this, progress));
+        pImpl.reset(new QMacSpinningProgressIndicatorPrivate(this, progress));
 
         parent->setAttribute(Qt::WA_NativeWindow);
         QHBoxLayout* layout = new QHBoxLayout(parent);
@@ -39,11 +39,11 @@ QSpinningProgressIndicator::QSpinningProgressIndicator(QWidget *parent)
     }
 }
 
-QSpinningProgressIndicator::~QSpinningProgressIndicator()
+QMacSpinningProgressIndicator::~QMacSpinningProgressIndicator()
 {
 }
 
-void QSpinningProgressIndicator::animate(bool animate)
+void QMacSpinningProgressIndicator::animate(bool animate)
 {
     assert(pImpl);
 
@@ -64,7 +64,17 @@ void QSpinningProgressIndicator::animate(bool animate)
     }
 }
 
-qint64 QSpinningProgressIndicator::getStartTime() const
+void QMacSpinningProgressIndicator::start()
+{
+    animate(true);
+}
+
+void QMacSpinningProgressIndicator::stop()
+{
+    animate(false);
+}
+
+qint64 QMacSpinningProgressIndicator::getStartTime() const
 {
     return startTime;
 }
