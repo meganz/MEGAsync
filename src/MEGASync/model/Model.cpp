@@ -159,7 +159,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     }
 
     QMutexLocker qm(&syncMutex);
-    assert(preferences->logged());
 
     std::shared_ptr<SyncSetting> cs;
     bool wasEnabled = true;
@@ -231,19 +230,27 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     return cs;
 }
 
-void Model::pickInfoFromOldSync(const SyncData &osd, int tag)
+void Model::rewriteSyncSettings()
+{
+    preferences->removeAllSyncSettings();
+    QMutexLocker qm(&syncMutex);
+    for (auto &cs : configuredSyncs)
+    {
+        preferences->writeSyncSetting(configuredSyncsMap[cs]); // we store MEGAsync specific fields into cache
+    }
+}
+
+void Model::pickInfoFromOldSync(const SyncData &osd, int tag, bool loadedFromPreviousSessions)
 {
     QMutexLocker qm(&syncMutex);
-    assert(preferences->logged());
+    assert(preferences->logged() || loadedFromPreviousSessions);
     std::shared_ptr<SyncSetting> cs;
 
-    if (!configuredSyncsMap.contains(tag)) //this should always be the case
-    {
-        cs = configuredSyncsMap[tag] = std::make_shared<SyncSetting>();
-    }
-    cs->setTag(tag);
-    cs->setSyncID(osd.mSyncID);
-    cs->setEnabled(osd.mEnabled);
+    assert (!configuredSyncsMap.contains(tag) && "picking already configured sync!"); //this should always be the case
+
+    cs = configuredSyncsMap[tag] = std::make_shared<SyncSetting>(osd, loadedFromPreviousSessions);
+
+    cs->setTag(tag); //assign the new tag given by the sdk
 
     assert(!configuredSyncs.contains(tag));
     configuredSyncs.append(tag);

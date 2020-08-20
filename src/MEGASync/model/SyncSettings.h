@@ -7,23 +7,32 @@
 
 #include "megaapi.h"
 
+class SyncData;
 class SyncSetting
 {
 private:
-    std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
     int mTag = 0;
     QString mSyncID;
-    bool mEnabled = false; //we need to hold this, for transitioning from old sync data, instead of simply forwarding to mSync->isEnabled
 
+    bool mEnabled = false;
+    QString mLocalFolder;
+    QString mName;
+    long long mLocalFingerPrint = 0;
+    QString mMegaFolder;
+    long long mMegaHandle = ::mega::INVALID_HANDLE;
+    bool mActive = false;
+    int mState = ::mega::MegaSync::SYNC_DISABLED;
+    bool mTemporaryDisabled = false;
+    int mError = ::mega::MegaSync::Error::UNKNOWN_ERROR;
 public:
     SyncSetting();
+    SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions);
     SyncSetting(QString initializer);
     ~SyncSetting();
-    SyncSetting(const SyncSetting& a);
+    SyncSetting(const SyncSetting& a) = default;
     SyncSetting(SyncSetting&& a) = default;
-    SyncSetting& operator=(const SyncSetting& a);
+    SyncSetting& operator=(const SyncSetting& a) = default;
     SyncSetting& operator=(SyncSetting&& a) = default;
-
 
     SyncSetting(mega::MegaSync *sync);
     int tag() const;
@@ -44,8 +53,6 @@ public:
     bool isTemporaryDisabled() const;
     int getError() const;
 
-    mega::MegaSync* getSync() const;
-
     QString toString();
 
     QString getSyncID() const;
@@ -57,7 +64,8 @@ Q_DECLARE_METATYPE(SyncSetting);
 struct SyncData
 {
     SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
-                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
+                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID,
+              ::mega::MegaSync::Error syncError = ::mega::MegaSync::Error::NO_SYNC_ERROR);
     QString mName;
     QString mLocalFolder;
     long long mMegaHandle;
@@ -67,4 +75,6 @@ struct SyncData
     bool mTemporarilyDisabled;
     int mPos;
     QString mSyncID;
+
+    ::mega::MegaSync::Error mSyncError;
 };

@@ -2386,6 +2386,20 @@ int Preferences::getNumUsers()
     return value;
 }
 
+
+bool Preferences::enterUser(QString account)
+{
+    QMutexLocker locker(&mutex);
+    assert(!logged());
+    if (account.size() && settings->containsGroup(account))
+    {
+        settings->beginGroup(account);
+        readFolders();
+        return true;
+    }
+    return false;
+}
+
 void Preferences::enterUser(int i)
 {
     mutex.lock();
@@ -2397,7 +2411,6 @@ void Preferences::enterUser(int i)
     }
 
     readFolders();
-    loadExcludedSyncNames();
     mutex.unlock();
 }
 
@@ -2407,7 +2420,6 @@ void Preferences::leaveUser()
     assert(logged());
     settings->endGroup();
 
-    clearTemporalBandwidth();
     mutex.unlock();
 }
 
@@ -2775,9 +2787,10 @@ void Preferences::readFolders()
 }
 
 
-SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID)
+SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp,
+                   bool enabled, bool tempDisabled, int pos, QString syncID, ::mega::MegaSync::Error syncError)
     : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mMegaFolder(megaFolder), mLocalfp(localfp),
-      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID)
+      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID), mSyncError(syncError)
 {
 
 }
@@ -2866,6 +2879,20 @@ void Preferences::saveOldCachedSyncs()
 }
 
 
+void Preferences::removeAllSyncSettings()
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    settings->beginGroup(syncsGroupByTagKey);
+
+    settings->remove(QString::fromAscii("")); //removes group and all its settings
+
+    settings->endGroup();
+    settings->sync();
+}
+
+
 void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 {
     QMutexLocker qm(&mutex);
@@ -2880,7 +2907,7 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
     settings->beginGroup(QString::number(syncSettings->tag()));
 
-    settings->remove(QString::fromAscii("")); //removes group and all its settingsings
+    settings->remove(QString::fromAscii("")); //removes group and all its settings
 
     settings->endGroup();
 
@@ -2890,19 +2917,25 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
 void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 {
-    QMutexLocker qm(&mutex);
-    assert(logged());
+    if (logged())
+    {
+        QMutexLocker qm(&mutex);
 
-    settings->beginGroup(syncsGroupByTagKey);
+        settings->beginGroup(syncsGroupByTagKey);
 
-    settings->beginGroup(QString::number(syncSettings->tag()));
+        settings->beginGroup(QString::number(syncSettings->tag()));
 
-    settings->setValue(configuredSyncsKey, syncSettings->toString());
+        settings->setValue(configuredSyncsKey, syncSettings->toString());
 
-    settings->endGroup();
+        settings->endGroup();
 
-    settings->endGroup();
-    settings->sync();
+        settings->endGroup();
+        settings->sync();
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii("Writting sync settings before logged in").toUtf8().constData());
+    }
 }
 
 void Preferences::setBaseUrl(const QString &value)

@@ -4798,12 +4798,27 @@ void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings)
     createAppMenus();
 }
 
-void MegaApplication::migrateSyncConfToSdk()
+void MegaApplication::migrateSyncConfToSdk(QString email)
 {
+    bool temporarilyLoggedPrefs = false;
+    if (!preferences->logged() && !email.isEmpty())
+    {
+        temporarilyLoggedPrefs = preferences->enterUser(email);
+
+        if (temporarilyLoggedPrefs)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Migrating syncs data to SDK cache from previous session")
+                         .toUtf8().constData());
+        }
+    }
+
+    assert(preferences->logged() || email.isEmpty() || !temporarilyLoggedPrefs);
+
     if (preferences->logged())
     {
         auto oldCachedSyncs = preferences->readOldCachedSyncs();
-        if (oldCachedSyncs.size())
+        int oldCacheSyncsCount = oldCachedSyncs.size();
+        if (oldCacheSyncsCount > 0)
         {
 
             auto cachedBusinessState = preferences->getBusinessState();
@@ -4827,6 +4842,20 @@ void MegaApplication::migrateSyncConfToSdk()
             megaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
         }
 
+        if (temporarilyLoggedPrefs) // append to old configurations those from previous session (if any)
+        {
+            auto loadedSyncs = preferences->getLoadedSyncsMap();
+            for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
+            {
+                auto loadedSync = it.value();
+                SyncData osd(loadedSync->name(), loadedSync->getLocalFolder(), loadedSync->getMegaHandle(), loadedSync->getMegaFolder(),
+                             loadedSync->getLocalFingerprint(), loadedSync->isEnabled(), loadedSync->isTemporaryDisabled(),
+                             oldCachedSyncs.size(), loadedSync->getSyncID(), static_cast<MegaSync::Error>(loadedSync->getError()));
+
+                oldCachedSyncs.push_back(osd);
+            }
+        }
+
         foreach(SyncData osd, oldCachedSyncs)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
@@ -4834,13 +4863,18 @@ void MegaApplication::migrateSyncConfToSdk()
 
             megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
                                          osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
-                                         osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                         new MegaListenerFuncExecuter(true, [this, osd](MegaApi* api,  MegaRequest *request, MegaError *e)
+                                         osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled, osd.mSyncError,
+                                         new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, temporarilyLoggedPrefs](MegaApi* api,  MegaRequest *request, MegaError *e)
             {
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    model->pickInfoFromOldSync(osd, request->getTransferTag());
-                    preferences->removeOldCachedSync(osd.mPos);
+                    bool isFromOldCache{osd.mPos < oldCacheSyncsCount};
+                    //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
+                    model->pickInfoFromOldSync(osd, request->getTransferTag(), temporarilyLoggedPrefs);
+                    if (isFromOldCache)
+                    {
+                        preferences->removeOldCachedSync(osd.mPos);
+                    }
                 }
                 else
                 {
@@ -4849,6 +4883,11 @@ void MegaApplication::migrateSyncConfToSdk()
 
              }));
         }
+    }
+
+    if (temporarilyLoggedPrefs)
+    {
+        preferences->leaveUser();
     }
 }
 
@@ -4862,11 +4901,11 @@ void MegaApplication::onUnblocked()
     updateTrayIconMenu();
 }
 
-void MegaApplication::fetchNodes()
+void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
     mFetchingNodes = true;
-    migrateSyncConfToSdk();
+    migrateSyncConfToSdk(email);
     megaApi->fetchNodes();
 }
 
@@ -7615,14 +7654,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             if (!preferences->logged()
                     && needsFetchNodes)
             {
-                fetchNodes();
+                auto email = request->getEmail();
+                fetchNodes(QString::fromUtf8(email ? email : ""));
             }
         }
 
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
-
             Platform::prepareForSync();
             int errorCode = e->getErrorCode();
             if (errorCode == MegaError::API_OK)
@@ -7841,6 +7880,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 else
                 {
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+                    model->rewriteSyncSettings(); //write sync settings into user's preferences
                     setupWizardFinished(QDialog::Accepted);
                 }
             }

@@ -259,6 +259,7 @@ public:
 
     // sync related
     void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
+    void removeAllSyncSettings(); //remove all sync from cache
     void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
     QMap<int, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
@@ -295,7 +296,12 @@ public:
     void setLastPublicHandle(mega::MegaHandle handle, int type);
 
     int getNumUsers();
+
+    // enter user preferences and load syncs into loadedSyncsMap
     void enterUser(int i);
+    bool enterUser(QString account);
+
+    // leave user
     void leaveUser();
 
     int accountStateInGeneral();
