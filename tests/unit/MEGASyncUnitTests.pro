@@ -121,6 +121,7 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 SOURCES += $$MEGASYNC_SRC_PATH/MegaApplication.cpp \
     $$MEGASYNC_SRC_PATH/TransferQuota.cpp \
     GuestWidgetTest.cpp \
+    Utilities.test.cpp \
     main.cpp
 
 HEADERS += $$MEGASYNC_SRC_PATH/MegaApplication.h \
