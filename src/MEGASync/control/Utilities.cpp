@@ -446,6 +446,32 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     return time;
 }
 
+const std::vector<std::pair<unsigned long long, std::string>> postFixes = {{1e12, "T"},
+                                       {1e9,  "G"},
+                                       {1e6,  "M"},
+                                       {1e3,  "K"}};
+
+QString Utilities::getQuantityString(unsigned long long quantity)
+{
+    for (const auto& postFix : postFixes)
+    {
+        if(quantity >= postFix.first)
+        {
+            const auto value{quantity / static_cast<double>(postFix.first)};
+            // QString::number(value, 'G', 3) is another way to do it but it rounds the result
+            constexpr auto maxStringSize{4};
+            auto valueString{QString::number(value).left(maxStringSize)};
+            if(*valueString.rbegin() == QStringLiteral("."))
+            {
+                valueString.chop(1);
+            }
+            return valueString.left(maxStringSize) + QString::fromStdString(postFix.second);
+        }
+    }
+
+    return QString::number(quantity);
+}
+
 QString Utilities::getFinishedTimeString(long long secs)
 {
     if (secs < 2)
