@@ -24,6 +24,8 @@ private:
     int mState = ::mega::MegaSync::SYNC_DISABLED;
     bool mTemporaryDisabled = false;
     int mError = ::mega::MegaSync::Error::UNKNOWN_ERROR;
+
+    static constexpr int CACHE_VERSION = 1;
 public:
     SyncSetting();
     SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions);

@@ -48,18 +48,28 @@ SyncSetting::SyncSetting(QString initializer)
 {
     QStringList parts = initializer.split(QString::fromUtf8("0x1E"));
     int i = 0;
-    if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
-    if (i<parts.size()) { mSyncID = parts.at(i++); }
+    int cacheVersion = 0;
+    if (i<parts.size()) { cacheVersion = parts.at(i++).toInt(); }
+    if (cacheVersion >= 1)
+    {
+        if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
+        if (i<parts.size()) { mSyncID = parts.at(i++); }
 
-    if (i<parts.size()) { mEnabled = parts.at(i++).toInt(); }
-    if (i<parts.size()) { mLocalFolder = parts.at(i++); }
-    if (i<parts.size()) { mName = parts.at(i++); }
-    if (i<parts.size()) { mLocalFingerPrint = parts.at(i++).toLongLong(); }
-    if (i<parts.size()) { mMegaFolder = parts.at(i++); }
-    if (i<parts.size()) { mMegaHandle = parts.at(i++).toLongLong(); }
-    if (i<parts.size()) { mActive = parts.at(i++).toInt(); }
-    if (i<parts.size()) { mTemporaryDisabled = parts.at(i++).toInt(); }
-    if (i<parts.size()) { mError = parts.at(i++).toInt(); }
+        if (i<parts.size()) { mEnabled = parts.at(i++).toInt(); }
+        if (i<parts.size()) { mLocalFolder = parts.at(i++); }
+        if (i<parts.size()) { mName = parts.at(i++); }
+        if (i<parts.size()) { mLocalFingerPrint = parts.at(i++).toLongLong(); }
+        if (i<parts.size()) { mMegaFolder = parts.at(i++); }
+        if (i<parts.size()) { mMegaHandle = parts.at(i++).toLongLong(); }
+        if (i<parts.size()) { mActive = parts.at(i++).toInt(); }
+        if (i<parts.size()) { mTemporaryDisabled = parts.at(i++).toInt(); }
+        if (i<parts.size()) { mError = parts.at(i++).toInt(); }
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unexpected SyncSetting cache version: %1")
+                     .arg(cacheVersion).toUtf8().constData());
+    }
 }
 
 
@@ -84,6 +94,7 @@ SyncSetting::SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions)
 QString SyncSetting::toString()
 {
     QStringList toret;
+    toret.append(QString::number(CACHE_VERSION));
     toret.append(QString::number(mTag));
     toret.append(mSyncID);
 
