@@ -162,7 +162,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->eMaxUploadConnections, SIGNAL(valueChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cbUseHttps, SIGNAL(clicked()), this, SLOT(stateChanged()));
 
-#ifndef WIN32    
+    ui->wSavingSync->hide();
+
+#ifndef WIN32
     #ifndef __APPLE__
     ui->rProxyAuto->hide();
     ui->cDisableIcons->hide();
@@ -297,7 +299,12 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         }
 
         ui->pProxies->hide();
+
+        QSizePolicy sp_retain = ui->bApply->sizePolicy();
+        sp_retain.setRetainSizeWhenHidden(true);
+        ui->bApply->setSizePolicy(sp_retain);
         ui->bApply->hide();
+
     }
 #endif
 
@@ -511,10 +518,19 @@ void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 
 void SettingsDialog::onSavingSettingsProgress(double progress)
 {
+    ui->wSavingSync->show();
+    ui->wSpinningIndicator->start();
+    savingSyncs(false, ui->pSyncs);
 }
 
 void SettingsDialog::onSavingSettingsCompleted()
 {
+    auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - ui->wSpinningIndicator->getStartTime()));
+    QTimer::singleShot(closeDelay, [this] () {
+        ui->wSavingSync->hide();
+        ui->wSpinningIndicator->stop();
+        savingSyncs(true, ui->pSyncs);
+    });
 }
 
 void SettingsDialog::storageChanged()
@@ -1313,6 +1329,8 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
 
 int SettingsDialog::saveSettings()
 {
+    onSavingSettingsProgress(0);
+
     saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
@@ -2550,6 +2568,25 @@ void SettingsDialog::onClearCache()
         }
     #endif
     }
+}
+
+void SettingsDialog::savingSyncs(bool completed, QObject *item)
+{
+    if (!item)
+    {
+        return;
+    }
+
+    for(auto *widget : item->findChildren<QWidget *>())
+    {
+        widget->setEnabled(completed);
+    }
+
+    ui->bAccount->setEnabled(completed);
+    ui->bSyncs->setEnabled(completed);
+    ui->bAdvanced->setEnabled(completed);
+    ui->bBandwidth->setEnabled(completed);
+    ui->bProxies->setEnabled(completed);
 }
 
 void SettingsDialog::updateStorageElements()

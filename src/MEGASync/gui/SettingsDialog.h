@@ -196,6 +196,7 @@ private:
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
+    void savingSyncs(bool completed, QObject *item);
 
 public:
     void updateStorageElements();
