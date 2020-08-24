@@ -58,7 +58,7 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>216</height>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -157,20 +157,23 @@ background: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #FFFFFF, stop:1 #F2F2F
          <widget class="QLabel" name="labelTitle">
           <property name="minimumSize">
            <size>
-            <width>189</width>
+               <width>0</width>
             <height>24</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>189</width>
+               <width>16777215</width>
             <height>24</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: #333333;
+              <string notr="true">#labelTitle
+{
+color: #333333;
 font-family: Lato;
-font-size: 16px;</string>
+font-size: 18px;
+}</string>
           </property>
           <property name="text">
            <string>Depleted transfer quota</string>
@@ -241,7 +244,7 @@ font-size: 16px;</string>
         <property name="maximumSize">
          <size>
           <width>640</width>
-          <height>48</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -250,7 +253,6 @@ font-size: 16px;</string>
     color: #333333;
 	font-family: Lato;
 	font-size: 13px;
-	line-height: 24px;
 }</string>
         </property>
         <property name="text">
