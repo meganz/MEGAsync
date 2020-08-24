@@ -271,8 +271,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
 
-    ui->wSavingSync->hide();
-
 #ifdef __APPLE__
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
@@ -1331,6 +1329,8 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
 
 int SettingsDialog::saveSettings()
 {
+    onSavingSettingsProgress(0);
+
     saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
@@ -2570,7 +2570,7 @@ void SettingsDialog::onClearCache()
     }
 }
 
-void SettingsDialog::savingSyncs(bool option, QObject *item)
+void SettingsDialog::savingSyncs(bool completed, QObject *item)
 {
     if (!item)
     {
@@ -2579,13 +2579,14 @@ void SettingsDialog::savingSyncs(bool option, QObject *item)
 
     for(auto *widget : item->findChildren<QWidget *>())
     {
-        widget->setEnabled(option);
+        widget->setEnabled(completed);
     }
 
-    ui->bAccount->setEnabled(option);
-    ui->bAdvanced->setEnabled(option);
-    ui->bBandwidth->setEnabled(option);
-    ui->bProxies->setEnabled(option);
+    ui->bAccount->setEnabled(completed);
+    ui->bSyncs->setEnabled(completed);
+    ui->bAdvanced->setEnabled(completed);
+    ui->bBandwidth->setEnabled(completed);
+    ui->bProxies->setEnabled(completed);
 }
 
 void SettingsDialog::updateStorageElements()
