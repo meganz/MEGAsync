@@ -264,8 +264,10 @@ public:
     QMap<int, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
     // old cache transition related:
-    void removeOldCachedSync(int position);
-    QList<SyncData> readOldCachedSyncs();//get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    void removeOldCachedSync(int position, QString email = {});
+    //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
+                                       int *cachedStorageState = nullptr, QString email = {});
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
     QStringList getExcludedSyncNames();

@@ -2795,11 +2795,25 @@ SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QSt
 
 }
 
-void Preferences::removeOldCachedSync(int position)
+void Preferences::removeOldCachedSync(int position, QString email)
 {
     QMutexLocker qm(&mutex);
-    assert(logged());
+    assert(logged() || !email.isEmpty());
 
+    // if not logged, use email to get into that user group and remove just some specific sync group
+    if (!logged() && email.size() && settings->containsGroup(email))
+    {
+        settings->beginGroup(email);
+        settings->beginGroup(syncsGroupKey);
+        settings->beginGroup(QString::number(position));
+        settings->remove(QString::fromAscii("")); //Remove all previous values
+        settings->endGroup();//sync
+        settings->endGroup();//old syncs
+        settings->endGroup();//user
+        return;
+    }
+
+    // otherwise remove oldSync and rewrite all
     auto it = oldSyncs.begin();
     while (it != oldSyncs.end())
     {
@@ -2815,11 +2829,34 @@ void Preferences::removeOldCachedSync(int position)
     saveOldCachedSyncs();
 }
 
-QList<SyncData> Preferences::readOldCachedSyncs()
+QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *cachedBlockedState, int *cachedStorageState, QString email)
 {
     QMutexLocker qm(&mutex);
     oldSyncs.clear();
+
+    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+    bool temporarilyLoggedPrefs = false;
+    if (!preferences->logged() && !email.isEmpty())
+    {
+        loadedSyncsMap.clear(); //ensure loaded are empty even when there is no email
+        temporarilyLoggedPrefs = preferences->enterUser(email);
+        if (temporarilyLoggedPrefs)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Migrating syncs data to SDK cache from previous session")
+                         .toUtf8().constData());
+        }
+        else
+        {
+            return oldSyncs;
+        }
+    }
+
     assert(logged());
+    //restore cached status
+    if (cachedBusinessState) *cachedBusinessState = getValue<int>(businessStateQKey, -2);
+    if (cachedBlockedState) *cachedBlockedState = getValue<int>(blockedStateQKey, -2);
+    if (cachedStorageState) *cachedStorageState = getValue<int>(storageStateQKey, MegaApi::STORAGE_STATE_UNKNOWN);
+
     settings->beginGroup(syncsGroupKey);
     int numSyncs = settings->numChildGroups();
     for (int i = 0; i < numSyncs; i++)
@@ -2841,6 +2878,12 @@ QList<SyncData> Preferences::readOldCachedSyncs()
         settings->endGroup();
     }
     settings->endGroup();
+
+    if (temporarilyLoggedPrefs)
+    {
+        preferences->leaveUser();
+    }
+
     return oldSyncs;
 }
 

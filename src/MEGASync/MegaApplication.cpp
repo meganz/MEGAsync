@@ -4800,94 +4800,74 @@ void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings)
 
 void MegaApplication::migrateSyncConfToSdk(QString email)
 {
-    bool temporarilyLoggedPrefs = false;
-    if (!preferences->logged() && !email.isEmpty())
-    {
-        temporarilyLoggedPrefs = preferences->enterUser(email);
+    bool needsMigratingFromOldSession = !preferences->logged();
+    assert(preferences->logged() || !email.isEmpty());
 
-        if (temporarilyLoggedPrefs)
+
+    int cachedBusinessState = 999;
+    int cachedBlockedState = 999;
+    int cachedStorageState = 999;
+
+    auto oldCachedSyncs = preferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
+    int oldCacheSyncsCount = oldCachedSyncs.size();
+    if (oldCacheSyncsCount > 0)
+    {
+        if (cachedBusinessState == -2)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Migrating syncs data to SDK cache from previous session")
-                         .toUtf8().constData());
+            cachedBusinessState = 999;
+        }
+        if (cachedBlockedState == -2)
+        {
+            cachedBlockedState = 999;
+        }
+        if (cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN)
+        {
+            cachedStorageState = 999;
+        }
+
+        megaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
+    }
+
+    if (needsMigratingFromOldSession) // append to old configurations those from previous session (if any)
+    {
+        auto loadedSyncs = preferences->getLoadedSyncsMap(); //loaded when entered user in readOldCachedSyncs(email)
+        for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
+        {
+            auto loadedSync = it.value();
+            SyncData osd(loadedSync->name(), loadedSync->getLocalFolder(), loadedSync->getMegaHandle(), loadedSync->getMegaFolder(),
+                         loadedSync->getLocalFingerprint(), loadedSync->isEnabled(), loadedSync->isTemporaryDisabled(),
+                         oldCachedSyncs.size(), loadedSync->getSyncID(), static_cast<MegaSync::Error>(loadedSync->getError()));
+
+            oldCachedSyncs.push_back(osd);
         }
     }
 
-    assert(preferences->logged() || email.isEmpty() || !temporarilyLoggedPrefs);
-
-    if (preferences->logged())
+    foreach(SyncData osd, oldCachedSyncs)
     {
-        auto oldCachedSyncs = preferences->readOldCachedSyncs();
-        int oldCacheSyncsCount = oldCachedSyncs.size();
-        if (oldCacheSyncsCount > 0)
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
+                     .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
+
+        megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
+                                     osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
+                                     osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled, osd.mSyncError,
+                                     new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi* api,  MegaRequest *request, MegaError *e)
         {
-
-            auto cachedBusinessState = preferences->getBusinessState();
-            if (cachedBusinessState == -2)
+            if (e->getErrorCode() == MegaError::API_OK)
             {
-                cachedBusinessState = 999;
-            }
-
-            auto cachedBlockedState = preferences->getBlockedState();
-            if (cachedBlockedState == -2)
-            {
-                cachedBlockedState = 999;
-            }
-
-            auto cachedStorageState = preferences->getStorageState();
-            if (cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN)
-            {
-                cachedStorageState = 999;
-            }
-
-            megaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
-        }
-
-        if (temporarilyLoggedPrefs) // append to old configurations those from previous session (if any)
-        {
-            auto loadedSyncs = preferences->getLoadedSyncsMap();
-            for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
-            {
-                auto loadedSync = it.value();
-                SyncData osd(loadedSync->name(), loadedSync->getLocalFolder(), loadedSync->getMegaHandle(), loadedSync->getMegaFolder(),
-                             loadedSync->getLocalFingerprint(), loadedSync->isEnabled(), loadedSync->isTemporaryDisabled(),
-                             oldCachedSyncs.size(), loadedSync->getSyncID(), static_cast<MegaSync::Error>(loadedSync->getError()));
-
-                oldCachedSyncs.push_back(osd);
-            }
-        }
-
-        foreach(SyncData osd, oldCachedSyncs)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
-                         .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
-
-            megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
-                                         osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
-                                         osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled, osd.mSyncError,
-                                         new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, temporarilyLoggedPrefs](MegaApi* api,  MegaRequest *request, MegaError *e)
-            {
-                if (e->getErrorCode() == MegaError::API_OK)
+                bool isFromOldCache{osd.mPos < oldCacheSyncsCount};
+                //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
+                model->pickInfoFromOldSync(osd, request->getTransferTag(), needsMigratingFromOldSession);
+                if (isFromOldCache)
                 {
-                    bool isFromOldCache{osd.mPos < oldCacheSyncsCount};
-                    //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                    model->pickInfoFromOldSync(osd, request->getTransferTag(), temporarilyLoggedPrefs);
-                    if (isFromOldCache)
-                    {
-                        preferences->removeOldCachedSync(osd.mPos);
-                    }
+                    preferences->removeOldCachedSync(osd.mPos, email);
                 }
-                else
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-                }
+            }
+            else
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+            }
 
-             }));
-        }
-    }
-
-    if (temporarilyLoggedPrefs)
-    {
-        preferences->leaveUser();
+         }));
     }
 }
 
