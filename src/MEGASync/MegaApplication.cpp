@@ -9047,6 +9047,11 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
             openSettings(SettingsDialog::SYNCS_TAB);
         }
     }
+
+    if (infoDialog)
+    {
+        infoDialog->addSyncDisabled(syncSetting->tag());
+    }
 }
 
 void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
@@ -9073,6 +9078,11 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
 
     showErrorMessage(tr("Your sync \"%1\" has been enabled")
                      .arg(syncSetting->name()));
+
+    if (infoDialog)
+    {
+        infoDialog->removeSyncDisabled(syncSetting->tag());
+    }
 }
 
 void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
@@ -9116,6 +9126,11 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
     }
 
     model->removeSyncedFolderByTag(sync->getTag());
+
+    if (infoDialog)
+    {
+        infoDialog->removeSyncDisabled(sync->getTag());
+    }
 
     onGlobalSyncStateChanged(api);
 }
