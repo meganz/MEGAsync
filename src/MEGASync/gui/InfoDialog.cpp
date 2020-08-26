@@ -351,6 +351,18 @@ void InfoDialog::enableTransferAlmostOverquotaAlert()
     updateDialogState();
 }
 
+void InfoDialog::addSyncDisabled(int tag)
+{
+    syncsDisabled.insert(tag);
+    updateDialogState();
+}
+
+void InfoDialog::removeSyncDisabled(int tag)
+{
+    syncsDisabled.remove(tag);
+    updateDialogState();
+}
+
 void InfoDialog::hideEvent(QHideEvent *event)
 {
 #ifdef __APPLE__
@@ -941,6 +953,12 @@ void InfoDialog::updateDialogState()
                                 " address and can therefore be interrupted."));
         ui->bBuyQuota->setText(tr("Upgrade"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+        overlay->setVisible(false);
+        ui->wPSA->hidePSA();
+    }
+    else if (syncsDisabled.size())
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
@@ -1989,6 +2007,17 @@ void InfoDialog::highLightMenuEntry(QAction *action)
     }
     pAction->setHighlight(true);
     lastHovered = pAction;
+}
+
+void InfoDialog::on_bDismissSyncSettings_clicked()
+{
+    syncsDisabled.clear();
+}
+
+void InfoDialog::on_bOpenSyncSettings_clicked()
+{
+    ((MegaApplication *)qApp)->openSettings(SettingsDialog::SYNCS_TAB);
+    syncsDisabled.clear();
 }
 
 int InfoDialog::getLoggedInMode() const
