@@ -7,6 +7,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/Preferences.cpp \
     $$PWD/LinkProcessor.cpp \
     $$PWD/MegaUploader.cpp \
+    $$PWD/TransferRemainingTime.cpp \
     $$PWD/UpdateTask.cpp \
     $$PWD/EncryptedSettings.cpp \
     $$PWD/CrashHandler.cpp \
@@ -20,6 +21,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \
+    $$PWD/TransferRemainingTime.h \
     $$PWD/UpdateTask.h \
     $$PWD/EncryptedSettings.h \
     $$PWD/CrashHandler.h \

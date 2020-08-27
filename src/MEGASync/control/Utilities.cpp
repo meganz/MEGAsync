@@ -411,13 +411,13 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (days)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days, 2, 10, QLatin1Char('0')));
     }
 
     if (items || hours)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours, 2, 10, QLatin1Char('0')));
     }
 
     if (items == 2)
@@ -429,7 +429,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (items || minutes)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes, 2, 10, QLatin1Char('0')));
     }
 
     if (items == 2)
@@ -440,7 +440,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
 
     if (secondPrecision)
     {
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds, 2, 10, QLatin1Char('0')));
     }
     time = time.trimmed();
     return time;

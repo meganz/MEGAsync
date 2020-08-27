@@ -454,34 +454,35 @@ void ActiveTransfersWidget::setTransferredBytes(TransferData *td, long long tota
 
 void ActiveTransfersWidget::udpateTransferState(TransferData *td)
 {
-    QString remainingTime;
-
     updateAnimation(td);
+    const auto remainingBytes{td->totalSize - td->totalTransferredBytes};
+    mTransferRemainingTime.addTransferSpeedBytesSecond(td->transferSpeed, remainingBytes);
+
+    const auto remainingTimeSeconds{mTransferRemainingTime.getRemainingTimeSeconds()};
+    QString remainingTimeString;
+
     switch (td->transferState)
     {
         case MegaTransfer::STATE_ACTIVE:
         {
-            // Update remaining time
-            long long remainingBytes = td->totalSize - td->totalTransferredBytes;
-            int totalRemainingSeconds = td->meanTransferSpeed ? remainingBytes / td->meanTransferSpeed : 0;
-            if (totalRemainingSeconds)
+        if (remainingTimeSeconds)
             {
-                if (totalRemainingSeconds < 60)
-                {
-                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
+            remainingTimeString = Utilities::getTimeString(remainingTimeSeconds);
                 }
                 else
                 {
-                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
+            remainingTimeString = QString::fromAscii("");
                 }
-            }
             break;
         }
         case MegaTransfer::STATE_PAUSED:
         {
-            remainingTime = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
+        remainingTimeString = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
             break;
         }
+    default:
+        remainingTimeString = QString::fromUtf8("");
+        break;
     }
 
     // Update progress bar
@@ -489,10 +490,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
     if (td->type == MegaTransfer::TYPE_DOWNLOAD)
     {
         ui->sDownloads->setCurrentWidget(ui->wActiveDownloads);
-        if(!remainingTime.isEmpty())
-        {
-            ui->lDownRemainingTime->setText(remainingTime);
-        }
+        ui->lDownRemainingTime->setText(remainingTimeString);
         ui->pbDownloads->setValue(permil);
         ui->lDownCompletedSize->setText(QString::fromUtf8("%1%2")
                                         .arg(!td->totalTransferredBytes ? QString::fromUtf8("") : QString::fromUtf8("<span style=\"color:#333333; text-decoration:none;\">%1</span>")
@@ -502,7 +500,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
     else
     {
         ui->sUploads->setCurrentWidget(ui->wActiveUploads);
-        ui->lUpRemainingTime->setText(remainingTime);
+        ui->lUpRemainingTime->setText(remainingTimeString);
         ui->pbUploads->setValue(permil);
         ui->lUpCompletedSize->setText(QString::fromUtf8("%1%2")
                                       .arg(!td->totalTransferredBytes ? QString::fromUtf8(""): QString::fromUtf8("<span style=\"color:#333333; text-decoration:none;\">%1</span>")

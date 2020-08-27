@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QMovie>
 #include "QTMegaTransferListener.h"
+#include "TransferRemainingTime.h"
 
 namespace Ui {
 class ActiveTransfersWidget;
@@ -30,7 +31,6 @@ class ActiveTransfersWidget : public QWidget, public mega::MegaTransferListener
     Q_OBJECT
 
 public:
-
     explicit ActiveTransfersWidget(QWidget *parent = 0);
     void init(mega::MegaApi *megaApi, mega::MegaTransfer *activeUpload = NULL, mega::MegaTransfer *activeDownload = NULL);
     ~ActiveTransfersWidget();
@@ -73,6 +73,7 @@ private:
     void updateAnimation(TransferData *td);
 
     void changeEvent(QEvent *event);
+    TransferRemainingTime mTransferRemainingTime;
 };
 
 #endif // ACTIVETRANSFERSWIDGET_H
