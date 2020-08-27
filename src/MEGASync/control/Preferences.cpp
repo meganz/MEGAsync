@@ -374,6 +374,7 @@ const QString Preferences::transferIdentifierKey    = QString::fromAscii("transf
 const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
+const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -2187,6 +2188,37 @@ void Preferences::setLastExit(long long value)
 
     settings->sync();
     mutex.unlock();
+}
+
+QSet<int> Preferences::getDisabledSyncTags()
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    QStringList stringTagList = getValueConcurrent<QString>(disabledSyncsKey).split(QString::fromUtf8("0x1E"));
+    QList<int> tagList;
+    for (auto &tag : stringTagList)
+    {
+        tagList.append(tag.toInt());
+    }
+
+    return QSet<int>::fromList(tagList);
+}
+
+void Preferences::setDisabledSyncTags(QSet<int> disabledSyncs)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    QList<int> disabledTags = disabledSyncs.toList();
+    QStringList tags;
+
+    for(auto &tag : disabledTags)
+    {
+        tags.append(QString::number(tag));
+    }
+
+    setValueAndSyncConcurrent(disabledSyncsKey, tags.join(QString::fromUtf8("0x1E")));
 }
 
 QString Preferences::getHttpsKey()
