@@ -2787,10 +2787,9 @@ void Preferences::readFolders()
 }
 
 
-SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp,
-                   bool enabled, bool tempDisabled, int pos, QString syncID, ::mega::MegaSync::Error syncError)
+SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID)
     : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mMegaFolder(megaFolder), mLocalfp(localfp),
-      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID), mSyncError(syncError)
+      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID)
 {
 
 }

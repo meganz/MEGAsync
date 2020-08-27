@@ -11,19 +11,12 @@ class SyncData;
 class SyncSetting
 {
 private:
+    std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
     int mTag = 0;
     QString mSyncID;
 
     bool mEnabled = false;
-    QString mLocalFolder;
-    QString mName;
-    long long mLocalFingerPrint = 0;
-    QString mMegaFolder;
-    long long mMegaHandle = ::mega::INVALID_HANDLE;
     bool mActive = false;
-    int mState = ::mega::MegaSync::SYNC_DISABLED;
-    bool mTemporaryDisabled = false;
-    int mError = ::mega::MegaSync::Error::UNKNOWN_ERROR;
 
     static constexpr int CACHE_VERSION = 1;
 public:
@@ -31,9 +24,9 @@ public:
     SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions);
     SyncSetting(QString initializer);
     ~SyncSetting();
-    SyncSetting(const SyncSetting& a) = default;
+    SyncSetting(const SyncSetting& a);
     SyncSetting(SyncSetting&& a) = default;
-    SyncSetting& operator=(const SyncSetting& a) = default;
+    SyncSetting& operator=(const SyncSetting& a);
     SyncSetting& operator=(SyncSetting&& a) = default;
 
     SyncSetting(mega::MegaSync *sync);
@@ -55,6 +48,8 @@ public:
     bool isTemporaryDisabled() const;
     int getError() const;
 
+    mega::MegaSync* getSync() const;
+
     QString toString();
 
     QString getSyncID() const;
@@ -66,8 +61,7 @@ Q_DECLARE_METATYPE(SyncSetting);
 struct SyncData
 {
     SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
-                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID,
-              ::mega::MegaSync::Error syncError = ::mega::MegaSync::Error::NO_SYNC_ERROR);
+                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
     QString mName;
     QString mLocalFolder;
     long long mMegaHandle;
@@ -77,6 +71,4 @@ struct SyncData
     bool mTemporarilyDisabled;
     int mPos;
     QString mSyncID;
-
-    ::mega::MegaSync::Error mSyncError;
 };

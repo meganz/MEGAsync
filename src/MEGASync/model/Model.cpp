@@ -171,7 +171,8 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
         wasEnabled = cs->isEnabled();
         wasActive = cs->isActive();
-        wasInactive = !cs->isActive(); //beware: empty MEGAsync's are in INITIAL_SYNC: i.e: active! [problematic for picked configs]
+        wasInactive = !cs->isActive();
+
         cs->setSync(sync);
     }
     else //new configuration (new or resumed)

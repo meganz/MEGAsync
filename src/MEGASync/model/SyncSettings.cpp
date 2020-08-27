@@ -15,6 +15,23 @@ SyncSetting::~SyncSetting()
 {
 }
 
+SyncSetting::SyncSetting(const SyncSetting& a) :
+    mSync(a.getSync()->copy()), mTag(a.tag()),
+    mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
+    mActive(a.isActive())
+{
+}
+
+SyncSetting& SyncSetting::operator=(const SyncSetting& a)
+{
+    mSync.reset(a.getSync()->copy());
+    mTag = a.tag();
+    mSyncID = a.getSyncID();
+    mEnabled = a.isEnabled();
+    mActive = a.isActive();
+    return *this;
+}
+
 QString SyncSetting::getSyncID() const
 {
     return mSyncID;
@@ -27,6 +44,7 @@ void SyncSetting::setSyncID(const QString &syncID)
 
 SyncSetting::SyncSetting()
 {
+    mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
 }
 
 SyncSetting::SyncSetting(MegaSync *sync)
@@ -36,7 +54,7 @@ SyncSetting::SyncSetting(MegaSync *sync)
 
 QString SyncSetting::name() const
 {
-    return mName;
+    return QString::fromUtf8(mSync->getName());
 }
 
 void SyncSetting::setEnabled(bool value)
@@ -44,69 +62,54 @@ void SyncSetting::setEnabled(bool value)
     mEnabled = value;
 }
 
+MegaSync * SyncSetting::getSync() const
+{
+    return mSync.get();
+}
+
 SyncSetting::SyncSetting(QString initializer)
 {
-    QStringList parts = initializer.split(QString::fromUtf8("0x1E"));
-    int i = 0;
-    int cacheVersion = 0;
-    if (i<parts.size()) { cacheVersion = parts.at(i++).toInt(); }
-    if (cacheVersion >= 1)
+    if (!initializer.isEmpty())
     {
-        if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
-        if (i<parts.size()) { mSyncID = parts.at(i++); }
-
-        if (i<parts.size()) { mEnabled = parts.at(i++).toInt(); }
-        if (i<parts.size()) { mLocalFolder = parts.at(i++); }
-        if (i<parts.size()) { mName = parts.at(i++); }
-        if (i<parts.size()) { mLocalFingerPrint = parts.at(i++).toLongLong(); }
-        if (i<parts.size()) { mMegaFolder = parts.at(i++); }
-        if (i<parts.size()) { mMegaHandle = parts.at(i++).toLongLong(); }
-        if (i<parts.size()) { mActive = parts.at(i++).toInt(); }
-        if (i<parts.size()) { mTemporaryDisabled = parts.at(i++).toInt(); }
-        if (i<parts.size()) { mError = parts.at(i++).toInt(); }
+        QStringList parts = initializer.split(QString::fromUtf8("0x1E"));
+        int i = 0;
+        int cacheVersion = 0;
+        if (i<parts.size()) { cacheVersion = parts.at(i++).toInt(); }
+        if (cacheVersion >= 1)
+        {
+            if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
+            if (i<parts.size()) { mSyncID = parts.at(i++); }
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unexpected SyncSetting cache version: %1")
+                     .arg(cacheVersion).toUtf8().constData());
+        }
     }
     else
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unexpected SyncSetting cache version: %1")
-                     .arg(cacheVersion).toUtf8().constData());
+        assert(false && "unexpected empty initializer");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unexpected SyncSetting empty initializer").toUtf8().constData());
     }
-}
 
+    mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
+}
 
 SyncSetting::SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions)
 {
     mSyncID = osd.mSyncID;
     mEnabled = osd.mEnabled;
-    mLocalFolder = osd.mLocalFolder;
-    mName = osd.mName;
-    mLocalFingerPrint = osd.mLocalfp;
-    mMegaFolder = osd.mMegaFolder;
-    mMegaHandle = osd.mMegaHandle;
 
     // mActive should be false for loadedFromPreviousSessions
     mActive = !loadedFromPreviousSessions && osd.mEnabled && !osd.mTemporarilyDisabled;
 
-    mTemporaryDisabled = osd.mTemporarilyDisabled;
-    mError = osd.mSyncError;
 }
-
 
 QString SyncSetting::toString()
 {
     QStringList toret;
-    toret.append(QString::number(CACHE_VERSION));
     toret.append(QString::number(mTag));
     toret.append(mSyncID);
-
-    toret.append(QString::number(mEnabled));
-    toret.append(mLocalFolder);
-    toret.append(mName);
-    toret.append(QString::number(mLocalFingerPrint));
-    toret.append(mMegaFolder);
-    toret.append(QString::number(mMegaHandle));
-    toret.append(QString::number(mActive));
-    toret.append(QString::number(mTemporaryDisabled));
-    toret.append(QString::number(mError));
 
     return toret.join(QString::fromUtf8("0x1E"));
 }
@@ -115,47 +118,40 @@ void SyncSetting::setSync(MegaSync *sync)
 {
     if (sync)
     {
+        mSync.reset(sync->copy());
+
         assert(mTag == 0 || mTag == sync->getTag());
         mTag = sync->getTag();
         mEnabled = sync->isEnabled();
 
-        mLocalFolder = QString::fromUtf8(sync->getLocalFolder());
-        mName = QString::fromUtf8(sync->getName());
-        mLocalFingerPrint = sync->getLocalFingerprint();
-
-        auto megafolder = sync->getMegaFolder();
-        mMegaFolder = megafolder ? QString::fromUtf8(megafolder) : QString();
-
-        mMegaHandle = sync->getMegaHandle();
-        mActive = sync->isActive();
-        mState = sync->getState();
-        mTemporaryDisabled = sync->isTemporaryDisabled();
-        mError = sync->getError();
+        mActive = sync->isActive(); //override active with the actual value
     }
     else
     {
         assert("SyncSettings constructor with null sync");
+        mSync.reset(new MegaSync()); // MegaSync getter return fair enough defaults
     }
 }
 
 QString SyncSetting::getLocalFolder() const
 {
-    return mLocalFolder;
+    return QString::fromUtf8(mSync->getLocalFolder());
 }
 
 long long SyncSetting::getLocalFingerprint()  const
 {
-    return mLocalFingerPrint;
+    return mSync->getLocalFingerprint();
 }
 
 QString SyncSetting::getMegaFolder()  const
 {
-    return mMegaFolder;
+    auto folder = mSync->getMegaFolder();
+    return folder ? QString::fromUtf8(folder) : QString();
 }
 
 long long SyncSetting::getMegaHandle()  const
 {
-    return mMegaHandle;
+    return mSync->getMegaHandle();
 }
 
 bool SyncSetting::isEnabled()  const
@@ -170,17 +166,17 @@ bool SyncSetting::isActive()  const
 
 int SyncSetting::getState() const
 {
-    return mState;
+    return mSync->getState();
 }
 
 bool SyncSetting::isTemporaryDisabled()  const
 {
-    return mTemporaryDisabled;
+    return mSync->isTemporaryDisabled();
 }
 
 int SyncSetting::getError() const
 {
-    return mError;
+    return mSync->getError();
 }
 
 int SyncSetting::tag() const
