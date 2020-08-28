@@ -2163,6 +2163,7 @@ if (!preferences->lastExecutionTime())
     }
     infoDialog->setUsage();
     infoDialog->setAccountType(preferences->accountType());
+    infoDialog->setDisabledSyncTags(preferences->getDisabledSyncTags());
 
     createAppMenus();
 
