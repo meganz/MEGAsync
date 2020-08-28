@@ -2195,14 +2195,19 @@ QSet<int> Preferences::getDisabledSyncTags()
     QMutexLocker qm(&mutex);
     assert(logged());
 
-    QStringList stringTagList = getValueConcurrent<QString>(disabledSyncsKey).split(QString::fromUtf8("0x1E"));
-    QList<int> tagList;
-    for (auto &tag : stringTagList)
+    QStringList stringTagList = getValueConcurrent<QString>(disabledSyncsKey).split(QString::fromUtf8("0x1E"), QString::SkipEmptyParts);
+    if (!stringTagList.isEmpty())
     {
-        tagList.append(tag.toInt());
+        QList<int> tagList;
+        for (auto &tag : stringTagList)
+        {
+            tagList.append(tag.toInt());
+        }
+
+        return QSet<int>::fromList(tagList);
     }
 
-    return QSet<int>::fromList(tagList);
+    return QSet<int>();
 }
 
 void Preferences::setDisabledSyncTags(QSet<int> disabledSyncs)
