@@ -217,7 +217,8 @@ public:
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
-    static int getDaysToTimestamp(int64_t msecsTimestamps);
+    static void getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays);
+    static void getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
 private:
     Utilities() {}
