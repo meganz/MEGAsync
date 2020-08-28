@@ -3131,6 +3131,9 @@ padding-bottom: 3px;</string>
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
+                     <property name="text">
+                      <string notr="true"/>
+                     </property>
                      <property name="readOnly">
                       <bool>true</bool>
                      </property>
@@ -3184,6 +3187,9 @@ padding-bottom: 3px;</string>
                    </property>
                    <item>
                     <widget class="QLineEdit" name="eDownloadFolder">
+                     <property name="text">
+                      <string notr="true"/>
+                     </property>
                      <property name="readOnly">
                       <bool>true</bool>
                      </property>
@@ -4270,7 +4276,7 @@ background:transparent;</string>
                 <set>Qt::ImhUrlCharactersOnly</set>
                </property>
                <property name="text">
-                <string/>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -4296,7 +4302,7 @@ background:transparent;</string>
                 <set>Qt::ImhDigitsOnly</set>
                </property>
                <property name="text">
-                <string/>
+                <string notr="true"/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -4363,7 +4369,7 @@ background:transparent;</string>
              </size>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -4435,7 +4441,7 @@ background:transparent;</string>
              </size>
             </property>
             <property name="text">
-             <string/>
+             <string notr="true"/>
             </property>
             <property name="echoMode">
              <enum>QLineEdit::Password</enum>
