@@ -69,6 +69,7 @@ public:
     void setTransferring(bool value);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
+    void setDisabledSyncTags(QSet<int> tags);
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);

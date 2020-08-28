@@ -354,6 +354,10 @@ void InfoDialog::enableTransferAlmostOverquotaAlert()
 void InfoDialog::addSyncDisabled(int tag)
 {
     syncsDisabled.insert(tag);
+    if (preferences->logged())
+    {
+        preferences->setDisabledSyncTags(syncsDisabled);
+    }
     updateDialogState();
 }
 
@@ -669,6 +673,13 @@ void InfoDialog::setAccountType(int accType)
     {
          ui->bUpgrade->show();
     }
+}
+
+void InfoDialog::setDisabledSyncTags(QSet<int> tags)
+{
+
+    //REVIEW: If possible to get enable/disable callbacks before loading from settings.Merge both lists of tags.
+    syncsDisabled = tags;
 }
 
 void InfoDialog::updateBlockedState()
