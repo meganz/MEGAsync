@@ -7227,7 +7227,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
         Platform::notifyAllSyncFoldersAdded();
         showNotificationMessage(tr("Your syncs have been enabled"));
     }
-    else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED)
+    else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
         showErrorMessage(tr("Your syncs have been temporarily disabled").append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));

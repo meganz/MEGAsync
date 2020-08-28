@@ -7,7 +7,7 @@
 
 #include "megaapi.h"
 
-class SyncData;
+struct SyncData;
 class SyncSetting
 {
 private:

@@ -100,8 +100,10 @@ SyncSetting::SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions)
     mSyncID = osd.mSyncID;
     mEnabled = osd.mEnabled;
 
-    // mActive should be false for loadedFromPreviousSessions
-    mActive = !loadedFromPreviousSessions && osd.mEnabled && !osd.mTemporarilyDisabled;
+    // Although mActive should be false for loadedFromPreviousSessions, since MEGAsync versions with old cache
+    // did not deActivate syncs when logging out, we dont need to consider this
+    // keeping the parameter and the code in case we consider fixing that. Uncoment the /**/ in that case.
+    mActive = /*!loadedFromPreviousSessions && */osd.mEnabled && !osd.mTemporarilyDisabled;
 
 }
 
