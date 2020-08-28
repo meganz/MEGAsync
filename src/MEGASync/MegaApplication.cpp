@@ -2984,8 +2984,9 @@ void MegaApplication::checkOverStorageStates()
 
             if ((!preferences->getPayWallNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getPayWallNotificationExecution()) > Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS)))
             {
-                const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
-                if (daysToExpire > 0) //Only show notification if at least there is one day left
+                int64_t remainDaysOut(0);
+                Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+                if (remainDaysOut > 0) //Only show notification if at least there is one day left
                 {
                     preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
                     megaApi->sendEvent(99530, "Paywall notification shown");
@@ -3621,9 +3622,13 @@ void MegaApplication::sendOverStorageNotification(int state)
         }
         case Preferences::STATE_PAYWALL:
         {
+            int64_t remainDaysOut(0);
+            Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+
             MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your data is at risk"));
-            notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))));
+            notification->setText(tr("You have [A] days left to save your data")
+                                  .replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
             notification->setActions(QStringList() << tr("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
             notificator->notify(notification);
