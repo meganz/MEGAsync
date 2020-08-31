@@ -1415,9 +1415,19 @@ int SettingsDialog::saveSettings()
                     {
                         if (enabled && preferences->isFolderActive(j) != enabled)
                         {
-                            preferences->setMegaFolderHandle(j, node->getHandle());
-                            preferences->setSyncState(j, enabled);
-                            megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                            bool storageOQPaywall{static_cast<MegaApplication *>(qApp)->getAppliedStorageState() == MegaApi::STORAGE_STATE_PAYWALL};
+                            if (storageOQPaywall)
+                            {
+                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync cannot be enabled: reached OQ paywall")
+                                             .arg(megaFolderPath).toUtf8().constData());
+                                ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
+                            }
+                            else
+                            {
+                                preferences->setMegaFolderHandle(j, node->getHandle());
+                                preferences->setSyncState(j, enabled);
+                                megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                            }
                         }
                         break;
                     }
