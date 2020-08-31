@@ -1415,9 +1415,20 @@ int SettingsDialog::saveSettings()
                     {
                         if (enabled && preferences->isFolderActive(j) != enabled)
                         {
-                            preferences->setMegaFolderHandle(j, node->getHandle());
-                            preferences->setSyncState(j, enabled);
-                            megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                            bool storageOQPaywall{static_cast<MegaApplication *>(qApp)->getAppliedStorageState() == MegaApi::STORAGE_STATE_PAYWALL};
+                            if (storageOQPaywall)
+                            {
+                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync cannot be enabled: reached OQ paywall").toUtf8().constData());
+                                QMegaMessageBox::critical(nullptr, tr("Error"),
+                                   tr("Storage Quota Exceeded. Upgrade now"));
+                                ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
+                            }
+                            else
+                            {
+                                preferences->setMegaFolderHandle(j, node->getHandle());
+                                preferences->setSyncState(j, enabled);
+                                megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                            }
                         }
                         break;
                     }
@@ -1765,7 +1776,7 @@ void SettingsDialog::loadSyncSettings()
         QCheckBox *c = new QCheckBox();
         c->setChecked(preferences->isFolderActive(i));
         c->setToolTip(tr("Enable / disable"));
-        connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+        connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
         ui->tSyncs->setCellWidget(i, 2, c);
     }
 }
@@ -1875,7 +1886,7 @@ void SettingsDialog::on_bAdd_clicked()
     QCheckBox *c = new QCheckBox();
     c->setChecked(true);
     c->setToolTip(tr("Enable / disable"));
-    connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+    connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
     ui->tSyncs->setCellWidget(pos, 2, c);
 
     syncNames.append(dialog->getSyncName());
