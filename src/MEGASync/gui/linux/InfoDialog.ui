@@ -2177,7 +2177,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                   </property>
                                   <property name="text">
-                                   <string>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</string>
+                                   <string/>
                                   </property>
                                   <property name="wordWrap">
                                    <bool>true</bool>
