@@ -3623,15 +3623,37 @@ void MegaApplication::sendOverStorageNotification(int state)
         case Preferences::STATE_PAYWALL:
         {
             int64_t remainDaysOut(0);
-            Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+            int64_t remainHoursOut(0);
+            Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut, remainHoursOut);
 
             MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your data is at risk"));
-            notification->setText(tr("You have [A] days left to save your data")
-                                  .replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
+
+            if (remainDaysOut > 0)
+            {
+                notification->setText(tr("You have [A] days left to save your data")
+                                      .replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
+            }
+            else if (remainDaysOut == 0 && remainHoursOut > 0)
+            {
+                notification->setText(tr("You have [A] hours left to save your data")
+                                      .replace(QString::fromUtf8("[A]"), QString::number(remainHoursOut)));
+            }
+            else
+            {
+                notification->setText(tr("You must act immediately to save your data"));
+            }
+
             notification->setActions(QStringList() << tr("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
             notificator->notify(notification);
+
+            if (infoDialog)
+            {
+                // Update remaining time in case infodialog is already
+                // open and to avoid discrepancies with notification time
+                infoDialog->updateDialogState();
+            }
             break;
         }
         default:
