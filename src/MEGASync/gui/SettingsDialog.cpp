@@ -1418,8 +1418,9 @@ int SettingsDialog::saveSettings()
                             bool storageOQPaywall{static_cast<MegaApplication *>(qApp)->getAppliedStorageState() == MegaApi::STORAGE_STATE_PAYWALL};
                             if (storageOQPaywall)
                             {
-                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync cannot be enabled: reached OQ paywall")
-                                             .arg(megaFolderPath).toUtf8().constData());
+                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync cannot be enabled: reached OQ paywall").toUtf8().constData());
+                                QMegaMessageBox::critical(nullptr, tr("Error"),
+                                   tr("Storage Quota Exceeded. Upgrade now"));
                                 ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
                             }
                             else
