@@ -1775,7 +1775,7 @@ void SettingsDialog::loadSyncSettings()
         QCheckBox *c = new QCheckBox();
         c->setChecked(preferences->isFolderActive(i));
         c->setToolTip(tr("Enable / disable"));
-        connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+        connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
         ui->tSyncs->setCellWidget(i, 2, c);
     }
 }
@@ -1885,7 +1885,7 @@ void SettingsDialog::on_bAdd_clicked()
     QCheckBox *c = new QCheckBox();
     c->setChecked(true);
     c->setToolTip(tr("Enable / disable"));
-    connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+    connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
     ui->tSyncs->setCellWidget(pos, 2, c);
 
     syncNames.append(dialog->getSyncName());
