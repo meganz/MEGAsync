@@ -8,6 +8,50 @@ OsNotifications::OsNotifications(Notificator *notificator)
 {
 }
 
+QString getSharedFolderName(mega::MegaUserAlert* alert)
+{
+    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+    const auto node{megaApi->getNodeByHandle(alert->getNodeHandle())};
+    auto sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
+    if(!sharedFolderName.isEmpty())
+    {
+        return sharedFolderName;
+    }
+    return QCoreApplication::translate("OsNotifications", "Shared Folder Activity");
+}
+
+QString getItemsAddedText(mega::MegaUserAlert* alert)
+{
+    const auto updatedItems{alert->getNumber(1) + alert->getNumber(0)};
+    if (updatedItems == 1)
+    {
+        return QCoreApplication::translate("OsNotifications", "[A] added 1 item")
+                .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()));
+    }
+    else
+    {
+         return QCoreApplication::translate("OsNotifications", "[A] added [B] items")
+                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()))
+                 .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
+    }
+}
+
+QString getItemsRemovedText(mega::MegaUserAlert* alert)
+{
+    const auto updatedItems{alert->getNumber(0)};
+    if (updatedItems == 1)
+    {
+        return QCoreApplication::translate("OsNotifications", "[A] removed 1 item")
+                .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()));
+    }
+    else
+    {
+         return QCoreApplication::translate("OsNotifications", "[A] removed [B] items")
+                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()))
+                 .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
+    }
+}
+
 void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 {
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
@@ -47,8 +91,25 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Established"));
                 notification->setText(QCoreApplication::translate("OsNotifications", "You ignored a contact request"));
                 break;
+            case mega::MegaUserAlert::TYPE_NEWSHARE:
+                notification->setTitle(getSharedFolderName(alert));
+                notification->setText(QCoreApplication::translate("OsNotifications", "New Shared folder from [X]")
+                                      .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail())));
+                break;
+            case mega::MegaUserAlert::TYPE_DELETEDSHARE:
+                notification->setTitle(getSharedFolderName(alert));
+                notification->setText(QCoreApplication::translate("OsNotifications", "[A] has left the shared folder")
+                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                break;
+            case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
+                notification->setTitle(getSharedFolderName(alert));
+                notification->setText(getItemsAddedText(alert));
+                break;
+            case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+                notification->setTitle(getSharedFolderName(alert));
+                notification->setText(getItemsRemovedText(alert));
+                break;
             }
-
             mNotificator->notify(notification);
         }
     }
