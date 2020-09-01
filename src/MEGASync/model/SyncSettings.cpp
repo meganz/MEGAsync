@@ -110,6 +110,7 @@ SyncSetting::SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions)
 QString SyncSetting::toString()
 {
     QStringList toret;
+    toret.append(QString::number(CACHE_VERSION));
     toret.append(QString::number(mTag));
     toret.append(mSyncID);
 
