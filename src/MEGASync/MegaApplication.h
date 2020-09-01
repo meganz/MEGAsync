@@ -39,6 +39,7 @@
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
+#include "OsNotifications.h"
 #include "TransferQuota.h"
 
 #ifdef __APPLE__
@@ -501,6 +502,7 @@ protected:
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
+    std::unique_ptr<OsNotifications> osNotifications;
 };
 
 class DeferPreferencesSyncForScope

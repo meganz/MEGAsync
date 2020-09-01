@@ -1226,6 +1226,7 @@ void MegaApplication::initialize()
 #else
     notificator = new Notificator(applicationName(), trayIcon, this);
 #endif
+    osNotifications = ::mega::make_unique<OsNotifications>(notificator);
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -8809,20 +8810,23 @@ MegaSyncLogger& MegaApplication::getLogger() const
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
+    Q_UNUSED(api);
     if (appfinished)
     {
         return;
     }
 
     bool copyRequired = true;
-    if (!list)//User alerts already loaded: get the list from MegaApi::getUserAlerts
+    if (list)
     {
-        list = megaApi->getUserAlerts();
-        copyRequired = false;
+        assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
+        osNotifications->addUserAlertList(list);
     }
     else
     {
-        assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
+        // User alerts already loaded: get the list from MegaApi::getUserAlerts
+        list = megaApi->getUserAlerts();
+        copyRequired = false;
     }
 
     if (!notificationsModel)
