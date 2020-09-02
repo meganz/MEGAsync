@@ -577,7 +577,16 @@ void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 
     if (dbusMssage.member() == QString::fromUtf8("ActionInvoked"))
     {
-        emit activated(ActivationActionButtonClicked); // we might want to parse dbusMssage.arguments().at(1) to emit an alternative action if several added
+        if(dbusMssage.arguments().size() > 1)
+        {
+            const auto actionText{dbusMssage.arguments().at(1).toString()};
+            const auto actionIndex{getActions().indexOf(actionText)};
+            emit activated(actionIndex);
+        }
+        else
+        {
+            emit activated(ActivationActionButtonClicked); // we might want to parse dbusMssage.arguments().at(1) to emit an alternative action if several added
+        }
     }
     else if (dbusMssage.member() == QString::fromUtf8("NotificationClosed"))
     {

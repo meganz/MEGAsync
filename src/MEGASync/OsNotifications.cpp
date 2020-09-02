@@ -68,8 +68,8 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setText(QCoreApplication::translate("OsNotifications","[A] sent you a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setActions(QStringList() << QCoreApplication::translate("OsNotifications", "Accept") <<
-                                         QCoreApplication::translate("OsNotifications", "Reject"));
+                notification->setActions(QStringList() << QCoreApplication::translate("OsNotifications", "Accept")
+                                         << QCoreApplication::translate("OsNotifications", "Reject"));
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::incomingPendingRequest);
                 break;
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
@@ -88,7 +88,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 break;
             case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Established"));
+                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Updated"));
                 notification->setText(QCoreApplication::translate("OsNotifications", "You ignored a contact request"));
                 break;
             case mega::MegaUserAlert::TYPE_NEWSHARE:
@@ -115,21 +115,27 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
     }
 }
 
-void OsNotifications::incomingPendingRequest(int activationButton)
+void OsNotifications::incomingPendingRequest(int actionId)
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
     const auto megaApp{static_cast<MegaApplication*>(qApp)};
     const auto requestList{megaApp->getMegaApi()->getIncomingContactRequests()};
     const auto sourceEmail{notification->getData()};
+    constexpr auto acceptActionId{0};
+    constexpr auto rejectActionId{1};
 
     for(int iRequest=0; iRequest < requestList->size(); iRequest++)
     {
         const auto request{requestList->get(iRequest)};
         if(QString::fromUtf8(request->getSourceEmail()) == sourceEmail)
         {
-            if(activationButton == MegaNotification::ActivationActionButtonClicked)
+            if(actionId == acceptActionId)
             {
                megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_ACCEPT);
+            }
+            else if(actionId == rejectActionId)
+            {
+               megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_DENY);
             }
         }
     }

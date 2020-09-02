@@ -15,7 +15,7 @@ public:
     void addUserAlertList(mega::MegaUserAlertList *alertList);
 
 public slots:
-    void incomingPendingRequest(int activationButton);
+    void incomingPendingRequest(int actionId);
 
 private:
     Notificator *mNotificator;
