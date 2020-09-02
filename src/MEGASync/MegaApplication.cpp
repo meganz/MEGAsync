@@ -3595,7 +3595,7 @@ void MegaApplication::sendOverStorageNotification(int state)
             notification->setTitle(tr("Your account is almost full."));
             notification->setText(tr("Upgrade now to a PRO account."));
             notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+            connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToUpgrade);
             notificator->notify(notification);
             break;
         }
@@ -3605,7 +3605,7 @@ void MegaApplication::sendOverStorageNotification(int state)
             notification->setTitle(tr("Your account is full."));
             notification->setText(tr("Upgrade now to a PRO account."));
             notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+            connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToUpgrade);
             notificator->notify(notification);
             break;
         }
@@ -3615,7 +3615,7 @@ void MegaApplication::sendOverStorageNotification(int state)
             notification->setTitle(tr("Your data is at risk"));
             notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))));
             notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+            connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToUpgrade);
             notificator->notify(notification);
             break;
         }
@@ -3636,7 +3636,7 @@ void MegaApplication::sendBusinessWarningNotification()
                 notification->setTitle(tr("Payment Failed"));
                 notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
                 notification->setActions(QStringList() << tr("Pay Now"));
-                connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
+                connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToPayBusiness);
                 notificator->notify(notification);
             }
             break;
@@ -3650,7 +3650,7 @@ void MegaApplication::sendBusinessWarningNotification()
                 notification->setTitle(tr("Your Business account is expired"));
                 notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
                 notification->setActions(QStringList() << tr("Pay Now"));
-                connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
+                connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToPayBusiness);
             }
             else
             {
@@ -4700,7 +4700,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
             notification->setText(message);
             notification->setActions(QStringList() << tr("Show in folder"));
             notification->setData(((data->totalTransfers == 1) ? QString::number(1) : QString::number(0)) + data->localPath);
-            connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
+            connect(notification, &MegaNotification::activated, this, &MegaApplication::showInFolder);
             notificator->notify(notification);
         }
 
@@ -4718,14 +4718,14 @@ void MegaApplication::enableFinderExt()
 }
 #endif
 
-void MegaApplication::showInFolder(int activationButton)
+void MegaApplication::showInFolder(MegaNotification::Action activationButton)
 {
     MegaNotification *notification = ((MegaNotification *)QObject::sender());
 
-    if ((activationButton == MegaNotification::ActivationActionButtonClicked
-         || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+    if ((activationButton == MegaNotification::Action::firstButton
+         || activationButton == MegaNotification::Action::legacy
      #ifndef _WIN32
-         || activationButton == MegaNotification::ActivationContentClicked
+         || activationButton == MegaNotification::Action::content
      #endif
          )
             && notification->getData().size() > 1)
@@ -4756,12 +4756,12 @@ void MegaApplication::openFolderPath(QString localPath)
     }
 }
 
-void MegaApplication::redirectToUpgrade(int activationButton)
+void MegaApplication::redirectToUpgrade(MegaNotification::Action activationButton)
 {
-    if (activationButton == MegaNotification::ActivationActionButtonClicked
-            || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+    if (activationButton == MegaNotification::Action::firstButton
+            || activationButton == MegaNotification::Action::legacy
         #ifndef _WIN32
-            || activationButton == MegaNotification::ActivationContentClicked
+            || activationButton == MegaNotification::Action::content
         #endif
             )
     {
@@ -4776,12 +4776,12 @@ void MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired()
     transferOverQuotaWaitTimeExpiredReceived = true;
 }
 
-void MegaApplication::redirectToPayBusiness(int activationButton)
+void MegaApplication::redirectToPayBusiness(MegaNotification::Action activationButton)
 {
-    if (activationButton == MegaNotification::ActivationActionButtonClicked
-            || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+    if (activationButton == MegaNotification::Action::firstButton
+            || activationButton == MegaNotification::Action::legacy
         #ifndef _WIN32
-            || activationButton == MegaNotification::ActivationContentClicked
+            || activationButton == MegaNotification::Action::content
         #endif
             )
     {      

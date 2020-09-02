@@ -287,15 +287,15 @@ public slots:
     void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
-    void redirectToUpgrade(int activationButton);
+    void redirectToUpgrade(MegaNotification::Action activationButton);
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
 private slots:
-    void showInFolder(int activationButton);
+    void showInFolder(MegaNotification::Action activationButton);
     void openFolderPath(QString path);
-    void redirectToPayBusiness(int activationButton);
+    void redirectToPayBusiness(MegaNotification::Action activationButton);
     void registerUserActivity();
     void PSAseen(int id);
     void onBlocked();

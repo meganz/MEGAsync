@@ -25,18 +25,18 @@ class MegaNotification : public QObject
     Q_OBJECT
 
 public:
-    enum CloseReason {
-        Unknown,
+    enum class CloseReason {
+        Unknown = 0,
         UserAction,
         AppHidden,
         TimedOut
     };
 
-    enum  {
-        ActivationContentClicked = -1,
-        ActivationActionButtonClicked = 0,
-        ActivationAdditionalButtonClicked = 1,
-        ActivationLegacyNotificationClicked = 2
+    enum class Action {
+        content = -1,
+        firstButton = 0,
+        secondButton = 1,
+        legacy = 2
     };
 
     MegaNotification();
@@ -84,8 +84,8 @@ protected:
     int dbusId;
 #endif
 signals:
-    void activated(int action);
-    void closed(int reason);
+    void activated(Action action);
+    void closed(CloseReason reason);
     void failed();
 
 #ifdef USE_DBUS

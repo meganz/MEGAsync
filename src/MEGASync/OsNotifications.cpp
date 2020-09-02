@@ -115,25 +115,23 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
     }
 }
 
-void OsNotifications::incomingPendingRequest(int actionId)
+void OsNotifications::incomingPendingRequest(MegaNotification::Action action)
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
     const auto megaApp{static_cast<MegaApplication*>(qApp)};
     const auto requestList{megaApp->getMegaApi()->getIncomingContactRequests()};
     const auto sourceEmail{notification->getData()};
-    constexpr auto acceptActionId{0};
-    constexpr auto rejectActionId{1};
 
     for(int iRequest=0; iRequest < requestList->size(); iRequest++)
     {
         const auto request{requestList->get(iRequest)};
         if(QString::fromUtf8(request->getSourceEmail()) == sourceEmail)
         {
-            if(actionId == acceptActionId)
+            if(action == MegaNotification::Action::firstButton)
             {
                megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_ACCEPT);
             }
-            else if(actionId == rejectActionId)
+            else if(action == MegaNotification::Action::secondButton)
             {
                megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_DENY);
             }
