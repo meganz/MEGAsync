@@ -1313,6 +1313,8 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
+    megaApi->setKeepSyncsAfterLogout(true);
+
 
     controller = Controller::instance();
     controller->setApi(this->megaApi);
@@ -4014,8 +4016,6 @@ void MegaApplication::unlink(bool keepLogs)
     }
     queuedStorageUserStatsReason = 0;
 
-    model->reset();
-
     if (!keepLogs)
     {
         logger->cleanLogs();
@@ -4798,57 +4798,58 @@ void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings)
     createAppMenus();
 }
 
-void MegaApplication::migrateSyncConfToSdk()
+void MegaApplication::migrateSyncConfToSdk(QString email)
 {
-    if (preferences->logged())
+    bool needsMigratingFromOldSession = !preferences->logged();
+    assert(preferences->logged() || !email.isEmpty());
+
+
+    int cachedBusinessState = 999;
+    int cachedBlockedState = 999;
+    int cachedStorageState = 999;
+
+    auto oldCachedSyncs = preferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
+    int oldCacheSyncsCount = oldCachedSyncs.size();
+    if (oldCacheSyncsCount > 0)
     {
-        auto oldCachedSyncs = preferences->readOldCachedSyncs();
-        if (oldCachedSyncs.size())
+        if (cachedBusinessState == -2)
         {
-
-            auto cachedBusinessState = preferences->getBusinessState();
-            if (cachedBusinessState == -2)
-            {
-                cachedBusinessState = 999;
-            }
-
-            auto cachedBlockedState = preferences->getBlockedState();
-            if (cachedBlockedState == -2)
-            {
-                cachedBlockedState = 999;
-            }
-
-            auto cachedStorageState = preferences->getStorageState();
-            if (cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN)
-            {
-                cachedStorageState = 999;
-            }
-
-            megaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
+            cachedBusinessState = 999;
+        }
+        if (cachedBlockedState == -2)
+        {
+            cachedBlockedState = 999;
+        }
+        if (cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN)
+        {
+            cachedStorageState = 999;
         }
 
-        foreach(SyncData osd, oldCachedSyncs)
+        megaApi->copyCachedStatus(cachedStorageState, cachedBlockedState, cachedBusinessState);
+    }
+
+    foreach(SyncData osd, oldCachedSyncs)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
+                     .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
+
+        megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
+                                     osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
+                                     osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
+                                     new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi* api,  MegaRequest *request, MegaError *e)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
-                         .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
-
-            megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
-                                         osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
-                                         osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                         new MegaListenerFuncExecuter(true, [this, osd](MegaApi* api,  MegaRequest *request, MegaError *e)
+            if (e->getErrorCode() == MegaError::API_OK)
             {
-                if (e->getErrorCode() == MegaError::API_OK)
-                {
-                    model->pickInfoFromOldSync(osd, request->getTransferTag());
-                    preferences->removeOldCachedSync(osd.mPos);
-                }
-                else
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-                }
+                //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
+                model->pickInfoFromOldSync(osd, request->getTransferTag(), needsMigratingFromOldSession);
+                preferences->removeOldCachedSync(osd.mPos, email);
+            }
+            else
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
+            }
 
-             }));
-        }
+         }));
     }
 }
 
@@ -4862,11 +4863,11 @@ void MegaApplication::onUnblocked()
     updateTrayIconMenu();
 }
 
-void MegaApplication::fetchNodes()
+void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
     mFetchingNodes = true;
-    migrateSyncConfToSdk();
+    migrateSyncConfToSdk(email);
     megaApi->fetchNodes();
 }
 
@@ -7226,7 +7227,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
         Platform::notifyAllSyncFoldersAdded();
         showNotificationMessage(tr("Your syncs have been enabled"));
     }
-    else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED)
+    else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
         showErrorMessage(tr("Your syncs have been temporarily disabled").append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));
@@ -7615,14 +7616,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             if (!preferences->logged()
                     && needsFetchNodes)
             {
-                fetchNodes();
+                auto email = request->getEmail();
+                fetchNodes(QString::fromUtf8(email ? email : ""));
             }
         }
 
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
-
             Platform::prepareForSync();
             int errorCode = e->getErrorCode();
             if (errorCode == MegaError::API_OK)
@@ -7739,6 +7740,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             unlink();
         }
 
+        model->reset();
+
         if (preferences)
         {
             if (preferences->logged())
@@ -7752,7 +7755,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             else
             {
                 preferences->resetGlobalSettings();
-                model->reset();
             }
 
             closeDialogs();
@@ -7841,6 +7843,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 else
                 {
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
+                    model->rewriteSyncSettings(); //write sync settings into user's preferences
                     setupWizardFinished(QDialog::Accepted);
                 }
             }
@@ -8990,7 +8993,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Your sync \"%1\" has been disabled. State = %2. Error = %3")
                  .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
 
-    if (syncSetting->isTemporaryDisabled())
+    if (syncSetting->isTemporaryDisabled() && syncSetting->getError() != MegaSync::Error::LOGGED_OUT)
     {
         showErrorMessage(tr("Your sync \"%1\" has been temporarily disabled").arg(syncSetting->name()).append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));

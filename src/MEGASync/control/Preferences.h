@@ -259,12 +259,15 @@ public:
 
     // sync related
     void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
+    void removeAllSyncSettings(); //remove all sync from cache
     void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
     QMap<int, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
     // old cache transition related:
-    void removeOldCachedSync(int position);
-    QList<SyncData> readOldCachedSyncs();//get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    void removeOldCachedSync(int position, QString email = {});
+    //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
+                                       int *cachedStorageState = nullptr, QString email = {});
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
     QStringList getExcludedSyncNames();
@@ -295,7 +298,12 @@ public:
     void setLastPublicHandle(mega::MegaHandle handle, int type);
 
     int getNumUsers();
+
+    // enter user preferences and load syncs into loadedSyncsMap
     void enterUser(int i);
+    bool enterUser(QString account);
+
+    // leave user
     void leaveUser();
 
     int accountStateInGeneral();

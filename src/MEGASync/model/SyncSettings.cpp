@@ -17,7 +17,8 @@ SyncSetting::~SyncSetting()
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
     mSync(a.getSync()->copy()), mTag(a.tag()),
-    mSyncID(a.getSyncID()), mEnabled(a.isEnabled())
+    mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
+    mActive(a.isActive())
 {
 }
 
@@ -27,6 +28,7 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mTag = a.tag();
     mSyncID = a.getSyncID();
     mEnabled = a.isEnabled();
+    mActive = a.isActive();
     return *this;
 }
 
@@ -67,17 +69,48 @@ MegaSync * SyncSetting::getSync() const
 
 SyncSetting::SyncSetting(QString initializer)
 {
-    QStringList parts = initializer.split(QString::fromUtf8("0x1E"));
-    int i = 0;
-    if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
-    if (i<parts.size()) { mSyncID = parts.at(i++); }
+    if (!initializer.isEmpty())
+    {
+        QStringList parts = initializer.split(QString::fromUtf8("0x1E"));
+        int i = 0;
+        int cacheVersion = 0;
+        if (i<parts.size()) { cacheVersion = parts.at(i++).toInt(); }
+        if (cacheVersion >= 1)
+        {
+            if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
+            if (i<parts.size()) { mSyncID = parts.at(i++); }
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unexpected SyncSetting cache version: %1")
+                     .arg(cacheVersion).toUtf8().constData());
+        }
+    }
+    else
+    {
+        assert(false && "unexpected empty initializer");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unexpected SyncSetting empty initializer").toUtf8().constData());
+    }
 
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
+}
+
+SyncSetting::SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions)
+{
+    mSyncID = osd.mSyncID;
+    mEnabled = osd.mEnabled;
+
+    // Although mActive should be false for loadedFromPreviousSessions, since MEGAsync versions with old cache
+    // did not deActivate syncs when logging out, we dont need to consider this
+    // keeping the parameter and the code in case we consider fixing that. Uncoment the /**/ in that case.
+    mActive = /*!loadedFromPreviousSessions && */osd.mEnabled && !osd.mTemporarilyDisabled;
+
 }
 
 QString SyncSetting::toString()
 {
     QStringList toret;
+    toret.append(QString::number(CACHE_VERSION));
     toret.append(QString::number(mTag));
     toret.append(mSyncID);
 
@@ -93,6 +126,8 @@ void SyncSetting::setSync(MegaSync *sync)
         assert(mTag == 0 || mTag == sync->getTag());
         mTag = sync->getTag();
         mEnabled = sync->isEnabled();
+
+        mActive = sync->isActive(); //override active with the actual value
     }
     else
     {
@@ -129,7 +164,7 @@ bool SyncSetting::isEnabled()  const
 
 bool SyncSetting::isActive()  const
 {
-    return mSync->isActive();
+    return mActive;
 }
 
 int SyncSetting::getState() const

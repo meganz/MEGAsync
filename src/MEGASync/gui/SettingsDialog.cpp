@@ -1458,7 +1458,11 @@ int SettingsDialog::saveSettings()
 
                     if (tagItem && static_cast<QLabel *>(tagItem)->text().toInt() == syncSetting->tag())
                     {
+#ifdef SYNC_ADVANCED_TEST_MODE
                         if (disabled && syncSetting->isEnabled()) //sync disabled
+#else
+                        if (disabled && syncSetting->isActive()) //sync disabled
+#endif
                         {
                             ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Disabling sync: %1 - %2")
                                                                                 .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));

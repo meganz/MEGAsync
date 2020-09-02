@@ -75,8 +75,11 @@ public:
     // transition sync to inactive: will trigger platform dependent behaviour
     void deactivateSync(std::shared_ptr<SyncSetting> cs);
 
+    // store all megasync specific info of syncsettings into megasync cache
+    void rewriteSyncSettings();
+
     // load into sync model the information from an old cached sync
-    void pickInfoFromOldSync(const SyncData &osd, int tag);
+    void pickInfoFromOldSync(const SyncData &osd, int tag, bool loadedFromPreviousSessions);
 
     // remove syncs from model
     void removeSyncedFolder(int num);

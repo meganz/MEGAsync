@@ -102,8 +102,6 @@ class MegaApplication : public QApplication, public mega::MegaListener, public S
 
     static void loadDataPath();
 
-    void migrateSyncConfToSdk();
-
 public:
 
     explicit MegaApplication(int &argc, char **argv);
@@ -145,6 +143,13 @@ public:
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
 
+
+    /**
+     * @brief Migrate sync configuration to sdk cache
+     * @param email of sync configuration to migrate from previous sessions
+     */
+    void migrateSyncConfToSdk(QString email = {});
+
     mega::MegaApi *getMegaApi() { return megaApi; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
@@ -184,7 +189,13 @@ public:
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
     MegaSyncLogger& getLogger() const;
     SetupWizard *getSetupWizard() const;
-    void fetchNodes();
+
+    /**
+     * @brief migrates sync configuration and fetches nodes
+     * @param email of sync configuration to migrate from previous sessions. If present
+     * syncs configured in previous sessions will be loaded.
+     */
+    void fetchNodes(QString email = {});
     void whyAmIBlocked(bool periodicCall = false);
     bool showSyncOverquotaDialog();
     bool finished() const;

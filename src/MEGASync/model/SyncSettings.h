@@ -7,23 +7,27 @@
 
 #include "megaapi.h"
 
+struct SyncData;
 class SyncSetting
 {
 private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
     int mTag = 0;
     QString mSyncID;
-    bool mEnabled = false; //we need to hold this, for transitioning from old sync data, instead of simply forwarding to mSync->isEnabled
 
+    bool mEnabled = false;
+    bool mActive = false;
+
+    static constexpr int CACHE_VERSION = 1;
 public:
     SyncSetting();
+    SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions);
     SyncSetting(QString initializer);
     ~SyncSetting();
     SyncSetting(const SyncSetting& a);
     SyncSetting(SyncSetting&& a) = default;
     SyncSetting& operator=(const SyncSetting& a);
     SyncSetting& operator=(SyncSetting&& a) = default;
-
 
     SyncSetting(mega::MegaSync *sync);
     int tag() const;
