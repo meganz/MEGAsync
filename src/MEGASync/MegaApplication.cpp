@@ -3290,6 +3290,18 @@ void MegaApplication::repositionInfoDialog()
 #endif
 }
 
+void MegaApplication::raiseInfoDialog()
+{
+    if (infoDialog)
+    {
+        infoDialog->show();
+        infoDialog->updateDialogState();
+        infoDialog->raise();
+        infoDialog->activateWindow();
+        infoDialog->highDpiResize.queueRedraw();
+    }
+}
+
 void MegaApplication::showInfoDialog()
 {
     if (appfinished)
@@ -3343,11 +3355,7 @@ void MegaApplication::showInfoDialog()
 
             repositionInfoDialog();
 
-            infoDialog->show();
-            infoDialog->updateDialogState();
-            infoDialog->raise();
-            infoDialog->activateWindow();
-            infoDialog->highDpiResize.queueRedraw();
+            raiseInfoDialog();
         }
         else
         {
@@ -5661,6 +5669,21 @@ void MegaApplication::processUploads()
         return;
     }
 
+    if (blockState)
+    {
+        if (infoDialog)
+        {
+            raiseInfoDialog();
+        }
+        else
+        {
+            // No infodialog available (logged with session locked),
+            // shows verifyemaildialog instead
+            showVerifyAccountInfo();
+        }
+        return;
+    }
+
     if (!preferences->logged())
     {
         openInfoWizard();
@@ -5738,6 +5761,21 @@ void MegaApplication::processDownloads()
 
     if (!downloadQueue.size())
     {
+        return;
+    }
+
+    if (blockState)
+    {
+        if (infoDialog)
+        {
+            raiseInfoDialog();
+        }
+        else
+        {
+            // No infodialog available (logged with session locked),
+            // shows verifyemaildialog instead
+            showVerifyAccountInfo();
+        }
         return;
     }
 

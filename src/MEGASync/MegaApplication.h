@@ -187,6 +187,8 @@ public:
     bool isAppliedStorageOverquota() const;
     void reloadSyncsInSettings();
 
+    void raiseInfoDialog();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
