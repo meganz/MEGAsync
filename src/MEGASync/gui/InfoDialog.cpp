@@ -213,6 +213,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     actualAccountType = -1;
 
+    connect(model, SIGNAL(syncDisabledListUpdated()), this, SLOT(updateDialogState()));
+
     uploadsFinishedTimer.setSingleShot(true);
     uploadsFinishedTimer.setInterval(5000);
     connect(&uploadsFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllUploadsFinished()));
@@ -348,22 +350,6 @@ void InfoDialog::enableTransferOverquotaAlert()
 void InfoDialog::enableTransferAlmostOverquotaAlert()
 {
     transferAlmostOverquotaAlertEnabled = true;
-    updateDialogState();
-}
-
-void InfoDialog::addSyncDisabled(int tag)
-{
-    syncsDisabled.insert(tag);
-    if (preferences->logged())
-    {
-        preferences->setDisabledSyncTags(syncsDisabled);
-    }
-    updateDialogState();
-}
-
-void InfoDialog::removeSyncDisabled(int tag)
-{
-    syncsDisabled.remove(tag);
     updateDialogState();
 }
 
@@ -675,13 +661,6 @@ void InfoDialog::setAccountType(int accType)
     }
 }
 
-void InfoDialog::setDisabledSyncTags(QSet<int> tags)
-{
-
-    //REVIEW: If possible to get enable/disable callbacks before loading from settings.Merge both lists of tags.
-    syncsDisabled = tags;
-}
-
 void InfoDialog::updateBlockedState()
 {
     if (!preferences->logged())
@@ -967,7 +946,7 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (syncsDisabled.size())
+    else if (model->hasUnattendedDisabledSyncs())
     {
         ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
         overlay->setVisible(false);
@@ -2022,13 +2001,13 @@ void InfoDialog::highLightMenuEntry(QAction *action)
 
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {
-    syncsDisabled.clear();
+    model->dismissUnattendedDisabledSyncs();
 }
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
     ((MegaApplication *)qApp)->openSettings(SettingsDialog::SYNCS_TAB);
-    syncsDisabled.clear();
+    model->dismissUnattendedDisabledSyncs();
 }
 
 int InfoDialog::getLoggedInMode() const

@@ -1610,6 +1610,30 @@ void MegaApplication::updateTrayIcon()
 #endif
 
     }
+    else if (model->hasUnattendedDisabledSyncs())
+    {
+        tooltip = QCoreApplication::applicationName()
+                + QString::fromAscii(" ")
+                + Preferences::VERSION_STRING
+                + QString::fromAscii("\n")
+                + tr("One or more syncs have been disabled");
+
+#ifndef __APPLE__
+    #ifdef _WIN32
+        icon = QString::fromUtf8("://images/alert_ico.ico");
+    #else
+        icon = QString::fromUtf8("://images/alert.svg");
+    #endif
+#else
+        icon = QString::fromUtf8("://images/icon_alert_mac.png");
+
+        if (scanningTimer->isActive())
+        {
+            scanningTimer->stop();
+        }
+#endif
+
+    }
     else if (!megaApi->isLoggedIn())
     {
         if (!infoDialog)
@@ -2163,7 +2187,8 @@ if (!preferences->lastExecutionTime())
     }
     infoDialog->setUsage();
     infoDialog->setAccountType(preferences->accountType());
-    infoDialog->setDisabledSyncTags(preferences->getDisabledSyncTags());
+
+    model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
 
     createAppMenus();
 
@@ -8980,7 +9005,7 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
     Platform::notifyItemChange(localPath, newState);
 }
 
-void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, bool newSync)
+void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
 {
     if (!syncSetting)
     {
@@ -9043,15 +9068,6 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, b
             break;
         }
         }
-        if (newSync) //TODO: note for reviewer: this may need to be opened always
-        {
-            openSettings(SettingsDialog::SYNCS_TAB);
-        }
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->addSyncDisabled(syncSetting->tag());
     }
 }
 
@@ -9060,6 +9076,11 @@ void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
     if (appfinished || !sync)
     {
         return;
+    }
+
+    if (sync->getError())
+    {
+        model->addUnattendedDisabledSync(sync->getTag());
     }
 
     onSyncDisabled(model->getSyncSettingByTag(sync->getTag()));
@@ -9080,10 +9101,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
     showErrorMessage(tr("Your sync \"%1\" has been enabled")
                      .arg(syncSetting->name()));
 
-    if (infoDialog)
-    {
-        infoDialog->removeSyncDisabled(syncSetting->tag());
-    }
+    model->removeUnattendedDisabledSync(syncSetting->tag());
 }
 
 void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
@@ -9127,11 +9145,6 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
     }
 
     model->removeSyncedFolderByTag(sync->getTag());
-
-    if (infoDialog)
-    {
-        infoDialog->removeSyncDisabled(sync->getTag());
-    }
 
     onGlobalSyncStateChanged(api);
 }

@@ -4,6 +4,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QSet>
 #include <QMutex>
 
 #include "control/Preferences.h"
@@ -36,6 +37,7 @@ class Model : public QObject
 signals:
     void syncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
     void syncRemoved(std::shared_ptr<SyncSetting> syncSettings);
+    void syncDisabledListUpdated();
 
 private:
     static std::unique_ptr<Model> model;
@@ -46,6 +48,8 @@ private:
     bool isFirstSyncDone = false;
     ///////////// END OF SYNCS ////////////////////
 
+    void saveUnattendedDisabledSyncs();
+
 protected:
     QMutex syncMutex;
 
@@ -53,6 +57,7 @@ protected:
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
 
+    QSet<int> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
     ///////////// END OF SYNCS ////////////////////
 
 
@@ -88,6 +93,13 @@ public:
     std::shared_ptr<SyncSetting> getSyncSettingByTag(int num);
 
     int getNumSyncedFolders();
+
+    //unattended disabled syncs
+    bool hasUnattendedDisabledSyncs() const;
+    void addUnattendedDisabledSync(int tag);
+    void removeUnattendedDisabledSync(int tag);
+    void setUnattendedDisabledSyncs(QSet<int> tags);
+    void dismissUnattendedDisabledSyncs();
 
     QStringList getSyncNames();
     QStringList getSyncIDs();

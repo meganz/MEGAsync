@@ -131,9 +131,6 @@ public slots:
    void enableTransferAlmostOverquotaAlert();
    void setBandwidthOverquotaState(QuotaState state);
 
-   void addSyncDisabled(int tag);
-   void removeSyncDisabled(int tag);
-
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
@@ -238,8 +235,6 @@ private:
     std::unique_ptr<QMenu> syncsMenu;
     MenuItemAction *addSyncAction;
     MenuItemAction *lastHovered;
-
-    QSet<int> syncsDisabled; //Register tags of syncs disabled to manage UI controls.
 
 protected:
     void setBlockedStateLabel(QString state);

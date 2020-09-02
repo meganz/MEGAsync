@@ -314,7 +314,7 @@ private slots:
     void PSAseen(int id);
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
     void onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings);
-    void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting, bool newSync = false);
+    void onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting);
     void onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting);
     void onBlocked();
     void onUnblocked();
