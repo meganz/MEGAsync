@@ -2,6 +2,7 @@
 #include "OsNotifications.h"
 #include "MegaApplication.h"
 #include <QCoreApplication>
+#include <QtConcurrent/QtConcurrent>
 
 OsNotifications::OsNotifications(Notificator *notificator)
     :mNotificator{notificator}
@@ -65,7 +66,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
                 notification->setTitle(QCoreApplication::translate("OsNotifications", "New Contact Request"));
-                notification->setText(QCoreApplication::translate("OsNotifications","[A] sent you a contact request")
+                notification->setText(QCoreApplication::translate("OsNotifications", "[A] sent you a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
                 notification->setActions(QStringList() << QCoreApplication::translate("OsNotifications", "Accept")
@@ -74,7 +75,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 break;
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
                 notification->setTitle(QCoreApplication::translate("OsNotifications", "New Contact Request"));
-                notification->setText(QCoreApplication::translate("OsNotifications","[A] cancelled their contact request")
+                notification->setText(QCoreApplication::translate("OsNotifications", "[A] cancelled the contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 break;
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
@@ -84,12 +85,24 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 break;
             case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
                 notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Established"));
-                notification->setText(QCoreApplication::translate("OsNotifications","[A] established you as a contact")
+                notification->setText(QCoreApplication::translate("OsNotifications", "New contact with [A] has been established")
+                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                notification->setData(QString::fromUtf8(alert->getEmail()));
+                notification->setActions(QStringList() << QCoreApplication::translate("OsNotifications", "View"));
+                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewContactOnWebClient);
+                break;
+            case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Updated"));
+                notification->setText(QCoreApplication::translate("OsNotifications","You accepted a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 break;
             case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
                 notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Updated"));
                 notification->setText(QCoreApplication::translate("OsNotifications", "You ignored a contact request"));
+                break;
+            case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Updated"));
+                notification->setText(QCoreApplication::translate("OsNotifications", "You denied a contact request"));
                 break;
             case mega::MegaUserAlert::TYPE_NEWSHARE:
                 notification->setTitle(getSharedFolderName(alert));
@@ -109,6 +122,8 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(getItemsRemovedText(alert));
                 break;
+            default:
+                continue;
             }
             mNotificator->notify(notification);
         }
@@ -137,4 +152,21 @@ void OsNotifications::incomingPendingRequest(MegaNotification::Action action)
             }
         }
     }
+}
+
+void OsNotifications::viewContactOnWebClient()
+{
+    const auto notification{static_cast<MegaNotification*>(QObject::sender())};
+    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+    const auto user{megaApi->getContact(notification->getData().toUtf8())};
+    const auto userVisible{user && user->getVisibility() == mega::MegaUser::VISIBILITY_VISIBLE};
+    const auto userHandle{QString::fromUtf8(megaApi->userHandleToBase64(user->getHandle()))};
+    auto url{QUrl(QString::fromUtf8("mega://#fm/contacts"))};
+
+    if (userVisible)
+    {
+        url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(userHandle));
+    }
+    QtConcurrent::run(QDesktopServices::openUrl, url);
+    delete user;
 }

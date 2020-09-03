@@ -16,6 +16,7 @@ public:
 
 public slots:
     void incomingPendingRequest(MegaNotification::Action action);
+    void viewContactOnWebClient();
 
 private:
     Notificator *mNotificator;
