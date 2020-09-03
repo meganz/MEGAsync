@@ -3585,48 +3585,6 @@ void MegaApplication::initLocalServer()
     }
 }
 
-void MegaApplication::sendBusinessWarningNotification()
-{
-    switch (businessStatus)
-    {
-        case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
-        {
-            if (megaApi->isMasterBusinessAccount())
-            {
-                MegaNotification *notification = new MegaNotification();
-                notification->setTitle(tr("Payment Failed"));
-                notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
-                notification->setActions(QStringList() << tr("Pay Now"));
-                connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToPayBusiness);
-                notificator->notify(notification);
-            }
-            break;
-        }
-        case MegaApi::BUSINESS_STATUS_EXPIRED:
-        {
-            MegaNotification *notification = new MegaNotification();
-
-            if (megaApi->isMasterBusinessAccount())
-            {
-                notification->setTitle(tr("Your Business account is expired"));
-                notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
-                notification->setActions(QStringList() << tr("Pay Now"));
-                connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToPayBusiness);
-            }
-            else
-            {
-                notification->setTitle(tr("Account Suspended"));
-                notification->setText(tr("Contact your business account administrator to resolve the issue and activate your account."));
-            }
-
-            notificator->notify(notification);
-            break;
-        }
-        default:
-            break;
-    }
-}
-
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
     if (obj == infoDialogMenu.get())
@@ -4720,21 +4678,6 @@ void MegaApplication::openFolderPath(QString localPath)
 void MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired()
 {
     transferOverQuotaWaitTimeExpiredReceived = true;
-}
-
-void MegaApplication::redirectToPayBusiness(MegaNotification::Action activationButton)
-{
-    if (activationButton == MegaNotification::Action::firstButton
-            || activationButton == MegaNotification::Action::legacy
-        #ifndef _WIN32
-            || activationButton == MegaNotification::Action::content
-        #endif
-            )
-    {      
-        QString url = QString::fromUtf8("mega://#repay");
-        Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-    }
 }
 
 void MegaApplication::registerUserActivity()
@@ -7356,7 +7299,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
-        sendBusinessWarningNotification();
+        mOsNotifications->sendBusinessWarningNotification(businessStatus);
         disableSyncs();
     }
 
@@ -8506,7 +8449,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
-        sendBusinessWarningNotification();
+        mOsNotifications->sendBusinessWarningNotification(businessStatus);
         disableSyncs();
     }
 

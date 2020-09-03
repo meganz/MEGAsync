@@ -294,7 +294,6 @@ public slots:
 private slots:
     void showInFolder(MegaNotification::Action activationButton);
     void openFolderPath(QString path);
-    void redirectToPayBusiness(MegaNotification::Action activationButton);
     void registerUserActivity();
     void PSAseen(int id);
     void onBlocked();
@@ -323,7 +322,6 @@ protected:
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
-    void sendBusinessWarningNotification();
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
 

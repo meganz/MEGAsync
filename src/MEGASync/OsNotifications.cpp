@@ -278,3 +278,61 @@ void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButto
         QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
 }
+
+void OsNotifications::sendBusinessWarningNotification(int businessStatus)
+{
+    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+
+    switch (businessStatus)
+    {
+    case mega::MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
+    {
+        if (megaApi->isMasterBusinessAccount())
+        {
+            const auto notification{new MegaNotification()};
+            notification->setTitle(tr("Payment Failed"));
+            notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
+            notification->setActions(QStringList() << tr("Pay Now"));
+            connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToPayBusiness);
+            mNotificator->notify(notification);
+        }
+        break;
+    }
+    case mega::MegaApi::BUSINESS_STATUS_EXPIRED:
+    {
+        const auto notification{new MegaNotification()};
+
+        if (megaApi->isMasterBusinessAccount())
+        {
+            notification->setTitle(tr("Your Business account is expired"));
+            notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
+            notification->setActions(QStringList() << tr("Pay Now"));
+            connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToPayBusiness);
+        }
+        else
+        {
+            notification->setTitle(tr("Account Suspended"));
+            notification->setText(tr("Contact your business account administrator to resolve the issue and activate your account."));
+        }
+        mNotificator->notify(notification);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationButton)
+{
+    if (activationButton == MegaNotification::Action::firstButton
+            || activationButton == MegaNotification::Action::legacy
+        #ifndef _WIN32
+            || activationButton == MegaNotification::Action::content
+        #endif
+            )
+    {
+        QString url = QString::fromUtf8("mega://#repay");
+        Utilities::getPROurlWithParameters(url);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    }
+}
