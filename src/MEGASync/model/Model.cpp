@@ -41,10 +41,15 @@ void Model::removeSyncedFolder(int num)
         deactivateSync(cs);
     }
 
+    auto tag = cs->tag();
+
     assert(preferences->logged());
     preferences->removeSyncSetting(cs);
     configuredSyncsMap.remove(configuredSyncs.at(num));
     configuredSyncs.removeAt(num);
+
+    removeUnattendedDisabledSync(tag);
+
 
     emit syncRemoved(cs);
 }
@@ -103,6 +108,7 @@ void Model::removeAllFolders()
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
+    unattendedDisabledSyncs.clear();
 }
 
 void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
