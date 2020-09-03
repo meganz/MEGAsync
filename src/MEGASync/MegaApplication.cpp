@@ -1226,7 +1226,7 @@ void MegaApplication::initialize()
 #else
     notificator = new Notificator(applicationName(), trayIcon, this);
 #endif
-    osNotifications = ::mega::make_unique<OsNotifications>(notificator);
+    mOsNotifications = std::make_shared<OsNotifications>(notificator);
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -1390,7 +1390,7 @@ void MegaApplication::initialize()
         }
     }
 
-    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, notificator);
+    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, mOsNotifications);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
@@ -2910,7 +2910,7 @@ void MegaApplication::checkOverStorageStates()
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
             megaApi->sendEvent(99519, "Overstorage notification shown");
-            sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
+            mOsNotifications->sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
         }
 
         if (infoDialog)
@@ -2954,7 +2954,7 @@ void MegaApplication::checkOverStorageStates()
         {
             preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
             megaApi->sendEvent(99522, "Almost overstorage notification shown");
-            sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
+            mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
 
         if (storageOverquotaDialog)
@@ -2979,7 +2979,7 @@ void MegaApplication::checkOverStorageStates()
                 {
                     preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
                     megaApi->sendEvent(99530, "Paywall notification shown");
-                    sendOverStorageNotification(Preferences::STATE_PAYWALL);
+                    mOsNotifications->sendOverStorageNotification(Preferences::STATE_PAYWALL);
                 }
             }
 
@@ -3582,45 +3582,6 @@ void MegaApplication::initLocalServer()
         {
             renewLocalSSLcert();
         }
-    }
-}
-
-void MegaApplication::sendOverStorageNotification(int state)
-{
-    switch (state)
-    {
-        case Preferences::STATE_ALMOST_OVER_STORAGE:
-        {
-            MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Your account is almost full."));
-            notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToUpgrade);
-            notificator->notify(notification);
-            break;
-        }
-        case Preferences::STATE_OVER_STORAGE:
-        {
-            MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Your account is full."));
-            notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToUpgrade);
-            notificator->notify(notification);
-            break;
-        }
-        case Preferences::STATE_PAYWALL:
-        {
-            MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Your data is at risk"));
-            notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))));
-            notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, &MegaNotification::activated, this, &MegaApplication::redirectToUpgrade);
-            notificator->notify(notification);
-            break;
-        }
-        default:
-            break;
     }
 }
 
@@ -4753,21 +4714,6 @@ void MegaApplication::openFolderPath(QString localPath)
         }
         #endif
         Platform::showInFolder(localPath);
-    }
-}
-
-void MegaApplication::redirectToUpgrade(MegaNotification::Action activationButton)
-{
-    if (activationButton == MegaNotification::Action::firstButton
-            || activationButton == MegaNotification::Action::legacy
-        #ifndef _WIN32
-            || activationButton == MegaNotification::Action::content
-        #endif
-            )
-    {
-        QString url = QString::fromUtf8("mega://#pro");
-        Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     }
 }
 
@@ -8820,7 +8766,7 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
     if (list)
     {
         assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
-        osNotifications->addUserAlertList(list);
+        mOsNotifications->addUserAlertList(list);
     }
     else
     {

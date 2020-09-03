@@ -5,11 +5,11 @@
 
 TransferQuota::TransferQuota(mega::MegaApi* megaApi,
                                        Preferences *preferences,
-                                       Notificator *notificator)
+                                       std::shared_ptr<OsNotifications> osNotifications)
     :mMegaApi{megaApi},
       mPricing(nullptr),
       mPreferences{preferences},
-      mNotificator{notificator},
+      mOsNotifications{std::move(osNotifications)},
       mUpgradeDialog{nullptr},
       mQuotaState{QuotaState::OK}
 {
@@ -248,27 +248,16 @@ void TransferQuota::reset()
     mWaitTimeUntil = std::chrono::system_clock::time_point();
 }
 
-void TransferQuota::sendNotification(const QString &title)
-{
-    MegaNotification *notification = new MegaNotification();
-    notification->setTitle(title);
-    notification->setText(tr("Upgrade now to a PRO account."));
-    notification->setActions(QStringList() << tr("Get PRO"));
-    const auto megaApp{static_cast<MegaApplication*>(qApp)};
-    connect(notification, &MegaNotification::activated, megaApp, &MegaApplication::redirectToUpgrade);
-    mNotificator->notify(notification);
-}
-
 void TransferQuota::sendQuotaWarningOsNotification()
 {
     const auto title{tr("Limited available transfer quota.")};
-    sendNotification(title);
+    mOsNotifications->sendOverTransferNotification(title);
 }
 
 void TransferQuota::sendOverQuotaOsNotification()
 {
     const auto title{tr("Depleted transfer quota.")};
-    sendNotification(title);
+    mOsNotifications->sendOverTransferNotification(title);
 }
 
 void TransferQuota::upgradeDialogFinished(int)

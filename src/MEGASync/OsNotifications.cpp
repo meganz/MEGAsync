@@ -61,71 +61,113 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
         // alerts are sent again after seen state updated, so lets only notify the unseen alerts
         if(!alert->getSeen())
         {
-            auto notification{new MegaNotification()};
             switch (alert->getType())
             {
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "New Contact Request"));
-                notification->setText(QCoreApplication::translate("OsNotifications", "[A] sent you a contact request")
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("New Contact Request"));
+                notification->setText(tr("[A] sent you a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setActions(QStringList() << QCoreApplication::translate("OsNotifications", "Accept")
-                                         << QCoreApplication::translate("OsNotifications", "Reject"));
+                notification->setActions(QStringList() << tr("Accept")
+                                         << tr("Reject"));
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::incomingPendingRequest);
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "New Contact Request"));
-                notification->setText(QCoreApplication::translate("OsNotifications", "[A] cancelled the contact request")
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("New Contact Request"));
+                notification->setText(tr("[A] cancelled the contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "New Contact Request"));
-                notification->setText(QCoreApplication::translate("OsNotifications", "Reminder") + QStringLiteral(": ") +
-                                      QCoreApplication::translate("OsNotifications", "You have a contact request"));
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("New Contact Request"));
+                notification->setText(tr("Reminder") + QStringLiteral(": ") +
+                                      tr("You have a contact request"));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Established"));
-                notification->setText(QCoreApplication::translate("OsNotifications", "New contact with [A] has been established")
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("Contact Established"));
+                notification->setText(tr("New contact with [A] has been established")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setActions(QStringList() << QCoreApplication::translate("OsNotifications", "View"));
+                notification->setActions(QStringList() << tr("View"));
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewContactOnWebClient);
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Updated"));
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("Contact Updated"));
                 notification->setText(QCoreApplication::translate("OsNotifications","You accepted a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Updated"));
-                notification->setText(QCoreApplication::translate("OsNotifications", "You ignored a contact request"));
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("Contact Updated"));
+                notification->setText(tr("You ignored a contact request"));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
-                notification->setTitle(QCoreApplication::translate("OsNotifications", "Contact Updated"));
-                notification->setText(QCoreApplication::translate("OsNotifications", "You denied a contact request"));
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("Contact Updated"));
+                notification->setText(tr("You denied a contact request"));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_NEWSHARE:
+            {
+                auto notification{new MegaNotification()};
                 notification->setTitle(getSharedFolderName(alert));
-                notification->setText(QCoreApplication::translate("OsNotifications", "New Shared folder from [X]")
+                notification->setText(tr("New Shared folder from [X]")
                                       .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail())));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_DELETEDSHARE:
+            {
+                auto notification{new MegaNotification()};
                 notification->setTitle(getSharedFolderName(alert));
-                notification->setText(QCoreApplication::translate("OsNotifications", "[A] has left the shared folder")
+                notification->setText(tr("[A] has left the shared folder")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
+            {
+                auto notification{new MegaNotification()};
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(getItemsAddedText(alert));
+                mNotificator->notify(notification);
                 break;
+            }
             case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+            {
+                auto notification{new MegaNotification()};
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(getItemsRemovedText(alert));
+                mNotificator->notify(notification);
                 break;
-            default:
-                continue;
             }
-            mNotificator->notify(notification);
+            default:
+                break;
+            }
         }
     }
 }
@@ -169,4 +211,70 @@ void OsNotifications::viewContactOnWebClient()
     }
     QtConcurrent::run(QDesktopServices::openUrl, url);
     delete user;
+}
+
+void OsNotifications::sendOverStorageNotification(int state)
+{
+    switch (state)
+    {
+    case Preferences::STATE_ALMOST_OVER_STORAGE:
+    {
+        auto notification{new MegaNotification()};
+        notification->setTitle(tr("Your account is almost full."));
+        notification->setText(tr("Upgrade now to a PRO account."));
+        notification->setActions(QStringList() << tr("Get PRO"));
+        connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+        mNotificator->notify(notification);
+        break;
+    }
+    case Preferences::STATE_OVER_STORAGE:
+    {
+        auto notification{new MegaNotification()};
+        notification->setTitle(tr("Your account is full."));
+        notification->setText(tr("Upgrade now to a PRO account."));
+        notification->setActions(QStringList() << tr("Get PRO"));
+        connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+        mNotificator->notify(notification);
+        break;
+    }
+    case Preferences::STATE_PAYWALL:
+    {
+        auto notification{new MegaNotification()};
+        notification->setTitle(tr("Your data is at risk"));
+        const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+        const auto daysToTimeStamps{QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))};
+        notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), daysToTimeStamps));
+        notification->setActions(QStringList() << tr("Get PRO"));
+        connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+        mNotificator->notify(notification);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void OsNotifications::sendOverTransferNotification(const QString &title)
+{
+    const auto notification{new MegaNotification()};
+    notification->setTitle(title);
+    notification->setText(tr("Upgrade now to a PRO account."));
+    notification->setActions(QStringList() << tr("Get PRO"));
+    connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+    mNotificator->notify(notification);
+}
+
+void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButton)
+{
+    if (activationButton == MegaNotification::Action::firstButton
+            || activationButton == MegaNotification::Action::legacy
+        #ifndef _WIN32
+            || activationButton == MegaNotification::Action::content
+        #endif
+            )
+    {
+        QString url = QString::fromUtf8("mega://#pro");
+        Utilities::getPROurlWithParameters(url);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    }
 }

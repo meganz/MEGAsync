@@ -287,7 +287,6 @@ public slots:
     void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
-    void redirectToUpgrade(MegaNotification::Action activationButton);
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
@@ -324,7 +323,6 @@ protected:
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
-    void sendOverStorageNotification(int state);
     void sendBusinessWarningNotification();
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
@@ -502,7 +500,7 @@ protected:
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
-    std::unique_ptr<OsNotifications> osNotifications;
+    std::shared_ptr<OsNotifications> mOsNotifications;
 };
 
 class DeferPreferencesSyncForScope

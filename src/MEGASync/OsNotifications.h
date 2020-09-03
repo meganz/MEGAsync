@@ -13,10 +13,13 @@ class OsNotifications: public QObject
 public:
     OsNotifications(Notificator *notificator);
     void addUserAlertList(mega::MegaUserAlertList *alertList);
+    void sendOverStorageNotification(int state);
+    void sendOverTransferNotification(const QString &title);
 
 public slots:
     void incomingPendingRequest(MegaNotification::Action action);
     void viewContactOnWebClient();
+    void redirectToUpgrade(MegaNotification::Action activationButton);
 
 private:
     Notificator *mNotificator;
