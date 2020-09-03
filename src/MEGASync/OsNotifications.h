@@ -28,6 +28,7 @@ public slots:
     void redirectToUpgrade(MegaNotification::Action activationButton);
     void redirectToPayBusiness(MegaNotification::Action activationButton);
     void showInFolder(MegaNotification::Action action);
+    void viewShareOnWebClient(MegaNotification::Action action);
 
 private:
     Notificator* mNotificator;

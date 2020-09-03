@@ -76,8 +76,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setText(tr("[A] sent you a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setActions(QStringList() << tr("Accept")
-                                         << tr("Reject"));
+                notification->setActions(QStringList() << tr("Accept") << tr("Reject"));
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::incomingPendingRequest);
                 mNotificator->notify(notification);
                 break;
@@ -143,6 +142,12 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(tr("New Shared folder from [X]")
                                       .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail())));
+                notification->setActions(QStringList() << tr("Show"));
+                const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+                const auto node{std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()))};
+                const auto nodeHandleBase64{QString::fromUtf8(node->getBase64Handle())};
+                notification->setData(nodeHandleBase64);
+                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
                 mNotificator->notify(notification);
                 break;
             }
@@ -281,14 +286,19 @@ void OsNotifications::sendFinishedTransferNotification(const QString &title, con
     mNotificator->notify(notification);
 }
 
+bool checkIfActionIsValid(MegaNotification::Action action)
+{
+    return (action == MegaNotification::Action::firstButton)
+            || action == MegaNotification::Action::legacy
+        #ifndef _WIN32
+            || action == MegaNotification::Action::content
+        #endif
+            ;
+}
+
 void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButton)
 {
-    if (activationButton == MegaNotification::Action::firstButton
-            || activationButton == MegaNotification::Action::legacy
-        #ifndef _WIN32
-            || activationButton == MegaNotification::Action::content
-        #endif
-            )
+    if (checkIfActionIsValid(activationButton))
     {
         QString url = QString::fromUtf8("mega://#pro");
         Utilities::getPROurlWithParameters(url);
@@ -356,12 +366,7 @@ void OsNotifications::sendErrorNotification(const QString &title, const QString 
 
 void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationButton)
 {
-    if (activationButton == MegaNotification::Action::firstButton
-            || activationButton == MegaNotification::Action::legacy
-        #ifndef _WIN32
-            || activationButton == MegaNotification::Action::content
-        #endif
-            )
+    if (checkIfActionIsValid(activationButton))
     {
         QString url = QString::fromUtf8("mega://#repay");
         Utilities::getPROurlWithParameters(url);
@@ -373,12 +378,7 @@ void OsNotifications::showInFolder(MegaNotification::Action action)
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
 
-    if ((action == MegaNotification::Action::firstButton
-         || action == MegaNotification::Action::legacy
-     #ifndef _WIN32
-         || action == MegaNotification::Action::content
-     #endif
-         ) && notification->getData().size() > 1)
+    if (checkIfActionIsValid(action) && notification->getData().size() > 1)
     {
         QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
         if (notification->getData().at(0) == QChar::fromAscii('1'))
@@ -388,6 +388,20 @@ void OsNotifications::showInFolder(MegaNotification::Action action)
         else
         {
             QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
+        }
+    }
+}
+
+void OsNotifications::viewShareOnWebClient(MegaNotification::Action action)
+{
+    if (checkIfActionIsValid(action))
+    {
+        const auto notification{static_cast<MegaNotification*>(QObject::sender())};
+        const auto nodeHandlerBase64{notification->getData()};
+        if (!nodeHandlerBase64.isEmpty())
+        {
+            const auto url{QUrl(QString::fromUtf8("mega://#fm/%1").arg(nodeHandlerBase64))};
+            QtConcurrent::run(QDesktopServices::openUrl, url);
         }
     }
 }
