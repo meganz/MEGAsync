@@ -26,9 +26,14 @@ Model::Model() : QObject(), syncMutex(QMutex::Recursive)
     preferences = Preferences::instance();
 }
 
+bool Model::hasUnattendedDisabledSyncs() const
+{
+    return unattendedDisabledSyncs.size();
+}
+
 void Model::removeSyncedFolder(int num)
 {
-assert(num <= configuredSyncs.size() && configuredSyncsMap.contains(configuredSyncs.at(num)));
+    assert(num <= configuredSyncs.size() && configuredSyncsMap.contains(configuredSyncs.at(num)));
     QMutexLocker qm(&syncMutex);
     auto cs = configuredSyncsMap[configuredSyncs.at(num)];
     if (cs->isActive())
@@ -36,10 +41,15 @@ assert(num <= configuredSyncs.size() && configuredSyncsMap.contains(configuredSy
         deactivateSync(cs);
     }
 
+    auto tag = cs->tag();
+
     assert(preferences->logged());
     preferences->removeSyncSetting(cs);
     configuredSyncsMap.remove(configuredSyncs.at(num));
     configuredSyncs.removeAt(num);
+
+    removeUnattendedDisabledSync(tag);
+
 
     emit syncRemoved(cs);
 }
@@ -76,6 +86,8 @@ void Model::removeSyncedFolderByTag(int tag)
         }
     }
 
+    removeUnattendedDisabledSync(tag);
+
     emit syncRemoved(cs);
 }
 
@@ -96,6 +108,7 @@ void Model::removeAllFolders()
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
+    unattendedDisabledSyncs.clear();
 }
 
 void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
@@ -264,6 +277,7 @@ void Model::reset()
     QMutexLocker qm(&syncMutex);
     configuredSyncs.clear();
     configuredSyncsMap.clear();
+    unattendedDisabledSyncs.clear();
     isFirstSyncDone = false;
 }
 
@@ -343,4 +357,41 @@ std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(int tag)
         return configuredSyncsMap[tag];
     }
     return nullptr;
+}
+
+void Model::saveUnattendedDisabledSyncs()
+{
+    if (preferences->logged())
+    {
+        preferences->setDisabledSyncTags(unattendedDisabledSyncs);
+    }
+}
+
+void Model::addUnattendedDisabledSync(int tag)
+{
+    unattendedDisabledSyncs.insert(tag);
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
+}
+
+void Model::removeUnattendedDisabledSync(int tag)
+{
+    unattendedDisabledSyncs.remove(tag);
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
+}
+
+void Model::setUnattendedDisabledSyncs(QSet<int> tags)
+{
+    //REVIEW: If possible to get enable/disable callbacks before loading from settings.Merge both lists of tags.
+    unattendedDisabledSyncs = tags;
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
+}
+
+void Model::dismissUnattendedDisabledSyncs()
+{
+    unattendedDisabledSyncs.clear();
+    saveUnattendedDisabledSyncs();
+    emit syncDisabledListUpdated();
 }

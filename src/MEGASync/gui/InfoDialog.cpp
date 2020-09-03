@@ -213,6 +213,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     actualAccountType = -1;
 
+    connect(model, SIGNAL(syncDisabledListUpdated()), this, SLOT(updateDialogState()));
+
     uploadsFinishedTimer.setSingleShot(true);
     uploadsFinishedTimer.setInterval(5000);
     connect(&uploadsFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllUploadsFinished()));
@@ -941,6 +943,12 @@ void InfoDialog::updateDialogState()
                                 " address and can therefore be interrupted."));
         ui->bBuyQuota->setText(tr("Upgrade"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+        overlay->setVisible(false);
+        ui->wPSA->hidePSA();
+    }
+    else if (model->hasUnattendedDisabledSyncs())
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
@@ -1989,6 +1997,17 @@ void InfoDialog::highLightMenuEntry(QAction *action)
     }
     pAction->setHighlight(true);
     lastHovered = pAction;
+}
+
+void InfoDialog::on_bDismissSyncSettings_clicked()
+{
+    model->dismissUnattendedDisabledSyncs();
+}
+
+void InfoDialog::on_bOpenSyncSettings_clicked()
+{
+    ((MegaApplication *)qApp)->openSettings(SettingsDialog::SYNCS_TAB);
+    model->dismissUnattendedDisabledSyncs();
 }
 
 int InfoDialog::getLoggedInMode() const

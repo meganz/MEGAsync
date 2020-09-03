@@ -284,6 +284,8 @@ public:
     void setLastReboot(long long value);
     long long getLastExit();
     void setLastExit(long long value);
+    QSet<int> getDisabledSyncTags();
+    void setDisabledSyncTags(QSet<int> disabledSyncs);
 
     QString getHttpsKey();
     void setHttpsKey(QString key);
@@ -658,6 +660,7 @@ protected:
     static const QString lastPublicHandleKey;
     static const QString lastPublicHandleTimestampKey;
     static const QString lastPublicHandleTypeKey;
+    static const QString disabledSyncsKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

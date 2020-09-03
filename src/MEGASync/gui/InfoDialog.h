@@ -69,6 +69,7 @@ public:
     void setTransferring(bool value);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
+    void setDisabledSyncTags(QSet<int> tags);
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
@@ -158,6 +159,9 @@ private slots:
     void sTabsChanged(int tab);
 
     void highLightMenuEntry(QAction* action);
+
+    void on_bDismissSyncSettings_clicked();
+    void on_bOpenSyncSettings_clicked();
 
 signals:
     void openTransferManager(int tab);
