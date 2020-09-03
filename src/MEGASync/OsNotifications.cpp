@@ -1,12 +1,18 @@
 #include "megaapi.h"
 #include "OsNotifications.h"
 #include "MegaApplication.h"
+#include "Platform.h"
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrent>
 
-OsNotifications::OsNotifications(Notificator *notificator)
-    :mNotificator{notificator}
+OsNotifications::OsNotifications(const QString &appName, QSystemTrayIcon *trayIcon)
+    :mAppIcon{QString::fromUtf8("://images/app_128.png")}
 {
+#ifdef __APPLE__
+    mNotificator = new Notificator(appName, NULL, this);
+#else
+    mNotificator = new Notificator(appName, trayIcon, this);
+#endif
 }
 
 QString getSharedFolderName(mega::MegaUserAlert* alert)
@@ -264,6 +270,17 @@ void OsNotifications::sendOverTransferNotification(const QString &title)
     mNotificator->notify(notification);
 }
 
+void OsNotifications::sendFinishedTransferNotification(const QString &title, const QString &message, const QString &extraData)
+{
+    auto notification{new MegaNotification()};
+    notification->setTitle(title);
+    notification->setText(message);
+    notification->setActions(QStringList() << tr("Show in folder"));
+    notification->setData(extraData);
+    connect(notification, &MegaNotification::activated, this, &OsNotifications::showInFolder);
+    mNotificator->notify(notification);
+}
+
 void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButton)
 {
     if (activationButton == MegaNotification::Action::firstButton
@@ -322,6 +339,21 @@ void OsNotifications::sendBusinessWarningNotification(int businessStatus)
     }
 }
 
+void OsNotifications::sendInfoNotification(const QString &title, const QString &message)
+{
+    mNotificator->notify(Notificator::Information, title, message, mAppIcon);
+}
+
+void OsNotifications::sendWarningNotification(const QString &title, const QString &message)
+{
+    mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
+}
+
+void OsNotifications::sendErrorNotification(const QString &title, const QString &message)
+{
+    mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
+}
+
 void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationButton)
 {
     if (activationButton == MegaNotification::Action::firstButton
@@ -334,5 +366,28 @@ void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationB
         QString url = QString::fromUtf8("mega://#repay");
         Utilities::getPROurlWithParameters(url);
         QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+    }
+}
+
+void OsNotifications::showInFolder(MegaNotification::Action action)
+{
+    const auto notification{static_cast<MegaNotification*>(QObject::sender())};
+
+    if ((action == MegaNotification::Action::firstButton
+         || action == MegaNotification::Action::legacy
+     #ifndef _WIN32
+         || action == MegaNotification::Action::content
+     #endif
+         ) && notification->getData().size() > 1)
+    {
+        QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
+        if (notification->getData().at(0) == QChar::fromAscii('1'))
+        {
+            Platform::showInFolder(localPath);
+        }
+        else
+        {
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
+        }
     }
 }

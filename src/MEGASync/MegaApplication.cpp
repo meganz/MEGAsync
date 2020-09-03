@@ -1099,7 +1099,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exitDialog = NULL;
     sslKeyPinningError = NULL;
     downloadNodeSelector = NULL;
-    notificator = NULL;
     pricing = NULL;
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
@@ -1221,12 +1220,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
-#ifdef __APPLE__
-    notificator = new Notificator(applicationName(), NULL, this);
-#else
-    notificator = new Notificator(applicationName(), trayIcon, this);
-#endif
-    mOsNotifications = std::make_shared<OsNotifications>(notificator);
+    mOsNotifications = std::make_shared<OsNotifications>(applicationName(), trayIcon);
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -4011,7 +4005,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
 
-    if (notificator)
+    if (mOsNotifications)
     {
 #ifdef __APPLE__
         if (infoDialog && infoDialog->isVisible())
@@ -4020,8 +4014,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
         }
 #endif
         lastTrayMessage = message;
-        notificator->notify(Notificator::Information, title, message,
-                            QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendInfoNotification(title, message);
     }
     else
     {
@@ -4043,11 +4036,10 @@ void MegaApplication::showWarningMessage(QString message, QString title)
         return;
     }
 
-    if (notificator)
+    if (mOsNotifications)
     {
         lastTrayMessage = message;
-        notificator->notify(Notificator::Warning, title, message,
-                                    QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendWarningNotification(title, message);
     }
     else QMegaMessageBox::warning(nullptr, title, message);
 }
@@ -4071,7 +4063,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     lastTsErrorMessageShown = QDateTime::currentMSecsSinceEpoch();
 
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, message.toUtf8().constData());
-    if (notificator)
+    if (mOsNotifications)
     {
 #ifdef __APPLE__
         if (infoDialog && infoDialog->isVisible())
@@ -4079,8 +4071,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
             infoDialog->hide();
         }
 #endif
-        notificator->notify(Notificator::Critical, title, message,
-                            QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendErrorNotification(title, message);
     }
     else
     {
@@ -4102,11 +4093,10 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
         return;
     }
 
-    if (notificator)
+    if (mOsNotifications)
     {
         lastTrayMessage = message;
-        notificator->notify(Notificator::Information, title, message,
-                                    QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendInfoNotification(title, message);
     }
 }
 
@@ -4612,15 +4602,12 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
             }
         }
 
-        if (notificator && !message.isEmpty())
+        if (mOsNotifications && !message.isEmpty())
         {           
             preferences->setLastTransferNotificationTimestamp();
-            notification->setTitle(title);
-            notification->setText(message);
-            notification->setActions(QStringList() << tr("Show in folder"));
-            notification->setData(((data->totalTransfers == 1) ? QString::number(1) : QString::number(0)) + data->localPath);
-            connect(notification, &MegaNotification::activated, this, &MegaApplication::showInFolder);
-            notificator->notify(notification);
+            const auto totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
+            const auto extraData{totalTransfersString + data->localPath};
+            mOsNotifications->sendFinishedTransferNotification(title, message, extraData);
         }
 
         transferAppData.erase(it);
@@ -4636,30 +4623,6 @@ void MegaApplication::enableFinderExt()
     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT, true);
 }
 #endif
-
-void MegaApplication::showInFolder(MegaNotification::Action activationButton)
-{
-    MegaNotification *notification = ((MegaNotification *)QObject::sender());
-
-    if ((activationButton == MegaNotification::Action::firstButton
-         || activationButton == MegaNotification::Action::legacy
-     #ifndef _WIN32
-         || activationButton == MegaNotification::Action::content
-     #endif
-         )
-            && notification->getData().size() > 1)
-    {
-        QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
-        if (notification->getData().at(0) == QChar::fromAscii('1'))
-        {
-            Platform::showInFolder(localPath);
-        }
-        else
-        {
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
-        }
-    }
-}
 
 void MegaApplication::openFolderPath(QString localPath)
 {

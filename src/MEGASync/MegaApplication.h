@@ -292,7 +292,6 @@ public slots:
     void enableFinderExt();
 #endif
 private slots:
-    void showInFolder(MegaNotification::Action activationButton);
     void openFolderPath(QString path);
     void registerUserActivity();
     void PSAseen(int id);
@@ -453,7 +452,6 @@ protected:
 
     QThread *updateThread;
     UpdateTask *updateTask;
-    Notificator *notificator;
     long long lastActiveTime;
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
