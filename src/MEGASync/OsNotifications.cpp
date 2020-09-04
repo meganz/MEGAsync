@@ -59,6 +59,73 @@ QString getItemsRemovedText(mega::MegaUserAlert* alert)
     }
 }
 
+QString createPaymentReminderText(int64_t expirationTimeStamp)
+{
+    QDateTime expiredDate;
+    expiredDate.setMSecsSinceEpoch(expirationTimeStamp * 1000);
+    QDateTime currentDate(QDateTime::currentDateTime());
+
+    int daysExpired = currentDate.daysTo(expiredDate);
+    if (daysExpired == 1)
+    {
+        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan will expire in 1 day");
+    }
+    else if (daysExpired > 0)
+    {
+        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan will expire in [A] days")
+                .replace(QString::fromUtf8("[A]"), QString::number(daysExpired));
+    }
+    else if (daysExpired == 0)
+    {
+        return QCoreApplication::translate("OsNotifications", "PRO membership plan expiring soon");
+    }
+    else if (daysExpired == -1)
+    {
+        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan expired 1 day ago");
+    }
+    else
+    {
+        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan expired [A] days ago")
+                .replace(QString::fromUtf8("[A]"), QString::number(-daysExpired));
+    }
+}
+
+QString createTakeDownMessage(mega::MegaUserAlert* alert)
+{
+    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+    const auto node{megaApi->getNodeByHandle(alert->getNodeHandle())};
+    if (node)
+    {
+        if (node->getType() == mega::MegaNode::TYPE_FILE)
+        {
+            return QCoreApplication::translate("OsNotifications", "Your publicly shared file ([A]) has been taken down")
+                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8(node->getName()));
+        }
+        else if (node->getType() == mega::MegaNode::TYPE_FOLDER)
+        {
+            return QCoreApplication::translate("OsNotifications", "Your publicly shared folder ([A]) has been taken down")
+                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8(node->getName()));
+        }
+        else
+        {
+            return QCoreApplication::translate("OsNotifications", "Your publicly shared has been taken down");
+        }
+
+        delete node;
+    }
+    else
+    {
+        return QCoreApplication::translate("OsNotifications", "Your publicly shared has been taken down");
+    }
+}
+
+QString getNodeHandleBase64(mega::MegaUserAlert* alert)
+{
+    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+    const auto node{std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()))};
+    return QString::fromUtf8(node->getBase64Handle());
+}
+
 void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 {
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
@@ -142,11 +209,8 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(tr("New Shared folder from [X]")
                                       .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail())));
+                notification->setData(getNodeHandleBase64(alert));
                 notification->setActions(QStringList() << tr("Show"));
-                const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
-                const auto node{std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()))};
-                const auto nodeHandleBase64{QString::fromUtf8(node->getBase64Handle())};
-                notification->setData(nodeHandleBase64);
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
                 mNotificator->notify(notification);
                 break;
@@ -157,6 +221,9 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(tr("[A] has left the shared folder")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                notification->setData(getNodeHandleBase64(alert));
+                notification->setActions(QStringList() << tr("Show"));
+                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
                 mNotificator->notify(notification);
                 break;
             }
@@ -165,6 +232,9 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 auto notification{new MegaNotification()};
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(getItemsAddedText(alert));
+                notification->setData(getNodeHandleBase64(alert));
+                notification->setActions(QStringList() << tr("Show"));
+                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
                 mNotificator->notify(notification);
                 break;
             }
@@ -173,6 +243,32 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 auto notification{new MegaNotification()};
                 notification->setTitle(getSharedFolderName(alert));
                 notification->setText(getItemsRemovedText(alert));
+                notification->setData(getNodeHandleBase64(alert));
+                notification->setActions(QStringList() << tr("Show"));
+                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
+                mNotificator->notify(notification);
+                break;
+            }
+            case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("Payment Info"));
+                constexpr auto paymentReminderIndex{1};
+                notification->setText(createPaymentReminderText(alert->getTimestamp(paymentReminderIndex)));
+                notification->setActions(QStringList() << tr("Upgrade"));
+                connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+                mNotificator->notify(notification);
+                break;
+            }
+            case mega::MegaUserAlert::TYPE_TAKEDOWN:
+            case mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+            {
+                auto notification{new MegaNotification()};
+                notification->setTitle(tr("Takedown Notice"));
+                notification->setText(createTakeDownMessage(alert));
+                notification->setData(getNodeHandleBase64(alert));
+                notification->setActions(QStringList() << tr("Show"));
+                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
                 mNotificator->notify(notification);
                 break;
             }
