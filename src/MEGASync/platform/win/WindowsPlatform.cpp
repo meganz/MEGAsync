@@ -107,7 +107,7 @@ void WindowsPlatform::prepareForSync()
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
                                     .arg(networkName).arg(driveName).toUtf8().constData());
 
-                        QStringList localFolders = preferences->getLocalFolders();
+                        QStringList localFolders = Model::instance()->getLocalFolders();
                         for (int i = 0; i < localFolders.size(); i++)
                         {
                             QString localFolder = localFolders.at(i);
@@ -808,6 +808,16 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
     WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinksPath, NULL);
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
+
+    //Hide debris folder
+    Preferences *preferences = Preferences::instance();
+    QString debrisPath = QDir::toNativeSeparators(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
+    {
+        SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
+    }
+
 }
 
 void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)

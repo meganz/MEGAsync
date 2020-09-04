@@ -188,10 +188,7 @@ padding-bottom: 6px;
    </property>
    <item row="8" column="0">
     <widget class="QWidget" name="wBottom" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_12">
-      <property name="spacing">
-       <number>0</number>
-      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_31">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -206,17 +203,14 @@ padding-bottom: 6px;
       </property>
       <item>
        <layout class="QHBoxLayout" name="layoutBottom">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinAndMaxSize</enum>
+        </property>
         <property name="leftMargin">
          <number>22</number>
         </property>
-        <property name="topMargin">
-         <number>11</number>
-        </property>
         <property name="rightMargin">
-         <number>30</number>
-        </property>
-        <property name="bottomMargin">
-         <number>15</number>
+         <number>22</number>
         </property>
         <item>
          <spacer name="horizontalSpacer">
@@ -225,7 +219,92 @@ padding-bottom: 6px;
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>400</width>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QWidget" name="wSavingSync" native="true">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_30">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="wContainerSpinning" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <widget class="QMacSpinningProgressIndicator" name="wSpinningIndicator" native="true">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>16</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lSavingSyncs">
+             <property name="text">
+              <string>Saving sync...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
             <height>0</height>
            </size>
           </property>
@@ -512,7 +591,7 @@ padding-bottom: 6px;
          <string>Advanced</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -643,7 +722,7 @@ padding-bottom: 6px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
             </property>
             <property name="iconSize">
@@ -973,7 +1052,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1229,7 +1308,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1514,7 +1593,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -2211,7 +2290,7 @@ border: none;</string>
           <string notr="true"/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3309,7 +3388,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3580,7 +3659,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3847,7 +3926,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3968,7 +4047,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -4509,7 +4588,7 @@ background:transparent;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_linux.qrc">
+      <iconset resource="../Resources_macx.qrc">
        <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
      </property>
      <property name="iconSize">
@@ -4523,6 +4602,14 @@ background:transparent;</string>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QMacSpinningProgressIndicator</class>
+   <extends>QWidget</extends>
+   <header location="global">QMacSpinningProgressIndicator.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>bAccount</tabstop>
   <tabstop>bSyncs</tabstop>
@@ -4582,7 +4669,7 @@ background:transparent;</string>
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
  <slots>
