@@ -23,7 +23,9 @@ public:
     void sendErrorNotification(const QString& title, const QString& message);
 
 public slots:
-    void incomingPendingRequest(MegaNotification::Action action);
+    void replayIncomingPendingRequest(MegaNotification::Action action);
+    void notifySharedUpdate(mega::MegaUserAlert* alert, const QString& message);
+    void notifyTakeDownReinstated(mega::MegaUserAlert* alert);
     void viewContactOnWebClient();
     void redirectToUpgrade(MegaNotification::Action activationButton);
     void redirectToPayBusiness(MegaNotification::Action activationButton);
