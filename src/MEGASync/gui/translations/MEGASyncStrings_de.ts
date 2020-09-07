@@ -3948,7 +3948,7 @@ Bitte verwenden Sie keine reservierten Sonderzeichen wie ‘\’, ‘/’ oder �
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Anzeigen</translation>
+        <translation type="unfinished">Anzeigen </translation>
     </message>
     <message>
         <source>&amp;amp;Rename</source>

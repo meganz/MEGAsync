@@ -3977,7 +3977,7 @@ Xin chắc rằng tên thư mục không có chứa các ký tự như ‘\’ �
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Hiện[S]</translation>
+        <translation type="unfinished">Hiện </translation>
     </message>
     <message>
         <source>All files (*)</source>

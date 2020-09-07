@@ -3978,7 +3978,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Weergeven[S]</translation>
+        <translation type="unfinished">Weergeven </translation>
     </message>
     <message>
         <source>All files (*)</source>

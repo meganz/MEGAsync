@@ -3977,7 +3977,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Afficher[S]</translation>
+        <translation type="unfinished">Afficher </translation>
     </message>
     <message>
         <source>All files (*)</source>

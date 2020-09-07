@@ -3977,7 +3977,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Tampilkan[S]</translation>
+        <translation type="unfinished">Tampilkan </translation>
     </message>
     <message>
         <source>All files (*)</source>

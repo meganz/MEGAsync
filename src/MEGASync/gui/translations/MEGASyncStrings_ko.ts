@@ -3978,7 +3978,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">보기[S]</translation>
+        <translation type="unfinished">보기 </translation>
     </message>
     <message>
         <source>All files (*)</source>

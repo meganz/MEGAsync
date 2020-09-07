@@ -3977,7 +3977,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Afișează[S]</translation>
+        <translation type="unfinished">Afișează </translation>
     </message>
     <message>
         <source>All files (*)</source>
