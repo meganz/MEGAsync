@@ -21,22 +21,22 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Tempat Sampah</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Gudang</translation>
+        <translation type="obsolete">Storage</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">File</translation>
+        <translation type="obsolete">Files</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Folder</translation>
+        <translation type="obsolete">Folders</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -366,7 +366,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="obsolete">Folder Berbagi baru dari [X]</translation>
+        <translation type="obsolete">New shared folder from [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -376,7 +376,7 @@
     <message>
         <source>Access to folders shared was removed</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
-        <translation type="obsolete">Akses ke folder berbagi telah dihapus</translation>
+        <translation type="obsolete">Access to shared folder was removed</translation>
     </message>
     <message>
         <source>[A] added 1 item</source>
@@ -436,7 +436,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">Anda punya %1 (%2) telah dicopot.</translation>
+        <translation type="obsolete">Your publicly shared %1 (%2) has been taken down.</translation>
     </message>
     <message>
         <source>file</source>
@@ -456,7 +456,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">[A] ([B]) Anda yang dibagikan secara publik telah dipulihkan</translation>
+        <translation type="obsolete">Your publicly shared [A] ([B]) has been reinstated</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +476,7 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="obsolete">(folder bersama tidak dikenal)</translation>
+        <translation type="obsolete">(unknown shared folder)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
@@ -486,7 +486,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">[%1] ([%2]) yang dibagikan secara publik telah dihapus</translation>
+        <translation type="obsolete">Your publicly shared [%1] ([%2]) has been taken down</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -548,11 +548,11 @@
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation type="obsolete">Sync akun secara menyeluruh hanya mungkin tanpa adanya sync selektif</translation>
+        <translation type="obsolete">Full account syncing is only possible without any selective syncs</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Peringatan</translation>
+        <translation type="obsolete">Warning</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -583,13 +583,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Folder lokal terlalu besar (versi ini terbatas pada %1 folder atau %2 file). Silakan, pilih folder lain.</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please select another folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">Anda mencoba menyinkronkan folder yang sangat besar. Untuk mencegah penyelarasan seluruh volume boot, yang tidak efisien dan berbahaya, kami meminta Anda untuk memulai dengan folder yang lebih kecil dan menambahkan lebih banyak data sementara MEGAsync sedang berjalan.</translation>
+        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
 </context>
 <context>
@@ -730,7 +730,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation type="unfinished">[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU Lesser General Public License Version 3[/A]</translation>
+        <translation type="unfinished">[A]Perangkat lunak ini menggunakan Qt ([C] 2018 The Qt Company Ltd) yang dicakup oleh GNU Lesser General Public License Versi 3[/A]</translation>
     </message>
 </context>
 <context>
@@ -757,11 +757,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="obsolete">Kata sandi diubah</translation>
+        <translation type="obsolete">Password changed</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="obsolete">Kata sandi anda telah dirubah.</translation>
+        <translation type="obsolete">Your password has been changed.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -769,11 +769,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="obsolete">Password salah</translation>
+        <translation type="obsolete">Wrong password</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Peringatan</translation>
+        <translation type="obsolete">Warning</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -883,7 +883,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
-        <translation type="obsolete">%1 dari %2</translation>
+        <translation type="obsolete">%1 of %2</translation>
     </message>
     <message>
         <source>starting...</source>
@@ -1091,7 +1091,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">Anda tidak memiliki write permission dalam folder ini.</translation>
+        <translation type="obsolete">You don’t have write permissions in this folder.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -1130,7 +1130,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="obsolete">MEGAsync dalam mode guest</translation>
+        <translation type="obsolete">MEGAsync is in guest mode</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1140,12 +1140,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation type="obsolete">Batalkan seluruh download</translation>
+        <translation type="obsolete">Cancel all downloads</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="obsolete">Batalkan download</translation>
+        <translation type="obsolete">Cancel download</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1155,7 +1155,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="obsolete">[A]Login[/A] atau [B]Buat akun[/B] untuk sepenuhnya memakai MEGA</translation>
+        <translation type="obsolete">[A]Log in[/A] or [B]Create an account[/B] to fully experience MEGA</translation>
     </message>
     <message>
         <source>Login to MEGA</source>
@@ -1210,7 +1210,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Message shown after a failed login to recommend the user to verify his account.</translatorcomment>
-        <translation type="obsolete">Sudahkah anda memverifikasi akun anda?</translation>
+        <translation type="obsolete">Have you verified your account?</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
@@ -1231,7 +1231,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="obsolete">Tidak bisa mendapatkan filesystem. Tolong, coba lagi. Jika masalah berlanjut, silakan hubungi kami di bug@mega.nz</translation>
+        <translation type="obsolete">Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1271,7 +1271,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify email</source>
         <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
-        <translation type="obsolete">Verifikasi email</translation>
+        <translation type="obsolete">Verify email</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
@@ -1374,7 +1374,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation type="obsolete">/MEGAsync Download</translation>
+        <translation type="obsolete">/MEGAsync Downloads</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
@@ -1510,23 +1510,23 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>one file at %1/s</source>
-        <translation type="obsolete">satu file dengan kecepatan %1/s</translation>
+        <translation type="obsolete">one file at %1/s</translation>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation type="obsolete">satu file (paused)</translation>
+        <translation type="obsolete">one file (paused)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
-        <translation type="obsolete">%1 dari %2 file  dengan kecepatan %3/s</translation>
+        <translation type="obsolete">%1 of %2 files at %3/s</translation>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation type="obsolete">%1 dari %2 file (paused)</translation>
+        <translation type="obsolete">%1 of %2 files (paused)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Total Tersisa:</translation>
+        <translation type="obsolete">Total Remaining:</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -1550,7 +1550,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Pause</source>
-        <translation type="obsolete">Hentikan sementara</translation>
+        <translation type="obsolete">Pause</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1559,32 +1559,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="obsolete">Lanjutkan download</translation>
+        <translation type="obsolete">Resume downloads</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="obsolete">Jeda download</translation>
+        <translation type="obsolete">Pause downloads</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="obsolete">Lanjutkan upload</translation>
+        <translation type="obsolete">Resume uploads</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="obsolete">Jeda upload</translation>
+        <translation type="obsolete">Pause uploads</translation>
     </message>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="obsolete">Lanjutkan download</translation>
+        <translation type="obsolete">Resume download</translation>
     </message>
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="obsolete">Lanjutkan upload</translation>
+        <translation type="obsolete">Resume upload</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
@@ -1593,17 +1593,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="obsolete">Server sangat sibuk. Harap tunggu.</translation>
+        <translation type="obsolete">Servers are too busy. Please wait…</translation>
     </message>
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
-        <translation type="obsolete">MEGAsync sedang tidak aktif</translation>
+        <translation type="obsolete">MEGAsync is currently disabled</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
-        <translation type="obsolete">Akun anda telah melewati space quota yang diizinkan. [A]Upgrade[/A] dan tetap menikmati storage yang aman dan terenkripsi secara menyeluruh.</translation>
+        <translation type="obsolete">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
     </message>
     <message>
         <source>Upgrade to PRO</source>
@@ -1618,37 +1618,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>USED STORAGE %1</source>
         <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
-        <translation type="obsolete">STORAGE TERPAKAI %1</translation>
+        <translation type="obsolete">USED STORAGE %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
-        <translation type="obsolete">Data sementara tidak tersedia</translation>
+        <translation type="obsolete">Data temporarily unavailable</translation>
     </message>
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">JEDA</translation>
+        <translation type="obsolete">PAUSED</translation>
     </message>
     <message>
         <source>Paused</source>
         <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
-        <translation type="obsolete">Berhenti sementara</translation>
+        <translation type="obsolete">Paused</translation>
     </message>
     <message>
         <source>Waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at waiting state</translatorcomment>
-        <translation type="obsolete">Menunggu</translation>
+        <translation type="obsolete">Waiting</translation>
     </message>
     <message>
         <source>Scanning...</source>
         <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
-        <translation type="obsolete">Scanning...</translation>
+        <translation type="obsolete">Scanning…</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at up-to-date state</translatorcomment>
-        <translation type="obsolete">Terkini</translation>
+        <translation type="obsolete">Up to date</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -1658,17 +1658,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Kotak Masuk</translation>
+        <translation type="obsolete">Inbox</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Berbagi Masuk</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Tempat Sampah</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1677,7 +1677,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>USED BANDWIDTH %1</source>
-        <translation type="obsolete">BANDWIDTH TERPAKAI %1</translation>
+        <translation type="obsolete">USED BANDWIDTH %1</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
@@ -1701,7 +1701,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>TRANSFER QUOTA %1</source>
         <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
-        <translation type="obsolete">KUOTA TRANSFER %1</translation>
+        <translation type="obsolete">TRANSFER QUOTA %1</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
@@ -1721,7 +1721,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="obsolete">Semua unggahan file saat ini dinonaktifkan. Harap tingkatkan ke PRO.</translation>
+        <translation type="obsolete">All file uploads are currently disabled. Please upgrade your account.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1766,7 +1766,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all notifications will be shown.</translatorcomment>
-        <translation type="obsolete">Semua notifikasi</translation>
+        <translation type="obsolete">All notifications</translation>
     </message>
     <message>
         <source>Open notification settings</source>
@@ -1796,7 +1796,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to filter notifications  by contact type</translatorcomment>
-        <translation type="obsolete">Kontak</translation>
+        <translation type="obsolete">Contacts</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
@@ -1811,7 +1811,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Payment</source>
         <translatorcomment>Label to filter notifications  by payment type</translatorcomment>
-        <translation type="obsolete">Pembayaran</translation>
+        <translation type="obsolete">Payment</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
@@ -1831,7 +1831,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished">Kami telah menghubungi Anda melalui email ke [A] pada [B] tetapi Anda masih memiliki file [C] yang mengambil [D] di akun MEGA Anda, yang mengharuskan Anda memiliki [E].</translation>
+        <translation type="unfinished">Kami telah menghubungi anda melalui email ke [A] pada [B], tetapi anda masih memiliki [C] file yang menggunakan [D] di akun MEGA anda, yang mengharuskan anda memiliki [E].</translation>
     </message>
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1846,7 +1846,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation type="unfinished">You must act immediately to save your data</translation>
+        <translation type="unfinished">Anda harus segera bertindak untuk menyimpan data anda</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
@@ -1873,47 +1873,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
         <translation type="unfinished">Transfer yang Anda antri melebihi kuota saat ini yang tersedia untuk alamat IP Anda dan karenanya dapat terganggu.</translation>
     </message>
+    <message>
+        <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
+        <translation type="unfinished">You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Labe shown when a user that MEGAsync is currently disabled due to an over quota state.</translatorcomment>
-        <translation type="obsolete">MEGAsync sedang tidak aktif</translation>
+        <translation type="obsolete">MEGAsync is currently disabled</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Akun anda telah melewati space quota yang diizinkan. [A]Upgrade[/A] dan tetap menikmati storage yang aman dan terenkripsi secara menyeluruh.</translation>
+        <translation type="obsolete">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
         <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
-        <translation type="obsolete">Tingkatkan akun anda</translation>
+        <translation type="obsolete">Upgrade your account</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Labe to indicate that the account usage is temporaryly unavailable.</translatorcomment>
-        <translation type="obsolete">Pemakaian: Data untuk sementara tidak tersedia</translation>
+        <translation type="obsolete">Usage: Data temporarily unavailable</translation>
     </message>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label to MEGA website link</translatorcomment>
-        <translation type="obsolete">MEGA websie</translation>
+        <translation type="obsolete">MEGA website</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the current amount of account usage.over the total actual plan.  Keep %1 and %2 codes.</translatorcomment>
-        <translation type="obsolete">%1 dari %2</translation>
+        <translation type="obsolete">%1 of %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
-        <translation type="obsolete">Pemakaian: %1</translation>
+        <translation type="obsolete">Usage: %1</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="obsolete">Pengaturan</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
 </context>
 <context>
@@ -1924,35 +1929,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="obsolete">[S]MEGAsync:[/S] syncing mudah dan otomatis antara komputer anda dan MEGA cloud drive anda</translation>
+        <translation type="obsolete">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA Cloud Drive</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="obsolete">[S]Flexible:[/S] Sync folder apapun dari PC ke folder apapun di cloud. Sync berapa banyak pun folder secara paralel.</translation>
+        <translation type="obsolete">[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="obsolete">Transfer yang lebih cepat</translation>
+        <translation type="obsolete">Faster transfer speeds</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="obsolete">MEGAsync memanfaatkan infrastrukter canggih MEGA dan transfer multi-koneksi.</translation>
+        <translation type="obsolete">MEGAsync takes full advantage of MEGA’s high-powered infrastructure and multi-connection transfers.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="obsolete">Pengunaan resource sedikit &amp; sendiri</translation>
+        <translation type="obsolete">Lean &amp; mean resource usage</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="obsolete">Jalankan algoritma enkripsi MEGA pada mesin anda tanpa mengandalkan browser yang lebih lambat.</translation>
+        <translation type="obsolete">Run MEGA’s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="obsolete">Ukuran file tak terbatas</translation>
+        <translation type="obsolete">Unlimited file size</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="obsolete">Walaupun teknologi browser dapat membatasi ukuran file dari transferan anda, anda dapat tetap mendownload atau upload file apapun dengan MEGAsync.</translation>
+        <translation type="obsolete">While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1964,7 +1969,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="obsolete">Manfaatkan 50 GB cloud storage dengan user-controlled end-to-end encryption yang aman dan daftar untuk akun GRATIS atau salah satu dari [A]PRO plan[/A] kami.</translation>
+        <translation type="obsolete">Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</translation>
     </message>
     <message>
         <source>MEGA Desktop app</source>
@@ -2132,7 +2137,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Terima kasih telah menguji MEGAsync. &lt;br&gt;Versi beta ini tidak lagi terkini dan telah kedaluwarsa.&lt;br&gt;Harap ikuti &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; di Twitter untuk pembaruan.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2147,17 +2152,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Sync &quot;%1&quot; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
+        <translation type="obsolete">Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Sync anda &quot;%1&quot; telah dibatalkan karena remote folder di dalam rubbish bin</translation>
+        <translation type="obsolete">Your sync “%1” has been disabled because the remote folder is in the Rubbish Bin</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
+        <translation type="obsolete">Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2166,18 +2171,18 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">Folder (%1) tidak diupload karena terlalu besar (beta ini dibatasi sampai %2 folder atau %3 file.</translation>
+        <translation type="obsolete">The folder (%1) wasn’t uploaded because it’s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folder tidak berhasil di-upload karena mereka terlalu besar (beta ini terbatasi sampai %2 folder atau %3 file.</translation>
+        <translation type="obsolete">%1 folders weren’t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Sinkronisasi akan berhenti. Penghapusan yang terjadi saat tidak berjalan tidak akan disebarluaskan. Tetap keluar?</translation>
+        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2187,7 +2192,7 @@ Exit anyway?</source>
     <message>
         <source>MEGAsync version code %1</source>
         <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
-        <translation type="obsolete">MEGAsync kode versi %1</translation>
+        <translation type="obsolete">MEGAsync version code %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2221,11 +2226,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="obsolete">Hentikan sementara</translation>
+        <translation type="obsolete">Pause</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation type="obsolete">Lanjutkan</translation>
+        <translation type="obsolete">Resume</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -2274,11 +2279,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">Folder (%1) gagal diupload karena folder terlalu besar. Hal ini kami larang untuk menghindari pengguna meng-upload seluruh volume boot, yang mana sangat tidak efisien dan berbahaya.</translation>
+        <translation type="obsolete">The folder (%1) wasn’t uploaded because it’s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 folder gagal diupload karena terlalu besar. Hal ini kami larang untuk mencegah pengguna meng-upload seluruh volume boot, yang mana tidak efisien dan berbahaya.</translation>
+        <translation type="obsolete">%1 folders weren’t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -2341,7 +2346,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">Sinkronisasi akan berhenti. Tetap keluar?</translation>
+        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -2356,7 +2361,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation type="obsolete">Upload file/ folder</translation>
+        <translation type="obsolete">Upload files/folders</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2386,7 +2391,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Upload ke MEGA</translation>
+        <translation type="obsolete">Upload to MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2401,7 +2406,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Download dari MEGA</translation>
+        <translation type="obsolete">Download from MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2476,7 +2481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer failed:</source>
         <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
-        <translation type="obsolete">Gagal transfer:</translation>
+        <translation type="obsolete">Transfer failed:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -2514,7 +2519,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">Kesalahan sementara, mencoba ulang.</translation>
+        <translation type="obsolete">Temporary error, retrying.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -2588,12 +2593,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Lanjutkan Transfer</translation>
+        <translation type="obsolete">Resume Transfers</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Hentikan Transfer</translation>
+        <translation type="obsolete">Pause Transfers</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -2603,7 +2608,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">MEGA websie</translation>
+        <translation type="obsolete">MEGA website</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -2623,7 +2628,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporarily not available</source>
         <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
-        <translation type="obsolete">Sementara tidak tersedia</translation>
+        <translation type="obsolete">Temporarily not available</translation>
     </message>
     <message>
         <source>Your account is almost full.</source>
@@ -2788,12 +2793,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Something went wrong</source>
         <translatorcomment>Notification title shown to the user to inform that the current action has failed because the current business account is in grace period.</translatorcomment>
-        <translation type="obsolete">Ada yang salah</translation>
+        <translation type="obsolete">Something went wrong</translation>
     </message>
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.</translation>
+        <translation type="obsolete">Please access MEGA using a desktop browser for more information.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2813,12 +2818,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Contact your business account administrator.</source>
         <translatorcomment>Notification message show to non-admin users for business accounts when there are issues that needs to be addressed by the business account admin.</translatorcomment>
-        <translation type="obsolete">Hubungi administrator akun bisnis Anda.</translation>
+        <translation type="obsolete">Contact your business account administrator.</translation>
     </message>
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">Ada masalah dengan pembayaran terakhir Anda. Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.</translation>
+        <translation type="obsolete">There was a problem with your last payment. Please access MEGA using a desktop browser for more information.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2833,7 +2838,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
         <translatorcomment>Message shown when the current business account is suspended. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation type="obsolete">Status akun Anda [A]kedaluwarsa[/A].</translation>
+        <translation type="obsolete">Your account status is [A]expired[/A].</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2914,6 +2919,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You have [A] days left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
         <translation type="unfinished">Anda memiliki [A] hari tersisa untuk menyimpan data Anda</translation>
+    </message>
+    <message>
+        <source>You have [A] hours left to save your data</source>
+        <translatorcomment>Notification content to inform the hours the user have to save the date before possible deletion. [A] will be replace with remaining hours amount.</translatorcomment>
+        <translation type="unfinished">You have [A] hours left to save your data</translation>
+    </message>
+    <message>
+        <source>You must act immediately to save your data</source>
+        <translatorcomment>Notification content to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
+        <translation type="unfinished">Anda harus segera bertindak untuk menyimpan data anda</translation>
     </message>
 </context>
 <context>
@@ -3078,7 +3093,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished">Storage Quota Exceeded. Please upgrade now</translation>
+        <translation type="unfinished">Kuota Penyimpanan Terlampaui. Harap tingkatkan sekarang</translation>
     </message>
 </context>
 <context>
@@ -3150,7 +3165,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">Dapatkan pranala</translation>
+        <translation type="unfinished">Dapatkan Tautan</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -3239,7 +3254,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Peringatan</translation>
+        <translation type="obsolete">Warning</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file
@@ -3247,7 +3262,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">Folder tujuan disinkronkan dan Anda sudah memiliki file di dalamnya dengan nama yang sama (%1). Jika Anda melanjutkan upload, file sebelumnya akan ditimpa. Apakah kamu yakin?</translation>
+        <translation type="obsolete">The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
     </message>
     <message>
         <source>Upload failed</source>
@@ -3270,7 +3285,7 @@ Are you sure?</source>
     <message>
         <source>Retrieving folders...</source>
         <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
-        <translation type="obsolete">Mengambil folder...</translation>
+        <translation type="obsolete">Retrieving folders…</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -3306,7 +3321,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">Folder root tidak dapat disinkronkan. Silakan, pilih subfolder.</translation>
+        <translation type="obsolete">The root folder can’t be synced. Please select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3316,7 +3331,7 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">Anda punya %1 di folder ini. Apakah anda yakin ingin mensinkronisasi nya?</translation>
+        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -3342,7 +3357,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="obsolete">Harap masukan nama folder yang valid</translation>
+        <translation type="obsolete">Please enter a valid folder name</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -3395,7 +3410,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Download syncs are temporarily disabled.</source>
         <translatorcomment>Label to indicate that syncs downloads are temporarily disabled because a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Sinkronisasi unduhan dinonaktifkan sementara.</translation>
+        <translation type="obsolete">Download syncs are temporarily disabled.</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -3420,7 +3435,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Empty transfer quota</source>
         <translatorcomment>Window title for dialog that shows informative messages about a situation of depleted transfer quota.</translatorcomment>
-        <translation type="obsolete">Kuota transfer kosong</translation>
+        <translation type="obsolete">Transfer quota exceeded</translation>
     </message>
     <message>
         <source>Syncs are temporarily disabled.</source>
@@ -3430,7 +3445,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun Anda. Anda dapat menambahkan sinkronisasi tetapi tetap dinonaktifkan hingga akun Anda memiliki lebih banyak bandwidth.</translation>
+        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun anda. Anda dapat menambahkan sinkronisasi tetapi tetap dinonaktifkan hingga akun anda memiliki lebih banyak bandwidth.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
@@ -3445,7 +3460,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun Anda. Anda dapat mengimpor tautan tetapi transfer akan tetap antri hingga akun Anda memiliki lebih banyak bandwidth.</translation>
+        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun anda. Anda dapat mengimpor tautan tetapi transfer akan tetap antri hingga akun anda memiliki lebih banyak bandwidth.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
@@ -3455,7 +3470,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun Anda. Anda dapat menambahkan unduhan tetapi transfer akan tetap antri hingga akun Anda memiliki lebih banyak bandwidth.</translation>
+        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun anda. Anda dapat menambahkan unduhan tetapi transfer akan tetap antri hingga akun anda memiliki lebih banyak bandwidth.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
@@ -3465,7 +3480,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun Anda. Anda dapat menambahkan stream tetapi transfer akan tetap antri hingga akun Anda memiliki lebih banyak bandwidth yang tersedia.</translation>
+        <translation type="unfinished">Anda telah melampaui kuota transfer yang tersedia untuk akun anda. Anda dapat menambahkan stream tetapi transfer akan tetap antri hingga akun anda memiliki lebih banyak bandwidth yang tersedia.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
@@ -3496,7 +3511,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="obsolete">Tahu lebih banyak</translation>
+        <translation type="obsolete">Know More</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3539,7 +3554,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation type="obsolete">Tidak ada link MEGA yang valid ditemukan. (Folder links belum didukung)</translation>
+        <translation type="obsolete">No valid MEGA links found. (Folder links aren’t yet supported)</translation>
     </message>
     <message>
         <source>Invalid MEGA Link</source>
@@ -3630,7 +3645,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="obsolete">popular!</translation>
+        <translation type="obsolete">Popular!</translation>
     </message>
     <message>
         <source>UNLIMITED</source>
@@ -3663,12 +3678,12 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="obsolete">- Desain baru untuk dialog utama
-- Asisten pengaturan yang ditingkatkan
-- Dukungan untuk menampilkan Pengumuman Layanan Publik
-- Pemberitahuan modern
-- Perpustakaan pihak ketiga yang diperbarui
-- Perbaikan dan peningkatan bug minor lainnya</translation>
+        <translation type="obsolete">- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</translation>
     </message>
     <message>
         <source>- Fix bug with selection of transfer manager items
@@ -3680,14 +3695,14 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="obsolete">- Memperbaiki bug dengan pemilihan item manajer transfer 
-- Memperbaiki bug dari menu konteks tidak ditampilkan di atas item manajer transfer 
-- Desain baru untuk dialog utama 
-- Asisten pengaturan yang ditingkatkan 
-- Dukungan untuk menampilkan Layanan Publik Pengumuman 
-- Pemberitahuan modern 
-- Perpustakaan pihak ketiga yang diperbarui 
-- Perbaikan dan peningkatan bug minor lainnya</translation>
+        <translation type="obsolete">- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3696,11 +3711,11 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
- - Peningkatan kinerja GUI selama penambahan banyak unduhan
- - Wizard informasi awal yang dibenahi, dengan ikon baru dan peningkatan antarmuka
- - Dukungan untuk akun bisnis
- - Perbaikan dan peningkatan bug minor lainnya</translation>
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
+- Improved GUI performance during the addition of many downloads
+- Restyled initial information wizard, with new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3710,12 +3725,12 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
- - Dukungan thumbnail yang diaktifkan untuk file PDF
- - Peningkatan kinerja GUI selama penambahan banyak unduhan
- - Wizard informasi awal yang dibenahi, dengan ikon baru dan peningkatan antarmuka
- - Dukungan untuk akun bisnis
- - Perbaikan dan peningkatan bug minor lainnya</translation>
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
+- Enabled thumbnail support for PDF files
+- Improved GUI performance during the addition of many downloads
+- Restyled initial information wizard, with new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3723,10 +3738,10 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
-        <translation type="obsolete">- Perbaiki kerusakan saat memproses beberapa file PDF
-- Lanjutkan transfer yang tertunda setelah crash pada startup berikutnya
-- Sertakan opsi untuk menambahkan sinkronisasi dari dialog utama
-- Perbaikan bug kecil lainnya dan peningkatan</translation>
+        <translation type="obsolete">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</translation>
     </message>
     <message>
         <source>- Fix sync issues on macOS 10.15
@@ -3736,12 +3751,12 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="obsolete">- Perbaiki masalah sinkronisasi pada macOS 10.15
-- Perbaiki masalah kembalinya transfer untuk webclient dan tautan publik unduhan
-- Perbaiki kerusakan saat memproses beberapa file PDF
-- Lanjutkan transfer yang tertunda setelah crash pada startup berikutnya
-- Sertakan opsi untuk menambahkan sinkronisasi dari dialog utama
-- Perbaikan dan peningkatan bug minor lainnya</translation>
+        <translation type="obsolete">- Fix sync issues on macOS 10.15
+- Fix transfer resumption issues for webclient and public links downloads
+- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</translation>
     </message>
     <message>
         <source>- Support for user notifications.
@@ -3754,19 +3769,19 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="obsolete">- Dukungan untuk pemberitahuan pengguna.
-- Laporan bug sekarang dapat dikirim dari dialog pengaturan.
-- Mengisi kembali dialog utama.
-- Peningkatan kinerja ketika berhadapan dengan sejumlah besar sinkronisasi dan transfer.
- -Peningkatan kegunaan akun bisnis.
-- Menambahkan dukungan untuk tautan ke file dan folder di dalam tautan folder publik.
-- Peningkatan untuk sinkronisasi dengan sistem file FAT32.
-- Peningkatan kinerja lainnya, perbaikan dan penyesuaian UI.</translation>
+        <translation type="obsolete">- Support for user notifications.
+- Bug reports can now be sent from the settings dialog.
+- Restyled the main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved business account usability.
+- Added support for links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 file systems.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
     <message>
         <source>- Fix crash issue for OSX 10.9.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
-        <translation type="obsolete">- Memperbaiki masalah kerusakan untuk OSX 10.9.</translation>
+        <translation type="obsolete">- Fixed crash issue for OSX 10.9.</translation>
     </message>
     <message>
         <source>- New customized message boxes.
@@ -3779,15 +3794,15 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="obsolete">- Kotak pesan baru yang disesuaikan. 
-- Bersihkan log retroaktif saat logout.
-- Memperbaiki masalah yang menonaktifkan ekstensi Finder dalam beberapa keadaan.
-- Verifikasi email untuk akun yang terkunci.
-- Verifikasi SMS untuk akun yang terkunci.
-- Dukungan untuk program afiliasi.
-- Opsi yang disertakan untuk mengirim log dari dialog laporan kerusakan.
-- Perbaikan dan penyesuaian UI lainnya.
-- Peningkatan dan penyesuaian kinerja lainnya.</translation>
+        <translation type="obsolete">- New customized message boxes.
+- Clean retroactive logs when logging out.
+- Fixed issues that disabled Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for the affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
     </message>
     <message>
         <source>- Improve user experience when exceeded transfer allowance.
@@ -3799,14 +3814,14 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
-        <translation type="unfinished">- User experience improvement when transfer quota is exceeded.
-- Updated translations.
-- Fixed issues during processing of RAW images.
-- Reduce memory usage on macOS.
-- Filenames are no longer escaped when special characters are supported by the target file system.
-- Integration of 2FA form within the main dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">- Peningkatan pengalaman pengguna saat kuota transfer terlampaui.
+- Terjemahan yang diperbarui.
+- Memperbaiki masalah selama pemrosesan gambar RAW.
+- Kurangi penggunaan memori di macOS.
+- Nama file tidak lagi keluar saat khusus karakter didukung oleh sistem file target.
+- Integrasi bentuk 2FA dalam dialog utama.
+- Perbaikan dan penyesuaian UI lainnya.
+- Peningkatan dan penyesuaian kinerja lainnya.</translation>
     </message>
 </context>
 <context>
@@ -3957,17 +3972,17 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation type="unfinished">All Files (*)</translation>
+        <translation type="unfinished">Semua Data (*)</translation>
     </message>
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Tunjukkan</translation>
+        <translation type="unfinished">Tampilkan[S]</translation>
     </message>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation type="unfinished">All files (*)</translation>
+        <translation type="unfinished">Semua data (*)</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4052,7 +4067,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>%1 already exists.Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation type="obsolete">%1 sudah ada. Apakah Anda ingin menggantinya?</translation>
+        <translation type="obsolete">%1 already exists.Do you want to replace it?</translation>
     </message>
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
@@ -4062,47 +4077,47 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>&amp;Open</source>
         <translatorcomment>Ok Button text when the dialog is executed for opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation type="unfinished">&amp;Open</translation>
+        <translation type="unfinished">&amp;Buka</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
         <translatorcomment>Ok Button text when the dialog is executed for choosing a directory. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Save).</translatorcomment>
-        <translation type="unfinished">&amp;Choose</translation>
+        <translation type="unfinished">&amp;Pilih</translation>
     </message>
     <message>
         <source>&amp;Save</source>
         <translatorcomment>Ok Button text when the dialog is executed for saving a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Choose).</translatorcomment>
-        <translation type="unfinished">&amp;Save</translation>
+        <translation type="unfinished">&amp;Simpan</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
         <translatorcomment>Contextual menu action for renaming a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Delete, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation type="unfinished">&amp;Rename</translation>
+        <translation type="unfinished">&amp;UbahNama</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
         <translatorcomment>Contextual menu action for deleting a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation type="unfinished">&amp;Delete</translation>
+        <translation type="unfinished">&amp;Hapus</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
         <translatorcomment>Contextual menu action for showing or not showing hidden files. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, &amp;New Folder).</translatorcomment>
-        <translation type="unfinished">Show &amp;hidden files</translation>
+        <translation type="unfinished">Tampilkan &amp;file tersembunyi</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
         <translatorcomment>Contextual menu action for creating a new folder. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, Show &amp;hidden files).</translatorcomment>
-        <translation type="unfinished">&amp;New Folder</translation>
+        <translation type="unfinished">&amp;Folder Baru</translation>
     </message>
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation type="unfinished">Are you sure you want to delete “%1”?</translation>
+        <translation type="unfinished">Anda yakin ingin menghapus ”%1″?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation type="unfinished">File &amp;name:</translation>
+        <translation type="unfinished">File &amp;nama:</translation>
     </message>
     <message>
         <source>%1
@@ -4110,15 +4125,15 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation type="unfinished">%1
-Directory not found.
-Please verify the correct directory name was given.</translation>
+Direktori tidak ditemukan.
+Harap verifikasi nama direktori yang diberikan dengan benar.</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation type="unfinished">%1 already exists.
-Do you want to replace it?</translation>
+        <translation type="unfinished">%1 sudah ada.
+Ingin menggantinya?</translation>
     </message>
     <message>
         <source>%1
@@ -4126,15 +4141,15 @@ File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
         <translation type="unfinished">%1
-File not found.
-Please verify the correct file name was given.</translation>
+File tidak ditemukan.
+Harap verifikasi nama file yang diberikan dengan benar.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished">”%1” is write protected.
-Do you want to delete it anyway?</translation>
+        <translation type="unfinished">″%1″ dilindungi dari penulisan.
+Apakah Anda tetap ingin menghapusnya?</translation>
     </message>
 </context>
 <context>
@@ -4182,7 +4197,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Kind</source>
         <translatorcomment>Header name of the column that shows file kind</translatorcomment>
-        <translation type="unfinished">Kind</translation>
+        <translation type="unfinished">Jenis</translation>
     </message>
     <message>
         <source>Type</source>
@@ -4212,7 +4227,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation type="unfinished">&lt;b&gt;The name “%1” cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</translation>
+        <translation type="unfinished">&lt;b&gt;Nama “%1” tidak dapat digunakan.&lt;/b&gt;&lt;p&gt;Coba gunakan nama lain, dengan lebih sedikit karakter atau tanpa tanda baca.</translation>
     </message>
 </context>
 <context>
@@ -4321,7 +4336,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="obsolete">Umum</translation>
+        <translation type="obsolete">General</translation>
     </message>
     <message>
         <source>Account</source>
@@ -4386,7 +4401,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation type="obsolete">Bahasa application</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
         <source>Details</source>
@@ -4415,7 +4430,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Synced folders</source>
-        <translation type="obsolete">Folder yang telah disinkronisasikan</translation>
+        <translation type="obsolete">Synced folders</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4474,16 +4489,16 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">Batas upload adalah per upload server dan diterapkan pada saat memulai upload baru</translation>
+        <translation type="obsolete">Upload limits are per upload server and are applied when starting new uploads</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Folder untuk upload dari Windows Explorer</translation>
+        <translation type="obsolete">Folder for uploads from Windows Explorer</translation>
     </message>
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Nama file yang disingkirkan</translation>
+        <translation type="obsolete">Excluded file names</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
@@ -4572,7 +4587,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">Anda sudah men-sync seluruh Cloud Drive anda</translation>
+        <translation type="obsolete">You are already syncing your entire Cloud Drive.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -4602,7 +4617,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.</translation>
+        <translation type="obsolete">The new excluded file names will be taken into account when the application starts again.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -4611,7 +4626,7 @@ when the application starts again.</source>
     <message>
         <source>Current cache size: %1</source>
         <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
-        <translation type="obsolete">Ukuran cache terkini: %1</translation>
+        <translation type="obsolete">Current cache size: %1</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -4640,31 +4655,31 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation type="obsolete">Sync selektif aktif</translation>
+        <translation type="obsolete">Selective sync active</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation type="obsolete">Izinkan sync akun menyeluruh</translation>
+        <translation type="obsolete">Enable full account sync</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation type="obsolete">Mengizinkan sync akun menyeluruh akan menonaktifkan seluruh sync terkini anda</translation>
+        <translation type="obsolete">Enabling full account sync will disable all your current syncs</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation type="obsolete">Sync akun menyeluruh aktif</translation>
+        <translation type="obsolete">Full account sync active</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">Menonaktifkan sync akun menyeluruh akan memperbolehkan anda untuk mengatur sync folder selektif</translation>
+        <translation type="obsolete">Disabling full account sync will allow you to set up selective folder syncing</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation type="obsolete">Matikan sync akun menyeluruh</translation>
+        <translation type="obsolete">Disable full account sync</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="obsolete">Lainnya</translation>
+        <translation type="obsolete">Other</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
@@ -4686,7 +4701,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync akan melakukan pemindaian penuh dari folder yang Anda sinkronkan saat dimulai. Apakah Anda ingin me-restart MEGAsync sekarang?</translation>
+        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -4695,7 +4710,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="obsolete">Folder upload dari komputer ini</translation>
+        <translation type="obsolete">Folder for uploads from this computer</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
@@ -4710,7 +4725,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Show Mac OS notifications</source>
         <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
-        <translation type="obsolete">Tunjukan Mac OS notifications</translation>
+        <translation type="obsolete">Show Mac OS notifications</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4751,7 +4766,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation type="obsolete">Anda telah sedang mensinkronisasikan seluruh Cloud Drive anda</translation>
+        <translation type="obsolete">You are already syncing your entire Cloud Drive</translation>
     </message>
     <message>
         <source>Enable / disable</source>
@@ -4761,7 +4776,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog to select the local folder for downloads.</translatorcomment>
-        <translation type="obsolete">Pilih folder lokal</translation>
+        <translation type="obsolete">Select local folder</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -5080,7 +5095,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Full account sync</source>
-        <translation type="obsolete">Sync akun menyeluruh</translation>
+        <translation type="obsolete">Full account sync</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5119,15 +5134,15 @@ when the application starts again</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation type="obsolete">Folder lokal anda:</translation>
+        <translation type="obsolete">Your local folder:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation type="obsolete">dan folder MEGA anda:</translation>
+        <translation type="obsolete">and your MEGA folder:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation type="obsolete">akan secara otomatis disinkronisasikan.</translation>
+        <translation type="obsolete">will be automatically synchronized.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -5227,11 +5242,11 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">Anda memiliki %1 di Cloud Drive anda. Anda yakin ingin mensinkronisasi seluruh Cloud Drive anda?</translation>
+        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation type="obsolete">dan Cloud Drive MEGA anda</translation>
+        <translation type="obsolete">and your MEGA Cloud Drive</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -5246,7 +5261,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Folder lokal terlalu besar (versi ini terbatas pada %1 folder atau %2 file). Silakan, pilih folder lain.</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please select another folder.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -5279,7 +5294,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting session key</source>
         <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
-        <translation type="obsolete">Error mendapatkan session key</translation>
+        <translation type="obsolete">Error getting session key</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5381,7 +5396,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Learn more</source>
         <translatorcomment>Label to redirect the user to a website with information about the different synchronization modes</translatorcomment>
-        <translation type="obsolete">Belajar Lebih</translation>
+        <translation type="obsolete">Learn more</translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5605,7 +5620,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning...</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="obsolete">Scanning...</translation>
+        <translation type="obsolete">Scanning…</translation>
     </message>
     <message>
         <source>Account full</source>
@@ -5620,12 +5635,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
-        <translation type="obsolete">Lanjutkan Transfer</translation>
+        <translation type="obsolete">Resume Transfers</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
-        <translation type="obsolete">Hentikan Transfer</translation>
+        <translation type="obsolete">Pause Transfers</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -5751,75 +5766,75 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>paused</source>
         <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">terhenti</translation>
+        <translation type="obsolete">paused</translation>
     </message>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">terantri</translation>
+        <translation type="obsolete">queued</translation>
     </message>
     <message>
         <source>retrying</source>
         <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">mencoba kembali</translation>
+        <translation type="obsolete">retrying</translation>
     </message>
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">menyelesaikan</translation>
+        <translation type="obsolete">completing</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation type="obsolete">sekarang</translation>
+        <translation type="obsolete">just now</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
-        <translation type="obsolete">%1 detik yang lalu</translation>
+        <translation type="obsolete">%1 seconds ago</translation>
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="obsolete">1 menit yang lalu</translation>
+        <translation type="obsolete">1 minute ago</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
-        <translation type="obsolete">%1 menit yang lalu</translation>
+        <translation type="obsolete">%1 minutes ago</translation>
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="obsolete">1 jam yang lalu</translation>
+        <translation type="obsolete">1 hour ago</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
-        <translation type="obsolete">%1 jam yang lalu</translation>
+        <translation type="obsolete">%1 hours ago</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="obsolete">1 hari yang lalu</translation>
+        <translation type="obsolete">1 day ago</translation>
     </message>
     <message>
         <source>%1 days ago</source>
-        <translation type="obsolete">%1 hari yang lalu</translation>
+        <translation type="obsolete">%1 days ago</translation>
     </message>
     <message>
         <source>1 month ago</source>
-        <translation type="obsolete">1 bulan yang lalu</translation>
+        <translation type="obsolete">1 month ago</translation>
     </message>
     <message>
         <source>%1 months ago</source>
-        <translation type="obsolete">%1 bulan yang lalu</translation>
+        <translation type="obsolete">%1 months ago</translation>
     </message>
     <message>
         <source>1 year ago</source>
-        <translation type="obsolete">1 tahun yang lalu</translation>
+        <translation type="obsolete">1 year ago</translation>
     </message>
     <message>
         <source>%1 years ago</source>
-        <translation type="obsolete">%1 tahun yang lalu</translation>
+        <translation type="obsolete">%1 years ago</translation>
     </message>
     <message>
         <source>starting</source>
         <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">memulai</translation>
+        <translation type="obsolete">starting</translation>
     </message>
 </context>
 <context>
@@ -5867,17 +5882,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">Import link</translation>
+        <translation type="obsolete">Import links</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">Upload ke MEGA</translation>
+        <translation type="obsolete">Upload to MEGA</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">Download dari MEGA</translation>
+        <translation type="obsolete">Download from MEGA</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -6010,7 +6025,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="obsolete">Quota transfer gratis telah terlewati</translation>
+        <translation type="obsolete">Free transfer quota exceeded</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -6042,7 +6057,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
         <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
-        <translation type="obsolete">Akun Anda penuh ([A] / [B]). Semua unggahan file ke MEGA saat ini dinonaktifkan.</translation>
+        <translation type="obsolete">Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
@@ -6075,12 +6090,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="obsolete">Bulan</translation>
+        <translation type="obsolete">month</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="obsolete">Gudang</translation>
+        <translation type="obsolete">Storage</translation>
     </message>
     <message>
         <source>transfer</source>
@@ -6140,11 +6155,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">Kotak Masuk</translation>
+        <translation type="obsolete">Inbox</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="obsolete">Berbagi Masuk</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -6152,7 +6167,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="obsolete">Tempat Sampah</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
 </context>
 <context>
