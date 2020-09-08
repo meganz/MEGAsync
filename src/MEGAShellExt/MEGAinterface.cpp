@@ -28,7 +28,7 @@ int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int 
        responseLen,                         // size of read buffer
        &readed,                             // number of bytes read
        NMPWAIT_NOWAIT);                     // waits
-    delete request;
+    delete[] request;
     if (success) return readed;
     return 0;
 }
@@ -41,6 +41,7 @@ MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath, bool overl
     StringCchPrintfW(request, requestLen, L"%s|%d", filePath, overlayIcons);
 
     int cbRead = sendRequest(MegaInterface::OP_PATH_STATE, request, chReadBuf, sizeof(chReadBuf));
+    delete[] request;
     if (cbRead > sizeof(WCHAR))
     {
         return ((MegaInterface::FileState)(chReadBuf[0] - L'0'));
@@ -60,7 +61,7 @@ LPWSTR MegaInterface::getString(StringID stringID, int numFiles, int numFolders)
         return chReadBuf;
     }
 
-    delete chReadBuf;
+    delete[] chReadBuf;
     return NULL;
 }
 
