@@ -9141,7 +9141,17 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
 
     DeferPreferencesSyncForScope deferrer(this);
 
+#ifdef _WIN32
+    if (!mShellNotifier)
+    {
+        mShellNotifier = make_shared<ShellNotifier>();
+    }
+
+    Platform::notifyItemChange(localPath, newState, mShellNotifier);
+
+#else
     Platform::notifyItemChange(localPath, newState);
+#endif
 }
 
 MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)
