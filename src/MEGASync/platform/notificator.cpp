@@ -697,7 +697,7 @@ void WinToastNotification::toastActivated()
     mutex.lock();
     if (notification)
     {
-        emit notification->activated(-1);
+        emit notification->activated(MegaNotification::Action::content);
         notification = NULL;
     }
     mutex.unlock();
@@ -708,7 +708,7 @@ void WinToastNotification::toastActivated(int actionIndex)
     mutex.lock();
     if (notification)
     {
-        emit notification->activated(actionIndex);
+        emit notification->activated(static_cast<MegaNotification::Action>(actionIndex));
         notification = NULL;
     }
     mutex.unlock();
@@ -719,7 +719,7 @@ void WinToastNotification::toastDismissed(WinToastDismissalReason state)
     mutex.lock();
     if (notification)
     {
-        int reason = MegaNotification::CloseReason::Unknown;
+        auto reason = MegaNotification::CloseReason::Unknown;
         switch (state)
         {
         case WinToastDismissalReason::UserCanceled:
