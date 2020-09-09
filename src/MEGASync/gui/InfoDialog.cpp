@@ -846,10 +846,11 @@ void InfoDialog::updateDialogState()
         MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
         const char *email = megaApi->getMyEmail();
 
+        auto numFiles{preferences->cloudDriveFiles() + preferences->inboxFiles() + preferences->rubbishFiles()};
         QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
-                .replace(QString::fromUtf8("[C]"), QString::number(megaApi->getNumNodes()))
+                .replace(QString::fromUtf8("[C]"), QString::number(numFiles))
                 .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
                 .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(static_cast<MegaApplication *>(qApp)->getPricing(), preferences->usedStorage()))
                 + QString::fromUtf8("</p>");
