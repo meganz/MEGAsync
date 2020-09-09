@@ -75,6 +75,7 @@ public:
 
 class Notificator;
 class MEGASyncDelegateListener;
+class ShellNotifier;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -534,6 +535,11 @@ protected:
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
+
+private:
+#ifdef _WIN32
+    std::shared_ptr<ShellNotifier> mShellNotifier;
+#endif
 };
 
 class DeferPreferencesSyncForScope
