@@ -838,5 +838,8 @@
         <file>images/settings-syncs.png</file>
         <file>images/settings-syncs@2x.png</file>
         <file>images/settings-syncs@3x.png</file>
+        <file>images/new_contact@3x.png</file>
+        <file>images/new_contact@2x.png</file>
+        <file>images/new_contact.png</file>
     </qresource>
 </RCC>

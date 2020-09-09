@@ -4500,7 +4500,6 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
 
     if (data->pendingTransfers == 0)
     {
-        MegaNotification *notification = new MegaNotification();
         QString title;
         QString message;
 

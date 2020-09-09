@@ -78,7 +78,7 @@ QString createPaymentReminderText(int64_t expirationTimeStamp)
     }
 }
 
-void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
+void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
 {
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
@@ -95,6 +95,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setText(tr("[A] sent you a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
+                notification->setImage(QIcon(QString::fromAscii("://images/new_contact.png")));
                 notification->setActions(QStringList() << tr("Accept") << tr("Reject"));
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::replayIncomingPendingRequest);
                 mNotificator->notify(notification);
@@ -203,7 +204,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
     }
 }
 
-void OsNotifications::replayIncomingPendingRequest(MegaNotification::Action action)
+void OsNotifications::replayIncomingPendingRequest(MegaNotification::Action action) const
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
     const auto megaApp{static_cast<MegaApplication*>(qApp)};
@@ -233,7 +234,7 @@ std::unique_ptr<mega::MegaNode> getMegaNode(mega::MegaUserAlert* alert)
     return std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()));
 }
 
-void OsNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message)
+void OsNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message) const
 {
     auto notification{new MegaNotification()};
     const auto node{getMegaNode(alert)};
@@ -282,7 +283,7 @@ QString createTakeDownMessage(mega::MegaUserAlert* alert)
     }
 }
 
-void OsNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert)
+void OsNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert) const
 {
     auto notification{new MegaNotification()};
     const auto node{getMegaNode(alert)};
@@ -297,7 +298,7 @@ void OsNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert)
     mNotificator->notify(notification);
 }
 
-void OsNotifications::viewContactOnWebClient()
+void OsNotifications::viewContactOnWebClient() const
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
     const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
@@ -314,7 +315,7 @@ void OsNotifications::viewContactOnWebClient()
     delete user;
 }
 
-void OsNotifications::sendOverStorageNotification(int state)
+void OsNotifications::sendOverStorageNotification(int state) const
 {
     switch (state)
     {
@@ -355,7 +356,7 @@ void OsNotifications::sendOverStorageNotification(int state)
     }
 }
 
-void OsNotifications::sendOverTransferNotification(const QString &title)
+void OsNotifications::sendOverTransferNotification(const QString &title) const
 {
     const auto notification{new MegaNotification()};
     notification->setTitle(title);
@@ -365,7 +366,7 @@ void OsNotifications::sendOverTransferNotification(const QString &title)
     mNotificator->notify(notification);
 }
 
-void OsNotifications::sendFinishedTransferNotification(const QString &title, const QString &message, const QString &extraData)
+void OsNotifications::sendFinishedTransferNotification(const QString &title, const QString &message, const QString &extraData) const
 {
     auto notification{new MegaNotification()};
     notification->setTitle(title);
@@ -386,7 +387,7 @@ bool checkIfActionIsValid(MegaNotification::Action action)
             ;
 }
 
-void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButton)
+void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButton) const
 {
     if (checkIfActionIsValid(activationButton))
     {
@@ -396,7 +397,7 @@ void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButto
     }
 }
 
-void OsNotifications::sendBusinessWarningNotification(int businessStatus)
+void OsNotifications::sendBusinessWarningNotification(int businessStatus) const
 {
     const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
 
@@ -439,22 +440,22 @@ void OsNotifications::sendBusinessWarningNotification(int businessStatus)
     }
 }
 
-void OsNotifications::sendInfoNotification(const QString &title, const QString &message)
+void OsNotifications::sendInfoNotification(const QString &title, const QString &message) const
 {
     mNotificator->notify(Notificator::Information, title, message, mAppIcon);
 }
 
-void OsNotifications::sendWarningNotification(const QString &title, const QString &message)
+void OsNotifications::sendWarningNotification(const QString &title, const QString &message) const
 {
     mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
 }
 
-void OsNotifications::sendErrorNotification(const QString &title, const QString &message)
+void OsNotifications::sendErrorNotification(const QString &title, const QString &message) const
 {
     mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
 }
 
-void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationButton)
+void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationButton) const
 {
     if (checkIfActionIsValid(activationButton))
     {
@@ -464,7 +465,7 @@ void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationB
     }
 }
 
-void OsNotifications::showInFolder(MegaNotification::Action action)
+void OsNotifications::showInFolder(MegaNotification::Action action) const
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
 
@@ -482,7 +483,7 @@ void OsNotifications::showInFolder(MegaNotification::Action action)
     }
 }
 
-void OsNotifications::viewShareOnWebClient(MegaNotification::Action action)
+void OsNotifications::viewShareOnWebClient(MegaNotification::Action action) const
 {
     if (checkIfActionIsValid(action))
     {
