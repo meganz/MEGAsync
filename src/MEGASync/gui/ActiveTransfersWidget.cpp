@@ -149,9 +149,9 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 
         activeDownload.transferState = transfer->getState();
         activeDownload.priority = priority;
-        activeDownload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeDownload, transfer->getSpeed());
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
+        activeDownload.updateRemainingTimeSeconds();
         udpateTransferState(&activeDownload);
     }
     else
@@ -181,9 +181,9 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 
         activeUpload.transferState = transfer->getState();
         activeUpload.priority = priority;
-        activeUpload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());
+        activeUpload.updateRemainingTimeSeconds();
         udpateTransferState(&activeUpload);
     }
 }
@@ -455,17 +455,15 @@ void ActiveTransfersWidget::setTransferredBytes(TransferData *td, long long tota
 void ActiveTransfersWidget::udpateTransferState(TransferData *td)
 {
     updateAnimation(td);
-    const auto remainingBytes{td->totalSize - td->totalTransferredBytes};
-    const auto remainingTimeSeconds{mTransferRemainingTime.calculateRemainingTimeSeconds(td->transferSpeed, remainingBytes)};
     QString remainingTimeString;
 
     switch (td->transferState)
     {
         case MegaTransfer::STATE_ACTIVE:
         {
-        if (remainingTimeSeconds)
+        if (td->remainingTimeSeconds)
             {
-            remainingTimeString = Utilities::getTimeString(remainingTimeSeconds);
+            remainingTimeString = Utilities::getTimeString(td->remainingTimeSeconds);
                 }
                 else
                 {
@@ -654,8 +652,15 @@ void TransferData::clear()
     transferState = 0;
     tag = 0;
     transferSpeed = 0;
-    meanTransferSpeed = 0;
     totalSize = 0;
     totalTransferredBytes = 0;
     priority = 0xFFFFFFFFFFFFFFFFULL;
+    remainingTimeSeconds = 0;
+    mTransferRemainingTime.reset();
+}
+
+void TransferData::updateRemainingTimeSeconds()
+{
+    const auto remainingBytes{totalSize - totalTransferredBytes};
+    remainingTimeSeconds = mTransferRemainingTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes);
 }

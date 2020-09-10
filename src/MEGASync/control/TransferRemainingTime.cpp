@@ -20,7 +20,7 @@ int TransferRemainingTime::calculateRemainingTimeSeconds(long long speedBytesSec
     if(totalRemainingSeconds > 0)
     {
         mRemainingTimesBuffer[mUpdateRemainingTimeCounter] = static_cast<int>(totalRemainingSeconds);
-        const auto bufferIsFull{mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE};
+        const auto bufferIsFull{mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE - 1};
         if(bufferIsFull)
         {
             mUpdateRemainingTimeCounter = 0;
@@ -32,4 +32,11 @@ int TransferRemainingTime::calculateRemainingTimeSeconds(long long speedBytesSec
         }
     }
     return mRemainingSeconds;
+}
+
+void TransferRemainingTime::reset()
+{
+    mRemainingSeconds = 0;
+    mUpdateRemainingTimeCounter = 0;
+    std::fill(std::begin(mRemainingTimesBuffer), std::end(mRemainingTimesBuffer), 0);
 }
