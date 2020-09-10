@@ -18,6 +18,23 @@ class SetupWizard;
 }
 
 class MegaApplication;
+
+class PreConfiguredSync
+{
+public:
+   PreConfiguredSync(QString localFolder, mega::MegaHandle megaFolderHandle, QString syncName);
+
+   QString localFolder() const;
+   QString syncName() const;
+
+   mega::MegaHandle megaFolderHandle() const;
+
+private:
+    mega::MegaHandle mMegaFolderHandle;
+    QString mLocalFolder;
+    QString mSyncName;
+};
+
 class SetupWizard : public QDialog, public mega::MegaRequestListener
 {
     Q_OBJECT
@@ -40,6 +57,8 @@ public:
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
     void goToStep(int page);
     void initModeSelection();
+
+    QList<PreConfiguredSync> preconfiguredSyncs() const;
 
 private slots:
     void on_bNext_clicked();
@@ -93,6 +112,9 @@ protected:
     bool loggingStarted;
     bool creatingDefaultSyncFolder;
     QTimer *animationTimer;
+
+    QList<PreConfiguredSync> mPreconfiguredSyncs;
+
 };
 
 #endif // SETUPWIZARD_H

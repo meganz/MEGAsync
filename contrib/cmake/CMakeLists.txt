@@ -196,6 +196,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/Preferences.h
     ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
+    ${MEGAsyncDir}/control/MegaController.h
+    ${MEGAsyncDir}/model/SyncSettings.h
+    ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
     ${MEGAsyncDir}/gui/BugReportDialog.h
@@ -262,6 +265,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
+    ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
     ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/platform/notificator.h
@@ -300,6 +304,8 @@ else()
 
         ${MEGAsyncDir}/gui/PermissionsDialog.h
         ${MEGAsyncDir}/gui/PermissionsWidget.h
+
+        ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
@@ -394,6 +400,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
+    ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
     ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
 
@@ -417,6 +424,10 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
     ${MEGAsyncDir}/control/TransferRemainingTime.cpp
+    ${MEGAsyncDir}/control/MegaController.cpp
+
+    ${MEGAsyncDir}/model/SyncSettings.cpp
+    ${MEGAsyncDir}/model/Model.cpp
 
     ${MEGAsyncDir}/platform/notificator.cpp
 
@@ -487,6 +498,8 @@ else()
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.mm
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
+
+        ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
 

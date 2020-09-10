@@ -55,11 +55,13 @@ void NotifyServer::acceptConnection()
 
         // send the list of current synced folders to the new client
         int localFolders = 0;
-        Preferences *preferences = Preferences::instance();
-        for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+        Model *model = Model::instance();
+        for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
-            QString c = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
-            if (!c.size() || !preferences->isFolderActive(i))
+            auto syncSetting = model->getSyncSetting(i);
+
+            QString c = QDir::toNativeSeparators(QDir(syncSetting->getLocalFolder()).canonicalPath());
+            if (!c.size() || !syncSetting->isActive())
             {
                 continue;
             }
