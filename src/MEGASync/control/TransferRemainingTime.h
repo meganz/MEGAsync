@@ -5,8 +5,7 @@ class TransferRemainingTime
 {
 public:
     TransferRemainingTime();
-    void addTransferSpeedBytesSecond(long long speedBytesSecond, long long remainingBytes);
-    int getRemainingTimeSeconds() const;
+    int calculateRemainingTimeSeconds(long long speedBytesSecond, long long remainingBytes);
     static const int REMAINING_SECONDS_BUFFER_SIZE{10};
 
 private:

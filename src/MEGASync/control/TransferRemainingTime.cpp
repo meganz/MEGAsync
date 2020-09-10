@@ -14,23 +14,22 @@ int calculateMedian(std::array<int, TransferRemainingTime::REMAINING_SECONDS_BUF
     return values[values.size()/2];
 }
 
-void TransferRemainingTime::addTransferSpeedBytesSecond(long long speedBytesSecond, long long remainingBytes)
+int TransferRemainingTime::calculateRemainingTimeSeconds(long long speedBytesSecond, long long remainingBytes)
 {
     const auto totalRemainingSeconds{speedBytesSecond ? (remainingBytes / speedBytesSecond) : 0};
-    if(mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE)
-    {
-        mUpdateRemainingTimeCounter = 0;
-        mRemainingSeconds = calculateMedian(mRemainingTimesBuffer);
-    }
-    else if(totalRemainingSeconds > 0)
+    if(totalRemainingSeconds > 0)
     {
         mRemainingTimesBuffer[mUpdateRemainingTimeCounter] = static_cast<int>(totalRemainingSeconds);
-        mUpdateRemainingTimeCounter++;
+        const auto bufferIsFull{mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE};
+        if(bufferIsFull)
+        {
+            mUpdateRemainingTimeCounter = 0;
+            mRemainingSeconds = calculateMedian(mRemainingTimesBuffer);
+        }
+        else
+        {
+            mUpdateRemainingTimeCounter++;
+        }
     }
-}
-
-
-int TransferRemainingTime::getRemainingTimeSeconds() const
-{
     return mRemainingSeconds;
 }

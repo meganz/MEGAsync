@@ -456,9 +456,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
 {
     updateAnimation(td);
     const auto remainingBytes{td->totalSize - td->totalTransferredBytes};
-    mTransferRemainingTime.addTransferSpeedBytesSecond(td->transferSpeed, remainingBytes);
-
-    const auto remainingTimeSeconds{mTransferRemainingTime.getRemainingTimeSeconds()};
+    const auto remainingTimeSeconds{mTransferRemainingTime.calculateRemainingTimeSeconds(td->transferSpeed, remainingBytes)};
     QString remainingTimeString;
 
     switch (td->transferState)

@@ -298,8 +298,7 @@ void CustomTransferItem::updateTransfer()
         {
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
-            mTransferRemainingTime.addTransferSpeedBytesSecond(transferSpeed, remainingBytes);
-            const auto totalRemainingSeconds{mTransferRemainingTime.getRemainingTimeSeconds()};
+            const auto totalRemainingSeconds{mTransferRemainingTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
             if (totalRemainingSeconds)
