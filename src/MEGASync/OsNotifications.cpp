@@ -131,6 +131,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setText(tr("[A] sent you a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
+                notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 notification->setActions(QStringList() << tr("Accept") << tr("Reject"));
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::replayIncomingPendingRequest);
@@ -143,6 +144,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setTitle(tr("New Contact Request"));
                 notification->setText(tr("[A] cancelled the contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
@@ -153,6 +155,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setTitle(tr("New Contact Request"));
                 notification->setText(tr("Reminder") + QStringLiteral(": ") +
                                       tr("You have a contact request"));
+                notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
@@ -165,6 +168,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
                 notification->setActions(QStringList() << tr("View"));
+                notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewContactOnWebClient);
                 mNotificator->notify(notification);
@@ -176,6 +180,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setTitle(tr("Contact Updated"));
                 notification->setText(QCoreApplication::translate("OsNotifications","You accepted a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
@@ -185,6 +190,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 auto notification{new MegaNotification()};
                 notification->setTitle(tr("Contact Updated"));
                 notification->setText(tr("You ignored a contact request"));
+                notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
@@ -194,6 +200,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 auto notification{new MegaNotification()};
                 notification->setTitle(tr("Contact Updated"));
                 notification->setText(tr("You denied a contact request"));
+                notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
@@ -229,6 +236,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 constexpr auto paymentReminderIndex{1};
                 notification->setText(createPaymentReminderText(alert->getTimestamp(paymentReminderIndex)));
                 notification->setActions(QStringList() << tr("Upgrade"));
+                notification->setImage(mAppIcon);
                 connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
                 mNotificator->notify(notification);
                 break;
@@ -293,6 +301,7 @@ void OsNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QStri
         notification->setActions(QStringList() << tr("Show"));
         QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
     }
+    notification->setImage(mAppIcon);
     notification->setImagePath(mFolderIconPath);
     mNotificator->notify(notification);
 }
@@ -338,6 +347,7 @@ void OsNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert) const
         notification->setActions(QStringList() << tr("Show"));
         QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
     }
+    notification->setImage(mAppIcon);
     mNotificator->notify(notification);
 }
 
@@ -368,6 +378,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         notification->setTitle(tr("Your account is almost full."));
         notification->setText(tr("Upgrade now to a PRO account."));
         notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setImage(mAppIcon);
         notification->setImagePath(mStorageQuotaWarningIconPath);
         connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
@@ -379,6 +390,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         notification->setTitle(tr("Your account is full."));
         notification->setText(tr("Upgrade now to a PRO account."));
         notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setImage(mAppIcon);
         notification->setImagePath(mStorageQuotaFullIconPath);
         connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
@@ -392,6 +404,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         const auto daysToTimeStamps{QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))};
         notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), daysToTimeStamps));
         notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setImage(mAppIcon);
         connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
         break;
@@ -407,6 +420,7 @@ void OsNotifications::sendOverTransferNotification(const QString &title) const
     notification->setTitle(title);
     notification->setText(tr("Upgrade now to a PRO account."));
     notification->setActions(QStringList() << tr("Get PRO"));
+    notification->setImage(mAppIcon);
     connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
     mNotificator->notify(notification);
 }
@@ -418,6 +432,7 @@ void OsNotifications::sendFinishedTransferNotification(const QString &title, con
     notification->setText(message);
     notification->setActions(QStringList() << tr("Show in folder"));
     notification->setData(extraData);
+    notification->setImage(mAppIcon);
     notification->setImagePath(mFileDownloadSucceedIconPath);
     connect(notification, &MegaNotification::activated, this, &OsNotifications::showInFolder);
     mNotificator->notify(notification);
@@ -457,6 +472,7 @@ void OsNotifications::sendBusinessWarningNotification(int businessStatus) const
             notification->setTitle(tr("Payment Failed"));
             notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
             notification->setActions(QStringList() << tr("Pay Now"));
+            notification->setImage(mAppIcon);
             connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToPayBusiness);
             mNotificator->notify(notification);
         }
@@ -471,6 +487,7 @@ void OsNotifications::sendBusinessWarningNotification(int businessStatus) const
             notification->setTitle(tr("Your Business account is expired"));
             notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
             notification->setActions(QStringList() << tr("Pay Now"));
+            notification->setImage(mAppIcon);
             connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToPayBusiness);
         }
         else
