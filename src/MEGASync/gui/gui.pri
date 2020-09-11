@@ -250,8 +250,8 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
 
     QT += macextras
-    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
-    HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
+    OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm $$PWD/MegaSystemTrayIcon.mm
+    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/MegaSystemTrayIcon.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

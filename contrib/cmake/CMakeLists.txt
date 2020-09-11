@@ -715,7 +715,7 @@ target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/catch")
 add_library(trompeloeil INTERFACE)
 target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloeil")
 
-set(MEGASyncUnitTestsDir "${RepoDir}/tests/unit")
+set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
     ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
     ${MEGASyncUnitTestsDir}/main.cpp
