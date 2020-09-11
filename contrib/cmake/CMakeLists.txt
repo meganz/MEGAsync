@@ -183,7 +183,7 @@ endif()
 
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
-    ${MEGAsyncDir}/OsNotifications.h
+    ${MEGAsyncDir}/DesktopNotifications.h
     ${MEGAsyncDir}/TransferQuota.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
@@ -326,7 +326,7 @@ endif()
 
 set (SRCS 
     ${MEGAsyncDir}/MegaApplication.cpp
-    ${MEGAsyncDir}/OsNotifications.cpp
+    ${MEGAsyncDir}/DesktopNotifications.cpp
     ${MEGAsyncDir}/TransferQuota.cpp
 
     ${FORMS}

@@ -8,11 +8,11 @@ class MegaUserAlertList;
 class MegaUserAlert;
 }
 
-class OsNotifications: public QObject
+class DesktopNotifications: public QObject
 {
     Q_OBJECT
 public:
-    OsNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
+    DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
     void addUserAlertList(mega::MegaUserAlertList *alertList) const;
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;

@@ -121,10 +121,10 @@ INCLUDEPATH += $$PWD
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 SOURCES += MegaApplication.cpp \
-    OsNotifications.cpp \
+    DesktopNotifications.cpp \
     TransferQuota.cpp
 HEADERS += MegaApplication.h \
-    OsNotifications.h \
+    DesktopNotifications.h \
     TransferQuota.h
 
 TRANSLATIONS = \

@@ -5,7 +5,7 @@
 
 TransferQuota::TransferQuota(mega::MegaApi* megaApi,
                                        Preferences *preferences,
-                                       std::shared_ptr<OsNotifications> osNotifications)
+                                       std::shared_ptr<DesktopNotifications> osNotifications)
     :mMegaApi{megaApi},
       mPricing(nullptr),
       mPreferences{preferences},

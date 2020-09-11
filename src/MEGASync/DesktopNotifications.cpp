@@ -1,5 +1,5 @@
 #include "megaapi.h"
-#include "OsNotifications.h"
+#include "DesktopNotifications.h"
 #include "MegaApplication.h"
 #include "Platform.h"
 #include <QCoreApplication>
@@ -32,7 +32,7 @@ QString getIconsPath()
     return MegaApplication::applicationDataPath() + QDir::separator() + iconFolderName + QDir::separator();
 }
 
-OsNotifications::OsNotifications(const QString &appName, QSystemTrayIcon *trayIcon)
+DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIcon *trayIcon)
     :mAppIcon{QString::fromUtf8("://images/app_128.png")},
      mNewContactIconPath{getIconsPath() + newContactIconName},
      mStorageQuotaFullIconPath{getIconsPath() + storageQuotaFullIconName},
@@ -114,7 +114,7 @@ QString createPaymentReminderText(int64_t expirationTimeStamp)
     }
 }
 
-void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
+void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
 {
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
@@ -134,7 +134,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 notification->setActions(QStringList() << tr("Accept") << tr("Reject"));
-                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::replayIncomingPendingRequest);
+                QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayIncomingPendingRequest);
                 mNotificator->notify(notification);
                 break;
             }
@@ -170,7 +170,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setActions(QStringList() << tr("View"));
                 notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
-                QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewContactOnWebClient);
+                QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
                 mNotificator->notify(notification);
                 break;
             }
@@ -237,7 +237,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setText(createPaymentReminderText(alert->getTimestamp(paymentReminderIndex)));
                 notification->setActions(QStringList() << tr("Upgrade"));
                 notification->setImage(mAppIcon);
-                connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+                connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
                 mNotificator->notify(notification);
                 break;
             }
@@ -254,7 +254,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
     }
 }
 
-void OsNotifications::replayIncomingPendingRequest(MegaNotification::Action action) const
+void DesktopNotifications::replayIncomingPendingRequest(MegaNotification::Action action) const
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
     const auto megaApp{static_cast<MegaApplication*>(qApp)};
@@ -284,7 +284,7 @@ std::unique_ptr<mega::MegaNode> getMegaNode(mega::MegaUserAlert* alert)
     return std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()));
 }
 
-void OsNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message) const
+void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message) const
 {
     auto notification{new MegaNotification()};
     const auto node{getMegaNode(alert)};
@@ -299,7 +299,7 @@ void OsNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QStri
     {
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
         notification->setActions(QStringList() << tr("Show"));
-        QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
+        QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewShareOnWebClient);
     }
     notification->setImage(mAppIcon);
     notification->setImagePath(mFolderIconPath);
@@ -335,7 +335,7 @@ QString createTakeDownMessage(mega::MegaUserAlert* alert)
     }
 }
 
-void OsNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert) const
+void DesktopNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert) const
 {
     auto notification{new MegaNotification()};
     const auto node{getMegaNode(alert)};
@@ -345,13 +345,13 @@ void OsNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert) const
     {
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
         notification->setActions(QStringList() << tr("Show"));
-        QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
+        QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewShareOnWebClient);
     }
     notification->setImage(mAppIcon);
     mNotificator->notify(notification);
 }
 
-void OsNotifications::viewContactOnWebClient() const
+void DesktopNotifications::viewContactOnWebClient() const
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
     const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
@@ -368,7 +368,7 @@ void OsNotifications::viewContactOnWebClient() const
     delete user;
 }
 
-void OsNotifications::sendOverStorageNotification(int state) const
+void DesktopNotifications::sendOverStorageNotification(int state) const
 {
     switch (state)
     {
@@ -380,7 +380,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         notification->setActions(QStringList() << tr("Get PRO"));
         notification->setImage(mAppIcon);
         notification->setImagePath(mStorageQuotaWarningIconPath);
-        connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+        connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
         break;
     }
@@ -392,7 +392,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         notification->setActions(QStringList() << tr("Get PRO"));
         notification->setImage(mAppIcon);
         notification->setImagePath(mStorageQuotaFullIconPath);
-        connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+        connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
         break;
     }
@@ -405,7 +405,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), daysToTimeStamps));
         notification->setActions(QStringList() << tr("Get PRO"));
         notification->setImage(mAppIcon);
-        connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+        connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
         break;
     }
@@ -414,18 +414,18 @@ void OsNotifications::sendOverStorageNotification(int state) const
     }
 }
 
-void OsNotifications::sendOverTransferNotification(const QString &title) const
+void DesktopNotifications::sendOverTransferNotification(const QString &title) const
 {
     const auto notification{new MegaNotification()};
     notification->setTitle(title);
     notification->setText(tr("Upgrade now to a PRO account."));
     notification->setActions(QStringList() << tr("Get PRO"));
     notification->setImage(mAppIcon);
-    connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
+    connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
     mNotificator->notify(notification);
 }
 
-void OsNotifications::sendFinishedTransferNotification(const QString &title, const QString &message, const QString &extraData) const
+void DesktopNotifications::sendFinishedTransferNotification(const QString &title, const QString &message, const QString &extraData) const
 {
     auto notification{new MegaNotification()};
     notification->setTitle(title);
@@ -434,7 +434,7 @@ void OsNotifications::sendFinishedTransferNotification(const QString &title, con
     notification->setData(extraData);
     notification->setImage(mAppIcon);
     notification->setImagePath(mFileDownloadSucceedIconPath);
-    connect(notification, &MegaNotification::activated, this, &OsNotifications::showInFolder);
+    connect(notification, &MegaNotification::activated, this, &DesktopNotifications::showInFolder);
     mNotificator->notify(notification);
 }
 
@@ -448,7 +448,7 @@ bool checkIfActionIsValid(MegaNotification::Action action)
             ;
 }
 
-void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButton) const
+void DesktopNotifications::redirectToUpgrade(MegaNotification::Action activationButton) const
 {
     if (checkIfActionIsValid(activationButton))
     {
@@ -458,7 +458,7 @@ void OsNotifications::redirectToUpgrade(MegaNotification::Action activationButto
     }
 }
 
-void OsNotifications::sendBusinessWarningNotification(int businessStatus) const
+void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) const
 {
     const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
 
@@ -473,7 +473,7 @@ void OsNotifications::sendBusinessWarningNotification(int businessStatus) const
             notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
             notification->setActions(QStringList() << tr("Pay Now"));
             notification->setImage(mAppIcon);
-            connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToPayBusiness);
+            connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToPayBusiness);
             mNotificator->notify(notification);
         }
         break;
@@ -488,7 +488,7 @@ void OsNotifications::sendBusinessWarningNotification(int businessStatus) const
             notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
             notification->setActions(QStringList() << tr("Pay Now"));
             notification->setImage(mAppIcon);
-            connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToPayBusiness);
+            connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToPayBusiness);
         }
         else
         {
@@ -503,22 +503,22 @@ void OsNotifications::sendBusinessWarningNotification(int businessStatus) const
     }
 }
 
-void OsNotifications::sendInfoNotification(const QString &title, const QString &message) const
+void DesktopNotifications::sendInfoNotification(const QString &title, const QString &message) const
 {
     mNotificator->notify(Notificator::Information, title, message, mAppIcon);
 }
 
-void OsNotifications::sendWarningNotification(const QString &title, const QString &message) const
+void DesktopNotifications::sendWarningNotification(const QString &title, const QString &message) const
 {
     mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
 }
 
-void OsNotifications::sendErrorNotification(const QString &title, const QString &message) const
+void DesktopNotifications::sendErrorNotification(const QString &title, const QString &message) const
 {
     mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
 }
 
-void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationButton) const
+void DesktopNotifications::redirectToPayBusiness(MegaNotification::Action activationButton) const
 {
     if (checkIfActionIsValid(activationButton))
     {
@@ -528,7 +528,7 @@ void OsNotifications::redirectToPayBusiness(MegaNotification::Action activationB
     }
 }
 
-void OsNotifications::showInFolder(MegaNotification::Action action) const
+void DesktopNotifications::showInFolder(MegaNotification::Action action) const
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
 
@@ -546,7 +546,7 @@ void OsNotifications::showInFolder(MegaNotification::Action action) const
     }
 }
 
-void OsNotifications::viewShareOnWebClient(MegaNotification::Action action) const
+void DesktopNotifications::viewShareOnWebClient(MegaNotification::Action action) const
 {
     if (checkIfActionIsValid(action))
     {
