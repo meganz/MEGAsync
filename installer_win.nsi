@@ -316,12 +316,10 @@ Section "Principal" SEC01
   ${EndIf}
 !endif
 
-!ifdef BUILD_X64_VERSION
-  ${IfNot} ${AtLeastWin7}
-    MessageBox MB_OK "This MEGAsync installer is for Windows 7 or above"
-    Quit
-  ${EndIf}
-!endif
+${IfNot} ${AtLeastWin7}
+  MessageBox MB_OK "This MEGAsync installer is for Windows 7 or above"
+  Quit
+${EndIf}
 
   !insertmacro DEBUG_MSG "Getting needed information"
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
