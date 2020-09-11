@@ -36,4 +36,6 @@ private:
 
     Notificator* mNotificator;
     QIcon mAppIcon;
+    QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;
+    QString mFolderIconPath, mFileDownloadSucceedIconPath;
 };

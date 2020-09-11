@@ -5,14 +5,50 @@
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrent>
 
+const auto iconPrefix{QStringLiteral("://images/")};
+const auto iconFolderName{QStringLiteral("icons")};
+const auto newContactIconName{QStringLiteral("new_contact@3x.png")};
+const auto storageQuotaFullIconName{QStringLiteral("Storage_Quota_full@3x.png")};
+const auto storageQuotaWarningIconName{QStringLiteral("Storage_Quota_almost_full@3x.png")};
+const auto failedToDownloadIconName{QStringLiteral("Failed_to_download@3x.png")};
+const auto folderIconName{QStringLiteral("Folder@3x.png")};
+const auto fileDownloadSucceedIconName{QStringLiteral("File_download_succeed@3x.png")};
+
+void copyIconsToAppFolder(QString folderPath)
+{
+    QStringList iconNames;
+    iconNames << newContactIconName << storageQuotaFullIconName << storageQuotaWarningIconName
+              << failedToDownloadIconName << folderIconName << fileDownloadSucceedIconName;
+
+    for(const auto& iconName : iconNames)
+    {
+        QFile iconFile(iconPrefix + iconName);
+        iconFile.copy(folderPath + QDir::separator() + iconName);
+    }
+}
+
+QString getIconsPath()
+{
+    return MegaApplication::applicationDataPath() + QDir::separator() + iconFolderName + QDir::separator();
+}
+
 OsNotifications::OsNotifications(const QString &appName, QSystemTrayIcon *trayIcon)
-    :mAppIcon{QString::fromUtf8("://images/app_128.png")}
+    :mAppIcon{QString::fromUtf8("://images/app_128.png")},
+     mNewContactIconPath{getIconsPath() + newContactIconName},
+     mStorageQuotaFullIconPath{getIconsPath() + storageQuotaFullIconName},
+     mStorageQuotaWarningIconPath{getIconsPath() + storageQuotaWarningIconName},
+     mFolderIconPath{getIconsPath() + folderIconName},
+     mFileDownloadSucceedIconPath{getIconsPath() + fileDownloadSucceedIconName}
 {
 #ifdef __APPLE__
     mNotificator = new Notificator(appName, NULL, this);
 #else
     mNotificator = new Notificator(appName, trayIcon, this);
 #endif
+
+    QDir appDir{MegaApplication::applicationDataPath()};
+    appDir.mkdir(iconFolderName);
+    copyIconsToAppFolder(getIconsPath());
 }
 
 QString getItemsAddedText(mega::MegaUserAlert* alert)
@@ -95,7 +131,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setText(tr("[A] sent you a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setImage(QIcon(QString::fromAscii("://images/new_contact.png")));
+                notification->setImagePath(mNewContactIconPath);
                 notification->setActions(QStringList() << tr("Accept") << tr("Reject"));
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::replayIncomingPendingRequest);
                 mNotificator->notify(notification);
@@ -107,6 +143,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setTitle(tr("New Contact Request"));
                 notification->setText(tr("[A] cancelled the contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
             }
@@ -116,6 +153,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setTitle(tr("New Contact Request"));
                 notification->setText(tr("Reminder") + QStringLiteral(": ") +
                                       tr("You have a contact request"));
+                notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
             }
@@ -127,6 +165,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
                 notification->setActions(QStringList() << tr("View"));
+                notification->setImagePath(mNewContactIconPath);
                 QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewContactOnWebClient);
                 mNotificator->notify(notification);
                 break;
@@ -137,6 +176,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 notification->setTitle(tr("Contact Updated"));
                 notification->setText(QCoreApplication::translate("OsNotifications","You accepted a contact request")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
             }
@@ -145,6 +185,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 auto notification{new MegaNotification()};
                 notification->setTitle(tr("Contact Updated"));
                 notification->setText(tr("You ignored a contact request"));
+                notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
             }
@@ -153,6 +194,7 @@ void OsNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
                 auto notification{new MegaNotification()};
                 notification->setTitle(tr("Contact Updated"));
                 notification->setText(tr("You denied a contact request"));
+                notification->setImagePath(mNewContactIconPath);
                 mNotificator->notify(notification);
                 break;
             }
@@ -251,6 +293,7 @@ void OsNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QStri
         notification->setActions(QStringList() << tr("Show"));
         QObject::connect(notification, &MegaNotification::activated, this, &OsNotifications::viewShareOnWebClient);
     }
+    notification->setImagePath(mFolderIconPath);
     mNotificator->notify(notification);
 }
 
@@ -325,6 +368,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         notification->setTitle(tr("Your account is almost full."));
         notification->setText(tr("Upgrade now to a PRO account."));
         notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setImagePath(mStorageQuotaWarningIconPath);
         connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
         break;
@@ -335,6 +379,7 @@ void OsNotifications::sendOverStorageNotification(int state) const
         notification->setTitle(tr("Your account is full."));
         notification->setText(tr("Upgrade now to a PRO account."));
         notification->setActions(QStringList() << tr("Get PRO"));
+        notification->setImagePath(mStorageQuotaFullIconPath);
         connect(notification, &MegaNotification::activated, this, &OsNotifications::redirectToUpgrade);
         mNotificator->notify(notification);
         break;
@@ -373,13 +418,14 @@ void OsNotifications::sendFinishedTransferNotification(const QString &title, con
     notification->setText(message);
     notification->setActions(QStringList() << tr("Show in folder"));
     notification->setData(extraData);
+    notification->setImagePath(mFileDownloadSucceedIconPath);
     connect(notification, &MegaNotification::activated, this, &OsNotifications::showInFolder);
     mNotificator->notify(notification);
 }
 
 bool checkIfActionIsValid(MegaNotification::Action action)
 {
-    return (action == MegaNotification::Action::firstButton)
+    return action == MegaNotification::Action::firstButton
             || action == MegaNotification::Action::legacy
         #ifndef _WIN32
             || action == MegaNotification::Action::content
