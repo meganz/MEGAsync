@@ -1506,7 +1506,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Ajouter une synchro</translation>
+        <translation>Ajouter une synchronisation</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1876,7 +1876,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished">You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+        <translation type="unfinished">Il vous reste [A][B] heures[/A] pour surclasser votre compte. Ce délai révolu, vos données pourraient être supprimées.</translation>
     </message>
 </context>
 <context>
@@ -2748,7 +2748,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu item to add a new synchronization</translatorcomment>
-        <translation type="unfinished">Ajouter une synchro</translation>
+        <translation type="unfinished">Ajouter une synchronisation</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -2788,7 +2788,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your syncs have been temporarily disabled</source>
         <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
-        <translation type="unfinished">Vos synchros ont été désactivées temporairement</translation>
+        <translation type="unfinished">Vos synchronisations ont été désactivées temporairement</translation>
     </message>
     <message>
         <source>Something went wrong</source>
@@ -2923,7 +2923,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A] hours left to save your data</source>
         <translatorcomment>Notification content to inform the hours the user have to save the date before possible deletion. [A] will be replace with remaining hours amount.</translatorcomment>
-        <translation type="unfinished">You have [A] hours left to save your data</translation>
+        <translation type="unfinished">Il vous reste [A] heures pour sauver vos données</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>

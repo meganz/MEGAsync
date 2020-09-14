@@ -1836,7 +1836,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to informa about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of days left to upgrade.</translatorcomment>
-        <translation type="unfinished">您剩下[A][B]天[/A]可以升級。在這之後，您的資料將被刪除。</translation>
+        <translation type="unfinished">您剩下[A][B]天[/A]可以升級。在這之後您的資料將被刪除。</translation>
     </message>
     <message>
         <source>Upgrade account</source>
@@ -1876,7 +1876,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished">You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+        <translation type="unfinished">您剩下[A][B]小時[/A]可以升級。在這之後您的資料將被刪除。</translation>
     </message>
 </context>
 <context>
@@ -2923,7 +2923,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A] hours left to save your data</source>
         <translatorcomment>Notification content to inform the hours the user have to save the date before possible deletion. [A] will be replace with remaining hours amount.</translatorcomment>
-        <translation type="unfinished">You have [A] hours left to save your data</translation>
+        <translation type="unfinished">您剩[A]小時可以保存您的資料</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>

@@ -730,7 +730,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation type="unfinished">[A]ซอฟต์แวร์นี้ใช้ Qt ([C] 2018 บริษัท Qt จำกัด) ซึ่งจะครอบคุลมโดย GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</translation>
+        <translation type="unfinished">[A]ซอฟต์แวร์นี้ใช้ Qt ([C] 2018 บริษัท Qt จำกัด) ซึ่งจะครอบคุลมโดย GNU Lesser General Public License Version 3[/A]</translation>
     </message>
 </context>
 <context>
@@ -4148,7 +4148,7 @@ Please verify the correct file name was given.</source>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished">ไฟล์ ‘%1’ ถูกป้องกันการเขียนไว้
+        <translation type="unfinished">ไฟล์ ”%1” ถูกป้องกันการเขียนไว้
 คุณต้องการลบหรือไม่</translation>
     </message>
 </context>
