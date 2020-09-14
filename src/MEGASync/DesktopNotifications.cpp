@@ -174,37 +174,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) 
                 mNotificator->notify(notification);
                 break;
             }
-            case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
-            {
-                auto notification{new MegaNotification()};
-                notification->setTitle(tr("Contact Updated"));
-                notification->setText(QCoreApplication::translate("OsNotifications","You accepted a contact request")
-                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
-                notification->setImage(mAppIcon);
-                notification->setImagePath(mNewContactIconPath);
-                mNotificator->notify(notification);
-                break;
-            }
-            case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
-            {
-                auto notification{new MegaNotification()};
-                notification->setTitle(tr("Contact Updated"));
-                notification->setText(tr("You ignored a contact request"));
-                notification->setImage(mAppIcon);
-                notification->setImagePath(mNewContactIconPath);
-                mNotificator->notify(notification);
-                break;
-            }
-            case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
-            {
-                auto notification{new MegaNotification()};
-                notification->setTitle(tr("Contact Updated"));
-                notification->setText(tr("You denied a contact request"));
-                notification->setImage(mAppIcon);
-                notification->setImagePath(mNewContactIconPath);
-                mNotificator->notify(notification);
-                break;
-            }
             case mega::MegaUserAlert::TYPE_NEWSHARE:
             {
                 const auto message{tr("New Shared folder from [X]")
