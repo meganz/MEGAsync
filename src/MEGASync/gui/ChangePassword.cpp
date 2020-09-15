@@ -40,7 +40,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                 if (request->getFlag()) //2FA enabled
                 {
                     QPointer<ChangePassword> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
+                    QPointer<Login2FA> verification = new Login2FA(this);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
@@ -78,7 +78,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             else if (e->getErrorCode() == MegaError::API_EFAILED || e->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 QPointer<ChangePassword> dialog = this;
-                QPointer<Login2FA> verification = new Login2FA();
+                QPointer<Login2FA> verification = new Login2FA(this);
                 verification->invalidCode(true);
                 int result = verification->exec();
                 if (!dialog || !verification || result != QDialog::Accepted)
@@ -120,20 +120,27 @@ ChangePassword::~ChangePassword()
 
 void ChangePassword::on_bOk_clicked()
 {
-    bool emptyField = newPassword().isEmpty() || confirmNewPassword().isEmpty();
-    bool equalPasswords = !newPassword().compare(confirmNewPassword());
+    const auto fieldIsEmpty{newPassword().isEmpty() || confirmNewPassword().isEmpty()};
+    const auto passwordsAreEqual{!newPassword().compare(confirmNewPassword())};
+    const auto newAndOldPasswordsAreTheSame{megaApi->checkPassword(newPassword().toUtf8())};
+    const auto passwordIsWeak{megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
-    if (emptyField)
+    if (fieldIsEmpty)
     {
         QMegaMessageBox::warning(this, tr("Error"), tr("Please enter your password"));
         return;
     }
-    else if (!equalPasswords)
+    else if (!passwordsAreEqual)
     {
         QMegaMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"));
         return;
     }
-    else if (megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK)
+    else if (newAndOldPasswordsAreTheSame)
+    {
+        QMegaMessageBox::warning(this, tr("Error"), tr("You have entered your current password, please enter a new password."));
+        return;
+    }
+    else if (passwordIsWeak)
     {
         QMegaMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"));
         return;

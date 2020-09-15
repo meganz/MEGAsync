@@ -211,9 +211,17 @@ public:
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget *what);
-
+    static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
+    static QString getReadableStringFromTs(mega::MegaIntegerList* list);
+    static QString getReadablePROplanFromId(int identifier);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
+    static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
+    // Returns remaining days until unix timestamp (floored)
+    static void getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays);
+    // Returns remaining days or remainig hours until unix timestamp. Note hours are not in addition to remaininDays
+    // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
+    static void getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
 private:
     Utilities() {}

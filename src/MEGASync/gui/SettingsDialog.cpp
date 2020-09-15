@@ -292,13 +292,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     }
 #endif
 
-    ui->lOQWarning->setText(QString::fromUtf8(""));
-    ui->wOQError->hide();
-
     highDpiResize.init(this);
     ((MegaApplication*)qApp)->attachStorageObserver(*this);
     ((MegaApplication*)qApp)->attachBandwidthObserver(*this);
     ((MegaApplication*)qApp)->attachAccountObserver(*this);
+
+    connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
+    storageStateChanged(app->getAppliedStorageState());
+
 }
 
 SettingsDialog::~SettingsDialog()
@@ -461,6 +462,11 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 void SettingsDialog::storageChanged()
 {
     onCacheSizeAvailable();
+}
+
+void SettingsDialog::storageStateChanged(int newStorageState)
+{
+     setOverQuotaMode(newStorageState == MegaApi::STORAGE_STATE_RED || newStorageState == MegaApi::STORAGE_STATE_PAYWALL);
 }
 
 void SettingsDialog::onCacheSizeAvailable()
@@ -1409,9 +1415,20 @@ int SettingsDialog::saveSettings()
                     {
                         if (enabled && preferences->isFolderActive(j) != enabled)
                         {
-                            preferences->setMegaFolderHandle(j, node->getHandle());
-                            preferences->setSyncState(j, enabled);
-                            megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                            bool storageOQPaywall{static_cast<MegaApplication *>(qApp)->getAppliedStorageState() == MegaApi::STORAGE_STATE_PAYWALL};
+                            if (storageOQPaywall)
+                            {
+                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(" Sync cannot be enabled: reached OQ paywall").toUtf8().constData());
+                                QMegaMessageBox::critical(nullptr, tr("Error"),
+                                   tr("Storage Quota Exceeded. Upgrade now"));
+                                ((QCheckBox *)ui->tSyncs->cellWidget(i, 2))->setChecked(false);
+                            }
+                            else
+                            {
+                                preferences->setMegaFolderHandle(j, node->getHandle());
+                                preferences->setSyncState(j, enabled);
+                                megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
+                            }
                         }
                         break;
                     }
@@ -1427,7 +1444,21 @@ int SettingsDialog::saveSettings()
                                                  node->getHandle(),
                                                  syncName, enabled);
 
-                    if (enabled)
+                    bool storageOQ = static_cast<MegaApplication *>(qApp)->isAppliedStorageOverquota();
+                    bool blocked = preferences->getBlockedState() != -2 && preferences->getBlockedState();
+                    bool businessExpired = preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED;
+                    if (storageOQ || blocked || businessExpired)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(
+                                         " Sync added as temporary disabled due to %1: %2 - %3")
+                                     .arg(QString::fromUtf8(storageOQ ? "storage overquota" :
+                                          (blocked ? "account blocked" : "business account expired") ))
+                                     .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
+
+                        preferences->setSyncState(j, false, true);
+                        ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->setChecked(false);
+                    }
+                    else if (enabled)
                     {
                         megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
                     }
@@ -1745,7 +1776,7 @@ void SettingsDialog::loadSyncSettings()
         QCheckBox *c = new QCheckBox();
         c->setChecked(preferences->isFolderActive(i));
         c->setToolTip(tr("Enable / disable"));
-        connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+        connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
         ui->tSyncs->setCellWidget(i, 2, c);
     }
 }
@@ -1791,6 +1822,12 @@ void SettingsDialog::on_bPermissions_clicked()
 #endif
 void SettingsDialog::on_bAdd_clicked()
 {
+    const auto dismissed{app->showSyncOverquotaDialog()};
+    if(!dismissed)
+    {
+        return;
+    }
+
     QStringList currentLocalFolders;
     QList<long long> currentMegaFolders;
     for (int i = 0; i < ui->tSyncs->rowCount(); i++)
@@ -1849,7 +1886,7 @@ void SettingsDialog::on_bAdd_clicked()
     QCheckBox *c = new QCheckBox();
     c->setChecked(true);
     c->setToolTip(tr("Enable / disable"));
-    connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)));
+    connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
     ui->tSyncs->setCellWidget(pos, 2, c);
 
     syncNames.append(dialog->getSyncName());

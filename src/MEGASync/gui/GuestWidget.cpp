@@ -15,7 +15,8 @@ using namespace mega;
 
 GuestWidget::GuestWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::GuestWidget)
+    ui(new Ui::GuestWidget),
+    incorrectCredentialsMessageReceived{false}
 {
     ui->setupUi(this);
 
@@ -32,6 +33,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     }
     ui->lEmail->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
     ui->lPassword->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
+    ui->leCode->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
 
     reset_UI_props();
 
@@ -44,8 +46,15 @@ GuestWidget::GuestWidget(QWidget *parent) :
     delegateListener = new QTMegaRequestListener(megaApi, this);
     megaApi->addRequestListener(delegateListener);
 
+    ui->sLoginTitle->setCurrentWidget(ui->pLoginTitle);
     ui->sPages->setCurrentWidget(ui->pLogin);
     state = GuestWidgetState::LOGIN;
+
+    ui->lLogin2FAError->hide();
+
+    connect(ui->leCode, &QLineEdit::textChanged, this, &GuestWidget::hide2FaLoginError);
+    connect(ui->lEmail, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);
+    connect(ui->lPassword, &QLineEdit::textChanged, this, &GuestWidget::hideLoginError);
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(fetchNodesAfterBlock()), this, SLOT(fetchNodesAfterBlockCallbak()));
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(setupWizardCreated()), this, SLOT(connectToSetupWizard()));
@@ -144,29 +153,11 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    QMegaMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
+                    incorrectCredentialsMessageReceived = true;
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
-                    QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
-                    int result = verification->exec();
-                    if (!dialog || !verification || result != QDialog::Accepted)
-                    {
-                        if (dialog)
-                        {
-                            megaApi->localLogout();
-                            page_login();
-                            loggingStarted = false;
-                        }
-                        delete verification;
-                        return;
-                    }
-
-                    QString pin = verification->pinCode();
-                    delete verification;
-
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
+                    page_login2FA();
                     return;
                 }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
@@ -187,26 +178,8 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
-                    QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA();
-                    verification->invalidCode(true);
-                    int result = verification->exec();
-                    if (!dialog || !verification || result != QDialog::Accepted)
-                    {
-                        if (dialog)
-                        {
-                            megaApi->localLogout();
-                            page_login();
-                            loggingStarted = false;
-                        }
-                        delete verification;
-                        return;
-                    }
-
-                    QString pin = verification->pinCode();
-                    delete verification;
-
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
+                    showLogin2FaError();
+                    page_login2FA();
                     return;
                 }
                 else if (error->getErrorCode() != MegaError::API_ESSL)
@@ -283,7 +256,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     }
 }
 
-void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
+void GuestWidget::onRequestUpdate(MegaApi*, MegaRequest *request)
 {
     if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
     {
@@ -297,12 +270,20 @@ void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
 
 void GuestWidget::resetFocus()
 {
-    if (!ui->lEmail->text().size())
+    if(state == GuestWidgetState::LOGIN)
     {
-        ui->lEmail->setFocus();
+        if (ui->lEmail->text().isEmpty())
+        {
+            ui->lEmail->setFocus();
+        }
+        ui->bLogin->setDefault(true);
     }
 
-    ui->bLogin->setDefault(true);
+    if(state == GuestWidgetState::LOGIN2FA)
+    {
+        ui->leCode->setFocus();
+        ui->bLogin2FaNext->setDefault(true);
+    }
 }
 
 void GuestWidget::disableListener()
@@ -334,6 +315,8 @@ void GuestWidget::initialize()
 
     closing = false;
     loggingStarted = false;
+    ui->lEmail->clear();
+    resetFocus();
     page_login();
 }
 
@@ -356,9 +339,51 @@ void GuestWidget::resetPageAfterBlock()
         page_settingUp();
         break;
     }
+    case GuestWidgetState::LOGIN2FA:
+    {
+        page_login2FA();
+        break;
+    }
     default:
         assert(false && "Unexpected state to reset Guest Widget to");
         break;
+    }
+}
+
+void GuestWidget::showLoginError(const QString &errorMessage) const
+{
+    constexpr auto animationTimeMillis{300};
+    ui->lLoginErrors->setText(errorMessage);
+    ui->sLoginTitle->setCurrentWidget(ui->pLoginErrors);
+    Utilities::animatePartialFadein(ui->lLoginErrors, animationTimeMillis);
+}
+
+void GuestWidget::showLogin2FaError() const
+{
+    constexpr auto animationTimeMillis{300};
+    Utilities::animatePartialFadein(ui->lLogin2FAError, animationTimeMillis);
+    ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
+    ui->lLogin2FAError->show();
+}
+
+void GuestWidget::hideLoginError()
+{
+    const auto isLoginErrorBeingShowed{ui->sLoginTitle->currentWidget() == ui->pLoginErrors};
+    if(isLoginErrorBeingShowed)
+    {
+        constexpr auto transitionTimeMillis{100};
+        Utilities::animatePartialFadeout(ui->lLoginErrors, transitionTimeMillis);
+        QTimer::singleShot(transitionTimeMillis, this, [&](){ui->sLoginTitle->setCurrentWidget(ui->pLoginTitle);});
+    }
+}
+
+void GuestWidget::hide2FaLoginError()
+{
+    if(ui->lLogin2FAError->isVisible())
+    {
+        constexpr auto animationTimeMillis{100};
+        Utilities::animatePartialFadeout(ui->lLogin2FAError, animationTimeMillis);
+        QTimer::singleShot(animationTimeMillis, this, [&](){ui->lLogin2FAError->hide();});
     }
 }
 
@@ -388,24 +413,25 @@ void GuestWidget::setBlockState(int lockType)
 
 void GuestWidget::on_bLogin_clicked()
 {
-    QString email = ui->lEmail->text().toLower().trimmed();
-    QString password = ui->lPassword->text();
+    email = ui->lEmail->text().toLower().trimmed();
+    password = ui->lPassword->text();
 
     if (!email.length())
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+        showLoginError(tr("Please, enter your e-mail address"));
         return;
     }
 
     if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+        showLoginError(tr("Please, enter a valid e-mail address"));
         return;
     }
 
     if (!password.length())
     {
-        QMegaMessageBox::warning(nullptr, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+        showLoginError(tr("Please, enter your password"));
+        ui->lPassword->setFocus();
         return;
     }
 
@@ -464,6 +490,7 @@ void GuestWidget::on_bCancel_clicked()
     }
     else
     {
+        loggingStarted = false;
         megaApi->localLogout();
         page_login();
     }
@@ -562,13 +589,21 @@ void GuestWidget::page_login()
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
 
-    ui->lEmail->clear();
     ui->lPassword->clear();
     ui->sPages->setCurrentWidget(ui->pLogin);
 
-    resetFocus();
+    if(incorrectCredentialsMessageReceived)
+    {
+        incorrectCredentialsMessageReceived = false;
+        showLoginError(tr("Incorrect email and/or password."));
+    }
+    else
+    {
+       hideLoginError();
+    }
 
     state = GuestWidgetState::LOGIN;
+    resetFocus();
 
     emit onPageLogin();
 }
@@ -641,10 +676,30 @@ void GuestWidget::page_lockedSMSAccount()
     ui->sPages->setCurrentWidget(ui->pVerifySMSAccount);
 }
 
+void GuestWidget::page_login2FA()
+{
+    if (ui->sPages->currentWidget() == ui->pLogin2FA)
+    {
+        return;
+    }
+
+    ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
+                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style='color:#333333; text-decoration:none; font-size:13px; font-family: \"SF UI Text\"'>"))
+                               .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+
+    ui->sPages->setCurrentWidget(ui->pLogin2FA);
+    ui->sPages->setStyleSheet(QStringLiteral("image: url(\":/images/login_plain_background.png\");"));
+    state = GuestWidgetState::LOGIN2FA;
+    resetFocus();
+}
+
 void GuestWidget::reset_UI_props()
 {
     ui->lEmailSent->setVisible(false);
     ui->bVerifyEmail->setEnabled(true);
+
+    ui->leCode->clear();
+    ui->lLogin2FAError->hide();
 }
 
 void GuestWidget::changeEvent(QEvent *event)
@@ -654,4 +709,31 @@ void GuestWidget::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
+}
+
+void GuestWidget::on_bLogin2FaNext_clicked()
+{
+    QRegExp re(QString::fromUtf8("\\d\\d\\d\\d\\d\\d"));
+    const auto pin{ui->leCode->text().trimmed()};
+    if (pin.isEmpty() || !re.exactMatch(pin))
+    {
+        showLogin2FaError();
+    }
+    else
+    {
+        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8().constData(), pin.toUtf8().constData());
+    }
+}
+
+void GuestWidget::on_bLoging2FaCancel_clicked()
+{
+    megaApi->localLogout();
+    page_login();
+    loggingStarted = false;
+}
+
+void GuestWidget::on_bLogin2FaHelp_clicked()
+{
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }

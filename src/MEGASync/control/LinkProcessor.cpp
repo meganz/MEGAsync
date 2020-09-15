@@ -58,7 +58,7 @@ MegaNode *LinkProcessor::getNode(int id)
     return linkNode[id];
 }
 
-int LinkProcessor::size()
+int LinkProcessor::size() const
 {
     return linkList.size();
 }
@@ -316,4 +316,18 @@ int LinkProcessor::numFailedImports()
 int LinkProcessor::getCurrentIndex()
 {
     return currentIndex;
+}
+
+bool LinkProcessor::atLeastOneLinkValidAndSelected() const
+{
+    for (int iLink = 0; iLink < size(); iLink++)
+    {
+        const auto isValid{linkNode.at(iLink)};
+        const auto isSelected{linkSelected.at(iLink)};
+        if(isValid && isSelected)
+        {
+            return true;
+        }
+    }
+    return false;
 }

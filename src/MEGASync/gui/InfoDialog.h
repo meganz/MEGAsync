@@ -15,6 +15,7 @@
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
+#include "TransferQuota.h"
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
@@ -70,16 +71,15 @@ public:
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
-
     void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
 
     void reset();
 
     QCustomTransfersModel *stealModel();
 
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -94,14 +94,12 @@ public:
 
     void setUnseenNotifications(long long value);
     void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
-
     long long getUnseenNotifications() const;
-
     void closeSyncsMenu();
-
     int getLoggedInMode() const;
 
 private:
+    InfoDialog() = default;
     void drawAvatar(QString email);
     void animateStates(bool opt);
     void updateTransfersCount();
@@ -126,9 +124,14 @@ public slots:
    void onAllTransfersFinished();
    void updateDialogState();
 
+   void enableTransferOverquotaAlert();
+   void enableTransferAlmostOverquotaAlert();
+   void setBandwidthOverquotaState(QuotaState state);
+
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
+    void on_bUpgradeOverDiskQuota_clicked();
     void openFolder(QString path);
     void onOverlayClicked();
     void on_bTransferManager_clicked();
@@ -140,7 +143,6 @@ private slots:
 
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
-
     void on_bActualFilter_clicked();
     void applyFilterOption(int opt);
     void on_bNotificationsSettings_clicked();
@@ -157,7 +159,9 @@ private slots:
 
 signals:
     void openTransferManager(int tab);
-    void dismissOQ(bool oq);
+    void dismissStorageOverquota(bool oq);
+    void dismissTransferOverquota();
+    void dismissTransferAlmostOverquota();
     void userActivity();
 
 private:
@@ -196,7 +200,10 @@ private:
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
+    bool transferOverquotaAlertEnabled;
+    bool transferAlmostOverquotaAlertEnabled;
     int storageState;
+    QuotaState transferOverquotaState;
     int actualAccountType;
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;
@@ -227,9 +234,9 @@ protected:
     void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
-    void changeEvent(QEvent * event);
-    bool eventFilter(QObject *obj, QEvent *e);
-    void paintEvent( QPaintEvent * e);
+    void changeEvent(QEvent * event) override;
+    bool eventFilter(QObject *obj, QEvent *e) override;
+    void paintEvent( QPaintEvent * e) override;
 
 protected:
     QDateTime lastPopupUpdate;

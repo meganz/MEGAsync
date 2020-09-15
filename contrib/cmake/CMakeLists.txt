@@ -107,8 +107,6 @@ set (TS_FILES
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ro.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_ru.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_th.ts
-    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_tl.ts
-    ${MEGAsyncDir}/gui/translations/MEGASyncStrings_uk.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_vi.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_zh_CN.ts
     ${MEGAsyncDir}/gui/translations/MEGASyncStrings_zh_TW.ts )
@@ -138,7 +136,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/AccountDetailsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/DownloadFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/SizeLimitDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/MessageBox.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangeLogDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
@@ -165,6 +162,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
+    ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
+    ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
     )
 
 
@@ -184,6 +183,7 @@ endif()
 
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
+    ${MEGAsyncDir}/TransferQuota.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -233,7 +233,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/MegaSpeedGraph.h
     ${MEGAsyncDir}/gui/MegaTransferDelegate.h
     ${MEGAsyncDir}/gui/MegaTransferView.h
-    ${MEGAsyncDir}/gui/MessageBox.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
     ${MEGAsyncDir}/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.h
@@ -262,6 +261,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
+    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
+    ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -323,6 +324,8 @@ set (SRCS
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
 
+    ${MEGAsyncDir}/TransferQuota.cpp
+
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
     ${MEGAsyncDir}/gui/BugReportDialog.cpp
@@ -350,7 +353,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/SizeLimitDialog.cpp
     ${MEGAsyncDir}/gui/UsageWidget.cpp
-    ${MEGAsyncDir}/gui/MessageBox.cpp
     ${MEGAsyncDir}/gui/QMegaModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
@@ -391,6 +393,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
+    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
+    ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp

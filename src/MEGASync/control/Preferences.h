@@ -10,6 +10,7 @@
 #include "control/EncryptedSettings.h"
 #include <assert.h>
 #include "megaapi.h"
+#include <chrono>
 
 Q_DECLARE_METATYPE(QList<long long>)
 
@@ -30,55 +31,11 @@ private:
 public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
-
     void initialize(QString dataPath);
-
-    template<typename T>
-    T getValue (const QString &key)
-    {
-        auto cf = cache.find(key);
-        if (cf != cache.end())
-        {
-            assert(cf->second.value<T>() == settings->value(key).value<T>());
-            return cf->second.value<T>();
-        }
-        else return settings->value(key).value<T>();
-    }
-
-    template<typename T>
-    T getValue (const QString &key, const T &defaultValue)
-    {
-        auto cf = cache.find(key);
-        if (cf != cache.end())
-        {
-            assert(cf->second.value<T>() == settings->value(key, defaultValue).template value<T>());
-            return cf->second.value<T>();
-        }
-        else return settings->value(key, defaultValue).template value<T>();
-    }
-
-    void setCachedValue (const QString &key, const QVariant &value)
-    {
-        if (!key.isEmpty())
-        {
-            cache[key] = value;
-        }
-    }
-
-    void cleanCache()
-    {
-        cache.clear();
-    }
-
-    void removeFromCache(const QString &key)
-    {
-        cache.erase(key);
-    }
-
     void setEmailAndGeneralSettings(const QString &email);
 
     //Thread safe functions
-    bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
+    virtual bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
@@ -141,13 +98,43 @@ public:
     void setOverStorageNotificationExecution(long long timestamp);
     long long getAlmostOverStorageNotificationExecution();
     void setAlmostOverStorageNotificationExecution(long long timestamp);
+    long long getPayWallNotificationExecution();
+    void setPayWallNotificationExecution(long long timestamp);
     long long getAlmostOverStorageDismissExecution();
     void setAlmostOverStorageDismissExecution(long long timestamp);
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
 
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaDialogLastExecution();
+    virtual void setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaOsNotificationLastExecution();
+    virtual void setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaUiAlertLastExecution();
+    virtual void setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferAlmostOverQuotaOsNotificationLastExecution();
+    virtual void setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferAlmostOverQuotaUiAlertLastExecution();
+    void setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint);
+
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaSyncDialogLastExecution();
+    virtual void setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaDownloadsDialogLastExecution();
+    virtual void setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaImportLinksDialogLastExecution();
+    virtual void setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaStreamDialogLastExecution();
+    virtual void setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getStorageOverQuotaUploadsDialogLastExecution();
+    void setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getStorageOverQuotaSyncsDialogLastExecution();
+    void setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+
     int getStorageState();
     void setStorageState(int value);
+    int getBusinessState();
+    void setBusinessState(int value);
+    int getBlockedState();
+    void setBlockedState(int value);
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -395,7 +382,8 @@ public:
         STATE_BELOW_OVER_STORAGE = 0,
         STATE_ALMOST_OVER_STORAGE,
         STATE_OVER_STORAGE,
-        STATE_OVER_STORAGE_DISMISSED
+        STATE_OVER_STORAGE_DISMISSED,
+        STATE_PAYWALL
     };
 
     enum {
@@ -412,10 +400,18 @@ public:
     static long long MIN_UPDATE_STATS_INTERVAL;
     static long long OQ_DIALOG_INTERVAL_MS;
     static long long OQ_NOTIFICATION_INTERVAL_MS;
-    static long long ALMOST_OS_INTERVAL_MS;
-    static long long OS_INTERVAL_MS;
+    static long long ALMOST_OQ_UI_MESSAGE_INTERVAL_MS;
+    static long long OQ_UI_MESSAGE_INTERVAL_MS;
+    static long long PAYWALL_NOTIFICATION_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
+
+    static std::chrono::milliseconds OVER_QUOTA_DIALOG_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
+    static std::chrono::milliseconds ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
+    static std::chrono::milliseconds ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
 
     static int STATE_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
@@ -481,6 +477,23 @@ protected:
     void storeSessionInGeneral(QString session);
     QString getSessionInGeneral();
 
+    std::chrono::system_clock::time_point getTimePoint(const QString& key);
+    void setTimePoint(const QString& key, const std::chrono::system_clock::time_point& timepoint);
+    template<typename T>
+    T getValue (const QString &key);
+    template<typename T>
+    T getValue (const QString &key, const T &defaultValue);
+    template<typename T>
+    T getValueConcurrent(const QString &key);
+    template<typename T>
+    T getValueConcurrent(const QString &key, const T &defaultValue);
+    void setAndCachedValue(const QString &key, const QVariant &value);
+    void setValueAndSyncConcurrent(const QString &key, const QVariant &value);
+    void setValueConcurrent(const QString &key, const QVariant &value);
+    void setCachedValue(const QString &key, const QVariant &value);
+    void cleanCache();
+    void removeFromCache(const QString &key);
+
     EncryptedSettings *settings;
     QStringList syncNames;
     QStringList syncIDs;
@@ -498,12 +511,18 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
-    long long overStorageDialogExecution;
-    long long overStorageNotificationExecution;
-    long long almostOverStorageNotificationExecution;
-    long long almostOverStorageDismissExecution;
-    long long overStorageDismissExecution;
+    std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;
+    std::chrono::system_clock::time_point transferAlmostOverQuotaOsNotificationDisabledUntil;
+    std::chrono::system_clock::time_point transferAlmostOverQuotaUiAlertDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaUiAlertDisableUntil;
     long long lastTransferNotification;
+    std::chrono::system_clock::time_point transferOverQuotaSyncDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaDownloadsDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaImportLinksDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaStreamDialogDisabledUntil;
+    std::chrono::system_clock::time_point storageOverQuotaUploadsDialogDisabledUntil;
+    std::chrono::system_clock::time_point storageOverQuotaSyncsDialogDisabledUntil;
 
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
@@ -533,9 +552,24 @@ protected:
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
+    static const QString payWallNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
+    static const QString transferOverQuotaDialogLastExecutionKey;
+    static const QString transferOverQuotaOsNotificationLastExecutionKey;
+    static const QString transferAlmostOverQuotaOsNotificationLastExecutionKey;
+    static const QString transferAlmostOverQuotaUiAlertLastExecutionKey;
+    static const QString transferOverQuotaUiAlertLastExecutionKey;
+    static const QString transferOverQuotaWaitUntilKey;
     static const QString storageStateQKey;
+    static const QString transferOverQuotaSyncDialogLastExecutionKey;
+    static const QString transferOverQuotaDownloadsDialogLastExecutionKey;
+    static const QString transferOverQuotaImportLinksDialogLastExecutionKey;
+    static const QString transferOverQuotaStreamDialogLastExecutionKey;
+    static const QString storageOverQuotaUploadsDialogLastExecutionKey;
+    static const QString storageOverQuotaSyncsDialogLastExecutionKey;
+    static const QString businessStateQKey;
+    static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;
