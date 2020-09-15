@@ -567,5 +567,7 @@
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
+        <file>images/settings-syncs.png</file>
+        <file>images/settings-syncs@2x.png</file>
     </qresource>
 </RCC>
