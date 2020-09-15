@@ -140,7 +140,8 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 if (loggingStarted)
                 {
                     preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-                    static_cast<MegaApplication*>(qApp)->fetchNodes();
+                    auto email = request->getEmail();
+                    static_cast<MegaApplication*>(qApp)->fetchNodes(QString::fromUtf8(email ? email : ""));
                     if (!preferences->hasLoggedIn())
                     {
                         preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);

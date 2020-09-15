@@ -5,7 +5,7 @@
 
 int main( int argc, char* argv[] )
 {
-     MegaApplication app(argc, argv);
+    MegaApplication app(argc, argv);
 
     int result = Catch::Session().run( argc, argv );
     return ( result < 0xff ? result : 0xff );

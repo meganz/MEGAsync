@@ -4,11 +4,16 @@
 #include <QString>
 #include <QHash>
 #include <QPixmap>
+#include <QProgressDialog>
+#include <control/MegaController.h>
+
 #include <QDir>
 #include <QIcon>
 #include <QLabel>
 #include <QEasingCurve>
 #include "megaapi.h"
+
+#include <functional>
 
 #include <sys/stat.h>
 
@@ -18,6 +23,8 @@
                              chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
+
+#define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
 
 struct PlanInfo
 {
@@ -161,6 +168,43 @@ private:
 };
 
 
+
+/**
+ * @brief The MegaListenerFuncExecuter class
+ *
+ * it takes an std::function as parameter that will be called upon request finish.
+ *
+ */
+class MegaListenerFuncExecuter : public mega::MegaRequestListener
+{
+private:
+    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
+    bool mAutoremove = true;
+    bool mExecuteInAppThread = true;
+
+public:
+
+    /**
+     * @brief MegaListenerFuncExecuter
+     * @param func to call upon onRequestFinish
+     * @param autoremove whether this should be deleted after func is called
+     */
+    MegaListenerFuncExecuter(bool autoremove = false,
+                             std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
+                            )
+        : mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
+    {
+    }
+
+    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
+    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) {}
+    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
+    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+
+    void setExecuteInAppThread(bool executeInAppThread);
+};
+
+
 class ClickableLabel : public QLabel {
     Q_OBJECT
 
@@ -219,6 +263,12 @@ public:
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
     static int getDaysToTimestamp(int64_t msecsTimestamps);
+
+    // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
+    // but the object will be deleted when the progress closes
+    static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
+
+    static void delayFirstSyncStart();
 
 private:
     Utilities() {}

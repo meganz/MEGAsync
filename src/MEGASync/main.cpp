@@ -323,6 +323,36 @@ void setScaleFactors()
 }
 #endif
 
+
+void removeSyncData(const QString &localFolder, const QString & name, const QString &syncID)
+{
+    Platform::syncFolderRemoved(localFolder, name, syncID);
+
+    #ifdef WIN32
+    // unhide debris folder
+    QString debrisPath = QDir::toNativeSeparators(localFolder +
+            QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
+    {
+        SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+    }
+
+    QDir dir(debrisPath);
+    QFileInfoList fList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
+    for (int j = 0; j < fList.size(); j++)
+    {
+        QString folderPath = QDir::toNativeSeparators(fList[j].absoluteFilePath());
+        WIN32_FILE_ATTRIBUTE_DATA fa;
+        if (GetFileAttributesExW((LPCWSTR)folderPath.utf16(), GetFileExInfoStandard, &fa))
+        {
+            SetFileAttributesW((LPCWSTR)folderPath.utf16(), fa.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
+        }
+    }
+    #endif
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setOrganizationName(QString::fromAscii("Mega Limited"));
@@ -343,35 +373,21 @@ int main(int argc, char *argv[])
             for (int i = 0; i < preferences->getNumUsers(); i++)
             {
                 preferences->enterUser(i);
-                for (int j = 0; j < preferences->getNumSyncedFolders(); j++)
+
+                // we do first for old sync configuration (in case there were remaining for some user)
+                QList<SyncData> syncData = preferences->readOldCachedSyncs();
+                foreach(SyncData osd, syncData)
                 {
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(j),
-                                                preferences->getSyncName(j),
-                                                preferences->getSyncID(j));
-
-                    #ifdef WIN32
-                        QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(j) +
-                                QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
-
-                        WIN32_FILE_ATTRIBUTE_DATA fad;
-                        if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
-                        {
-                            SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
-                        }
-
-                        QDir dir(debrisPath);
-                        QFileInfoList fList = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden);
-                        for (int j = 0; j < fList.size(); j++)
-                        {
-                            QString folderPath = QDir::toNativeSeparators(fList[j].absoluteFilePath());
-                            WIN32_FILE_ATTRIBUTE_DATA fa;
-                            if (GetFileAttributesExW((LPCWSTR)folderPath.utf16(), GetFileExInfoStandard, &fa))
-                            {
-                                SetFileAttributesW((LPCWSTR)folderPath.utf16(), fa.dwFileAttributes & ~FILE_ATTRIBUTE_HIDDEN);
-                            }
-                        }
-                    #endif
+                    removeSyncData(osd.mLocalFolder, osd.mName, osd.mSyncID);
                 }
+
+                // now for the new syncs cached configurations
+                auto loadedSyncs = preferences->getLoadedSyncsMap();
+                for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
+                {
+                    removeSyncData(it.value()->getLocalFolder(), it.value()->name(), it.value()->getSyncID());
+                }
+
                 preferences->leaveUser();
             }
         }
@@ -746,25 +762,25 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileDialog", "Open");
     QT_TRANSLATE_NOOP("QFileDialog", "Save As");
     QT_TRANSLATE_NOOP("QFileDialog", "Directory:");
-    QT_TRANSLATE_NOOP("QFileDialog", "File &name:");
-    QT_TRANSLATE_NOOP("QFileDialog", "&Open");
-    QT_TRANSLATE_NOOP("QFileDialog", "&Choose");
-    QT_TRANSLATE_NOOP("QFileDialog", "&Save");
+    QT_TRANSLATE_NOOP("QFileDialog", "File &amp;name:");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Open");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Choose");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Save");
     QT_TRANSLATE_NOOP("QFileDialog", "All Files (*)");
     QT_TRANSLATE_NOOP("QFileDialog", "Show ");
-    QT_TRANSLATE_NOOP("QFileDialog", "&Rename");
-    QT_TRANSLATE_NOOP("QFileDialog", "&Delete");
-    QT_TRANSLATE_NOOP("QFileDialog", "Show &hidden files");
-    QT_TRANSLATE_NOOP("QFileDialog", "&New Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Rename");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Delete");
+    QT_TRANSLATE_NOOP("QFileDialog", "Show &amp;hidden files");
+    QT_TRANSLATE_NOOP("QFileDialog", "&amp;New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "All files (*)");
     QT_TRANSLATE_NOOP("QFileDialog", "Directories");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1\nDirectory not found.\nPlease verify the correct directory name was given.");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.\nDo you want to replace it?");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1\nFile not found.\nPlease verify the correct file name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct directory name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.Do you want to replace it?");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct file name was given.");
     QT_TRANSLATE_NOOP("QFileDialog", "New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "Delete");
-    QT_TRANSLATE_NOOP("QFileDialog", "'%1' is write protected.\nDo you want to delete it anyway?");
-    QT_TRANSLATE_NOOP("QFileDialog", "Are you sure you want to delete '%1'?");
+    QT_TRANSLATE_NOOP("QFileDialog", "&apos;%1&apos; is write protected. Do you want to delete it anyway?");
+    QT_TRANSLATE_NOOP("QFileDialog", "Are you sure you want to delete &apos;%1&apos;?");
     QT_TRANSLATE_NOOP("QFileDialog", "Could not delete directory.");
     QT_TRANSLATE_NOOP("QFileDialog", "Recent Places");
     QT_TRANSLATE_NOOP("QFileDialog", "Remove");
@@ -784,7 +800,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 KB");
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 bytes");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Invalid filename");
-    QT_TRANSLATE_NOOP("QFileSystemModel", "<b>The name \"%1\" cannot be used.</b><p>Try using another name, with fewer characters or no punctuation marks.");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Name");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Size");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Kind");
@@ -841,5 +857,34 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%i folders");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
     QT_TRANSLATE_NOOP("MegaNodeNames", "Cloud Drive");
+    QT_TRANSLATE_NOOP("MegaSyncError", "No error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Unknown error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "File system not supported");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node is not valid");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path is not valid");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Initial scan failed");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path temporarily unavailable");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path not available");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node not found");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Reached storage quota limit");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Business account expired");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Foreign target storage quota reached");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote path has changed");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node moved to Rubbish Bin");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Share without full access");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local fingerprint mismatch");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Put nodes error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Active sync below path");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Active sync above path");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node has been deleted");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Remote node is inside Rubbish Bin");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Unsupported VBoxSharedFolderFS filesystem");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local path collides with an existing sync");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem is FAT");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem is HGFS");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Your account is blocked");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Unknown temporary error");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Too many changes in account, local state invalid");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Undefined error");
 #endif
 }
