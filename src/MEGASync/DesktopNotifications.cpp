@@ -49,6 +49,8 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
     QDir appDir{MegaApplication::applicationDataPath()};
     appDir.mkdir(iconFolderName);
     copyIconsToAppFolder(getIconsPath());
+
+    QObject::connect(&mRemovedSharedNotificator, &RemovedSharesNotificator::sendClusteredAlert, this, &DesktopNotifications::receiveClusteredAlert);
 }
 
 QString getItemsAddedText(mega::MegaUserAlert* alert)
@@ -67,7 +69,7 @@ QString getItemsAddedText(mega::MegaUserAlert* alert)
     }
 }
 
-QString getItemsRemovedText(mega::MegaUserAlert* alert)
+QString getItemsRemovedMessage(mega::MegaUserAlert* alert)
 {
     const auto updatedItems{alert->getNumber(0)};
     if (updatedItems == 1)
@@ -114,7 +116,7 @@ QString createPaymentReminderText(int64_t expirationTimeStamp)
     }
 }
 
-void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) const
+void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 {
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
@@ -195,7 +197,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList) 
             }
             case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
-                notifySharedUpdate(alert, getItemsRemovedText(alert));
+                mRemovedSharedNotificator.addUserAlert(alert);
                 break;
             }
             case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
@@ -526,5 +528,16 @@ void DesktopNotifications::viewShareOnWebClient(MegaNotification::Action action)
             const auto url{QUrl(QString::fromUtf8("mega://#fm/%1").arg(nodeHandlerBase64))};
             QtConcurrent::run(QDesktopServices::openUrl, url);
         }
+    }
+}
+
+void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, const QString &message)
+{
+    switch (alert->getType())
+    {
+    case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+    {
+        notifySharedUpdate(alert, message);
+    }
     }
 }

@@ -1,0 +1,27 @@
+#pragma once
+#include "UserAlertTimedClustering.h"
+#include <queue>
+#include <memory>
+#include <QObject>
+
+namespace mega {
+class MegaUserAlert;
+}
+
+class RemovedSharesNotificator: public QObject
+{
+    Q_OBJECT
+public:
+    void addUserAlert(mega::MegaUserAlert* userAlert);
+
+signals:
+    void sendClusteredAlert(mega::MegaUserAlert* alert, const QString& message);
+
+private:
+    using AlertId = unsigned;
+    using TotalRemovedItems = int64_t;
+    std::map<AlertId, std::unique_ptr<UserAlertTimedClustering>> mAlertClusters;
+    std::map<AlertId, std::chrono::system_clock::time_point> mClusterTimestamps;
+
+    void removeObsoleteAlertClusters();
+};

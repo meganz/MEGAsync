@@ -122,10 +122,14 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 SOURCES += MegaApplication.cpp \
     DesktopNotifications.cpp \
-    TransferQuota.cpp
+    RemovedSharesNotificator.cpp \
+    TransferQuota.cpp \
+    UserAlertTimedClustering.cpp
 HEADERS += MegaApplication.h \
     DesktopNotifications.h \
-    TransferQuota.h
+    RemovedSharesNotificator.h \
+    TransferQuota.h \
+    UserAlertTimedClustering.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
