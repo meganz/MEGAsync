@@ -6609,6 +6609,12 @@ void MegaApplication::openSettings(int tab)
     settingsDialog->show();
 }
 
+void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
+{
+    openSettings(SettingsDialog::SYNCS_TAB);
+    settingsDialog->addSyncFolder(megaFolderHandle);
+}
+
 void MegaApplication::createAppMenus()
 {
     if (appfinished)

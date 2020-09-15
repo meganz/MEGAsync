@@ -237,6 +237,7 @@ public slots:
     void onMessageClicked();
     void start();
     void openSettings(int tab = -1);
+    void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
     void openInfoWizard();
     void importLinks();
     void officialWeb();

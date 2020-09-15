@@ -1999,7 +1999,8 @@ void SettingsDialog::on_bPermissions_clicked()
     }
 }
 #endif
-void SettingsDialog::on_bAdd_clicked()
+
+void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {
     const auto dismissed{app->showSyncOverquotaDialog()};
     if(!dismissed)
@@ -2017,6 +2018,10 @@ void SettingsDialog::on_bAdd_clicked()
     }
 
     QPointer<BindFolderDialog> dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFoldersPaths, this);
+    if(megaFolderHandle > 0)
+    {
+        dialog->setMegaFolder(megaFolderHandle);
+    }
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)
     {
@@ -2066,6 +2071,12 @@ void SettingsDialog::on_bAdd_clicked()
 
     syncsChanged = true;
     stateChanged();
+}
+
+void SettingsDialog::on_bAdd_clicked()
+{
+    const auto invalidMegaFolderHandle{0};
+    addSyncFolder(invalidMegaFolderHandle);
 }
 
 void SettingsDialog::on_bApply_clicked()

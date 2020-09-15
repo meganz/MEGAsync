@@ -180,7 +180,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 const auto message{tr("New Shared folder from [X]")
                             .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
-                notifySharedUpdate(alert, message);
+                const auto isNewShare{true};
+                notifySharedUpdate(alert, message, isNewShare);
                 break;
             }
             case mega::MegaUserAlert::TYPE_DELETEDSHARE:
@@ -255,7 +256,7 @@ std::unique_ptr<mega::MegaNode> getMegaNode(mega::MegaUserAlert* alert)
     return std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()));
 }
 
-void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message) const
+void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message, bool isNewShare) const
 {
     auto notification{new MegaNotification()};
     const auto node{getMegaNode(alert)};
@@ -269,8 +270,19 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     if(node)
     {
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
-        notification->setActions(QStringList() << tr("Show"));
-        QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewShareOnWebClient);
+        const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+        const auto fullAccess{megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL};
+        if(isNewShare && fullAccess)
+        {
+            notification->setActions(QStringList() << tr("Show") << tr("Sync"));
+            QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayNewShareReceived);
+        }
+        else
+        {
+            notification->setActions(QStringList() << tr("Show"));
+            QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewShareOnWebClient);
+        }
+
     }
     notification->setImage(mAppIcon);
     notification->setImagePath(mFolderIconPath);
@@ -539,7 +551,7 @@ void DesktopNotifications::viewShareOnWebClient(MegaNotification::Action action)
     }
 }
 
-void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, const QString &message)
+void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, const QString &message) const
 {
     switch (alert->getType())
     {
@@ -547,5 +559,26 @@ void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, con
     {
         notifySharedUpdate(alert, message);
     }
+    }
+}
+
+void DesktopNotifications::replayNewShareReceived(MegaNotification::Action action) const
+{
+    const auto actionIsViewOnWebClient{action == MegaNotification::Action::firstButton};
+    const auto actionIsSyncShare{action == MegaNotification::Action::secondButton};
+    if(actionIsViewOnWebClient)
+    {
+        viewShareOnWebClient(action);
+    }
+    else if(actionIsSyncShare)
+    {
+        const auto notification{static_cast<MegaNotification*>(QObject::sender())};
+        const auto nodeHandlerBase64{notification->getData()};
+        if (!nodeHandlerBase64.isEmpty())
+        {
+            const auto megaFolderHandle{mega::MegaApi::base64ToUserHandle(nodeHandlerBase64.toStdString().c_str())};
+            const auto megaApp{static_cast<MegaApplication*>(qApp)};
+            megaApp->openSettingsAddSync(megaFolderHandle);
+        }
     }
 }
