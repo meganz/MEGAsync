@@ -169,7 +169,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 notification->setText(tr("New contact with [A] has been established")
                                       .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                 notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setActions(QStringList() << tr("View"));
+                notification->setActions(QStringList() << tr("View") << tr("Chat"));
                 notification->setImage(mAppIcon);
                 notification->setImagePath(mNewContactIconPath);
                 QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
@@ -322,21 +322,29 @@ void DesktopNotifications::notifyTakeDownReinstated(mega::MegaUserAlert *alert) 
     mNotificator->notify(notification);
 }
 
-void DesktopNotifications::viewContactOnWebClient() const
+void DesktopNotifications::viewContactOnWebClient(MegaNotification::Action activationButton) const
 {
     const auto notification{static_cast<MegaNotification*>(QObject::sender())};
     const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
-    const auto user{megaApi->getContact(notification->getData().toUtf8())};
-    const auto userVisible{user && user->getVisibility() == mega::MegaUser::VISIBILITY_VISIBLE};
-    const auto userHandle{QString::fromUtf8(megaApi->userHandleToBase64(user->getHandle()))};
+    const auto userMail{megaApi->getContact(notification->getData().toUtf8())};
     auto url{QUrl(QString::fromUtf8("mega://#fm/contacts"))};
-
+    const auto userVisible{userMail && userMail->getVisibility() == mega::MegaUser::VISIBILITY_VISIBLE};
     if (userVisible)
     {
-        url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(userHandle));
+        const auto userHandle{QString::fromUtf8(megaApi->userHandleToBase64(userMail->getHandle()))};
+        const auto actionIsViewContact{activationButton == MegaNotification::Action::firstButton};
+        const auto actionIsOpenChat{activationButton == MegaNotification::Action::secondButton};
+        if(actionIsViewContact)
+        {
+            url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(userHandle));
+        }
+        else if(actionIsOpenChat)
+        {
+            url = QUrl(QString::fromUtf8("mega://#fm/chat/p/%1").arg(userHandle));
+        }
     }
     QtConcurrent::run(QDesktopServices::openUrl, url);
-    delete user;
+    delete userMail;
 }
 
 void DesktopNotifications::sendOverStorageNotification(int state) const

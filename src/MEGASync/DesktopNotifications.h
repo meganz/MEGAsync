@@ -25,7 +25,7 @@ public:
 
 public slots:
     void replayIncomingPendingRequest(MegaNotification::Action action) const;
-    void viewContactOnWebClient() const;
+    void viewContactOnWebClient(MegaNotification::Action activationButton) const;
     void redirectToUpgrade(MegaNotification::Action activationButton) const;
     void redirectToPayBusiness(MegaNotification::Action activationButton) const;
     void showInFolder(MegaNotification::Action action) const;
