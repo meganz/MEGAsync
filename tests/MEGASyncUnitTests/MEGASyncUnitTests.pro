@@ -1,12 +1,10 @@
-QT += testlib
-QT -= gui
+TARGET = MEGASyncUnitTests
 
-CONFIG += qt console warn_on depend_includepath testcase
-CONFIG -= app_bundle
+CONFIG += qt console warn_on depend_includepath
+
 CONFIG += c++14
 CONFIG += with_tests
 
-TEMPLATE = app
 include(../../src/MEGASync/MEGASync.pro)
 include(../3rdparty/catch/catch.pri)
 include(../3rdparty/trompeloeil/trompeloeil.pri)
