@@ -208,6 +208,7 @@ double computeScale(const QScreen& screen)
 void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
 {
     QString scale_factors;
+    double minScaleFactor{std::numeric_limits<double>::max()};
     for (auto ss = screenscales.begin(); ss != screenscales.end(); ++ss)
     {
         if (scale_factors.size())
@@ -215,12 +216,25 @@ void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
             scale_factors += QString::fromAscii(";");
         }
         scale_factors += ss.key() + QString::fromAscii("=") + QString::number(ss.value());
+        minScaleFactor = std::min(minScaleFactor, ss.value());
     }
 
     if (scale_factors.size())
     {
-        qDebug() << "Setting QT_SCREEN_SCALE_FACTORS=" << scale_factors;
-        qputenv("QT_SCREEN_SCALE_FACTORS", scale_factors.toAscii());
+        qDebug() << "Linux distro detected: " << QSysInfo::productType() + QSysInfo::productVersion();
+        const auto isLinuxDeeping20{QSysInfo::productType() == QStringLiteral("Deepin")
+                    && QSysInfo::productVersion() == QStringLiteral("20")};
+        if(isLinuxDeeping20)
+        {
+            qDebug() << "Deepin 20 detected";
+            qDebug() << "Setting QT_SCALE_FACTOR=" << minScaleFactor;
+            qputenv("QT_SCALE_FACTOR", QString::number(minScaleFactor).toAscii());
+        }
+        else
+        {
+            qDebug() << "Setting QT_SCREEN_SCALE_FACTORS=" << scale_factors;
+            qputenv("QT_SCREEN_SCALE_FACTORS", scale_factors.toAscii());
+        }
     }
     else
     {
