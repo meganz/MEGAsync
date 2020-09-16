@@ -563,9 +563,6 @@ image: none;</string>
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
-                     <property name="text">
-                      <string/>
-                     </property>
                      <property name="placeholderText">
                       <string>Email address</string>
                      </property>

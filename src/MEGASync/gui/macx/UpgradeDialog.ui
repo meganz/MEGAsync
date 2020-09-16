@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Limited avaliable transfer quota</string>
+   <string>Depleted transfer quota</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#UpgradeDialog
@@ -225,7 +225,7 @@ font-size: 18px;
 }</string>
              </property>
              <property name="text">
-              <string>...</string>
+              <string notr="true"/>
              </property>
              <property name="icon">
               <iconset resource="../Resources_macx.qrc">
@@ -384,7 +384,7 @@ font-size: 18px;
          <number>2</number>
         </property>
         <property name="text">
-         <string>Please upgrade your account to continue immediately, or wait 01 h 45 m to continue for free</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
