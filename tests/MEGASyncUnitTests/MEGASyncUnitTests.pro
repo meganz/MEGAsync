@@ -3,7 +3,7 @@ TARGET = MEGASyncUnitTests
 CONFIG += qt console warn_on depend_includepath
 
 CONFIG += c++14
-CONFIG += with_tests
+CONFIG += building_tests
 
 include(../../src/MEGASync/MEGASync.pro)
 include(../3rdparty/catch/catch.pri)

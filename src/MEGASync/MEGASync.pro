@@ -120,7 +120,7 @@ INCLUDEPATH += $$PWD
 
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
-!CONFIG(with_tests) {
+!CONFIG(building_tests) {
     SOURCES += $$PWD/main.cpp
 }
 

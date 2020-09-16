@@ -1,5 +1,7 @@
 TEMPLATE = subdirs
 
+SUBDIRS += MEGASync
+
 CONFIG(debug, debug|release) {
     #SUBDIRS += MEGALogger
 }
@@ -34,9 +36,6 @@ CONFIG(with_updater) {
 
 CONFIG(with_tests) {
     SUBDIRS += ../tests/MEGASyncUnitTests
-}
-else {
-    SUBDIRS += MEGASync
 }
 
 CONFIG(with_tools) {
