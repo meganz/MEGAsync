@@ -738,11 +738,23 @@ padding-left: -16px;</string>
       </property>
       <item>
        <widget class="QToolButton" name="toolButtonError">
+        <property name="minimumSize">
+         <size>
+          <width>27</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>27</width>
+          <height>27</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;</string>
         </property>
         <property name="text">
-         <string>...</string>
+         <string notr="true"/>
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">

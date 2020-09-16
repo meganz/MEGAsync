@@ -786,25 +786,25 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileDialog", "Open");
     QT_TRANSLATE_NOOP("QFileDialog", "Save As");
     QT_TRANSLATE_NOOP("QFileDialog", "Directory:");
-    QT_TRANSLATE_NOOP("QFileDialog", "File &amp;name:");
-    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Open");
-    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Choose");
-    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Save");
+    QT_TRANSLATE_NOOP("QFileDialog", "File &name:");
+    QT_TRANSLATE_NOOP("QFileDialog", "&Open");
+    QT_TRANSLATE_NOOP("QFileDialog", "&Choose");
+    QT_TRANSLATE_NOOP("QFileDialog", "&Save");
     QT_TRANSLATE_NOOP("QFileDialog", "All Files (*)");
     QT_TRANSLATE_NOOP("QFileDialog", "Show ");
-    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Rename");
-    QT_TRANSLATE_NOOP("QFileDialog", "&amp;Delete");
-    QT_TRANSLATE_NOOP("QFileDialog", "Show &amp;hidden files");
-    QT_TRANSLATE_NOOP("QFileDialog", "&amp;New Folder");
+    QT_TRANSLATE_NOOP("QFileDialog", "&Rename");
+    QT_TRANSLATE_NOOP("QFileDialog", "&Delete");
+    QT_TRANSLATE_NOOP("QFileDialog", "Show &hidden files");
+    QT_TRANSLATE_NOOP("QFileDialog", "&New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "All files (*)");
     QT_TRANSLATE_NOOP("QFileDialog", "Directories");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct directory name was given.");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.Do you want to replace it?");
-    QT_TRANSLATE_NOOP("QFileDialog", "%1 Please verify the correct file name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1\nDirectory not found.\nPlease verify the correct directory name was given.");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1 already exists.\nDo you want to replace it?");
+    QT_TRANSLATE_NOOP("QFileDialog", "%1\nFile not found.\nPlease verify the correct file name was given.");
     QT_TRANSLATE_NOOP("QFileDialog", "New Folder");
     QT_TRANSLATE_NOOP("QFileDialog", "Delete");
-    QT_TRANSLATE_NOOP("QFileDialog", "&apos;%1&apos; is write protected. Do you want to delete it anyway?");
-    QT_TRANSLATE_NOOP("QFileDialog", "Are you sure you want to delete &apos;%1&apos;?");
+    QT_TRANSLATE_NOOP("QFileDialog", "'%1' is write protected.\nDo you want to delete it anyway?");
+    QT_TRANSLATE_NOOP("QFileDialog", "Are you sure you want to delete '%1'?");
     QT_TRANSLATE_NOOP("QFileDialog", "Could not delete directory.");
     QT_TRANSLATE_NOOP("QFileDialog", "Recent Places");
     QT_TRANSLATE_NOOP("QFileDialog", "Remove");
@@ -824,7 +824,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 KB");
     QT_TRANSLATE_NOOP("QFileSystemModel", "%1 bytes");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Invalid filename");
-    QT_TRANSLATE_NOOP("QFileSystemModel", "&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.");
+    QT_TRANSLATE_NOOP("QFileSystemModel", "<b>The name \"%1\" cannot be used.</b><p>Try using another name, with fewer characters or no punctuation marks.");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Name");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Size");
     QT_TRANSLATE_NOOP("QFileSystemModel", "Kind");
@@ -871,6 +871,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
     QT_TRANSLATE_NOOP("MegaError", "Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.");
     QT_TRANSLATE_NOOP("MegaError", "Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.");
+    QT_TRANSLATE_NOOP("MegaError", "Storage Quota Exceeded. Upgrade now");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "Get MEGA link");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View on MEGA");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "No options available");
@@ -1231,6 +1232,8 @@ void MegaApplication::showInterface(QString)
     }
 }
 
+bool gCrashableForTesting = false;
+
 void MegaApplication::initialize()
 {
     if (megaApi)
@@ -1336,6 +1339,8 @@ void MegaApplication::initialize()
         {
             QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL);
         }
+
+        gCrashableForTesting = settings.value(QString::fromUtf8("crashable"), Preferences::BASE_URL).toBool();
 
         Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
@@ -2549,6 +2554,8 @@ void MegaApplication::rebootApplication(bool update)
     QApplication::exit();
 }
 
+int* testCrashPtr = nullptr;
+
 void MegaApplication::exitApplication(bool force)
 {
     if (appfinished)
@@ -2599,6 +2606,10 @@ void MegaApplication::exitApplication(bool force)
             #endif
 
             QApplication::exit();
+        } 
+        else if (gCrashableForTesting)
+        {
+            *testCrashPtr = 0;
         }
     }
     else
@@ -2975,8 +2986,9 @@ void MegaApplication::checkOverStorageStates()
 
             if ((!preferences->getPayWallNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getPayWallNotificationExecution()) > Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS)))
             {
-                const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
-                if (daysToExpire > 0) //Only show notification if at least there is one day left
+                int64_t remainDaysOut(0);
+                Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+                if (remainDaysOut > 0) //Only show notification if at least there is one day left
                 {
                     preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
                     megaApi->sendEvent(99530, "Paywall notification shown");
@@ -3621,12 +3633,38 @@ void MegaApplication::sendOverStorageNotification(int state)
         }
         case Preferences::STATE_PAYWALL:
         {
+            int64_t remainDaysOut(0);
+            int64_t remainHoursOut(0);
+            Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut, remainHoursOut);
+
             MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your data is at risk"));
-            notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))));
+
+            if (remainDaysOut > 0)
+            {
+                notification->setText(tr("You have [A] days left to save your data")
+                                      .replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
+            }
+            else if (remainDaysOut == 0 && remainHoursOut > 0)
+            {
+                notification->setText(tr("You have [A] hours left to save your data")
+                                      .replace(QString::fromUtf8("[A]"), QString::number(remainHoursOut)));
+            }
+            else
+            {
+                notification->setText(tr("You must act immediately to save your data"));
+            }
+
             notification->setActions(QStringList() << tr("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
             notificator->notify(notification);
+
+            if (infoDialog)
+            {
+                // Update remaining time in case infodialog is already
+                // open and to avoid discrepancies with notification time
+                infoDialog->updateDialogState();
+            }
             break;
         }
         default:
@@ -6824,6 +6862,17 @@ void MegaApplication::createAppMenus()
 #endif
 
 
+    createInfoDialogMenus();
+    updateTrayIconMenu();
+}
+
+void MegaApplication::createInfoDialogMenus()
+{
+    if (!infoDialog)
+    {
+        return;
+    }
+
 #ifdef _WIN32
     if (!windowsMenu)
     {
@@ -7173,8 +7222,6 @@ void MegaApplication::createAppMenus()
     infoDialogMenu->show();
     infoDialogMenu->hide();
 #endif
-
-    updateTrayIconMenu();
 }
 
 void MegaApplication::createGuestMenu()

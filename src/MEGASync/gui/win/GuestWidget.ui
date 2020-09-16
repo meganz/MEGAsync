@@ -66,7 +66,7 @@ font-size: 13px;
 background-color: #F0373A;
 border-radius: 3px;
 border: 1px solid rgba(0, 0, 0, 5%);
-padding: 7px 14px 7px 14px;
+padding: 6px 14px 6px 14px;
 font-family: &quot;Lato&quot;;
 font-size: 14px;
 color: #ffffff;
@@ -78,7 +78,7 @@ color: #ffffff;
                                       stop: 0 #ffffff, stop: 1 #fcfcfc);
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
- padding: 7px 14px 7px 14px;
+ padding: 6px 14px 6px 14px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
  color: #333333;
@@ -619,9 +619,6 @@ image: none;</string>
                         <property name="styleSheet">
                          <string notr="true"/>
                         </property>
-                        <property name="text">
-                         <string/>
-                        </property>
                         <property name="placeholderText">
                          <string>Email address</string>
                         </property>
@@ -737,7 +734,7 @@ image: none;
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
-                          <height>22</height>
+                          <height>32</height>
                          </size>
                         </property>
                         <property name="maximumSize">
@@ -759,6 +756,18 @@ image: none;
                       </item>
                       <item alignment="Qt::AlignVCenter">
                        <widget class="QPushButton" name="bCreateAccount">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>32</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>32</height>
+                         </size>
+                        </property>
                         <property name="cursor">
                          <cursorShape>PointingHandCursor</cursorShape>
                         </property>

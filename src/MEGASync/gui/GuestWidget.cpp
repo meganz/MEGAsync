@@ -316,6 +316,8 @@ void GuestWidget::initialize()
 
     closing = false;
     loggingStarted = false;
+    ui->lEmail->clear();
+    resetFocus();
     page_login();
 }
 
@@ -589,7 +591,7 @@ void GuestWidget::page_login()
     ui->sPages->style()->polish(ui->sPages);
 
     ui->lPassword->clear();
-    ui->sPages->setCurrentWidget(ui->pLogin);   
+    ui->sPages->setCurrentWidget(ui->pLogin);
 
     if(incorrectCredentialsMessageReceived)
     {
@@ -720,8 +722,7 @@ void GuestWidget::on_bLogin2FaNext_clicked()
     }
     else
     {
-        const auto pin{ui->leCode->text().trimmed().toUtf8().constData()};
-        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8(), pin);
+        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8().constData(), pin.toUtf8().constData());
     }
 }
 

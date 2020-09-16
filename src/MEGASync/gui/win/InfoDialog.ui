@@ -344,7 +344,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -386,7 +386,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -428,7 +428,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1210,13 +1210,13 @@ margin-bottom: 12px;
                               <property name="minimumSize">
                                <size>
                                 <width>52</width>
-                                <height>44</height>
+                                <height>50</height>
                                </size>
                               </property>
                               <property name="maximumSize">
                                <size>
                                 <width>52</width>
-                                <height>44</height>
+                                <height>50</height>
                                </size>
                               </property>
                               <property name="currentIndex">
@@ -1226,13 +1226,13 @@ margin-bottom: 12px;
                                <property name="minimumSize">
                                 <size>
                                  <width>52</width>
-                                 <height>44</height>
+                                 <height>50</height>
                                 </size>
                                </property>
                                <property name="maximumSize">
                                 <size>
                                  <width>52</width>
-                                 <height>44</height>
+                                 <height>50</height>
                                 </size>
                                </property>
                               </widget>
@@ -2015,13 +2015,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                               <number>0</number>
                              </property>
                              <property name="topMargin">
-                              <number>16</number>
+                              <number>10</number>
                              </property>
                              <property name="rightMargin">
                               <number>0</number>
                              </property>
                              <property name="bottomMargin">
-                              <number>16</number>
+                              <number>10</number>
                              </property>
                              <item>
                               <widget class="QLabel" name="lOverDiskQuotaLabel">
@@ -2182,7 +2182,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                   </property>
                                   <property name="text">
-                                   <string>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</string>
+                                   <string/>
                                   </property>
                                   <property name="wordWrap">
                                    <bool>true</bool>

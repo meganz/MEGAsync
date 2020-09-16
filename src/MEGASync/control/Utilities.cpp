@@ -958,18 +958,27 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-int Utilities::getDaysToTimestamp(int64_t msecsTimestamps)
+void Utilities::getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remainDays)
 {
     if (!msecsTimestamps)
     {
-        return -1;
+        return;
     }
 
-    QDateTime currentDate(QDateTime::currentDateTime());
-    QDateTime tsOQ = QDateTime::fromMSecsSinceEpoch(msecsTimestamps);
-    int daysExpired = currentDate.daysTo(tsOQ);
+    int64_t hours = 0;
+    getDaysAndHoursToTimestamp(msecsTimestamps, remainDays, hours);
+}
 
-    return daysExpired;//Negative if tsOQ is earlier than currentDate
+void Utilities::getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remainDays, int64_t &remainHours)
+{
+    if (!msecsTimestamps)
+    {
+        return;
+    }
+
+    int64_t currDate = QDateTime::currentDateTimeUtc().toMSecsSinceEpoch();
+    remainDays  = floor((msecsTimestamps - currDate) / 864e5); //ms difference to days
+    remainHours = floor((msecsTimestamps - currDate) / 36e5); //ms difference to hours
 }
 
 QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, QWidget *parent)
