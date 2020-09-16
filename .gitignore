@@ -67,7 +67,7 @@ cmake_install.cmake
 *automoc*
 src/build-MEGASync-Desktop-*
 
-*.pro.user*
+*.pro.user.*
 ecm_uninstall.cmake
 install_manifest.txt
 src/.qmake.stash
