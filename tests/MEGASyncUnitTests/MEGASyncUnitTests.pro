@@ -9,4 +9,5 @@ include(../../src/MEGASync/MEGASync.pro)
 include(../3rdparty/catch/catch.pri)
 include(../3rdparty/trompeloeil/trompeloeil.pri)
 SOURCES += GuestWidgetTest.cpp \
+           Utilities.test.cpp \
            main.cpp

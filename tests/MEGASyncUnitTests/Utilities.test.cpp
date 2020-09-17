@@ -8,6 +8,7 @@ TEST_CASE("Create string with sufix from quantities")
     REQUIRE(Utilities::getQuantityString(100).toStdString() == "100");
 
     REQUIRE(Utilities::getQuantityString(1000).toStdString() == "1K");
+    REQUIRE(Utilities::getQuantityString(1009).toStdString() == "1K");
     REQUIRE(Utilities::getQuantityString(1532).toStdString() == "1.53K");
     REQUIRE(Utilities::getQuantityString(10981).toStdString() == "10.9K");
     REQUIRE(Utilities::getQuantityString(10949).toStdString() == "10.9K");
