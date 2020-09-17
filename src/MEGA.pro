@@ -34,6 +34,10 @@ CONFIG(with_updater) {
     SUBDIRS += MEGAUpdateGenerator
 }
 
+CONFIG(with_tests) {
+    SUBDIRS += ../tests/MEGASyncUnitTests
+}
+
 CONFIG(with_tools) {
     SUBDIRS += MEGASync/mega/contrib/QtCreator/MEGACli
     SUBDIRS += MEGASync/mega/contrib/QtCreator/MEGASimplesync
