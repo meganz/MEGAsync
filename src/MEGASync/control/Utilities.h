@@ -246,6 +246,7 @@ class Utilities
 public:
     static QString getSizeString(unsigned long long bytes);
     static QString getTimeString(long long secs, bool secondPrecision = true);
+    static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
     static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
@@ -261,7 +262,11 @@ public:
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
-    static int getDaysToTimestamp(int64_t msecsTimestamps);
+    // Returns remaining days until unix timestamp (floored)
+    static void getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays);
+    // Returns remaining days or remainig hours until unix timestamp. Note hours are not in addition to remaininDays
+    // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
+    static void getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
     // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
     // but the object will be deleted when the progress closes

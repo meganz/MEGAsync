@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200402
+win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200529
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 
@@ -120,10 +120,15 @@ INCLUDEPATH += $$PWD
 
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
-SOURCES += MegaApplication.cpp \
-    TransferQuota.cpp
-HEADERS += MegaApplication.h \
-    TransferQuota.h
+!CONFIG(building_tests) {
+    SOURCES += $$PWD/main.cpp
+}
+
+SOURCES += $$PWD/MegaApplication.cpp \
+    $$PWD/TransferQuota.cpp
+
+HEADERS += $$PWD/MegaApplication.h \
+    $$PWD/TransferQuota.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
@@ -157,17 +162,17 @@ win32 {
 
     RC_FILE = icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
-    QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
-    QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01
+    QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,6.01
+    QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,6.01
     DEFINES += PSAPI_VERSION=1
 }
 
 
 macx {
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
-    MAC_ICONS_RESOURCES.files += folder.icns
-    MAC_ICONS_RESOURCES.files += folder_yosemite.icns
-    MAC_ICONS_RESOURCES.files += appicon32.tiff
+    MAC_ICONS_RESOURCES.files += $$PWD/folder.icns
+    MAC_ICONS_RESOURCES.files += $$PWD/folder_yosemite.icns
+    MAC_ICONS_RESOURCES.files += $$PWD/appicon32.tiff
     MAC_ICONS_RESOURCES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += MAC_ICONS_RESOURCES
     ICON = app.icns

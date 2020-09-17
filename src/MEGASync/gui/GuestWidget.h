@@ -34,12 +34,13 @@ public:
     };
 
     explicit GuestWidget(QWidget *parent = 0);
+    GuestWidget(mega::MegaApi* megaApi, QWidget *parent = 0);
 
     ~GuestWidget();
 
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
+    void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) override;
 
     void resetFocus();
 
@@ -51,7 +52,6 @@ public:
 
     void setTexts(const QString& s1, const QString& s2);
     std::pair<QString, QString> getTexts();
-
 
 signals:
     void forwardAction(int action);
@@ -109,7 +109,7 @@ protected:
 
     void reset_UI_props();
 
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent * event) override;
 };
 
 #endif // GUESWIDGET_H

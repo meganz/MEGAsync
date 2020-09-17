@@ -12,6 +12,10 @@ OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
     ui->setupUi(this);
     ui->labelTitle->setWordWrap(false);
 
+    setAttribute(Qt::WA_QuitOnClose, false);
+#ifndef __APPLE__
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+#endif
     connect(ui->buttonDismiss, &QPushButton::clicked, this, &QDialog::reject);
     connect(ui->buttonUpgrade, &QPushButton::clicked, this, &OverQuotaDialog::onUpgradeClicked);
     connect(ui->labelTitle, &CustomLabel::labelSizeChange, this, &OverQuotaDialog::onTitleLengthChanged);
@@ -31,13 +35,15 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverQuotaDialogTy
 
 void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
 {
-    const QString styleLabelAperture{QString::fromUtf8("<p style=\"line-height: 20px;\">")};
-    const QString styleLabelClosure{QString::fromUtf8("</p>")};
+    const auto styleLabelAperture{QString::fromUtf8("<p style=\"line-height: 20px;\">")};
+    const auto styleLabelClosure{QString::fromUtf8("</p>")};
+    const auto storageFullTitle{tr("Storage full")};
+    const auto transferQuotaDepletedTitle{tr("Depleted transfer quota")};
 
     if(type == OverQuotaDialogType::STORAGE_SYNCS)
     {
-        setWindowTitle(tr("Storage full"));
-        ui->labelTitle->setText(tr("Download syncs are temporarily disabled."));
+        setWindowTitle(storageFullTitle);
+        ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
         ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available storage space for your account."
                                 " You can add syncs but they will remain disabled until there is enough space"
                                 " on your account.")
@@ -47,7 +53,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
     }
     else if(type == OverQuotaDialogType::STORAGE_UPLOAD)
     {
-        setWindowTitle(tr("Storage full"));
+        setWindowTitle(storageFullTitle);
         ui->labelTitle->setText(tr("Uploads are temporarily disabled."));
         ui->labelMessage->setText(styleLabelAperture +  tr("You have exceeded the available storage space for your account."
                                  " You can add uploads but transfers will remain queued until there is enough space"
@@ -58,7 +64,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
     }
     else if(type == OverQuotaDialogType::BANDWITH_SYNC)
     {
-        setWindowTitle(tr("Empty transfer quota"));
+        setWindowTitle(transferQuotaDepletedTitle);
         ui->labelTitle->setText(tr("Syncs are temporarily disabled."));
         ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can add syncs but they will remain disable until there is enough bandwidth"
@@ -69,7 +75,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
     }
     else if(type == OverQuotaDialogType::BANDWIDTH_IMPORT_LINK)
     {
-        setWindowTitle(tr("Empty transfer quota"));
+        setWindowTitle(transferQuotaDepletedTitle);
         ui->labelTitle->setText(tr("Importing links is temporarily disabled."));
         ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can import links but transfers will remain queued until there is enough bandwidth"
@@ -80,7 +86,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
     }
     else if(type == OverQuotaDialogType::BANDWIDTH_DOWNLOAD)
     {
-        setWindowTitle(tr("Empty transfer quota"));
+        setWindowTitle(transferQuotaDepletedTitle);
         ui->labelTitle->setText(tr("Downloads are temporarily disabled."));
         ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can add downloads but transfers will remain queued until there is enough bandwidth"
@@ -91,7 +97,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
     }
     else if(type == OverQuotaDialogType::BANDWIDTH_STREAM)
     {
-        setWindowTitle(tr("Empty transfer quota"));
+        setWindowTitle(transferQuotaDepletedTitle);
         ui->labelTitle->setText(tr("Streams are temporarily disabled."));
         ui->labelMessage->setText(styleLabelAperture + tr("You have exceeded the available transfer quota for your account."
                                  " You can add streams but transfers will remain queued until there is enough bandwidth"
@@ -114,7 +120,7 @@ void OverQuotaDialog::onTitleLengthChanged()
 {
     int sizeLimitToWrap = ui->widgetHeader->width() - ui->buttonWarning->width() - ui->widgetHeader->layout()->spacing();
 
-#ifdef Q_OS_LINUX
+#ifndef Q_OS_MACOS
     sizeLimitToWrap -= ui->widgetHeader->layout()->contentsMargins().left() + ui->widgetHeader->layout()->contentsMargins().right();
 #endif
 
@@ -123,4 +129,3 @@ void OverQuotaDialog::onTitleLengthChanged()
         ui->labelTitle->setWordWrap(true);
     }
 }
-
