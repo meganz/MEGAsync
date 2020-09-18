@@ -107,7 +107,7 @@ void WindowsPlatform::prepareForSync()
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
                                     .arg(networkName).arg(driveName).toUtf8().constData());
 
-                        QStringList localFolders = preferences->getLocalFolders();
+                        QStringList localFolders = Model::instance()->getLocalFolders();
                         for (int i = 0; i < localFolders.size(); i++)
                         {
                             QString localFolder = localFolders.at(i);
@@ -185,7 +185,7 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(std::string *localPath, int)
+void WindowsPlatform::notifyItemChange(std::string *localPath, int, std::shared_ptr<ShellNotifier> notifier)
 {
     if (!localPath || !localPath->size())
     {
@@ -204,7 +204,14 @@ void WindowsPlatform::notifyItemChange(std::string *localPath, int)
         return;
     }
 
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
+    if (notifier)
+    {
+        notifier->enqueueItemChange(std::move(path));
+    }
+    else
+    {
+        SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL); // same as in ShellNotifier::notify()
+    }
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
@@ -808,6 +815,16 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
     WCHAR *wLinksPath = (WCHAR *)linksPath.utf16();
     SHChangeNotify(SHCNE_UPDATEDIR, SHCNF_PATH | SHCNF_FLUSHNOWAIT, wLinksPath, NULL);
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
+
+    //Hide debris folder
+    Preferences *preferences = Preferences::instance();
+    QString debrisPath = QDir::toNativeSeparators(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
+    {
+        SetFileAttributesW((LPCWSTR)debrisPath.utf16(), fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
+    }
+
 }
 
 void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
@@ -1422,4 +1439,77 @@ bool WindowsPlatform::isUserActive()
         return false;
     }
     return true;
+}
+
+
+
+ShellNotifier::~ShellNotifier()
+{
+    if (!mThread.joinable()) // thread wasn't started
+    {
+        return;
+    }
+
+    // signal the thread to stop
+    {
+        unique_lock lock(mQueueAccessMutex);
+        mExit = true;
+        mWaitCondition.notify_all();
+    }
+
+    mThread.join();
+}
+
+void ShellNotifier::enqueueItemChange(std::string&& localPath)
+{
+    // make sure the thread was started
+    if (!mThread.joinable())
+    {
+        mThread = std::thread([this]() { doInThread(); });
+    }
+
+    unique_lock lock(mQueueAccessMutex);
+
+    mPendingNotifications.emplace(localPath);
+    mWaitCondition.notify_one();
+}
+
+void ShellNotifier::doInThread()
+{
+    for (;;)
+    {
+        std::string path;
+
+        { // lock scope
+            unique_lock lock(mQueueAccessMutex);
+
+            if (mPendingNotifications.empty())
+            {
+                // end execution only when the notification queue was emptied
+                if (mExit)
+                {
+                    return;
+                }
+
+                mWaitCondition.wait(lock);
+            }
+            else
+            {
+                // pop next pending notification
+                path.swap(mPendingNotifications.front());
+                mPendingNotifications.pop();
+            }
+        } // end of lock scope
+
+        if (!path.empty())
+        {
+            notify(path);
+        }
+    }
+}
+
+void ShellNotifier::notify(const std::string& path) const
+{
+    // same as in WindowsPlatform::notifyItemChange()
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
 }

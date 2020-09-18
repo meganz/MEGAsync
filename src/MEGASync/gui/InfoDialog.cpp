@@ -208,8 +208,12 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
+    model = Model::instance();
+    controller = Controller::instance();
 
     actualAccountType = -1;
+
+    connect(model, SIGNAL(syncDisabledListUpdated()), this, SLOT(updateDialogState()));
 
     uploadsFinishedTimer.setSingleShot(true);
     uploadsFinishedTimer.setInterval(5000);
@@ -846,21 +850,34 @@ void InfoDialog::updateDialogState()
         MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
         const char *email = megaApi->getMyEmail();
 
+        auto numFiles{preferences->cloudDriveFiles() + preferences->inboxFiles() + preferences->rubbishFiles()};
         QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
-                .replace(QString::fromUtf8("[C]"), QString::number(megaApi->getNumNodes()))
+                .replace(QString::fromUtf8("[C]"), QString::number(numFiles))
                 .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
                 .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(static_cast<MegaApplication *>(qApp)->getPricing(), preferences->usedStorage()))
                 + QString::fromUtf8("</p>");
         ui->lOverDiskQuotaLabel->setText(overDiskText);
 
-        const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
-        if (daysToExpire > 0)
+        int64_t remainDaysOut(0);
+        int64_t remainHoursOut(0);
+        Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut, remainHoursOut);
+        if (remainDaysOut > 0)
         {
-            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
+            QString descriptionDays = tr("You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.");
+            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionDays
                     .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                    .replace(QString::fromUtf8("[B]"), QString::number(daysToExpire))
+                    .replace(QString::fromUtf8("[B]"), QString::number(remainDaysOut))
+                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                    + QString::fromUtf8("</p>"));
+        }
+        else if (remainDaysOut == 0 && remainHoursOut > 0)
+        {
+            QString descriptionHours = tr("You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.");
+            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionHours
+                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                    .replace(QString::fromUtf8("[B]"), QString::number(remainHoursOut))
                     .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                     + QString::fromUtf8("</p>"));
         }
@@ -939,6 +956,12 @@ void InfoDialog::updateDialogState()
                                 " address and can therefore be interrupted."));
         ui->bBuyQuota->setText(tr("Upgrade"));
         ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+        overlay->setVisible(false);
+        ui->wPSA->hidePSA();
+    }
+    else if (model->hasUnattendedDisabledSyncs())
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
@@ -1049,46 +1072,42 @@ void InfoDialog::addSync(MegaHandle h)
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
     MegaHandle handle = dialog->getMegaFolder();
-    MegaNode *node = megaApi->getNodeByHandle(handle);
     QString syncName = dialog->getSyncName();
     delete dialog;
     dialog = NULL;
-    if (!localFolderPath.length() || !node)
-    {
-        delete node;
-        return;
-    }
 
-   const char *nPath = megaApi->getNodePath(node);
-   if (!nPath)
+
+   MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
+
+   ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding sync: %1")
+                                                    .arg(localFolderPath));
+
+   //Connect failing signals
+   connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
    {
-       delete node;
-       return;
-   }
-
-   preferences->addSyncedFolder(localFolderPath, QString::fromUtf8(nPath), handle, syncName);
-
-   bool storageOQ = static_cast<MegaApplication *>(qApp)->isAppliedStorageOverquota();
-   bool blocked = preferences->getBlockedState() != -2 && preferences->getBlockedState();
-   bool businessExpired = preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED;
-   if (storageOQ || blocked || businessExpired)
+       static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
+   }, Qt::QueuedConnection);
+   connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath](MegaRequest *request, MegaError *error)
    {
-       MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii(
-                        " Sync added as temporary disabled due to %1: %2 - %3")
-                    .arg(QString::fromUtf8(storageOQ ? "storage overquota" :
-                         (blocked ? "account blocked" : "business account expired") ))
-                    .arg(localFolderPath).arg(QString::fromUtf8(nPath)).toUtf8().constData());
+       if (error->getErrorCode())
+       {
+           auto reqCopy = request->copy();
+           auto errCopy = error->copy();
 
-       preferences->setSyncState(preferences->getNumSyncedFolders() - 1, false, true);
-       //needs updating:
-       static_cast<MegaApplication *>(qApp)->reloadSyncsInSettings();
-   }
-   else
-   {
-        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
-   }
-   delete [] nPath;
-   delete node;
+           QObject temporary;
+           QObject::connect(&temporary, &QObject::destroyed, this, [reqCopy, errCopy, localFolderPath](){
+
+               // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
+               static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath);
+
+               delete reqCopy;
+               delete errCopy;
+               //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
+           }, Qt::QueuedConnection);
+       }
+   }, Qt::DirectConnection); //Note, we need direct connection to use request & error
+
+   controller->addSync(localFolderPath, handle, syncName, addSyncStep);
 }
 
 #ifdef __APPLE__
@@ -1125,7 +1144,7 @@ void InfoDialog::on_bAddSync_clicked()
         addSyncAction = NULL;
     }
 
-    int num = (megaApi && preferences->logged()) ? preferences->getNumSyncedFolders() : 0;
+    int num = (megaApi && preferences->logged()) ? model->getNumSyncedFolders() : 0;
     if (num == 0)
     {
         addSync();
@@ -1165,17 +1184,19 @@ void InfoDialog::on_bAddSync_clicked()
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
-            if (!preferences->isFolderActive(i))
+            auto syncSetting = model->getSyncSetting(i);
+
+            if (!syncSetting->isActive())
             {
                 continue;
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
+            MenuItemAction *action = new MenuItemAction(syncSetting->name(), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             syncsMenu->addAction(action);
-            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+            menuSignalMapper->setMapping(action, syncSetting->getLocalFolder());
         }
 
         if (!activeFolders)
@@ -1185,17 +1206,11 @@ void InfoDialog::on_bAddSync_clicked()
         }
         else
         {
-            long long firstSyncHandle = INVALID_HANDLE;
-            if (num == 1)
-            {
-                firstSyncHandle = preferences->getMegaFolderHandle(0);
-            }
-
             auto rootNode = ((MegaApplication*)qApp)->getRootNode();
             if (rootNode)
             {
-                long long rootHandle = rootNode->getHandle();
-                if ((num > 1) || (firstSyncHandle != rootHandle))
+                bool fullSync = num == 1 && model->getSyncSetting(0)->getMegaHandle() == rootNode->getHandle();
+                if ((num > 1) || !fullSync)
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
                     connect(addAction, SIGNAL(triggered()), this, SLOT(addSync()), Qt::QueuedConnection);
@@ -1995,6 +2010,17 @@ void InfoDialog::highLightMenuEntry(QAction *action)
     }
     pAction->setHighlight(true);
     lastHovered = pAction;
+}
+
+void InfoDialog::on_bDismissSyncSettings_clicked()
+{
+    model->dismissUnattendedDisabledSyncs();
+}
+
+void InfoDialog::on_bOpenSyncSettings_clicked()
+{
+    ((MegaApplication *)qApp)->openSettings(SettingsDialog::SYNCS_TAB);
+    model->dismissUnattendedDisabledSyncs();
 }
 
 int InfoDialog::getLoggedInMode() const

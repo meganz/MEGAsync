@@ -13,6 +13,8 @@
 #include <QDir>
 #include <QProcess>
 
+#include <queue>
+
 class WindowsPlatform
 {
 
@@ -32,7 +34,7 @@ public:
     static void initialize(int argc, char *argv[]);
     static void prepareForSync();
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(std::string *localPath, int newState);
+    static void notifyItemChange(std::string *localPath, int newState, std::shared_ptr<ShellNotifier> notifier = nullptr);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static void showInFolder(QString pathIn);
@@ -55,6 +57,26 @@ public:
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
     static bool isUserActive();
+};
+
+
+class ShellNotifier
+{
+public:
+    ~ShellNotifier();
+
+    void enqueueItemChange(std::string&& localPath);
+
+private:
+    void doInThread();
+
+    void notify(const std::string& path) const; // called from secondary thread context
+
+    std::thread mThread;
+    std::queue<std::string> mPendingNotifications;
+    std::mutex mQueueAccessMutex;
+    std::condition_variable mWaitCondition;
+    bool mExit = false;
 };
 
 #endif // WINDOWSPLATFORM_H

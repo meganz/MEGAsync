@@ -979,6 +979,8 @@ void UpdateTask::emptydirlocal(string* name, dev_t basedev)
 }
 #endif
 
+namespace
+{
 SignatureChecker::SignatureChecker(const char *base64Key)
 {
     string pubks;
@@ -1232,3 +1234,4 @@ int Base64::btoa(const byte* b, int blen, char* a)
 
     return p;
 }
+} // end of namespace
