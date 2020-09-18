@@ -17,7 +17,7 @@ struct TransferData
     int tag;
     int type;
     long long transferSpeed;
-    int remainingTimeSeconds;
+    std::chrono::seconds remainingTimeSeconds;
     long long totalSize;
     long long totalTransferredBytes;
     unsigned long long priority;

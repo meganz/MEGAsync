@@ -14,24 +14,34 @@ int calculateMedian(std::array<int, TransferRemainingTime::REMAINING_SECONDS_BUF
     return values[values.size()/2];
 }
 
-int TransferRemainingTime::calculateRemainingTimeSeconds(long long speedBytesSecond, long long remainingBytes)
+std::chrono::seconds TransferRemainingTime::calculateRemainingTimeSeconds(long long speedBytesSecond, long long remainingBytes)
 {
-    const auto totalRemainingSeconds{speedBytesSecond ? (remainingBytes / speedBytesSecond) : 0};
-    if(totalRemainingSeconds > 0)
+    if(speedBytesSecond)
     {
-        mRemainingTimesBuffer[mUpdateRemainingTimeCounter] = static_cast<int>(totalRemainingSeconds);
-        const auto bufferIsFull{mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE - 1};
-        if(bufferIsFull)
-        {
-            mUpdateRemainingTimeCounter = 0;
-            mRemainingSeconds = calculateMedian(mRemainingTimesBuffer);
-        }
-        else
-        {
-            mUpdateRemainingTimeCounter++;
-        }
+        mRemainingTimesBuffer[mUpdateRemainingTimeCounter] = static_cast<int>(remainingBytes / speedBytesSecond);
     }
-    return mRemainingSeconds;
+    else
+    {
+        mRemainingTimesBuffer[mUpdateRemainingTimeCounter] = std::numeric_limits<int>::max();
+    }
+    const auto bufferIsFull{mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE - 1};
+    if(bufferIsFull)
+    {
+        mUpdateRemainingTimeCounter = 0;
+        mRemainingSeconds = calculateMedian(mRemainingTimesBuffer);
+    }
+    else
+    {
+        mUpdateRemainingTimeCounter++;
+    }
+    if(mRemainingSeconds == std::numeric_limits<int>::max())
+    {
+        return std::chrono::seconds::max();
+    }
+    else
+    {
+        return std::chrono::seconds{mRemainingSeconds};
+    }
 }
 
 void TransferRemainingTime::reset()

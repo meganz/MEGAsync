@@ -456,28 +456,28 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
 {
     updateAnimation(td);
     QString remainingTimeString;
+    const auto undeterminedRemainingTimeString{QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>")};
 
     switch (td->transferState)
     {
-        case MegaTransfer::STATE_ACTIVE:
+    case MegaTransfer::STATE_ACTIVE:
+    {
+        if (td->remainingTimeSeconds.count() && td->remainingTimeSeconds == std::chrono::seconds::max())
         {
-        if (td->remainingTimeSeconds)
-            {
-            remainingTimeString = Utilities::getTimeString(td->remainingTimeSeconds);
-                }
-                else
-                {
-            remainingTimeString = QString::fromAscii("");
-                }
-            break;
+            remainingTimeString = undeterminedRemainingTimeString;
         }
-        case MegaTransfer::STATE_PAUSED:
+        else if(td->remainingTimeSeconds.count())
         {
-        remainingTimeString = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
-            break;
+            remainingTimeString = Utilities::getTimeString(td->remainingTimeSeconds.count());
         }
+        break;
+    }
+    case MegaTransfer::STATE_PAUSED:
+    {
+        remainingTimeString = undeterminedRemainingTimeString;
+        break;
+    }
     default:
-        remainingTimeString = QString::fromUtf8("");
         break;
     }
 
@@ -655,7 +655,7 @@ void TransferData::clear()
     totalSize = 0;
     totalTransferredBytes = 0;
     priority = 0xFFFFFFFFFFFFFFFFULL;
-    remainingTimeSeconds = 0;
+    remainingTimeSeconds = std::chrono::seconds{0};
     mTransferRemainingTime.reset();
 }
 

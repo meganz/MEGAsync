@@ -301,14 +301,13 @@ void CustomTransferItem::updateTransfer()
             const auto totalRemainingSeconds{mTransferRemainingTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
-            if (totalRemainingSeconds)
+            if (totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max())
             {
-                remainingTime = Utilities::getTimeString(totalRemainingSeconds);
+                remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
                 ui->bClockDown->setVisible(true);
             }
             else
             {
-                remainingTime = QString::fromAscii("");
                 ui->bClockDown->setVisible(false);
             }
             ui->lRemainingTime->setText(remainingTime);
