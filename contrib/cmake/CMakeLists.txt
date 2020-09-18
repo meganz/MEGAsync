@@ -733,6 +733,7 @@ target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloei
 set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
     ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
+    ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
     ${MEGASyncUnitTestsDir}/main.cpp
     )
