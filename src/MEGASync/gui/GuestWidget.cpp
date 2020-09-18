@@ -14,9 +14,12 @@
 using namespace mega;
 
 GuestWidget::GuestWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::GuestWidget),
-    incorrectCredentialsMessageReceived{false}
+    GuestWidget(((MegaApplication *)qApp)->getMegaApi(), parent)
+{
+}
+
+GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
+    :QWidget(parent), ui(new Ui::GuestWidget)
 {
     ui->setupUi(this);
 
@@ -38,7 +41,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     reset_UI_props();
 
     app = (MegaApplication *)qApp;
-    megaApi = app->getMegaApi();
+    this->megaApi = megaApi;
     preferences = Preferences::instance();
     closing = false;
     loggingStarted = false;
