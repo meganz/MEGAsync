@@ -486,8 +486,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                         }
 
                         const auto transferIsDownloadType{transfer->getType() == MegaTransfer::TYPE_DOWNLOAD};
-                        const auto unkownAccess{item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
-                        if (!item || unkownAccess || transferIsDownloadType)
+                        const auto unkownAccess{!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
+                        if (unkownAccess || transferIsDownloadType)
                         {
                             showInMega = false;
                         }
