@@ -453,6 +453,8 @@ void SettingsDialog::syncStateChanged(int state)
         }
     }
 #endif
+    onSavingSettingsProgress(0);
+
     syncsChanged = true;
     stateChanged();
 }
@@ -1329,8 +1331,6 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
 
 int SettingsDialog::saveSettings()
 {
-    onSavingSettingsProgress(0);
-
     saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
