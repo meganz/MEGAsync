@@ -741,6 +741,7 @@ target_link_libraries(MEGASync_unit_tests
     trompeloeil
     Mega
     ${MEGA_QT_LINK_LIBRARIES}
+    ${TARGET_LINK_LIBRARIES_PLATFORM}
     )
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
