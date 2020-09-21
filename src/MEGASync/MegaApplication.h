@@ -284,6 +284,7 @@ public slots:
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void showInfoDialog();
+    void showInfoDialogNotifications();
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);

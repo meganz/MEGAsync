@@ -2015,6 +2015,11 @@ int InfoDialog::getLoggedInMode() const
     return loggedInMode;
 }
 
+void InfoDialog::showNotifications()
+{
+    on_tNotifications_clicked();
+}
+
 void InfoDialog::setBlockedStateLabel(QString state)
 {
     if (state.isEmpty())

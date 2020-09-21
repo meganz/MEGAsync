@@ -3374,6 +3374,12 @@ void MegaApplication::showInfoDialog()
     updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
 }
 
+void MegaApplication::showInfoDialogNotifications()
+{
+    showInfoDialog();
+    infoDialog->showNotifications();
+}
+
 void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy)
 {
     if (appfinished)
@@ -8657,8 +8663,7 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
     bool copyRequired = true;
     if (list)
     {
-        assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
-        mOsNotifications->addUserAlertList(list);
+        assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");        
     }
     else
     {
@@ -8666,6 +8671,8 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         list = megaApi->getUserAlerts();
         copyRequired = false;
     }
+
+    mOsNotifications->addUserAlertList(list);
 
     if (!notificationsModel)
     {

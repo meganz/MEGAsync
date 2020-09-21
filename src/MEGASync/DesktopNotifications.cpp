@@ -14,6 +14,7 @@ const auto failedToDownloadIconName{QStringLiteral("Failed_to_download@3x.png")}
 const auto folderIconName{QStringLiteral("Folder@3x.png")};
 const auto fileDownloadSucceedIconName{QStringLiteral("File_download_succeed@3x.png")};
 constexpr auto translationContext{"DesktopNotifications"};
+constexpr auto maxNumberOfUnseenNotifications{3};
 
 void copyIconsToAppFolder(QString folderPath)
 {
@@ -137,8 +138,32 @@ QString createDeletedShareMessage(mega::MegaUserAlert* alert)
     return message;
 }
 
+int countUnseenAlerts(mega::MegaUserAlertList *alertList)
+{
+    auto count{0};
+    for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
+    {
+        if(!alertList->get(iAlert)->getSeen())
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
 void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 {
+    if(mPreferences->showNotifications())
+    {
+        const auto unseenAlertsCount{countUnseenAlerts(alertList)};
+        const auto tooManyAlertsUnseen{unseenAlertsCount > maxNumberOfUnseenNotifications};
+        if(tooManyAlertsUnseen)
+        {
+            notifyTooManyUnseenAlerts(unseenAlertsCount);
+            return;
+        }
+    }
+
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
         const auto alert{alertList->get(iAlert)};
@@ -329,6 +354,17 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     }
     notification->setImage(mAppIcon);
     notification->setImagePath(mFolderIconPath);
+    mNotificator->notify(notification);
+}
+
+void DesktopNotifications::notifyTooManyUnseenAlerts(int unseenAlertCount) const
+{
+    auto notification{new MegaNotification()};
+    notification->setTitle(tr("Notifications"));
+    notification->setText(tr("You have [A] unseen notifications").replace(QStringLiteral("[A]"), QString::number(unseenAlertCount)));
+    notification->setImage(mAppIcon);
+    notification->setActions(QStringList() << tr("View"));
+    QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewOnInfoDialogNotifications);
     mNotificator->notify(notification);
 }
 
@@ -632,5 +668,14 @@ void DesktopNotifications::replayNewShareReceived(MegaNotification::Action actio
             const auto megaApp{static_cast<MegaApplication*>(qApp)};
             megaApp->openSettingsAddSync(megaFolderHandle);
         }
+    }
+}
+
+void DesktopNotifications::viewOnInfoDialogNotifications(MegaNotification::Action action) const
+{
+    if(action == MegaNotification::Action::firstButton)
+    {
+        const auto megaApp{static_cast<MegaApplication*>(qApp)};
+        megaApp->showInfoDialogNotifications();
     }
 }

@@ -33,10 +33,12 @@ public slots:
     void viewShareOnWebClient(MegaNotification::Action action) const;
     void receiveClusteredAlert(mega::MegaUserAlert* alert, const QString& message) const;
     void replayNewShareReceived(MegaNotification::Action action) const;
+    void viewOnInfoDialogNotifications(MegaNotification::Action action) const;
 
 private:
     void notifyTakeDownReinstated(mega::MegaUserAlert* alert) const;
     void notifySharedUpdate(mega::MegaUserAlert* alert, const QString& message, bool isNewShare = false) const;
+    void notifyTooManyUnseenAlerts(int unseenAlertCount) const;
 
     Notificator* mNotificator;
     QIcon mAppIcon;
