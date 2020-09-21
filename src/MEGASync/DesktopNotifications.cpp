@@ -33,13 +33,14 @@ QString getIconsPath()
     return MegaApplication::applicationDataPath() + QDir::separator() + iconFolderName + QDir::separator();
 }
 
-DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIcon *trayIcon)
+DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIcon *trayIcon, Preferences *preferences)
     :mAppIcon{QString::fromUtf8("://images/app_128.png")},
      mNewContactIconPath{getIconsPath() + newContactIconName},
      mStorageQuotaFullIconPath{getIconsPath() + storageQuotaFullIconName},
      mStorageQuotaWarningIconPath{getIconsPath() + storageQuotaWarningIconName},
      mFolderIconPath{getIconsPath() + folderIconName},
-     mFileDownloadSucceedIconPath{getIconsPath() + fileDownloadSucceedIconName}
+     mFileDownloadSucceedIconPath{getIconsPath() + fileDownloadSucceedIconName},
+     mPreferences{preferences}
 {
 #ifdef __APPLE__
     mNotificator = new Notificator(appName, NULL, this);
@@ -148,75 +149,99 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
             {
-                auto notification{new MegaNotification()};
-                notification->setTitle(tr("New Contact Request"));
-                notification->setText(tr("[A] sent you a contact request")
-                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
-                notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setImage(mAppIcon);
-                notification->setImagePath(mNewContactIconPath);
-                notification->setActions(QStringList() << tr("Accept") << tr("Reject"));
-                QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayIncomingPendingRequest);
-                mNotificator->notify(notification);
+                if(mPreferences->showNotifications())
+                {
+                    auto notification{new MegaNotification()};
+                    notification->setTitle(tr("New Contact Request"));
+                    notification->setText(tr("[A] sent you a contact request")
+                                          .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                    notification->setData(QString::fromUtf8(alert->getEmail()));
+                    notification->setImage(mAppIcon);
+                    notification->setImagePath(mNewContactIconPath);
+                    notification->setActions(QStringList() << tr("Accept") << tr("Reject"));
+                    QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::replayIncomingPendingRequest);
+                    mNotificator->notify(notification);
+                }
                 break;
             }
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
             {
-                auto notification{new MegaNotification()};
-                notification->setTitle(tr("New Contact Request"));
-                notification->setText(tr("[A] cancelled the contact request")
-                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
-                notification->setImage(mAppIcon);
-                notification->setImagePath(mNewContactIconPath);
-                mNotificator->notify(notification);
-                break;
+                if(mPreferences->showNotifications())
+                {
+                    auto notification{new MegaNotification()};
+                    notification->setTitle(tr("New Contact Request"));
+                    notification->setText(tr("[A] cancelled the contact request")
+                                          .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                    notification->setImage(mAppIcon);
+                    notification->setImagePath(mNewContactIconPath);
+                    mNotificator->notify(notification);
+                    break;
+                }
             }
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
             {
-                auto notification{new MegaNotification()};
-                notification->setTitle(tr("New Contact Request"));
-                notification->setText(tr("Reminder") + QStringLiteral(": ") +
-                                      tr("You have a contact request"));
-                notification->setImage(mAppIcon);
-                notification->setImagePath(mNewContactIconPath);
-                mNotificator->notify(notification);
-                break;
+                if(mPreferences->showNotifications())
+                {
+                    auto notification{new MegaNotification()};
+                    notification->setTitle(tr("New Contact Request"));
+                    notification->setText(tr("Reminder") + QStringLiteral(": ") +
+                                          tr("You have a contact request"));
+                    notification->setImage(mAppIcon);
+                    notification->setImagePath(mNewContactIconPath);
+                    mNotificator->notify(notification);
+                    break;
+                }
             }
             case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
             {
-                auto notification{new MegaNotification()};
-                notification->setTitle(tr("Contact Established"));
-                notification->setText(tr("New contact with [A] has been established")
-                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
-                notification->setData(QString::fromUtf8(alert->getEmail()));
-                notification->setActions(QStringList() << tr("View") << tr("Chat"));
-                notification->setImage(mAppIcon);
-                notification->setImagePath(mNewContactIconPath);
-                QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
-                mNotificator->notify(notification);
+                if(mPreferences->showNotifications())
+                {
+                    auto notification{new MegaNotification()};
+                    notification->setTitle(tr("Contact Established"));
+                    notification->setText(tr("New contact with [A] has been established")
+                                          .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
+                    notification->setData(QString::fromUtf8(alert->getEmail()));
+                    notification->setActions(QStringList() << tr("View") << tr("Chat"));
+                    notification->setImage(mAppIcon);
+                    notification->setImagePath(mNewContactIconPath);
+                    QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
+                    mNotificator->notify(notification);
+                }
                 break;
             }
             case mega::MegaUserAlert::TYPE_NEWSHARE:
             {
-                const auto message{tr("New Shared folder from [X]")
-                            .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
-                const auto isNewShare{true};
-                notifySharedUpdate(alert, message, isNewShare);
+                if(mPreferences->showNotifications())
+                {
+                    const auto message{tr("New Shared folder from [X]")
+                                .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
+                    const auto isNewShare{true};
+                    notifySharedUpdate(alert, message, isNewShare);
+                }
                 break;
             }
             case mega::MegaUserAlert::TYPE_DELETEDSHARE:
             {
-                notifySharedUpdate(alert, createDeletedShareMessage(alert));
+                if(mPreferences->showNotifications())
+                {
+                    notifySharedUpdate(alert, createDeletedShareMessage(alert));
+                }
                 break;
             }
             case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
             {
-                notifySharedUpdate(alert, getItemsAddedText(alert));
+                if(mPreferences->showNotifications())
+                {
+                    notifySharedUpdate(alert, getItemsAddedText(alert));
+                }
                 break;
             }
             case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
-                mRemovedSharedNotificator.addUserAlert(alert);
+                if(mPreferences->showNotifications())
+                {
+                    mRemovedSharedNotificator.addUserAlert(alert);
+                }
                 break;
             }
             case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
@@ -436,15 +461,18 @@ void DesktopNotifications::sendOverTransferNotification(const QString &title) co
 
 void DesktopNotifications::sendFinishedTransferNotification(const QString &title, const QString &message, const QString &extraData) const
 {
-    auto notification{new MegaNotification()};
-    notification->setTitle(title);
-    notification->setText(message);
-    notification->setActions(QStringList() << tr("Show in folder"));
-    notification->setData(extraData);
-    notification->setImage(mAppIcon);
-    notification->setImagePath(mFileDownloadSucceedIconPath);
-    connect(notification, &MegaNotification::activated, this, &DesktopNotifications::showInFolder);
-    mNotificator->notify(notification);
+    if(mPreferences->showNotifications())
+    {
+        auto notification{new MegaNotification()};
+        notification->setTitle(title);
+        notification->setText(message);
+        notification->setActions(QStringList() << tr("Show in folder"));
+        notification->setData(extraData);
+        notification->setImage(mAppIcon);
+        notification->setImagePath(mFileDownloadSucceedIconPath);
+        connect(notification, &MegaNotification::activated, this, &DesktopNotifications::showInFolder);
+        mNotificator->notify(notification);
+    }
 }
 
 bool checkIfActionIsValid(MegaNotification::Action action)
@@ -514,12 +542,18 @@ void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) c
 
 void DesktopNotifications::sendInfoNotification(const QString &title, const QString &message) const
 {
-    mNotificator->notify(Notificator::Information, title, message, mAppIcon);
+    if(mPreferences->showNotifications())
+    {
+        mNotificator->notify(Notificator::Information, title, message, mAppIcon);
+    }
 }
 
 void DesktopNotifications::sendWarningNotification(const QString &title, const QString &message) const
 {
-    mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
+    if(mPreferences->showNotifications())
+    {
+        mNotificator->notify(Notificator::Warning, title, message, mAppIcon);
+    }
 }
 
 void DesktopNotifications::sendErrorNotification(const QString &title, const QString &message) const

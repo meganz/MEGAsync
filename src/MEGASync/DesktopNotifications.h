@@ -1,6 +1,7 @@
 #pragma once
 #include "notificator.h"
 #include "RemovedSharesNotificator.h"
+#include "Preferences.h"
 #include <QObject>
 #include <memory>
 
@@ -13,7 +14,7 @@ class DesktopNotifications: public QObject
 {
     Q_OBJECT
 public:
-    DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
+    DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon, Preferences *preferences);
     void addUserAlertList(mega::MegaUserAlertList *alertList);
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;
@@ -42,4 +43,5 @@ private:
     QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;
     QString mFolderIconPath, mFileDownloadSucceedIconPath;
     RemovedSharesNotificator mRemovedSharedNotificator;
+    Preferences *mPreferences;
 };

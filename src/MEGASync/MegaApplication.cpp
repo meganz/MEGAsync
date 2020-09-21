@@ -1279,7 +1279,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
-    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon);
+    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon, preferences);
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)

@@ -5,11 +5,11 @@
 
 TransferQuota::TransferQuota(mega::MegaApi* megaApi,
                                        Preferences *preferences,
-                                       std::shared_ptr<DesktopNotifications> osNotifications)
+                                       std::shared_ptr<DesktopNotifications> desktopNotifications)
     :mMegaApi{megaApi},
       mPricing(nullptr),
       mPreferences{preferences},
-      mOsNotifications{std::move(osNotifications)},
+      mOsNotifications{std::move(desktopNotifications)},
       mUpgradeDialog{nullptr},
       mQuotaState{QuotaState::OK}
 {
