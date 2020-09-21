@@ -13,6 +13,7 @@ const auto storageQuotaWarningIconName{QStringLiteral("Storage_Quota_almost_full
 const auto failedToDownloadIconName{QStringLiteral("Failed_to_download@3x.png")};
 const auto folderIconName{QStringLiteral("Folder@3x.png")};
 const auto fileDownloadSucceedIconName{QStringLiteral("File_download_succeed@3x.png")};
+constexpr auto translationContext{"DesktopNotifications"};
 
 void copyIconsToAppFolder(QString folderPath)
 {
@@ -58,12 +59,12 @@ QString getItemsAddedText(mega::MegaUserAlert* alert)
     const auto updatedItems{alert->getNumber(1) + alert->getNumber(0)};
     if (updatedItems == 1)
     {
-        return QCoreApplication::translate("OsNotifications", "[A] added 1 item")
+        return QCoreApplication::translate(translationContext, "[A] added 1 item")
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()));
     }
     else
     {
-         return QCoreApplication::translate("OsNotifications", "[A] added [B] items")
+         return QCoreApplication::translate(translationContext, "[A] added [B] items")
                  .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()))
                  .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
     }
@@ -74,12 +75,12 @@ QString getItemsRemovedMessage(mega::MegaUserAlert* alert)
     const auto updatedItems{alert->getNumber(0)};
     if (updatedItems == 1)
     {
-        return QCoreApplication::translate("OsNotifications", "[A] removed 1 item")
+        return QCoreApplication::translate(translationContext, "[A] removed 1 item")
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()));
     }
     else
     {
-         return QCoreApplication::translate("OsNotifications", "[A] removed [B] items")
+         return QCoreApplication::translate(translationContext, "[A] removed [B] items")
                  .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()))
                  .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
     }
@@ -94,26 +95,45 @@ QString createPaymentReminderText(int64_t expirationTimeStamp)
     const auto daysExpired{currentDate.daysTo(expiredDate)};
     if (daysExpired == 1)
     {
-        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan will expire in 1 day");
+        return QCoreApplication::translate(translationContext, "Your PRO membership plan will expire in 1 day");
     }
     else if (daysExpired > 0)
     {
-        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan will expire in [A] days")
+        return QCoreApplication::translate(translationContext, "Your PRO membership plan will expire in [A] days")
                 .replace(QString::fromUtf8("[A]"), QString::number(daysExpired));
     }
     else if (daysExpired == 0)
     {
-        return QCoreApplication::translate("OsNotifications", "PRO membership plan expiring soon");
+        return QCoreApplication::translate(translationContext, "PRO membership plan expiring soon");
     }
     else if (daysExpired == -1)
     {
-        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan expired 1 day ago");
+        return QCoreApplication::translate(translationContext, "Your PRO membership plan expired 1 day ago");
     }
     else
     {
-        return QCoreApplication::translate("OsNotifications", "Your PRO membership plan expired [A] days ago")
+        return QCoreApplication::translate(translationContext, "Your PRO membership plan expired [A] days ago")
                 .replace(QString::fromUtf8("[A]"), QString::number(-daysExpired));
     }
+}
+
+QString createDeletedShareMessage(mega::MegaUserAlert* alert)
+{
+    QString message;
+    const auto email{QString::fromUtf8(alert->getEmail())};
+    const auto someoneLeftTheFolder{alert->getNumber(0) == 0};
+    if (someoneLeftTheFolder)
+    {
+        message = QCoreApplication::translate(translationContext,"[A] has left the shared folder")
+                .replace(QString::fromUtf8("[A]"), email);
+    }
+    else //Access for the user was removed by share owner
+    {
+        message = email.isEmpty() ? QCoreApplication::translate(translationContext, "Access to shared folder was removed") :
+                                    QCoreApplication::translate(translationContext, "Access to shared folder was removed by [A]")
+                                    .replace(QString::fromUtf8("[A]"), email);
+    }
+    return message;
 }
 
 void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
@@ -186,9 +206,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             }
             case mega::MegaUserAlert::TYPE_DELETEDSHARE:
             {
-                const auto message{tr("[A] has left the shared folder")
-                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()))};
-                notifySharedUpdate(alert, message);
+                notifySharedUpdate(alert, createDeletedShareMessage(alert));
                 break;
             }
             case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
@@ -263,7 +281,7 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     auto sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
     if(sharedFolderName.isEmpty())
     {
-        sharedFolderName = QCoreApplication::translate("OsNotifications", "Shared Folder Activity");
+        sharedFolderName = QCoreApplication::translate(translationContext, "Shared Folder Activity");
     }
     notification->setTitle(sharedFolderName);
     notification->setText(message);
@@ -297,24 +315,24 @@ QString createTakeDownMessage(mega::MegaUserAlert* alert)
     {
         if (node->getType() == mega::MegaNode::TYPE_FILE)
         {
-            return QCoreApplication::translate("OsNotifications", "Your publicly shared file ([A]) has been taken down")
+            return QCoreApplication::translate(translationContext, "Your publicly shared file ([A]) has been taken down")
                     .replace(QString::fromUtf8("[A]"), QString::fromUtf8(node->getName()));
         }
         else if (node->getType() == mega::MegaNode::TYPE_FOLDER)
         {
-            return QCoreApplication::translate("OsNotifications", "Your publicly shared folder ([A]) has been taken down")
+            return QCoreApplication::translate(translationContext, "Your publicly shared folder ([A]) has been taken down")
                     .replace(QString::fromUtf8("[A]"), QString::fromUtf8(node->getName()));
         }
         else
         {
-            return QCoreApplication::translate("OsNotifications", "Your publicly shared has been taken down");
+            return QCoreApplication::translate(translationContext, "Your publicly shared has been taken down");
         }
 
         delete node;
     }
     else
     {
-        return QCoreApplication::translate("OsNotifications", "Your publicly shared has been taken down");
+        return QCoreApplication::translate(translationContext, "Your publicly shared has been taken down");
     }
 }
 
