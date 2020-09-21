@@ -1049,7 +1049,14 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
       PFUNCTION_TABLE_ACCESS_ROUTINE64 SymFunctionTableAccess64_ = reinterpret_cast<PFUNCTION_TABLE_ACCESS_ROUTINE64>(
       GetProcAddress(dbghelp_module_, "SymFunctionTableAccess64"));
 
-      if (StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_)
+      typedef BOOL(WINAPI *SymInitialize_type)(
+          HANDLE hProcess,
+          PCSTR  UserSearchPath,
+          BOOL   fInvadeProcess);
+      SymInitialize_type SymInitialize_ = reinterpret_cast<SymInitialize_type>(
+      GetProcAddress(dbghelp_module_, "SymInitialize"));
+
+      if (StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_ && SymInitialize_)
       {
           HANDLE hThread = GetCurrentThread();
           DWORD machineType;
@@ -1076,6 +1083,9 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
           #else
               #error "Unsupported platform"
           #endif
+
+          // Without this, stack will contain garbage frames for x64 (and often even for x86)
+          SymInitialize_(process, nullptr, TRUE);
 
           oss << "Stacktrace:\n";
           do {
