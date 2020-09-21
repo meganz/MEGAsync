@@ -733,6 +733,7 @@ set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
     ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
+    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
     ${MEGASyncUnitTestsDir}/main.cpp
     )
 add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
