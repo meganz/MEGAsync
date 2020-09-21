@@ -34,7 +34,9 @@ void StatusInfo::setState(int state)
                 scanningTimer.stop();
             }
 
-            ui->lStatusDesc->setText(tr("Paused"));
+            const auto statusText{tr("Paused")};
+            ui->lStatusDesc->setToolTip(statusText);
+            ui->lStatusDesc->setText(statusText);
             ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
             ui->bIconState->setIconSize(QSize(24, 24));
             break;
@@ -48,13 +50,17 @@ void StatusInfo::setState(int state)
 
             if (isOverQuota)
             {
-                ui->lStatusDesc->setText(tr("Account full"));
+                const auto statusText{tr("Account full")};
+                ui->lStatusDesc->setToolTip(statusText);
+                ui->lStatusDesc->setText(statusText);
                 ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_full.png")));
                 ui->bIconState->setIconSize(QSize(24, 24));
             }
             else
             {
-                ui->lStatusDesc->setText(tr("Up to date"));
+                const auto statusText{tr("Up to date")};
+                ui->lStatusDesc->setToolTip(statusText);
+                ui->lStatusDesc->setText(statusText);
                 ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_uptodate_state.png")));
                 ui->bIconState->setIconSize(QSize(24, 24));
             }
@@ -69,7 +75,9 @@ void StatusInfo::setState(int state)
                 scanningTimer.start();
             }
 
-            ui->lStatusDesc->setText(tr("Syncing")+QString::fromUtf8("..."));
+            const auto statusText{tr("Syncing")+QString::fromUtf8("...")};
+            ui->lStatusDesc->setToolTip(statusText);
+            ui->lStatusDesc->setText(statusText);
             break;
         }
         case STATE_WAITING:
@@ -80,7 +88,9 @@ void StatusInfo::setState(int state)
                 scanningTimer.start();
             }
 
-            ui->lStatusDesc->setText(tr("Waiting")+QString::fromUtf8("..."));
+            const auto statusText{tr("Waiting")+QString::fromUtf8("...")};
+            ui->lStatusDesc->setToolTip(statusText);
+            ui->lStatusDesc->setText(statusText);
             break;
         }
         case STATE_INDEXING:
@@ -91,7 +101,9 @@ void StatusInfo::setState(int state)
                 scanningTimer.start();
             }
 
-            ui->lStatusDesc->setText(tr("Scanning")+QString::fromUtf8("..."));
+            const auto statusText{tr("Scanning")+QString::fromUtf8("...")};
+            ui->lStatusDesc->setToolTip(statusText);
+            ui->lStatusDesc->setText(statusText);
             break;
         }
         case STATE_TRANSFERRING:
@@ -102,7 +114,9 @@ void StatusInfo::setState(int state)
                 scanningTimer.start();
             }
 
-            ui->lStatusDesc->setText(tr("Transferring")+QString::fromUtf8("..."));
+            const auto statusText{tr("Transferring")+QString::fromUtf8("...")};
+            ui->lStatusDesc->setToolTip(statusText);
+            ui->lStatusDesc->setText(statusText);
             break;
         }
         default:

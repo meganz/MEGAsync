@@ -14,9 +14,12 @@
 using namespace mega;
 
 GuestWidget::GuestWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::GuestWidget),
-    incorrectCredentialsMessageReceived{false}
+    GuestWidget(((MegaApplication *)qApp)->getMegaApi(), parent)
+{
+}
+
+GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
+    :QWidget(parent), ui(new Ui::GuestWidget)
 {
     ui->setupUi(this);
 
@@ -38,7 +41,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     reset_UI_props();
 
     app = (MegaApplication *)qApp;
-    megaApi = app->getMegaApi();
+    this->megaApi = megaApi;
     preferences = Preferences::instance();
     closing = false;
     loggingStarted = false;
@@ -316,6 +319,8 @@ void GuestWidget::initialize()
 
     closing = false;
     loggingStarted = false;
+    ui->lEmail->clear();
+    resetFocus();
     page_login();
 }
 
@@ -589,7 +594,7 @@ void GuestWidget::page_login()
     ui->sPages->style()->polish(ui->sPages);
 
     ui->lPassword->clear();
-    ui->sPages->setCurrentWidget(ui->pLogin);   
+    ui->sPages->setCurrentWidget(ui->pLogin);
 
     if(incorrectCredentialsMessageReceived)
     {
@@ -720,8 +725,7 @@ void GuestWidget::on_bLogin2FaNext_clicked()
     }
     else
     {
-        const auto pin{ui->leCode->text().trimmed().toUtf8().constData()};
-        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8(), pin);
+        megaApi->multiFactorAuthLogin(email.toUtf8(), password.toUtf8().constData(), pin.toUtf8().constData());
     }
 }
 

@@ -447,6 +447,40 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     return time;
 }
 
+struct Postfix
+{
+    double value;
+    std::string letter;
+};
+
+const std::vector<Postfix> postfixes = {{1e12, "T"},
+                                     {1e9,  "G"},
+                                     {1e6,  "M"},
+                                     {1e3,  "K"}};
+
+constexpr auto maxStringSize{4};
+
+QString Utilities::getQuantityString(unsigned long long quantity)
+{
+    for (const auto& postfix : postfixes)
+    {
+        if(static_cast<double>(quantity) >= postfix.value)
+        {
+            const auto value{static_cast<double>(quantity) / postfix.value};
+            // QString::number(value, 'G', 3) is another way to do it but it rounds the result
+
+            auto valueString{QString::number(value).left(maxStringSize)};
+            if(valueString.contains(QStringLiteral(".")))
+            {
+                valueString.remove(QRegExp(QStringLiteral("0+$"))); // Remove any number of trailing 0's
+                valueString.remove(QRegExp(QStringLiteral("\\.$"))); // If the last character is just a '.' then remove it
+            }
+            return valueString + QString::fromStdString(postfix.letter);
+        }
+    }
+    return QString::number(quantity);
+}
+
 QString Utilities::getFinishedTimeString(long long secs)
 {
     if (secs < 2)
@@ -924,18 +958,27 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-int Utilities::getDaysToTimestamp(int64_t msecsTimestamps)
+void Utilities::getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remainDays)
 {
     if (!msecsTimestamps)
     {
-        return -1;
+        return;
     }
 
-    QDateTime currentDate(QDateTime::currentDateTime());
-    QDateTime tsOQ = QDateTime::fromMSecsSinceEpoch(msecsTimestamps);
-    int daysExpired = currentDate.daysTo(tsOQ);
+    int64_t hours = 0;
+    getDaysAndHoursToTimestamp(msecsTimestamps, remainDays, hours);
+}
 
-    return daysExpired;//Negative if tsOQ is earlier than currentDate
+void Utilities::getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remainDays, int64_t &remainHours)
+{
+    if (!msecsTimestamps)
+    {
+        return;
+    }
+
+    int64_t currDate = QDateTime::currentDateTimeUtc().toMSecsSinceEpoch();
+    remainDays  = floor((msecsTimestamps - currDate) / 864e5); //ms difference to days
+    remainHours = floor((msecsTimestamps - currDate) / 36e5); //ms difference to hours
 }
 
 QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, QWidget *parent)

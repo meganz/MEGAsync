@@ -850,21 +850,34 @@ void InfoDialog::updateDialogState()
         MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
         const char *email = megaApi->getMyEmail();
 
+        auto numFiles{preferences->cloudDriveFiles() + preferences->inboxFiles() + preferences->rubbishFiles()};
         QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
-                .replace(QString::fromUtf8("[C]"), QString::number(megaApi->getNumNodes()))
+                .replace(QString::fromUtf8("[C]"), QString::number(numFiles))
                 .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
                 .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(static_cast<MegaApplication *>(qApp)->getPricing(), preferences->usedStorage()))
                 + QString::fromUtf8("</p>");
         ui->lOverDiskQuotaLabel->setText(overDiskText);
 
-        const auto daysToExpire{Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000)};
-        if (daysToExpire > 0)
+        int64_t remainDaysOut(0);
+        int64_t remainHoursOut(0);
+        Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut, remainHoursOut);
+        if (remainDaysOut > 0)
         {
-            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lWarningOverDiskQuota->text()
+            QString descriptionDays = tr("You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.");
+            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionDays
                     .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                    .replace(QString::fromUtf8("[B]"), QString::number(daysToExpire))
+                    .replace(QString::fromUtf8("[B]"), QString::number(remainDaysOut))
+                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                    + QString::fromUtf8("</p>"));
+        }
+        else if (remainDaysOut == 0 && remainHoursOut > 0)
+        {
+            QString descriptionHours = tr("You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.");
+            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionHours
+                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                    .replace(QString::fromUtf8("[B]"), QString::number(remainHoursOut))
                     .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                     + QString::fromUtf8("</p>"));
         }

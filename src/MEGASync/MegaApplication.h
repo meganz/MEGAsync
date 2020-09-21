@@ -76,6 +76,7 @@ public:
 
 class Notificator;
 class MEGASyncDelegateListener;
+class ShellNotifier;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -172,6 +173,7 @@ public:
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
     void createAppMenus();
+    void createInfoDialogMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
@@ -532,6 +534,11 @@ protected:
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
+
+private:
+#ifdef _WIN32
+    std::shared_ptr<ShellNotifier> mShellNotifier;
+#endif
 };
 
 class DeferPreferencesSyncForScope

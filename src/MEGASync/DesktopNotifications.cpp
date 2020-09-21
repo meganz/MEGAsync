@@ -471,8 +471,9 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
         auto notification{new MegaNotification()};
         notification->setTitle(tr("Your data is at risk"));
         const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
-        const auto daysToTimeStamps{QString::number(Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000))};
-        notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), daysToTimeStamps));
+        int64_t remainDaysOut(0);
+        Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
+        notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
         notification->setActions(QStringList() << tr("Get PRO"));
         notification->setImage(mAppIcon);
         connect(notification, &MegaNotification::activated, this, &DesktopNotifications::redirectToUpgrade);
