@@ -80,12 +80,6 @@ void MegaApplication::loadDataPath()
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
-#ifdef _WIN32
-    for (QScreen *s: this->screens() )
-    {
-        lastCheckedScreens.insert(s->name(), s->devicePixelRatio());
-    }
-#endif
     appfinished = false;
 
     bool logToStdout = false;

@@ -132,9 +132,9 @@ SCENARIO("Scale factor calculation on windows platforms")
 {
     unsetEnvironmentVariables();
 
-    GIVEN("A single screen set with 1920x1080 resolution with 1.0 device pixel ratio")
+    GIVEN("A single screen set with 1920x1080 resolution with 100% scale")
     {
-        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1080, 96, 1.0}}, "win64", "");
+        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1040, 96., 1.}}, "Windows 10", "");
 
         WHEN("Scale factor is set")
         {
@@ -148,9 +148,24 @@ SCENARIO("Scale factor calculation on windows platforms")
         }
     }
 
-    GIVEN("A single screen with 1920x1080 resolution with 2.0 device pixel ratio")
+    GIVEN("A single screen with 1920x1080 resolution with 150% scale")
     {
-        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1080, 96, 2.0}}, "win64", "");
+        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 960, 510, 72., 2.0}}, "Windows 10", "");
+
+        WHEN("Scale factor is set")
+        {
+            scaleFactorManager.setScaleFactorEnvironmentVariable();
+
+            THEN("Environment variable is set with the correct factor since the bigger MEGASync window does not fit the available screen space.")
+            {
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("0.666667"));
+            }
+        }
+    }
+
+    GIVEN("A single screen with 3840x2160 resolution with 150% scale")
+    {
+        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1050, 72., 2.0}}, "win64", "");
 
         WHEN("Scale factor is set")
         {
@@ -163,15 +178,15 @@ SCENARIO("Scale factor calculation on windows platforms")
         }
     }
 
-    GIVEN("A single screen with 3840x2160 resolution with 3.1 device pixel ratio")
+    GIVEN("A single screen with 3840x2160 resolution with 200% scale")
     {
-        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 3840, 2160, 96, 2.0}}, "win64", "");
+        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1050, 96., 2.0}}, "win64", "");
 
         WHEN("Scale factor is set")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Scale factor environment variable is not set because highDpi is enabled")
+            THEN("Scale factor environment variable is not set because highDpi")
             {
                 CHECK_FALSE(getenv(scaleEnvironmentVariableName));
             }
