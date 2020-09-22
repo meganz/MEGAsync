@@ -202,9 +202,10 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
     return false;
 }
 
-double adjustScaleValueToSuitableIncrement(double scale, double maxScale)
+double adjustScaleValueToSuitableIncrement(double scale, double maxScale, double pixelRatio)
 {
-    constexpr auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
+    auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
+    dpiScreensSuitableIncrement /= pixelRatio;
     scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
     if(scale > maxScale)
     {
@@ -232,7 +233,15 @@ bool ScaleFactorManager::computeScales()
         }
         const auto maxScale{calculateMaxScale(screenInfo)};
         scale = std::min(scale, maxScale);
-        scale = adjustScaleValueToSuitableIncrement(scale, maxScale);
+        scale = adjustScaleValueToSuitableIncrement(scale, maxScale, screenInfo.devicePixelRatio);
+
+        const auto hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
+        const auto scaleNeedsToBeAdjusted{scale < 1.0 && !hdpiAutoEnabled};
+        if(scaleNeedsToBeAdjusted)
+        {
+            scale = 1.0;
+        }
+
         if(scale != 1.0)
         {
             needsRescaling = true;
@@ -265,6 +274,7 @@ double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
         scale = std::min(screenInfo.availableWidthPixels / baseWidthPixels,
                          screenInfo.availableHeightPixels / baseHeightPixels) * correctionFactor;
         scale = std::max(scale, 1.0); // avoid problematic scales lower than 1.0 when no hdpi enabled
+        scale = std::min(scale, 3.0); // avoid too big scales
     }
     return scale;
 }

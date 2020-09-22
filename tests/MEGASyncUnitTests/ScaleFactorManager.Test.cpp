@@ -47,6 +47,37 @@ SCENARIO("Scale factor calculation on linux platforms")
         }
     }
 
+    GIVEN("A single screen with 640x480 resolution and 100% screen scaled")
+    {
+        ScaleFactorManager scaleFactorManager(OsType::LINUX, {{"screenName", 640, 480, 96, 1.}}, "Ubuntu20", "plasma");
+
+        WHEN("Scale factor is set")
+        {
+            scaleFactorManager.setScaleFactorEnvironmentVariable();
+
+            THEN("No need to rescale because the scale calculated is lower than 1.0 and that is the minimum value allowed")
+            {
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
+                CHECK_FALSE(getenv(scaleScreensEnvironmentVariableName));
+            }
+        }
+    }
+
+    GIVEN("A single screen with 8000x6000 resolution and 100% screen scaled")
+    {
+        ScaleFactorManager scaleFactorManager(OsType::LINUX, {{"screenName", 8000, 6000, 96, 1.}}, "Ubuntu20", "plasma");
+
+        WHEN("Scale factor is set")
+        {
+            scaleFactorManager.setScaleFactorEnvironmentVariable();
+
+            THEN("Environment variable is set to the maximum value allowed")
+            {
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("3"));
+            }
+        }
+    }
+
     GIVEN("A single screen with 3840x2160 resolution")
     {
         ScaleFactorManager scaleFactorManager(OsType::LINUX, {{"screenName", 3840, 2160, 96, 1.}}, "Ubuntu20", "plasma");
@@ -156,22 +187,38 @@ SCENARIO("Scale factor calculation on windows platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environment variable is set with the correct factor since the bigger MEGASync window does not fit the available screen space.")
+            THEN("Environment variable is set with the correct factor since the biggest MEGASync window does not fit the available screen space.")
             {
-                CHECK(getenv(scaleEnvironmentVariableName) == std::string("0.666667"));
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("0.75"));
+            }
+        }
+    }
+
+    GIVEN("A single screen with 640x480 resolution and 100% screen scaled")
+    {
+        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 640, 480, 96, 1.}}, "Windows 10", "");
+
+        WHEN("Scale factor is set")
+        {
+            scaleFactorManager.setScaleFactorEnvironmentVariable();
+
+            THEN("No need to rescale because the scale calculated is lower than 1.0 and that is the minimum value allowed when hidpi is disabled")
+            {
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
+                CHECK_FALSE(getenv(scaleScreensEnvironmentVariableName));
             }
         }
     }
 
     GIVEN("A single screen with 3840x2160 resolution with 150% scale")
     {
-        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1050, 72., 2.0}}, "win64", "");
+        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1050, 72., 2.0}}, "Windows 10", "");
 
         WHEN("Scale factor is set")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Scale factor environment variable is not set because highDpi is enabled")
+            THEN("Scale factor environment variable is not set because highDpi is enabled and biggest window fits the available screen")
             {
                 CHECK_FALSE(getenv(scaleEnvironmentVariableName));
             }
@@ -180,13 +227,13 @@ SCENARIO("Scale factor calculation on windows platforms")
 
     GIVEN("A single screen with 3840x2160 resolution with 200% scale")
     {
-        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1050, 96., 2.0}}, "win64", "");
+        ScaleFactorManager scaleFactorManager(OsType::WIN, {{"screenName", 1920, 1050, 96., 2.0}}, "Windows 10", "");
 
         WHEN("Scale factor is set")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Scale factor environment variable is not set because highDpi")
+            THEN("Scale factor environment variable is not set because highDpi is enabled and bigger window fits the available screen")
             {
                 CHECK_FALSE(getenv(scaleEnvironmentVariableName));
             }
