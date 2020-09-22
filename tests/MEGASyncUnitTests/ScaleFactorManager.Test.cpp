@@ -1,20 +1,20 @@
 #include <catch.hpp>
 #include "ScaleFactorManager.h"
 
-constexpr auto scaleEnvirontmentVariableName{"QT_SCALE_FACTOR"};
-constexpr auto scaleScreensEnvirontmentVariableName{"QT_SCREEN_SCALE_FACTORS"};
-constexpr auto autoScaleEnvirontmentVariableName{"QT_AUTO_SCREEN_SCALE_FACTOR"};
+constexpr auto scaleEnvironmentVariableName{"QT_SCALE_FACTOR"};
+constexpr auto scaleScreensEnvironmentVariableName{"QT_SCREEN_SCALE_FACTORS"};
+constexpr auto autoScaleEnvironmentVariableName{"QT_AUTO_SCREEN_SCALE_FACTOR"};
 
-void unsetEnvirontmentVariables()
+void unsetEnvironmentVariables()
 {
-    unsetenv(scaleEnvirontmentVariableName);
-    unsetenv(scaleScreensEnvirontmentVariableName);
-    unsetenv(autoScaleEnvirontmentVariableName);
+    unsetenv(scaleEnvironmentVariableName);
+    unsetenv(scaleScreensEnvironmentVariableName);
+    unsetenv(autoScaleEnvironmentVariableName);
 }
 
 SCENARIO("Scale factor calculation on linux platforms")
 {
-    unsetEnvirontmentVariables();
+    unsetEnvironmentVariables();
 
     GIVEN("A single screen with 1920x1080 resolution")
     {
@@ -24,10 +24,10 @@ SCENARIO("Scale factor calculation on linux platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is not set as scaling is not needed")
+            THEN("Environment variable is not set as scaling is not needed")
             {
-                CHECK_FALSE(getenv(scaleEnvirontmentVariableName));
-                CHECK_FALSE(getenv(scaleScreensEnvirontmentVariableName));
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
+                CHECK_FALSE(getenv(scaleScreensEnvironmentVariableName));
             }
         }
     }
@@ -40,9 +40,9 @@ SCENARIO("Scale factor calculation on linux platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set with the correct factor")
+            THEN("environment variable is set with the correct factor")
             {
-                CHECK(getenv(scaleEnvirontmentVariableName) == std::string("1.66667"));
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("1.66667"));
             }
         }
     }
@@ -55,9 +55,9 @@ SCENARIO("Scale factor calculation on linux platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set with the correct factor")
+            THEN("Environment variable is set with the correct factor")
             {
-                CHECK(getenv(scaleEnvirontmentVariableName) == std::string("1.5"));
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("1.5"));
             }
         }
     }
@@ -70,14 +70,14 @@ SCENARIO("Scale factor calculation on linux platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set with the correct factor")
+            THEN("Environment variable is set with the correct factor")
             {
-                CHECK(getenv(scaleEnvirontmentVariableName) == std::string("2"));
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("2"));
             }
         }
     }
 
-    GIVEN("A single screen with 3840x2160 resolution and display 200% scale with QT_AUTO_SCREEN_SCALE_FACTOR environtment variable set")
+    GIVEN("A single screen with 3840x2160 resolution and display 200% scale with QT_AUTO_SCREEN_SCALE_FACTOR Environment variable set")
     {
         // When QT_AUTO_SCREEN_SCALE_FACTOR is set Qt treats the screan as 1920x1080
         // and sets the variable highDpiAutoScalingEnabled to 2.0
@@ -88,9 +88,9 @@ SCENARIO("Scale factor calculation on linux platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set with the correct factor")
+            THEN("Scale factor environment variable is not set because highDpi is enabled")
             {
-                CHECK_FALSE(getenv(scaleEnvirontmentVariableName));
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
             }
         }
     }
@@ -103,10 +103,10 @@ SCENARIO("Scale factor calculation on linux platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set with the correct factor")
+            THEN("Environment variable is set with the correct factor")
             {
-                CHECK_FALSE(getenv(scaleEnvirontmentVariableName));
-                CHECK(getenv(scaleScreensEnvirontmentVariableName) == std::string("1,000000;1,500000"));
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
+                CHECK(getenv(scaleScreensEnvironmentVariableName) == std::string("1,000000;1,500000"));
             }
         }
     }
@@ -119,10 +119,10 @@ SCENARIO("Scale factor calculation on linux platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set with the correct factor")
+            THEN("Environment variable is set with the correct factor")
             {
-                CHECK_FALSE(getenv(scaleEnvirontmentVariableName));
-                CHECK(getenv(scaleScreensEnvirontmentVariableName) == std::string("1,666667;2,000000"));
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
+                CHECK(getenv(scaleScreensEnvironmentVariableName) == std::string("1,666667;2,000000"));
             }
         }
     }
@@ -130,7 +130,7 @@ SCENARIO("Scale factor calculation on linux platforms")
 
 SCENARIO("Scale factor calculation on windows platforms")
 {
-    unsetEnvirontmentVariables();
+    unsetEnvironmentVariables();
 
     GIVEN("A single screen set with 1920x1080 resolution with 1.0 device pixel ratio")
     {
@@ -140,10 +140,10 @@ SCENARIO("Scale factor calculation on windows platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is not set as scaling is not needed")
+            THEN("Environment variable is not set as scaling is not needed")
             {
-                CHECK_FALSE(getenv(scaleEnvirontmentVariableName));
-                CHECK_FALSE(getenv(scaleScreensEnvirontmentVariableName));
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
+                CHECK_FALSE(getenv(scaleScreensEnvironmentVariableName));
             }
         }
     }
@@ -156,9 +156,9 @@ SCENARIO("Scale factor calculation on windows platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set to the maximum value that fits the available screen")
+            THEN("Scale factor environment variable is not set because highDpi is enabled")
             {
-                CHECK_FALSE(getenv(scaleEnvirontmentVariableName));
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
             }
         }
     }
@@ -171,9 +171,9 @@ SCENARIO("Scale factor calculation on windows platforms")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is set with maximum factor ratio allowed")
+            THEN("Scale factor environment variable is not set because highDpi is enabled")
             {
-                CHECK_FALSE(getenv(scaleEnvirontmentVariableName));
+                CHECK_FALSE(getenv(scaleEnvironmentVariableName));
             }
         }
     }
@@ -181,7 +181,7 @@ SCENARIO("Scale factor calculation on windows platforms")
 
 SCENARIO("Retrieve loggin after calculations")
 {
-    unsetEnvirontmentVariables();
+    unsetEnvironmentVariables();
 
     GIVEN("A two screen setup")
     {
@@ -204,7 +204,7 @@ SCENARIO("Retrieve loggin after calculations")
         }
     }
 
-    GIVEN("A two screen setup with QT_AUTO_SCREEN_SCALE_FACTOR environtment set")
+    GIVEN("A two screen setup with QT_AUTO_SCREEN_SCALE_FACTOR environment set")
     {
         setenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1", true);
         ScaleFactorManager scaleFactorManager(OsType::LINUX, {{"screenName1", 1920, 1080, 96, 1.}, {"screenName2", 3840, 2160, 96, 1.}}, "Ubuntu20", "plasma");
@@ -227,12 +227,12 @@ SCENARIO("Retrieve loggin after calculations")
     }
 }
 
-SCENARIO("Environtment variables already set before execution")
+SCENARIO("Environment variables already set before execution")
 {
-    unsetEnvirontmentVariables();
+    unsetEnvironmentVariables();
     ScaleFactorManager scaleFactorManager(OsType::LINUX, {{"screenName1", 1920, 1080, 192, 1.}, {"screenName2", 3840, 2160, 192, 1.}}, "Ubuntu20", "plasma");
 
-    GIVEN("QT_SCALE_FACTOR environtment variable already set")
+    GIVEN("QT_SCALE_FACTOR Environment variable already set")
     {
         setenv("QT_SCALE_FACTOR", "1.27", true);
 
@@ -240,9 +240,9 @@ SCENARIO("Environtment variables already set before execution")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is left with the value already set")
+            THEN("Environment variable is left with the value already set")
             {
-                CHECK(getenv(scaleEnvirontmentVariableName) == std::string("1.27"));
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("1.27"));
 
                 AND_THEN("Logs can be retrieved")
                 {
@@ -258,7 +258,7 @@ SCENARIO("Environtment variables already set before execution")
         }
     }
 
-    GIVEN("QT_SCREEN_SCALE_FACTORS environtment variable already set")
+    GIVEN("QT_SCREEN_SCALE_FACTORS environment variable already set")
     {
         const auto variableValue{"screenName1=1.22;screenName2=1.21"};
         setenv("QT_SCREEN_SCALE_FACTORS", variableValue, true);
@@ -267,7 +267,7 @@ SCENARIO("Environtment variables already set before execution")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("Environtment variable is left with the value already set")
+            THEN("Environment variable is left with the value already set")
             {
                 CHECK(getenv("QT_SCREEN_SCALE_FACTORS") == std::string(variableValue));
                 CHECK_FALSE(getenv("QT_SCALE_FACTOR"));
@@ -287,7 +287,7 @@ SCENARIO("Environtment variables already set before execution")
         }
     }
 
-    GIVEN("QT_SCREEN_SCALE_FACTORS environtment variable already set but screen names does not match")
+    GIVEN("QT_SCREEN_SCALE_FACTORS environment variable already set but screen names does not match")
     {
         const auto variableValue{"wrong_screen_name=1.22;screenName2=1.21"};
         setenv("QT_SCREEN_SCALE_FACTORS", variableValue, true);
@@ -296,7 +296,7 @@ SCENARIO("Environtment variables already set before execution")
         {
             scaleFactorManager.setScaleFactorEnvironmentVariable();
 
-            THEN("QT_SCALE_FACTOR environtment variable is set with the calculated scale")
+            THEN("QT_SCALE_FACTOR environment variable is set with the calculated scale")
             {
                 AND_THEN("Logs can be retrieved")
                 {

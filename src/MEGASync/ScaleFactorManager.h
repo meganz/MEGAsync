@@ -37,7 +37,7 @@ private:
     std::vector<double> mCalculatedScales;
     std::string mDesktopName;
 
-    bool checkEnvirontmentVariables() const;
+    bool checkEnvironmentVariables() const;
     bool computeScales();
     double computeScaleLinux(const ScreenInfo& screenInfo) const;
 };

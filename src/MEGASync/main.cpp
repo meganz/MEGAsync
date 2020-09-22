@@ -23,7 +23,7 @@
 #include <Shellapi.h>
 #endif
 
-#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
+#if defined(WIN32) || defined(Q_OS_LINUX)
 #include <QScreen>
 #endif
 
@@ -289,7 +289,6 @@ int main(int argc, char *argv[])
     QSslSocket::supportsSsl();
 
 #ifndef Q_OS_MACX
-#if QT_VERSION >= 0x050600
    const auto autoScreenScaleFactor{getenv("QT_AUTO_SCREEN_SCALE_FACTOR")};
    const auto autoScreenScaleFactorDisabled{autoScreenScaleFactor && autoScreenScaleFactor == std::string("0")};
    if(autoScreenScaleFactorDisabled)
@@ -301,7 +300,6 @@ int main(int argc, char *argv[])
        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
        QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
    }
-#endif
 #endif
 
 #ifdef Q_OS_MACX
@@ -318,7 +316,7 @@ int main(int argc, char *argv[])
 
 #endif
 
-#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
+#if defined(Q_OS_LINUX)
     if (!(getenv("DO_NOT_SET_QT_PLUGIN_PATH")))
     {
         if (QDir(QString::fromUtf8("/opt/mega/plugins")).exists())
@@ -349,11 +347,11 @@ int main(int argc, char *argv[])
 #endif
 
 #ifndef Q_OS_MACX
-#if ( defined(WIN32) && QT_VERSION >= 0x050000 )
+#if defined(WIN32)
     ScaleFactorManager scaleFactorManager(OsType::WIN);
 #endif
 
-#if (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
+#if defined(Q_OS_LINUX)
     ScaleFactorManager scaleFactorManager(OsType::LINUX);
 #endif
 
@@ -361,7 +359,7 @@ int main(int argc, char *argv[])
         scaleFactorManager.setScaleFactorEnvironmentVariable();
     } catch (const std::exception& exception)
     {
-        const auto errorMessage{QString::fromStdString("Error while setting scale factor environtment variable: "+
+        const auto errorMessage{QString::fromStdString("Error while setting scale factor environment variable: "+
                     std::string(exception.what()))};
         logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, errorMessage);
     }

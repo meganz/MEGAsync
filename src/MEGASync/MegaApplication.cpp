@@ -8,9 +8,7 @@
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
-#include "qtlockedfile/qtlockedfile.h"
 #include "OverQuotaDialog.h"
-#include "ScaleFactorManager.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -40,10 +38,6 @@
 #include <Psapi.h>
 #include <Strsafe.h>
 #include <Shellapi.h>
-#endif
-
-#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
-#include <QScreen>
 #endif
 
 using namespace mega;

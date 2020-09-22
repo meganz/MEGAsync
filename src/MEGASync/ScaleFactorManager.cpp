@@ -132,7 +132,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
         throw std::runtime_error("No screens found");
     }
 
-    if(!checkEnvirontmentVariables())
+    if(!checkEnvironmentVariables())
     {
         const auto needsRescaling{computeScales()};
         if(needsRescaling)
@@ -162,7 +162,7 @@ std::vector<std::string> ScaleFactorManager::getLogMessages() const
     return mLogMessages;
 }
 
-bool ScaleFactorManager::checkEnvirontmentVariables() const
+bool ScaleFactorManager::checkEnvironmentVariables() const
 {
     if (getenv("QT_SCALE_FACTOR"))
     {
