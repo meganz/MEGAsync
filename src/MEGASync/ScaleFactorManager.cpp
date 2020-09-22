@@ -5,19 +5,109 @@
 #include <QProcess>
 #include <QScreen>
 
+double getDpiOnLinux()
+{
+    //the best cross platform solution found (caveat: screen agnostic)
+    QProcess p;
+    p.start(QString::fromUtf8("bash -c \"xrdb -query | grep dpi | awk '{print $2}'\""));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        qDebug() << "Error for \"xrdb -query\" command:" << e;
+    }
+
+    return qRound(output.toDouble());
+}
+
+double getWindowScalingFactorOnXcfe()
+{
+    // when zoom is set on Xcfe on Ubuntu 20 the only way to check the value is to query xfconf-query
+    // querying xrdb would give 96.0 even when zoom is configured
+    auto windowScalingFactor{1.0};
+    QProcess p;
+    p.start(QString::fromUtf8("bash -c \"xfconf-query -c xsettings -p /Gdk/WindowScalingFactor\""));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    const auto outputCorrect{e.isEmpty() && output.size() == 1};
+    if (outputCorrect)
+    {
+        bool conversionOk;
+        const auto scalingFactor{output.toDouble(&conversionOk)};
+        if(conversionOk)
+        {
+            windowScalingFactor = scalingFactor;
+        }
+    }
+    return windowScalingFactor;
+}
+
+ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
+{
+    auto linuxDpi{0.};
+    if(osType == OsType::LINUX)
+    {
+        linuxDpi = getDpiOnLinux();
+
+        if(desktopName == "XFCE")
+        {
+            linuxDpi *= getWindowScalingFactorOnXcfe();
+        }
+    }
+
+    int argc = 0;
+    QGuiApplication app{argc, nullptr};
+    const auto screens{app.screens()};
+    ScreensInfo screensInfo;
+    for (const auto& screen : screens)
+    {
+        ScreenInfo screenInfo;
+        screenInfo.name = screen->name().toStdString();
+        screenInfo.availableWidthPixels = screen->availableGeometry().width();
+        screenInfo.availableHeightPixels = screen->availableGeometry().height();
+        screenInfo.devicePixelRatio = screen->devicePixelRatio();
+
+        const auto isLinuxAndDpiCalculationIsCorrect{osType==OsType::LINUX && linuxDpi > 0};
+        screenInfo.dotsPerInch = isLinuxAndDpiCalculationIsCorrect ? linuxDpi : screen->logicalDotsPerInch();
+
+        screensInfo.push_back(screenInfo);
+    }
+    return screensInfo;
+}
+
+std::string getDesktopName()
+{
+    std::string desktopName;
+    const auto xdgCurrentDesktop{getenv("XDG_CURRENT_DESKTOP")};
+    if (xdgCurrentDesktop)
+    {
+        desktopName = xdgCurrentDesktop;
+    }
+    return desktopName;
+}
+
 ScaleFactorManager::ScaleFactorManager(OsType osType)
-    :ScaleFactorManager{osType, createScreensInfo(), QSysInfo::prettyProductName().toStdString()}
+    :ScaleFactorManager{osType, createScreensInfo(osType, getDesktopName()), QSysInfo::prettyProductName().toStdString(), getDesktopName()}
 {
 }
 
-ScaleFactorManager::ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName)
-    :mOsType{osType}, mScreensInfo{screensInfo}
+ScaleFactorManager::ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName, std::string desktopName)
+    :mOsType{osType}, mScreensInfo{screensInfo}, mDesktopName{desktopName}
 {
-    logMessages.emplace_back(osName);
+    if(mDesktopName.empty())
+    {
+        mLogMessages.emplace_back(osName);
+    }
+    else
+    {
+        mLogMessages.emplace_back(osName + " (" + mDesktopName + ")");
+    }
 
     for(const auto& screenInfo : mScreensInfo)
     {
-        logMessages.emplace_back("Screen detected: "+screenInfo.toString());
+        mLogMessages.emplace_back("Screen detected: "+screenInfo.toString());
     }
 }
 
@@ -49,27 +139,27 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
         {
             if(mScreensInfo.size() > 1)
             {
-                const auto screenScaleFactorVariable{createScreenScaleFactorsVariable(calculatedScales)};
+                const auto screenScaleFactorVariable{createScreenScaleFactorsVariable(mCalculatedScales)};
                 qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.c_str());
-                logMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to "+screenScaleFactorVariable);
+                mLogMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to "+screenScaleFactorVariable);
             }
             else
             {
-                const auto scaleString{QString::number(calculatedScales.front()).toAscii()};
+                const auto scaleString{QString::number(mCalculatedScales.front()).toAscii()};
                 qputenv("QT_SCALE_FACTOR", scaleString);
-                logMessages.emplace_back("QT_SCALE_FACTOR set to "+scaleString);
+                mLogMessages.emplace_back("QT_SCALE_FACTOR set to "+scaleString);
             }
         }
         else
         {
-            logMessages.emplace_back("Scaling not needed.");
+            mLogMessages.emplace_back("Scaling not needed.");
         }
     }
 }
 
 std::vector<std::string> ScaleFactorManager::getLogMessages() const
 {
-    return logMessages;
+    return mLogMessages;
 }
 
 bool ScaleFactorManager::checkEnvirontmentVariables() const
@@ -77,7 +167,7 @@ bool ScaleFactorManager::checkEnvirontmentVariables() const
     if (getenv("QT_SCALE_FACTOR"))
     {
         qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR=" << getenv("QT_SCALE_FACTOR");
-        logMessages.emplace_back("Scale factor not calculated because QT_SCALE_FACTOR is already set to: "+
+        mLogMessages.emplace_back("Scale factor not calculated because QT_SCALE_FACTOR is already set to: "+
                                  std::string(getenv("QT_SCALE_FACTOR")));
         return true;
     }
@@ -95,7 +185,7 @@ bool ScaleFactorManager::checkEnvirontmentVariables() const
             {
                 screenScaleFactorsValid = false;
                 qDebug() << "Screen name " << QString::fromStdString(screenInfo.name) << " not found in predefined QT_SCREEN_SCALE_FACTORS: " << getenv("QT_SCREEN_SCALE_FACTORS");
-                logMessages.emplace_back("Screen name " + screenInfo.name + " not found in predefined QT_SCREEN_SCALE_FACTORS: " +
+                mLogMessages.emplace_back("Screen name " + screenInfo.name + " not found in predefined QT_SCREEN_SCALE_FACTORS: " +
                                std::string(getenv("QT_SCREEN_SCALE_FACTORS")));
                 break;
             }
@@ -104,7 +194,7 @@ bool ScaleFactorManager::checkEnvirontmentVariables() const
         if (screenScaleFactorsValid)
         {
             qDebug() << "Not setting scale factors. Using predefined QT_SCREEN_SCALE_FACTORS=" << getenv("QT_SCREEN_SCALE_FACTORS");
-            logMessages.emplace_back("Scale factor not calculated because QT_SCREEN_SCALE_FACTORS is already set to: "+
+            mLogMessages.emplace_back("Scale factor not calculated because QT_SCREEN_SCALE_FACTORS is already set to: "+
                                      std::string(getenv("QT_SCREEN_SCALE_FACTORS")));
             return true;
         }
@@ -136,7 +226,7 @@ bool ScaleFactorManager::computeScales()
     for(auto& screenInfo : mScreensInfo)
     {
         auto scale = 1.;
-        if(mOsType==OsType::LINUX)
+        if(mOsType == OsType::LINUX)
         {
             scale = computeScaleLinux(screenInfo);
         }
@@ -147,7 +237,7 @@ bool ScaleFactorManager::computeScales()
         {
             needsRescaling = true;
         }
-        calculatedScales.push_back(scale);
+        mCalculatedScales.push_back(scale);
     }
     return needsRescaling;
 }
@@ -177,48 +267,4 @@ double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
         scale = std::max(scale, 1.0); // avoid problematic scales lower than 1.0 when no hdpi enabled
     }
     return scale;
-}
-
-double ScaleFactorManager::getDpiOnLinux() const
-{
-    //the best cross platform solution found (caveat: screen agnostic)
-    QProcess p;
-    p.start(QString::fromUtf8("bash -c \"xrdb -query | grep dpi | awk '{print $2}'\""));
-    p.waitForFinished(2000);
-    QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
-    QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    if (e.size())
-    {
-        qDebug() << "Error for \"xrdb -query\" command:" << e;
-    }
-
-    return qRound(output.toDouble());
-}
-
-ScreensInfo ScaleFactorManager::createScreensInfo()
-{
-    auto linuxDpi{0.};
-    if(mOsType==OsType::LINUX)
-    {
-        linuxDpi = getDpiOnLinux();
-    }
-
-    int argc = 0;
-    QGuiApplication app{argc, nullptr};
-    const auto screens{app.screens()};
-    ScreensInfo screensInfo;
-    for (const auto& screen : screens)
-    {
-        ScreenInfo screenInfo;
-        screenInfo.name = screen->name().toStdString();
-        screenInfo.availableWidthPixels = screen->availableGeometry().width();
-        screenInfo.availableHeightPixels = screen->availableGeometry().height();
-        screenInfo.devicePixelRatio = screen->devicePixelRatio();
-
-        const auto isLinuxAndDpiCalculationIsCorrect{mOsType==OsType::LINUX && linuxDpi > 0};
-        screenInfo.dotsPerInch = isLinuxAndDpiCalculationIsCorrect ? linuxDpi : screen->logicalDotsPerInch();
-
-        screensInfo.push_back(screenInfo);
-    }
-    return screensInfo;
 }

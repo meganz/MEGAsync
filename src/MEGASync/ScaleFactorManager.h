@@ -26,19 +26,18 @@ class ScaleFactorManager
 {
 public:
     ScaleFactorManager(OsType osType);
-    ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName);
+    ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName, std::string desktopName);
     void setScaleFactorEnvironmentVariable();
     std::vector<std::string> getLogMessages() const;
 
 private:
     OsType mOsType;
     ScreensInfo mScreensInfo;
-    mutable std::vector<std::string> logMessages;
-    std::vector<double> calculatedScales;
+    mutable std::vector<std::string> mLogMessages;
+    std::vector<double> mCalculatedScales;
+    std::string mDesktopName;
 
     bool checkEnvirontmentVariables() const;
     bool computeScales();
     double computeScaleLinux(const ScreenInfo& screenInfo) const;
-    double getDpiOnLinux() const;
-    ScreensInfo createScreensInfo();
 };
