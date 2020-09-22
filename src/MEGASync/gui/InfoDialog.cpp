@@ -544,7 +544,7 @@ void InfoDialog::updateTransfersCount()
             if (remainingDownloads <= 0)
             {
                 ui->bTransferManager->setCompletedDownloads(0);
-                ui->bTransferManager->setTotalDownloads(0);                
+                ui->bTransferManager->setTotalDownloads(0);
             }
 
             remainingDownloadsTimerRunning = false;
