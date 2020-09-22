@@ -557,7 +557,7 @@ void InfoDialog::updateTransfersCount()
             if (remainingUploads <= 0)
             {
                 ui->bTransferManager->setCompletedUploads(0);
-                ui->bTransferManager->setTotalUploads(0);                
+                ui->bTransferManager->setTotalUploads(0);
             }
 
             remainingUploadsTimerRunning = false;
