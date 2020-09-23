@@ -545,8 +545,9 @@ void InfoDialog::updateTransfersCount()
             {
                 ui->bTransferManager->setCompletedDownloads(0);
                 ui->bTransferManager->setTotalDownloads(0);
-                remainingDownloadsTimerRunning = false;
             }
+
+            remainingDownloadsTimerRunning = false;
         });
     }
     if (remainingUploads <= 0 && !remainingUploadsTimerRunning)
@@ -557,8 +558,9 @@ void InfoDialog::updateTransfersCount()
             {
                 ui->bTransferManager->setCompletedUploads(0);
                 ui->bTransferManager->setTotalUploads(0);
-                remainingUploadsTimerRunning = false;
             }
+
+            remainingUploadsTimerRunning = false;
         });
     }
 
