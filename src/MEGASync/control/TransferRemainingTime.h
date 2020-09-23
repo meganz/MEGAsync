@@ -3,7 +3,7 @@
 #include <chrono>
 
 /// Responsability: calculates remaining time in seconds after adding the speed in bytes seconds and the remaining
-/// time left. In order to filter the results it uses a buffer that is filled with a few samples (10 samples buffer size)
+/// bytes left. In order to filter the results it uses a buffer that is filled with a few samples (10 samples buffer size)
 /// and when the buffer is filled calculates the median of the values on the buffer. First time until the buffer is filled
 /// returns zero. After calculating the median and until the buffer is filled again it returns the last calculated value.
 
