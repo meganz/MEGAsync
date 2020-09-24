@@ -141,7 +141,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
             {
                 if(mOsName == "Deepin 20")
                 {
-                    const auto minCalculatedScale{*std::min(mCalculatedScales.begin(), mCalculatedScales.end())};
+                    const auto minCalculatedScale{*std::min_element(mCalculatedScales.begin(), mCalculatedScales.end())};
                     const auto minCalculatedScaleString{QString::number(minCalculatedScale).toAscii()};
                     qputenv("QT_SCALE_FACTOR", minCalculatedScaleString);
                     mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + minCalculatedScaleString);
