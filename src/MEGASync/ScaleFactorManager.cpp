@@ -274,7 +274,7 @@ double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
         scale = std::min(screenInfo.availableWidthPixels / baseWidthPixels,
                          screenInfo.availableHeightPixels / baseHeightPixels) * correctionFactor;
         scale = std::max(scale, 1.0); // avoid problematic scales lower than 1.0 when no hdpi enabled
-        scale = std::min(scale, 3.0); // avoid too big scales
     }
+    scale = std::min(scale, 3.0); // avoid too big scales
     return scale;
 }
