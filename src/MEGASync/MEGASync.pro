@@ -125,10 +125,12 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 }
 
 SOURCES += $$PWD/MegaApplication.cpp \
-    $$PWD/TransferQuota.cpp
+    $$PWD/TransferQuota.cpp \
+    $$PWD/ScaleFactorManager.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
-    $$PWD/TransferQuota.h
+    $$PWD/TransferQuota.h \
+    $$PWD/ScaleFactorManager.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \

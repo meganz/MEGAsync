@@ -184,6 +184,7 @@ endif()
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
     ${MEGAsyncDir}/TransferQuota.h
+    ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -325,12 +326,12 @@ endif()
 
 set (SRCS
     ${MEGAsyncDir}/MegaApplication.cpp
+    ${MEGAsyncDir}/TransferQuota.cpp
+    ${MEGAsyncDir}/ScaleFactorManager.cpp
 
     ${FORMS}
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
-
-    ${MEGAsyncDir}/TransferQuota.cpp
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
@@ -732,6 +733,7 @@ set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
     ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
+    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
     ${MEGASyncUnitTestsDir}/main.cpp
     )
 add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
