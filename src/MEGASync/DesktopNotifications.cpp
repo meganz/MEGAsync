@@ -159,7 +159,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
         const auto tooManyAlertsUnseen{unseenAlertsCount > maxNumberOfUnseenNotifications};
         if(tooManyAlertsUnseen)
         {
-            notifyTooManyUnseenAlerts(unseenAlertsCount);
+            notifyUnreadNotifications();
             return;
         }
     }
@@ -357,11 +357,10 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     mNotificator->notify(notification);
 }
 
-void DesktopNotifications::notifyTooManyUnseenAlerts(int unseenAlertCount) const
+void DesktopNotifications::notifyUnreadNotifications() const
 {
     auto notification{new MegaNotification()};
-    notification->setTitle(tr("Notifications"));
-    notification->setText(tr("You have [A] unseen notifications").replace(QStringLiteral("[A]"), QString::number(unseenAlertCount)));
+    notification->setTitle(tr("You have unread notifications"));
     notification->setImage(mAppIcon);
     notification->setActions(QStringList() << tr("View"));
     QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewOnInfoDialogNotifications);

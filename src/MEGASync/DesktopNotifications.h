@@ -38,7 +38,7 @@ public slots:
 private:
     void notifyTakeDownReinstated(mega::MegaUserAlert* alert) const;
     void notifySharedUpdate(mega::MegaUserAlert* alert, const QString& message, bool isNewShare = false) const;
-    void notifyTooManyUnseenAlerts(int unseenAlertCount) const;
+    void notifyUnreadNotifications() const;
 
     Notificator* mNotificator;
     QIcon mAppIcon;
