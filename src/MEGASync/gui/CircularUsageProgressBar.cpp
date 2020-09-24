@@ -173,7 +173,7 @@ void CircularUsageProgressBar::setValue(int value)
         value = CircularUsageProgressBar::MINVALUE;
     }
 
-    if (progressBarValue != value)
+    if (progressBarValue != value || totalValueUnkown)
     {
         totalValueUnkown = false;
         textValue = tr("[A]%").replace(QStringLiteral("[A]"), QString::number(value));

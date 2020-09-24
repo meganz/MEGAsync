@@ -104,6 +104,8 @@ void UpdateTask::tryUpdate()
     if (getenv("MEGA_UPDATE_CHECK_URL"))
     {
         updateURL = QString::fromUtf8(getenv("MEGA_UPDATE_CHECK_URL"));
+
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Using environment variable MEGA_UPDATE_CHECK_URL to fetch update file");
     }
 
     downloadFile(updateURL + randomSequence);
@@ -229,6 +231,12 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
 
     updateVersion = version.toInt();
     int currentVersion = QApplication::applicationVersion().toInt();
+    if (getenv("MEGA_UPDATE_CHECK_VERSION"))
+    {
+        currentVersion = std::atoi(getenv("MEGA_UPDATE_CHECK_VERSION"));
+
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING,"Comparing version against environment variable MEGA_UPDATE_CHECK_VERSION");
+    }
     if (updateVersion <= currentVersion)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO,

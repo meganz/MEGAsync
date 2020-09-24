@@ -17,7 +17,7 @@ win32 {
                 $$PWD/win/WintoastCompat.h
 
     LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd
-    DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
+    DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x06010000 _WIN32_WINNT=0x0601
 }
 
 unix:!macx {
@@ -26,12 +26,12 @@ unix:!macx {
 	PREFIX = $$THE_RPM_BUILD_ROOT/usr
 	}
 	DATADIR =$$PREFIX/share
-	
+
 	distro.target = $$PWD/linux/data/distro
     distro.path = $$DATADIR/doc/megasync
     system(command -v lsb_release): distro.commands = lsb_release -ds > $$distro.target
     distro.files = $$distro.target
-    
+
     version.target = $$PWD/linux/data/version
 	version.path = $$DATADIR/doc/megasync
     system(command -v lsb_release): version.commands = lsb_release -rs > $$version.target
