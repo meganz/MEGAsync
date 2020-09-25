@@ -399,6 +399,15 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
+
+void chopFirstCharacterIfZero(QString& string)
+{
+    if(!string.isEmpty() && string.at(0) == QLatin1Char('0'))
+    {
+        string.replace(0, 1, QLatin1Char(' '));
+    }
+}
+
 QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     int seconds = (int) secs % 60;
@@ -424,6 +433,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (items == 2)
     {
         time = time.trimmed();
+        chopFirstCharacterIfZero(time);
         return time;
     }
 
@@ -436,6 +446,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (items == 2)
     {
         time = time.trimmed();
+        chopFirstCharacterIfZero(time);
         return time;
     }
 
@@ -444,6 +455,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
         time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds, 2, 10, QLatin1Char('0')));
     }
     time = time.trimmed();
+    chopFirstCharacterIfZero(time);
     return time;
 }
 
