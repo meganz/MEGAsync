@@ -466,7 +466,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
         {
             remainingTimeString = undeterminedRemainingTimeString;
         }
-        else if(td->remainingTimeSeconds.count())
+        else if (td->remainingTimeSeconds.count())
         {
             remainingTimeString = Utilities::getTimeString(td->remainingTimeSeconds.count());
         }
@@ -514,25 +514,25 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
     ui->lRemainingDownloads->setText(QString::fromUtf8("%1").arg(totalDownloads));
 
     const auto totalDownloadsChangeFromOne{previousTotalDownloads == 1 && totalDownloads != 1};
-    if(totalDownloadsChangeFromOne)
+    if (totalDownloadsChangeFromOne)
     {
         ui->lDescRemainingDown->setText(tr("Remaining Downloads"));
     }
 
     const auto totalDownloadsChangeToOne{previousTotalDownloads != 1 && totalDownloads == 1};
-    if(totalDownloadsChangeToOne)
+    if (totalDownloadsChangeToOne)
     {
         ui->lDescRemainingDown->setText(tr("Remaining Download"));
     }
 
     const auto totalUploadsChangeFromOne{previousTotalUploads == 1 && totalUploads != 1};
-    if(totalUploadsChangeFromOne)
+    if (totalUploadsChangeFromOne)
     {
         ui->lDescRemainingUp->setText(tr("Remaining Uploads"));
     }
 
     const auto totalUploadsChangeToOne{previousTotalUploads != 1 && totalUploads == 1};
-    if(totalUploadsChangeToOne)
+    if (totalUploadsChangeToOne)
     {
         ui->lDescRemainingUp->setText(tr("Remaining Upload"));
     }
@@ -610,7 +610,7 @@ void ActiveTransfersWidget::updateAnimation(TransferData *td)
             break;
 
         default:
-            if(td->type == MegaTransfer::TYPE_UPLOAD)
+            if (td->type == MegaTransfer::TYPE_UPLOAD)
             {
                 if (animationUp->state() != QMovie::NotRunning)
                 {
