@@ -46,6 +46,11 @@ double getWindowScalingFactorOnXcfe()
 
 ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
 {
+    if(QSysInfo::prettyProductName().toStdString() == "Deepin 20")
+    {
+        return {};
+    }
+
     auto linuxDpi{0.};
     if(osType == OsType::LINUX)
     {
@@ -127,13 +132,20 @@ std::string createScreenScaleFactorsVariable(std::vector<double> calculatedScale
 
 void ScaleFactorManager::setScaleFactorEnvironmentVariable()
 {
-    if(mScreensInfo.empty())
+    if(mScreensInfo.empty() && mOsName != "Deepin 20")
     {
         throw std::runtime_error("No screens found");
     }
 
     if(!checkEnvironmentVariables())
     {
+        if(mOsName == "Deepin 20")
+        {
+            const auto scale{getDpiOnLinux() / 96.0};
+            qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
+            return;
+        }
+
         const auto needsRescaling{computeScales()};
         if(needsRescaling)
         {
