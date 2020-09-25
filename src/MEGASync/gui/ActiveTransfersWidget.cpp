@@ -479,6 +479,10 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
         {
             remainingTimeString = Utilities::getTimeString(td->remainingTimeSeconds.count());
         }
+        else
+        {
+            remainingTimeString = QString::fromUtf8("");
+        }
         break;
     }
     case MegaTransfer::STATE_PAUSED:
@@ -487,6 +491,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
         break;
     }
     default:
+        remainingTimeString = QString::fromUtf8("");
         break;
     }
 
