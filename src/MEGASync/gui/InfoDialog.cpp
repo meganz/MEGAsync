@@ -129,7 +129,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #endif
 
 #ifdef _WIN32
-    if(getenv("QT_SCREEN_SCALE_FACTORS"))
+    if(getenv("QT_SCREEN_SCALE_FACTORS") || getenv("QT_SCALE_FACTOR"))
     {
         //do not use WA_TranslucentBackground when using custom scale factors in windows
         setStyleSheet(styleSheet().append(QString::fromUtf8("#wInfoDialogIn{border-radius: 0px;}" ) ));
@@ -545,8 +545,9 @@ void InfoDialog::updateTransfersCount()
             {
                 ui->bTransferManager->setCompletedDownloads(0);
                 ui->bTransferManager->setTotalDownloads(0);
-                remainingDownloadsTimerRunning = false;
             }
+
+            remainingDownloadsTimerRunning = false;
         });
     }
     if (remainingUploads <= 0 && !remainingUploadsTimerRunning)
@@ -557,8 +558,9 @@ void InfoDialog::updateTransfersCount()
             {
                 ui->bTransferManager->setCompletedUploads(0);
                 ui->bTransferManager->setTotalUploads(0);
-                remainingUploadsTimerRunning = false;
             }
+
+            remainingUploadsTimerRunning = false;
         });
     }
 

@@ -24,7 +24,7 @@ GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
     ui->setupUi(this);
 
 #ifdef _WIN32
-    if(getenv("QT_SCREEN_SCALE_FACTORS"))
+    if(getenv("QT_SCREEN_SCALE_FACTORS") || getenv("QT_SCALE_FACTOR"))
     {
         //do not use WA_TranslucentBackground when using custom scale factors in windows
         setStyleSheet(styleSheet().append(QString::fromUtf8("#wGuestWidgetIn{border-radius: 0px;}" ) ));

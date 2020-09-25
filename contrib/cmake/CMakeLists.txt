@@ -184,6 +184,7 @@ endif()
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
     ${MEGAsyncDir}/TransferQuota.h
+    ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -326,12 +327,12 @@ endif()
 
 set (SRCS
     ${MEGAsyncDir}/MegaApplication.cpp
+    ${MEGAsyncDir}/TransferQuota.cpp
+    ${MEGAsyncDir}/ScaleFactorManager.cpp
 
     ${FORMS}
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
-
-    ${MEGAsyncDir}/TransferQuota.cpp
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
@@ -735,6 +736,7 @@ set(UNIT_TEST_FILES
     ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
     ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
+    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
     ${MEGASyncUnitTestsDir}/main.cpp
     )
 add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
@@ -744,6 +746,7 @@ target_link_libraries(MEGASync_unit_tests
     trompeloeil
     Mega
     ${MEGA_QT_LINK_LIBRARIES}
+    ${TARGET_LINK_LIBRARIES_PLATFORM}
     )
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )

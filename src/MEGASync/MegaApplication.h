@@ -415,9 +415,6 @@ protected:
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
-#ifdef _WIN32
-    QMap<QString, double> lastCheckedScreens;
-#endif
     Preferences *preferences;
     Model *model;
     Controller *controller;

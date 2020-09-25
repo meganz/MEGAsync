@@ -8,7 +8,6 @@
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
-#include "qtlockedfile/qtlockedfile.h"
 #include "OverQuotaDialog.h"
 
 #include <QTranslator>
@@ -39,10 +38,6 @@
 #include <Psapi.h>
 #include <Strsafe.h>
 #include <Shellapi.h>
-#endif
-
-#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
-#include <QScreen>
 #endif
 
 using namespace mega;
@@ -85,12 +80,6 @@ void MegaApplication::loadDataPath()
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
-#ifdef _WIN32
-    for (QScreen *s: this->screens() )
-    {
-        lastCheckedScreens.insert(s->name(), s->devicePixelRatio());
-    }
-#endif
     appfinished = false;
 
     bool logToStdout = false;
@@ -692,7 +681,11 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::setTrayIconFromTheme(QString icon)
 {
     QString name = QString(icon).replace(QString::fromAscii("://images/"), QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
-    trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
+    const auto needsToBeUpdated{name != trayIcon->icon().name()};
+    if(needsToBeUpdated)
+    {
+        trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
+    }
 }
 #endif
 
