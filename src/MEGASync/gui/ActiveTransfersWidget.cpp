@@ -149,6 +149,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 
         activeDownload.transferState = transfer->getState();
         activeDownload.priority = priority;
+        activeDownload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeDownload, transfer->getSpeed());
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
         activeDownload.updateRemainingTimeSeconds();
@@ -181,6 +182,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 
         activeUpload.transferState = transfer->getState();
         activeUpload.priority = priority;
+        activeUpload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());
         activeUpload.updateRemainingTimeSeconds();
@@ -462,9 +464,16 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
     {
     case MegaTransfer::STATE_ACTIVE:
     {
-        if (td->remainingTimeSeconds.count() && td->remainingTimeSeconds == std::chrono::seconds::max())
+        const auto infiniteRemainingTime{td->remainingTimeSeconds.count() && td->remainingTimeSeconds == std::chrono::seconds::max()};
+        const auto lowerThanMinute{td->remainingTimeSeconds.count() && td->remainingTimeSeconds < std::chrono::minutes{1}};
+        if (infiniteRemainingTime)
         {
             remainingTimeString = undeterminedRemainingTimeString;
+        }
+        else if(lowerThanMinute)
+        {
+            const auto lowerThanMinuteTimeString{QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"))};
+            remainingTimeString = lowerThanMinuteTimeString;
         }
         else if (td->remainingTimeSeconds.count())
         {

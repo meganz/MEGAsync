@@ -301,7 +301,8 @@ void CustomTransferItem::updateTransfer()
             const auto totalRemainingSeconds{mTransferRemainingTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
-            if (totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max())
+            const auto printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
+            if (printableValue)
             {
                 remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
                 ui->bClockDown->setVisible(true);

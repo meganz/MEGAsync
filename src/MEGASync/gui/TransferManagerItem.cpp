@@ -187,7 +187,8 @@ void TransferManagerItem::updateTransfer()
             const auto totalRemainingSeconds{mTransferRemainigTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
-            if (totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max())
+            const auto printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
+            if (printableValue)
             {
                 remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
             }

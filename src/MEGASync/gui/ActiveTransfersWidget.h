@@ -17,6 +17,7 @@ struct TransferData
     int tag;
     int type;
     long long transferSpeed;
+    long long meanTransferSpeed;
     std::chrono::seconds remainingTimeSeconds;
     long long totalSize;
     long long totalTransferredBytes;
@@ -24,7 +25,6 @@ struct TransferData
 
     TransferData();
     void clear();
-    void setMeanTransferSpeed();
     void updateRemainingTimeSeconds();
 
 private:
@@ -78,7 +78,6 @@ private:
     void updateAnimation(TransferData *td);
 
     void changeEvent(QEvent *event);
-    TransferRemainingTime mTransferRemainingTime;
 };
 
 #endif // ACTIVETRANSFERSWIDGET_H
