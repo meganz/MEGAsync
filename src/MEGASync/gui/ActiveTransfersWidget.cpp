@@ -153,7 +153,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         setSpeed(&activeDownload, transfer->getSpeed());
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
         activeDownload.updateRemainingTimeSeconds();
-        udpateTransferState(&activeDownload);
+        updateTransferState(&activeDownload);
     }
     else
     {
@@ -186,7 +186,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());
         activeUpload.updateRemainingTimeSeconds();
-        udpateTransferState(&activeUpload);
+        updateTransferState(&activeUpload);
     }
 }
 
@@ -454,7 +454,7 @@ void ActiveTransfersWidget::setTransferredBytes(TransferData *td, long long tota
     }
 }
 
-void ActiveTransfersWidget::udpateTransferState(TransferData *td)
+void ActiveTransfersWidget::updateTransferState(TransferData *td)
 {
     updateAnimation(td);
     QString remainingTimeString;

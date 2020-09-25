@@ -73,7 +73,7 @@ private:
     void setSpeed(TransferData *td, long long transferSpeed);
     void setTransferredBytes(TransferData *td, long long totalTransferredBytes);
 
-    void udpateTransferState(TransferData *td);
+    void updateTransferState(TransferData *td);
     void updateNumberOfTransfers(mega::MegaApi *api);
     void updateAnimation(TransferData *td);
 
