@@ -388,7 +388,7 @@ void Notificator::onMessageClicked()
 {
     if (currentNotification)
     {
-        currentNotification->emitlLegacyNotificationActivated();
+        currentNotification->emitLegacyNotificationActivated();
         currentNotification = NULL;
     }
 }
@@ -537,7 +537,7 @@ void MegaNotification::setData(const QString &value)
     data = value;
 }
 
-void MegaNotification::emitlLegacyNotificationActivated()
+void MegaNotification::emitLegacyNotificationActivated()
 {
     emit activated(Action::legacy);
 }

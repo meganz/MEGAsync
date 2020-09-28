@@ -65,7 +65,7 @@ public:
     QString getData() const;
     void setData(const QString &value);
 
-    void emitlLegacyNotificationActivated();
+    void emitLegacyNotificationActivated();
 
 protected:
     QString title;
