@@ -360,7 +360,7 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
 void DesktopNotifications::notifyUnreadNotifications() const
 {
     auto notification{new MegaNotification()};
-    notification->setTitle(tr("You have unread notifications"));
+    notification->setText(tr("You have unread notifications"));
     notification->setImage(mAppIcon);
     notification->setActions(QStringList() << tr("View"));
     QObject::connect(notification, &MegaNotification::activated, this, &DesktopNotifications::viewOnInfoDialogNotifications);
