@@ -399,6 +399,15 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
+
+void replaceLeadingZeroCharacterWithSpace(QString& string)
+{
+    if(!string.isEmpty() && string.at(0) == QLatin1Char('0'))
+    {
+        string.replace(0, 1, QLatin1Char(' '));
+    }
+}
+
 QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     int seconds = (int) secs % 60;
@@ -412,38 +421,41 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (days)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days, 2, 10, QLatin1Char('0')));
     }
 
     if (items || hours)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours, 2, 10, QLatin1Char('0')));
     }
 
     if (items == 2)
     {
         time = time.trimmed();
+        replaceLeadingZeroCharacterWithSpace(time);
         return time;
     }
 
     if (items || minutes)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes, 2, 10, QLatin1Char('0')));
     }
 
     if (items == 2)
     {
         time = time.trimmed();
+        replaceLeadingZeroCharacterWithSpace(time);
         return time;
     }
 
     if (secondPrecision)
     {
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds, 2, 10, QLatin1Char('0')));
     }
     time = time.trimmed();
+    replaceLeadingZeroCharacterWithSpace(time);
     return time;
 }
 

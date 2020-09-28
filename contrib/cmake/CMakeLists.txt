@@ -195,6 +195,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
     ${MEGAsyncDir}/control/Preferences.h
+    ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/model/SyncSettings.h
@@ -423,6 +424,7 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaDownloader.cpp
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
+    ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
@@ -732,6 +734,7 @@ target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloei
 set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
     ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
+    ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
     ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
     ${MEGASyncUnitTestsDir}/main.cpp
