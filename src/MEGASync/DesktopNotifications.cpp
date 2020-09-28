@@ -199,9 +199,9 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                     notification->setImage(mAppIcon);
                     notification->setImagePath(mNewContactIconPath);
-                    mNotificator->notify(notification);
-                    break;
+                    mNotificator->notify(notification);   
                 }
+                break;
             }
             case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
             {
@@ -214,8 +214,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                     notification->setImage(mAppIcon);
                     notification->setImagePath(mNewContactIconPath);
                     mNotificator->notify(notification);
-                    break;
                 }
+                break;
             }
             case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
             {
