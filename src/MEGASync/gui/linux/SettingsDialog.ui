@@ -557,6 +557,18 @@ background:transparent;</string>
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>23</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -576,6 +588,18 @@ background:transparent;</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>23</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -592,13 +616,13 @@ background:transparent;</string>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>23</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>16777215</height>
+          <height>23</height>
          </size>
         </property>
         <property name="text">
@@ -636,7 +660,7 @@ background:transparent;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -3293,6 +3317,18 @@ padding-bottom: 3px;</string>
              </property>
              <item>
               <widget class="QLineEdit" name="eUploadFolder">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
+                </size>
+               </property>
                <property name="accessibleName">
                 <string>Uploads:</string>
                </property>
@@ -3315,7 +3351,13 @@ padding-bottom: 3px;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>0</height>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
                 </size>
                </property>
                <property name="text">
@@ -3352,6 +3394,18 @@ padding-bottom: 3px;</string>
              </property>
              <item>
               <widget class="QLineEdit" name="eDownloadFolder">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
+                </size>
+               </property>
                <property name="accessibleName">
                 <string>Downloads:</string>
                </property>
@@ -3374,7 +3428,13 @@ padding-bottom: 3px;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>0</height>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
                 </size>
                </property>
                <property name="text">
@@ -3609,6 +3669,18 @@ background:transparent;</string>
              </property>
              <item>
               <widget class="QPushButton" name="bExcludeSize">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Exclude by size</string>
                </property>
@@ -3648,7 +3720,13 @@ background:transparent;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>0</height>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
                 </size>
                </property>
                <property name="text">
@@ -3670,7 +3748,13 @@ background:transparent;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>0</height>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
                 </size>
                </property>
                <property name="text">
@@ -3813,7 +3897,7 @@ background:transparent;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>0</height>
+                 <height>23</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -3898,10 +3982,16 @@ background:transparent;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>23</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>70</width>
-                 <height>16777215</height>
+                 <height>23</height>
                 </size>
                </property>
                <property name="text">
@@ -3932,6 +4022,18 @@ background:transparent;</string>
           </property>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>23</height>
+             </size>
+            </property>
             <property name="text">
              <string>%1 clearing scheduler</string>
             </property>
@@ -4043,6 +4145,18 @@ background:transparent;</string>
           </item>
           <item>
            <widget class="QPushButton" name="bClearFileVersions">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>23</height>
+             </size>
+            </property>
             <property name="text">
              <string>Clear</string>
             </property>
@@ -4150,7 +4264,13 @@ background:transparent;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>0</height>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>23</height>
              </size>
             </property>
             <property name="text">

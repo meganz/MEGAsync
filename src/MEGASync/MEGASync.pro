@@ -128,13 +128,15 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/DesktopNotifications.cpp \
     $$PWD/RemovedSharesNotificator.cpp \
     $$PWD/TransferQuota.cpp \
-    $$PWD/UserAlertTimedClustering.cpp
+    $$PWD/UserAlertTimedClustering.cpp \
+    $$PWD/ScaleFactorManager.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/DesktopNotifications.h \
     $$PWD/RemovedSharesNotificator.h \
     $$PWD/TransferQuota.h \
-    $$PWD/UserAlertTimedClustering.h
+    $$PWD/UserAlertTimedClustering.h \
+    $$PWD/ScaleFactorManager.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \

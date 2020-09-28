@@ -187,6 +187,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/TransferQuota.h
     ${MEGAsyncDir}/RemovedSharesNotificator.h
     ${MEGAsyncDir}/UserAlertTimedClustering.h
+    ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -197,6 +198,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
     ${MEGAsyncDir}/control/Preferences.h
+    ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/model/SyncSettings.h
@@ -332,6 +334,7 @@ set (SRCS
     ${MEGAsyncDir}/TransferQuota.cpp
     ${MEGAsyncDir}/RemovedSharesNotificator.cpp
     ${MEGAsyncDir}/UserAlertTimedClustering.cpp
+    ${MEGAsyncDir}/ScaleFactorManager.cpp
 
     ${FORMS}
     ${MOC_INPUT}
@@ -427,6 +430,7 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaDownloader.cpp
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
+    ${MEGAsyncDir}/control/TransferRemainingTime.cpp
     ${MEGAsyncDir}/control/MegaController.cpp
 
     ${MEGAsyncDir}/model/SyncSettings.cpp
@@ -736,7 +740,9 @@ target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloei
 set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
     ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
+    ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
+    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
     ${MEGASyncUnitTestsDir}/main.cpp
     )
 add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
@@ -746,6 +752,7 @@ target_link_libraries(MEGASync_unit_tests
     trompeloeil
     Mega
     ${MEGA_QT_LINK_LIBRARIES}
+    ${TARGET_LINK_LIBRARIES_PLATFORM}
     )
 
 target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
