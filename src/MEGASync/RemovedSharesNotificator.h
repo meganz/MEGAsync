@@ -19,7 +19,6 @@ signals:
 
 private:
     using AlertId = unsigned;
-    using TotalRemovedItems = int64_t;
     std::map<AlertId, std::unique_ptr<UserAlertTimedClustering>> mAlertClusters;
     std::map<AlertId, std::chrono::system_clock::time_point> mClusterTimestamps;
 
