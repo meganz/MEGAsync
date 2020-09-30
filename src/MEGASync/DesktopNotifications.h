@@ -41,7 +41,6 @@ private:
     void notifyUnreadNotifications() const;
 
     QString getItemsAddedText(mega::MegaUserAlert* alert);
-    QString getItemsRemovedMessage(mega::MegaUserAlert* alert);
     QString createPaymentReminderText(int64_t expirationTimeStamp);
     QString createDeletedShareMessage(mega::MegaUserAlert* alert);
     QString createTakeDownMessage(mega::MegaUserAlert* alert, bool isReinstated = false) const;
@@ -53,4 +52,5 @@ private:
     QString mFolderIconPath, mFileDownloadSucceedIconPath;
     RemovedSharesNotificator mRemovedSharedNotificator;
     Preferences *mPreferences;
+    bool mIsFirstTime;//Check first time alerts are added to show unified message of unread.
 };

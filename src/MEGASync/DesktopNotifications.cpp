@@ -50,7 +50,8 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
      mStorageQuotaWarningIconPath{getIconsPath() + storageQuotaWarningIconName},
      mFolderIconPath{getIconsPath() + folderIconName},
      mFileDownloadSucceedIconPath{getIconsPath() + fileDownloadSucceedIconName},
-     mPreferences{preferences}
+     mPreferences{preferences},
+     mIsFirstTime{true}
 {
 #ifdef __APPLE__
     mNotificator = new Notificator(appName, NULL, this);
@@ -76,22 +77,6 @@ QString DesktopNotifications::getItemsAddedText(mega::MegaUserAlert* alert)
     else
     {
          return tr("[A] added [B] items")
-                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()))
-                 .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
-    }
-}
-
-QString DesktopNotifications::getItemsRemovedMessage(mega::MegaUserAlert* alert)
-{
-    const auto updatedItems{alert->getNumber(0)};
-    if (updatedItems == 1)
-    {
-        return tr("[A] removed 1 item")
-                .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()));
-    }
-    else
-    {
-         return tr("[A] removed [B] items")
                  .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail()))
                  .replace(QString::fromUtf8("[B]"), QString::number(updatedItems));
     }
@@ -166,11 +151,13 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
     {
         const auto unseenAlertsCount{countUnseenAlerts(alertList)};
         const auto tooManyAlertsUnseen{unseenAlertsCount > maxNumberOfUnseenNotifications};
-        if(tooManyAlertsUnseen)
+        if(tooManyAlertsUnseen || (mIsFirstTime && unseenAlertsCount))
         {
+            mIsFirstTime = false;
             notifyUnreadNotifications();
             return;
         }
+        mIsFirstTime = false;
     }
 
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
