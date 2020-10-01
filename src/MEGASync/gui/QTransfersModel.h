@@ -39,7 +39,7 @@ public:
             data.filename = QString::fromUtf8(transfer->getFileName());
             data.isSyncTransfer = transfer->isSyncTransfer();
             data.errorCode = transfer->getLastError().getErrorCode();
-            data.errorValue = transfer->getLastError().getValue();
+            data.errorValue = transfer->getLastErrorExtended() ? transfer->getLastErrorExtended()->getValue() : 0;
             data.state = transfer->getState();
             data.finishedTime = transfer->getUpdateTime();
             data.totalSize = transfer->getTotalBytes();
