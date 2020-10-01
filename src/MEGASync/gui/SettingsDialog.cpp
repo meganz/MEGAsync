@@ -453,7 +453,6 @@ void SettingsDialog::syncStateChanged(int state)
         }
     }
 #endif
-    onSavingSettingsProgress(0);
 
     syncsChanged = true;
     stateChanged();
@@ -1409,6 +1408,8 @@ int SettingsDialog::saveSettings()
         //Syncs
         if (syncsChanged)
         {
+            onSavingSettingsProgress(0);
+
             // 1 - loop through the syncs in the model to remove or update
             for (int i = 0; i < model->getNumSyncedFolders(); i++)
             {
