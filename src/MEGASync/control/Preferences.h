@@ -6,13 +6,19 @@
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
+#include <QDataStream>
 
 #include "control/EncryptedSettings.h"
+#include "model/Model.h"
 #include <assert.h>
+#include <memory>
 #include "megaapi.h"
+#include <chrono>
 
 Q_DECLARE_METATYPE(QList<long long>)
 
+class SyncSetting;
+struct SyncData;
 class Preferences : public QObject
 {
     Q_OBJECT
@@ -23,6 +29,7 @@ signals:
 
 private:
     static Preferences *preferences;
+
     Preferences();
 
     std::map<QString, QVariant> cache;
@@ -30,55 +37,11 @@ private:
 public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
-
     void initialize(QString dataPath);
-
-    template<typename T>
-    T getValue (const QString &key)
-    {
-        auto cf = cache.find(key);
-        if (cf != cache.end())
-        {
-            assert(cf->second.value<T>() == settings->value(key).value<T>());
-            return cf->second.value<T>();
-        }
-        else return settings->value(key).value<T>();
-    }
-
-    template<typename T>
-    T getValue (const QString &key, const T &defaultValue)
-    {
-        auto cf = cache.find(key);
-        if (cf != cache.end())
-        {
-            assert(cf->second.value<T>() == settings->value(key, defaultValue).template value<T>());
-            return cf->second.value<T>();
-        }
-        else return settings->value(key, defaultValue).template value<T>();
-    }
-
-    void setCachedValue (const QString &key, const QVariant &value)
-    {
-        if (!key.isEmpty())
-        {
-            cache[key] = value;
-        }
-    }
-
-    void cleanCache()
-    {
-        cache.clear();
-    }
-
-    void removeFromCache(const QString &key)
-    {
-        cache.erase(key);
-    }
-
     void setEmailAndGeneralSettings(const QString &email);
 
     //Thread safe functions
-    bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
+    virtual bool logged(); //true if a full login+fetchnodes has completed (now or in previous executions)
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
@@ -141,13 +104,43 @@ public:
     void setOverStorageNotificationExecution(long long timestamp);
     long long getAlmostOverStorageNotificationExecution();
     void setAlmostOverStorageNotificationExecution(long long timestamp);
+    long long getPayWallNotificationExecution();
+    void setPayWallNotificationExecution(long long timestamp);
     long long getAlmostOverStorageDismissExecution();
     void setAlmostOverStorageDismissExecution(long long timestamp);
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
 
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaDialogLastExecution();
+    virtual void setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaOsNotificationLastExecution();
+    virtual void setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaUiAlertLastExecution();
+    virtual void setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferAlmostOverQuotaOsNotificationLastExecution();
+    virtual void setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferAlmostOverQuotaUiAlertLastExecution();
+    void setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint);
+
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaSyncDialogLastExecution();
+    virtual void setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaDownloadsDialogLastExecution();
+    virtual void setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaImportLinksDialogLastExecution();
+    virtual void setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    virtual std::chrono::system_clock::time_point getTransferOverQuotaStreamDialogLastExecution();
+    virtual void setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getStorageOverQuotaUploadsDialogLastExecution();
+    void setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+    std::chrono::system_clock::time_point getStorageOverQuotaSyncsDialogLastExecution();
+    void setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::time_point timepoint);
+
     int getStorageState();
     void setStorageState(int value);
+    int getBusinessState();
+    void setBusinessState(int value);
+    int getBlockedState();
+    void setBlockedState(int value);
 
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
@@ -264,36 +257,26 @@ public:
     long long importFolder();
     void setImportFolder(long long value);
 
-    int getNumSyncedFolders();
-    QString getSyncName(int num);
-    QString getSyncID(int num);
-    QString getLocalFolder(int num);
-    QString getMegaFolder(int num);
-    long long getLocalFingerprint(int num);
-    void setLocalFingerprint(int num, long long fingerprint);
-    mega::MegaHandle getMegaFolderHandle(int num);
-    bool isFolderActive(int num);
-    bool isTemporaryInactiveFolder(int num);
-    void setSyncState(int num, bool enabled, bool temporaryDisabled = false);
-
-    bool isOneTimeActionDone(int action);
-    void setOneTimeActionDone(int action, bool done);
-
-    QStringList getSyncNames();
-    QStringList getSyncIDs();
-    QStringList getMegaFolders();
-    QStringList getLocalFolders();
-    QList<long long> getMegaFolderHandles();
-
-    void addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName = QString(), bool active = true);
-    void setMegaFolderHandle(int num, mega::MegaHandle handle);
-    void removeSyncedFolder(int num);
-    void removeAllFolders();
+    // sync related
+    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
+    void removeAllSyncSettings(); //remove all sync from cache
+    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
+    QMap<int, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
+    void removeAllFolders(); //remove all syncs from cache
+    // old cache transition related:
+    void removeOldCachedSync(int position, QString email = {});
+    //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
+                                       int *cachedStorageState = nullptr, QString email = {});
+    void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
     QStringList getExcludedSyncPaths();
     void setExcludedSyncPaths(QStringList paths);
+
+    bool isOneTimeActionDone(int action);
+    void setOneTimeActionDone(int action, bool done);
 
     QStringList getPreviousCrashes();
     void setPreviousCrashes(QStringList crashes);
@@ -301,6 +284,8 @@ public:
     void setLastReboot(long long value);
     long long getLastExit();
     void setLastExit(long long value);
+    QSet<int> getDisabledSyncTags();
+    void setDisabledSyncTags(QSet<int> disabledSyncs);
 
     QString getHttpsKey();
     void setHttpsKey(QString key);
@@ -315,7 +300,12 @@ public:
     void setLastPublicHandle(mega::MegaHandle handle, int type);
 
     int getNumUsers();
+
+    // enter user preferences and load syncs into loadedSyncsMap
     void enterUser(int i);
+    bool enterUser(QString account);
+
+    // leave user
     void leaveUser();
 
     int accountStateInGeneral();
@@ -395,7 +385,8 @@ public:
         STATE_BELOW_OVER_STORAGE = 0,
         STATE_ALMOST_OVER_STORAGE,
         STATE_OVER_STORAGE,
-        STATE_OVER_STORAGE_DISMISSED
+        STATE_OVER_STORAGE_DISMISSED,
+        STATE_PAYWALL
     };
 
     enum {
@@ -412,10 +403,18 @@ public:
     static long long MIN_UPDATE_STATS_INTERVAL;
     static long long OQ_DIALOG_INTERVAL_MS;
     static long long OQ_NOTIFICATION_INTERVAL_MS;
-    static long long ALMOST_OS_INTERVAL_MS;
-    static long long OS_INTERVAL_MS;
+    static long long ALMOST_OQ_UI_MESSAGE_INTERVAL_MS;
+    static long long OQ_UI_MESSAGE_INTERVAL_MS;
+    static long long PAYWALL_NOTIFICATION_INTERVAL_MS;
     static long long USER_INACTIVITY_MS;
     static long long MIN_UPDATE_CLEANING_INTERVAL_MS;
+
+    static std::chrono::milliseconds OVER_QUOTA_DIALOG_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
+    static std::chrono::milliseconds ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
+    static std::chrono::milliseconds ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    static std::chrono::milliseconds OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
 
     static int STATE_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
@@ -475,21 +474,40 @@ protected:
     void logout();
 
     void loadExcludedSyncNames();
-    void readFolders();
-    void writeFolders();
+
+    // sync related:
+    void readFolders(); //read sync stored configuration
 
     void storeSessionInGeneral(QString session);
     QString getSessionInGeneral();
 
+    std::chrono::system_clock::time_point getTimePoint(const QString& key);
+    void setTimePoint(const QString& key, const std::chrono::system_clock::time_point& timepoint);
+    template<typename T>
+    T getValue (const QString &key);
+    template<typename T>
+    T getValue (const QString &key, const T &defaultValue);
+    template<typename T>
+    T getValueConcurrent(const QString &key);
+    template<typename T>
+    T getValueConcurrent(const QString &key, const T &defaultValue);
+    void setAndCachedValue(const QString &key, const QVariant &value);
+    void setValueAndSyncConcurrent(const QString &key, const QVariant &value);
+    void setValueConcurrent(const QString &key, const QVariant &value);
+    void setCachedValue(const QString &key, const QVariant &value);
+    void cleanCache();
+    void removeFromCache(const QString &key);
+
     EncryptedSettings *settings;
-    QStringList syncNames;
-    QStringList syncIDs;
-    QStringList megaFolders;
-    QStringList localFolders;
-    QList<long long> megaFolderHandles;
-    QList<long long> localFingerprints;
-    QList<bool> activeFolders;
-    QList<bool> temporaryInactiveFolders;
+
+    // sync configuration from old syncs
+    QList<SyncData> oldSyncs;
+
+    // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
+    // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
+    // These are only used for retrieving values or removing at uninstall
+    QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;
     bool errorFlag;
@@ -498,17 +516,24 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
-    long long overStorageDialogExecution;
-    long long overStorageNotificationExecution;
-    long long almostOverStorageNotificationExecution;
-    long long almostOverStorageDismissExecution;
-    long long overStorageDismissExecution;
+    std::chrono::system_clock::time_point transferOverQuotaDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaOsNotificationDisabledUntil;
+    std::chrono::system_clock::time_point transferAlmostOverQuotaOsNotificationDisabledUntil;
+    std::chrono::system_clock::time_point transferAlmostOverQuotaUiAlertDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaUiAlertDisableUntil;
     long long lastTransferNotification;
+    std::chrono::system_clock::time_point transferOverQuotaSyncDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaDownloadsDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaImportLinksDialogDisabledUntil;
+    std::chrono::system_clock::time_point transferOverQuotaStreamDialogDisabledUntil;
+    std::chrono::system_clock::time_point storageOverQuotaUploadsDialogDisabledUntil;
+    std::chrono::system_clock::time_point storageOverQuotaSyncsDialogDisabledUntil;
 
     static const QString currentAccountKey;
     static const QString currentAccountStatusKey;
     static const QString needsFetchNodesKey;
     static const QString syncsGroupKey;
+    static const QString syncsGroupByTagKey;
     static const QString emailKey;
     static const QString firstNameKey;
     static const QString lastNameKey;
@@ -529,16 +554,30 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
-    static const QString usedBandwidthIntervalKey;    
+    static const QString usedBandwidthIntervalKey;
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
+    static const QString payWallNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
+    static const QString transferOverQuotaDialogLastExecutionKey;
+    static const QString transferOverQuotaOsNotificationLastExecutionKey;
+    static const QString transferAlmostOverQuotaOsNotificationLastExecutionKey;
+    static const QString transferAlmostOverQuotaUiAlertLastExecutionKey;
+    static const QString transferOverQuotaUiAlertLastExecutionKey;
+    static const QString transferOverQuotaWaitUntilKey;
     static const QString storageStateQKey;
+    static const QString transferOverQuotaSyncDialogLastExecutionKey;
+    static const QString transferOverQuotaDownloadsDialogLastExecutionKey;
+    static const QString transferOverQuotaImportLinksDialogLastExecutionKey;
+    static const QString transferOverQuotaStreamDialogLastExecutionKey;
+    static const QString storageOverQuotaUploadsDialogLastExecutionKey;
+    static const QString storageOverQuotaSyncsDialogLastExecutionKey;
+    static const QString businessStateQKey;
+    static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
-    static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
     static const QString startOnStartupKey;
     static const QString languageKey;
@@ -564,6 +603,7 @@ protected:
     static const QString proxyRequiresAuthKey;
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
+    static const QString configuredSyncsKey;
     static const QString syncNameKey;
     static const QString syncIdKey;
     static const QString localFolderKey;
@@ -577,11 +617,7 @@ protected:
     static const QString hasDefaultDownloadFolderKey;
     static const QString hasDefaultImportFolderKey;
     static const QString importFolderKey;
-    static const QString fileNameKey;
-    static const QString fileHandleKey;
-    static const QString localPathKey;
     static const QString localFingerprintKey;
-    static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
     static const QString excludedSyncPathsKey;
@@ -624,6 +660,7 @@ protected:
     static const QString lastPublicHandleKey;
     static const QString lastPublicHandleTimestampKey;
     static const QString lastPublicHandleTypeKey;
+    static const QString disabledSyncsKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

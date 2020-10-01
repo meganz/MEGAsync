@@ -184,23 +184,13 @@ void TransferManagerItem::updateTransfer()
         {
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
-            int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
+            const auto totalRemainingSeconds{mTransferRemainigTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
-            if (totalRemainingSeconds)
+            const auto printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
+            if (printableValue)
             {
-                if (totalRemainingSeconds < 60)
-                {
-                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
-                }
-                else
-                {
-                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
-                }
-            }
-            else
-            {
-                remainingTime = QString::fromAscii("");
+                remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
             }
             ui->lRemainingTime->setText(remainingTime);
 
@@ -262,8 +252,22 @@ void TransferManagerItem::updateTransfer()
     ui->pbTransfer->setValue(permil);
 
     // Update transferred bytes
-    ui->lTotal->setText(QString::fromUtf8("%1%2").arg(!totalTransferredBytes ? QString::fromUtf8(""): QString::fromUtf8("%1<span style=\"color:#777777; text-decoration:none;\">&nbsp;&nbsp;of&nbsp;&nbsp;</span>").arg(Utilities::getSizeString(totalTransferredBytes)))
-                        .arg(Utilities::getSizeString(totalSize)));
+    const auto totalBytesText{Utilities::getSizeString(totalSize)};
+    const auto totalBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalBytesText)};
+    if(totalTransferredBytes)
+    {
+        const auto totalTransferredBytesText{Utilities::getSizeString(totalTransferredBytes)};
+        const auto totalTransferredBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalTransferredBytesText)};
+        auto transferredBytesText{tr("%1 of %2")};
+        transferredBytesText.replace(QStringLiteral("%1"), totalTransferredBytesStyled);
+        transferredBytesText.replace(QStringLiteral("%2"), totalBytesStyled);
+        ui->lTotal->setText(transferredBytesText);
+    }
+    else
+    {
+        ui->lTotal->setText(totalBytesStyled);
+    }
+
 }
 
 void TransferManagerItem::updateFinishedTime()

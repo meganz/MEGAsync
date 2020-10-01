@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200402
+win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200529
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 
@@ -19,6 +19,8 @@ message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
 
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
+
+win32:!contains(QMAKE_TARGET.arch, x86_64):DEFINES += PDFIUM_DELAY_LOAD_DLL=1
 
 debug_and_release {
     CONFIG -= debug_and_release
@@ -101,6 +103,7 @@ else {
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
+include(model/model.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
@@ -117,8 +120,17 @@ INCLUDEPATH += $$PWD
 
 DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
-SOURCES += MegaApplication.cpp
-HEADERS += MegaApplication.h
+!CONFIG(building_tests) {
+    SOURCES += $$PWD/main.cpp
+}
+
+SOURCES += $$PWD/MegaApplication.cpp \
+    $$PWD/TransferQuota.cpp \
+    $$PWD/ScaleFactorManager.cpp
+
+HEADERS += $$PWD/MegaApplication.h \
+    $$PWD/TransferQuota.h \
+    $$PWD/ScaleFactorManager.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
@@ -137,8 +149,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ro.ts \
     gui/translations/MEGASyncStrings_ru.ts \
     gui/translations/MEGASyncStrings_th.ts \
-    gui/translations/MEGASyncStrings_tl.ts \
-    gui/translations/MEGASyncStrings_uk.ts \
     gui/translations/MEGASyncStrings_vi.ts \
     gui/translations/MEGASyncStrings_zh_CN.ts \
     gui/translations/MEGASyncStrings_zh_TW.ts
@@ -154,17 +164,17 @@ win32 {
 
     RC_FILE = icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
-    QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
-    QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01
+    QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,6.01
+    QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,6.01
     DEFINES += PSAPI_VERSION=1
 }
 
 
 macx {
     QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
-    MAC_ICONS_RESOURCES.files += folder.icns
-    MAC_ICONS_RESOURCES.files += folder_yosemite.icns
-    MAC_ICONS_RESOURCES.files += appicon32.tiff
+    MAC_ICONS_RESOURCES.files += $$PWD/folder.icns
+    MAC_ICONS_RESOURCES.files += $$PWD/folder_yosemite.icns
+    MAC_ICONS_RESOURCES.files += $$PWD/appicon32.tiff
     MAC_ICONS_RESOURCES.path = Contents/Resources
     QMAKE_BUNDLE_DATA += MAC_ICONS_RESOURCES
     ICON = app.icns

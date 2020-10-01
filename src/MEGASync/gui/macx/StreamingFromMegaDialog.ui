@@ -31,11 +31,15 @@
 font-size: 11px;
 }
 
-#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc 
+#lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc, #labelError
 {
   font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #000000;
+}
+#labelError
+{
+  font-size: 13px;
 }
 #lFileSize
 {
@@ -709,6 +713,54 @@ font-size: 11px;
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QToolButton" name="toolButtonError">
+        <property name="minimumSize">
+         <size>
+          <width>27</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>27</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/icon_error.png</normaloff>:/images/icon_error.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelError">
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Stream error: transfer overquota</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">

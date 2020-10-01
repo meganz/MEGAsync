@@ -2,6 +2,11 @@
 #define MEGASPEEDGRAPH_H
 
 #include <QWidget>
+#include <QColor>
+#include <QTimer>
+#include <QList>
+#include <QPolygonF>
+#include <QPainterPath>
 #include "megaapi.h"
 
 namespace Ui {

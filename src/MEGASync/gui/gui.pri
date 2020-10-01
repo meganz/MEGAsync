@@ -2,6 +2,7 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialog.cpp \
+    $$PWD/OverQuotaDialog.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -17,7 +18,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
     $$PWD/SizeLimitDialog.cpp \
     $$PWD/UsageWidget.cpp \
-    $$PWD/MessageBox.cpp \
     $$PWD/QMegaModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
@@ -65,10 +65,13 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/FilterAlertWidget.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
-    $$PWD/VerifyLockMessage.cpp
+    $$PWD/VerifyLockMessage.cpp \
+    $$PWD/MegaInfoMessage.cpp \
+    $$PWD/WaitingSpinnerWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
+    $$PWD/OverQuotaDialog.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -84,7 +87,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
     $$PWD/SizeLimitDialog.h \
     $$PWD/UsageWidget.h \
-    $$PWD/MessageBox.h \
     $$PWD/QMegaModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
@@ -132,7 +134,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/FilterAlertWidget.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
-    $$PWD/VerifyLockMessage.h
+    $$PWD/VerifyLockMessage.h \
+    $$PWD/MegaInfoMessage.h \
+    $$PWD/WaitingSpinnerWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -158,7 +162,6 @@ win32 {
                 $$PWD/win/AccountDetailsDialog.ui \
                 $$PWD/win/DownloadFromMegaDialog.ui \
                 $$PWD/win/SizeLimitDialog.ui \
-                $$PWD/win/MessageBox.ui \
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
@@ -188,7 +191,10 @@ win32 {
                 $$PWD/win/AlertFilterType.ui \
                 $$PWD/win/BugReportDialog.ui \
                 $$PWD/win/LockedPopOver.ui \
-                $$PWD/win/VerifyLockMessage.ui
+                $$PWD/win/VerifyLockMessage.ui \
+                $$PWD/win/MegaInfoMessage.ui \
+                $$PWD/win/DynamicTransferQuotaPopOver.ui \
+                $$PWD/win/OverQuotaDialog.ui
 }
 
 macx {
@@ -208,7 +214,6 @@ macx {
                 $$PWD/macx/AccountDetailsDialog.ui \
                 $$PWD/macx/DownloadFromMegaDialog.ui \
                 $$PWD/macx/SizeLimitDialog.ui \
-                $$PWD/macx/MessageBox.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
                 $$PWD/macx/GuestWidget.ui \
                 $$PWD/macx/StreamingFromMegaDialog.ui \
@@ -241,20 +246,29 @@ macx {
                 $$PWD/macx/AlertFilterType.ui \
                 $$PWD/macx/BugReportDialog.ui \
                 $$PWD/macx/LockedPopOver.ui \
-                $$PWD/macx/VerifyLockMessage.ui
+                $$PWD/macx/VerifyLockMessage.ui \
+                $$PWD/macx/MegaInfoMessage.ui \
+                $$PWD/macx/DynamicTransferQuotaPopOver.ui \
+                $$PWD/macx/OverQuotaDialog.ui \
 
     QT += macextras
-    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
-    HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
+    OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm \
+                            $$PWD/MegaSystemTrayIcon.mm \
+                            $$PWD/QMacSpinningProgressIndicator.mm
+
+    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/MegaSystemTrayIcon.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
-               $$PWD/PermissionsWidget.h
+               $$PWD/PermissionsWidget.h \
+               $$PWD/QMacSpinningProgressIndicator.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
  else {
-    HEADERS += $$PWD/LockedPopOver.h
-    SOURCES += $$PWD/LockedPopOver.cpp
+    HEADERS += $$PWD/LockedPopOver.h \
+               $$PWD/DynamicTransferQuotaPopOver.h
+    SOURCES += $$PWD/LockedPopOver.cpp \
+               $$PWD/DynamicTransferQuotaPopOver.cpp
 }
 
 unix:!macx {
@@ -275,7 +289,6 @@ unix:!macx {
                 $$PWD/linux/AccountDetailsDialog.ui \
                 $$PWD/linux/DownloadFromMegaDialog.ui \
                 $$PWD/linux/SizeLimitDialog.ui \
-                $$PWD/linux/MessageBox.ui\
                 $$PWD/linux/ChangeLogDialog.ui \
                 $$PWD/linux/GuestWidget.ui \
                 $$PWD/linux/StreamingFromMegaDialog.ui \
@@ -307,7 +320,10 @@ unix:!macx {
                 $$PWD/linux/AlertFilterType.ui \
                 $$PWD/linux/BugReportDialog.ui \
                 $$PWD/linux/LockedPopOver.ui \
-                $$PWD/linux/VerifyLockMessage.ui
+                $$PWD/linux/VerifyLockMessage.ui \
+                $$PWD/linux/MegaInfoMessage.ui \
+                $$PWD/linux/DynamicTransferQuotaPopOver.ui \
+                $$PWD/linux/OverQuotaDialog.ui \
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

@@ -17,6 +17,8 @@
 #include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
+#include "MegaController.h"
+#include "../model/Model.h"
 #include "megaapi.h"
 #include "HighDpiResize.h"
 
@@ -45,12 +47,21 @@ public:
 public slots:
     void stateChanged();
     void fileVersioningStateChanged();
+    void storageStateChanged(int state);
     void syncStateChanged(int state);
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-    
+    void onSyncStateChanged(std::shared_ptr<SyncSetting>);
+    void onSyncDeleted(std::shared_ptr<SyncSetting>);
+    void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
+    void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
+
 private slots:
+
+    void onSavingSettingsProgress(double progress);
+    void onSavingSettingsCompleted();
+
     void on_bAccount_clicked();
 
     void on_bSyncs_clicked();
@@ -132,6 +143,8 @@ private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
+    Controller *controller;
+    Model *model;
     mega::MegaApi *megaApi;
     HighDpiResize highDpiResize;
     bool syncsChanged;
@@ -144,6 +157,7 @@ private:
     MegaProgressCustomDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
     bool shouldClose;
+    std::unique_ptr<ProgressHelper> saveSettingsProgress;
     int modifyingSettings;
     long long cacheSize;
     long long remoteCacheSize;
@@ -182,6 +196,7 @@ private:
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
+    void savingSyncs(bool completed, QObject *item);
 
 public:
     void updateStorageElements();

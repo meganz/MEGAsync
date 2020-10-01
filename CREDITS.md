@@ -15,7 +15,11 @@ QT is framework for cross-platform develppment
 QT is the framework used by MEGAsync to get cross platform compatibility 
 
 ######  License: 
-Dual license: Open Source + Commercial
+Dual license: LGPL 3
+
+https://www.gnu.org/licenses/lgpl-3.0.html
+
+https://www.gnu.org/licenses/licenses.html
 
 http://www.qt.io/licensing/
 
@@ -103,6 +107,32 @@ several instances running at once.
 
 ###### License: 
 The BSD 3-Clause License
+
+--------------------------------------------------------------------
+
+#### NSPopover+MISSINGBackgroundView
+Copyright (c) 2015 Valentin Shergin
+
+A very tiny library that allows to access (and customize) background view of NSPopover.
+
+https://github.com/shergin/NSPopover-MISSINGBackgroundView
+
+License: MIT
+
+https://github.com/shergin/NSPopover-MISSINGBackgroundView/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
+#### QtWaitingSpinner
+Original Work Copyright (c) 2012-2015 Alexander Turkin
+
+QtWaitingSpinner is a highly configurable, custom Qt widget for showing spinner icons in Qt applications.
+
+https://github.com/snowwlex/QtWaitingSpinner
+
+License: MIT
+
+https://github.com/snowwlex/QtWaitingSpinner/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
@@ -195,17 +225,6 @@ https://github.com/libuv/libuv
 License: MIT
 
 https://github.com/libuv/libuv/blob/v1.x/LICENSE
-
-#### NSPopover+MISSINGBackgroundView
-Copyright (c) 2015 Valentin Shergin
-
-A very tiny library that allows to access (and customize) background view of NSPopover.
-
-https://github.com/shergin/NSPopover-MISSINGBackgroundView
-
-License: MIT
-
-https://github.com/shergin/NSPopover-MISSINGBackgroundView/blob/master/LICENSE
 
 #### LibRaw
 Copyright © 2008-2018 LibRaw LLC (info@libraw.org)
