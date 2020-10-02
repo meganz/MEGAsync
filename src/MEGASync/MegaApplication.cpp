@@ -734,11 +734,7 @@ void MegaApplication::updateTrayIcon()
                 appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL};
     if (isOverQuotaOrPaywall)
     {
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Over quota");
+        tooltipState = tr("Over quota");
 
         icon = icons["warning"];
 
@@ -751,11 +747,7 @@ void MegaApplication::updateTrayIcon()
     }
     else if (blockState)
     {
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Locked account");
+        tooltipState = tr("Locked account");
 
         icon = icons["alert"];
 
@@ -768,11 +760,7 @@ void MegaApplication::updateTrayIcon()
     }
     else if (model->hasUnattendedDisabledSyncs())
     {
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("One or more syncs have been disabled");
+        tooltipState = tr("One or more syncs have been disabled");
 
         icon = icons["alert"];
 
@@ -788,11 +776,7 @@ void MegaApplication::updateTrayIcon()
     {
         if (!infoDialog)
         {
-            tooltipState = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("Logging in");
+            tooltipState = tr("Logging in");
             icon = icons["synching"];
     #ifdef __APPLE__
             if (!scanningTimer->isActive())
@@ -804,11 +788,7 @@ void MegaApplication::updateTrayIcon()
         }
         else
         {
-            tooltipState = QCoreApplication::applicationName()
-                    + QString::fromAscii(" ")
-                    + Preferences::VERSION_STRING
-                    + QString::fromAscii("\n")
-                    + tr("You are not logged in");
+            tooltipState = tr("You are not logged in");
             icon = icons["uptodate"];
 
     #ifdef __APPLE__
@@ -821,11 +801,7 @@ void MegaApplication::updateTrayIcon()
     }
     else if (!getRootNode())
     {
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Fetching file list...");
+        tooltipState = tr("Fetching file list...");
         icon = icons["synching"];
 
 #ifdef __APPLE__
@@ -838,11 +814,7 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Paused");
+        tooltipState = tr("Paused");
         icon = icons["paused"];
 
 #ifdef __APPLE__
@@ -854,11 +826,6 @@ void MegaApplication::updateTrayIcon()
     }
     else if (indexing || waiting || syncing || transferring)
     {
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n");
-
         if (indexing)
         {
             tooltipState += tr("Scanning");
@@ -888,11 +855,7 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("Up to date");
+        tooltipState = tr("Up to date");
         icon = icons["uptodate"];
 
 #ifdef __APPLE__
@@ -910,11 +873,7 @@ void MegaApplication::updateTrayIcon()
     if (!networkConnectivity)
     {
         //Override the current state
-        tooltipState = QCoreApplication::applicationName()
-                + QString::fromAscii(" ")
-                + Preferences::VERSION_STRING
-                + QString::fromAscii("\n")
-                + tr("No Internet connection");
+        tooltipState = tr("No Internet connection");
         icon = icons["logging"];
     }
 
