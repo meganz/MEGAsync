@@ -1138,12 +1138,20 @@ void MegaApplication::requestUserData()
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 
-    const char *email = megaApi->getMyEmail();
-    if (email)
-    {
-        megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
-        delete [] email;
-    }
+    mthreadPool->push([=]()
+    {//thread pool function
+        const char *email = megaApi->getMyEmail();
+
+        Utilities::queueFunctionInAppThread([=]()
+        {//queued function
+            if (email)
+            {
+                megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
+                delete [] email;
+            }
+        });//end of queued function
+
+    });// end of thread pool function
 }
 
 void MegaApplication::loggedIn(bool fromWizard)
