@@ -2,7 +2,7 @@
 #include "megaapi.h"
 #include <QCoreApplication>
 
-constexpr std::chrono::milliseconds clusterMaxTime{std::chrono::seconds(5)};
+constexpr int clusterMaxTime{5000};//5 seconds cluster time
 
 UserAlertTimedClustering::UserAlertTimedClustering()
     :mUserAlert{nullptr}, mPreviousTotalRemovedItems{0}
