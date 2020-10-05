@@ -262,13 +262,13 @@ void TransferManagerItem::updateTransfer()
     ui->pbTransfer->setValue(permil);
 
     // Update transferred bytes
-    const auto totalBytesText{Utilities::getSizeString(totalSize)};
-    const auto totalBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalBytesText)};
+    const QString totalBytesText{Utilities::getSizeString(totalSize)};
+    const QString totalBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalBytesText)};
     if(totalTransferredBytes)
     {
-        const auto totalTransferredBytesText{Utilities::getSizeString(totalTransferredBytes)};
-        const auto totalTransferredBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalTransferredBytesText)};
-        auto transferredBytesText{tr("%1 of %2")};
+        const QString totalTransferredBytesText{Utilities::getSizeString(totalTransferredBytes)};
+        const QString totalTransferredBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalTransferredBytesText)};
+        QString transferredBytesText{tr("%1 of %2")};
         transferredBytesText.replace(QStringLiteral("%1"), totalTransferredBytesStyled);
         transferredBytesText.replace(QStringLiteral("%2"), totalBytesStyled);
         ui->lTotal->setText(transferredBytesText);

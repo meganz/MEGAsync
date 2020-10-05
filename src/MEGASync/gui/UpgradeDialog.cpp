@@ -156,22 +156,22 @@ void UpgradeDialog::clearPlans()
 
 void UpgradeDialog::mousePressEvent(QMouseEvent *event)
 {
-    const auto mousePositionButtonRelated{ui->toolButtonQuestion->mapFrom(this, event->pos())};
+    const QPoint mousePositionButtonRelated{ui->toolButtonQuestion->mapFrom(this, event->pos())};
     if (ui->toolButtonQuestion->rect().contains(mousePositionButtonRelated))
     {
 #ifdef __APPLE__
         showPopOverRelativeToRect(winId(), m_NativePopOver, event->localPos());
 #else
 
-        const auto mouseGlobalPosition{event->globalPos()};
+        const QPoint mouseGlobalPosition{event->globalPos()};
 
         mPopOver->show();
         mPopOver->ensurePolished();
         mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width() / 2, mPopOver->height() + 10));
         Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
 
-        const auto initialWidth{mPopOver->width()};
-        const auto initialHeight{mPopOver->height()};
+        const int initialWidth{mPopOver->width()};
+        const int initialHeight{mPopOver->height()};
 
         // size might be incorrect the first time it's shown. This works around that and repositions at the expected position afterwards
         QTimer::singleShot(1, this, [this, mouseGlobalPosition, initialWidth, initialHeight] ()
@@ -179,7 +179,7 @@ void UpgradeDialog::mousePressEvent(QMouseEvent *event)
             mPopOver->update();
             mPopOver->ensurePolished();
 
-            const auto sizeChanged{initialWidth != mPopOver->width() || initialHeight != mPopOver->height()};
+            const bool sizeChanged{initialWidth != mPopOver->width() || initialHeight != mPopOver->height()};
             if (sizeChanged)
             {
                 mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width()/2, mPopOver->height()));

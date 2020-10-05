@@ -1822,7 +1822,7 @@ void SettingsDialog::on_bPermissions_clicked()
 #endif
 void SettingsDialog::on_bAdd_clicked()
 {
-    const auto dismissed{app->showSyncOverquotaDialog()};
+    const bool dismissed{app->showSyncOverquotaDialog()};
     if(!dismissed)
     {
         return;
