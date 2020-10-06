@@ -2070,7 +2070,6 @@ void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, i
 void InfoDialog::paintEvent(QPaintEvent * e)
 {
     app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
-    app->mStartPaintTime = QDateTime::currentMSecsSinceEpoch();
     QDialog::paintEvent(e);
     app->megaApiLock.reset();
 
