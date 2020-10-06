@@ -10,8 +10,6 @@ QCustomTransfersModel::QCustomTransfersModel(int type, QObject *parent)
     modelState = IDLE;
     activeUploadTag   = -1;
     activeDownloadTag = -1;
-
-    mThreadPool = ThreadPoolSingleton::getInstance();
 }
 
 void QCustomTransfersModel::refreshTransfers()

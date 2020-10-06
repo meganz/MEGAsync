@@ -20,8 +20,6 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
 {
     QPointer<QActiveTransfersModel> model = this;
 
-    mThreadPool = ThreadPoolSingleton::getInstance();
-
     if (!transferData)
     {
         return;

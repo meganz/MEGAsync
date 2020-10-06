@@ -88,6 +88,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncDeleted(std::shared_ptr<SyncSetting>)));
 
+    mThreadPool = ThreadPoolSingleton::getInstance();
+
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;

@@ -34,6 +34,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     QPointer<TransferManager> transferManager = this;
 
+    mThreadPool = ThreadPoolSingleton::getInstance();
+
     mThreadPool->push([this, transferManager]()
     {//thread pool function
 
