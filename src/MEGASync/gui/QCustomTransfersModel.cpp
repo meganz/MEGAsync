@@ -10,6 +10,8 @@ QCustomTransfersModel::QCustomTransfersModel(int type, QObject *parent)
     modelState = IDLE;
     activeUploadTag   = -1;
     activeDownloadTag = -1;
+
+    mThreadPool = ThreadPoolSingleton::getInstance();
 }
 
 void QCustomTransfersModel::refreshTransfers()
@@ -75,7 +77,7 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *t, Mega
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {       
-        ThreadPoolSingleton::getInstance()->push([this, model, transfer]()
+        mThreadPool->push([this, model, transfer]()
         {//thread pool function
             if (!model)
             {

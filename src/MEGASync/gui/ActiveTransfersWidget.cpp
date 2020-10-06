@@ -28,6 +28,8 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     activeDownload.clear();
     animationDown = animationUp = NULL;
 
+    mThreadPool = ThreadPoolSingleton::getInstance();
+
     ui->bDownPaused->setVisible(false);
     ui->bUpPaused->setVisible(false);
     ui->sDownloads->setCurrentWidget(ui->wNoDownloads);
@@ -230,7 +232,7 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
     if (totalDownloads && activeDownload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
-        ThreadPoolSingleton::getInstance()->push([this, activeTransfersWidget]()
+        mThreadPool->push([this, activeTransfersWidget]()
         {//thread pool function
             if (!activeTransfersWidget)
             {
@@ -294,7 +296,7 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
 
     if (totalUploads && activeUpload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
-        ThreadPoolSingleton::getInstance()->push([this, activeTransfersWidget]()
+        mThreadPool->push([this, activeTransfersWidget]()
         {//thread pool function
             if (!activeTransfersWidget)
             {

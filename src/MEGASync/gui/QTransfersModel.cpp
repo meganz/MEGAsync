@@ -9,6 +9,8 @@ QTransfersModel::QTransfersModel(int type, QObject *parent) :
     this->type = type;
     this->megaApi = ((MegaApplication *)qApp)->getMegaApi();
     this->transferItems.setMaxCost(16);
+
+    mThreadPool = ThreadPoolSingleton::getInstance();
 }
 
 int QTransfersModel::columnCount(const QModelIndex &parent) const

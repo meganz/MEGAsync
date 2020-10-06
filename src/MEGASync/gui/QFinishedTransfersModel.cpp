@@ -23,7 +23,7 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *t)
     QPointer<QFinishedTransfersModel> model = this;
     MegaTransfer *transfer = t->copy(); //Copy transfer to avoid deletions by finishedtransfers if QMap reaches limit.
 
-    ThreadPoolSingleton::getInstance()->push([this, model, transfer]()
+    mThreadPool->push([this, model, transfer]()
     {//thread pool function
         if (!model)
         {

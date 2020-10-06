@@ -1133,7 +1133,7 @@ void SettingsDialog::loadSettings()
 
         //Account
         ui->lEmail->setText(preferences->email());
-        static_cast<MegaApplication*>(qApp)->pushToThreadPool([=]()
+        mThreadPool->push([=]()
         {//thread pool function
 
             char *email = megaApi->getMyEmail();
@@ -1389,7 +1389,7 @@ int SettingsDialog::saveSettings()
             preferences->setLanguage(selectedLanguageCode);
             app->changeLanguage(selectedLanguageCode);
             QString currentLanguageCode = app->getCurrentLanguageCode();
-            static_cast<MegaApplication*>(qApp)->pushToThreadPool([=]()
+            mThreadPool->push([=]()
             {
                 megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
                 megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());

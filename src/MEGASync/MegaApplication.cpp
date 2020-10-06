@@ -163,7 +163,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     logger->setDebug(true);
 #endif
 
-    mthreadPool = ThreadPoolSingleton::getInstance();
+    mThreadPool = ThreadPoolSingleton::getInstance();
 
     updateAvailable = false;
     networkConnectivity = true;
@@ -1138,7 +1138,7 @@ void MegaApplication::requestUserData()
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 
-    mthreadPool->push([=]()
+    mThreadPool->push([=]()
     {//thread pool function
         const char *email = megaApi->getMyEmail();
 
@@ -2113,7 +2113,7 @@ void MegaApplication::periodicTasks()
 
             networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
-            mthreadPool->push([=]()
+            mThreadPool->push([=]()
             {//thread pool function
                 megaApi->update();
 
@@ -3566,7 +3566,7 @@ void MegaApplication::checkFirstTransfer()
     if (numTransfers[MegaTransfer::TYPE_DOWNLOAD] && activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] == 0xFFFFFFFFFFFFFFFFULL)
     {
 
-        mthreadPool->push([=]()
+        mThreadPool->push([=]()
         {//thread pool function
 
             MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
@@ -3586,7 +3586,7 @@ void MegaApplication::checkFirstTransfer()
 
     if (numTransfers[MegaTransfer::TYPE_UPLOAD] && activeTransferPriority[MegaTransfer::TYPE_UPLOAD] == 0xFFFFFFFFFFFFFFFFULL)
     {        
-        mthreadPool->push([=]()
+        mThreadPool->push([=]()
         {//thread pool function
 
             MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
@@ -7175,7 +7175,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         //Account details retrieved, update the preferences and the information dialog
         shared_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
 
-        mthreadPool->push([=]()
+        mThreadPool->push([=]()
         {//thread pool function
         shared_ptr<MegaNodeList> inShares(megaApi->getInShares());
 
@@ -7952,7 +7952,7 @@ MegaSyncLogger& MegaApplication::getLogger() const
 
 void MegaApplication::pushToThreadPool(std::function<void()> functor)
 {
-    mthreadPool->push(std::move(functor));
+    mThreadPool->push(std::move(functor));
 }
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
@@ -8033,7 +8033,7 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
     }
     else
     {
-        mthreadPool->push(funcToThreadPool);
+        mThreadPool->push(funcToThreadPool);
     }
 }
 
@@ -8181,7 +8181,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
 
     if (megaApi && infoDialog)
     {
-        mthreadPool->push([this]() {
+        mThreadPool->push([this]() {
 
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();

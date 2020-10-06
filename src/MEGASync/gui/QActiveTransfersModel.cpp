@@ -20,6 +20,8 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
 {
     QPointer<QActiveTransfersModel> model = this;
 
+    mThreadPool = ThreadPoolSingleton::getInstance();
+
     if (!transferData)
     {
         return;
@@ -30,7 +32,7 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
         int numDownloads = transferData->getNumDownloads();
         if (numDownloads)
         {
-            ThreadPoolSingleton::getInstance()->push([this, model, transferData, numDownloads]()
+            mThreadPool->push([this, model, transferData, numDownloads]()
             {//thread pool function
                 for (int i = 0; i < numDownloads; i++)
                 {
@@ -65,7 +67,7 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
         int numUploads = transferData->getNumUploads();
         if (numUploads)
         {
-            ThreadPoolSingleton::getInstance()->push([this, model, transferData, numUploads]()
+            mThreadPool->push([this, model, transferData, numUploads]()
             {//thread pool function
                 for (int i = 0; i < numUploads; i++)
                 {

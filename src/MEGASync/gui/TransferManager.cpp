@@ -34,7 +34,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     QPointer<TransferManager> transferManager = this;
 
-    static_cast<MegaApplication*>(qApp)->pushToThreadPool([this, transferManager]()
+    mThreadPool->push([this, transferManager]()
     {//thread pool function
 
         if (!transferManager)
