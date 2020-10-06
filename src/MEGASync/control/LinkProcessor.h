@@ -18,7 +18,7 @@ public:
     bool isSelected(int id);
     int getError(int id);
     mega::MegaNode *getNode(int id);
-    int size();
+    int size() const;
 
     void requestLinkInfo();
     void importLinks(QString nodePath);
@@ -31,6 +31,8 @@ public:
     int numSuccessfullImports();
     int numFailedImports();
     int getCurrentIndex();
+
+    bool atLeastOneLinkValidAndSelected() const;
 
 protected:
     mega::MegaApi *megaApi;

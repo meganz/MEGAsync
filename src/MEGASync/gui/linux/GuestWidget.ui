@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,24 +18,46 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>402</width>
-    <height>394</height>
+    <width>400</width>
+    <height>392</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wGuestWidgetIn
+   <string notr="true">#wHeader
+{
+ background-color:  #FAFAFA;
+ border-top-left-radius: 16px;
+ border-top-right-radius: 16px;
+}
+#bMEGA, #bLogoLogging, #bLogoLogin, #bLogoSettingUp, #bShield
+{
+	border: none;
+}
+
+#wGuestWidgetIn
 {
  border: 1px solid rgba(100, 100, 100);
  border-radius: 16px;
+}
+
+#lLogin2FAError, #lLoginErrors
+{
+    border: 1px solid rgba(218,49,53,0.5);
+    border-radius: 2px;
+    background-color: rgba(240,55,58,0.1);
+    padding: 6px 12px 6px 12px;
+    font-family: &quot;Lato&quot;;
+    font-size: 12px;
+    color:  #DA3135;
 }
 
 QPushButton, QLabel
@@ -43,31 +65,45 @@ QPushButton, QLabel
 font-size: 13px;
 }
 
-#wHeader
+
+#bLogin, #bVerifyEmail, #bVerifySMS
 {
- background-color:  #FAFAFA;
- border-top-left-radius: 16px;
- border-top-right-radius: 16px;
+background-color: #F0373A;
+border-radius: 3px;
+border: 1px solid rgba(0, 0, 0, 5%);
+padding: 7px 14px 7px 14px;
+font-family: &quot;Lato&quot;;
+font-size: 14px;
+color: #ffffff;
 }
 
-#bMEGA, #bLogoLogging, #bLogoLogin, #bLogoSettingUp
+#bCreateAccount, #bCancel, #bVerifyEmailLogout, #bVerifySMSLogout
 {
-	border: none;
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fcfcfc);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 5%);
+ padding: 7px 14px 7px 14px;
+ font-family: &quot;Lato&quot;;
+ font-size: 14px;
+ color: #333333;
+
 }
 
-#bCreateAccount, #bForgotPassword
+#bForgotPassword
 {
 	border: none;
 	color: #666666;
 	font-family: &quot;Lato&quot;;
     font-size: 13px;
 }
+
 QPushButton#bSettings:hover
 {
 	image: url(://images/tray_preferences_over_ico.png);
 }
 
-#lEmail, #lPassword
+#lEmail, #lPassword, #leCode
 {
      color:rgba(0, 0, 0, 0.4);
 	font-family: &quot;Lato&quot;;
@@ -78,9 +114,17 @@ QPushButton#bSettings:hover
 
 #lDesc
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 18px;
-  color:rgba(51, 51, 51, 0.7);
+  color: rgba(0,0,0,0.85);
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+#lCode
+{
+  color: #333333;
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
 }
 
 #lDescLogin
@@ -89,8 +133,11 @@ QPushButton#bSettings:hover
   font-size: 13px;
   color: #666666;
 }
+
 #lLogin
 {
+  border-radius: 2px;
+  padding: 6px 12px 6px 12px;
   font-family: &quot;Lato&quot;;
   font-size: 16px;
   color: #333333;
@@ -109,6 +156,14 @@ QPushButton#bSettings:hover
      font-family: &quot;Lato&quot;;
 	font-size: 16px;
 }
+
+#lLostAuthCode
+{
+  color: #333333;
+  font-family: &quot;SF UI Text&quot;;
+  font-size: 13px;
+}
+
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -132,7 +187,7 @@ QPushButton#bSettings:hover
      <property name="minimumSize">
       <size>
        <width>402</width>
-       <height>394</height>
+       <height>392</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -211,6 +266,9 @@ QPushButton#bSettings:hover
              <height>24</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 margin-top: -1px;</string>
@@ -219,7 +277,7 @@ margin-top: -1px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -258,7 +316,7 @@ margin-top: -1px;</string>
 </string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="pLogin">
          <property name="minimumSize">
@@ -377,7 +435,7 @@ image: none;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_macx.qrc">
+                   <iconset resource="../Resources_linux.qrc">
                     <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -389,30 +447,6 @@ image: none;</string>
                  </widget>
                 </item>
                </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lLogin">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background: transparent;
-image: none;
-padding-top: 50px;</string>
-               </property>
-               <property name="text">
-                <string>Login to MEGA</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
               </widget>
              </item>
              <item>
@@ -458,10 +492,103 @@ padding-top: 50px;</string>
                     <number>0</number>
                    </property>
                    <item>
+                    <widget class="QStackedWidget" name="sLoginTitle">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>71</height>
+                      </size>
+                     </property>
+                     <property name="currentIndex">
+                      <number>0</number>
+                     </property>
+                     <widget class="QWidget" name="pLoginTitle">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background: transparent;
+image: none;</string>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_18">
+                       <item alignment="Qt::AlignBottom">
+                        <widget class="QLabel" name="lLogin">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                         <property name="focusPolicy">
+                          <enum>Qt::NoFocus</enum>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">image: none;</string>
+                         </property>
+                         <property name="text">
+                          <string>Login to MEGA</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                     <widget class="QWidget" name="pLoginErrors">
+                      <property name="styleSheet">
+                       <string notr="true">background: transparent;</string>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_17">
+                       <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
+                        <widget class="QLabel" name="lLoginErrors">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>26</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: rgba(240,55,58,0.1);</string>
+                         </property>
+                         <property name="text">
+                          <string>Please, enter your e-mail address</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </widget>
+                   </item>
+                   <item>
                     <widget class="QWidget" name="widget" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>65</height>
+                      </size>
+                     </property>
                      <layout class="QVBoxLayout" name="verticalLayout_9">
                       <property name="leftMargin">
-                       <number>12</number>
+                       <number>0</number>
                       </property>
                       <property name="topMargin">
                        <number>0</number>
@@ -472,50 +599,59 @@ padding-top: 50px;</string>
                       <property name="bottomMargin">
                        <number>0</number>
                       </property>
-                      <item>
+                      <item alignment="Qt::AlignHCenter">
                        <widget class="QLineEdit" name="lEmail">
                         <property name="minimumSize">
                          <size>
-                          <width>305</width>
-                          <height>0</height>
+                          <width>296</width>
+                          <height>24</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>305</width>
-                          <height>16777215</height>
+                          <width>296</width>
+                          <height>24</height>
                          </size>
                         </property>
                         <property name="styleSheet">
                          <string notr="true"/>
-                        </property>
-                        <property name="text">
-                         <string/>
                         </property>
                         <property name="placeholderText">
                          <string>Email address</string>
                         </property>
                        </widget>
                       </item>
-                      <item>
+                      <item alignment="Qt::AlignHCenter">
                        <widget class="QLineEdit" name="lPassword">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="minimumSize">
                          <size>
-                          <width>305</width>
-                          <height>0</height>
+                          <width>296</width>
+                          <height>24</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>305</width>
-                          <height>16777215</height>
+                          <width>296</width>
+                          <height>24</height>
                          </size>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::LeftToRight</enum>
                         </property>
                         <property name="text">
                          <string/>
                         </property>
                         <property name="echoMode">
                          <enum>QLineEdit::Password</enum>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                         </property>
                         <property name="placeholderText">
                          <string>Password</string>
@@ -526,7 +662,35 @@ padding-top: 50px;</string>
                     </widget>
                    </item>
                    <item>
+                    <widget class="QPushButton" name="bForgotPassword">
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background: transparent;
+image: none;
+
+</string>
+                     </property>
+                     <property name="text">
+                      <string>Forgot password?</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <widget class="QWidget" name="wLoginButton" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true">image: none;</string>
                      </property>
@@ -556,19 +720,47 @@ padding-top: 50px;</string>
                         </property>
                        </spacer>
                       </item>
-                      <item>
+                      <item alignment="Qt::AlignVCenter">
                        <widget class="QPushButton" name="bLogin">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>120</width>
                           <height>22</height>
                          </size>
                         </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>58</width>
+                          <height>32</height>
+                         </size>
+                        </property>
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true"/>
                         </property>
                         <property name="text">
                          <string>Login</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item alignment="Qt::AlignVCenter">
+                       <widget class="QPushButton" name="bCreateAccount">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="text">
+                         <string>Create account</string>
                         </property>
                        </widget>
                       </item>
@@ -589,92 +781,6 @@ padding-top: 50px;</string>
                     </widget>
                    </item>
                   </layout>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" name="wButtons" native="true">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#wButtons
-{
-background: transparent;
-image: none;
-border-bottom-left-radius: 2px;
-border-bottom-right-radius: 2px;
-}</string>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout">
-                <property name="spacing">
-                 <number>10</number>
-                </property>
-                <property name="leftMargin">
-                 <number>48</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>48</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>15</number>
-                </property>
-                <item>
-                 <widget class="QPushButton" name="bForgotPassword">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background: transparent;
-image: none;
-
-</string>
-                  </property>
-                  <property name="text">
-                   <string>Forgot password?</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>23</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="bCreateAccount">
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background: transparent;
-image: none;
-</string>
-                  </property>
-                  <property name="text">
-                   <string>Create account</string>
-                  </property>
                  </widget>
                 </item>
                </layout>
@@ -763,7 +869,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -959,6 +1065,9 @@ image: none;</string>
                        <height>22</height>
                       </size>
                      </property>
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
@@ -1087,7 +1196,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -1130,6 +1239,1465 @@ image: none;</string>
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="pVerifyEmailAccount">
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>11</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="wContainerVerifyEmail" native="true">
+            <property name="styleSheet">
+             <string notr="true">image: none;</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="wLockedIcon" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>70</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>70</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_9">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>162</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="bLockedIcon">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border: none;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normalon>:/images/locked_account_ico.png</normalon>
+                   </iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_10">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>162</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wContainerVerifyEmail_2" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_12">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>50</number>
+                </property>
+                <property name="topMargin">
+                 <number>60</number>
+                </property>
+                <property name="rightMargin">
+                 <number>50</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QWidget" name="wInsideContainerVerifyEmail" native="true">
+                  <layout class="QVBoxLayout" name="verticalLayout_15">
+                   <property name="spacing">
+                    <number>24</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>2</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lVerifyEmailTitle">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#lVerifyEmailTitle
+{
+	color: #333333;
+    font-family: &quot;Lato&quot;;
+	font-size: 16px;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Locked Account</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lVerifyEmailDesc">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#lVerifyEmailDesc
+{
+	color: rgba(0,0,0,0.85);
+	font-family: &quot;Lato&quot;;
+	font-size: 13px;
+	line-height: 15px;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QWidget" name="wWhyAmIseen" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_12">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <spacer name="horizontalSpacer_19">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>79</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="bWhyAmIseen">
+                     <property name="cursor">
+                      <cursorShape>PointingHandCursor</cursorShape>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#bWhyAmIseen
+{
+
+  color: #F0373A;
+  font-family: &quot;SF Pro Text&quot;;
+  font-size: 13px;
+  line-height: 15px;
+  border: none;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Why am I seeing this?</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_20">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>79</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wVerifyEmailButtons" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <property name="spacing">
+                 <number>12</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_11">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>66</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="bVerifyEmailLogout">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Logout</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="bVerifyEmail">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">#bVerifyEmail:disabled {
+background-color:rgba(240, 55, 58, 0.3);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Resend email</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>65</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wEmailSent" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_11">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>170</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lEmailSent">
+                  <property name="styleSheet">
+                   <string notr="true">#lEmailSent
+{
+  color: #666666;
+  font-family: Lato;
+  font-size: 11px;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Email sent</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_18">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>169</width>
+                    <height>17</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pVerifySMSAccount">
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="wContainerVerifySMS" native="true">
+            <property name="styleSheet">
+             <string notr="true">image: none;</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>11</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="wVerifyIcon" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>70</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>70</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_13">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>162</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="bVerifyIcon">
+                  <property name="minimumSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">border: none;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normalon>:/images/locked_account_ico.png</normalon>
+                   </iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>70</width>
+                    <height>70</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_14">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>162</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wContainerVerifySMS_2" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_12">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>50</number>
+                </property>
+                <property name="topMargin">
+                 <number>60</number>
+                </property>
+                <property name="rightMargin">
+                 <number>50</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QWidget" name="wInsideContainerVerifySMS" native="true">
+                  <layout class="QVBoxLayout" name="verticalLayout_14">
+                   <property name="spacing">
+                    <number>24</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>2</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lVerifySMSTitle">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#lVerifySMSTitle
+{
+        color: #333333;
+        font-family: &quot;Lato&quot;;
+        font-size: 16px;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Locked Account</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lVerifySMSDesc">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#lVerifySMSDesc
+{
+        color: rgba(0,0,0,0.85);
+        font-family: &quot;Lato&quot;;
+        font-size: 13px;
+        line-height: 15px;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignCenter</set>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wVerifySMSButtons" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <property name="spacing">
+                 <number>12</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_11">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>66</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="bVerifySMSLogout">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Logout</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="bVerifySMS">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>34</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Verify now</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>65</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pLogin2FA">
+         <property name="styleSheet">
+          <string notr="true">background: transparent;
+image: none;</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_16">
+          <item>
+           <widget class="QWidget" name="wHeader" native="true">
+            <property name="styleSheet">
+             <string notr="true">background: transparent;</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>8</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>179</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bShield">
+               <property name="minimumSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normalon>:/images/Shield_big.png</normalon>
+                </iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>60</width>
+                 <height>60</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>179</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="wDesc" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>30</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>30</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lDesc">
+               <property name="text">
+                <string>Please enter the code generated by your authentication app</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QWidget" name="w2FACode" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <property name="spacing">
+              <number>9</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>4</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="wCode" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>22</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>22</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>23</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>2</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>13</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lCode">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>6 digit code:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="leCode">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_7">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>13</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="wError" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>158</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lLogin2FAError">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>26</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>26</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(240,55,58,0.1);</string>
+                  </property>
+                  <property name="text">
+                   <string>Invalid code</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>158</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <item>
+             <spacer name="horizontalSpacer_21">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bLogin2FaHelp">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: none;
+      </string>
+              </property>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lLostAuthCode">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>210</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="text">
+               <string>[A]Lost your authenticator device?[/A]</string>
+              </property>
+              <property name="textFormat">
+               <enum>Qt::RichText</enum>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+              <property name="textInteractionFlags">
+               <set>Qt::TextBrowserInteraction</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_16">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QWidget" name="bLayout" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>60</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <property name="leftMargin">
+              <number>32</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>24</number>
+             </property>
+             <property name="bottomMargin">
+              <number>18</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bLoging2FaCancel">
+               <property name="minimumSize">
+                <size>
+                 <width>81</width>
+                 <height>22</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">#bLoging2FaCancel
+{
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                  stop: 0 #ffffff, stop: 1 #fcfcfc);
+border-radius: 3px;
+border: 1px solid rgba(0, 0, 0, 5%);
+padding: 7px 14px 7px 14px;
+font-family: &quot;Lato&quot;;
+font-size: 14px;
+color: #333333;
+
+}</string>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bLogin2FaNext">
+               <property name="minimumSize">
+                <size>
+                 <width>81</width>
+                 <height>22</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">#bLogin2FaNext
+{
+background-color: #F0373A;
+border-radius: 3px;
+border: 1px solid rgba(0, 0, 0, 5%);
+padding: 7px 14px 7px 14px;
+font-family: &quot;Lato&quot;;
+font-size: 14px;
+color: #ffffff;
+}</string>
+               </property>
+               <property name="text">
+                <string>Next</string>
+               </property>
+               <property name="autoDefault">
+                <bool>true</bool>
+               </property>
+               <property name="default">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_15">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>10</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
@@ -1141,13 +2709,13 @@ image: none;</string>
   <tabstop>lEmail</tabstop>
   <tabstop>lPassword</tabstop>
   <tabstop>bLogin</tabstop>
-  <tabstop>bForgotPassword</tabstop>
-  <tabstop>bCreateAccount</tabstop>
   <tabstop>bSettings</tabstop>
   <tabstop>bCancel</tabstop>
+  <tabstop>bLogoLogging</tabstop>
+  <tabstop>bLogoSettingUp</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

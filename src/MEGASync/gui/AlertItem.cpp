@@ -370,11 +370,21 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
                 if (node)
                 {
-                    notificationContent = tr("Your publicly shared [%1] ([%2]) has been taken down")
-                            .arg(node->getType() == MegaNode::TYPE_FILE ? tr("file")
-                                       : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
-                                       : QString::fromUtf8(""))
-                            .arg(formatRichString(QString::fromUtf8(node->getName())));
+                    if (node->getType() == MegaNode::TYPE_FILE)
+                    {
+                        notificationContent = tr("Your publicly shared file ([A]) has been taken down")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+                    else if (node->getType() == MegaNode::TYPE_FOLDER)
+                    {
+                        notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+                    else
+                    {
+                        notificationContent = tr("Your publicly shared has been taken down");
+                    }
+
                     delete node;
                 }
                 else
@@ -388,11 +398,21 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
                 if (node)
                 {
-                    notificationContent = tr("Your publicly shared [A] ([B]) has been reinstated")
-                            .replace(QString::fromUtf8("[A]"), node->getType() == MegaNode::TYPE_FILE ? tr("file")
-                                       : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
-                                       : QString::fromUtf8(""))
-                            .replace(QString::fromUtf8("[B]"), formatRichString(QString::fromUtf8(node->getName())));
+                    if (node->getType() == MegaNode::TYPE_FILE)
+                    {
+                        notificationContent = tr("Your publicly shared file ([A]) has been reinstated")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+                    else if (node->getType() == MegaNode::TYPE_FOLDER)
+                    {
+                        notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                    }
+                    else
+                    {
+                        notificationContent = tr("Your taken down has been reinstated");
+                    }
+
                     delete node;
                 }
                 else
@@ -413,10 +433,26 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
 {
     if (ts != -1)
     {
-        QDateTime date;
-        date.setMSecsSinceEpoch(ts * 1000);
-        ui->lTimeStamp->setText(date.toString(QString::fromUtf8("h:mm ap, d MMMM yyyy")));
+        QString dateTimeFormat;
+        const auto dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
+        const auto sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
+        const auto sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
 
+        if(sameWeek && sameYear)
+        {
+            dateTimeFormat.append(QStringLiteral("dddd, "));
+        }
+        dateTimeFormat.append(QStringLiteral("d MMMM "));
+
+        if(!sameYear)
+        {
+            dateTimeFormat.append(QStringLiteral("yyyy "));
+        }
+
+        const auto language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
+        dateTimeFormat.append(QLocale(language).timeFormat(QLocale::ShortFormat));
+        const auto dateTimeTranslated{QLocale(language).toString(dateTime, dateTimeFormat)};
+        ui->lTimeStamp->setText(dateTimeTranslated);
     }
     else
     {

@@ -4,6 +4,10 @@
 #include <QString>
 #include <QStringList>
 #include <QWidget>
+#import <objc/runtime.h>
+
+Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
+Q_FORWARD_DECLARE_OBJC_CLASS(NSPopover);
 
 void setMacXActivationPolicy();
 QStringList qt_mac_NSArrayToQStringList(void *nsarray);
@@ -23,5 +27,10 @@ bool runHttpServer();
 bool runHttpsServer();
 bool userActive();
 double uptime();
+
+//You take the ownership of the returned value
+NSPopover* allocatePopOverWithView(NSView* view, QSize size);
+void showPopOverRelativeToRect(WId view, id popOver, QPointF rect);
+void releaseIdObject(id obj);
 
 #endif // MACXFUNCTIONS_H

@@ -1,19 +1,25 @@
 #include "UpgradeDialog.h"
+#ifdef __APPLE__
+#include "macx/MacXFunctions.h"
+#endif
 #include "ui_UpgradeDialog.h"
 #include "Utilities.h"
 #include "Preferences.h"
 #include <QDateTime>
 #include <QUrl>
 #include "HighDpiResize.h"
+#include <QMouseEvent>
+#include "mega/types.h"
 
 using namespace mega;
 
-UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent) :
-    QDialog(parent),
+UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *parent)
+    :QDialog(parent),
     ui(new Ui::UpgradeDialog)
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    ui->toolButtonQuestion->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     this->megaApi = megaApi;
     if (pricing)
@@ -27,11 +33,8 @@ UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *pa
 
     finishTime = 0;
 
-    ui->lDescInfo->setTextFormat(Qt::RichText);
-    ui->lDescInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->lDescInfo->text() + QString::fromUtf8("</p>"));
-    ui->lDescRecommendation->setTextFormat(Qt::RichText);   
-    ui->lDescRecommendation->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    ui->lDescRecommendation->setOpenExternalLinks(true);
+    ui->labelInfo->setTextFormat(Qt::RichText);
+    ui->labelInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->labelInfo->text() + QString::fromUtf8("</p>"));
     refreshAccountDetails();
 
     plansLayout = new QHBoxLayout();
@@ -47,6 +50,12 @@ UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *pa
     timer->setSingleShot(false);
     connect(timer, SIGNAL(timeout()), this, SLOT(unitTimeElapsed()));
     highDpiResize.init(this);
+
+#ifdef __APPLE__
+    QSize size = mPopOver->size();
+    m_NativePopOver = allocatePopOverWithView(mPopOver->nativeView(), size);
+    mPopOver->show();
+#endif
 }
 
 void UpgradeDialog::setTimestamp(long long time)
@@ -80,32 +89,23 @@ void UpgradeDialog::refreshAccountDetails()
     Preferences *preferences = Preferences::instance();
     if (preferences->isTemporalBandwidthValid() && preferences->temporalBandwidth())
     {
-        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
-        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
-        Preferences *preferences = Preferences::instance();
-        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
-        {
-            mega::MegaHandle aff = preferences->lastPublicHandle();
-            if (aff != mega::INVALID_HANDLE)
-            {
-                char *base64aff = mega::MegaApi::handleToBase64(aff);
-                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
-                delete [] base64aff;
-            }
-        }
+        QString url = QString::fromUtf8("mega://#pro");
+        Utilities::getPROurlWithParameters(url);
 
-        ui->lDescRecommendation->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours,"
-                                                                                                    " which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A],"
-                                                                                                    " which will give you your own transfer quota package and also ample extra storage space. ")
-                                        .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
-                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
-                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
-                                        .replace(QString::fromUtf8(" 6 "), QString::fromUtf8(" ").append(QString::number(preferences->temporalBandwidthInterval())).append(QString::fromUtf8(" ")))
-                                         + QString::fromUtf8("</p>"));
+        mPopOver->updateMessage(tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours,"
+                                   " which took you over our current limit. To remove this limit,"
+                                   " you can [A]upgrade to PRO[/A], which will give you your own transfer quota"
+                                   " package and also ample extra storage space. ")
+                           .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
+                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
+                           .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
+                           .replace(QString::fromUtf8(" 6 "), QString::fromUtf8(" ").append(QString::number(preferences->temporalBandwidthInterval())).append(QString::fromUtf8(" ")))
+                           + QString::fromUtf8("</p>"));
+        ui->toolButtonQuestion->setVisible(true);
     }
     else
     {
-        ui->lDescRecommendation->setText(QString());
+        ui->toolButtonQuestion->setVisible(false);
     }
 }
 
@@ -154,6 +154,43 @@ void UpgradeDialog::clearPlans()
     }
 }
 
+void UpgradeDialog::mousePressEvent(QMouseEvent *event)
+{
+    const auto mousePositionButtonRelated{ui->toolButtonQuestion->mapFrom(this, event->pos())};
+    if (ui->toolButtonQuestion->rect().contains(mousePositionButtonRelated))
+    {
+#ifdef __APPLE__
+        showPopOverRelativeToRect(winId(), m_NativePopOver, event->localPos());
+#else
+
+        const auto mouseGlobalPosition{event->globalPos()};
+
+        mPopOver->show();
+        mPopOver->ensurePolished();
+        mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width() / 2, mPopOver->height() + 10));
+        Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
+
+        const auto initialWidth{mPopOver->width()};
+        const auto initialHeight{mPopOver->height()};
+
+        // size might be incorrect the first time it's shown. This works around that and repositions at the expected position afterwards
+        QTimer::singleShot(1, this, [this, mouseGlobalPosition, initialWidth, initialHeight] ()
+        {
+            mPopOver->update();
+            mPopOver->ensurePolished();
+
+            const auto sizeChanged{initialWidth != mPopOver->width() || initialHeight != mPopOver->height()};
+            if (sizeChanged)
+            {
+                mPopOver->move(mouseGlobalPosition - QPoint(mPopOver->width()/2, mPopOver->height()));
+                Utilities::adjustToScreenFunc(mouseGlobalPosition, mPopOver.get());
+                mPopOver->update();
+            }
+        });
+#endif
+    }
+}
+
 QString UpgradeDialog::convertCurrency(const char *currency)
 {
     if (!strcmp(currency, "EUR"))
@@ -176,7 +213,7 @@ void UpgradeDialog::unitTimeElapsed()
     {
         remainingTime = 0;
     }
-    ui->lRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ").arg(Utilities::getTimeString(remainingTime)));
+    ui->labelRemainingTime->setText(tr("Please upgrade to Pro to continue immediately, or wait %1 to continue for free. ").arg(Utilities::getTimeString(remainingTime)));
 }
 
 void UpgradeDialog::changeEvent(QEvent *event)
@@ -184,9 +221,9 @@ void UpgradeDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        if (!ui->lDescInfo->text().contains(QString::fromUtf8("line-height")))
+        if (!ui->labelInfo->text().contains(QString::fromUtf8("line-height")))
         {
-            ui->lDescInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->lDescInfo->text() + QString::fromUtf8("</p>"));
+            ui->labelInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->labelInfo->text() + QString::fromUtf8("</p>"));
         }
         refreshAccountDetails();
     }

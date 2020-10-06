@@ -10,6 +10,25 @@
 #include <QtConcurrent/QtConcurrent>
 #endif
 
+QString getArchitectureString()
+{
+    QString architecture;
+    const auto separationString{QStringLiteral(" ") + QChar(0x2022) + QStringLiteral(" ")};
+
+    constexpr auto is32bits{sizeof(char*) == 4};
+    if(is32bits)
+    {
+        architecture.append(separationString + QStringLiteral("32-bit"));
+    }
+
+    constexpr auto is64bits{sizeof(char*) == 8};
+    if(is64bits)
+    {
+        architecture.append(separationString + QStringLiteral("64-bit"));
+    }
+    return architecture;
+}
+
 ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString changeLog, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ChangeLogDialog)
@@ -37,8 +56,11 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
                           "}"
                  ""));
 
+    tweakStrings();
+
     ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     ui->tChangelog->document()->setDocumentMargin(16.0);
+    ui->labelArchitecture->setText(getArchitectureString());
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -55,11 +77,11 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 {
     QString changelog = QCoreApplication::translate("Preferences", notes.toUtf8().constData());
     ui->tChangelog->setHtml(QString::fromUtf8("<p style='line-height: 119%;'><span style='margin: 16px; font-family: Lato; font-size:11px; color: #333333;'>") +
-                             tr("New in this version:") +
-                             QString::fromUtf8("</span></p>") +
-                             QString::fromUtf8("<p style=' line-height: 146%;'><span style='font-family: Lato; font-size:11px; color: #666666;'>") +
-                             changelog.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
-                             QString::fromUtf8("</span></p>"));
+                            tr("New in this version:") +
+                            QString::fromUtf8("</span></p>") +
+                            QString::fromUtf8("<p style=' line-height: 146%;'><span style='font-family: Lato; font-size:11px; color: #666666;'>") +
+                            changelog.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
+                            QString::fromUtf8("</span></p>"));
 }
 
 void ChangeLogDialog::on_bTerms_clicked()
@@ -91,7 +113,18 @@ void ChangeLogDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        tweakStrings();
         setChangeLogNotes(Preferences::CHANGELOG);
     }
     QDialog::changeEvent(event);
+}
+
+void ChangeLogDialog::tweakStrings()
+{
+    ui->lLGPL->setText(ui->lLGPL->text().replace(QString::fromUtf8("[A]"),
+                                              QString::fromUtf8("<html><p style='line-height: 16px;'>"))
+                                        .replace(QString::fromUtf8("[C]"),
+                                              QString::fromUtf8("&copy;"))
+                                        .replace(QString::fromUtf8("[/A]"),
+                                                QString::fromUtf8("</p></html>")));
 }

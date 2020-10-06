@@ -17,7 +17,7 @@ win32 {
                 $$PWD/win/WintoastCompat.h
 
     LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd
-    DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
+    DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x06010000 _WIN32_WINNT=0x0601
 }
 
 unix:!macx {
@@ -26,12 +26,12 @@ unix:!macx {
 	PREFIX = $$THE_RPM_BUILD_ROOT/usr
 	}
 	DATADIR =$$PREFIX/share
-	
+
 	distro.target = $$PWD/linux/data/distro
     distro.path = $$DATADIR/doc/megasync
     system(command -v lsb_release): distro.commands = lsb_release -ds > $$distro.target
     distro.files = $$distro.target
-    
+
     version.target = $$PWD/linux/data/version
 	version.path = $$DATADIR/doc/megasync
     system(command -v lsb_release): version.commands = lsb_release -rs > $$version.target
@@ -47,7 +47,7 @@ unix:!macx {
         $$PWD/linux/ExtServer.h \
         $$PWD/linux/NotifyServer.h
 
-    LIBS += -lssl -lcrypto -ldl
+    LIBS += -lssl -lcrypto -ldl -lxcb
     DEFINES += USE_DBUS
 
     # do not install desktop files if no_desktop is defined,
@@ -86,6 +86,7 @@ unix:!macx {
 
         trayiconssynching.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/synching.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megasynching.svg
         trayiconswarning.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/warning.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megawarning.svg
+        trayiconsalert.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/alert.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megaalert.svg
         trayiconspaused.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/paused.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megapaused.svg
         trayiconslogging.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/logging.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megalogging.svg
         trayiconsuptodate.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/uptodate.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megauptodate.svg
@@ -93,22 +94,25 @@ unix:!macx {
 
         trayiconssynching.path = $${HICOLOR}/scalable/status
         trayiconswarning.path = $${HICOLOR}/scalable/status
+        trayiconsalert.path = $${HICOLOR}/scalable/status
         trayiconspaused.path = $${HICOLOR}/scalable/status
         trayiconslogging.path = $${HICOLOR}/scalable/status
         trayiconsuptodate.path = $${HICOLOR}/scalable/status
 
         trayiconssynching.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megasynching.svg
         trayiconswarning.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megawarning.svg
+        trayiconsalert.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megaalert.svg
         trayiconspaused.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megapaused.svg
         trayiconslogging.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megalogging.svg
         trayiconsuptodate.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megauptodate.svg
 
-        INSTALLS += trayiconssynching trayiconswarning trayiconspaused trayiconslogging trayiconsuptodate
+        INSTALLS += trayiconssynching trayiconswarning trayiconsalert trayiconspaused trayiconslogging trayiconsuptodate
 
         MONOCOLOR = $$DESKTOP_DESTDIR/share/icons/ubuntu-mono-dark
 
         trayiconssynchingmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/synching_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megasynching.svg
         trayiconswarningmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/warning_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megawarning.svg
+        trayiconsalertmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/alert_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megaalert.svg
         trayiconspausedmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/paused_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megapaused.svg
         trayiconsloggingmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/logging_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megalogging.svg
         trayiconsuptodatemono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/uptodate_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megauptodate.svg
@@ -116,17 +120,19 @@ unix:!macx {
 
         trayiconssynchingmono.path = $${MONOCOLOR}/status/24
         trayiconswarningmono.path = $${MONOCOLOR}/status/24
+        trayiconsalertmono.path = $${MONOCOLOR}/status/24
         trayiconspausedmono.path = $${MONOCOLOR}/status/24
         trayiconsloggingmono.path = $${MONOCOLOR}/status/24
         trayiconsuptodatemono.path = $${MONOCOLOR}/status/24
 
         trayiconssynchingmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megasynching.svg
         trayiconswarningmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megawarning.svg
+        trayiconsalertmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megaalert.svg
         trayiconspausedmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megapaused.svg
         trayiconsloggingmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megalogging.svg
         trayiconsuptodatemono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megauptodate.svg
 
-        INSTALLS += trayiconssynchingmono trayiconswarningmono trayiconspausedmono trayiconsloggingmono trayiconsuptodatemono
+        INSTALLS += trayiconssynchingmono trayiconswarningmono trayiconsalertmono trayiconspausedmono trayiconsloggingmono trayiconsuptodatemono
 
     } else {
         message("Skipping desktop files installation.")
@@ -149,7 +155,10 @@ macx {
         $$PWD/macx/MacXLocalServerPrivate.h \
         $$PWD/macx/MacXLocalSocket.h \
         $$PWD/macx/MacXLocalSocketPrivate.h \
-        $$PWD/macx/Protocol.h
+        $$PWD/macx/NSPopover+MISSINGBackgroundView.h \
+        $$PWD/macx/LockedPopOver.h \
+        $$PWD/macx/Protocol.h \
+        $$PWD/macx/DynamicTransferQuotaPopOver.h
 
 
     OBJECTIVE_SOURCES += \
@@ -164,7 +173,10 @@ macx {
             $$PWD/macx/MacXLocalServer.mm \
             $$PWD/macx/MacXLocalServerPrivate.mm \
             $$PWD/macx/MacXLocalSocket.mm \
-            $$PWD/macx/MacXLocalSocketPrivate.mm
+            $$PWD/macx/MacXLocalSocketPrivate.mm \
+            $$PWD/macx/NSPopover+MISSINGBackgroundView.mm \
+            $$PWD/macx/LockedPopOver.mm \
+            $$PWD/macx/DynamicTransferQuotaPopOver.mm
 
     LIBS += -framework Cocoa
     LIBS += -framework Security

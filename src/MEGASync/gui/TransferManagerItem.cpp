@@ -159,16 +159,19 @@ void TransferManagerItem::setTransferState(int value)
 
 void TransferManagerItem::finishTransfer()
 {
+    ui->lCompleted->setIconSize(QSize(12, 12));
     ui->sTransferState->setCurrentWidget(ui->stateCompleted);
-    if (transferState == MegaTransfer::STATE_COMPLETED)
+    if (transferError < 0)
     {
-        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
+        updateFinishedIco(true);
     }
     else
     {
-        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
+        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+        updateFinishedIco(false);
     }
-    ui->lCompleted->setIconSize(QSize(12, 12));
+
     ui->lTotalCompleted->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
 }
 
@@ -181,23 +184,13 @@ void TransferManagerItem::updateTransfer()
         {
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
-            int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
+            const auto totalRemainingSeconds{mTransferRemainigTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
-            if (totalRemainingSeconds)
+            const auto printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
+            if (printableValue)
             {
-                if (totalRemainingSeconds < 60)
-                {
-                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
-                }
-                else
-                {
-                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
-                }
-            }
-            else
-            {
-                remainingTime = QString::fromAscii("");
+                remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
             }
             ui->lRemainingTime->setText(remainingTime);
 
@@ -259,8 +252,22 @@ void TransferManagerItem::updateTransfer()
     ui->pbTransfer->setValue(permil);
 
     // Update transferred bytes
-    ui->lTotal->setText(QString::fromUtf8("%1%2").arg(!totalTransferredBytes ? QString::fromUtf8(""): QString::fromUtf8("%1<span style=\"color:#777777; text-decoration:none;\">&nbsp;&nbsp;of&nbsp;&nbsp;</span>").arg(Utilities::getSizeString(totalTransferredBytes)))
-                        .arg(Utilities::getSizeString(totalSize)));
+    const auto totalBytesText{Utilities::getSizeString(totalSize)};
+    const auto totalBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalBytesText)};
+    if(totalTransferredBytes)
+    {
+        const auto totalTransferredBytesText{Utilities::getSizeString(totalTransferredBytes)};
+        const auto totalTransferredBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalTransferredBytesText)};
+        auto transferredBytesText{tr("%1 of %2")};
+        transferredBytesText.replace(QStringLiteral("%1"), totalTransferredBytesStyled);
+        transferredBytesText.replace(QStringLiteral("%2"), totalBytesStyled);
+        ui->lTotal->setText(transferredBytesText);
+    }
+    else
+    {
+        ui->lTotal->setText(totalBytesStyled);
+    }
+
 }
 
 void TransferManagerItem::updateFinishedTime()
@@ -348,6 +355,28 @@ void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
     }
 
     emit refreshTransfer(this->getTransferTag());
+}
+
+void TransferManagerItem::updateFinishedIco(bool transferErrors)
+{
+    QIcon iconCompleted;
+
+    switch (type)
+    {
+        case MegaTransfer::TYPE_UPLOAD:
+            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/upload_fail_item_ico.png")
+                                                                      : QString::fromUtf8(":/images/uploaded_item_ico.png"));
+            break;
+        case MegaTransfer::TYPE_DOWNLOAD:
+            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/download_fail_item_ico.png")
+                                                                      : QString::fromUtf8(":/images/downloaded_item_ico.png"));
+            break;
+        default:
+            break;
+    }
+
+    ui->lTransferTypeCompleted->setIcon(iconCompleted);
+    ui->lTransferTypeCompleted->setIconSize(QSize(ui->lTransferTypeCompleted->width(), ui->lTransferTypeCompleted->height()));
 }
 
 void TransferManagerItem::loadDefaultTransferIcon()

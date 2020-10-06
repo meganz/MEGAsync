@@ -1,3 +1,4 @@
+#include "model/Model.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
 
@@ -11,22 +12,21 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.0.0";
-const int Preferences::VERSION_CODE = 4300;
-const int Preferences::BUILD_ID = 8;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.5.0";
+const int Preferences::VERSION_CODE = 4305;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.0");
-QString Preferences::SDK_ID = QString::fromAscii("1c1afc1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.5");
+QString Preferences::SDK_ID = QString::fromAscii("a2ec5c1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Support for user notifications.\n"
-    "- Support to send bug reports from settings dialog.\n"
-    "- New restyling of main dialog.\n"
-    "- Performance improvements when dealing with huge amount of syncs and transfers.\n"
-    "- Improved support for business accounts.\n"
-    "- Support links to files and folders inside a public folder link.\n"
-    "- Improvements for synchronization with FAT32 filesystems.\n"
+    "- Improve user experience when exceeded transfer allowance.\n"
+    "- Improvements in translation.\n"
+    "- Fixed issues during processing of RAW images.\n"
+    "- Reduce memory usage on macOS system.\n"
+    "- Stop escaping filenames when special characters are supported by target filesystem.\n"
+    "- Integration of 2FA form within main dialog.\n"
     "- Other UI fixes and adjustments.\n"
-    "- Other performance improvements, UI fixes and adjustments."));
+    "- Other performance improvements and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -39,9 +39,17 @@ int Preferences::MIN_FIRST_SYNC_DELAY_S = 40; // Min delay time to wait for loca
 
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
-long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
-long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
+long long Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS = 259200000; // 72 hours
+long long Preferences::OQ_UI_MESSAGE_INTERVAL_MS = 129600000; // 36 hours
+long long Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS = 86400000; //24 hours
 long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
+
+std::chrono::milliseconds Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION{std::chrono::hours(7*24)};
+std::chrono::milliseconds Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
+std::chrono::milliseconds Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION{std::chrono::hours(36)};
+std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATION{std::chrono::hours(72)};
+std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
+std::chrono::milliseconds Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME{std::chrono::hours{12}};
 
 long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
@@ -127,7 +135,7 @@ const QString Preferences::defaultHttpsCert = QString::fromUtf8(
             "WJ1PfDrK\n"
             "-----END CERTIFICATE-----\n");
 
-const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(            
+const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
             "-----BEGIN CERTIFICATE-----\n"
             "MIIFdDCCBFygAwIBAgIQJ2buVutJ846r13Ci/ITeIjANBgkqhkiG9w0BAQwFADBv\n"
             "MQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFk\n"
@@ -209,7 +217,11 @@ bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
 
 #ifdef WIN32
-    const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
+    #ifdef _WIN64
+        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync64/v.txt");
+    #else
+        const QString Preferences::UPDATE_CHECK_URL             = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
+    #endif
 #else
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/msync/v.txt");
 #endif
@@ -221,12 +233,13 @@ const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("https://g.api.mega.co.nz/cs");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
+const QString Preferences::syncsGroupByTagKey       = QString::fromAscii("SyncsByTag");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
+const QString Preferences::currentAccountStatusKey  = QString::fromAscii("currentAccountStatus");
+const QString Preferences::needsFetchNodesKey       = QString::fromAscii("needsFetchNodes");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
 const QString Preferences::firstNameKey             = QString::fromAscii("firstName");
 const QString Preferences::lastNameKey              = QString::fromAscii("lastName");
-const QString Preferences::emailHashKey             = QString::fromAscii("emailHash");
-const QString Preferences::privatePwKey             = QString::fromAscii("privatePw");
 const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
 const QString Preferences::usedStorageKey           = QString::fromAscii("usedStorage");
 const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudDriveStorage");
@@ -249,9 +262,25 @@ const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBa
 const QString Preferences::overStorageDialogExecutionKey = QString::fromAscii("overStorageDialogExecution");
 const QString Preferences::overStorageNotificationExecutionKey = QString::fromAscii("overStorageNotificationExecution");
 const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
+const QString Preferences::payWallNotificationExecutionKey = QString::fromAscii("payWallNotificationExecution");
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
 const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLight");
+const QString Preferences::businessStateQKey = QString::fromAscii("businessState");
+const QString Preferences::blockedStateQKey = QString::fromAscii("blockedState");
+
+const QString Preferences::transferOverQuotaDialogLastExecutionKey = QString::fromAscii("transferOverQuotaDialogLastExecution");
+const QString Preferences::transferOverQuotaOsNotificationLastExecutionKey = QString::fromAscii("transferOverQuotaOsNotificationLastExecution");
+const QString Preferences::transferAlmostOverQuotaOsNotificationLastExecutionKey = QString::fromAscii("transferAlmostOverQuotaOsNotificationLastExecution");
+const QString Preferences::transferAlmostOverQuotaUiAlertLastExecutionKey = QString::fromAscii("transferAlmostOverQuotaUiAlertLastExecution");
+const QString Preferences::transferOverQuotaUiAlertLastExecutionKey = QString::fromAscii("transferOverQuotaUiAlertDisableUntil");
+
+const QString Preferences::transferOverQuotaSyncDialogLastExecutionKey = QString::fromAscii("transferOverQuotaSyncDialogLastExecution");
+const QString Preferences::transferOverQuotaDownloadsDialogLastExecutionKey = QString::fromAscii("transferOverQuotaDownloadsDialogLastExecution");
+const QString Preferences::transferOverQuotaImportLinksDialogLastExecutionKey = QString::fromAscii("transferOverQuotaImportLinksDialogLastExecution");
+const QString Preferences::transferOverQuotaStreamDialogLastExecutionKey = QString::fromAscii("transferOverQuotaStreamDialogLastExecution");
+const QString Preferences::storageOverQuotaUploadsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaUploadsDialogLastExecution");
+const QString Preferences::storageOverQuotaSyncsDialogLastExecutionKey = QString::fromAscii("storageOverQuotaSyncsDialogLastExecution");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
@@ -290,6 +319,7 @@ const QString Preferences::proxyPortKey             = QString::fromAscii("proxyP
 const QString Preferences::proxyRequiresAuthKey     = QString::fromAscii("proxyRequiresAuth");
 const QString Preferences::proxyUsernameKey         = QString::fromAscii("proxyUsername");
 const QString Preferences::proxyPasswordKey         = QString::fromAscii("proxyPassword");
+const QString Preferences::configuredSyncsKey       = QString::fromAscii("configuredSyncs");
 const QString Preferences::syncNameKey              = QString::fromAscii("syncName");
 const QString Preferences::syncIdKey                = QString::fromAscii("syncId");
 const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
@@ -303,11 +333,7 @@ const QString Preferences::importFolderKey          = QString::fromAscii("import
 const QString Preferences::hasDefaultUploadFolderKey    = QString::fromAscii("hasDefaultUploadFolder");
 const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromAscii("hasDefaultDownloadFolder");
 const QString Preferences::hasDefaultImportFolderKey    = QString::fromAscii("hasDefaultImportFolder");
-const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
-const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
-const QString Preferences::localPathKey             = QString::fromAscii("localPath");
 const QString Preferences::localFingerprintKey      = QString::fromAscii("localFingerprint");
-const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
 const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
 const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUploadsPaused");
@@ -346,6 +372,8 @@ const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsC
 const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
 const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
+const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
+const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -383,6 +411,9 @@ const int Preferences::defaultProxyPort             = 8080;
 const bool Preferences::defaultProxyRequiresAuth    = false;
 const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
 const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
+
+const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
+const bool  Preferences::defaultNeedsFetchNodes   = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -474,22 +505,14 @@ void Preferences::initialize(QString dataPath)
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
     diffTimeWithSDK = 0;
-    overStorageDialogExecution = -1;
-    overStorageNotificationExecution = -1;
-    almostOverStorageNotificationExecution = -1;
-    almostOverStorageDismissExecution = -1;
-    overStorageDismissExecution = -1;
     lastTransferNotification = 0;
     clearTemporalBandwidth();
 }
 
 QString Preferences::email()
 {
-    mutex.lock();
     assert(logged());
-    QString value = settings->value(emailKey).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(emailKey);
 }
 
 void Preferences::setEmail(QString email)
@@ -497,6 +520,7 @@ void Preferences::setEmail(QString email)
     mutex.lock();
     login(email);
     settings->setValue(emailKey, email);
+    setCachedValue(emailKey, email);
     settings->sync();
     mutex.unlock();
     emit stateChanged();
@@ -504,72 +528,96 @@ void Preferences::setEmail(QString email)
 
 QString Preferences::firstName()
 {
-    mutex.lock();
     assert(logged());
-    QString value = settings->value(firstNameKey, QString()).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(firstNameKey, QString());
 }
 
 void Preferences::setFirstName(QString firstName)
 {
-    mutex.lock();
-    settings->setValue(firstNameKey, firstName);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(firstNameKey, firstName);
 }
 
 QString Preferences::lastName()
 {
-    mutex.lock();
     assert(logged());
-    QString value = settings->value(lastNameKey, QString()).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(lastNameKey, QString());
 }
 
 void Preferences::setLastName(QString lastName)
 {
-    mutex.lock();
-    settings->setValue(lastNameKey, lastName);
-    settings->sync();
-    mutex.unlock();
-}
-
-QString Preferences::emailHash()
-{
-    mutex.lock();
-    assert(logged());
-    QString value = settings->value(emailHashKey).toString();
-    mutex.unlock();
-    return value;
-}
-
-QString Preferences::privatePw()
-{
-    mutex.lock();
-    assert(logged());
-    QString value = settings->value(privatePwKey).toString();
-    mutex.unlock();
-    return value;
+    setValueAndSyncConcurrent(lastNameKey, lastName);
 }
 
 void Preferences::setSession(QString session)
 {
     mutex.lock();
-    assert(logged());
-    settings->setValue(sessionKey, session);
-    settings->remove(emailHashKey);
-    settings->remove(privatePwKey);
+    storeSessionInGeneral(session);
     settings->sync();
     mutex.unlock();
 }
 
+void Preferences::setSessionInUserGroup(QString session)
+{
+    assert(logged());
+    setValueAndSyncConcurrent(sessionKey, session);
+}
+
+void Preferences::storeSessionInGeneral(QString session)
+{
+    mutex.lock();
+
+    QString currentAccount;
+    if (logged())
+    {
+        settings->setValue(sessionKey, session); //store in user group too (for backwards compatibility)
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(sessionKey, session);
+    setCachedValue(sessionKey, session);
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    settings->sync();
+    mutex.unlock();
+}
+
+QString Preferences::getSessionInGeneral()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    QString value = getValue<QString>(sessionKey);
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+    return value;
+}
+
+
 QString Preferences::getSession()
 {
     mutex.lock();
-    assert(logged());
-    QString value = settings->value(sessionKey).toString();
+    QString value;
+    if (logged())
+    {
+        value = settings->value(sessionKey).toString(); // for MEGAsync prior unfinished fetchnodes resumable sessions (<=4.3.1)
+    }
+
+    if (value.isEmpty() && needsFetchNodesInGeneral())
+    {
+        value = getSessionInGeneral(); // for MEGAsync with unfinished fetchnodes resumable sessions (>4.3.1)
+    }
+
     mutex.unlock();
     return value;
 }
@@ -578,8 +626,10 @@ unsigned long long Preferences::transferIdentifier()
 {
     mutex.lock();
     assert(logged());
-    long long value = settings->value(transferIdentifierKey, defaultTransferIdentifier).toLongLong();
-    settings->setValue(transferIdentifierKey, ++value);
+    long long value = getValue<long long>(transferIdentifierKey, defaultTransferIdentifier);
+    value++;
+    settings->setValue(transferIdentifierKey, value);
+    setCachedValue(transferIdentifierKey, value);
     mutex.unlock();
     return value;
 }
@@ -596,41 +646,27 @@ void Preferences::setLastTransferNotificationTimestamp()
 
 long long Preferences::totalStorage()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(totalStorageKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(totalStorageKey);
 }
 
 void Preferences::setTotalStorage(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(totalStorageKey, value);
-    mutex.unlock();
+    setValueConcurrent(totalStorageKey, value);
 }
 
 long long Preferences::usedStorage()
 {
-    mutex.lock();
     assert(logged());
-
-    long long value = settings->value(usedStorageKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(usedStorageKey);
 }
 
 void Preferences::setUsedStorage(long long value)
 {
-    mutex.lock();
     assert(logged());
-    if (value < 0)
-    {
-        value = 0;
-    }
-    settings->setValue(usedStorageKey, value);
-    mutex.unlock();
+    value = std::max(value, static_cast<long long>(0));
+    setValueConcurrent(usedStorageKey, value);
 }
 
 long long Preferences::availableStorage()
@@ -646,257 +682,182 @@ long long Preferences::availableStorage()
 
 long long Preferences::cloudDriveStorage()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(cloudDriveStorageKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(cloudDriveStorageKey);
 }
 
 void Preferences::setCloudDriveStorage(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(cloudDriveStorageKey, value);
-    mutex.unlock();
+    setValueConcurrent(cloudDriveStorageKey, value);
 }
 
 long long Preferences::inboxStorage()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(inboxStorageKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(inboxStorageKey);
 }
 
 void Preferences::setInboxStorage(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(inboxStorageKey, value);
-    mutex.unlock();
+    setValueConcurrent(inboxStorageKey, value);
 }
 
 long long Preferences::rubbishStorage()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(rubbishStorageKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(rubbishStorageKey);
 }
 
 void Preferences::setRubbishStorage(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(rubbishStorageKey, value);
-    mutex.unlock();
+    setValueConcurrent(rubbishStorageKey, value);
 }
 
 long long Preferences::inShareStorage()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(inShareStorageKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(inShareStorageKey);
 }
 
 void Preferences::setInShareStorage(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(inShareStorageKey, value);
-    mutex.unlock();
+    setValueConcurrent(inShareStorageKey, value);
 }
 
 long long Preferences::versionsStorage()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(versionsStorageKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(versionsStorageKey);
 }
 
 void Preferences::setVersionsStorage(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(versionsStorageKey, value);
-    mutex.unlock();
+    setValueConcurrent(versionsStorageKey, value);
 }
 
 long long Preferences::cloudDriveFiles()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(cloudDriveFilesKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(cloudDriveFilesKey);
 }
 
 void Preferences::setCloudDriveFiles(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(cloudDriveFilesKey, value);
-    mutex.unlock();
+    setValueConcurrent(cloudDriveFilesKey, value);
 }
 
 long long Preferences::inboxFiles()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(inboxFilesKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(inboxFilesKey);
 }
 
 void Preferences::setInboxFiles(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(inboxFilesKey, value);
-    mutex.unlock();
+    setValueConcurrent(inboxFilesKey, value);
 }
 
 long long Preferences::rubbishFiles()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(rubbishFilesKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(rubbishFilesKey);
 }
 
 void Preferences::setRubbishFiles(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(rubbishFilesKey, value);
-    mutex.unlock();
+    setValueConcurrent(rubbishFilesKey, value);
 }
 
 long long Preferences::inShareFiles()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(inShareFilesKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(inShareFilesKey);
 }
 
 void Preferences::setInShareFiles(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(inShareFilesKey, value);
-    mutex.unlock();
+    setValueConcurrent(inShareFilesKey, value);
 }
 
 long long Preferences::cloudDriveFolders()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(cloudDriveFoldersKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(cloudDriveFoldersKey);
 }
 
 void Preferences::setCloudDriveFolders(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(cloudDriveFoldersKey, value);
-    mutex.unlock();
+    setValueConcurrent(cloudDriveFoldersKey, value);
 }
 
 long long Preferences::inboxFolders()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(inboxFoldersKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(inboxFoldersKey);
 }
 
 void Preferences::setInboxFolders(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(inboxFoldersKey, value);
-    mutex.unlock();
+    setValueConcurrent(inboxFoldersKey, value);
 }
 
 long long Preferences::rubbishFolders()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(rubbishFoldersKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(rubbishFoldersKey);
 }
 
 void Preferences::setRubbishFolders(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(rubbishFoldersKey, value);
-    mutex.unlock();
+    setValueConcurrent(rubbishFoldersKey, value);
 }
 
 long long Preferences::inShareFolders()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(inShareFoldersKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(inShareFoldersKey);
 }
 
 void Preferences::setInShareFolders(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(inShareFoldersKey, value);
-    mutex.unlock();
+    setValueConcurrent(inShareFoldersKey, value);
 }
 
 long long Preferences::totalBandwidth()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(totalBandwidthKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(totalBandwidthKey);
 }
 
 void Preferences::setTotalBandwidth(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(totalBandwidthKey, value);
-    mutex.unlock();
+    setValueConcurrent(totalBandwidthKey, value);
 }
 
 int Preferences::bandwidthInterval()
 {
-    mutex.lock();
     assert(logged());
-    int value = settings->value(usedBandwidthIntervalKey).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(usedBandwidthIntervalKey);
 }
 
 void Preferences::setBandwidthInterval(int value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(usedBandwidthIntervalKey, value);
-    mutex.unlock();
+    setValueConcurrent(usedBandwidthIntervalKey, value);
 }
 
 bool Preferences::isTemporalBandwidthValid()
@@ -916,135 +877,314 @@ void Preferences::setDsDiffTimeWithSDK(long long diffTime)
 
 long long Preferences::getOverStorageDialogExecution()
 {
-    if (overStorageDialogExecution != -1)
-    {
-        return overStorageDialogExecution;
-    }
-
-    mutex.lock();
     assert(logged());
-    overStorageDialogExecution = settings->value(overStorageDialogExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return overStorageDialogExecution;
+    return getValueConcurrent<long long>(overStorageDialogExecutionKey, defaultTimeStamp);
 }
 
 void Preferences::setOverStorageDialogExecution(long long timestamp)
 {
-    overStorageDialogExecution = timestamp;
-    mutex.lock();
     assert(logged());
-    settings->setValue(overStorageDialogExecutionKey, timestamp);
-    mutex.unlock();
+    setValueConcurrent(overStorageDialogExecutionKey, timestamp);
 }
 
 long long Preferences::getOverStorageNotificationExecution()
 {
-    if (overStorageNotificationExecution != -1)
-    {
-        return overStorageNotificationExecution;
-    }
-
-    mutex.lock();
     assert(logged());
-    overStorageNotificationExecution = settings->value(overStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return overStorageNotificationExecution;
+    return getValueConcurrent<long long>(overStorageNotificationExecutionKey, defaultTimeStamp);
 }
 
 void Preferences::setOverStorageNotificationExecution(long long timestamp)
 {
-    overStorageNotificationExecution = timestamp;
-    mutex.lock();
     assert(logged());
-    settings->setValue(overStorageNotificationExecutionKey, timestamp);
-    mutex.unlock();
+    setValueConcurrent(overStorageNotificationExecutionKey, timestamp);
 }
 
 long long Preferences::getAlmostOverStorageNotificationExecution()
 {
-    if (almostOverStorageNotificationExecution != -1)
-    {
-        return almostOverStorageNotificationExecution;
-    }
-
-    mutex.lock();
     assert(logged());
-    almostOverStorageNotificationExecution = settings->value(almostOverStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return almostOverStorageNotificationExecution;
+    return getValueConcurrent<long long>(almostOverStorageNotificationExecutionKey, defaultTimeStamp);
 }
 
 void Preferences::setAlmostOverStorageNotificationExecution(long long timestamp)
 {
-    almostOverStorageNotificationExecution = timestamp;
-    mutex.lock();
     assert(logged());
-    settings->setValue(almostOverStorageNotificationExecutionKey, timestamp);
-    mutex.unlock();
+    setValueConcurrent(almostOverStorageNotificationExecutionKey, timestamp);
+}
+
+long long Preferences::getPayWallNotificationExecution()
+{
+    assert(logged());
+    return getValueConcurrent<long long>(payWallNotificationExecutionKey, defaultTimeStamp);
+}
+
+void Preferences::setPayWallNotificationExecution(long long timestamp)
+{
+    assert(logged());
+    setValueConcurrent(payWallNotificationExecutionKey, timestamp);
 }
 
 long long Preferences::getAlmostOverStorageDismissExecution()
 {
-    if (almostOverStorageDismissExecution != -1)
-    {
-        return almostOverStorageDismissExecution;
-    }
-
-    mutex.lock();
     assert(logged());
-    almostOverStorageDismissExecution = settings->value(almostOverStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return almostOverStorageDismissExecution;
+    return getValueConcurrent<long long>(almostOverStorageDismissExecutionKey, defaultTimeStamp);
 }
 
 void Preferences::setAlmostOverStorageDismissExecution(long long timestamp)
 {
-    almostOverStorageDismissExecution = timestamp;
-    mutex.lock();
     assert(logged());
-    settings->setValue(almostOverStorageDismissExecutionKey, timestamp);
-    mutex.unlock();
+    setValueConcurrent(almostOverStorageDismissExecutionKey, timestamp);
 }
 
 long long Preferences::getOverStorageDismissExecution()
 {
-    if (overStorageDismissExecution != -1)
-    {
-        return overStorageDismissExecution;
-    }
-
-    mutex.lock();
     assert(logged());
-    overStorageDismissExecution = settings->value(overStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
-    mutex.unlock();
-    return overStorageDismissExecution;
+    return getValueConcurrent<long long>(overStorageDismissExecutionKey, defaultTimeStamp);
 }
 
 void Preferences::setOverStorageDismissExecution(long long timestamp)
 {
-    overStorageDismissExecution = timestamp;
-    mutex.lock();
     assert(logged());
-    settings->setValue(overStorageDismissExecutionKey, timestamp);
-    mutex.unlock();
+    setValueConcurrent(overStorageDismissExecutionKey, timestamp);
 }
 
+std::chrono::system_clock::time_point Preferences::getTimePoint(const QString& key)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    const auto value{getValue<long long>(key, defaultTimeStamp)};
+    std::chrono::milliseconds durationMillis(value);
+    return std::chrono::system_clock::time_point{durationMillis};
+}
+
+void Preferences::setTimePoint(const QString& key, const std::chrono::system_clock::time_point& timepoint)
+{
+    QMutexLocker locker(&mutex);
+    assert(logged());
+    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    settings->setValue(key, static_cast<long long>(timePointMillis));
+    setCachedValue(key, static_cast<long long>(timePointMillis));
+}
+
+template<typename T>
+T Preferences::getValue(const QString &key)
+{
+    auto cf = cache.find(key);
+    if (cf != cache.end())
+    {
+        assert(cf->second.value<T>() == settings->value(key).value<T>());
+        return cf->second.value<T>();
+    }
+    else return settings->value(key).value<T>();
+}
+
+template<typename T>
+T Preferences::getValue(const QString &key, const T &defaultValue)
+{
+    auto cf = cache.find(key);
+    if (cf != cache.end())
+    {
+        assert(cf->second.value<T>() == settings->value(key, defaultValue).template value<T>());
+        return cf->second.value<T>();
+    }
+    else return settings->value(key, defaultValue).template value<T>();
+}
+
+template<typename T>
+T Preferences::getValueConcurrent(const QString &key)
+{
+    QMutexLocker locker(&mutex);
+    return getValue<T>(key);
+}
+
+template<typename T>
+T Preferences::getValueConcurrent(const QString &key, const T &defaultValue)
+{
+    QMutexLocker locker(&mutex);
+    return getValue<T>(key, defaultValue);
+}
+
+void Preferences::setAndCachedValue(const QString &key, const QVariant &value)
+{
+    settings->setValue(key, value);
+    setCachedValue(key, value);
+}
+
+void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &value)
+{
+    QMutexLocker locker(&mutex);
+    setAndCachedValue(key, value);
+    settings->sync();
+}
+
+void Preferences::setValueConcurrent(const QString &key, const QVariant &value)
+{
+    QMutexLocker locker(&mutex);
+    setAndCachedValue(key, value);
+}
+
+void Preferences::setCachedValue(const QString &key, const QVariant &value)
+{
+    if (!key.isEmpty())
+    {
+        cache[key] = value;
+    }
+}
+
+void Preferences::cleanCache()
+{
+    cache.clear();
+}
+
+void Preferences::removeFromCache(const QString &key)
+{
+    cache.erase(key);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDialogLastExecution()
+{
+    return getTimePoint(transferOverQuotaDialogLastExecutionKey);
+}
+
+void Preferences::setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferOverQuotaDialogLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaOsNotificationLastExecution()
+{
+    return getTimePoint(transferOverQuotaOsNotificationLastExecutionKey);
+}
+
+void Preferences::setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferOverQuotaOsNotificationLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaOsNotificationLastExecution()
+{
+    return getTimePoint(transferAlmostOverQuotaOsNotificationLastExecutionKey);
+}
+
+void Preferences::setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferAlmostOverQuotaOsNotificationLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferAlmostOverQuotaUiAlertLastExecution()
+{
+    return getTimePoint(transferAlmostOverQuotaUiAlertLastExecutionKey);
+}
+
+void Preferences::setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferAlmostOverQuotaUiAlertLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaUiAlertLastExecution()
+{
+    return getTimePoint(transferOverQuotaUiAlertLastExecutionKey);
+}
+
+void Preferences::setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferOverQuotaUiAlertLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaSyncDialogLastExecution()
+{
+    return getTimePoint(transferOverQuotaSyncDialogLastExecutionKey);
+}
+
+void Preferences::setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferOverQuotaSyncDialogLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDownloadsDialogLastExecution()
+{
+    return getTimePoint(transferOverQuotaDownloadsDialogLastExecutionKey);
+}
+
+void Preferences::setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferOverQuotaDownloadsDialogLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaImportLinksDialogLastExecution()
+{
+    return getTimePoint(transferOverQuotaImportLinksDialogLastExecutionKey);
+}
+
+void Preferences::setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferOverQuotaImportLinksDialogLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getTransferOverQuotaStreamDialogLastExecution()
+{
+    return getTimePoint(transferOverQuotaStreamDialogLastExecutionKey);
+}
+
+void Preferences::setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(transferOverQuotaStreamDialogLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getStorageOverQuotaUploadsDialogLastExecution()
+{
+    return getTimePoint(storageOverQuotaUploadsDialogLastExecutionKey);
+}
+
+void Preferences::setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+    setTimePoint(storageOverQuotaUploadsDialogLastExecutionKey, timepoint);
+}
+
+std::chrono::system_clock::time_point Preferences::getStorageOverQuotaSyncsDialogLastExecution()
+{
+    return getTimePoint(storageOverQuotaSyncsDialogLastExecutionKey);
+}
+
+void Preferences::setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::time_point timepoint)
+{
+
+    setTimePoint(storageOverQuotaSyncsDialogLastExecutionKey, timepoint);
+}
 
 int Preferences::getStorageState()
 {
-    mutex.lock();
     assert(logged());
-    int value = settings->value(storageStateQKey, MegaApi::STORAGE_STATE_UNKNOWN).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(storageStateQKey, MegaApi::STORAGE_STATE_UNKNOWN);
 }
 
 void Preferences::setStorageState(int value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(storageStateQKey, value);
-    mutex.unlock();
+    setValueConcurrent(storageStateQKey, value);
+}
+
+int Preferences::getBusinessState()
+{
+    assert(logged());
+    return getValueConcurrent<int>(businessStateQKey, -2);
+}
+
+void Preferences::setBusinessState(int value)
+{
+    assert(logged());
+    setValueConcurrent(businessStateQKey, value);
+}
+
+int Preferences::getBlockedState()
+{
+    assert(logged());
+    return getValueConcurrent<int>(blockedStateQKey, -2);
+}
+
+void Preferences::setBlockedState(int value)
+{
+    assert(logged());
+    setValueConcurrent(blockedStateQKey, value);
 }
 
 void Preferences::setTemporalBandwidthValid(bool value)
@@ -1074,102 +1214,69 @@ void Preferences::setTemporalBandwidthInterval(int value)
 
 long long Preferences::usedBandwidth()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(usedBandwidthKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(usedBandwidthKey);
 }
 
 void Preferences::setUsedBandwidth(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(usedBandwidthKey, value);
-    mutex.unlock();
+    setValueConcurrent(usedBandwidthKey, value);
 }
 
 int Preferences::accountType()
 {
-    mutex.lock();
     assert(logged());
-    int value = settings->value(accountTypeKey).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(accountTypeKey);
 }
 
 void Preferences::setAccountType(int value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(accountTypeKey, value);
-    mutex.unlock();
+    setValueConcurrent(accountTypeKey, value);
 }
 
 long long Preferences::proExpirityTime()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(proExpirityTimeKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(proExpirityTimeKey);
 }
 
 void Preferences::setProExpirityTime(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(proExpirityTimeKey, value);
-    mutex.unlock();
+    setValueConcurrent(proExpirityTimeKey, value);
 }
 
 bool Preferences::showNotifications()
 {
-    mutex.lock();
-    bool value = settings->value(showNotificationsKey, defaultShowNotifications).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(showNotificationsKey, defaultShowNotifications);
 }
 
 void Preferences::setShowNotifications(bool value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(showNotificationsKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(showNotificationsKey, value);
 }
 
 bool Preferences::startOnStartup()
 {
-    mutex.lock();
-    bool value = settings->value(startOnStartupKey, defaultStartOnStartup).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(startOnStartupKey, defaultStartOnStartup);
 }
 
 void Preferences::setStartOnStartup(bool value)
 {
-    mutex.lock();
-    settings->setValue(startOnStartupKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(startOnStartupKey, value);
 }
 
 bool Preferences::usingHttpsOnly()
 {
-    mutex.lock();
-    bool value = settings->value(useHttpsOnlyKey, defaultUseHttpsOnly).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(useHttpsOnlyKey, defaultUseHttpsOnly);
 }
 
 void Preferences::setUseHttpsOnly(bool value)
 {
-    mutex.lock();
-    settings->setValue(useHttpsOnlyKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(useHttpsOnlyKey, value);
 }
 
 bool Preferences::SSLcertificateException()
@@ -1181,7 +1288,7 @@ bool Preferences::SSLcertificateException()
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
     }
-    bool value = settings->value(SSLcertificateExceptionKey, defaultSSLcertificateException).toBool();
+    bool value = getValue<bool>(SSLcertificateExceptionKey, defaultSSLcertificateException);
     if (!currentAccount.isEmpty())
     {
         settings->beginGroup(currentAccount);
@@ -1200,6 +1307,7 @@ void Preferences::setSSLcertificateException(bool value)
         currentAccount = settings->value(currentAccountKey).toString();
     }
     settings->setValue(SSLcertificateExceptionKey, value);
+    setCachedValue(SSLcertificateExceptionKey, value);
     if (!currentAccount.isEmpty())
     {
         settings->beginGroup(currentAccount);
@@ -1210,114 +1318,72 @@ void Preferences::setSSLcertificateException(bool value)
 
 int Preferences::transferDownloadMethod()
 {
-    mutex.lock();
-    int value = settings->value(transferDownloadMethodKey, defaultTransferDownloadMethod).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(transferDownloadMethodKey, defaultTransferDownloadMethod);
 }
 
 void Preferences::setTransferDownloadMethod(int value)
 {
-    mutex.lock();
-    settings->setValue(transferDownloadMethodKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(transferDownloadMethodKey, value);
 }
 
 int Preferences::transferUploadMethod()
 {
-    mutex.lock();
-    int value = settings->value(transferUploadMethodKey, defaultTransferUploadMethod).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(transferUploadMethodKey, defaultTransferUploadMethod);
 }
 
 void Preferences::setTransferUploadMethod(int value)
 {
-    mutex.lock();
-    settings->setValue(transferUploadMethodKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(transferUploadMethodKey, value);
 }
 
 QString Preferences::language()
 {
-    mutex.lock();
-    QString value = settings->value(languageKey, QLocale::system().name()).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(languageKey, QLocale::system().name());
 }
 
 void Preferences::setLanguage(QString &value)
 {
-    mutex.lock();
-    settings->setValue(languageKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(languageKey, value);
 }
 
 bool Preferences::updateAutomatically()
 {
-    mutex.lock();
-    bool value = settings->value(updateAutomaticallyKey, defaultUpdateAutomatically).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(updateAutomaticallyKey, defaultUpdateAutomatically);
 }
 
 void Preferences::setUpdateAutomatically(bool value)
 {
-    mutex.lock();
-    settings->setValue(updateAutomaticallyKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(updateAutomaticallyKey, value);
 }
 
 bool Preferences::hasDefaultUploadFolder()
 {
-    mutex.lock();
-    bool value = settings->value(hasDefaultUploadFolderKey, uploadFolder() != 0).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(hasDefaultUploadFolderKey, uploadFolder() != 0);
 }
 
 bool Preferences::hasDefaultDownloadFolder()
 {
-    mutex.lock();
-    bool value = settings->value(hasDefaultDownloadFolderKey, !downloadFolder().isEmpty()).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(hasDefaultDownloadFolderKey, !downloadFolder().isEmpty());
 }
 
 bool Preferences::hasDefaultImportFolder()
 {
-    mutex.lock();
-    bool value = settings->value(hasDefaultImportFolderKey, importFolder() != 0).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(hasDefaultImportFolderKey, importFolder() != 0);
 }
 
 void Preferences::setHasDefaultUploadFolder(bool value)
 {
-    mutex.lock();
-    settings->setValue(hasDefaultUploadFolderKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(hasDefaultUploadFolderKey, value);
 }
 
 void Preferences::setHasDefaultDownloadFolder(bool value)
 {
-    mutex.lock();
-    settings->setValue(hasDefaultDownloadFolderKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(hasDefaultDownloadFolderKey, value);
 }
 
 void Preferences::setHasDefaultImportFolder(bool value)
 {
-    mutex.lock();
-    settings->setValue(hasDefaultImportFolderKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(hasDefaultImportFolderKey, value);
 }
 
 bool Preferences::canUpdate(QString filePath)
@@ -1342,215 +1408,233 @@ bool Preferences::canUpdate(QString filePath)
     return value;
 }
 
-int Preferences::uploadLimitKB()
+int Preferences::accountStateInGeneral()
 {
     mutex.lock();
-    assert(logged());
-    int value = settings->value(uploadLimitKBKey, defaultUploadLimitKB).toInt();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    int value = getValue<int>(currentAccountStatusKey, defaultAccountStatus);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     mutex.unlock();
     return value;
 }
 
-void Preferences::setUploadLimitKB(int value)
+void Preferences::setAccountStateInGeneral(int value)
 {
     mutex.lock();
-    assert(logged());
-    settings->setValue(uploadLimitKBKey, value);
+
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(currentAccountStatusKey, value);
+    setCachedValue(currentAccountStatusKey, value);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     settings->sync();
     mutex.unlock();
 }
 
-int Preferences::downloadLimitKB()
+
+bool Preferences::needsFetchNodesInGeneral()
 {
     mutex.lock();
-    assert(logged());
-    int value = settings->value(downloadLimitKBKey, defaultDownloadLimitKB).toInt();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    bool value = getValue<bool>(needsFetchNodesKey, defaultNeedsFetchNodes);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     mutex.unlock();
     return value;
+}
+
+void Preferences::setNeedsFetchNodesInGeneral(bool value)
+{
+    mutex.lock();
+
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(needsFetchNodesKey, value);
+    setCachedValue(needsFetchNodesKey, value);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    settings->sync();
+    mutex.unlock();
+}
+
+
+int Preferences::uploadLimitKB()
+{
+    assert(logged());
+    return getValueConcurrent<int>(uploadLimitKBKey, defaultUploadLimitKB);
+}
+
+void Preferences::setUploadLimitKB(int value)
+{
+    assert(logged());
+    setValueAndSyncConcurrent(uploadLimitKBKey, value);
+}
+
+int Preferences::downloadLimitKB()
+{
+    assert(logged());
+    return getValueConcurrent<int>(downloadLimitKBKey, defaultDownloadLimitKB);
 }
 
 int Preferences::parallelUploadConnections()
 {
-    mutex.lock();
-    int value = settings->value(parallelUploadConnectionsKey, defaultParallelUploadConnections).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(parallelUploadConnectionsKey, defaultParallelUploadConnections);
 }
 
 int Preferences::parallelDownloadConnections()
 {
-    mutex.lock();
-    int value = settings->value(parallelDownloadConnectionsKey, defaultParallelDownloadConnections).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(parallelDownloadConnectionsKey, defaultParallelDownloadConnections);
 }
 
 void Preferences::setParallelUploadConnections(int value)
 {
-    mutex.lock();
     assert(logged());
     if (value < 1 || value > 6)
     {
        value = 3;
     }
-    settings->setValue(parallelUploadConnectionsKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(parallelUploadConnectionsKey, value);
 }
 
 void Preferences::setParallelDownloadConnections(int value)
 {
-    mutex.lock();
     assert(logged());
     if (value < 1 || value > 6)
     {
        value = 4;
     }
-    settings->setValue(parallelDownloadConnectionsKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(parallelDownloadConnectionsKey, value);
 }
 
 void Preferences::setDownloadLimitKB(int value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(downloadLimitKBKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(downloadLimitKBKey, value);
 }
 
 bool Preferences::upperSizeLimit()
 {
-    mutex.lock();
-    bool value = settings->value(upperSizeLimitKey, defaultUpperSizeLimit).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(upperSizeLimitKey, defaultUpperSizeLimit);
 }
 
 void Preferences::setUpperSizeLimit(bool value)
 {
-    mutex.lock();
-    settings->setValue(upperSizeLimitKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(upperSizeLimitKey, value);
 }
 
 long long Preferences::upperSizeLimitValue()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(upperSizeLimitValueKey, defaultUpperSizeLimitValue).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(upperSizeLimitValueKey, defaultUpperSizeLimitValue);
 }
+
 void Preferences::setUpperSizeLimitValue(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(upperSizeLimitValueKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(upperSizeLimitValueKey, value);
 }
 
 bool Preferences::cleanerDaysLimit()
 {
-    mutex.lock();
-    bool value = settings->value(cleanerDaysLimitKey, defaultCleanerDaysLimit).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(cleanerDaysLimitKey, defaultCleanerDaysLimit);
 }
 
 void Preferences::setCleanerDaysLimit(bool value)
 {
-    mutex.lock();
-    settings->setValue(cleanerDaysLimitKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(cleanerDaysLimitKey, value);
 }
 
 int Preferences::cleanerDaysLimitValue()
 {
-    mutex.lock();
     assert(logged());
-    int value = settings->value(cleanerDaysLimitValueKey, defaultCleanerDaysLimitValue).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(cleanerDaysLimitValueKey, defaultCleanerDaysLimitValue);
 }
+
 void Preferences::setCleanerDaysLimitValue(int value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(cleanerDaysLimitValueKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(cleanerDaysLimitValueKey, value);
 }
 
 int Preferences::upperSizeLimitUnit()
 {
-    mutex.lock();
     assert(logged());
-    int value = settings->value(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(upperSizeLimitUnitKey, defaultUpperSizeLimitUnit);
 }
 void Preferences::setUpperSizeLimitUnit(int value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(upperSizeLimitUnitKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(upperSizeLimitUnitKey, value);
 }
 
 bool Preferences::lowerSizeLimit()
 {
-    mutex.lock();
-    bool value = settings->value(lowerSizeLimitKey, defaultLowerSizeLimit).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(lowerSizeLimitKey, defaultLowerSizeLimit);
 }
 
 void Preferences::setLowerSizeLimit(bool value)
 {
-    mutex.lock();
-    settings->setValue(lowerSizeLimitKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lowerSizeLimitKey, value);
 }
 
 long long Preferences::lowerSizeLimitValue()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(lowerSizeLimitValueKey, defaultLowerSizeLimitValue).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(lowerSizeLimitValueKey, defaultLowerSizeLimitValue);
 }
+
 void Preferences::setLowerSizeLimitValue(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(lowerSizeLimitValueKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lowerSizeLimitValueKey, value);
 }
 
 int Preferences::lowerSizeLimitUnit()
 {
-    mutex.lock();
     assert(logged());
-    int value = settings->value(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(lowerSizeLimitUnitKey, defaultLowerSizeLimitUnit);
 }
+
 void Preferences::setLowerSizeLimitUnit(int value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(lowerSizeLimitUnitKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lowerSizeLimitUnitKey, value);
 }
 
 int Preferences::folderPermissionsValue()
@@ -1563,10 +1647,7 @@ int Preferences::folderPermissionsValue()
 
 void Preferences::setFolderPermissionsValue(int permissions)
 {
-    mutex.lock();
-    settings->setValue(folderPermissionsKey, permissions);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(folderPermissionsKey, permissions);
 }
 
 int Preferences::filePermissionsValue()
@@ -1579,122 +1660,77 @@ int Preferences::filePermissionsValue()
 
 void Preferences::setFilePermissionsValue(int permissions)
 {
-    mutex.lock();
-    settings->setValue(filePermissionsKey, permissions);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(filePermissionsKey, permissions);
 }
 
 int Preferences::proxyType()
 {
-    mutex.lock();
-    int value = settings->value(proxyTypeKey, defaultProxyType).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(proxyTypeKey, defaultProxyType);
 }
 
 void Preferences::setProxyType(int value)
 {
-    mutex.lock();
-    settings->setValue(proxyTypeKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(proxyTypeKey, value);
 }
 
 int Preferences::proxyProtocol()
 {
-    mutex.lock();
-    int value = settings->value(proxyProtocolKey, defaultProxyProtocol).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(proxyProtocolKey, defaultProxyProtocol);
 }
 
 void Preferences::setProxyProtocol(int value)
 {
-    mutex.lock();
-    settings->setValue(proxyProtocolKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(proxyProtocolKey, value);
 }
 
 QString Preferences::proxyServer()
 {
-    mutex.lock();
-    QString value = settings->value(proxyServerKey, defaultProxyServer).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(proxyServerKey, defaultProxyServer);
 }
 
 void Preferences::setProxyServer(const QString &value)
 {
-    mutex.lock();
-    settings->setValue(proxyServerKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(proxyServerKey, value);
 }
 
 int Preferences::proxyPort()
 {
-    mutex.lock();
-    int value = settings->value(proxyPortKey, defaultProxyPort).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(proxyPortKey, defaultProxyPort);
 }
 
 void Preferences::setProxyPort(int value)
 {
-    mutex.lock();
-    settings->setValue(proxyPortKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(proxyPortKey, value);
 }
 
 bool Preferences::proxyRequiresAuth()
 {
-    mutex.lock();
-    bool value = settings->value(proxyRequiresAuthKey, defaultProxyRequiresAuth).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(proxyRequiresAuthKey, defaultProxyRequiresAuth);
 }
 
 void Preferences::setProxyRequiresAuth(bool value)
 {
-    mutex.lock();
-    settings->setValue(proxyRequiresAuthKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(proxyRequiresAuthKey, value);
 }
 
 QString Preferences::getProxyUsername()
 {
-    mutex.lock();
-    QString value = settings->value(proxyUsernameKey, defaultProxyUsername).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(proxyUsernameKey, defaultProxyUsername);
 }
 
 void Preferences::setProxyUsername(const QString &value)
 {
-    mutex.lock();
-    settings->setValue(proxyUsernameKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(proxyUsernameKey, value);
 }
 
 QString Preferences::getProxyPassword()
 {
-    mutex.lock();
-    QString value = settings->value(proxyPasswordKey, defaultProxyPassword).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(proxyPasswordKey, defaultProxyPassword);
 }
 
 void Preferences::setProxyPassword(const QString &value)
 {
-    mutex.lock();
-    settings->setValue(proxyPasswordKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(proxyPasswordKey, value);
 }
 
 QString Preferences::proxyHostAndPort()
@@ -1720,224 +1756,148 @@ QString Preferences::proxyHostAndPort()
 long long Preferences::lastExecutionTime()
 {
     mutex.lock();
-    long long value = settings->value(lastExecutionTimeKey, 0).toLongLong();
+    long long value = getValue<long long>(lastExecutionTimeKey, 0);
     mutex.unlock();
     return value;
 }
+
 long long Preferences::installationTime()
 {
-    mutex.lock();
-    long long value = settings->value(installationTimeKey, 0).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(installationTimeKey, 0);
 }
+
 void Preferences::setInstallationTime(long long time)
 {
-    mutex.lock();
-    settings->setValue(installationTimeKey, time);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(installationTimeKey, time);
 }
+
 long long Preferences::accountCreationTime()
 {
-    mutex.lock();
-    long long value = settings->value(accountCreationTimeKey, 0).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(accountCreationTimeKey, 0);
 }
+
 void Preferences::setAccountCreationTime(long long time)
 {
-    mutex.lock();
-    settings->setValue(accountCreationTimeKey, time);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(accountCreationTimeKey, time);
 
 }
+
 long long Preferences::hasLoggedIn()
 {
-    mutex.lock();
-    long long value = settings->value(hasLoggedInKey, 0).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(hasLoggedInKey, 0);
 }
+
 void Preferences::setHasLoggedIn(long long time)
 {
-    mutex.lock();
-    settings->setValue(hasLoggedInKey, time);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(hasLoggedInKey, time);
 }
 
 bool Preferences::isFirstStartDone()
 {
-    mutex.lock();
-    bool value = settings->value(firstStartDoneKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(firstStartDoneKey, false);
 }
 
 void Preferences::setFirstStartDone(bool value)
 {
-    mutex.lock();
-    settings->setValue(firstStartDoneKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(firstStartDoneKey, value);
 }
 
 bool Preferences::isFirstSyncDone()
 {
-    mutex.lock();
-    bool value = settings->value(firstSyncDoneKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(firstSyncDoneKey, false);
 }
 
 void Preferences::setFirstSyncDone(bool value)
 {
-    mutex.lock();
-    settings->setValue(firstSyncDoneKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(firstSyncDoneKey, value);
 }
 
 bool Preferences::isFirstFileSynced()
 {
-    mutex.lock();
-    bool value = settings->value(firstFileSyncedKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(firstFileSyncedKey, false);
 }
 
 void Preferences::setFirstFileSynced(bool value)
 {
-    mutex.lock();
-    settings->setValue(firstFileSyncedKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(firstFileSyncedKey, value);
 }
 
 bool Preferences::isFirstWebDownloadDone()
 {
-    mutex.lock();
-    bool value = settings->value(firstWebDownloadKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(firstWebDownloadKey, false);
 }
 
 void Preferences::setFirstWebDownloadDone(bool value)
 {
-    mutex.lock();
-    settings->setValue(firstWebDownloadKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(firstWebDownloadKey, value);
 }
 
 bool Preferences::isFatWarningShown()
 {
-    mutex.lock();
-    bool value = settings->value(fatWarningShownKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(fatWarningShownKey, false);
 }
 
 void Preferences::setFatWarningShown(bool value)
 {
-    mutex.lock();
-    settings->setValue(fatWarningShownKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(fatWarningShownKey, value);
 }
 
 QString Preferences::lastCustomStreamingApp()
 {
-    mutex.lock();
-    QString value = settings->value(lastCustomStreamingAppKey).toString();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<QString>(lastCustomStreamingAppKey);
 }
 
 void Preferences::setLastCustomStreamingApp(const QString &value)
 {
-    mutex.lock();
-    settings->setValue(lastCustomStreamingAppKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lastCustomStreamingAppKey, value);
 }
 
 long long Preferences::getMaxMemoryUsage()
 {
-    mutex.lock();
-    long long value = settings->value(maxMemoryUsageKey, 0).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(maxMemoryUsageKey, 0);
 }
 
 void Preferences::setMaxMemoryUsage(long long value)
 {
-    mutex.lock();
-    settings->setValue(maxMemoryUsageKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(maxMemoryUsageKey, value);
 }
 
 long long Preferences::getMaxMemoryReportTime()
 {
-    mutex.lock();
-    long long value = settings->value(maxMemoryReportTimeKey, 0).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(maxMemoryReportTimeKey, 0);
 }
 
 void Preferences::setMaxMemoryReportTime(long long timestamp)
 {
-    mutex.lock();
-    settings->setValue(maxMemoryReportTimeKey, timestamp);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(maxMemoryReportTimeKey, timestamp);
 }
 
 void Preferences::setLastExecutionTime(qint64 time)
 {
-    mutex.lock();
-    settings->setValue(lastExecutionTimeKey, time);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lastExecutionTimeKey, time);
 }
 
 long long Preferences::lastUpdateTime()
 {
-    mutex.lock();
-    assert(logged());
-    long long value = settings->value(lastUpdateTimeKey, 0).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(lastUpdateTimeKey, 0);
 }
 
 void Preferences::setLastUpdateTime(long long time)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(lastUpdateTimeKey, time);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lastUpdateTimeKey, time);
 }
 
 int Preferences::lastUpdateVersion()
 {
-    mutex.lock();
     assert(logged());
-    int value = settings->value(lastUpdateVersionKey, 0).toInt();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<int>(lastUpdateVersionKey, 0);
 }
 
 void Preferences::setLastUpdateVersion(int version)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(lastUpdateVersionKey, version);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lastUpdateVersionKey, version);
 }
 
 QString Preferences::downloadFolder()
@@ -1950,367 +1910,46 @@ QString Preferences::downloadFolder()
 
 void Preferences::setDownloadFolder(QString value)
 {
-    mutex.lock();
-    settings->setValue(downloadFolderKey, QDir::toNativeSeparators(value));
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(downloadFolderKey, QDir::toNativeSeparators(value));
 }
 
 long long Preferences::uploadFolder()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(uploadFolderKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(uploadFolderKey);
 }
 
 void Preferences::setUploadFolder(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(uploadFolderKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(uploadFolderKey, value);
 }
 
 long long Preferences::importFolder()
 {
-    mutex.lock();
     assert(logged());
-    long long value = settings->value(importFolderKey).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(importFolderKey);
 }
 
 void Preferences::setImportFolder(long long value)
 {
-    mutex.lock();
     assert(logged());
-    settings->setValue(importFolderKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(importFolderKey, value);
 }
 
-int Preferences::getNumSyncedFolders()
-{
-    mutex.lock();
-    int value = localFolders.length();
-    mutex.unlock();
-    return value;
-}
 
-QString Preferences::getSyncName(int num)
-{
-    mutex.lock();
-    assert(logged() && (syncNames.size()>num));
-    if (num >= syncNames.size())
-    {
-        mutex.unlock();
-        return QString();
-    }
-    QString value = syncNames.at(num);
-    mutex.unlock();
-    return value;
-}
-
-QString Preferences::getSyncID(int num)
-{
-    mutex.lock();
-    assert(logged() && (syncIDs.size() > num));
-    if (num >= syncIDs.size())
-    {
-        mutex.unlock();
-        return QString();
-    }
-    QString value = syncIDs.at(num);
-    mutex.unlock();
-    return value;
-}
-
-QString Preferences::getLocalFolder(int num)
-{
-    mutex.lock();
-    assert(logged() && (localFolders.size()>num));
-    if (num >= localFolders.size())
-    {
-        mutex.unlock();
-        return QString();
-    }
-
-    QFileInfo fileInfo(localFolders.at(num));
-    QString value = QDir::toNativeSeparators(fileInfo.canonicalFilePath());
-    if (value.isEmpty())
-    {
-        value = QDir::toNativeSeparators(localFolders.at(num));
-    }
-
-    mutex.unlock();
-    return value;
-}
-
-QString Preferences::getMegaFolder(int num)
-{
-    mutex.lock();
-    assert(logged() && (megaFolders.size()>num));
-    if (num >= megaFolders.size())
-    {
-        mutex.unlock();
-        return QString();
-    }
-    QString value = megaFolders.at(num);
-    mutex.unlock();
-    return value;
-}
-
-long long Preferences::getLocalFingerprint(int num)
-{
-    mutex.lock();
-    assert(logged() && (localFingerprints.size()>num));
-    if (num >= localFingerprints.size())
-    {
-        mutex.unlock();
-        return 0;
-    }
-    long long value = localFingerprints.at(num);
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setLocalFingerprint(int num, long long fingerprint)
-{
-    mutex.lock();
-    if (num >= localFingerprints.size())
-    {
-        mutex.unlock();
-        return;
-    }
-    localFingerprints[num] = fingerprint;
-    writeFolders();
-    mutex.unlock();
-}
-
-MegaHandle Preferences::getMegaFolderHandle(int num)
-{
-    mutex.lock();
-    assert(logged() && (megaFolderHandles.size()>num));
-    if (num >= megaFolderHandles.size())
-    {
-        mutex.unlock();
-        return mega::INVALID_HANDLE;
-    }
-    long long value = megaFolderHandles.at(num);
-    mutex.unlock();
-    return value;
-}
-
-bool Preferences::isFolderActive(int num)
-{
-    mutex.lock();
-    if (num >= activeFolders.size())
-    {
-        mutex.unlock();
-        return false;
-    }
-    bool value = activeFolders.at(num);
-    mutex.unlock();
-    return value;
-}
-
-bool Preferences::isTemporaryInactiveFolder(int num)
-{
-    mutex.lock();
-    if (num >= temporaryInactiveFolders.size())
-    {
-        mutex.unlock();
-        return false;
-    }
-    bool value = temporaryInactiveFolders.at(num);
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setSyncState(int num, bool enabled, bool temporaryDisabled)
-{
-    mutex.lock();
-    if (num >= activeFolders.size() || num >= temporaryInactiveFolders.size())
-    {
-        mutex.unlock();
-        return;
-    }
-    activeFolders[num] = enabled;
-    temporaryInactiveFolders[num] = temporaryDisabled;
-    writeFolders();
-    mutex.unlock();
-
-    if (enabled)
-    {
-        Platform::syncFolderAdded(localFolders[num], syncNames[num], syncIDs[num]);
-    }
-}
-
-bool Preferences::isOneTimeActionDone(int action)
-{
-    mutex.lock();
-    QString currentAccount;
-    if (logged())
-    {
-        settings->endGroup();
-        currentAccount = settings->value(currentAccountKey).toString();
-    }
-
-    bool value = settings->value(oneTimeActionDoneKey + QString::number(action), false).toBool();
-
-    if (!currentAccount.isEmpty())
-    {
-        settings->beginGroup(currentAccount);
-    }
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setOneTimeActionDone(int action, bool done)
-{
-    mutex.lock();
-    QString currentAccount;
-    if (logged())
-    {
-        settings->endGroup();
-        currentAccount = settings->value(currentAccountKey).toString();
-    }
-
-    settings->setValue(oneTimeActionDoneKey + QString::number(action), done);
-
-    if (!currentAccount.isEmpty())
-    {
-        settings->beginGroup(currentAccount);
-    }
-    settings->sync();
-    mutex.unlock();
-}
-
-QStringList Preferences::getSyncNames()
-{
-    mutex.lock();
-    QStringList value = syncNames;
-    mutex.unlock();
-    return value;
-}
-
-QStringList Preferences::getSyncIDs()
-{
-    mutex.lock();
-    QStringList value = syncIDs;
-    mutex.unlock();
-    return value;
-}
-
-QStringList Preferences::getMegaFolders()
-{
-    mutex.lock();
-    QStringList value = megaFolders;
-    mutex.unlock();
-    return value;
-}
-
-QStringList Preferences::getLocalFolders()
-{
-    mutex.lock();
-    QStringList value = localFolders;
-    mutex.unlock();
-    return value;
-}
-
-QList<long long> Preferences::getMegaFolderHandles()
-{
-    mutex.lock();
-    QList<long long> value = megaFolderHandles;
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName,  bool active)
-{
-    mutex.lock();
-    assert(logged());
-
-    QFileInfo localFolderInfo(localFolder);
-    if (syncName.isEmpty())
-    {
-        syncName = localFolderInfo.fileName();
-    }
-
-    if (syncName.isEmpty())
-    {
-        syncName = QDir::toNativeSeparators(localFolder);
-    }
-
-    syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
-
-    localFolder = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
-    syncNames.append(syncName);
-    QString syncID = QUuid::createUuid().toString().toUpper();
-    syncIDs.append(syncID);
-    localFolders.append(localFolder);
-    megaFolders.append(megaFolder);
-    megaFolderHandles.append(megaFolderHandle);
-    activeFolders.append(active);
-    temporaryInactiveFolders.append(false);
-    localFingerprints.append(0);
-    writeFolders();
-    mutex.unlock();
-    Platform::syncFolderAdded(localFolder, syncName, syncID);
-}
-
-void Preferences::setMegaFolderHandle(int num, MegaHandle handle)
-{
-    mutex.lock();
-    if (num >= megaFolderHandles.size())
-    {
-        mutex.unlock();
-        return;
-    }
-    megaFolderHandles[num] = handle;
-    writeFolders();
-    mutex.unlock();
-}
-
-void Preferences::removeSyncedFolder(int num)
-{
-    mutex.lock();
-    assert(logged());
-    syncNames.removeAt(num);
-    syncIDs.removeAt(num);
-    localFolders.removeAt(num);
-    megaFolders.removeAt(num);
-    megaFolderHandles.removeAt(num);
-    activeFolders.removeAt(num);
-    temporaryInactiveFolders.removeAt(num);
-    localFingerprints.removeAt(num);
-    writeFolders();
-    mutex.unlock();
-}
+/////////   Sync related stuff /////////////////////
 
 void Preferences::removeAllFolders()
 {
-    mutex.lock();
+    QMutexLocker qm(&mutex);
     assert(logged());
 
-    for (int i = 0; i < localFolders.size(); i++)
-    {
-        Platform::syncFolderRemoved(localFolders[i], syncNames[i], syncIDs[i]);
-    }
-
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
-    writeFolders();
-    mutex.unlock();
+    //remove all configured syncs
+    settings->beginGroup(syncsGroupByTagKey);
+    settings->remove(QString::fromAscii("")); //remove group and all its settings
+    settings->endGroup();
+    settings->sync();
 }
 
 QStringList Preferences::getExcludedSyncNames()
@@ -2330,10 +1969,12 @@ void Preferences::setExcludedSyncNames(QStringList names)
     if (!excludedSyncNames.size())
     {
         settings->remove(excludedSyncNamesKey);
+        removeFromCache(excludedSyncNamesKey);
     }
     else
     {
         settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
+        setCachedValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
     }
 
     settings->sync();
@@ -2357,15 +1998,60 @@ void Preferences::setExcludedSyncPaths(QStringList paths)
     if (!excludedSyncPaths.size())
     {
         settings->remove(excludedSyncPathsKey);
+        removeFromCache(excludedSyncPathsKey);
     }
     else
     {
         settings->setValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromAscii("\n")));
+        setCachedValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromAscii("\n")));
     }
 
     settings->sync();
     mutex.unlock();
 }
+
+
+bool Preferences::isOneTimeActionDone(int action)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    bool value = getValue<bool>(oneTimeActionDoneKey + QString::number(action), false);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setOneTimeActionDone(int action, bool done)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(oneTimeActionDoneKey + QString::number(action), done);
+    setCachedValue(oneTimeActionDoneKey + QString::number(action), done);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    settings->sync();
+    mutex.unlock();
+}
+
 
 QStringList Preferences::getPreviousCrashes()
 {
@@ -2400,10 +2086,12 @@ void Preferences::setPreviousCrashes(QStringList crashes)
     if (!crashes.size())
     {
         settings->remove(previousCrashesKey);
+        removeFromCache(previousCrashesKey);
     }
     else
     {
         settings->setValue(previousCrashesKey, crashes.join(QString::fromAscii("\n")));
+        setCachedValue(previousCrashesKey, crashes.join(QString::fromAscii("\n")));
     }
 
     if (!currentAccount.isEmpty())
@@ -2425,7 +2113,7 @@ long long Preferences::getLastReboot()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    long long value = settings->value(lastRebootKey).toLongLong();
+    long long value = getValue<long long>(lastRebootKey);
 
     if (!currentAccount.isEmpty())
     {
@@ -2447,6 +2135,7 @@ void Preferences::setLastReboot(long long value)
     }
 
     settings->setValue(lastRebootKey, value);
+    setCachedValue(lastRebootKey, value);
 
     if (!currentAccount.isEmpty())
     {
@@ -2467,7 +2156,7 @@ long long Preferences::getLastExit()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    long long value = settings->value(lastExitKey).toLongLong();
+    long long value = getValue<long long>(lastExitKey);
 
     if (!currentAccount.isEmpty())
     {
@@ -2489,6 +2178,7 @@ void Preferences::setLastExit(long long value)
     }
 
     settings->setValue(lastExitKey, value);
+    setCachedValue(lastExitKey, value);
 
     if (!currentAccount.isEmpty())
     {
@@ -2497,6 +2187,42 @@ void Preferences::setLastExit(long long value)
 
     settings->sync();
     mutex.unlock();
+}
+
+QSet<int> Preferences::getDisabledSyncTags()
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    QStringList stringTagList = getValueConcurrent<QString>(disabledSyncsKey).split(QString::fromUtf8("0x1E"), QString::SkipEmptyParts);
+    if (!stringTagList.isEmpty())
+    {
+        QList<int> tagList;
+        for (auto &tag : stringTagList)
+        {
+            tagList.append(tag.toInt());
+        }
+
+        return QSet<int>::fromList(tagList);
+    }
+
+    return QSet<int>();
+}
+
+void Preferences::setDisabledSyncTags(QSet<int> disabledSyncs)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    QList<int> disabledTags = disabledSyncs.toList();
+    QStringList tags;
+
+    for(auto &tag : disabledTags)
+    {
+        tags.append(QString::number(tag));
+    }
+
+    setValueAndSyncConcurrent(disabledSyncsKey, tags.join(QString::fromUtf8("0x1E")));
 }
 
 QString Preferences::getHttpsKey()
@@ -2509,7 +2235,7 @@ QString Preferences::getHttpsKey()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    QString value = settings->value(httpsKeyKey, defaultHttpsKey).toString();
+    QString value = getValue<QString>(httpsKeyKey, defaultHttpsKey);
 
     if (!currentAccount.isEmpty())
     {
@@ -2530,6 +2256,7 @@ void Preferences::setHttpsKey(QString key)
     }
 
     settings->setValue(httpsKeyKey, key);
+    setCachedValue(httpsKeyKey, key);
 
     if (!currentAccount.isEmpty())
     {
@@ -2549,7 +2276,7 @@ QString Preferences::getHttpsCert()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    QString value = settings->value(httpsCertKey, defaultHttpsCert).toString();
+    QString value = getValue<QString>(httpsCertKey, defaultHttpsCert);
 
     if (!currentAccount.isEmpty())
     {
@@ -2570,6 +2297,7 @@ void Preferences::setHttpsCert(QString cert)
     }
 
     settings->setValue(httpsCertKey, cert);
+    setCachedValue(httpsCertKey, cert);
 
     if (!currentAccount.isEmpty())
     {
@@ -2589,7 +2317,7 @@ QString Preferences::getHttpsCertIntermediate()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    QString value = settings->value(httpsCertIntermediateKey, defaultHttpsCertIntermediate).toString();
+    QString value = getValue<QString>(httpsCertIntermediateKey, defaultHttpsCertIntermediate);
 
     if (!currentAccount.isEmpty())
     {
@@ -2610,6 +2338,7 @@ void Preferences::setHttpsCertIntermediate(QString intermediate)
     }
 
     settings->setValue(httpsCertIntermediateKey, intermediate);
+    setCachedValue(httpsCertIntermediateKey, intermediate);
 
     if (!currentAccount.isEmpty())
     {
@@ -2629,7 +2358,7 @@ long long Preferences::getHttpsCertExpiration()
         currentAccount = settings->value(currentAccountKey).toString();
     }
 
-    long long value = settings->value(httpsCertExpirationKey, defaultHttpsCertExpiration).toLongLong();
+    long long value = getValue<long long>(httpsCertExpirationKey, defaultHttpsCertExpiration);
 
     if (!currentAccount.isEmpty())
     {
@@ -2650,6 +2379,7 @@ void Preferences::setHttpsCertExpiration(long long expiration)
     }
 
     settings->setValue(httpsCertExpirationKey, expiration);
+    setCachedValue(httpsCertExpirationKey, expiration);
 
     if (!currentAccount.isEmpty())
     {
@@ -2659,30 +2389,26 @@ void Preferences::setHttpsCertExpiration(long long expiration)
     settings->sync();
 }
 
-long long Preferences::lastPublicHandleTimestamp()
+void Preferences::getLastHandleInfo(MegaHandle &lastHandle, int &type, long long &timestamp)
 {
     mutex.lock();
     assert(logged());
-    long long value = settings->value(lastPublicHandleTimestampKey, 0).toLongLong();
+    timestamp = getValue<long long>(lastPublicHandleTimestampKey, 0);
+    lastHandle = getValue<unsigned long long>(lastPublicHandleKey, mega::INVALID_HANDLE);
+    type = getValue<int>(lastPublicHandleTypeKey, MegaApi::AFFILIATE_TYPE_INVALID);
     mutex.unlock();
-    return value;
 }
 
-MegaHandle Preferences::lastPublicHandle()
-{
-    mutex.lock();
-    assert(logged());
-    MegaHandle value = settings->value(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE).toULongLong();
-    mutex.unlock();
-    return value;
-}
-
-void Preferences::setLastPublicHandle(MegaHandle handle)
+void Preferences::setLastPublicHandle(MegaHandle handle, int type)
 {
     mutex.lock();
     assert(logged());
     settings->setValue(lastPublicHandleKey, (unsigned long long) handle);
+    setCachedValue(lastPublicHandleKey, (unsigned long long) handle);
     settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    setCachedValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    settings->setValue(lastPublicHandleTypeKey, type);
+    setCachedValue(lastPublicHandleTypeKey, type);
     settings->sync();
     mutex.unlock();
 }
@@ -2696,6 +2422,20 @@ int Preferences::getNumUsers()
     return value;
 }
 
+
+bool Preferences::enterUser(QString account)
+{
+    QMutexLocker locker(&mutex);
+    assert(!logged());
+    if (account.size() && settings->containsGroup(account))
+    {
+        settings->beginGroup(account);
+        readFolders();
+        return true;
+    }
+    return false;
+}
+
 void Preferences::enterUser(int i)
 {
     mutex.lock();
@@ -2707,7 +2447,6 @@ void Preferences::enterUser(int i)
     }
 
     readFolders();
-    loadExcludedSyncNames();
     mutex.unlock();
 }
 
@@ -2717,15 +2456,6 @@ void Preferences::leaveUser()
     assert(logged());
     settings->endGroup();
 
-    clearTemporalBandwidth();
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
     mutex.unlock();
 }
 
@@ -2733,104 +2463,91 @@ void Preferences::unlink()
 {
     mutex.lock();
     assert(logged());
-    settings->remove(emailHashKey);
-    settings->remove(privatePwKey);
-    settings->remove(sessionKey);
+    settings->remove(sessionKey); // Remove session from specific account settings
     settings->endGroup();
+    mutex.unlock();
+
+    resetGlobalSettings();
+}
+
+void Preferences::resetGlobalSettings()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
 
     settings->remove(currentAccountKey);
+    settings->remove(needsFetchNodesKey);
+    settings->remove(currentAccountStatusKey);
+    settings->remove(sessionKey); // Remove session from global settings
     clearTemporalBandwidth();
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
     settings->sync();
+    cleanCache();
     mutex.unlock();
+
     emit stateChanged();
 }
 
 bool Preferences::isCrashed()
 {
     mutex.lock();
-    bool value = settings->value(isCrashedKey, false).toBool();
+    bool value = getValue<bool>(isCrashedKey, false);
     mutex.unlock();
     return value;
 }
 
 void Preferences::setCrashed(bool value)
 {
-    mutex.lock();
-    settings->setValue(isCrashedKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(isCrashedKey, value);
 }
 
 bool Preferences::getGlobalPaused()
 {
-    mutex.lock();
-    bool value = settings->value(wasPausedKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(wasPausedKey, false);
 }
 
 void Preferences::setGlobalPaused(bool value)
 {
-    mutex.lock();
-    settings->setValue(wasPausedKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(wasPausedKey, value);
 }
 
 bool Preferences::getUploadsPaused()
 {
-    mutex.lock();
-    bool value = settings->value(wasUploadsPausedKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(wasUploadsPausedKey, false);
 }
 
 void Preferences::setUploadsPaused(bool value)
 {
-    mutex.lock();
-    settings->setValue(wasUploadsPausedKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(wasUploadsPausedKey, value);
 }
 
 bool Preferences::getDownloadsPaused()
 {
-    mutex.lock();
-    bool value = settings->value(wasDownloadsPausedKey, false).toBool();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<bool>(wasDownloadsPausedKey, false);
 }
 
 void Preferences::setDownloadsPaused(bool value)
 {
-    mutex.lock();
-    settings->setValue(wasDownloadsPausedKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(wasDownloadsPausedKey, value);
 }
 
 long long Preferences::lastStatsRequest()
 {
-    mutex.lock();
-    long long value = settings->value(lastStatsRequestKey, 0).toLongLong();
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(lastStatsRequestKey, 0);
 }
 
 void Preferences::setLastStatsRequest(long long value)
 {
-    mutex.lock();
-    settings->setValue(lastStatsRequestKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(lastStatsRequestKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()
@@ -2844,11 +2561,7 @@ bool Preferences::fileVersioningDisabled()
 
 void Preferences::disableFileVersioning(bool value)
 {
-    mutex.lock();
-    assert(logged());
-    settings->setValue(disableFileVersioningKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(disableFileVersioningKey, value);
 }
 
 bool Preferences::overlayIconsDisabled()
@@ -2861,10 +2574,7 @@ bool Preferences::overlayIconsDisabled()
 
 void Preferences::disableOverlayIcons(bool value)
 {
-    mutex.lock();
-    settings->setValue(disableOverlayIconsKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(disableOverlayIconsKey, value);
 }
 
 bool Preferences::leftPaneIconsDisabled()
@@ -2877,10 +2587,7 @@ bool Preferences::leftPaneIconsDisabled()
 
 void Preferences::disableLeftPaneIcons(bool value)
 {
-    mutex.lock();
-    settings->setValue(disableLeftPaneIconsKey, value);
-    settings->sync();
-    mutex.unlock();
+    setValueAndSyncConcurrent(disableLeftPaneIconsKey, value);
 }
 
 bool Preferences::error()
@@ -2938,12 +2645,36 @@ bool Preferences::needsDeferredSync()
     return b;
 }
 
+void Preferences::setEmailAndGeneralSettings(const QString &email)
+{
+    int proxyType = this->proxyType();
+    QString proxyServer = this->proxyServer();
+    int proxyPort = this->proxyPort();
+    int proxyProtocol = this->proxyProtocol();
+    bool proxyAuth = this->proxyRequiresAuth();
+    QString proxyUsername = this->getProxyUsername();
+    QString proxyPassword = this->getProxyPassword();
+
+    QString session = this->getSessionInGeneral();
+
+    this->setEmail(email);
+
+    this->setSessionInUserGroup(session); //this is required to provide backwards compatibility
+    this->setProxyType(proxyType);
+    this->setProxyServer(proxyServer);
+    this->setProxyPort(proxyPort);
+    this->setProxyProtocol(proxyProtocol);
+    this->setProxyRequiresAuth(proxyAuth);
+    this->setProxyUsername(proxyUsername);
+    this->setProxyPassword(proxyPassword);
+}
 
 void Preferences::login(QString account)
 {
     mutex.lock();
     logout();
     settings->setValue(currentAccountKey, account);
+    setCachedValue(currentAccountKey, account);
     settings->beginGroup(account);
     readFolders();
     loadExcludedSyncNames();
@@ -2955,6 +2686,7 @@ void Preferences::login(QString account)
             emit updated(lastVersion);
         }
         settings->setValue(lastVersionKey, Preferences::VERSION_CODE);
+        setCachedValue(lastVersionKey, Preferences::VERSION_CODE);
     }
     settings->sync();
     mutex.unlock();
@@ -2996,14 +2728,7 @@ void Preferences::logout()
         settings->endGroup();
     }
     clearTemporalBandwidth();
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
+    cleanCache();
     mutex.unlock();
 }
 
@@ -3062,33 +2787,34 @@ void Preferences::loadExcludedSyncNames()
     mutex.unlock();
 }
 
+
+QMap<int, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
+{
+    return loadedSyncsMap;
+}
+
 void Preferences::readFolders()
 {
     mutex.lock();
     assert(logged());
-    syncNames.clear();
-    syncIDs.clear();
-    localFolders.clear();
-    megaFolders.clear();
-    megaFolderHandles.clear();
-    activeFolders.clear();
-    temporaryInactiveFolders.clear();
-    localFingerprints.clear();
 
-    settings->beginGroup(syncsGroupKey);
+    loadedSyncsMap.clear();
+
+    settings->beginGroup(syncsGroupByTagKey);
     int numSyncs = settings->numChildGroups();
     for (int i = 0; i < numSyncs; i++)
     {
-        settings->beginGroup(QString::number(i));
+        settings->beginGroup(i);
 
-        syncNames.append(settings->value(syncNameKey).toString());
-        syncIDs.append(settings->value(syncIdKey, QUuid::createUuid().toString().toUpper()).toString());
-        localFolders.append(settings->value(localFolderKey).toString());
-        megaFolders.append(settings->value(megaFolderKey).toString());
-        megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
-        activeFolders.append(settings->value(folderActiveKey, true).toBool());
-        temporaryInactiveFolders.append(settings->value(temporaryInactiveKey, false).toBool());
-        localFingerprints.append(settings->value(localFingerprintKey, 0).toLongLong());
+        auto sc = std::make_shared<SyncSetting>(settings->value(configuredSyncsKey).value<QString>());
+        if (sc->tag())
+        {
+            loadedSyncsMap[sc->tag()] = sc;
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii("Reading invalid Sync Setting!").toUtf8().constData());
+        }
 
         settings->endGroup();
     }
@@ -3096,33 +2822,198 @@ void Preferences::readFolders()
     mutex.unlock();
 }
 
-void Preferences::writeFolders()
+
+SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID)
+    : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mMegaFolder(megaFolder), mLocalfp(localfp),
+      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID)
 {
-    mutex.lock();
+
+}
+
+void Preferences::removeOldCachedSync(int position, QString email)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged() || !email.isEmpty());
+
+    // if not logged, use email to get into that user group and remove just some specific sync group
+    if (!logged() && email.size() && settings->containsGroup(email))
+    {
+        settings->beginGroup(email);
+        settings->beginGroup(syncsGroupKey);
+        settings->beginGroup(QString::number(position));
+        settings->remove(QString::fromAscii("")); //Remove all previous values
+        settings->endGroup();//sync
+        settings->endGroup();//old syncs
+        settings->endGroup();//user
+        return;
+    }
+
+    // otherwise remove oldSync and rewrite all
+    auto it = oldSyncs.begin();
+    while (it != oldSyncs.end())
+    {
+        if (it->mPos == position)
+        {
+            it = oldSyncs.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+    saveOldCachedSyncs();
+}
+
+QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *cachedBlockedState, int *cachedStorageState, QString email)
+{
+    QMutexLocker qm(&mutex);
+    oldSyncs.clear();
+
+    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+    bool temporarilyLoggedPrefs = false;
+    if (!preferences->logged() && !email.isEmpty())
+    {
+        loadedSyncsMap.clear(); //ensure loaded are empty even when there is no email
+        temporarilyLoggedPrefs = preferences->enterUser(email);
+        if (temporarilyLoggedPrefs)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Migrating syncs data to SDK cache from previous session")
+                         .toUtf8().constData());
+        }
+        else
+        {
+            return oldSyncs;
+        }
+    }
+
     assert(logged());
+    //restore cached status
+    if (cachedBusinessState) *cachedBusinessState = getValue<int>(businessStateQKey, -2);
+    if (cachedBlockedState) *cachedBlockedState = getValue<int>(blockedStateQKey, -2);
+    if (cachedStorageState) *cachedStorageState = getValue<int>(storageStateQKey, MegaApi::STORAGE_STATE_UNKNOWN);
+
+    settings->beginGroup(syncsGroupKey);
+    int numSyncs = settings->numChildGroups();
+    for (int i = 0; i < numSyncs; i++)
+    {
+        settings->beginGroup(i);
+
+        oldSyncs.push_back(SyncData(settings->value(syncNameKey).toString(),
+                                    settings->value(localFolderKey).toString(),
+                                    settings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
+                                    settings->value(megaFolderKey).toString(),
+                                    settings->value(localFingerprintKey, 0).toLongLong(),
+                                    settings->value(folderActiveKey, true).toBool(),
+                                    settings->value(temporaryInactiveKey, false).toBool(),
+                                     i,
+                                    settings->value(syncIdKey, true).toString()
+                                    ));
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
+        settings->endGroup();
+    }
+    settings->endGroup();
+
+    if (temporarilyLoggedPrefs)
+    {
+        preferences->leaveUser();
+    }
+
+    return oldSyncs;
+}
+
+void Preferences::saveOldCachedSyncs()
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    if (!logged())
+    {
+        return;
+    }
 
     settings->beginGroup(syncsGroupKey);
 
-    settings->remove(QString::fromAscii(""));
-    for (int i = 0; i < localFolders.size(); i++)
+    settings->remove(QString::fromAscii("")); //Remove all previous values
+
+    int i = 0 ;
+    foreach(SyncData osd, oldSyncs) //normally if no errors happened it'll be empty
     {
         settings->beginGroup(QString::number(i));
 
-        settings->setValue(syncNameKey, syncNames[i]);
-        settings->setValue(syncIdKey, syncIDs[i]);
-        settings->setValue(localFolderKey, localFolders[i]);
-        settings->setValue(megaFolderKey, megaFolders[i]);
-        settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
-        settings->setValue(folderActiveKey, activeFolders[i]);
-        settings->setValue(temporaryInactiveKey,temporaryInactiveFolders[i]);
-        settings->setValue(localFingerprintKey, localFingerprints[i]);
+        settings->setValue(syncNameKey, osd.mName);
+        settings->setValue(localFolderKey, osd.mLocalFolder);
+        settings->setValue(localFingerprintKey, osd.mLocalfp);
+        settings->setValue(megaFolderHandleKey, osd.mMegaHandle);
+        settings->setValue(megaFolderKey, osd.mMegaFolder);
+        settings->setValue(folderActiveKey, osd.mEnabled);
+        settings->setValue(syncIdKey, osd.mSyncID);
 
         settings->endGroup();
     }
 
     settings->endGroup();
     settings->sync();
-    mutex.unlock();
+}
+
+
+void Preferences::removeAllSyncSettings()
+{
+    QMutexLocker qm(&mutex);
+    assert(logged());
+
+    settings->beginGroup(syncsGroupByTagKey);
+
+    settings->remove(QString::fromAscii("")); //removes group and all its settings
+
+    settings->endGroup();
+    settings->sync();
+}
+
+
+void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+{
+    QMutexLocker qm(&mutex);
+    assert(logged() && syncSettings);
+    if (!syncSettings)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid Sync Setting!").toUtf8().constData());
+        return;
+    }
+
+    settings->beginGroup(syncsGroupByTagKey);
+
+    settings->beginGroup(QString::number(syncSettings->tag()));
+
+    settings->remove(QString::fromAscii("")); //removes group and all its settings
+
+    settings->endGroup();
+
+    settings->endGroup();
+    settings->sync();
+}
+
+void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
+{
+    if (logged())
+    {
+        QMutexLocker qm(&mutex);
+
+        settings->beginGroup(syncsGroupByTagKey);
+
+        settings->beginGroup(QString::number(syncSettings->tag()));
+
+        settings->setValue(configuredSyncsKey, syncSettings->toString());
+
+        settings->endGroup();
+
+        settings->endGroup();
+        settings->sync();
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii("Writting sync settings before logged in").toUtf8().constData());
+    }
 }
 
 void Preferences::setBaseUrl(const QString &value)
@@ -3142,14 +3033,35 @@ void Preferences::overridePreference(const QSettings &settings, QString &&name, 
     }
 }
 
+template<>
+void Preferences::overridePreference(const QSettings &settings, QString &&name, std::chrono::milliseconds &value)
+{
+    const auto previous{value};
+    const auto previousMillis{static_cast<long long>(value.count())};
+    const auto variant{settings.value(name, previousMillis)};
+    value = std::chrono::milliseconds(variant.value<long long>());
+    if (previous != value)
+    {
+        qDebug() << "Preference " << name << " overridden: " << value.count();
+    }
+}
+
 void Preferences::overridePreferences(const QSettings &settings)
 {
     overridePreference(settings, QString::fromUtf8("OQ_DIALOG_INTERVAL_MS"), Preferences::OQ_DIALOG_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("OQ_NOTIFICATION_INTERVAL_MS"), Preferences::OQ_NOTIFICATION_INTERVAL_MS);
-    overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS);
-    overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OQ_UI_MESSAGE_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("PAYWALL_NOTIFICATION_INTERVAL_MS"), Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
     overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
+
+    overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_DIALOG_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION);
+    overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);
+    overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_UI_ALERT_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION);
+    overridePreference(settings, QString::fromUtf8("TRANSFER_ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATION_MS"), Preferences::ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATION);
+    overridePreference(settings, QString::fromUtf8("TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION_MS"), Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);
+    overridePreference(settings, QString::fromUtf8("OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME_MS"), Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME);
 
     overridePreference(settings, QString::fromUtf8("MIN_UPDATE_STATS_INTERVAL"), Preferences::MIN_UPDATE_STATS_INTERVAL);
     overridePreference(settings, QString::fromUtf8("MIN_UPDATE_CLEANING_INTERVAL_MS"), Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS);

@@ -15,6 +15,7 @@ class CrashReportDialog : public QDialog
 public:
     explicit CrashReportDialog(QString crash, QWidget *parent = 0);
     QString getUserMessage();
+    bool sendLogs();
     ~CrashReportDialog();
 
 private:

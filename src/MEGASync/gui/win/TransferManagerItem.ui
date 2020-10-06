@@ -240,7 +240,7 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTransferName">
                <property name="minimumSize">
                 <size>
-                 <width>250</width>
+                 <width>275</width>
                  <height>0</height>
                 </size>
                </property>
@@ -275,7 +275,7 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTotal">
                <property name="minimumSize">
                 <size>
-                 <width>150</width>
+                 <width>0</width>
                  <height>0</height>
                 </size>
                </property>
@@ -286,7 +286,11 @@ padding-top: 1px;</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">#lTotal
+{
+color:#777777;
+text-decoration:none;
+}</string>
                </property>
                <property name="text">
                 <string notr="true"/>
@@ -312,7 +316,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>190</width>
+                 <width>195</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -548,6 +552,18 @@ padding-top: 1px;</string>
              </property>
              <item>
               <widget class="QPushButton" name="lTransferTypeCompleted">
+               <property name="minimumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
                </property>

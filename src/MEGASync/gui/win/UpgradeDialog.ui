@@ -7,41 +7,28 @@
     <x>0</x>
     <y>0</y>
     <width>880</width>
-    <height>568</height>
+    <height>548</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>880</width>
-    <height>568</height>
+    <height>548</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>880</width>
-    <height>568</height>
+    <height>548</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Free bandwidth quota exceeded</string>
+   <string>Depleted transfer quota</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#UpgradeDialog
 {
-	background-color: #FFFFFF;
-}
-#lDescRecommendation, #lDescInfo
-{
-    color: #333333;
-	font-family: Lato;
-	font-size: 12px;
-	line-height: 20px;
-}
-#lRemainingTime
-{
-  font-family: Lato;
-  font-size: 14px;
-  color: #333333;
+	background-color: #F2F2F2;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -61,17 +48,275 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="wHeader" native="true">
+    <widget class="QWidget" name="widgetHeader" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>64</height>
+       <height>216</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>64</height>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#widgetHeader
+{
+background: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #FFFFFF, stop:1 #F2F2F2);
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>32</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QToolButton" name="toolButtonIconImage">
+        <property name="minimumSize">
+         <size>
+          <width>64</width>
+          <height>64</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>64</width>
+          <height>64</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#toolButtonIconImage
+{
+ border: none;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normalon>:/images/transfer_empty_64.png</normalon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>64</width>
+          <height>64</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelTitle">
+          <property name="minimumSize">
+           <size>
+               <width>0</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+               <width>16777215</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+              <string notr="true">#labelTitle
+{
+color: #333333;
+font-family: Lato;
+font-size: 18px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Depleted transfer quota</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButtonQuestion">
+          <property name="minimumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">#toolButtonQuestion
+{
+	border: none;
+}</string>
+          </property>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+          <property name="icon">
+           <iconset resource="../Resources_linux.qrc">
+            <normaloff>:/images/icon_question_white.png</normaloff>:/images/icon_question_white.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="labelInfo">
+        <property name="minimumSize">
+         <size>
+          <width>640</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>640</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#labelInfo
+{
+    color: #333333;
+	font-family: Lato;
+	font-size: 13px;
+	line-height: 24px;
+}</string>
+        </property>
+        <property name="text">
+         <string>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignHCenter|Qt::AlignTop</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>48</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QWidget" name="wPlans" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>242</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>242</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#wPlans
+{
+  background-color: #F2F2F2;
+}</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widgetFooter" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>62</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>62</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -90,21 +335,8 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="lRemainingTime">
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="labelRemainingTime">
         <property name="minimumSize">
          <size>
           <width>675</width>
@@ -116,6 +348,14 @@
           <width>16777215</width>
           <height>40</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#labelRemainingTime
+{
+  font-family: Lato;
+  font-size: 14px;
+  color: #333333;
+}</string>
         </property>
         <property name="lineWidth">
          <number>2</number>
@@ -131,298 +371,13 @@
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wPlans" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>288</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>288</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#wPlans
-{
-  background-color: #F2F2F2;
-}</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wBottom" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>216</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>216</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>48</number>
-      </property>
-      <item>
-       <widget class="QWidget" name="wIcon" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>195</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>195</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>23</number>
-         </property>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QToolButton" name="wIconImage">
-               <property name="minimumSize">
-                <size>
-                 <width>94</width>
-                 <height>94</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>94</width>
-                 <height>94</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#wIconImage
-{
- border: none;
-}</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normalon>:/images/transfers_empty.png</normalon>
-                </iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>94</width>
-                 <height>94</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <property name="spacing">
-          <number>20</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>35</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lDescInfo">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lDescRecommendation">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources_linux.qrc"/>
+ </resources>
  <connections/>
 </ui>

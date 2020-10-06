@@ -458,6 +458,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 bool failed = false;
                 bool linkAvailable = true;
                 bool showInMega = true;
+                bool showInFolder = true;
 
                 MegaTransfer *transfer = NULL;
                 QTransfersModel *model = (QTransfersModel*)this->model();
@@ -484,9 +485,17 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                             linkAvailable = false;
                         }
 
-                        if (!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
+                        const auto transferIsDownloadType{transfer->getType() == MegaTransfer::TYPE_DOWNLOAD};
+                        const auto unkownAccess{!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
+                        if (unkownAccess || transferIsDownloadType)
                         {
                             showInMega = false;
+                        }
+
+                        const auto transferIsUploadType{transfer->getType() == MegaTransfer::TYPE_UPLOAD};
+                        if(transferIsUploadType)
+                        {
+                            showInFolder = false;
                         }
 
                         delete transfer;
@@ -499,7 +508,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 }
                 else
                 {
-                    customizeCompletedContextMenu(linkAvailable, true, true, showInMega);
+                    customizeCompletedContextMenu(linkAvailable, true, showInFolder, showInMega);
                 }
                 contextCompleted->exec(mapToGlobal(point));
             }
@@ -593,7 +602,7 @@ void MegaTransferView::cancelTransferClicked()
     QPointer<MegaTransferView> view = QPointer<MegaTransferView>(this);
     if (QMegaMessageBox::warning(0,
                              QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel this transfer?"), Utilities::getDevicePixelRatio(),
+                             tr("Are you sure you want to cancel this transfer?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
             || !view)
     {
@@ -712,13 +721,12 @@ void MegaTransferView::showInMEGAClicked()
             transfer = model->getTransferByTag(transferTagSelected[i]);
             if (transfer)
             {
-                MegaHandle handle = transfer->getNodeHandle();
+                MegaHandle handle = transfer->getParentHandle();
                 if (handle != INVALID_HANDLE)
                 {
-                    const char *b64handle = MegaApi::handleToBase64(handle);
-                    QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromUtf8(b64handle);
-                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                    delete [] b64handle;
+                    const auto app{((MegaApplication *)qApp)};
+                    constexpr auto versions{false};
+                    app->shellViewOnMega(handle, versions);
                 }
                 delete transfer;
             }

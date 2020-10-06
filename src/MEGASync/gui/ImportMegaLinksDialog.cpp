@@ -4,6 +4,7 @@
 #include "gui/NodeSelector.h"
 #include "gui/MultiQFileDialog.h"
 #include "Utilities.h"
+#include "MegaApplication.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -92,23 +93,11 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 
         if (!testNode)
         {
-            testNode = megaApi->getRootNode();
-        }
-
-        MegaNode *p = testNode;
-        while (p)
-        {
-            if (megaApi->isSynced(p))
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+            if (rootNode)
             {
-                ui->cDownload->setChecked(false);
-                this->on_cDownload_clicked();
-                delete p;
-                break;
+                testNode = rootNode->copy();
             }
-
-            testNode = p;
-            p = megaApi->getParentNode(testNode);
-            delete testNode;
         }
     }
     else
@@ -155,32 +144,14 @@ QString ImportMegaLinksDialog::getDownloadPath()
 
 void ImportMegaLinksDialog::on_cDownload_clicked()
 {
-    if (finished && (ui->cDownload->isChecked() || ui->cImport->isChecked()))
-    {
-        ui->bOk->setEnabled(true);
-    }
-    else
-    {
-        ui->bOk->setEnabled(false);
-    }
-
-    ui->bLocalFolder->setEnabled(ui->cDownload->isChecked());
-    ui->eLocalFolder->setEnabled(ui->cDownload->isChecked());
+    enableLocalFolder(ui->cDownload->isChecked());
+    enableOkButton();
 }
 
 void ImportMegaLinksDialog::on_cImport_clicked()
 {
-    if (finished && (ui->cDownload->isChecked() || ui->cImport->isChecked()))
-    {
-        ui->bOk->setEnabled(true);
-    }
-    else
-    {
-        ui->bOk->setEnabled(false);
-    }
-
-    ui->bMegaFolder->setEnabled(ui->cImport->isChecked());
-    ui->eMegaFolder->setEnabled(ui->cImport->isChecked());
+    enableMegaFolder(ui->cImport->isChecked());
+    enableOkButton();
 }
 
 void ImportMegaLinksDialog::on_bLocalFolder_clicked()
@@ -225,7 +196,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
         QTemporaryFile test(path + QDir::separator());
         if (!test.open())
         {
-            QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
+            QMegaMessageBox::critical(nullptr, tr("Error"), tr("You don't have write permissions in this local folder."));
             return;
         }
 
@@ -306,15 +277,13 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 {
     finished = true;
-    if (ui->cDownload->isChecked() || ui->cImport->isChecked())
-    {
-        ui->bOk->setEnabled(true);
-    }
+    checkLinkValidAndSelected();
 }
 
 void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
 {
     linkProcessor->setSelected(id, state);
+    checkLinkValidAndSelected();
 }
 
 void ImportMegaLinksDialog::changeEvent(QEvent *event)
@@ -327,4 +296,33 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
             this->onLinkInfoAvailable(i);
     }
     QDialog::changeEvent(event);
+}
+
+void ImportMegaLinksDialog::enableOkButton() const
+{
+    const auto downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
+    const auto enable{finished && downloadOrImportChecked && linkProcessor->atLeastOneLinkValidAndSelected()};
+    ui->bOk->setEnabled(enable);
+}
+
+void ImportMegaLinksDialog::enableLocalFolder(bool enable)
+{
+    ui->bLocalFolder->setEnabled(enable);
+    ui->eLocalFolder->setEnabled(enable);
+}
+
+void ImportMegaLinksDialog::enableMegaFolder(bool enable)
+{
+    ui->bMegaFolder->setEnabled(enable);
+    ui->eMegaFolder->setEnabled(enable);
+}
+
+void ImportMegaLinksDialog::checkLinkValidAndSelected()
+{
+    const auto enable{linkProcessor->atLeastOneLinkValidAndSelected()};
+    ui->cDownload->setEnabled(enable);
+    ui->cImport->setEnabled(enable);
+    enableOkButton();
+    enableLocalFolder(enable && ui->cDownload->isChecked());
+    enableMegaFolder(enable && ui->cImport->isChecked());
 }

@@ -32,6 +32,7 @@ CustomTransferItem::CustomTransferItem(QWidget *parent) :
 
     actionButtonsEnabled = false;
     dsFinishedTime = 0;
+    mTransferFinishedWhileBlocked = false;
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
     ui->lShowInFolder->hide();
@@ -264,7 +265,10 @@ void CustomTransferItem::finishTransfer()
         ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
         ui->lActionTransfer->setIconSize(QSize(24,24));
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
-        ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError, this->getType() == MegaTransfer::TYPE_DOWNLOAD ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
+        ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError",
+                                                                                                       MegaError::getErrorString(transferError,
+                                                                                                                                 this->getType() == MegaTransfer::TYPE_DOWNLOAD && !mTransferFinishedWhileBlocked
+                                                                                                                                 ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
         updateFinishedIco(type, true);
     }
     else
@@ -294,24 +298,17 @@ void CustomTransferItem::updateTransfer()
         {
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
-            int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
+            const auto totalRemainingSeconds{mTransferRemainingTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
-            if (totalRemainingSeconds)
+            const auto printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
+            if (printableValue)
             {
-                if (totalRemainingSeconds < 60)
-                {
-                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
-                }
-                else
-                {
-                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
-                }
+                remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
                 ui->bClockDown->setVisible(true);
             }
             else
             {
-                remainingTime = QString::fromAscii("");
                 ui->bClockDown->setVisible(false);
             }
             ui->lRemainingTime->setText(remainingTime);

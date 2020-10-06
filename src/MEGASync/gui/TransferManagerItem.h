@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QMovie>
 #include "TransferItem.h"
+#include "TransferRemainingTime.h"
 
 namespace Ui {
 class TransferManagerItem;
@@ -46,6 +47,10 @@ private:
 
 private slots:
     void frameChanged(int);
+
+private:
+    void updateFinishedIco(bool transferErrors);
+    TransferRemainingTime mTransferRemainigTime;
 
 protected:
     QMovie *animation;

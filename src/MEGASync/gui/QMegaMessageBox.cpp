@@ -3,49 +3,39 @@
 #include <QDialogButtonBox>
 
 QMessageBox::StandardButton QMegaMessageBox::information(QWidget *parent, const QString &title,
-    const QString &text, qreal devPixelRatio, QMessageBox::StandardButtons buttons,
+    const QString &text, QMessageBox::StandardButtons buttons,
                                   QMessageBox::StandardButton defaultButton)
 {
-    return showNewMessageBox(parent, Information, title, text, devPixelRatio, buttons, defaultButton);
+    return showNewMessageBox(parent, Information, title, text, buttons, defaultButton);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::warning(QWidget *parent, const QString &title,
-    const QString &text, qreal devPixelRatio, QMessageBox::StandardButtons buttons,
+    const QString &text, QMessageBox::StandardButtons buttons,
                                   QMessageBox::StandardButton defaultButton)
 {
-    return showNewMessageBox(parent, Warning, title, text, devPixelRatio, buttons, defaultButton);
+    return showNewMessageBox(parent, Warning, title, text, buttons, defaultButton);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::question(QWidget *parent, const QString &title,
-    const QString &text, qreal devPixelRatio, QMessageBox::StandardButtons buttons,
+    const QString &text, QMessageBox::StandardButtons buttons,
                                   QMessageBox::StandardButton defaultButton)
 {
-    return showNewMessageBox(parent, Question, title, text, devPixelRatio, buttons, defaultButton);
+    return showNewMessageBox(parent, Question, title, text, buttons, defaultButton);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::critical(QWidget *parent, const QString &title,
-    const QString &text, qreal devPixelRatio, QMessageBox::StandardButtons buttons,
+    const QString &text,  QMessageBox::StandardButtons buttons,
                                   QMessageBox::StandardButton defaultButton)
 {
-    return showNewMessageBox(parent, Critical, title, text, devPixelRatio, buttons, defaultButton);
+    return showNewMessageBox(parent, Critical, title, text, buttons, defaultButton);
 }
 
 QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, QMessageBox::Icon icon,
-    const QString &title, const QString &text, qreal devPixelRatio, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton)
+    const QString &title, const QString &text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton)
 {
     QMessageBox msgBox(icon, title, text, QMessageBox::NoButton, parent);
+    msgBox.setTextFormat(Qt::TextFormat::PlainText);
     HighDpiResize hDpiResizer(&msgBox);
-    switch (icon)
-    {
-        case Information:
-        case Warning:
-        case Question:
-        case Critical:
-            msgBox.setIconPixmap(QPixmap(devPixelRatio < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                       : QString::fromUtf8(":/images/mbox-warning@2x.png")));
-        default:
-            break;
-    }
 
     QDialogButtonBox *buttonBox = msgBox.findChild<QDialogButtonBox*>();
     Q_ASSERT(buttonBox != 0);

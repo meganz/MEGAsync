@@ -4,8 +4,16 @@
 #include <QString>
 #include <QHash>
 #include <QPixmap>
+#include <QProgressDialog>
+#include <control/MegaController.h>
+
 #include <QDir>
 #include <QIcon>
+#include <QLabel>
+#include <QEasingCurve>
+#include "megaapi.h"
+
+#include <functional>
 
 #include <sys/stat.h>
 
@@ -15,6 +23,8 @@
                              chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
+
+#define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
 
 struct PlanInfo
 {
@@ -158,16 +168,111 @@ private:
 };
 
 
+
+/**
+ * @brief The MegaListenerFuncExecuter class
+ *
+ * it takes an std::function as parameter that will be called upon request finish.
+ *
+ */
+class MegaListenerFuncExecuter : public mega::MegaRequestListener
+{
+private:
+    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
+    bool mAutoremove = true;
+    bool mExecuteInAppThread = true;
+
+public:
+
+    /**
+     * @brief MegaListenerFuncExecuter
+     * @param func to call upon onRequestFinish
+     * @param autoremove whether this should be deleted after func is called
+     */
+    MegaListenerFuncExecuter(bool autoremove = false,
+                             std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
+                            )
+        : mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
+    {
+    }
+
+    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
+    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) {}
+    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
+    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+
+    void setExecuteInAppThread(bool executeInAppThread);
+};
+
+
+class ClickableLabel : public QLabel {
+    Q_OBJECT
+
+public:
+    explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
+        : QLabel(parent)
+    {
+#ifndef __APPLE__
+        setMouseTracking(true);
+#endif
+    }
+
+    ~ClickableLabel() {}
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent* event)
+    {
+        emit clicked();
+    }
+#ifndef __APPLE__
+    void enterEvent(QEvent *event)
+    {
+        setCursor(Qt::PointingHandCursor);
+    }
+
+    void leaveEvent(QEvent *event)
+    {
+        setCursor(Qt::ArrowCursor);
+    }
+#endif
+
+};
+
 class Utilities
 {
 public:
     static QString getSizeString(unsigned long long bytes);
     static QString getTimeString(long long secs, bool secondPrecision = true);
+    static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
     static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
+    static void getPROurlWithParameters(QString &url);
+    static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
+
+    static void adjustToScreenFunc(QPoint position, QWidget *what);
+    static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
+    static QString getReadableStringFromTs(mega::MegaIntegerList* list);
+    static QString getReadablePROplanFromId(int identifier);
+    static void animatePartialFadeout(QWidget *object, int msecs = 2000);
+    static void animatePartialFadein(QWidget *object, int msecs = 2000);
+    static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
+    // Returns remaining days until unix timestamp (floored)
+    static void getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays);
+    // Returns remaining days or remainig hours until unix timestamp. Note hours are not in addition to remaininDays
+    // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
+    static void getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
+
+    // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
+    // but the object will be deleted when the progress closes
+    static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
+
+    static void delayFirstSyncStart();
 
 private:
     Utilities() {}
@@ -190,6 +295,8 @@ public:
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);
+
+    static long long getSystemsAvailableMemory();
 };
 
 #endif // UTILITIES_H

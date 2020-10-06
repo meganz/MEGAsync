@@ -190,6 +190,9 @@ void TransferManager::createAddMenu()
         {
             addMenu->removeAction(actions[i]);
         }
+#ifdef _WIN32
+        addMenu->deleteLater();
+#endif
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
@@ -209,7 +212,7 @@ void TransferManager::createAddMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")));
+    importLinksAction = new MenuItemAction(tr("Open links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")));
     connect(importLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
@@ -371,14 +374,15 @@ void TransferManager::on_bAdd_clicked()
 {
     emit userActivity();
 
+#ifdef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    createAddMenu();
+#endif
+
     auto menuWidthInitialPopup = addMenu->sizeHint().width();
     auto displayedMenu = addMenu;
     QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
     QPoint p = !point.isNull() ? point - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
 
-#ifdef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
-    createAddMenu();
-#endif
 
 #ifdef __APPLE__
     addMenu->exec(p);
@@ -394,7 +398,7 @@ void TransferManager::on_bAdd_clicked()
             displayedMenu->ensurePolished();
             if (menuWidthInitialPopup != displayedMenu->sizeHint().width())
             {
-                QPoint p = pointValue  - QPoint(displayedMenu->sizeHint().width(), 0);
+                QPoint p = pointValue - QPoint(displayedMenu->sizeHint().width(), 0);
                 displayedMenu->update();
                 displayedMenu->popup(p);
             }
@@ -514,10 +518,10 @@ void TransferManager::on_bClearAll_clicked()
 
     if (w != ui->wCompleted)
     {
-        if (QMegaMessageBox::warning(NULL,
+        if (QMegaMessageBox::warning(nullptr,
                                  QString::fromUtf8("MEGAsync"),
                                  tr("Are you sure you want to cancel all transfers?"),
-                                 Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
                 || !dialog)
         {
             return;

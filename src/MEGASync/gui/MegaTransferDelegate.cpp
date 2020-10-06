@@ -58,6 +58,14 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
             if (transfer)
             {
+                //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
+                bool blockedTransfer = static_cast<MegaApplication*>(qApp)->finishedTransfersWhileBlocked(transfer->getTag());
+                if (blockedTransfer)
+                {
+                    ti->setTransferFinishedWhileBlocked(blockedTransfer);
+                    static_cast<MegaApplication*>(qApp)->removeFinishedBlockedTransfer(transfer->getTag());
+                }
+
                 ti->setType(transfer->getType(), transfer->isSyncTransfer());
                 ti->setFileName(QString::fromUtf8(transfer->getFileName()));
                 ti->setTotalSize(transfer->getTotalBytes());
@@ -68,7 +76,8 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 int tError = transfer->getLastError().getErrorCode();
                 if (tError != MegaError::API_OK)
                 {
-                    ti->setTransferError(tError, transfer->getLastError().getValue());
+                    assert(transfer->getLastErrorExtended());
+                    ti->setTransferError(tError, transfer->getLastErrorExtended()->getValue());
                 }
 
                 ti->setTransferState(transfer->getState());
@@ -202,17 +211,17 @@ void MegaTransferDelegate::processCancel(int tag)
     }
     else
     {
+        QPointer<QTransfersModel> modelPointer = model;
+
         QMessageBox warning;
         HighDpiResize hDpiResizer(&warning);
         warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
         warning.setText(tr("Are you sure you want to cancel this transfer?"));
         warning.setIcon(QMessageBox::Warning);
-        warning.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
-                                                                           : QString::fromUtf8(":/images/mbox-warning@2x.png")));
         warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         warning.setDefaultButton(QMessageBox::No);
         int result = warning.exec();
-        if (result == QMessageBox::Yes)
+        if (modelPointer && result == QMessageBox::Yes)
         {
             model->megaApi->cancelTransferByTag(tag);
         }

@@ -129,6 +129,16 @@
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
         <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
     </message>
+    <message>
+        <source>Remaining Download</source>
+        <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
+        <translation type="unfinished">Remaining Download</translation>
+    </message>
+    <message>
+        <source>Remaining Upload</source>
+        <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
+        <translation type="unfinished">Remaining Upload</translation>
+    </message>
 </context>
 <context>
     <name>AddExclusionDialog</name>
@@ -140,7 +150,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -431,12 +441,12 @@
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="unfinished">file</translation>
+        <translation type="obsolete">file</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="unfinished">folder</translation>
+        <translation type="obsolete">folder</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
@@ -446,7 +456,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [A] ([B]) has been reinstated</translation>
+        <translation type="obsolete">Your publicly shared [A] ([B]) has been reinstated</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
@@ -476,7 +486,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+        <translation type="obsolete">Your publicly shared [%1] ([%2]) has been taken down</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -487,6 +497,26 @@
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
         <translation type="unfinished">Access to shared folder was removed</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Your publicly shared file ([A]) has been taken down</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared folder ([A]) has been taken down</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Your publicly shared file ([A]) has been reinstated</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared folder ([A]) has been reinstated</translation>
     </message>
 </context>
 <context>
@@ -692,6 +722,16 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
         <translation type="unfinished">Data Protection Regulation</translation>
     </message>
+    <message>
+        <source>All rights reserved.</source>
+        <translatorcomment>Tail part of the footer message after copyright year Mega Limited.</translatorcomment>
+        <translation type="unfinished">All rights reserved.</translation>
+    </message>
+    <message>
+        <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
+        <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
+        <translation type="unfinished">[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU Lesser General Public License Version 3[/A]</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
@@ -751,6 +791,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
         <translation type="unfinished">Too many requests. Please wait.</translation>
+    </message>
+    <message>
+        <source>You have entered your current password, please enter a new password.</source>
+        <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
+        <translation type="unfinished">You have entered your current password, please enter a new password.</translation>
+    </message>
+</context>
+<context>
+    <name>CircularUsageProgressBar</name>
+    <message>
+        <source>[A]%</source>
+        <translatorcomment>Percent sign style. Form and spacing between digit and sign is different in each language.</translatorcomment>
+        <translation type="unfinished">[A]%</translation>
     </message>
 </context>
 <context>
@@ -812,6 +865,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Send report</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
+        <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
+        <translation type="unfinished">Attach diagnostic log files to assist with debugging
+(in some cases it may contain details about your data, such as file or folder names)</translation>
     </message>
 </context>
 <context>
@@ -918,6 +977,19 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>You don’t have write permissions in this local folder.</translation>
+    </message>
+</context>
+<context>
+    <name>DynamicTransferQuotaPopOver</name>
+    <message>
+        <source>Dynamic transfer quota</source>
+        <translatorcomment>Title label to indicate about the dynamic transfer quota used by current account.</translatorcomment>
+        <translation type="unfinished">Dynamic transfer quota</translation>
+    </message>
+    <message>
+        <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
+        <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
+        <translation type="unfinished">[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over your current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</translation>
     </message>
 </context>
 <context>
@@ -1083,7 +1155,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="obsolete">[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</translation>
+        <translation type="obsolete">[A]Log in[/A] or [B]Create an account[/B] to fully experience MEGA</translation>
     </message>
     <message>
         <source>Login to MEGA</source>
@@ -1159,7 +1231,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="unfinished">Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="obsolete">Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1180,6 +1252,81 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
         <translation type="unfinished">Logging out…</translation>
+    </message>
+    <message>
+        <source>Locked Account</source>
+        <translatorcomment>Label to indicate the current account is locked</translatorcomment>
+        <translation type="unfinished">Locked Account</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account.</translatorcomment>
+        <translation type="unfinished">Logout</translation>
+    </message>
+    <message>
+        <source>Verify email</source>
+        <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
+        <translation type="obsolete">Verify email</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
+        <translation type="unfinished">Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
+        <translation type="unfinished">Verify now</translation>
+    </message>
+    <message>
+        <source>Creating account...</source>
+        <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
+        <translation type="unfinished">Creating account…</translation>
+    </message>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Why am I seeing this?</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Resend email</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email sent</translation>
+    </message>
+    <message>
+        <source>Please enter the code generated by your authentication app</source>
+        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
+        <translation type="unfinished">Please enter the code generated by your authentication app</translation>
+    </message>
+    <message>
+        <source>6 digit code:</source>
+        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
+        <translation type="unfinished">6 digit code:</translation>
+    </message>
+    <message>
+        <source>Invalid code</source>
+        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
+        <translation type="unfinished">Invalid code</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
+        <translation type="unfinished">Next</translation>
+    </message>
+    <message>
+        <source>[A]Lost your authenticator device?[/A]</source>
+        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
+        <translation type="unfinished">[A]Lost your authenticator device?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1203,7 +1350,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation>Import links</translation>
+        <translation type="vanished">Import links</translation>
     </message>
     <message>
         <source>Download to my computer</source>
@@ -1267,6 +1414,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>You don’t have write permissions in this local folder.</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
     </message>
 </context>
 <context>
@@ -1671,6 +1823,61 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 used</translation>
     </message>
+    <message>
+        <source>Your data is at risk!</source>
+        <translatorcomment>Label to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation type="unfinished">Your data is at risk!</translation>
+    </message>
+    <message>
+        <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
+        <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
+        <translation type="unfinished">We have contacted you by email to [A] on [B], but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</translation>
+    </message>
+    <message>
+        <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to informa about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of days left to upgrade.</translatorcomment>
+        <translation type="unfinished">You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+    </message>
+    <message>
+        <source>Upgrade account</source>
+        <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
+        <translation type="unfinished">Upgrade account</translation>
+    </message>
+    <message>
+        <source>You must act immediately to save your data</source>
+        <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
+        <translation type="unfinished">You must act immediately to save your data</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota.</source>
+        <translatorcomment>Title to indicate a situation of depleted transfer quota for the current account.</translatorcomment>
+        <translation type="unfinished">Depleted transfer quota.</translation>
+    </message>
+    <message>
+        <source>All downloads are currently disabled.</source>
+        <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
+        <translation type="unfinished">All downloads are currently disabled.</translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translatorcomment>Button label to upgrade the current account.</translatorcomment>
+        <translation type="unfinished">Upgrade</translation>
+    </message>
+    <message>
+        <source>Limited available transfer quota</source>
+        <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
+        <translation type="unfinished">Limited available transfer quota</translation>
+    </message>
+    <message>
+        <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
+        <translatorcomment>Informative label to indicate that your queued transfers may be interrupted because the current account is above 90 percent of the transfer quota of the current account.</translatorcomment>
+        <translation type="unfinished">Your queued transfers exceed the current quota available for your IP address and may therefore be interrupted.</translation>
+    </message>
+    <message>
+        <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
+        <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
+        <translation type="unfinished">You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -1772,12 +1979,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+        <translation type="unfinished">Log in or create an account to start using the MEGA Desktop App.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+        <translation type="unfinished">You need to log in to your MEGA account to run the MEGA Desktop App.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1867,6 +2074,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>LockedPopOver</name>
+    <message>
+        <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</translation>
+    </message>
+    <message>
+        <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Locked Accounts</translation>
+    </message>
+</context>
+<context>
     <name>Login2FA</name>
     <message>
         <source>Login Verification</source>
@@ -1876,12 +2101,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation type="unfinished">Please enter the 6-digit code generated by your Authenticator App.</translation>
+        <translation type="unfinished">Please enter the code generated by your authentication app</translation>
     </message>
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation type="unfinished">6 digit code</translation>
+        <translation type="unfinished">6 digit code:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1901,7 +2126,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your Authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Lost your authenticator device?[/A]</translation>
     </message>
 </context>
 <context>
@@ -2010,7 +2235,7 @@ Exit anyway?</source>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Import links</translation>
+        <translation type="vanished">Import links</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -2114,7 +2339,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation type="vanished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -2132,7 +2357,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="unfinished">Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2388,7 +2613,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
+        <translation type="unfinished">MEGAsync will continue to work, however you may not receive new updates.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -2660,6 +2885,51 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
         <translation type="unfinished">contact</translation>
     </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
+        <translation type="unfinished">Locked Account</translation>
+    </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
+    </message>
+    <message>
+        <source>Your account has been disabled by your administrator. Please contact your business account administrator for further details.</source>
+        <translatorcomment>Warning shown to the user when the administrator of a business account disables him.</translatorcomment>
+        <translation type="unfinished">Your account has been disabled by your administrator. Please contact your business account administrator for further details.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</translation>
+    </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is in a transferring state (ongoing transfers are running)</translatorcomment>
+        <translation type="unfinished">Transferring</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation type="unfinished">Your data is at risk</translation>
+    </message>
+    <message>
+        <source>You have [A] days left to save your data</source>
+        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
+        <translation type="unfinished">You have [A] days left to save your data</translation>
+    </message>
+    <message>
+        <source>You have [A] hours left to save your data</source>
+        <translatorcomment>Notification content to inform the hours the user have to save the date before possible deletion. [A] will be replace with remaining hours amount.</translatorcomment>
+        <translation type="unfinished">You have [A] hours left to save your data</translation>
+    </message>
+    <message>
+        <source>You must act immediately to save your data</source>
+        <translatorcomment>Notification content to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
+        <translation type="unfinished">You must act immediately to save your data</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2793,7 +3063,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">Your account was terminated due to a breach of MEGA’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -2819,6 +3089,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation type="unfinished">Transfer failed due to a recursive directory structure</translation>
+    </message>
+    <message>
+        <source>Storage Quota Exceeded. Upgrade now</source>
+        <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
+        <translation type="unfinished">Storage Quota Exceeded. Please upgrade now</translation>
+    </message>
+</context>
+<context>
+    <name>MegaInfoMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Why am I seeing this?</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close current message box</translatorcomment>
+        <translation type="unfinished">Close</translation>
+    </message>
+    <message>
+        <source>Locked Accounts</source>
+        <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
+        <translation type="unfinished">Locked Accounts</translation>
+    </message>
+    <message>
+        <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
+        <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
+        <translation type="unfinished">It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</translation>
+    </message>
+    <message>
+        <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
+        <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
+        <translation type="unfinished">Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</translation>
     </message>
 </context>
 <context>
@@ -2862,7 +3165,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">Get link</translation>
+        <translation type="unfinished">Get Link</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2968,33 +3271,6 @@ Are you sure?</source>
     </message>
 </context>
 <context>
-    <name>MessageBox</name>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
-    </message>
-    <message>
-        <source>Do not ask me again</source>
-        <translatorcomment>Check box label to remember the option of a user.</translatorcomment>
-        <translation type="unfinished">Do not ask me again</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
-        <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
-        <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
-        <translation type="unfinished">The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
-    </message>
-</context>
-<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3061,7 +3337,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Invalid folder for synchronization. Please ensure that you don’t use characters like ‘\’, ‘/’ or ‘:’ in your folder names.</translation>
+        <translation type="unfinished">Invalid folder for synchronization. Please ensure that you don’t use characters like “\”, “/” or “:” in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3113,7 +3389,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">Invalid folder name.
-Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+Please ensure that you don’t use characters like “\” “/” or “:” in your folder names.</translation>
     </message>
 </context>
 <context>
@@ -3122,6 +3398,112 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
         <source>MEGAsync</source>
         <translatorcomment>Product name.</translatorcomment>
         <translation type="unfinished">MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>OverQuotaDialog</name>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
+        <translation type="unfinished">Storage Full</translation>
+    </message>
+    <message>
+        <source>Download syncs are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that syncs downloads are temporarily disabled because a situation of over transfer quota.</translatorcomment>
+        <translation type="obsolete">Download syncs are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting set syncs but disabled until there is enough free storage space within the account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space in your account.</translation>
+    </message>
+    <message>
+        <source>Buy more space</source>
+        <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
+        <translation type="unfinished">Buy more space</translation>
+    </message>
+    <message>
+        <source>Uploads are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that uploads are temporarily disabled due to a storage space limit has been reached.</translatorcomment>
+        <translation type="unfinished">Uploads are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space in your account.</translation>
+    </message>
+    <message>
+        <source>Empty transfer quota</source>
+        <translatorcomment>Window title for dialog that shows informative messages about a situation of depleted transfer quota.</translatorcomment>
+        <translation type="obsolete">Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>Syncs are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that syncs are temporarily disabled due to transfer quota limit has been reached.</translatorcomment>
+        <translation type="unfinished">Syncs are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add syncs but they will remain disabled until your account has more transfer quota available.</translation>
+    </message>
+    <message>
+        <source>Upgrade Account</source>
+        <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
+        <translation type="unfinished">Upgrade Account</translation>
+    </message>
+    <message>
+        <source>Importing links is temporarily disabled.</source>
+        <translatorcomment>Label to indicate that import links feature is temporarily disabled due to a situation of over transfer quota. User will be able to import but not to download.</translatorcomment>
+        <translation type="unfinished">Importing links is temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until your account has more transfer quota available.</translation>
+    </message>
+    <message>
+        <source>Downloads are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that downloads are temporarily disabled due to a situation of over transfer quota.</translatorcomment>
+        <translation type="unfinished">Downloads are temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until your account has more transfer quota available.</translation>
+    </message>
+    <message>
+        <source>Streams are temporarily disabled.</source>
+        <translatorcomment>Label to indicate that streaming transfers  of MEGAsync (context menu, stream option) is temporarily disabled due to a situation of over transfer quota.</translatorcomment>
+        <translation type="unfinished">Streaming is temporarily disabled.</translation>
+    </message>
+    <message>
+        <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
+        <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
+        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until your account has more transfer quota available.</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota</source>
+        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
+        <translation type="unfinished">Depleted transfer quota</translation>
+    </message>
+</context>
+<context>
+    <name>OverquotaFullDialog</name>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate that current account has reached storage limit.</translatorcomment>
+        <translation type="unfinished">Storage Full</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss the warning about storage full.</translatorcomment>
+        <translation type="unfinished">Dismiss</translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
+        <translation type="unfinished">Upgrade</translation>
     </message>
 </context>
 <context>
@@ -3142,7 +3524,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation>Import links</translation>
+        <translation type="vanished">Import links</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
@@ -3178,6 +3560,11 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">Invalid MEGA Link</translation>
+    </message>
+    <message>
+        <source>Enter links</source>
+        <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
+        <translation type="unfinished">Enter links</translation>
     </message>
 </context>
 <context>
@@ -3382,15 +3769,59 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
+        <translation type="obsolete">- Support for user notifications.
+- Bug reports can now be sent from the settings dialog.
+- Restyled the main dialog.
 - Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
-- Other UI fixes and adjustments.
+- Improved business account usability.
+- Added support for links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 file systems.
 - Other performance improvements, UI fixes and adjustments.</translation>
+    </message>
+    <message>
+        <source>- Fix crash issue for OSX 10.9.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
+        <translation type="obsolete">- Fixed crash issue for OSX 10.9.</translation>
+    </message>
+    <message>
+        <source>- New customized message boxes.
+- Clean retroactive logs when logout.
+- Fixed issues that disable Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
+        <translation type="obsolete">- New customized message boxes.
+- Clean retroactive logs when logging out.
+- Fixed issues that disabled Finder extension under some circumstances.
+- Email verification for locked accounts.
+- SMS verification for locked accounts.
+- Support for the affiliate program.
+- Included option to send logs from crash report dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
+    </message>
+    <message>
+        <source>- Improve user experience when exceeded transfer allowance.
+- Improvements in translation.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS system.
+- Stop escaping filenames when special characters are supported by target filesystem.
+- Integration of 2FA form within main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
+        <translation type="unfinished">- User experience improvement when transfer quota is exceeded.
+- Updated translations.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS.
+- Filenames are no longer escaped when special characters are supported by the target file system.
+- Integration of 2FA form within the main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -3414,6 +3845,389 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>&amp;Cancel</translation>
+    </message>
+</context>
+<context>
+    <name>QFileDialog</name>
+    <message>
+        <source>Look in:</source>
+        <translatorcomment>Label to indicate the current filesystem path containing the files and folders that are being listed</translatorcomment>
+        <translation type="unfinished">Look in:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translatorcomment>Button for going backwards in the navigating in the filesystem</translatorcomment>
+        <translation type="unfinished">Back</translation>
+    </message>
+    <message>
+        <source>Go back</source>
+        <translatorcomment>Back button message used by assistive technologies (such as screen readers)</translatorcomment>
+        <translation type="unfinished">Go back</translation>
+    </message>
+    <message>
+        <source>Alt+Left</source>
+        <translatorcomment>Shortcut for Back button.It is shown in the button tooltip.</translatorcomment>
+        <translation type="unfinished">Alt+Left</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
+        <translation type="unfinished">Forward</translation>
+    </message>
+    <message>
+        <source>Go forward</source>
+        <translatorcomment>Forward button message used by assistive technologies (such as screen readers)</translatorcomment>
+        <translation type="unfinished">Go forward</translation>
+    </message>
+    <message>
+        <source>Alt+Right</source>
+        <translatorcomment>Shortcut for Forward button.It is shown in the button tooltip.</translatorcomment>
+        <translation type="unfinished">Alt+Right</translation>
+    </message>
+    <message>
+        <source>Parent Directory</source>
+        <translatorcomment>Button to move to the parent directory</translatorcomment>
+        <translation type="unfinished">Parent Directory</translation>
+    </message>
+    <message>
+        <source>Go to the parent directory</source>
+        <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
+        <translation type="unfinished">Go to the parent directory</translation>
+    </message>
+    <message>
+        <source>Alt+Up</source>
+        <translatorcomment>Shortcut for Parent Directory button.It is shown in the button tooltip.</translatorcomment>
+        <translation type="unfinished">Alt+Up</translation>
+    </message>
+    <message>
+        <source>Create New Folder</source>
+        <translatorcomment>Button for creating a new folder</translatorcomment>
+        <translation type="unfinished">Create New Folder</translation>
+    </message>
+    <message>
+        <source>Create a New Folder</source>
+        <translatorcomment>Create a new folder button message used by assistive technologies (such as screen readers)</translatorcomment>
+        <translation type="unfinished">Create a New Folder</translation>
+    </message>
+    <message>
+        <source>List View</source>
+        <translatorcomment>Button for changing to filesystem list view mode</translatorcomment>
+        <translation type="unfinished">List View</translation>
+    </message>
+    <message>
+        <source>Change to list view mode</source>
+        <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
+        <translation type="unfinished">Change to list view mode</translation>
+    </message>
+    <message>
+        <source>Detail View</source>
+        <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
+        <translation type="unfinished">Detailed View</translation>
+    </message>
+    <message>
+        <source>Change to detail view mode</source>
+        <translatorcomment>Change to detail view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
+        <translation type="unfinished">Change to detail view mode</translation>
+    </message>
+    <message>
+        <source>Sidebar</source>
+        <translatorcomment>Name of the side bar area of the window</translatorcomment>
+        <translation type="unfinished">Sidebar</translation>
+    </message>
+    <message>
+        <source>List of places and bookmarks</source>
+        <translatorcomment>Name to indicate the list of places and bookmarks area of the window</translatorcomment>
+        <translation type="unfinished">List of places and bookmarks</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Label for a list of files</translatorcomment>
+        <translation type="unfinished">Files</translation>
+    </message>
+    <message>
+        <source>Files of type:</source>
+        <translatorcomment>Label for choosing a type for filtering files</translatorcomment>
+        <translation type="unfinished">Files of type:</translation>
+    </message>
+    <message>
+        <source>Find Directory</source>
+        <translatorcomment>Window title when opening a directory</translatorcomment>
+        <translation type="unfinished">Find Directory</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translatorcomment>Window title when opening a file</translatorcomment>
+        <translation type="unfinished">Open</translation>
+    </message>
+    <message>
+        <source>Save As</source>
+        <translatorcomment>Window title when saving a file</translatorcomment>
+        <translation type="unfinished">Save As</translation>
+    </message>
+    <message>
+        <source>Directory:</source>
+        <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
+        <translation type="unfinished">Directory:</translation>
+    </message>
+    <message>
+        <source>All Files (*)</source>
+        <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
+        <translation type="unfinished">All Files (*)</translation>
+    </message>
+    <message>
+        <source>Show </source>
+        <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
+        <translation type="unfinished">Show[S]</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
+        <translation type="unfinished">All files (*)</translation>
+    </message>
+    <message>
+        <source>Directories</source>
+        <translatorcomment>Name of the option for showing only directories</translatorcomment>
+        <translation type="unfinished">Directories</translation>
+    </message>
+    <message>
+        <source>New Folder</source>
+        <translatorcomment>Default folder new when creating a new folder</translatorcomment>
+        <translation type="unfinished">New Folder</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Deleting warning dialog window title</translatorcomment>
+        <translation type="unfinished">Delete</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
+        <translatorcomment>Warning message shown before deleting a file or a folder</translatorcomment>
+        <translation type="obsolete">Are you sure you want to delete  “%1”?</translation>
+    </message>
+    <message>
+        <source>Could not delete directory.</source>
+        <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
+        <translation type="unfinished">Could not delete directory.</translation>
+    </message>
+    <message>
+        <source>Recent Places</source>
+        <translatorcomment>List of recent filesystem places</translatorcomment>
+        <translation type="unfinished">Recent Places</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Contextual action for removing a new file or folder in the sidebar</translatorcomment>
+        <translation type="unfinished">Remove</translation>
+    </message>
+    <message>
+        <source>My Computer</source>
+        <translatorcomment>Label to name the top level of the filesystem</translatorcomment>
+        <translation type="unfinished">My Computer</translation>
+    </message>
+    <message>
+        <source>Drive</source>
+        <translatorcomment>Label to name physical storage drives</translatorcomment>
+        <translation type="unfinished">Drive</translation>
+    </message>
+    <message>
+        <source>%1 File</source>
+        <translatorcomment>Option for filtering files by extension. %1 is a file name suffix, for example txt.</translatorcomment>
+        <translation type="unfinished">%1 File</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translatorcomment>Label to desing a file matching</translatorcomment>
+        <translation type="unfinished">File</translation>
+    </message>
+    <message>
+        <source>File Folder</source>
+        <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
+        <translation type="unfinished">File Folder</translation>
+    </message>
+    <message>
+        <source>Folder</source>
+        <translatorcomment>Label to desing a folder matching all other platforms</translatorcomment>
+        <translation type="unfinished">Folder</translation>
+    </message>
+    <message>
+        <source>Alias</source>
+        <translatorcomment>Label for shourcut in all other platforms in OS X Finder</translatorcomment>
+        <translation type="unfinished">Alias</translation>
+    </message>
+    <message>
+        <source>Shortcut</source>
+        <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
+        <translation type="unfinished">Shortcut</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translatorcomment>Name when the file or folder does not match</translatorcomment>
+        <translation type="unfinished">Unknown</translation>
+    </message>
+    <message>
+        <source>%1 already exists.Do you want to replace it?</source>
+        <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
+        <translation type="obsolete">%1 already exists.Do you want to replace it?</translation>
+    </message>
+    <message>
+        <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
+        <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
+        <translation type="obsolete">”%1” is write protected. Do you want to delete it anyway?</translation>
+    </message>
+    <message>
+        <source>&amp;Open</source>
+        <translatorcomment>Ok Button text when the dialog is executed for opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Choose, &amp;Save).</translatorcomment>
+        <translation type="unfinished">&amp;Open</translation>
+    </message>
+    <message>
+        <source>&amp;Choose</source>
+        <translatorcomment>Ok Button text when the dialog is executed for choosing a directory. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Save).</translatorcomment>
+        <translation type="unfinished">&amp;Choose</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translatorcomment>Ok Button text when the dialog is executed for saving a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Choose).</translatorcomment>
+        <translation type="unfinished">&amp;Save</translation>
+    </message>
+    <message>
+        <source>&amp;Rename</source>
+        <translatorcomment>Contextual menu action for renaming a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Delete, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
+        <translation type="unfinished">&amp;Rename</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translatorcomment>Contextual menu action for deleting a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
+        <translation type="unfinished">&amp;Delete</translation>
+    </message>
+    <message>
+        <source>Show &amp;hidden files</source>
+        <translatorcomment>Contextual menu action for showing or not showing hidden files. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, &amp;New Folder).</translatorcomment>
+        <translation type="unfinished">Show &amp;hidden files</translation>
+    </message>
+    <message>
+        <source>&amp;New Folder</source>
+        <translatorcomment>Contextual menu action for creating a new folder. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, Show &amp;hidden files).</translatorcomment>
+        <translation type="unfinished">&amp;New Folder</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
+        <translation type="unfinished">Are you sure you want to delete “%1”?</translation>
+    </message>
+    <message>
+        <source>File &amp;name:</source>
+        <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
+        <translation type="unfinished">File &amp;name:</translation>
+    </message>
+    <message>
+        <source>%1
+Directory not found.
+Please verify the correct directory name was given.</source>
+        <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
+        <translation type="unfinished">%1
+Directory not found.
+Please verify the correct directory name was given.</translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
+        <translation type="unfinished">%1 already exists.
+Do you want to replace it?</translation>
+    </message>
+    <message>
+        <source>%1
+File not found.
+Please verify the correct file name was given.</source>
+        <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
+        <translation type="unfinished">%1
+File not found.
+Please verify the correct file name was given.</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is write protected.
+Do you want to delete it anyway?</source>
+        <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
+        <translation type="unfinished">”%1” is write protected.
+Do you want to delete it anyway?</translation>
+    </message>
+</context>
+<context>
+    <name>QFileSystemModel</name>
+    <message>
+        <source>%1 TB</source>
+        <translatorcomment>File size measured in terabytes</translatorcomment>
+        <translation type="unfinished">%1 TB</translation>
+    </message>
+    <message>
+        <source>%1 GB</source>
+        <translatorcomment>File size measured in gigabytes</translatorcomment>
+        <translation type="unfinished">%1 GB</translation>
+    </message>
+    <message>
+        <source>%1 MB</source>
+        <translatorcomment>File size measured in megabytes</translatorcomment>
+        <translation type="unfinished">%1 MB</translation>
+    </message>
+    <message>
+        <source>%1 KB</source>
+        <translatorcomment>File size measured in kilobytes</translatorcomment>
+        <translation type="unfinished">%1 KB</translation>
+    </message>
+    <message>
+        <source>%1 bytes</source>
+        <translatorcomment>File size measured in bytes</translatorcomment>
+        <translation type="unfinished">%1 bytes</translation>
+    </message>
+    <message>
+        <source>Invalid filename</source>
+        <translatorcomment>Name of an invalid filename</translatorcomment>
+        <translation type="unfinished">Invalid filename</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translatorcomment>Header name of the column that shows file names</translatorcomment>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translatorcomment>Header name of the column that shows files sizes</translatorcomment>
+        <translation type="unfinished">Size</translation>
+    </message>
+    <message>
+        <source>Kind</source>
+        <translatorcomment>Header name of the column that shows file kind</translatorcomment>
+        <translation type="unfinished">Kind</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translatorcomment>Header name of the column that shows file type</translatorcomment>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <source>Date Modified</source>
+        <translatorcomment>Header name of the column that shows file modified dates</translatorcomment>
+        <translation type="unfinished">Date Modified</translation>
+    </message>
+    <message>
+        <source>My Computer</source>
+        <translatorcomment>Name of the top level of the filesystem in windows platform</translatorcomment>
+        <translation type="unfinished">My Computer</translation>
+    </message>
+    <message>
+        <source>Computer</source>
+        <translatorcomment>Name of the top level of the filesystem in unix platform</translatorcomment>
+        <translation type="unfinished">Computer</translation>
+    </message>
+    <message>
+        <source>%1 byte(s)</source>
+        <translatorcomment>File size measured in bytes</translatorcomment>
+        <translation type="unfinished">%1 byte(s)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
+        <translatorcomment>Alert message when file name is incorrect</translatorcomment>
+        <translation type="unfinished">&lt;b&gt;The name “%1” cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</translation>
     </message>
 </context>
 <context>
@@ -3597,7 +4411,7 @@ Please ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>FREE</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -3972,7 +4786,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Export Key</translation>
+        <translation type="obsolete">Export Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -4195,6 +5009,16 @@ when the application starts again</source>
         <source>Bug report</source>
         <translatorcomment>Button label to show the bug report form.</translatorcomment>
         <translation type="unfinished">Report issue</translation>
+    </message>
+    <message>
+        <source>KB/s</source>
+        <translatorcomment>Label to indicate kilobyte per second data transfer rate.</translatorcomment>
+        <translation type="unfinished">KB/s</translation>
+    </message>
+    <message>
+        <source>Backup Recovery Key</source>
+        <translatorcomment>Button label to export master key of the current user. </translatorcomment>
+        <translation type="unfinished">Backup Recovery Key</translation>
     </message>
 </context>
 <context>
@@ -4534,7 +5358,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Very Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation type="unfinished">Very Weak</translation>
+        <translation type="unfinished">Very weak</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -4828,6 +5652,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
         <translation type="unfinished">Syncing</translation>
     </message>
+    <message>
+        <source>Transferring</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
+        <translation type="unfinished">Transferring</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -4925,6 +5754,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
         <translation type="unfinished">Error getting link information</translation>
+    </message>
+    <message>
+        <source>Stream error: transfer overquota</source>
+        <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
+        <translation type="unfinished">Streaming error: transfer quota exceeded.</translation>
     </message>
 </context>
 <context>
@@ -5048,7 +5882,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Import links</translation>
+        <translation type="obsolete">Import links</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -5097,6 +5931,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Download</source>
         <translation type="unfinished">Download</translation>
     </message>
+    <message>
+        <source>Open links</source>
+        <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
+        <translation type="unfinished">Open links</translation>
+    </message>
 </context>
 <context>
     <name>TransferManagerItem</name>
@@ -5135,6 +5974,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
         <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
+        <translation type="unfinished">%1 of %2</translation>
+    </message>
+</context>
+<context>
+    <name>TransferQuota</name>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Informative label of system notification to encourage user to upgrade account.</translatorcomment>
+        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished">Get PRO</translation>
+    </message>
+    <message>
+        <source>Limited available transfer quota.</source>
+        <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
+        <translation type="unfinished">Limited available transfer quota.</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota.</source>
+        <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
+        <translation type="unfinished">Depleted transfer quota.</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -5158,7 +6025,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Free transfer quota exceeded</translation>
+        <translation type="obsolete">Free transfer quota exceeded</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -5173,6 +6040,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
         <translation type="unfinished">The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade your account[/A], which will give you your own transfer quota package and also ample extra storage space.</translation>
+    </message>
+    <message>
+        <source>Depleted transfer quota</source>
+        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
+        <translation type="unfinished">Depleted transfer quota</translation>
     </message>
 </context>
 <context>
@@ -5406,6 +6278,64 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
         <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+</context>
+<context>
+    <name>VerifyLockMessage</name>
+    <message>
+        <source>Why am I seeing this?</source>
+        <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
+        <translation type="unfinished">Why am I seeing this?</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translatorcomment>Button label to logout the current account</translatorcomment>
+        <translation type="unfinished">Logout</translation>
+    </message>
+    <message>
+        <source>Verify your email</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
+        <translation type="unfinished">Verify your email</translation>
+    </message>
+    <message>
+        <source>Locked account</source>
+        <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
+        <translation type="unfinished">Locked Account</translation>
+    </message>
+    <message>
+        <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
+        <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
+        <translation type="unfinished">Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+    </message>
+    <message>
+        <source>Resend email</source>
+        <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
+        <translation type="unfinished">Resend email</translation>
+    </message>
+    <message>
+        <source>Verify your account</source>
+        <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
+        <translation type="unfinished">Verify your account</translation>
+    </message>
+    <message>
+        <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
+        <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
+        <translation type="unfinished">Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
+    </message>
+    <message>
+        <source>Verify now</source>
+        <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
+        <translation type="unfinished">Verify now</translation>
+    </message>
+    <message>
+        <source>Email sent</source>
+        <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
+        <translation type="unfinished">Email sent</translation>
     </message>
 </context>
 <context>

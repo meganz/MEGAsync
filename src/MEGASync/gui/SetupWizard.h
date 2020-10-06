@@ -18,6 +18,23 @@ class SetupWizard;
 }
 
 class MegaApplication;
+
+class PreConfiguredSync
+{
+public:
+   PreConfiguredSync(QString localFolder, mega::MegaHandle megaFolderHandle, QString syncName);
+
+   QString localFolder() const;
+   QString syncName() const;
+
+   mega::MegaHandle megaFolderHandle() const;
+
+private:
+    mega::MegaHandle mMegaFolderHandle;
+    QString mLocalFolder;
+    QString mSyncName;
+};
+
 class SetupWizard : public QDialog, public mega::MegaRequestListener
 {
     Q_OBJECT
@@ -27,7 +44,9 @@ public:
         PAGE_INITIAL = 0,
         PAGE_NEW_ACCOUNT = 1,
         PAGE_LOGIN = 2,
-        PAGE_MODE = 3
+        PAGE_MODE = 3,
+        PAGE_LOGOUT = 4,
+        PAGE_PROGRESS = 5
     };
 
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
@@ -38,6 +57,8 @@ public:
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
     void goToStep(int page);
     void initModeSelection();
+
+    QList<PreConfiguredSync> preconfiguredSyncs() const;
 
 private slots:
     void on_bNext_clicked();
@@ -60,6 +81,9 @@ private slots:
 
 private:
     QPropertyAnimation *m_animation;
+
+signals:
+    void pageChanged(int page);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -88,6 +112,9 @@ protected:
     bool loggingStarted;
     bool creatingDefaultSyncFolder;
     QTimer *animationTimer;
+
+    QList<PreConfiguredSync> mPreconfiguredSyncs;
+
 };
 
 #endif // SETUPWIZARD_H

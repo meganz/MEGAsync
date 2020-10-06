@@ -12,6 +12,7 @@
 
 #define LOGS_FOLDER_LEAFNAME_QSTRING QString::fromUtf8("logs")
 
+class LoggingThread;
 class MegaSyncLogger : public QObject, public mega::MegaLogger
 {
     Q_OBJECT
@@ -19,7 +20,11 @@ class MegaSyncLogger : public QObject, public mega::MegaLogger
 public:
     MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& mDesktopPath, bool logToStdout);
     ~MegaSyncLogger();
-    void log(const char *time, int loglevel, const char *source, const char *message) override;
+    void log(const char *time, int loglevel, const char *source, const char *message
+#ifdef ENABLE_LOG_PERFORMANCE
+             , const char **directMessages, size_t *directMessagesSizes, int numberMessages
+#endif
+             ) override;
     void setDebug(bool enable);
     bool isDebug() const;
     bool mLogToStdout = false;
@@ -35,13 +40,16 @@ public:
      * @returns true if preparation went well (if false, there is no need for resumeAfterReporting)
      */
     bool prepareForReporting();
+    bool cleanLogs();
     void resumeAfterReporting();
 
 signals:
     void logReadyForReporting();
+    void logCleaned();
 
 private:
     QString mDesktopPath;
+    std::unique_ptr<LoggingThread> g_loggingThread;
 };
 
 extern MegaSyncLogger *g_megaSyncLogger;   // for crash report flush

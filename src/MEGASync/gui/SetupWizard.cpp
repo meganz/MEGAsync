@@ -63,6 +63,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
     connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
 
+    connect(static_cast<MegaApplication*>(qApp), SIGNAL(closeSetupWizard(int)), this, SLOT(done(int)));
+
     page_newaccount();
 
     ui->lError->setText(QString::fromUtf8(""));
@@ -160,7 +162,9 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (loggingStarted)
                 {
-                    megaApi->fetchNodes();
+                    preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
+                    auto email = request->getEmail();
+                    static_cast<MegaApplication*>(qApp)->fetchNodes(QString::fromUtf8(email ? email : ""));
                     if (!preferences->hasLoggedIn())
                     {
                         preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -174,6 +178,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (loggingStarted)
             {
+                preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_FAILED);
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
                     showErrorMessage(tr("Incorrect email and/or password."));
@@ -269,7 +274,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
                 if (!node)
                 {
-                    QMessageBox::warning(NULL, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
+                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
                 }
                 else
                 {
@@ -283,7 +288,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             if (error->getErrorCode() != MegaError::API_ESSL
                     && error->getErrorCode() != MegaError::API_ESID)
             {
-                QMessageBox::warning(NULL, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMegaMessageBox::warning(nullptr, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
             }
 
             break;
@@ -294,7 +299,15 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {   
                 if (loggingStarted)
                 {
-                    page_login();
+                    if (error->getErrorCode() == MegaError::API_EBLOCKED)
+                    {
+                        done(QDialog::Rejected);
+                    }
+                    else
+                    {
+                        page_login();
+                    }
+
                     loggingStarted = false;
                 }
                 else
@@ -303,53 +316,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
                 break;
             }
+            loggingStarted = false;
 
-            if (loggingStarted)
-            {
-                if (!megaApi->isFilesystemAvailable())
-                {
-                    page_login();
-                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                        "Please, try again. If the problem persists "
-                                        "please contact bug@mega.co.nz"));
-                    done(QDialog::Rejected);
-                    preferences->setCrashed(true);
-                    app->rebootApplication(false);
-                    return;
-                }
-
-                char *session = megaApi->dumpSession();
-                sessionKey = QString::fromUtf8(session);
-                delete [] session;
-
-                QString email = ui->eLoginEmail->text().toLower().trimmed();
-                if (preferences->hasEmail(email))
-                {
-                    int proxyType = preferences->proxyType();
-                    QString proxyServer = preferences->proxyServer();
-                    int proxyPort = preferences->proxyPort();
-                    int proxyProtocol = preferences->proxyProtocol();
-                    bool proxyAuth = preferences->proxyRequiresAuth();
-                    QString proxyUsername = preferences->getProxyUsername();
-                    QString proxyPassword = preferences->getProxyPassword();
-
-                    preferences->setEmail(email);
-                    preferences->setSession(sessionKey);
-                    preferences->setProxyType(proxyType);
-                    preferences->setProxyServer(proxyServer);
-                    preferences->setProxyPort(proxyPort);
-                    preferences->setProxyProtocol(proxyProtocol);
-                    preferences->setProxyRequiresAuth(proxyAuth);
-                    preferences->setProxyUsername(proxyUsername);
-                    preferences->setProxyPassword(proxyPassword);
-
-                    Platform::notifyAllSyncFoldersAdded();
-                    done(QDialog::Accepted);
-                    break;
-                }
-
-                page_mode();
-            }
             break;
         }
         case MegaRequest::TYPE_LOGOUT:
@@ -578,18 +546,18 @@ void SetupWizard::on_bNext_clicked()
         QString localFolderPath = ui->eLocalFolder->text();
         if (!Utilities::verifySyncedFolderLimits(localFolderPath))
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
             return;
         }
 
         MegaNode *node = megaApi->getNodeByPath(ui->eMegaFolder->text().toUtf8().constData());
         if (!node)
         {
-            MegaNode *rootNode = megaApi->getRootNode();
+            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
             if (!rootNode)
             {
                 page_login();
-                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
                                     "Please, try again. If the problem persists "
                                     "please contact bug@mega.co.nz"));
 
@@ -600,9 +568,8 @@ void SetupWizard::on_bNext_clicked()
             }
 
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            megaApi->createFolder("MEGAsync", rootNode);
+            megaApi->createFolder("MEGAsync", rootNode.get());
             creatingDefaultSyncFolder = true;
-            delete rootNode;
 
             ui->lProgress->setText(tr("Creating folder..."));
             page_progress();
@@ -640,11 +607,12 @@ void SetupWizard::on_bCancel_clicked()
     {
         setupPreferences();
         QString syncName;
-        MegaNode *rootNode = megaApi->getRootNode();
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+
         if (!rootNode)
         {
             page_login();
-            QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+            QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
                                 "Please, try again. If the problem persists "
                                 "please contact bug@mega.co.nz"));
 
@@ -654,9 +622,7 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        delete rootNode;
-
-        preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
+        mPreconfiguredSyncs.append(PreConfiguredSync(ui->eLocalFolder->text(), selectedMegaFolderHandle, syncName));
         done(QDialog::Accepted);
     }
     else
@@ -758,9 +724,9 @@ void SetupWizard::on_bLocalFolder_clicked()
         }
 
         QTemporaryFile test(path + QDir::separator());
-        if (test.open() || QMessageBox::warning(NULL, tr("Warning"), tr("You don't have write permissions in this local folder.") +
+        if (test.open() || QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You don't have write permissions in this local folder.") +
                     QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.") + QString::fromUtf8("\n") + tr("Do you want to continue?"),
-                    QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
             ui->eLocalFolder->setText(path);
         }
@@ -876,25 +842,8 @@ void SetupWizard::wAdvancedSetup_clicked()
 
 void SetupWizard::setupPreferences()
 {
-    QString email = ui->eLoginEmail->text().toLower().trimmed();
-
-    int proxyType = preferences->proxyType();
-    QString proxyServer = preferences->proxyServer();
-    int proxyPort = preferences->proxyPort();
-    int proxyProtocol = preferences->proxyProtocol();
-    bool proxyAuth = preferences->proxyRequiresAuth();
-    QString proxyUsername = preferences->getProxyUsername();
-    QString proxyPassword = preferences->getProxyPassword();
-    preferences->setEmail(QString::fromUtf8(megaApi->getMyEmail()));
-    preferences->setSession(QString::fromUtf8(megaApi->dumpSession()));
-
-    preferences->setProxyType(proxyType);
-    preferences->setProxyServer(proxyServer);
-    preferences->setProxyPort(proxyPort);
-    preferences->setProxyProtocol(proxyProtocol);
-    preferences->setProxyRequiresAuth(proxyAuth);
-    preferences->setProxyUsername(proxyUsername);
-    preferences->setProxyPassword(proxyPassword);
+    std::unique_ptr<char[]> email(megaApi->getMyEmail());
+    preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
 }
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
@@ -1020,6 +969,7 @@ void SetupWizard::page_login()
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pLogin);
+    emit pageChanged(PAGE_LOGIN);
     sessionKey.clear();
 }
 
@@ -1043,6 +993,7 @@ void SetupWizard::page_logout()
     ui->bCancel->setDefault(true);
 
     ui->sPages->setCurrentWidget(ui->pProgress);
+    emit pageChanged(PAGE_LOGOUT);
     sessionKey.clear();
 }
 
@@ -1080,7 +1031,7 @@ void SetupWizard::page_mode()
         ui->bBack->setEnabled(true);
     }
 
-
+    emit pageChanged(PAGE_MODE);
     ui->sPages->setCurrentWidget(ui->pSetupType);
 }
 
@@ -1114,6 +1065,7 @@ void SetupWizard::page_welcome()
     }
 
     ui->sPages->setCurrentWidget(ui->pWelcome);
+    emit pageChanged(PAGE_MODE);
     ui->wButtons->hide();
     ui->bFinish->setFocus();
 }
@@ -1150,6 +1102,7 @@ void SetupWizard::page_newaccount()
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pNewAccount);
+    emit pageChanged(PAGE_NEW_ACCOUNT);
 }
 
 void SetupWizard::page_progress()
@@ -1167,6 +1120,7 @@ void SetupWizard::page_progress()
     ui->bCancel->setDefault(true);
 
     ui->sPages->setCurrentWidget(ui->pProgress);
+    emit pageChanged(PAGE_PROGRESS);
 }
 
 void SetupWizard::setLevelStrength(int level)
@@ -1216,6 +1170,11 @@ void SetupWizard::setLevelStrength(int level)
             ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
             break;
     }
+}
+
+QList<PreConfiguredSync> SetupWizard::preconfiguredSyncs() const
+{
+    return mPreconfiguredSyncs;
 }
 
 void SetupWizard::lTermsLink_clicked()
@@ -1275,4 +1234,25 @@ void SetupWizard::onPasswordTextChanged(QString text)
 {
     int strength = megaApi->getPasswordStrength(text.toUtf8().constData());
     text.isEmpty() ? setLevelStrength(-1) : setLevelStrength(strength);
+}
+
+PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
+    mLocalFolder{localFolder}, mMegaFolderHandle{megaFolderHandle},mSyncName(syncName)
+{
+
+}
+
+QString PreConfiguredSync::localFolder() const
+{
+    return mLocalFolder;
+}
+
+QString PreConfiguredSync::syncName() const
+{
+    return mSyncName;
+}
+
+mega::MegaHandle PreConfiguredSync::megaFolderHandle() const
+{
+    return mMegaFolderHandle;
 }

@@ -981,9 +981,10 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   oss << "MEGAprivate ERROR DUMP\n";
   int frame_number=0;
 
-  oss << "Application: " << QApplication::applicationName().toUtf8().constData() << "\n";
+  oss << "Application: " << QApplication::applicationName().toUtf8().constData() << (sizeof(char*) == 4 ? " [32 bit]" : "") << (sizeof(char*) == 8 ? " [64 bit]" : "") << "\n";
   oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
          "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
+  oss << "Timestamp: " << QDateTime::currentMSecsSinceEpoch() << "\n";
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];
   int nameSize = GetModuleFileNameA(module, moduleName, sizeof(moduleName));
@@ -1048,7 +1049,14 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
       PFUNCTION_TABLE_ACCESS_ROUTINE64 SymFunctionTableAccess64_ = reinterpret_cast<PFUNCTION_TABLE_ACCESS_ROUTINE64>(
       GetProcAddress(dbghelp_module_, "SymFunctionTableAccess64"));
 
-      if (StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_)
+      typedef BOOL(WINAPI *SymInitialize_type)(
+          HANDLE hProcess,
+          PCSTR  UserSearchPath,
+          BOOL   fInvadeProcess);
+      SymInitialize_type SymInitialize_ = reinterpret_cast<SymInitialize_type>(
+      GetProcAddress(dbghelp_module_, "SymInitialize"));
+
+      if (StackWalk64_ && SymFunctionTableAccess64_ && SymGetModuleBase64_ && SymInitialize_)
       {
           HANDLE hThread = GetCurrentThread();
           DWORD machineType;
@@ -1075,6 +1083,9 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
           #else
               #error "Unsupported platform"
           #endif
+
+          // Without this, stack will contain garbage frames for x64 (and often even for x86)
+          SymInitialize_(process, nullptr, TRUE);
 
           oss << "Stacktrace:\n";
           do {

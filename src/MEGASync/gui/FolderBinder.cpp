@@ -39,7 +39,7 @@ bool FolderBinder::setSelectedMegaFolder(MegaHandle handle)
     {
         selectedMegaFolderHandle = mega::INVALID_HANDLE;
         delete selectedFolder;
-        QMessageBox::warning(NULL, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
+        QMegaMessageBox::warning(nullptr, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
         return false;
     }
 
@@ -109,17 +109,17 @@ void FolderBinder::on_bLocalFolder_clicked()
         path = QDir::toNativeSeparators(path);
         if (!Utilities::verifySyncedFolderLimits(path))
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
+            QMegaMessageBox::warning(nullptr, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
             return;
         }
 
         QTemporaryFile test(path + QDir::separator());
-        if (test.open()|| QMessageBox::warning(NULL,
+        if (test.open()|| QMegaMessageBox::warning(nullptr,
                                         tr("Warning"),
                                         tr("You don't have write permissions in this local folder.")
                                         + QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.")
                                         + QString::fromUtf8("\n") + tr("Do you want to continue?"),
-                                        QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+                                        QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
         {
             ui->eLocalFolder->setText(path);
         }

@@ -22,7 +22,7 @@ public:
     ~TransfersSummaryWidget();
 
     void updateSizes();
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event) override;
     int getDisplacement() const;
     void setDisplacement(int value);
 
@@ -53,6 +53,7 @@ public:
     void setCompletedUploads(long long  value);
 
     void initialize();
+    void reset();
 
     void showAnimated();
     void setPaused(bool value);
@@ -174,10 +175,10 @@ private:
 
     bool isWithinPseudoEllipse(QPoint pos, int x, int margin, int w, int diam);
 
-    void showEvent(QShowEvent *event);
+    void showEvent(QShowEvent *event) override;
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *event);
-    virtual void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 };
 
 
