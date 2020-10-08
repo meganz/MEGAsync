@@ -21,6 +21,8 @@ protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
+    QPixmap mask_image(QString pathToFile, int size);
+
 private:
     QPixmap backgroundPixmapOriginal;
     QPixmap backgroundPixmap;
