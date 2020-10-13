@@ -24,7 +24,7 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
 
 void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 {
-    constexpr auto padingPixels{6};
+    constexpr int padingPixels{6};
     double updatedOuterRadius = qMin(width(), height()) - padingPixels;
     if (updatedOuterRadius != outerRadius)
     {
@@ -54,13 +54,13 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     drawArcValue(painter, baseRect, arcStep);
 
     //Draw percentage text or dynamic transfer icon
-    const auto innerRadius{outerRadius - penWidth / 2};
-    const auto delta{(outerRadius - innerRadius) / 2};
-    const auto innerRect{QRectF(delta, delta + padingPixels / 2, innerRadius, innerRadius)};
+    const double innerRadius{outerRadius - penWidth / 2};
+    const double delta{(outerRadius - innerRadius) / 2};
+    const QRectF innerRect{QRectF(delta, delta + padingPixels / 2, innerRadius, innerRadius)};
     if(totalValueUnkown)
     {
-        constexpr auto dynamicIconNativeSizePixels{QSize{32, 32}};
-        auto dynamicIconRect{QRectF(QPoint(0, 0), dynamicIconNativeSizePixels)};
+        constexpr QSize dynamicIconNativeSizePixels{QSize{32, 32}};
+        QRectF dynamicIconRect{QRectF(QPoint(0, 0), dynamicIconNativeSizePixels)};
         dynamicIconRect.moveCenter(innerRect.center());
         QIcon dynamicQuotaIcon{dynamicTransferBlue};
         if(progressBarValue == CircularUsageProgressBar::MAXVALUE)
@@ -76,18 +76,18 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 
     if (progressBarValue >= ALMOSTOVERQUOTA_VALUE) // If value higher than almost oq threshold show warning image
     {
-        constexpr auto nativeOuterRadius{44.0};
-        const auto ratio{outerRadius / nativeOuterRadius};
-        constexpr auto iconSizePixels{24};
-        const auto pixmapTotalSideLength{ratio * iconSizePixels};
-        constexpr auto iconPaddingX{3};
-        const auto x{outerRadius - (pixmapTotalSideLength / 2) - iconPaddingX};
-        constexpr auto iconPaddingY{5};
-        const auto y{padingPixels / 2 - iconPaddingY};
-        const auto width{pixmapTotalSideLength};
-        const auto height{pixmapTotalSideLength};
-        const auto icon{progressBarValue >= CircularUsageProgressBar::MAXVALUE ? markFull : markWarning};
-        const auto pixmap{icon.pixmap(iconSizePixels, iconSizePixels)};
+        constexpr double nativeOuterRadius{44.0};
+        const double ratio{outerRadius / nativeOuterRadius};
+        constexpr int iconSizePixels{24};
+        const double pixmapTotalSideLength{ratio * iconSizePixels};
+        constexpr int iconPaddingX{3};
+        const double x{outerRadius - (pixmapTotalSideLength / 2) - iconPaddingX};
+        constexpr int iconPaddingY{5};
+        const double y{padingPixels / 2 - iconPaddingY};
+        const double width{pixmapTotalSideLength};
+        const double height{pixmapTotalSideLength};
+        const QIcon icon{progressBarValue >= CircularUsageProgressBar::MAXVALUE ? markFull : markWarning};
+        const QPixmap pixmap{icon.pixmap(iconSizePixels, iconSizePixels)};
         painter.drawPixmap(x, y, width, height, pixmap);
     }
 }

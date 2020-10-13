@@ -300,8 +300,8 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
 
 void ImportMegaLinksDialog::enableOkButton() const
 {
-    const auto downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
-    const auto enable{finished && downloadOrImportChecked && linkProcessor->atLeastOneLinkValidAndSelected()};
+    const bool downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
+    const bool enable{finished && downloadOrImportChecked && linkProcessor->atLeastOneLinkValidAndSelected()};
     ui->bOk->setEnabled(enable);
 }
 
@@ -319,7 +319,7 @@ void ImportMegaLinksDialog::enableMegaFolder(bool enable)
 
 void ImportMegaLinksDialog::checkLinkValidAndSelected()
 {
-    const auto enable{linkProcessor->atLeastOneLinkValidAndSelected()};
+    const bool enable{linkProcessor->atLeastOneLinkValidAndSelected()};
     ui->cDownload->setEnabled(enable);
     ui->cImport->setEnabled(enable);
     enableOkButton();
