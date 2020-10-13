@@ -66,7 +66,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
-    $$PWD/MegaInfoMessage.cpp
+    $$PWD/MegaInfoMessage.cpp \
+    $$PWD/WaitingSpinnerWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -134,7 +135,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
     $$PWD/VerifyLockMessage.h \
-    $$PWD/MegaInfoMessage.h
+    $$PWD/MegaInfoMessage.h \
+    $$PWD/WaitingSpinnerWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -250,11 +252,15 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
 
     QT += macextras
-    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
-    HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
+    OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm \
+                            $$PWD/MegaSystemTrayIcon.mm \
+                            $$PWD/QMacSpinningProgressIndicator.mm
+
+    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/MegaSystemTrayIcon.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
-               $$PWD/PermissionsWidget.h
+               $$PWD/PermissionsWidget.h \
+               $$PWD/QMacSpinningProgressIndicator.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
