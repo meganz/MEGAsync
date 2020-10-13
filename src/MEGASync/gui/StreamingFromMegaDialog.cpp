@@ -73,7 +73,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
         return;
     }
 
-    const auto messageBox{::mega::make_unique<QMessageBox>(this)};
+    const unique_ptr<QMessageBox> messageBox{::mega::make_unique<QMessageBox>(this)};
     messageBox->setIcon(QMessageBox::Question);
     messageBox->setWindowTitle(tr("Stream from MEGA"));
     messageBox->setText(tr("Are you sure that you want to stop the streaming?"));
@@ -94,7 +94,7 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
 void StreamingFromMegaDialog::on_bFromCloud_clicked()
 {
-    const auto nodeSelector{::mega::make_unique<NodeSelector>(megaApi, NodeSelector::STREAM_SELECT, this->parentWidget())};
+    const unique_ptr<NodeSelector> nodeSelector{::mega::make_unique<NodeSelector>(megaApi, NodeSelector::STREAM_SELECT, this->parentWidget())};
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {
@@ -106,7 +106,7 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
-    const auto inputDialog{::mega::make_unique<QInputDialog>(this)};
+    const unique_ptr<QInputDialog> inputDialog{::mega::make_unique<QInputDialog>(this)};
     inputDialog->setWindowFlags(inputDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     inputDialog->setWindowTitle(tr("Open link"));
     inputDialog->setLabelText(tr("Enter a MEGA file link:"));
@@ -318,7 +318,7 @@ void StreamingFromMegaDialog::updateFileInfoFromNode(MegaNode *node)
 
 void StreamingFromMegaDialog::requestPublicNodeInfo()
 {
-    auto url{mPublicLink.trimmed()};
+    QString url{mPublicLink.trimmed()};
     if (url.isEmpty())
     {
         return;
@@ -375,7 +375,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
 
 void StreamingFromMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
-    const auto isPublicNode{request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE};
+    const bool isPublicNode{request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE};
     if(isPublicNode)
     {
         if (e->getErrorCode() == MegaError::API_OK)
@@ -392,7 +392,7 @@ void StreamingFromMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, M
 
 void StreamingFromMegaDialog::onTransferTemporaryError(mega::MegaApi*, mega::MegaTransfer* transfer, mega::MegaError* e)
 {
-    const auto errorIsOverQuota{e->getErrorCode() == MegaError::API_EOVERQUOTA};
+    const bool errorIsOverQuota{e->getErrorCode() == MegaError::API_EOVERQUOTA};
     if(transfer->isStreamingTransfer() && errorIsOverQuota)
     {
         updateFileInfo(QString::fromUtf8(selectedMegaNode->getName()), LinkStatus::TRANSFER_OVER_QUOTA);

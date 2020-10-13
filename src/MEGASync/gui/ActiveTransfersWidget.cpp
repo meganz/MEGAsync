@@ -527,26 +527,26 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
     totalDownloads = api->getNumPendingDownloads();
     ui->lRemainingDownloads->setText(QString::fromUtf8("%1").arg(totalDownloads));
 
-    const auto totalDownloadsChangeFromOne{previousTotalDownloads == 1 && totalDownloads != 1};
-    if (totalDownloadsChangeFromOne)
+    const bool totalDownloadsChangeFromOne{previousTotalDownloads == 1 && totalDownloads != 1};
+    if(totalDownloadsChangeFromOne)
     {
         ui->lDescRemainingDown->setText(tr("Remaining Downloads"));
     }
 
-    const auto totalDownloadsChangeToOne{previousTotalDownloads != 1 && totalDownloads == 1};
-    if (totalDownloadsChangeToOne)
+    const bool totalDownloadsChangeToOne{previousTotalDownloads != 1 && totalDownloads == 1};
+    if(totalDownloadsChangeToOne)
     {
         ui->lDescRemainingDown->setText(tr("Remaining Download"));
     }
 
-    const auto totalUploadsChangeFromOne{previousTotalUploads == 1 && totalUploads != 1};
-    if (totalUploadsChangeFromOne)
+    const bool totalUploadsChangeFromOne{previousTotalUploads == 1 && totalUploads != 1};
+    if(totalUploadsChangeFromOne)
     {
         ui->lDescRemainingUp->setText(tr("Remaining Uploads"));
     }
 
-    const auto totalUploadsChangeToOne{previousTotalUploads != 1 && totalUploads == 1};
-    if (totalUploadsChangeToOne)
+    const bool totalUploadsChangeToOne{previousTotalUploads != 1 && totalUploads == 1};
+    if(totalUploadsChangeToOne)
     {
         ui->lDescRemainingUp->setText(tr("Remaining Upload"));
     }
