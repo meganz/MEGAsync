@@ -729,7 +729,7 @@ void MegaApplication::updateTrayIcon()
     #endif
         };
 
-    const auto isOverQuotaOrPaywall{appliedStorageState == MegaApi::STORAGE_STATE_RED ||
+    const bool isOverQuotaOrPaywall{appliedStorageState == MegaApi::STORAGE_STATE_RED ||
                 transferQuota->isOverQuota() ||
                 appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL};
     if (isOverQuotaOrPaywall)
@@ -2403,8 +2403,8 @@ void MegaApplication::showInfoDialog()
     }
 #endif
 
-    const auto transferQuotaWaitTimeExpired{transferOverQuotaWaitTimeExpiredReceived && !transferQuota->isOverQuota()};
-    const auto loggedAndNotBandwidthOverquota{preferences && preferences->logged()};
+    const bool transferQuotaWaitTimeExpired{transferOverQuotaWaitTimeExpiredReceived && !transferQuota->isOverQuota()};
+    const bool loggedAndNotBandwidthOverquota{preferences && preferences->logged()};
     if (loggedAndNotBandwidthOverquota && transferQuotaWaitTimeExpired)
     {
         transferOverQuotaWaitTimeExpiredReceived = false;
@@ -4457,14 +4457,14 @@ void MegaApplication::uploadActionClicked()
         return;
     }
 
-    const auto disabledUntil{preferences->getStorageOverQuotaUploadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
-    const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
-    const auto storageIsOverQuota{storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL};
+    const auto disabledUntil = preferences->getStorageOverQuotaUploadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+    const bool dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    const bool storageIsOverQuota{storageState == MegaApi::STORAGE_STATE_RED || storageState == MegaApi::STORAGE_STATE_PAYWALL};
     if(storageIsOverQuota && dialogEnabled)
     {
         preferences->setStorageOverQuotaUploadsDialogLastExecution(std::chrono::system_clock::now());
-        const auto storageFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_UPLOAD)};
-        const auto upgradeButtonClicked{storageFullDialog->exec() == QDialog::Accepted};
+        const unique_ptr<OverQuotaDialog> storageFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_UPLOAD)};
+        const bool upgradeButtonClicked{storageFullDialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
         {
             return;
@@ -4542,27 +4542,27 @@ void MegaApplication::uploadActionClicked()
 
 bool MegaApplication::showSyncOverquotaDialog()
 {
-    const auto storageFull{storageState == MegaApi::STORAGE_STATE_RED};
-    const auto disabledUntil{preferences->getStorageOverQuotaSyncsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
-    const auto dialogStorageEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    const bool storageFull{storageState == MegaApi::STORAGE_STATE_RED};
+    const auto disabledUntil = preferences->getStorageOverQuotaSyncsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+    const bool dialogStorageEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(dialogStorageEnabled && storageFull)
     {
         preferences->setStorageOverQuotaSyncsDialogLastExecution(std::chrono::system_clock::now());
-        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_SYNCS)};
-        const auto upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
+        const unique_ptr<OverQuotaDialog> dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::STORAGE_SYNCS)};
+        const bool upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
         {
             return false;
         }
     }
 
-    const auto transferDialogDisabledUntil{preferences->getTransferOverQuotaSyncDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
-    const auto dialogTransferEnabled{std::chrono::system_clock::now() >= transferDialogDisabledUntil};
+    const auto transferDialogDisabledUntil = preferences->getTransferOverQuotaSyncDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+    const bool dialogTransferEnabled{std::chrono::system_clock::now() >= transferDialogDisabledUntil};
     if(dialogTransferEnabled && transferQuota->isOverQuota() && !storageFull)
     {
         preferences->setTransferOverQuotaSyncDialogLastExecution(std::chrono::system_clock::now());
-        const auto dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWITH_SYNC)};
-        const auto upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
+        const unique_ptr<OverQuotaDialog> dialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWITH_SYNC)};
+        const bool upgradeButtonClicked{dialog->exec() == QDialog::Accepted};
         if(upgradeButtonClicked)
         {
             return false;
@@ -4652,7 +4652,7 @@ void MegaApplication::streamActionClicked()
     }
 
     streamSelector = new StreamingFromMegaDialog(megaApi);
-    connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector, &StreamingFromMegaDialog::updateStreamingState);
+    connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, streamSelector.data(), &StreamingFromMegaDialog::updateStreamingState);
     streamSelector->show();
 }
 
@@ -5198,11 +5198,11 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 
 void MegaApplication::shellViewOnMega(MegaHandle handle, bool versions)
 {
-    const auto handleBase64Pointer{MegaApi::handleToBase64(handle)};
-    const auto handleArgument{QString::fromUtf8(handleBase64Pointer)};
+    const char* handleBase64Pointer{MegaApi::handleToBase64(handle)};
+    const QString handleArgument{QString::fromUtf8(handleBase64Pointer)};
     delete [] handleBase64Pointer;
-    const auto versionsArgument{versions ? QString::fromUtf8("/versions") : QString::fromUtf8("")};
-    const auto url{QString::fromUtf8("fm%1/%2").arg(versionsArgument).arg(handleArgument)};
+    const QString versionsArgument{versions ? QString::fromUtf8("/versions") : QString::fromUtf8("")};
+    const QString url{QString::fromUtf8("fm%1/%2").arg(versionsArgument).arg(handleArgument)};
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 
 }
@@ -5435,7 +5435,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
         return;
     }
 
-    const auto upgradingDissmised{showSyncOverquotaDialog()};
+    const bool upgradingDissmised{showSyncOverquotaDialog()};
     if (infoDialog && upgradingDissmised)
     {
         infoDialog->addSync(targetFolder);
@@ -7273,7 +7273,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             notifyStorageObservers();
         }
 
-        const auto proUserIsNotOverquota{!megaApi->getBandwidthOverquotaDelay() &&
+        const bool proUserIsNotOverquota{!megaApi->getBandwidthOverquotaDelay() &&
                     preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE};
         if (proUserIsNotOverquota)
         {
@@ -7292,7 +7292,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             notifyBandwidthObservers();
 
-            const auto userIsPro{preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE};
+            const bool userIsPro{preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE};
             if(userIsPro)
             {
                 transferQuota->setUserProUsages(preferences->usedBandwidth(), preferences->totalBandwidth());
@@ -7605,6 +7605,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                     }
                 }
 
+                // update the path before showing the notification, in case the destination file was renamed
+                data->localPath = QString::fromUtf8(transfer->getPath());
+
+#ifdef WIN32 // this should really be done in a function, not all over the code...
+                if (data->localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                {
+                    data->localPath = data->localPath.mid(4);
+                }
+#endif
+
                 data->pendingTransfers--;
                 showNotificationFinishedTransfers(notificationId);
             }
@@ -7908,7 +7918,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         }
         else if (e->getValue() && !transferQuota->isOverQuota())
         {
-            const auto waitTime{std::chrono::seconds(e->getValue())};
+            const auto waitTime = std::chrono::seconds(e->getValue());
             preferences->clearTemporalBandwidth();
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)

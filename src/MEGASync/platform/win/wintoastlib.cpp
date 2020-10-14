@@ -564,6 +564,19 @@ HRESULT	WinToast::createShellLinkHelper() {
                                     hr = shellLink.As(&persistFile);
                                     if (SUCCEEDED(hr)) {
                                         hr = persistFile->Save(slPath, TRUE);
+
+                                        // attempt to create the full path if some dir was missing, then try again
+                                        if (hr == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)) {
+                                            std::wstring linkDir(slPath);
+                                            auto pos = linkDir.find_last_of('\\');
+                                            if (pos != std::wstring::npos) {
+                                                linkDir.erase(pos);
+                                            }
+                                            int err = SHCreateDirectoryEx(nullptr, linkDir.c_str(), nullptr);
+                                            if (err == ERROR_SUCCESS) {
+                                                hr = persistFile->Save(slPath, TRUE);
+                                            }
+                                        }
                                     }
                                 }
                             }

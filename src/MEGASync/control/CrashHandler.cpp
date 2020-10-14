@@ -209,7 +209,7 @@ string getDistroVersion()
         oss << "Error info:\n";
         if (info)
         {
-            oss << sys_siglist[sig] << " (" << sig << ") at address " << std::showbase << std::hex << info->si_addr << std::dec << "\n";
+            oss << strsignal(sig) << " (" << sig << ") at address " << std::showbase << std::hex << info->si_addr << std::dec << "\n";
         }
         else
         {

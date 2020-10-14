@@ -25,10 +25,10 @@ void TransferQuota::setOverQuota(std::chrono::milliseconds waitTime)
 
 bool TransferQuota::isOverQuota()
 {    
-    auto isOverQuota{mQuotaState == QuotaState::FULL};
+    bool isOverQuota{mQuotaState == QuotaState::FULL};
     if(isOverQuota)
     {
-        const auto waitTimeIsOver{std::chrono::system_clock::now() >= mWaitTimeUntil};
+        const bool waitTimeIsOver{std::chrono::system_clock::now() >= mWaitTimeUntil};
         if(waitTimeIsOver)
         {
             isOverQuota = false;
@@ -62,8 +62,8 @@ void TransferQuota::setQuotaOk()
 
 void TransferQuota::checkExecuteDialog()
 {
-    const auto disabledUntil{mPreferences->getTransferOverQuotaDialogLastExecution()+Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION};
-    const auto dialogExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    const auto disabledUntil = mPreferences->getTransferOverQuotaDialogLastExecution()+Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION;
+    const bool dialogExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(dialogExecutionEnabled)
     {
         mPreferences->setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::now());
@@ -81,8 +81,8 @@ void TransferQuota::checkExecuteDialog()
             mUpgradeDialog->raise();
         }
 
-        const auto endWaitTimeSinceEpoch{mWaitTimeUntil.time_since_epoch()};
-        const auto endWaitTimeSinceEpochSeconds{std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count()};
+        const auto endWaitTimeSinceEpoch = mWaitTimeUntil.time_since_epoch();
+        const auto endWaitTimeSinceEpochSeconds = std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count();
         mUpgradeDialog->setTimestamp(endWaitTimeSinceEpochSeconds);
         mUpgradeDialog->refreshAccountDetails();
     }
@@ -90,8 +90,8 @@ void TransferQuota::checkExecuteDialog()
 
 void TransferQuota::checkExecuteNotification()
 {
-    const auto disabledUntil{mPreferences->getTransferOverQuotaOsNotificationLastExecution()+Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION};
-    const auto notificationExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    const auto disabledUntil = mPreferences->getTransferOverQuotaOsNotificationLastExecution()+Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    const bool notificationExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (notificationExecutionEnabled)
     {
         mPreferences->setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
@@ -102,8 +102,8 @@ void TransferQuota::checkExecuteNotification()
 
 void TransferQuota::checkExecuteUiMessage()
 {
-    const auto disabledUntil{mPreferences->getTransferOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION};
-    const auto uiAlertExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    const auto disabledUntil = mPreferences->getTransferOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
+    const bool uiAlertExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (uiAlertExecutionEnabled)
     {
         mMegaApi->sendEvent(EVENT_ID_TRANSFER_OVER_QUOTA_UI_ALERT, EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT);
@@ -113,8 +113,8 @@ void TransferQuota::checkExecuteUiMessage()
 
 void TransferQuota::checkExecuteWarningOsNotification()
 {
-    const auto disabledUntil{mPreferences->getTransferAlmostOverQuotaOsNotificationLastExecution()+Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION};
-    const auto notificationExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    const auto disabledUntil = mPreferences->getTransferAlmostOverQuotaOsNotificationLastExecution()+Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION;
+    const bool notificationExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (notificationExecutionEnabled)
     {
         mPreferences->setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
@@ -126,8 +126,8 @@ void TransferQuota::checkExecuteWarningOsNotification()
 
 void TransferQuota::checkExecuteWarningUiMessage()
 {
-    const auto disabledUntil{mPreferences->getTransferAlmostOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION};
-    const auto executeUiWarningAlert{std::chrono::system_clock::now() >= disabledUntil};
+    const auto disabledUntil = mPreferences->getTransferAlmostOverQuotaUiAlertLastExecution()+Preferences::OVER_QUOTA_UI_ALERT_DISABLE_DURATION;
+    const bool executeUiWarningAlert{std::chrono::system_clock::now() >= disabledUntil};
     if (executeUiWarningAlert)
     {
         mMegaApi->sendEvent(EVENT_ID_TRANSFER_ALMOST_QUOTA_UI_ALERT, EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT);
@@ -137,10 +137,10 @@ void TransferQuota::checkExecuteWarningUiMessage()
 
 void TransferQuota::checkExecuteAlerts()
 {
-    const auto megaApp{static_cast<MegaApplication*>(qApp)};
-    const auto allowAlerts{megaApp->isInfoDialogVisible() || mUpgradeDialog || Platform::isUserActive()};
-    const auto userLogged{mPreferences && mPreferences->logged()};
-    const auto bandwidthAlertsEnabled{!megaApp->finished() && userLogged && allowAlerts};
+    const MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
+    const bool allowAlerts{megaApp->isInfoDialogVisible() || mUpgradeDialog || Platform::isUserActive()};
+    const bool userLogged{mPreferences && mPreferences->logged()};
+    const bool bandwidthAlertsEnabled{!megaApp->finished() && userLogged && allowAlerts};
     if (bandwidthAlertsEnabled)
     {
         if(isOverQuota())
@@ -159,7 +159,7 @@ void TransferQuota::checkExecuteAlerts()
 
 void TransferQuota::setUserProUsages(long long usedBytes, long long totalBytes)
 {
-    const auto usagePercent{std::floor(100.0 * usedBytes / totalBytes)};
+    const auto usagePercent = std::floor(100.0 * usedBytes / totalBytes);
     if(usagePercent >= ALMOST_OVER_QUOTA_PER_CENT)
     {
         mQuotaState = QuotaState::WARNING;
@@ -202,13 +202,13 @@ void TransferQuota::checkQuotaAndAlerts()
 
 bool TransferQuota::checkImportLinksAlertDismissed()
 {
-    auto dismissed{true};
-    const auto disabledUntil{mPreferences->getTransferOverQuotaImportLinksDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
-    const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    bool dismissed{true};
+    const auto disabledUntil = mPreferences->getTransferOverQuotaImportLinksDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+    const bool dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(isOverQuota() && dialogEnabled)
     {
         mPreferences->setTransferOverQuotaImportLinksDialogLastExecution(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK)};
+        const auto bandwidthFullDialog = OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_IMPORT_LINK);
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
     return dismissed;
@@ -216,13 +216,13 @@ bool TransferQuota::checkImportLinksAlertDismissed()
 
 bool TransferQuota::checkDownloadAlertDismissed()
 {
-    auto dismissed{true};
-    const auto disabledUntil{mPreferences->getTransferOverQuotaDownloadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
-    const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    bool dismissed{true};
+    const auto disabledUntil = mPreferences->getTransferOverQuotaDownloadsDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+    const bool dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(isOverQuota() && dialogEnabled)
     {
         mPreferences->setTransferOverQuotaDownloadsDialogLastExecution(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD)};
+        const auto bandwidthFullDialog = OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_DOWNLOAD);
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
     return dismissed;
@@ -230,13 +230,13 @@ bool TransferQuota::checkDownloadAlertDismissed()
 
 bool TransferQuota::checkStreamingAlertDismissed()
 {
-    auto dismissed{true};
-    const auto disabledUntil{mPreferences->getTransferOverQuotaStreamDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME};
-    const auto dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
+    bool dismissed{true};
+    const auto disabledUntil = mPreferences->getTransferOverQuotaStreamDialogLastExecution() + Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
+    const bool dialogEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if(isOverQuota() && dialogEnabled)
     {
         mPreferences->setTransferOverQuotaStreamDialogLastExecution(std::chrono::system_clock::now());
-        const auto bandwidthFullDialog{OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_STREAM)};
+        const auto bandwidthFullDialog = OverQuotaDialog::createDialog(OverQuotaDialogType::BANDWIDTH_STREAM);
         dismissed = (bandwidthFullDialog->exec() == QDialog::Rejected);
     }
     return dismissed;
@@ -254,20 +254,20 @@ void TransferQuota::sendNotification(const QString &title)
     notification->setTitle(title);
     notification->setText(tr("Upgrade now to a PRO account."));
     notification->setActions(QStringList() << tr("Get PRO"));
-    const auto megaApp{static_cast<MegaApplication*>(qApp)};
+    const MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
     connect(notification, &MegaNotification::activated, megaApp, &MegaApplication::redirectToUpgrade);
     mNotificator->notify(notification);
 }
 
 void TransferQuota::sendQuotaWarningOsNotification()
 {
-    const auto title{tr("Limited available transfer quota.")};
+    const QString title{tr("Limited available transfer quota.")};
     sendNotification(title);
 }
 
 void TransferQuota::sendOverQuotaOsNotification()
 {
-    const auto title{tr("Depleted transfer quota.")};
+    const QString title{tr("Depleted transfer quota.")};
     sendNotification(title);
 }
 
