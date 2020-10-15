@@ -569,5 +569,13 @@
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
         <file>images/settings-syncs.png</file>
         <file>images/settings-syncs@2x.png</file>
+        <file>images/settings-advanced.png</file>
+        <file>images/settings-advanced@2x.png</file>
+        <file>images/settings-general.png</file>
+        <file>images/settings-general@2x.png</file>
+        <file>images/settings-network.png</file>
+        <file>images/settings-network@2x.png</file>
+        <file>images/settings-transfers.png</file>
+        <file>images/settings-transfers@2x.png</file>
     </qresource>
 </RCC>
