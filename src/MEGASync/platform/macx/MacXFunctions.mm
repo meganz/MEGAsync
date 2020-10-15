@@ -838,3 +838,29 @@ void releaseIdObject(id obj)
 {
     [obj release];
 }
+
+void customizeNSToolbar(QMacToolBar *toolBar)
+{
+    if (toolBar)
+    {
+        NSToolbar *tb = toolBar->nativeToolbar();
+        [tb setAllowsUserCustomization:NO];
+    }
+}
+
+void checkNSToolBarItem(QMacToolBar *toolBar, QMacToolBarItem *defaultItem)
+{
+    if (toolBar && defaultItem)
+    {
+        NSToolbar *tb = toolBar->nativeToolbar();
+        [tb setSelectedItemIdentifier:[defaultItem->nativeToolBarItem() itemIdentifier]];
+    }
+}
+
+void enableNSToolBarItem(QMacToolBarItem *defaultItem, bool isEnabled)
+{
+    if (defaultItem)
+    {
+        [defaultItem->nativeToolBarItem() setEnabled:isEnabled];
+    }
+}

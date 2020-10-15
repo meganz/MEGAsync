@@ -1,9 +1,11 @@
 #ifndef MACXFUNCTIONS_H
 #define MACXFUNCTIONS_H
 
+#include <QMacToolBar>
 #include <QString>
 #include <QStringList>
 #include <QWidget>
+
 #import <objc/runtime.h>
 
 Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
@@ -27,6 +29,9 @@ bool runHttpServer();
 bool runHttpsServer();
 bool userActive();
 double uptime();
+void customizeNSToolbar(QMacToolBar *toolBar);
+void checkNSToolBarItem(QMacToolBar *toolBar, QMacToolBarItem *defaultItem);
+void enableNSToolBarItem(QMacToolBarItem *defaultItem, bool isEnabled);
 
 //You take the ownership of the returned value
 NSPopover* allocatePopOverWithView(NSView* view, QSize size);
