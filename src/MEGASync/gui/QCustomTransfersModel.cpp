@@ -334,6 +334,28 @@ void QCustomTransfersModel::updateActiveTransfer(MegaApi *api, MegaTransfer *new
     }
 }
 
+void QCustomTransfersModel::retryAllTransfers()
+{
+    retryAllCompletedTransfers(); 
+}
+
+
+void QCustomTransfersModel::retryAllCompletedTransfers()
+{
+    if (transfers.size())
+    {
+      // TODO: 
+      // Filter for failed transfers
+      // For each failed tx
+      //    retry the tx
+      //    possibly set whichever flags / state indicate its in progress
+      //    (i think the API does this for me though)
+      // 
+      // See following for how to retry.
+      // https://github.com/matthewstrasiotto/MEGAsync/blob/58d3ed7f4a10d08b0fa908639a65deac6a6bde1b/src/MEGASync/gui/MegaTransferDelegate.cpp#L292
+    }
+}
+
 transfer_it QCustomTransfersModel::getInsertPosition(MegaTransfer *transfer)
 {
     transfer_it it = transferOrder.begin();

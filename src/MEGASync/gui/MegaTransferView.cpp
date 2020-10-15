@@ -745,3 +745,13 @@ void MegaTransferView::clearAllTransferClicked()
         model->removeAllTransfers();
     }
 }
+
+
+void MegaTransferView::retryAllFailedTransferClicked()
+{
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        model->retryAllTransfers();
+    }
+}
