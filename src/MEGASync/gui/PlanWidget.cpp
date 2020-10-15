@@ -113,10 +113,8 @@ void PlanWidget::updatePlanInfo()
 
     if (details.gbStorage == -1) //UNLIMITED
     {
-        ui->lStorageInfo->setText(QString::fromUtf8("<span style=\'color:#333333; font-family: Lato; font-size: 15px; font-weight: 600; text-decoration:none;\'>")
-                                  + tr("UNLIMITED") + QString::fromUtf8("</span>"));
-        ui->lBandWidthInfo->setText(QString::fromUtf8("<span style='color:#666666; font-family: Lato; font-size: 13px; text-decoration:none;'>")
-                                    + tr("Storage and transfers") + QString::fromUtf8("</span>"));
+        ui->lStorageInfo->setText(formatRichString(tr("SCALABLE"), STORAGE));
+        ui->lBandWidthInfo->setText(formatRichString(tr("UNLIMITED"), BANDWIDTH));
     }
     else
     {
