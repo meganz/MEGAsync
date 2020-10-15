@@ -5041,9 +5041,10 @@ void MegaApplication::processDownloads()
 
     QString defaultPath = preferences->downloadFolder();
     if (preferences->hasDefaultDownloadFolder()
-            && QFile(defaultPath).exists())
+            && QDir(defaultPath).exists())
     {
-        QTemporaryFile *test = new QTemporaryFile(defaultPath + QDir::separator());
+        QString qFilePath = QDir::fromNativeSeparators(defaultPath); // QFile always wants `/` as separator
+        QTemporaryFile *test = new QTemporaryFile(qFilePath + QDir::separator());
         if (test->open())
         {
             delete test;
