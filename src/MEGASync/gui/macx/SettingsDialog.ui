@@ -186,7 +186,7 @@ padding-bottom: 6px;
    <property name="verticalSpacing">
     <number>2</number>
    </property>
-   <item row="8" column="0">
+   <item row="7" column="0">
     <widget class="QWidget" name="wBottom" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_31">
       <property name="leftMargin">
@@ -369,249 +369,7 @@ padding-bottom: 6px;
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QWidget" name="wTabHeader" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>500</width>
-       <height>76</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>500</width>
-       <height>76</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QToolButton" name="bAccount">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Account</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>://images/account_32.png</normaloff>://images/account_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="bSyncs">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>Syncs</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>://images/syncs_32.png</normaloff>://images/syncs_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="bBandwidth">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Bandwidth</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>://images/bandwidth_32.png</normaloff>://images/bandwidth_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="bProxies">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Proxy</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="bAdvanced">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Advanced</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
-          <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0">
+   <item row="1" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
@@ -635,7 +393,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -4557,7 +4315,7 @@ background:transparent;</string>
      </widget>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="3" column="0">
     <widget class="QToolButton" name="toolButton_4">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -4611,11 +4369,6 @@ background:transparent;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>bAccount</tabstop>
-  <tabstop>bSyncs</tabstop>
-  <tabstop>bBandwidth</tabstop>
-  <tabstop>bProxies</tabstop>
-  <tabstop>bAdvanced</tabstop>
   <tabstop>lAccountType</tabstop>
   <tabstop>lEmail</tabstop>
   <tabstop>lStorageSpace</tabstop>
@@ -4669,6 +4422,7 @@ background:transparent;</string>
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
+  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>

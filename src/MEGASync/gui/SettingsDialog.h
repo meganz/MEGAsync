@@ -7,6 +7,7 @@
 #include <QtCore>
 #include <QNetworkProxy>
 #include <QButtonGroup>
+#include <QMacToolBar>
 #include <ConnectivityChecker.h>
 
 #include "AccountDetailsDialog.h"
@@ -21,6 +22,20 @@
 #include "../model/Model.h"
 #include "megaapi.h"
 #include "HighDpiResize.h"
+
+//Const values
+constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
+constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
+constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
+constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
+constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT{464};
+constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS{444};
+constexpr auto SETTING_ANIMATION_PROXY_TAB_HEIGHT{359};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE{519};
+
 
 namespace Ui {
 class SettingsDialog;
@@ -179,6 +194,7 @@ private:
     QButtonGroup uploadButtonGroup;
     bool reloadUIpage;
 
+
 #ifndef WIN32
     int folderPermissions;
     int filePermissions;
@@ -190,6 +206,15 @@ private:
     QPropertyAnimation *minHeightAnimation;
     QPropertyAnimation *maxHeightAnimation;
     QParallelAnimationGroup *animationGroup;
+
+    std::unique_ptr<QMacToolBar> toolBar;
+    std::unique_ptr<QMacToolBarItem> bAccount;
+    std::unique_ptr<QMacToolBarItem> bSyncs;
+    std::unique_ptr<QMacToolBarItem> bBandwidth;
+    std::unique_ptr<QMacToolBarItem> bProxies;
+    std::unique_ptr<QMacToolBarItem> bAdvanced;
+
+    void animateSettingPage(int endValue, int duration = 150);
 #endif
 
     void loadSizeLimits();

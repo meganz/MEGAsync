@@ -19,6 +19,8 @@
 #include "gui/AddExclusionDialog.h"
 #include "gui/BugReportDialog.h"
 #include <assert.h>
+#include <QMacToolBar>
+#include "mega/types.h"
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -131,7 +133,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     uploadButtonGroup.addButton(ui->rUploadNoLimit);
     uploadButtonGroup.addButton(ui->rUploadAutoLimit);
 
-    ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
 
     connect(ui->rNoProxy, SIGNAL(clicked()), this, SLOT(stateChanged()));
@@ -230,30 +231,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     ui->bOk->hide();
     ui->bCancel->hide();
-
-    const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
-    if (ratio < 2)
-    {
-        ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
-
-        ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-        ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-        ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-        ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-        ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    }
-    else
-    {
-        ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header@2x.png\"); }"));
-
-        ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
-        ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
-        ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
-        ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
-        ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
-    }
-
 #else
+
+    ui->bAccount->setChecked(true);
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -287,14 +267,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     {
         if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
         {
-            setMinimumHeight(522);
-            setMaximumHeight(522);
+            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
+            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
             ui->gStorageSpace->setMinimumHeight(83);
         }
         else
         {
-            setMinimumHeight(542);
-            setMaximumHeight(542);
+            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
+            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
             ui->gStorageSpace->setMinimumHeight(103);
         }
 
@@ -316,6 +296,51 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
     storageStateChanged(app->getAppliedStorageState());
 
+#ifdef __APPLE__
+    // Set native NSToolBar for settings.
+    toolBar = ::mega::make_unique<QMacToolBar>(this);
+
+    QIcon account(QString::fromUtf8("://images/settings-general.png"));
+    QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
+    QIcon bandwidth(QString::fromUtf8("://images/settings-transfers.png"));
+    QIcon proxy(QString::fromUtf8("://images/settings-network.png"));
+    QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
+
+    // add Items
+    bAccount.reset(toolBar->addItem(account, tr("Account")));
+    bAccount.get()->setIcon(account);
+    connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
+
+    bSyncs.reset(toolBar->addItem(syncs, tr("Syncs")));
+    bSyncs.get()->setIcon(syncs);
+    connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
+
+    bBandwidth.reset(toolBar->addItem(bandwidth, tr("Bandwidth")));
+    bBandwidth.get()->setIcon(bandwidth);
+    connect(bBandwidth.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bBandwidth_clicked);
+
+    bProxies.reset(toolBar->addItem(proxy, tr("Proxy")));
+    bProxies.get()->setIcon(proxy);
+    connect(bProxies.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bProxies_clicked);
+
+    bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
+    bAdvanced.get()->setIcon(advanced);
+    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
+
+    bAccount.get()->setSelectable(true);
+    bSyncs.get()->setSelectable(true);
+    bBandwidth.get()->setSelectable(true);
+    bProxies.get()->setSelectable(true);
+    bAdvanced.get()->setSelectable(true);
+
+    //Disable context menu and set default option to account tab
+    customizeNSToolbar(toolBar.get());
+    checkNSToolBarItem(toolBar.get(), bAccount.get());
+
+    // Attach to the window
+    this->window()->winId(); // create window->windowhandle()
+    toolBar->attachToWindow(this->window()->windowHandle());
+#endif
 }
 
 SettingsDialog::~SettingsDialog()
@@ -333,6 +358,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 
     if (proxyOnly)
     {
+#ifndef __APPLE__
         ui->bAccount->setEnabled(false);
         ui->bAccount->setChecked(false);
         ui->bAdvanced->setEnabled(false);
@@ -342,6 +368,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bBandwidth->setEnabled(false);
         ui->bBandwidth->setChecked(false);
         ui->bProxies->setChecked(true);
+#endif
         ui->wStack->setCurrentWidget(ui->pProxies);
         ui->pProxies->show();
 
@@ -353,10 +380,12 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     }
     else
     {
+#ifndef __APPLE__
         ui->bAccount->setEnabled(true);
         ui->bAdvanced->setEnabled(true);
         ui->bSyncs->setEnabled(true);
         ui->bBandwidth->setEnabled(true);
+#endif
     }
 }
 
@@ -600,18 +629,8 @@ void SettingsDialog::onCacheSizeAvailable()
 
     #ifdef __APPLE__
         if (ui->wStack->currentWidget() == ui->pAdvanced)
-        {
-            minHeightAnimation->setTargetObject(this);
-            maxHeightAnimation->setTargetObject(this);
-            minHeightAnimation->setPropertyName("minimumHeight");
-            maxHeightAnimation->setPropertyName("maximumHeight");
-            minHeightAnimation->setStartValue(minimumHeight());
-            maxHeightAnimation->setStartValue(maximumHeight());
-            minHeightAnimation->setEndValue(572);
-            maxHeightAnimation->setEndValue(572);
-            minHeightAnimation->setDuration(150);
-            maxHeightAnimation->setDuration(150);
-            animationGroup->start();
+        {            
+            animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE, SETTING_ANIMATION_PAGE_TIMEOUT);
         }
     #endif
     }
@@ -620,56 +639,47 @@ void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
 
+    setWindowTitle(tr("Account"));
+
     if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
+#ifndef __APPLE__
         ui->bAccount->setChecked(true);
+#else
+        checkNSToolBarItem(toolBar.get(), bAccount.get());
+#endif
         return;
     }
 
     reloadUIpage = false;
 
-#ifdef __APPLE__
-    ui->bApply->hide();
-#endif
-
+#ifndef __APPLE__
     ui->bAccount->setChecked(true);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
+#endif
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
 
 #ifdef __APPLE__
-    ui->pAccount->hide();
-    ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
-    ui->pProxies->hide();
-    ui->pSyncs->hide();
+    checkNSToolBarItem(toolBar.get(), bAccount.get());
 
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
+    ui->bApply->hide();
+    ui->pAccount->hide();
+
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        minHeightAnimation->setEndValue(522);
-        maxHeightAnimation->setEndValue(522);
-
         ui->gStorageSpace->setMinimumHeight(83);
+        animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
     else
     {
-        minHeightAnimation->setEndValue(542);
-        maxHeightAnimation->setEndValue(542);
-
         ui->gStorageSpace->setMinimumHeight(103);
+        animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
+
 #endif
 }
 
@@ -677,44 +687,36 @@ void SettingsDialog::on_bSyncs_clicked()
 {
     emit userActivity();
 
+    setWindowTitle(tr("Syncs"));
+
     if (ui->wStack->currentWidget() == ui->pSyncs)
     {
+#ifndef __APPLE__
         ui->bSyncs->setChecked(true);
+#else
+        checkNSToolBarItem(toolBar.get(), bSyncs.get());
+#endif
         return;
     }
 
-#ifdef __APPLE__
-    ui->bApply->hide();
-#endif
-
+#ifndef __APPLE__
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(true);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
+#endif
     ui->wStack->setCurrentWidget(ui->pSyncs);
-    ui->tSyncs->horizontalHeader()->setVisible( true );
+    ui->tSyncs->horizontalHeader()->setVisible(true);
     ui->bOk->setFocus();
 
 #ifdef __APPLE__
-    ui->pAccount->hide();
-    ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
-    ui->pProxies->hide();
+    checkNSToolBarItem(toolBar.get(), bSyncs.get());
+
+    ui->bApply->hide();
     ui->pSyncs->hide();
 
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
-
-    minHeightAnimation->setEndValue(420);
-    maxHeightAnimation->setEndValue(420);
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
+    animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
@@ -722,58 +724,49 @@ void SettingsDialog::on_bBandwidth_clicked()
 {
     emit userActivity();
 
+    setWindowTitle(tr("Bandwidth"));
+
     if (ui->wStack->currentWidget() == ui->pBandwidth)
     {
+#ifndef __APPLE__
         ui->bBandwidth->setChecked(true);
+#else
+       checkNSToolBarItem(toolBar.get(), bBandwidth.get());
+#endif
         return;
     }
 
-#ifdef __APPLE__
-    ui->bApply->hide();
-#endif
-
+#ifndef __APPLE__
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(true);
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
+#endif
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
 
 #ifdef __APPLE__
-    ui->pAccount->hide();
-    ui->pAdvanced->hide();
+    checkNSToolBarItem(toolBar.get(), bBandwidth.get());
+
+    ui->bApply->hide();
     ui->pBandwidth->hide();
-    ui->pProxies->hide();
-    ui->pSyncs->hide();
 
     int bwHeight;
     ui->gBandwidthQuota->show();
     ui->bSeparatorBandwidth->show();
 
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        minHeightAnimation->setEndValue(520);
-        maxHeightAnimation->setEndValue(520);
-
         ui->gBandwidthQuota->setMinimumHeight(59);
+        animateSettingPage(SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
     else
     {
-        minHeightAnimation->setEndValue(540);
-        maxHeightAnimation->setEndValue(540);
-
         ui->gBandwidthQuota->setMinimumHeight(79);
+        animateSettingPage(SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
+
 #endif
 }
 
@@ -781,54 +774,44 @@ void SettingsDialog::on_bAdvanced_clicked()
 {
     emit userActivity();
 
+    setWindowTitle(tr("Advanced"));
+
     if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
+#ifndef __APPLE__
         ui->bAdvanced->setChecked(true);
+#else
+        checkNSToolBarItem(toolBar.get(), bAdvanced.get());
+#endif
         return;
     }
 
-#ifdef __APPLE__
-    ui->bApply->hide();
-#endif
-
+#ifndef __APPLE__
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(true);
     ui->bProxies->setChecked(false);
+#endif
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
 
 #ifdef __APPLE__
-    ui->pAccount->hide();
-    ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
-    ui->pProxies->hide();
-    ui->pSyncs->hide();
+    checkNSToolBarItem(toolBar.get(), bAdvanced.get());
 
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
+    ui->bApply->hide();
+    ui->pAdvanced->hide();
 
     onCacheSizeAvailable();
 
     if (!cacheSize && !remoteCacheSize)
-    {
-        minHeightAnimation->setEndValue(595);
-        maxHeightAnimation->setEndValue(595);
+    {      
+        animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
     else
     {
-        minHeightAnimation->setEndValue(640);
-        maxHeightAnimation->setEndValue(640);
+        animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
-
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
 #endif
 }
 
@@ -837,45 +820,36 @@ void SettingsDialog::on_bProxies_clicked()
 {
     emit userActivity();
 
+    setWindowTitle(tr("Proxy"));
+
     if (ui->wStack->currentWidget() == ui->pProxies)
     {
+#ifndef __APPLE__
         ui->bProxies->setChecked(true);
+#else
+        checkNSToolBarItem(toolBar.get(), bProxies.get());
+#endif
         return;
     }
 
-#ifdef __APPLE__
-    ui->bApply->show();
-#endif
-
+#ifndef __APPLE__
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(true);
+#endif
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
 
 #ifdef __APPLE__
-    ui->pAccount->hide();
-    ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
-    ui->pProxies->hide();
-    ui->pSyncs->hide();
+    checkNSToolBarItem(toolBar.get(), bProxies.get());
 
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(435);
-    maxHeightAnimation->setEndValue(435);
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
-    animationGroup->start();
+    ui->bApply->show();
+    ui->pProxies->hide();
+    animateSettingPage(SETTING_ANIMATION_PROXY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
-
 
 void SettingsDialog::on_bCancel_clicked()
 {
@@ -905,13 +879,6 @@ void SettingsDialog::on_bHelp_clicked()
     QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
-
-#ifndef __APPLE__
-void SettingsDialog::on_bHelpIco_clicked()
-{
-    on_bHelp_clicked();
-}
-#endif
 
 void SettingsDialog::on_rProxyManual_clicked()
 {
@@ -1116,20 +1083,10 @@ void SettingsDialog::loadSettings()
         ui->cLanguage->addItems(languages);
         ui->cLanguage->setCurrentIndex(currentIndex);
 
-        int width = ui->bBandwidth->width();
-        QFont f = ui->bBandwidth->font();
-        QFontMetrics fm = QFontMetrics(f);
-        int neededWidth = fm.width(tr("Bandwidth"));
-        if (width < neededWidth)
-        {
-            ui->bBandwidth->setText(tr("Transfers"));
-        }
-
         if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
         {
             ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
         }
-
 
         //Account
         char *email = megaApi->getMyEmail();
@@ -2559,17 +2516,7 @@ void SettingsDialog::onClearCache()
     #ifdef __APPLE__
         if (!cacheSize && !remoteCacheSize)
         {
-            minHeightAnimation->setTargetObject(this);
-            maxHeightAnimation->setTargetObject(this);
-            minHeightAnimation->setPropertyName("minimumHeight");
-            maxHeightAnimation->setPropertyName("maximumHeight");
-            minHeightAnimation->setStartValue(minimumHeight());
-            maxHeightAnimation->setStartValue(maximumHeight());
-            minHeightAnimation->setEndValue(595);
-            maxHeightAnimation->setEndValue(595);
-            minHeightAnimation->setDuration(150);
-            maxHeightAnimation->setDuration(150);
-            animationGroup->start();
+            animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE, SETTING_ANIMATION_PAGE_TIMEOUT);
         }
     #endif
     }
@@ -2587,11 +2534,19 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
         widget->setEnabled(completed);
     }
 
+#ifndef __APPLE__
     ui->bAccount->setEnabled(completed);
     ui->bSyncs->setEnabled(completed);
     ui->bAdvanced->setEnabled(completed);
     ui->bBandwidth->setEnabled(completed);
     ui->bProxies->setEnabled(completed);
+#else
+    enableNSToolBarItem(bAccount.get(), completed);
+    enableNSToolBarItem(bSyncs.get() , completed);
+    enableNSToolBarItem(bAdvanced.get(), completed);
+    enableNSToolBarItem(bBandwidth.get(), completed);
+    enableNSToolBarItem(bProxies.get(), completed);
+#endif
 }
 
 void SettingsDialog::updateStorageElements()
@@ -2799,23 +2754,43 @@ void SettingsDialog::openSettingsTab(int tab)
     {
     case ACCOUNT_TAB:
         reloadUIpage = true;
+#ifndef __APPLE__
         on_bAccount_clicked();
+#else
+        emit bAccount.get()->activated();
+#endif
         break;
 
     case SYNCS_TAB:
+#ifndef __APPLE__
         on_bSyncs_clicked();
+#else
+        emit bSyncs.get()->activated();
+#endif
         break;
 
     case BANDWIDTH_TAB:
+#ifndef __APPLE__
         on_bBandwidth_clicked();
+#else
+        emit bBandwidth.get()->activated();
+#endif
         break;
 
     case PROXY_TAB:
+#ifndef __APPLE__
         on_bProxies_clicked();
+#else
+        emit bProxies.get()->activated();
+#endif
         break;
 
     case ADVANCED_TAB:
+#ifndef __APPLE__
         on_bAdvanced_clicked();
+#else
+        emit bAdvanced.get()->activated();
+#endif
         break;
 
     default:
@@ -2858,3 +2833,27 @@ void SettingsDialog::on_bSendBug_clicked()
 
     delete dialog;
 }
+
+#ifndef __APPLE__
+void SettingsDialog::on_bHelpIco_clicked()
+{
+    on_bHelp_clicked();
+}
+#endif
+
+#ifdef __APPLE__
+void SettingsDialog::animateSettingPage(int endValue, int duration)
+{
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(endValue);
+    maxHeightAnimation->setEndValue(endValue);
+    minHeightAnimation->setDuration(duration);
+    maxHeightAnimation->setDuration(duration);
+    animationGroup->start();
+}
+#endif
