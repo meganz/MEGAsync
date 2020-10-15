@@ -887,7 +887,8 @@ QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
     int products = pricing->getNumProducts();
     for (int i = 0; i < products; i++)
     {
-        if (pricing->getMonths(i) == 1)
+        //Skip business & non monthly plans to offer
+        if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
         {
             if (usedStorage < (pricing->getGBStorage(i) * GB))
             {
