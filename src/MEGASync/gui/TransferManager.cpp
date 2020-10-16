@@ -633,3 +633,12 @@ void TransferManager::mouseReleaseEvent(QMouseEvent *event)
     dragPosition = QPoint(-1, -1);
 }
 
+
+void TransferManager::on_bRetryAll_clicked()
+{
+    QWidget *w = ui->wTransfers->currentWidget();
+    if(w == ui->wCompleted)
+    {
+        ui->wCompleted->retryTransfers();
+    }
+}

@@ -76,6 +76,8 @@ private slots:
 
     void refreshFinishedTime();
 
+    void on_bRetryAll_clicked();
+
 protected:
     void changeEvent(QEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
