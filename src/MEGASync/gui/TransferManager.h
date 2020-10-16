@@ -59,7 +59,7 @@ private:
     QTimer *refreshTransferTime;
 
     void createAddMenu();
-    void onTransfersActive(bool exists);  
+    void onTransfersActive(bool clearExists, bool retryExists);
 
 public slots:
     void updateState();
