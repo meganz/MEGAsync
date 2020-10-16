@@ -105,11 +105,11 @@ void QFinishedTransfersModel::removeAllTransfers()
 
 void QFinishedTransfersModel::retryAllTransfers()
 {
-    retryAllCompletedTransfers(); 
+    retryAllFailedTransfers(); 
 }
 
 
-void QFinishedTransfersModel::retryAllCompletedTransfers()
+void QFinishedTransfersModel::retryAllFailedTransfers()
 {
     if (transfers.size())
     {
