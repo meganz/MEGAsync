@@ -33,7 +33,6 @@ public:
 private slots:
     void refreshTransferItem(int tag);
     void removeAllCompletedTransfers();
-    void retryAllFailedTransfers(); 
 
 protected:
     void updateTransferInfo(mega::MegaTransfer *transfer);
@@ -43,7 +42,6 @@ public slots:
     void removeAllTransfers();
     void removeTransferByTag(int transferTag);
     void updateActiveTransfer(mega::MegaApi *api, mega::MegaTransfer *newtransfer);
-    void retryAllTransfers();
 
 private:
     unsigned char modelState;
