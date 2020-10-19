@@ -303,6 +303,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     QIcon account(QString::fromUtf8("://images/settings-general.png"));
     QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
     QIcon bandwidth(QString::fromUtf8("://images/settings-transfers.png"));
+    QIcon security(QString::fromUtf8("://images/settings-security.png"));
     QIcon proxy(QString::fromUtf8("://images/settings-network.png"));
     QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
 
@@ -319,6 +320,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     bBandwidth.get()->setIcon(bandwidth);
     connect(bBandwidth.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bBandwidth_clicked);
 
+    bSecurity.reset(toolBar->addItem(bandwidth, tr("Security")));
+    bSecurity.get()->setIcon(security);
+    connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
+
     bProxies.reset(toolBar->addItem(proxy, tr("Proxy")));
     bProxies.get()->setIcon(proxy);
     connect(bProxies.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bProxies_clicked);
@@ -330,6 +335,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     bAccount.get()->setSelectable(true);
     bSyncs.get()->setSelectable(true);
     bBandwidth.get()->setSelectable(true);
+    bSecurity.get()->setSelectable(true);
     bProxies.get()->setSelectable(true);
     bAdvanced.get()->setSelectable(true);
 
@@ -768,6 +774,42 @@ void SettingsDialog::on_bBandwidth_clicked()
     }
 
 #endif
+}
+
+void SettingsDialog::on_bSecurity_clicked()
+{
+    emit userActivity();
+
+    setWindowTitle(tr("Security"));
+
+    if (ui->wStack->currentWidget() == ui->pSecurity)
+    {
+#ifndef __APPLE__
+        ui->bSecurity->setChecked(true);
+#else
+        checkNSToolBarItem(toolBar.get(), bSecurity.get());
+#endif
+        return;
+    }
+
+#ifndef __APPLE__
+    ui->bAccount->setChecked(false);
+    ui->bSyncs->setChecked(false);
+    ui->bBandwidth->setChecked(false);
+    ui->bAdvanced->setChecked(false);
+    ui->bProxies->setChecked(true);
+#endif
+    ui->wStack->setCurrentWidget(ui->pSecurity);
+    ui->bOk->setFocus();
+
+#ifdef __APPLE__
+    checkNSToolBarItem(toolBar.get(), bSecurity.get());
+
+    ui->bApply->hide();
+    ui->pSecurity->hide();
+    animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
+
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
@@ -2711,6 +2753,10 @@ void SettingsDialog::onAnimationFinished()
     {
         ui->pBandwidth->show();
     }
+    else if (ui->wStack->currentWidget() == ui->pSecurity)
+    {
+        ui->pSecurity->show();
+    }
     else if (ui->wStack->currentWidget() == ui->pProxies)
     {
         ui->pProxies->show();
@@ -2774,6 +2820,14 @@ void SettingsDialog::openSettingsTab(int tab)
         on_bBandwidth_clicked();
 #else
         emit bBandwidth.get()->activated();
+#endif
+        break;
+
+    case SECURITY_TAB:
+#ifndef __APPLE__
+        on_bSecurity_clicked();
+#else
+        emit bSecurity.get()->activated();
 #endif
         break;
 

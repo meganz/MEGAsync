@@ -577,5 +577,7 @@
         <file>images/settings-network@2x.png</file>
         <file>images/settings-transfers.png</file>
         <file>images/settings-transfers@2x.png</file>
+        <file>images/settings-security.png</file>
+        <file>images/settings-security@2x.png</file>
     </qresource>
 </RCC>

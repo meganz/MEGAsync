@@ -30,6 +30,7 @@ constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
 constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS{444};
+constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
 constexpr auto SETTING_ANIMATION_PROXY_TAB_HEIGHT{359};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
@@ -47,7 +48,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
     
 public:
-    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4};
+    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
     ~SettingsDialog();
@@ -82,6 +83,8 @@ private slots:
     void on_bSyncs_clicked();
 
     void on_bBandwidth_clicked();
+
+    void on_bSecurity_clicked();
 
     void on_bAdvanced_clicked();
 
@@ -211,6 +214,7 @@ private:
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
     std::unique_ptr<QMacToolBarItem> bBandwidth;
+    std::unique_ptr<QMacToolBarItem> bSecurity;
     std::unique_ptr<QMacToolBarItem> bProxies;
     std::unique_ptr<QMacToolBarItem> bAdvanced;
 
