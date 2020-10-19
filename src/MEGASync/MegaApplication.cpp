@@ -828,19 +828,19 @@ void MegaApplication::updateTrayIcon()
     {
         if (indexing)
         {
-            tooltipState += tr("Scanning");
+            tooltipState = tr("Scanning");
         }
         else if (syncing)
         {
-            tooltipState += tr("Syncing");
+            tooltipState = tr("Syncing");
         }
         else if (waiting)
         {
-            tooltipState += tr("Waiting");
+            tooltipState = tr("Waiting");
         }
         else
         {
-            tooltipState += tr("Transferring");
+            tooltipState = tr("Transferring");
         }
 
         icon = icons["synching"];
