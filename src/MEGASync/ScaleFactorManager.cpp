@@ -46,6 +46,11 @@ double getWindowScalingFactorOnXcfe()
 
 ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
 {
+    if(QSysInfo::prettyProductName().toStdString() == "Deepin 20")
+    {
+        return {};
+    }
+
     auto linuxDpi{0.};
     if(osType == OsType::LINUX)
     {
@@ -94,15 +99,15 @@ ScaleFactorManager::ScaleFactorManager(OsType osType)
 }
 
 ScaleFactorManager::ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName, std::string desktopName)
-    :mOsType{osType}, mScreensInfo{screensInfo}, mDesktopName{desktopName}
+    :mOsType{osType}, mOsName{osName}, mScreensInfo{screensInfo}, mDesktopName{desktopName}
 {
     if(mDesktopName.empty())
     {
-        mLogMessages.emplace_back(osName);
+        mLogMessages.emplace_back(mOsName);
     }
     else
     {
-        mLogMessages.emplace_back(osName + " (" + mDesktopName + ")");
+        mLogMessages.emplace_back(mOsName + " (" + mDesktopName + ")");
     }
 
     for(const auto& screenInfo : mScreensInfo)
@@ -127,27 +132,44 @@ std::string createScreenScaleFactorsVariable(std::vector<double> calculatedScale
 
 void ScaleFactorManager::setScaleFactorEnvironmentVariable()
 {
-    if(mScreensInfo.empty())
+    if(mScreensInfo.empty() && mOsName != "Deepin 20")
     {
         throw std::runtime_error("No screens found");
     }
 
     if(!checkEnvironmentVariables())
     {
+        if(mOsName == "Deepin 20")
+        {
+            const auto scale{getDpiOnLinux() / 96.0};
+            qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
+            return;
+        }
+
         const auto needsRescaling{computeScales()};
         if(needsRescaling)
         {
             if(mScreensInfo.size() > 1)
             {
-                const auto screenScaleFactorVariable{createScreenScaleFactorsVariable(mCalculatedScales)};
-                qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.c_str());
-                mLogMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to "+screenScaleFactorVariable);
+                if(mOsName == "Deepin 20")
+                {
+                    const auto minCalculatedScale{*std::min_element(mCalculatedScales.begin(), mCalculatedScales.end())};
+                    const auto minCalculatedScaleString{QString::number(minCalculatedScale).toAscii()};
+                    qputenv("QT_SCALE_FACTOR", minCalculatedScaleString);
+                    mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + minCalculatedScaleString);
+                }
+                else
+                {
+                    const auto screenScaleFactorVariable{createScreenScaleFactorsVariable(mCalculatedScales)};
+                    qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.c_str());
+                    mLogMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to " + screenScaleFactorVariable);
+                }
             }
             else
             {
                 const auto scaleString{QString::number(mCalculatedScales.front()).toAscii()};
                 qputenv("QT_SCALE_FACTOR", scaleString);
-                mLogMessages.emplace_back("QT_SCALE_FACTOR set to "+scaleString);
+                mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + scaleString);
             }
         }
         else
