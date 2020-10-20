@@ -3,6 +3,7 @@
 #include "control/Utilities.h"
 #include "HighDpiResize.h"
 #include "Preferences.h"
+#include "MegaApplication.h"
 #include <QMessageBox>
 
 using namespace mega;
@@ -26,6 +27,8 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
 
     activeDownload.clear();
     animationDown = animationUp = NULL;
+
+    mThreadPool = ThreadPoolSingleton::getInstance();
 
     ui->bDownPaused->setVisible(false);
     ui->bUpPaused->setVisible(false);
@@ -136,7 +139,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 
         // New Download transfer, update name, size and tag
         if (activeDownload.tag != transfer->getTag())
-        {           
+        {
             activeDownload.tag = transfer->getTag();
             setType(&activeDownload, type, transfer->isSyncTransfer());
             activeDownload.fileName = QString::fromUtf8(transfer->getFileName());
@@ -225,14 +228,34 @@ void ActiveTransfersWidget::pausedUpTransfers(bool paused)
 
 void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
+    QPointer<ActiveTransfersWidget> activeTransfersWidget = this;
+
     if (totalDownloads && activeDownload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
-        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
-        if (nextTransfer)
-        {
-            onTransferUpdate(megaApi, nextTransfer);
-            delete nextTransfer;
-        }
+        mThreadPool->push([this, activeTransfersWidget]()
+        {//thread pool function
+            if (!activeTransfersWidget)
+            {
+                return;
+            }
+
+            MegaTransfer *nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+
+            if (nextTransfer)
+            {
+                Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
+                {//queued function
+
+                    if (activeTransfersWidget)
+                    {
+                        onTransferUpdate(megaApi, nextTransfer);
+                    }
+                    delete nextTransfer;
+
+                });//end of queued function
+            }
+
+        });// end of thread pool function;
     }
 
     if (Preferences::instance()->getDownloadsPaused())
@@ -269,14 +292,34 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
 void ActiveTransfersWidget::updateUpSpeed(long long speed)
 {
+    QPointer<ActiveTransfersWidget> activeTransfersWidget = this;
+
     if (totalUploads && activeUpload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
-        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
-        if (nextTransfer)
-        {
-            onTransferUpdate(megaApi, nextTransfer);
-            delete nextTransfer;
-        }
+        mThreadPool->push([this, activeTransfersWidget]()
+        {//thread pool function
+            if (!activeTransfersWidget)
+            {
+                return;
+            }
+
+            MegaTransfer *nextTransfer = ((MegaApplication *)qApp)->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+            if (nextTransfer)
+            {
+                Utilities::queueFunctionInAppThread([this, activeTransfersWidget, nextTransfer]()
+                {//queued function
+
+                    if (activeTransfersWidget)
+                    {
+                        onTransferUpdate(megaApi, nextTransfer);
+                    }
+
+                    delete nextTransfer;
+
+                });//end of queued function
+            }
+
+        });// end of thread pool function;
     }
 
     if (Preferences::instance()->getUploadsPaused())
@@ -312,7 +355,7 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
 
 void ActiveTransfersWidget::on_bDownCancel_clicked()
 {
-    MegaTransfer *transfer = NULL;
+    MegaTransfer *transfer = nullptr;
     transfer = megaApi->getTransferByTag(activeDownload.tag);
     if (!transfer)
     {
@@ -336,7 +379,7 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
 
 void ActiveTransfersWidget::on_bUpCancel_clicked()
 {
-    MegaTransfer *transfer = NULL;
+    MegaTransfer *transfer = nullptr;
     transfer = megaApi->getTransferByTag(activeUpload.tag);
     if (!transfer)
     {

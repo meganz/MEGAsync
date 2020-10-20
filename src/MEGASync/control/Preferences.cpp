@@ -666,8 +666,8 @@ long long Preferences::availableStorage()
 {
     mutex.lock();
     assert(logged());
-    long long total = settings->value(totalStorageKey).toLongLong();
-    long long used = settings->value(usedStorageKey).toLongLong();
+    long long total = getValue<long long>(totalStorageKey);
+    long long used = getValue<long long>(usedStorageKey);
     mutex.unlock();
     long long available = total - used;
     return available >= 0 ? available : 0;
@@ -1633,7 +1633,7 @@ void Preferences::setLowerSizeLimitUnit(int value)
 int Preferences::folderPermissionsValue()
 {
     mutex.lock();
-    int permissions = settings->value(folderPermissionsKey, defaultFolderPermissions).toInt();
+    int permissions = getValue<int>(folderPermissionsKey, defaultFolderPermissions);
     mutex.unlock();
     return permissions;
 }
@@ -1646,7 +1646,7 @@ void Preferences::setFolderPermissionsValue(int permissions)
 int Preferences::filePermissionsValue()
 {
     mutex.lock();
-    int permissions = settings->value(filePermissionsKey, defaultFilePermissions).toInt();
+    int permissions = getValue<int>(filePermissionsKey, defaultFilePermissions);
     mutex.unlock();
     return permissions;
 }
@@ -1896,7 +1896,7 @@ void Preferences::setLastUpdateVersion(int version)
 QString Preferences::downloadFolder()
 {
     mutex.lock();
-    QString value = QDir::toNativeSeparators(settings->value(downloadFolderKey).toString());
+    QString value = QDir::toNativeSeparators(getValue<QString>(downloadFolderKey));
     mutex.unlock();
     return value;
 }
@@ -2547,7 +2547,7 @@ bool Preferences::fileVersioningDisabled()
 {
     mutex.lock();
     assert(logged());
-    bool result = settings->value(disableFileVersioningKey, false).toBool();
+    bool result = getValue(disableFileVersioningKey, false);
     mutex.unlock();
     return result;
 }
@@ -2560,7 +2560,7 @@ void Preferences::disableFileVersioning(bool value)
 bool Preferences::overlayIconsDisabled()
 {
     mutex.lock();
-    bool result = settings->value(disableOverlayIconsKey, false).toBool();
+    bool result = getValue(disableOverlayIconsKey, false);
     mutex.unlock();
     return result;
 }
@@ -2573,7 +2573,7 @@ void Preferences::disableOverlayIcons(bool value)
 bool Preferences::leftPaneIconsDisabled()
 {
     mutex.lock();
-    bool result = settings->value(disableLeftPaneIconsKey, false).toBool();
+    bool result = getValue(disableLeftPaneIconsKey, false);
     mutex.unlock();
     return result;
 }
@@ -2733,19 +2733,19 @@ static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
 void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
-    excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    excludedSyncNames = getValue<QString>(excludedSyncNamesKey).split(QString::fromAscii("\n", QString::SkipEmptyParts));
     if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
     {
         excludedSyncNames.clear();
     }
 
-    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    excludedSyncPaths = getValue<QString>(excludedSyncPathsKey).split(QString::fromAscii("\n", QString::SkipEmptyParts));
     if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
     {
         excludedSyncPaths.clear();
     }
 
-    if (settings->value(lastVersionKey).toInt() < 108)
+    if (getValue<int>(lastVersionKey) < 108)
     {
         excludedSyncNames.clear();
         excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
@@ -2754,14 +2754,14 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
-    if (settings->value(lastVersionKey).toInt() < 3400)
+    if (getValue<int>(lastVersionKey) < 3400)
     {
         excludedSyncNames.append(QString::fromUtf8("*~.*"));
         excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
         excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 
-    if (settings->value(lastVersionKey).toInt() < 2907)
+    if (getValue<int>(lastVersionKey) < 2907)
     {
         //This string is no longer excluded by default since 2907
         excludedSyncNames.removeAll(QString::fromUtf8("Icon?"));
