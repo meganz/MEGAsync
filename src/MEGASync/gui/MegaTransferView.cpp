@@ -715,8 +715,8 @@ void MegaTransferView::showInMEGAClicked()
                 MegaHandle handle = transfer->getParentHandle();
                 if (handle != INVALID_HANDLE)
                 {
-                    const auto app{((MegaApplication *)qApp)};
-                    constexpr auto versions{false};
+                    MegaApplication* app{((MegaApplication *)qApp)};
+                    constexpr bool versions{false};
                     app->shellViewOnMega(handle, versions);
                 }
                 delete transfer;

@@ -322,8 +322,8 @@ bool LinkProcessor::atLeastOneLinkValidAndSelected() const
 {
     for (int iLink = 0; iLink < size(); iLink++)
     {
-        const auto isValid{linkNode.at(iLink)};
-        const auto isSelected{linkSelected.at(iLink)};
+        const MegaNode* isValid{linkNode.at(iLink)};
+        const bool isSelected{linkSelected.at(iLink)};
         if(isValid && isSelected)
         {
             return true;

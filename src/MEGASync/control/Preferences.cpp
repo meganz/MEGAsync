@@ -943,7 +943,7 @@ std::chrono::system_clock::time_point Preferences::getTimePoint(const QString& k
 {
     QMutexLocker locker(&mutex);
     assert(logged());
-    const auto value{getValue<long long>(key, defaultTimeStamp)};
+    const long long value{getValue<long long>(key, defaultTimeStamp)};
     std::chrono::milliseconds durationMillis(value);
     return std::chrono::system_clock::time_point{durationMillis};
 }
@@ -952,7 +952,7 @@ void Preferences::setTimePoint(const QString& key, const std::chrono::system_clo
 {
     QMutexLocker locker(&mutex);
     assert(logged());
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    auto timePointMillis = std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count();
     settings->setValue(key, static_cast<long long>(timePointMillis));
     setCachedValue(key, static_cast<long long>(timePointMillis));
 }
@@ -3110,9 +3110,9 @@ void Preferences::overridePreference(const QSettings &settings, QString &&name, 
 template<>
 void Preferences::overridePreference(const QSettings &settings, QString &&name, std::chrono::milliseconds &value)
 {
-    const auto previous{value};
-    const auto previousMillis{static_cast<long long>(value.count())};
-    const auto variant{settings.value(name, previousMillis)};
+    const std::chrono::milliseconds previous{value};
+    const long long previousMillis{static_cast<long long>(value.count())};
+    const QVariant variant{settings.value(name, previousMillis)};
     value = std::chrono::milliseconds(variant.value<long long>());
     if (previous != value)
     {

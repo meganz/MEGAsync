@@ -13,15 +13,15 @@
 QString getArchitectureString()
 {
     QString architecture;
-    const auto separationString{QStringLiteral(" ") + QChar(0x2022) + QStringLiteral(" ")};
+    const QString separationString{QStringLiteral(" ") + QChar(0x2022) + QStringLiteral(" ")};
 
-    constexpr auto is32bits{sizeof(char*) == 4};
+    constexpr bool is32bits{sizeof(char*) == 4};
     if(is32bits)
     {
         architecture.append(separationString + QStringLiteral("32-bit"));
     }
 
-    constexpr auto is64bits{sizeof(char*) == 8};
+    constexpr bool is64bits{sizeof(char*) == 8};
     if(is64bits)
     {
         architecture.append(separationString + QStringLiteral("64-bit"));

@@ -352,7 +352,7 @@ void GuestWidget::resetPageAfterBlock()
 
 void GuestWidget::showLoginError(const QString &errorMessage) const
 {
-    constexpr auto animationTimeMillis{300};
+    constexpr int animationTimeMillis{300};
     ui->lLoginErrors->setText(errorMessage);
     ui->sLoginTitle->setCurrentWidget(ui->pLoginErrors);
     Utilities::animatePartialFadein(ui->lLoginErrors, animationTimeMillis);
@@ -360,7 +360,7 @@ void GuestWidget::showLoginError(const QString &errorMessage) const
 
 void GuestWidget::showLogin2FaError() const
 {
-    constexpr auto animationTimeMillis{300};
+    constexpr int animationTimeMillis{300};
     Utilities::animatePartialFadein(ui->lLogin2FAError, animationTimeMillis);
     ui->lLogin2FAError->setText(ui->lLogin2FAError->text().toUpper());
     ui->lLogin2FAError->show();
@@ -368,10 +368,10 @@ void GuestWidget::showLogin2FaError() const
 
 void GuestWidget::hideLoginError()
 {
-    const auto isLoginErrorBeingShowed{ui->sLoginTitle->currentWidget() == ui->pLoginErrors};
+    const bool isLoginErrorBeingShowed{ui->sLoginTitle->currentWidget() == ui->pLoginErrors};
     if(isLoginErrorBeingShowed)
     {
-        constexpr auto transitionTimeMillis{100};
+        constexpr int transitionTimeMillis{100};
         Utilities::animatePartialFadeout(ui->lLoginErrors, transitionTimeMillis);
         QTimer::singleShot(transitionTimeMillis, this, [&](){ui->sLoginTitle->setCurrentWidget(ui->pLoginTitle);});
     }
@@ -381,7 +381,7 @@ void GuestWidget::hide2FaLoginError()
 {
     if(ui->lLogin2FAError->isVisible())
     {
-        constexpr auto animationTimeMillis{100};
+        constexpr int animationTimeMillis{100};
         Utilities::animatePartialFadeout(ui->lLogin2FAError, animationTimeMillis);
         QTimer::singleShot(animationTimeMillis, this, [&](){ui->lLogin2FAError->hide();});
     }
@@ -714,7 +714,7 @@ void GuestWidget::changeEvent(QEvent *event)
 void GuestWidget::on_bLogin2FaNext_clicked()
 {
     QRegExp re(QString::fromUtf8("\\d\\d\\d\\d\\d\\d"));
-    const auto pin{ui->leCode->text().trimmed()};
+    const QString pin{ui->leCode->text().trimmed()};
     if (pin.isEmpty() || !re.exactMatch(pin))
     {
         showLogin2FaError();
