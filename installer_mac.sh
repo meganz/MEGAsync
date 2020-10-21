@@ -58,12 +58,12 @@ dsymutil MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
 strip MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader
 dsymutil MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
 strip MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater
-dsymutil MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion -o MEGADeprecatedVersion.dSYM
-strip MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion
+#dsymutil MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion -o MEGADeprecatedVersion.dSYM
+#strip MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion
 mv MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 mv MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 mv MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater MEGASync/MEGAsync.app/Contents/MacOS/MEGAupdater
-mv MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion MEGASync/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion
+#mv MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion MEGASync/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion
 
 cp -L ../$AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
 cp -L ../$AVFORMAT_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
@@ -214,6 +214,6 @@ echo "Cleaning"
 rm -rf MEGAsync
 rm -rf MEGALoader
 rm -rf MEGAUpdater
-rm -rf MEGADeprecatedVersion
+#rm -rf MEGADeprecatedVersion
 
 echo "DONE"
