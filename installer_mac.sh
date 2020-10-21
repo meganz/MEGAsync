@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/zsh -e
 
 Usage () {
     echo "Usage: installer_mac.sh [[--sign] | [--create-dmg] | [--notarize]]"
@@ -48,8 +48,8 @@ rm -rf Release_x64
 mkdir Release_x64
 cd Release_x64
 $QTBASE/bin/lrelease ../src/MEGASync/MEGASync.pro
-$QTBASE/bin/qmake "CONFIG += FULLREQUIREMENTS" -r ../src -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
-make -j4
+$QTBASE/bin/qmake "CONFIG += FULLREQUIREMENTS" -r ../src -spec macx-clang CONFIG+=release CONFIG+=x86_64 -nocache
+make -j8
 cp -R MEGASync/MEGAsync.app MEGASync/MEGAsync_orig.app
 $QTBASE/bin/macdeployqt MEGASync/MEGAsync.app -no-strip
 dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
