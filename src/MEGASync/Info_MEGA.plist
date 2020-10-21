@@ -18,6 +18,8 @@
     <string></string>
     <key>LSUIElement</key>
     <string>1</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.9</string>
     <key>NSHighResolutionCapable</key>
     <string>True</string>
     <key>NSUserNotificationAlertStyle</key>
