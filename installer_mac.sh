@@ -87,15 +87,6 @@ install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Fra
 install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 
-
-#If any @rpath or an absolute path to link to a dynamic library outside of the app, the app will be rejected by Gatekeeper, so remove them. QTBUG-61413
-install_name_tool -delete_rpath "$QTBASE/lib" MEGASync/MEGAsync.app/Contents/Frameworks/QtGui.framework/Versions/5/QtGui
-install_name_tool -delete_rpath "$QTBASE/lib" MEGASync/MEGAsync.app/Contents/Frameworks/QtMacExtras.framework/Versions/5/QtMacExtras
-install_name_tool -delete_rpath "$QTBASE/lib" MEGASync/MEGAsync.app/Contents/Frameworks/QtNetwork.framework/Versions/5/QtNetwork
-install_name_tool -delete_rpath "$QTBASE/lib" MEGASync/MEGAsync.app/Contents/Frameworks/QtPrintSupport.framework/Versions/5/QtPrintSupport
-install_name_tool -delete_rpath "$QTBASE/lib" MEGASync/MEGAsync.app/Contents/Frameworks/QtWidgets.framework/Versions/5/QtWidgets
-
-
 otool -L MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 
 mv MEGASync/MEGAsync.app ./
