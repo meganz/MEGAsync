@@ -275,7 +275,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exitDialog = NULL;
     sslKeyPinningError = NULL;
     downloadNodeSelector = NULL;
-    notificator = NULL;
     pricing = NULL;
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
@@ -413,11 +412,7 @@ void MegaApplication::initialize()
     QString language = preferences->language();
     changeLanguage(language);
 
-#ifdef __APPLE__
-    notificator = new Notificator(applicationName(), NULL, this);
-#else
-    notificator = new Notificator(applicationName(), trayIcon, this);
-#endif
+    mOsNotifications = std::make_shared<DesktopNotifications>(applicationName(), trayIcon, preferences);
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
     if (modifiers.testFlag(Qt::ControlModifier)
@@ -592,7 +587,7 @@ void MegaApplication::initialize()
         }
     }
 
-    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, notificator);
+    transferQuota = ::mega::make_unique<TransferQuota>(megaApi, preferences, mOsNotifications);
     connect(transferQuota.get(), &TransferQuota::waitTimeIsOver, this, &MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired);
 
     periodicTasksTimer = new QTimer(this);
@@ -1971,7 +1966,7 @@ void MegaApplication::checkOverStorageStates()
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
             megaApi->sendEvent(99519, "Overstorage notification shown");
-            sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
+            mOsNotifications->sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
         }
 
         if (infoDialog)
@@ -2015,7 +2010,7 @@ void MegaApplication::checkOverStorageStates()
         {
             preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
             megaApi->sendEvent(99522, "Almost overstorage notification shown");
-            sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
+            mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
 
         if (storageOverquotaDialog)
@@ -2041,7 +2036,7 @@ void MegaApplication::checkOverStorageStates()
                 {
                     preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
                     megaApi->sendEvent(99530, "Paywall notification shown");
-                    sendOverStorageNotification(Preferences::STATE_PAYWALL);
+                    mOsNotifications->sendOverStorageNotification(Preferences::STATE_PAYWALL);
                 }
             }
 
@@ -2447,6 +2442,12 @@ void MegaApplication::showInfoDialog()
     updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
 }
 
+void MegaApplication::showInfoDialogNotifications()
+{
+    showInfoDialog();
+    infoDialog->showNotifications();
+}
+
 void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy)
 {
     if (appfinished)
@@ -2660,113 +2661,6 @@ void MegaApplication::initLocalServer()
         {
             renewLocalSSLcert();
         }
-    }
-}
-
-void MegaApplication::sendOverStorageNotification(int state)
-{
-    switch (state)
-    {
-        case Preferences::STATE_ALMOST_OVER_STORAGE:
-        {
-            MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Your account is almost full."));
-            notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
-            notificator->notify(notification);
-            break;
-        }
-        case Preferences::STATE_OVER_STORAGE:
-        {
-            MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Your account is full."));
-            notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
-            notificator->notify(notification);
-            break;
-        }
-        case Preferences::STATE_PAYWALL:
-        {
-            int64_t remainDaysOut(0);
-            int64_t remainHoursOut(0);
-            Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut, remainHoursOut);
-
-            MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Your data is at risk"));
-
-            if (remainDaysOut > 0)
-            {
-                notification->setText(tr("You have [A] days left to save your data")
-                                      .replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
-            }
-            else if (remainDaysOut == 0 && remainHoursOut > 0)
-            {
-                notification->setText(tr("You have [A] hours left to save your data")
-                                      .replace(QString::fromUtf8("[A]"), QString::number(remainHoursOut)));
-            }
-            else
-            {
-                notification->setText(tr("You must act immediately to save your data"));
-            }
-
-            notification->setActions(QStringList() << tr("Get PRO"));
-            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
-            notificator->notify(notification);
-
-            if (infoDialog)
-            {
-                // Update remaining time in case infodialog is already
-                // open and to avoid discrepancies with notification time
-                infoDialog->updateDialogState();
-            }
-            break;
-        }
-        default:
-            break;
-    }
-}
-
-void MegaApplication::sendBusinessWarningNotification()
-{
-    switch (businessStatus)
-    {
-        case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
-        {
-            if (megaApi->isMasterBusinessAccount())
-            {
-                MegaNotification *notification = new MegaNotification();
-                notification->setTitle(tr("Payment Failed"));
-                notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
-                notification->setActions(QStringList() << tr("Pay Now"));
-                connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
-                notificator->notify(notification);
-            }
-            break;
-        }
-        case MegaApi::BUSINESS_STATUS_EXPIRED:
-        {
-            MegaNotification *notification = new MegaNotification();
-
-            if (megaApi->isMasterBusinessAccount())
-            {
-                notification->setTitle(tr("Your Business account is expired"));
-                notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
-                notification->setActions(QStringList() << tr("Pay Now"));
-                connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
-            }
-            else
-            {
-                notification->setTitle(tr("Account Suspended"));
-                notification->setText(tr("Contact your business account administrator to resolve the issue and activate your account."));
-            }
-
-            notificator->notify(notification);
-            break;
-        }
-        default:
-            break;
     }
 }
 
@@ -3201,7 +3095,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
 
-    if (notificator)
+    if (mOsNotifications)
     {
 #ifdef __APPLE__
         if (infoDialog && infoDialog->isVisible())
@@ -3210,8 +3104,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
         }
 #endif
         lastTrayMessage = message;
-        notificator->notify(Notificator::Information, title, message,
-                            QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendInfoNotification(title, message);
     }
     else
     {
@@ -3233,11 +3126,10 @@ void MegaApplication::showWarningMessage(QString message, QString title)
         return;
     }
 
-    if (notificator)
+    if (mOsNotifications)
     {
         lastTrayMessage = message;
-        notificator->notify(Notificator::Warning, title, message,
-                                    QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendWarningNotification(title, message);
     }
     else QMegaMessageBox::warning(nullptr, title, message);
 }
@@ -3261,7 +3153,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     lastTsErrorMessageShown = QDateTime::currentMSecsSinceEpoch();
 
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, message.toUtf8().constData());
-    if (notificator)
+    if (mOsNotifications)
     {
 #ifdef __APPLE__
         if (infoDialog && infoDialog->isVisible())
@@ -3269,8 +3161,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
             infoDialog->hide();
         }
 #endif
-        notificator->notify(Notificator::Critical, title, message,
-                            QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendErrorNotification(title, message);
     }
     else
     {
@@ -3292,11 +3183,10 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
         return;
     }
 
-    if (notificator)
+    if (mOsNotifications)
     {
         lastTrayMessage = message;
-        notificator->notify(Notificator::Information, title, message,
-                                    QIcon(QString::fromUtf8("://images/app_128.png")));
+        mOsNotifications->sendInfoNotification(title, message);
     }
 }
 
@@ -3706,7 +3596,6 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
 
     if (data->pendingTransfers == 0)
     {
-        MegaNotification *notification = new MegaNotification();
         QString title;
         QString message;
 
@@ -3827,15 +3716,12 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
             }
         }
 
-        if (notificator && !message.isEmpty())
+        if (mOsNotifications && !message.isEmpty())
         {           
             preferences->setLastTransferNotificationTimestamp();
-            notification->setTitle(title);
-            notification->setText(message);
-            notification->setActions(QStringList() << tr("Show in folder"));
-            notification->setData(((data->totalTransfers == 1) ? QString::number(1) : QString::number(0)) + data->localPath);
-            connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
-            notificator->notify(notification);
+            const auto totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
+            const auto extraData{totalTransfersString + data->localPath};
+            mOsNotifications->sendFinishedTransferNotification(title, message, extraData);
         }
 
         transferAppData.erase(it);
@@ -3852,30 +3738,6 @@ void MegaApplication::enableFinderExt()
 }
 #endif
 
-void MegaApplication::showInFolder(int activationButton)
-{
-    MegaNotification *notification = ((MegaNotification *)QObject::sender());
-
-    if ((activationButton == MegaNotification::ActivationActionButtonClicked
-         || activationButton == MegaNotification::ActivationLegacyNotificationClicked
-     #ifndef _WIN32
-         || activationButton == MegaNotification::ActivationContentClicked
-     #endif
-         )
-            && notification->getData().size() > 1)
-    {
-        QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
-        if (notification->getData().at(0) == QChar::fromAscii('1'))
-        {
-            Platform::showInFolder(localPath);
-        }
-        else
-        {
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
-        }
-    }
-}
-
 void MegaApplication::openFolderPath(QString localPath)
 {
     if (!localPath.isEmpty())
@@ -3890,39 +3752,9 @@ void MegaApplication::openFolderPath(QString localPath)
     }
 }
 
-void MegaApplication::redirectToUpgrade(int activationButton)
-{
-    if (activationButton == MegaNotification::ActivationActionButtonClicked
-            || activationButton == MegaNotification::ActivationLegacyNotificationClicked
-        #ifndef _WIN32
-            || activationButton == MegaNotification::ActivationContentClicked
-        #endif
-            )
-    {
-        QString url = QString::fromUtf8("mega://#pro");
-        Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-    }
-}
-
 void MegaApplication::updateStatesAfterTransferOverQuotaTimeHasExpired()
 {
     transferOverQuotaWaitTimeExpiredReceived = true;
-}
-
-void MegaApplication::redirectToPayBusiness(int activationButton)
-{
-    if (activationButton == MegaNotification::ActivationActionButtonClicked
-            || activationButton == MegaNotification::ActivationLegacyNotificationClicked
-        #ifndef _WIN32
-            || activationButton == MegaNotification::ActivationContentClicked
-        #endif
-            )
-    {      
-        QString url = QString::fromUtf8("mega://#repay");
-        Utilities::getPROurlWithParameters(url);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-    }
 }
 
 void MegaApplication::registerUserActivity()
@@ -5892,6 +5724,12 @@ void MegaApplication::openSettings(int tab)
     settingsDialog->show();
 }
 
+void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
+{
+    openSettings(SettingsDialog::SYNCS_TAB);
+    settingsDialog->addSyncFolder(megaFolderHandle);
+}
+
 void MegaApplication::createAppMenus()
 {
     if (appfinished)
@@ -6668,7 +6506,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
-        sendBusinessWarningNotification();
+        mOsNotifications->sendBusinessWarningNotification(businessStatus);
     }
 
     if (e->getErrorCode() == MegaError::API_EPAYWALL)
@@ -7695,7 +7533,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
         lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
-        sendBusinessWarningNotification();
+        mOsNotifications->sendBusinessWarningNotification(businessStatus);
     }
 
     //Show the transfer in the "recently updated" list
@@ -7968,6 +7806,7 @@ void MegaApplication::pushToThreadPool(std::function<void()> functor)
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
+    Q_UNUSED(api);
     if (appfinished)
     {
         return;
@@ -7975,7 +7814,6 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 
     bool doSynchronously = list; // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
                                  // since we are not copying the list, and we need to process it before it goes out of scope.
-
     auto funcToThreadPool = [=, &list]()
     {//thread pool function
         bool copyRequired = true;
@@ -7991,6 +7829,8 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 
             //CHECK it triggers a lot
             assert((!copyRequired || notificationsModel) && "onUserAlertsUpdate with !alerts should have happened before!");
+
+            mOsNotifications->addUserAlertList(list);
 
             if (!notificationsModel)
             {

@@ -42,6 +42,7 @@
 #include "QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
+#include "DesktopNotifications.h"
 #include "TransferQuota.h"
 
 #ifdef __APPLE__
@@ -243,6 +244,7 @@ public slots:
     void onMessageClicked();
     void start();
     void openSettings(int tab = -1);
+    void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
     void openInfoWizard();
     void importLinks();
     void officialWeb();
@@ -289,6 +291,7 @@ public slots:
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void showInfoDialog();
+    void showInfoDialogNotifications();
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);
@@ -321,15 +324,12 @@ public slots:
     void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
-    void redirectToUpgrade(int activationButton);
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
 private slots:
-    void showInFolder(int activationButton);
     void openFolderPath(QString path);
-    void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
@@ -361,8 +361,6 @@ protected:
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
-    void sendOverStorageNotification(int state);
-    void sendBusinessWarningNotification();
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
 
@@ -496,7 +494,6 @@ protected:
 
     QThread *updateThread;
     UpdateTask *updateTask;
-    Notificator *notificator;
     long long lastActiveTime;
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
@@ -541,6 +538,7 @@ protected:
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
+    std::shared_ptr<DesktopNotifications> mOsNotifications;
 
 private:
 #ifdef _WIN32

@@ -43,6 +43,7 @@ public:
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
     void storageChanged();
+    void addSyncFolder(mega::MegaHandle megaFolderHandle);
 
 public slots:
     void stateChanged();
