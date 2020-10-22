@@ -34,14 +34,6 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         TransferItem *ti = model->transferItems[tag];
         if (!ti)
         {
-            if (static_cast<MegaApplication*>(qApp)->megaApiLock)
-            {
-                // We will call the SDK several times, and if there is one new transfer there may be many, and the SDK may be working a lot.  
-                // Here we lock the SDK mutex so we can make all these calls back into it in one go, and get the painting done.  
-                // The lock will be released at the end of the infoDialog or transferDialog paintEvent().
-                static_cast<MegaApplication*>(qApp)->megaApiLock->lockOnce();
-            }
-
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
                 ti = new CustomTransferItem();
@@ -54,67 +46,47 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             ti->setTransferTag(tag);
             connect(ti, SIGNAL(refreshTransfer(int)), model, SLOT(refreshTransferItem(int)));
             model->transferItems.insert(tag, ti);
-            MegaTransfer *transfer = model->getTransferByTag(tag);
+            TransferItemData *tData = model->data(index, Qt::UserRole).value<TransferItemData*>();
 
-            if (transfer)
-            {
+            if (tData)
+            {                       
                 //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
-                bool blockedTransfer = static_cast<MegaApplication*>(qApp)->finishedTransfersWhileBlocked(transfer->getTag());
+                bool blockedTransfer = static_cast<MegaApplication*>(qApp)->finishedTransfersWhileBlocked(tData->data.tag);
                 if (blockedTransfer)
                 {
                     ti->setTransferFinishedWhileBlocked(blockedTransfer);
-                    static_cast<MegaApplication*>(qApp)->removeFinishedBlockedTransfer(transfer->getTag());
+                    static_cast<MegaApplication*>(qApp)->removeFinishedBlockedTransfer(tData->data.tag);
                 }
 
-                ti->setType(transfer->getType(), transfer->isSyncTransfer());
-                ti->setFileName(QString::fromUtf8(transfer->getFileName()));
-                ti->setTotalSize(transfer->getTotalBytes());
-                ti->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
-                ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());           
-                ti->setPriority(transfer->getPriority());
+                ti->setType(tData->data.type, tData->data.isSyncTransfer);
+                ti->setFileName(tData->data.filename);
+                ti->setTotalSize(tData->data.totalSize);
+                ti->setSpeed(tData->data.speed, tData->data.meanSpeed);
+                ti->setTransferredBytes(tData->data.transferredBytes, !tData->data.isSyncTransfer);
+                ti->setPriority(tData->data.priority);
 
-                int tError = transfer->getLastError().getErrorCode();
+                int tError = tData->data.errorCode;
                 if (tError != MegaError::API_OK)
                 {
-                    assert(transfer->getLastErrorExtended());
-                    ti->setTransferError(tError, transfer->getLastErrorExtended()->getValue());
+                    ti->setTransferError(tError,  tData->data.errorValue);
                 }
 
-                ti->setTransferState(transfer->getState());
+                ti->setTransferState(tData->data.state);
 
                 if (ti->isTransferFinished())
                 {
-                    if (transfer->getUpdateTime() != ti->getFinishedTime())
+                    if (!ti->getFinishedTime())
                     {
-                        ti->setFinishedTime(transfer->getUpdateTime());
+                        ti->setFinishedTime(tData->data.updateTime);
                         ti->updateFinishedTime(); // applies styles which can be slow - just do it when the finished time changes
                     }
 
-                    MegaNode *node = transfer->getPublicMegaNode();
-                    if (node && node->isPublic())
+                    if (tData->data.publicNode)
                     {
-                        ti->setIsLinkAvailable(true);
+                       ti->setIsLinkAvailable(true);
                     }
-                    else
-                    {
-                        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
-                        if (ownNode)
-                        {
-                            int access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
-                            if (access == MegaShare::ACCESS_OWNER)
-                            {
-                                ti->setIsLinkAvailable(true);
-                            }
-
-                            ti->setNodeAccess(access);
-                            delete ownNode;
-                        }
-                    }
-                    delete node;
                 }
-
-                delete transfer;
-            }            
+            }
         }
         else
         {

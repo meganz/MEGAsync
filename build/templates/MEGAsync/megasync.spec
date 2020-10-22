@@ -39,7 +39,7 @@ BuildRequires: ffmpeg-mega
         BuildRequires: libcares-devel
     %endif
 
-    %if !( ( %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?suse_version} == 1230 )
+    %if !( ( "%{_target_cpu}" == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?suse_version} == 1230 )
         BuildRequires: libraw-devel
     %endif
         BuildRequires: update-desktop-files
@@ -124,7 +124,7 @@ BuildRequires: ffmpeg-mega
 
 
 #Pdfium: required for 64 bits only
-%if %{_target_cpu} != "i586" &&  %{_target_cpu} != "i686"
+%if "%{_target_cpu}" != "i586" &&  "%{_target_cpu}" != "i686"
     BuildRequires: pdfium-mega
 %endif
 
@@ -158,7 +158,7 @@ BuildRequires: ffmpeg-mega
 #Build libraw?
 %define flag_libraw %{nil}
 
-%if ( %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?centos_version} >= 800 || 0%{?rhel_version}
+%if ( "%{_target_cpu}" == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?centos_version} >= 800 || 0%{?rhel_version}
     %define flag_libraw -W
 %endif
 

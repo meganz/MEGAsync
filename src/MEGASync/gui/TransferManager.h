@@ -9,6 +9,7 @@
 #include <QGraphicsEffect>
 #include <QTimer>
 #include "QTMegaTransferListener.h"
+#include "Utilities.h"
 
 namespace Ui {
 class TransferManager;
@@ -57,6 +58,7 @@ private:
     QPoint dragPosition;
     long long notificationNumber;
     QTimer *refreshTransferTime;
+    ThreadPool* mThreadPool;
 
     void createAddMenu();
     void onTransfersActive(bool exists);  

@@ -157,6 +157,21 @@ SCENARIO("Scale factor calculation on linux platforms")
             }
         }
     }
+
+    GIVEN("Two screens with 3840x2160 and 1920x1080 resolutions scaled to 200% on Deepin 20 distro")
+    {
+        ScaleFactorManager scaleFactorManager(OsType::LINUX, {{"screenName1", 3840, 2160, 192, 1.}, {"screenName2", 1920, 1080, 192, 1.}}, "Deepin 20", "DDE");
+
+        WHEN("Scale factor is set")
+        {
+            scaleFactorManager.setScaleFactorEnvironmentVariable();
+
+            THEN("Environment variable is set for all screens with the minimum factor calculated for Deepin distro")
+            {
+                CHECK(getenv(scaleEnvironmentVariableName) == std::string("1.66667"));
+            }
+        }
+    }
 }
 
 SCENARIO("Scale factor calculation on windows platforms")

@@ -26,6 +26,8 @@ using namespace mega;
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, QString> Utilities::languageNames;
 
+std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
+
 const unsigned long long KB = 1024;
 const unsigned long long MB = 1024 * KB;
 const unsigned long long GB = 1024 * MB;
@@ -142,6 +144,12 @@ void Utilities::initializeExtensions()
      extensionIcons[QString::fromAscii("pages")] = QString::fromAscii("pages.png");
      extensionIcons[QString::fromAscii("numbers")] = QString::fromAscii("numbers.png");
      extensionIcons[QString::fromAscii("key")] = QString::fromAscii("keynote.png");
+}
+
+
+void Utilities::queueFunctionInAppThread(std::function<void()> fun) {
+   QObject temporary;
+   QObject::connect(&temporary, &QObject::destroyed, qApp, std::move(fun), Qt::QueuedConnection);
 }
 
 void Utilities::getFolderSize(QString folderPath, long long *size)
@@ -887,7 +895,8 @@ QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
     int products = pricing->getNumProducts();
     for (int i = 0; i < products; i++)
     {
-        if (pricing->getMonths(i) == 1)
+        //Skip business & non monthly plans to offer
+        if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
         {
             if (usedStorage < (pricing->getGBStorage(i) * GB))
             {

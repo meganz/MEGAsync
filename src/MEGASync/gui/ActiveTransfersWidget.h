@@ -5,6 +5,7 @@
 #include <QMovie>
 #include "QTMegaTransferListener.h"
 #include "TransferRemainingTime.h"
+#include "Utilities.h"
 
 namespace Ui {
 class ActiveTransfersWidget;
@@ -65,6 +66,7 @@ private:
     TransferData activeUpload, activeDownload;
     QMovie *animationDown, *animationUp;
     QPixmap loadIconResourceDown, loadIconResourceUp;
+    ThreadPool* mThreadPool;
 
     int mWhichGraphsStyleSheet = 0;
 

@@ -9,9 +9,11 @@
 
 #include <QDir>
 #include <QIcon>
+#include <functional>
 #include <QLabel>
 #include <QEasingCurve>
 #include "megaapi.h"
+#include "ThreadPool.h"
 
 #include <functional>
 
@@ -167,6 +169,23 @@ private:
     std::vector<IAccountObserver*> accountObservers;
 };
 
+class ThreadPoolSingleton
+{
+    private:
+        static std::unique_ptr<ThreadPool> instance;
+        ThreadPoolSingleton() {}
+
+    public:
+        static ThreadPool* getInstance()
+        {
+            if (instance == nullptr)
+            {
+                instance.reset(new ThreadPool(1));
+            }
+
+            return instance.get();
+        }
+};
 
 
 /**
@@ -288,6 +307,9 @@ public:
     static QString getAvatarPath(QString email);
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
+
+    static void queueFunctionInAppThread(std::function<void()> fun);
+
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
 

@@ -179,6 +179,7 @@ private:
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
     bool reloadUIpage;
+    ThreadPool* mThreadPool;
 
 #ifndef WIN32
     int folderPermissions;

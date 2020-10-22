@@ -34,6 +34,7 @@
 #include "control/MegaDownloader.h"
 #include "control/UpdateTask.h"
 #include "control/MegaSyncLogger.h"
+#include "control/ThreadPool.h"
 #include "control/MegaController.h"
 #include "model/Model.h"
 #include "megaapi.h"
@@ -190,7 +191,11 @@ public:
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
+    std::shared_ptr<mega::MegaNode> getInboxNode(bool forceReset = false);
+    std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
+
     MegaSyncLogger& getLogger() const;
+    void pushToThreadPool(std::function<void()> functor);
     SetupWizard *getSetupWizard() const;
 
     /**
@@ -437,7 +442,10 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
+    ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
+    std::shared_ptr<mega::MegaNode> mInboxNode;
+    std::shared_ptr<mega::MegaNode> mRubbishNode;
     bool mFetchingNodes = false;
     bool mQueringWhyAmIBlocked = false;
     int numTransfers[2];

@@ -12,21 +12,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.5.0";
-const int Preferences::VERSION_CODE = 4305;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.6.0";
+const int Preferences::VERSION_CODE = 4306;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.5");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.6");
 QString Preferences::SDK_ID = QString::fromAscii("a2ec5c1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Improve user experience when exceeded transfer allowance.\n"
-    "- Improvements in translation.\n"
-    "- Fixed issues during processing of RAW images.\n"
-    "- Reduce memory usage on macOS system.\n"
-    "- Stop escaping filenames when special characters are supported by target filesystem.\n"
-    "- Integration of 2FA form within main dialog.\n"
-    "- Other UI fixes and adjustments.\n"
-    "- Other performance improvements and adjustments."));
+    "- Fixed crash on OSX 10.9 systems."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -673,8 +666,8 @@ long long Preferences::availableStorage()
 {
     mutex.lock();
     assert(logged());
-    long long total = settings->value(totalStorageKey).toLongLong();
-    long long used = settings->value(usedStorageKey).toLongLong();
+    long long total = getValue<long long>(totalStorageKey);
+    long long used = getValue<long long>(usedStorageKey);
     mutex.unlock();
     long long available = total - used;
     return available >= 0 ? available : 0;
@@ -951,7 +944,7 @@ std::chrono::system_clock::time_point Preferences::getTimePoint(const QString& k
 {
     QMutexLocker locker(&mutex);
     assert(logged());
-    const auto value{getValue<long long>(key, defaultTimeStamp)};
+    const long long value{getValue<long long>(key, defaultTimeStamp)};
     std::chrono::milliseconds durationMillis(value);
     return std::chrono::system_clock::time_point{durationMillis};
 }
@@ -960,7 +953,7 @@ void Preferences::setTimePoint(const QString& key, const std::chrono::system_clo
 {
     QMutexLocker locker(&mutex);
     assert(logged());
-    auto timePointMillis{std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count()};
+    auto timePointMillis = std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count();
     settings->setValue(key, static_cast<long long>(timePointMillis));
     setCachedValue(key, static_cast<long long>(timePointMillis));
 }
@@ -1640,7 +1633,7 @@ void Preferences::setLowerSizeLimitUnit(int value)
 int Preferences::folderPermissionsValue()
 {
     mutex.lock();
-    int permissions = settings->value(folderPermissionsKey, defaultFolderPermissions).toInt();
+    int permissions = getValue<int>(folderPermissionsKey, defaultFolderPermissions);
     mutex.unlock();
     return permissions;
 }
@@ -1653,7 +1646,7 @@ void Preferences::setFolderPermissionsValue(int permissions)
 int Preferences::filePermissionsValue()
 {
     mutex.lock();
-    int permissions = settings->value(filePermissionsKey, defaultFilePermissions).toInt();
+    int permissions = getValue<int>(filePermissionsKey, defaultFilePermissions);
     mutex.unlock();
     return permissions;
 }
@@ -1903,7 +1896,7 @@ void Preferences::setLastUpdateVersion(int version)
 QString Preferences::downloadFolder()
 {
     mutex.lock();
-    QString value = QDir::toNativeSeparators(settings->value(downloadFolderKey).toString());
+    QString value = QDir::toNativeSeparators(getValue<QString>(downloadFolderKey));
     mutex.unlock();
     return value;
 }
@@ -2554,7 +2547,7 @@ bool Preferences::fileVersioningDisabled()
 {
     mutex.lock();
     assert(logged());
-    bool result = settings->value(disableFileVersioningKey, false).toBool();
+    bool result = getValue(disableFileVersioningKey, false);
     mutex.unlock();
     return result;
 }
@@ -2567,7 +2560,7 @@ void Preferences::disableFileVersioning(bool value)
 bool Preferences::overlayIconsDisabled()
 {
     mutex.lock();
-    bool result = settings->value(disableOverlayIconsKey, false).toBool();
+    bool result = getValue(disableOverlayIconsKey, false);
     mutex.unlock();
     return result;
 }
@@ -2580,7 +2573,7 @@ void Preferences::disableOverlayIcons(bool value)
 bool Preferences::leftPaneIconsDisabled()
 {
     mutex.lock();
-    bool result = settings->value(disableLeftPaneIconsKey, false).toBool();
+    bool result = getValue(disableLeftPaneIconsKey, false);
     mutex.unlock();
     return result;
 }
@@ -2740,19 +2733,19 @@ static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
 void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
-    excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    excludedSyncNames = getValue<QString>(excludedSyncNamesKey).split(QString::fromAscii("\n", QString::SkipEmptyParts));
     if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
     {
         excludedSyncNames.clear();
     }
 
-    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    excludedSyncPaths = getValue<QString>(excludedSyncPathsKey).split(QString::fromAscii("\n", QString::SkipEmptyParts));
     if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
     {
         excludedSyncPaths.clear();
     }
 
-    if (settings->value(lastVersionKey).toInt() < 108)
+    if (getValue<int>(lastVersionKey) < 108)
     {
         excludedSyncNames.clear();
         excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
@@ -2761,14 +2754,14 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
-    if (settings->value(lastVersionKey).toInt() < 3400)
+    if (getValue<int>(lastVersionKey) < 3400)
     {
         excludedSyncNames.append(QString::fromUtf8("*~.*"));
         excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
         excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 
-    if (settings->value(lastVersionKey).toInt() < 2907)
+    if (getValue<int>(lastVersionKey) < 2907)
     {
         //This string is no longer excluded by default since 2907
         excludedSyncNames.removeAll(QString::fromUtf8("Icon?"));
@@ -3036,9 +3029,9 @@ void Preferences::overridePreference(const QSettings &settings, QString &&name, 
 template<>
 void Preferences::overridePreference(const QSettings &settings, QString &&name, std::chrono::milliseconds &value)
 {
-    const auto previous{value};
-    const auto previousMillis{static_cast<long long>(value.count())};
-    const auto variant{settings.value(name, previousMillis)};
+    const std::chrono::milliseconds previous{value};
+    const long long previousMillis{static_cast<long long>(value.count())};
+    const QVariant variant{settings.value(name, previousMillis)};
     value = std::chrono::milliseconds(variant.value<long long>());
     if (previous != value)
     {
