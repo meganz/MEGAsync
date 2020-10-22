@@ -195,7 +195,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 if(mPreferences->showNotifications())
                 {
                     auto notification{new MegaNotification()};
-                    notification->setTitle(QStringLiteral(""));
+                    notification->setTitle(tr("Cancelled Contact Request"));
                     notification->setText(tr("[A] cancelled the contact request")
                                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                     notification->setImage(mAppIcon);
@@ -209,7 +209,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 if(mPreferences->showNotifications())
                 {
                     auto notification{new MegaNotification()};
-                    notification->setTitle(QStringLiteral(""));
+                    notification->setTitle(tr("New Contact Request"));
                     notification->setText(tr("Reminder") + QStringLiteral(": ") +
                                           tr("You have a contact request"));
 
@@ -228,7 +228,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 if(mPreferences->showNotifications())
                 {
                     auto notification{new MegaNotification()};
-                    notification->setTitle(QStringLiteral(""));
+                    notification->setTitle(tr("New Contact Established"));
                     notification->setText(tr("New contact with [A] has been established")
                                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
                     notification->setData(QString::fromUtf8(alert->getEmail()));
@@ -249,10 +249,11 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const auto message{tr("New Shared folder from [X]")
+                    const auto title{tr("Shared Folder Received")};
+                    const auto message{tr("New shared folder from [X]")
                                 .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
                     const auto isNewShare{true};
-                    notifySharedUpdate(alert, message, isNewShare);
+                    notifySharedUpdate(alert, message, NEW_SHARE);
                 }
                 break;
             }
@@ -260,7 +261,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    notifySharedUpdate(alert, createDeletedShareMessage(alert));
+                    const auto title{tr("Shared Folder Removed")};
+                    notifySharedUpdate(alert, createDeletedShareMessage(alert), DELETE_SHARE);
                 }
                 break;
             }
@@ -268,7 +270,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    notifySharedUpdate(alert, getItemsAddedText(alert));
+                    const auto title{tr("Shared Folder Updated")};
+                    notifySharedUpdate(alert, getItemsAddedText(alert), NEW_SHARED_NODES);
                 }
                 break;
             }
@@ -339,14 +342,28 @@ std::unique_ptr<mega::MegaNode> getMegaNode(mega::MegaUserAlert* alert)
     return std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()));
 }
 
-void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message, bool isNewShare) const
+void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message, int type) const
 {
     auto notification{new MegaNotification()};
     const auto node{getMegaNode(alert)};
     auto sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
     if(sharedFolderName.isEmpty())
     {
-        sharedFolderName = tr("Shared Folder Activity");
+        switch (type) {
+            case NEW_SHARE:
+                sharedFolderName = tr("Shared Folder Received");
+                break;
+            case DELETE_SHARE:
+                sharedFolderName = tr("Shared Folder Removed");
+                break;
+            case NEW_SHARED_NODES:
+            case REMOVED_SHARED_NODES:
+                sharedFolderName = tr("Shared Folder Updated");
+                break;
+            default:
+                sharedFolderName = tr("Shared Folder Activity");
+                break;
+        }
     }
     notification->setTitle(sharedFolderName);
     notification->setText(message);
@@ -355,7 +372,7 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
         const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
         const auto fullAccess{megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL};
-        if(isNewShare && fullAccess)
+        if(type == NEW_SHARE && fullAccess)
         {
 #ifdef __APPLE__
             //Apple do not support multi option with notifications. Just provide default one.
@@ -667,7 +684,7 @@ void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, con
     {
     case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
     {
-        notifySharedUpdate(alert, message);
+        notifySharedUpdate(alert, message, REMOVED_SHARED_NODES);
     }
     }
 }

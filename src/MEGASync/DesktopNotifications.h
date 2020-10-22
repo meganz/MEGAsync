@@ -14,6 +14,12 @@ class DesktopNotifications: public QObject
 {
     Q_OBJECT
 public:
+    enum  {
+        NEW_SHARE = 0,
+        DELETE_SHARE = 1,
+        NEW_SHARED_NODES = 2,
+        REMOVED_SHARED_NODES = 3
+    };
     DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon, Preferences *preferences);
     void addUserAlertList(mega::MegaUserAlertList *alertList);
     void sendOverStorageNotification(int state) const;
@@ -37,7 +43,7 @@ public slots:
 
 private:
     void notifyTakeDown(mega::MegaUserAlert* alert, bool isReinstated = false) const;
-    void notifySharedUpdate(mega::MegaUserAlert* alert, const QString& message, bool isNewShare = false) const;
+    void notifySharedUpdate(mega::MegaUserAlert* alert, const QString& message, int type) const;
     void notifyUnreadNotifications() const;
 
     QString getItemsAddedText(mega::MegaUserAlert* alert);
