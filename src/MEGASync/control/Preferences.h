@@ -436,7 +436,7 @@ public:
     static unsigned int MAX_IDLE_TIME_MS;
     static unsigned int MAX_COMPLETED_ITEMS;
 
-    static unsigned int MUTEX_STEALER_MS; //to create a task that steals the timer for a while (how long)
+    static unsigned int MUTEX_STEALER_MS; //to create a task that steals the sdk mutex for a while (how long)
     static unsigned int MUTEX_STEALER_PERIOD_MS; //periodicity (how often)
     static unsigned int MUTEX_STEALER_PERIOD_ONLY_ONCE; //if only done once
 
