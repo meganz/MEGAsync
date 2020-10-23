@@ -1,6 +1,6 @@
 #!/bin/zsh -e
 
-if [ -z "$MEGAQTPATH" ]; then
+if [ -z "$MEGAQTPATH" ]  || [ ! -d "$MEGAQTPATH" ]; then
     echo "Please set MEGAQTPATH env variable to a valid QT installation path!"
     exit 1;
 fi
@@ -18,6 +18,7 @@ APP_NAME=MEGAsync
 ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
+QTBASE="$(cd "$QTBASE" && pwd -P)"
 
 AVCODEC_VERSION=libavcodec.57.dylib
 AVFORMAT_VERSION=libavformat.57.dylib
