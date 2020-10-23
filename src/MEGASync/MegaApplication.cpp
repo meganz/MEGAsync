@@ -318,6 +318,12 @@ MegaApplication::~MegaApplication()
     {
         removeTranslator(&translator);
     }
+
+    if (mMutexStealerThread)
+    {
+        mMutexStealerThread->join();
+    }
+
     delete pricing;
 }
 
@@ -593,6 +599,25 @@ void MegaApplication::initialize()
     periodicTasksTimer = new QTimer(this);
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
     connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
+
+    // SDK locker code for testing purposes
+    if (Preferences::MUTEX_STEALER_MS && Preferences::MUTEX_STEALER_PERIOD_MS)
+    {
+        mMutexStealerThread.reset(new std::thread([this]() {
+            while (!appfinished)
+            {
+                {
+                    std::unique_ptr<MegaApiLock> apiLock {megaApi->getMegaApiLock(true)};
+                    Utilities::sleepMilliseconds(Preferences::MUTEX_STEALER_MS);
+                }
+                if (Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE)
+                {
+                    return;
+                }
+                Utilities::sleepMilliseconds(Preferences::MUTEX_STEALER_PERIOD_MS);
+            }
+        }));
+    }
 
     infoDialogTimer = new QTimer(this);
     infoDialogTimer->setSingleShot(true);

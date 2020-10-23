@@ -319,6 +319,8 @@ public:
     static QString getExtensionPixmapName(QString fileName, QString prefix);
 
     static long long getSystemsAvailableMemory();
+
+    static void sleepMilliseconds(long long milliseconds);
 };
 
 #endif // UTILITIES_H

@@ -59,6 +59,10 @@ unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
 unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
+unsigned int Preferences::MUTEX_STEALER_MS                    = 0;
+unsigned int Preferences::MUTEX_STEALER_PERIOD_MS             = 0;
+unsigned int Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE      = 0;
+
 const qint16 Preferences::HTTP_PORT  = 6341;
 const qint16 Preferences::HTTPS_PORT = 6342;
 
@@ -3073,4 +3077,8 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("PROXY_TEST_TIMEOUT_MS"), Preferences::PROXY_TEST_TIMEOUT_MS);
     overridePreference(settings, QString::fromUtf8("MAX_IDLE_TIME_MS"), Preferences::MAX_IDLE_TIME_MS);
     overridePreference(settings, QString::fromUtf8("MAX_COMPLETED_ITEMS"), Preferences::MAX_COMPLETED_ITEMS);
+
+    overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_MS"), Preferences::MUTEX_STEALER_MS);
+    overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_MS"), Preferences::MUTEX_STEALER_PERIOD_MS);
+    overridePreference(settings, QString::fromUtf8("MUTEX_STEALER_PERIOD_ONLY_ONCE"), Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE);
 }

@@ -1066,6 +1066,15 @@ long long Utilities::getSystemsAvailableMemory()
     return availMemory;
 }
 
+void Utilities::sleepMilliseconds(long long milliseconds)
+{
+#ifdef WIN32
+            Sleep(milliseconds);
+#else
+            usleep(milliseconds * 1000);
+#endif
+}
+
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)
 {
     mExecuteInAppThread = executeInAppThread;

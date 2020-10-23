@@ -476,6 +476,8 @@ protected:
     QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
     QTimer *firstTransferTimer;
+    std::unique_ptr<std::thread> mMutexStealerThread;
+
     QTranslator translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
