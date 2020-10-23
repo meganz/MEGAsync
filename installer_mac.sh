@@ -51,7 +51,7 @@ mkdir Release_x64
 cd Release_x64
 "$MEGAQTPATH"/bin/lrelease ../src/MEGASync/MEGASync.pro
 "$MEGAQTPATH"/bin/qmake "CONFIG += FULLREQUIREMENTS" -r ../src -spec macx-clang CONFIG+=release CONFIG+=x86_64 -nocache
-make -j8
+make -j`sysctl -n hw.ncpu`
 cp -R MEGASync/MEGAsync.app MEGASync/MEGAsync_orig.app
 "$MEGAQTPATH"/bin/macdeployqt MEGASync/MEGAsync.app -no-strip
 dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
