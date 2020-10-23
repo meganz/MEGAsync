@@ -124,8 +124,8 @@ Release:
 # OS X compilation
 
 ##### Requirements:
-* Xcode 8.3
-* Qt 5.6.3
+* Xcode 10
+* Qt 5.9.9
 
 ##### Preparation:
 1.- Install Xcode in your system
