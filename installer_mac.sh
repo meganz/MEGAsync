@@ -5,11 +5,6 @@ if [ -z "$MEGAQTPATH" ]  || [ ! -d "$MEGAQTPATH" ]; then
     exit 1;
 fi
 
-if [ -z "$MEGAQTPATH" ]  || [ ! -d "$MEGAQTPATH" ]; then
-￼    echo "Please set MEGAQTPATH env variable to a valid QT installation path!"
-￼    exit 1;
-￼fi
-
 Usage () {
     echo "Usage: installer_mac.sh [[--sign] | [--create-dmg] | [--notarize]]"
 }
