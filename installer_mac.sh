@@ -18,7 +18,7 @@ APP_NAME=MEGAsync
 ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
-QTBASE="$(cd "$QTBASE" && pwd -P)"
+MEGAQTPATH="$(cd "$MEGAQTPATH" && pwd -P)"
 
 AVCODEC_VERSION=libavcodec.57.dylib
 AVFORMAT_VERSION=libavformat.57.dylib
