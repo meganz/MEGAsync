@@ -2366,6 +2366,11 @@ void MegaApplication::repositionInfoDialog()
         unityFix();
     }
 
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Moving Info Dialog to posx = %1, posy = %2")
+                 .arg(posx)
+                 .arg(posy)
+                 .toUtf8().constData());
+
     infoDialog->move(posx, posy);
 
 #ifdef __APPLE__
@@ -2493,9 +2498,22 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     QDesktopWidget *desktop = QApplication::desktop();
     int screenIndex = desktop->screenNumber(position);
     screenGeometry = desktop->availableGeometry(screenIndex);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. availableGeometry: valid = %1, geom = %2, pos = %3, index = %4")
+                 .arg(screenGeometry.isValid())
+                 .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
+                 .arg(QString::fromUtf8("[%1,%2]").arg(position.x()).arg(position.y()))
+                 .arg(screenIndex)
+                 .toUtf8().constData());
+
     if (!screenGeometry.isValid())
     {
         screenGeometry = desktop->screenGeometry(screenIndex);
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. screenGeometry: valid = %1, geom = %2, dialog rect = %3")
+                     .arg(screenGeometry.isValid())
+                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
+                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
+                     .toUtf8().constData());
         if (screenGeometry.isValid())
         {
             screenGeometry.setTop(28);
@@ -2506,6 +2524,11 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             screenGeometry.setBottom(screenGeometry.bottom() + 4);
             screenGeometry.setRight(screenGeometry.right() + 4);
         }
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. screenGeometry 2: valid = %1, geom = %2, dialog rect = %3")
+                     .arg(screenGeometry.isValid())
+                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
+                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
+                     .toUtf8().constData());
     }
     else
     {
@@ -2520,8 +2543,11 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         }
     }
 
-
     #ifdef __APPLE__
+
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
+                     .arg(QString::fromUtf8("[%1,%2]").arg(positionTrayIcon.x()).arg(positionTrayIcon.y()))
+                     .toUtf8().constData());
         if (positionTrayIcon.x() || positionTrayIcon.y())
         {
             if ((positionTrayIcon.x() + dialog->width() / 2) > screenGeometry.right())
@@ -2594,6 +2620,14 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
                         }
                         break;
                 }
+
+
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. pabd.uEdge = %1, pabd.rc = %2")
+                             .arg(pabd.uEdge)
+                             .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(pabd.rc.left).arg(pabd.rc.top).arg(pabd.rc.right).arg(pabd.rc.bottom))
+                             .arg(screenIndex)
+                             .toUtf8().constData());
+
             }
         #endif
 
@@ -2615,6 +2649,14 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             *posy = screenGeometry.top() + 2;
         }
     #endif
+
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. Final: valid = %1, geom = %2, dialog rect = %3, posx = %4, posy = %5")
+                     .arg(screenGeometry.isValid())
+                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(screenGeometry.x()).arg(screenGeometry.y()).arg(screenGeometry.width()).arg(screenGeometry.height()))
+                     .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(dialog->rect().x()).arg(dialog->rect().y()).arg(dialog->rect().width()).arg(dialog->rect().height()))
+                     .arg(*posx)
+                     .arg(*posy)
+                     .toUtf8().constData());
 
 }
 
@@ -4034,11 +4076,23 @@ void MegaApplication::showTrayMenu(QPoint *point)
             }
 
             menuWidthInitialPopup = infoDialogMenu->sizeHint().width();
+
+            auto cursorPos = QCursor::pos();
+
             QPoint p = point ? (*point) - QPoint(infoDialogMenu->sizeHint().width(), 0)
-                                     : QCursor::pos();
+                                     : cursorPos;
             infoDialogMenu->update();
             infoDialogMenu->popup(p);
             displayedMenu = infoDialogMenu.get();
+
+
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Poping up Info Dialog menu: p = %1, cursor = %2, dialog size hint = %3, displayedMenu = %4, menuWidthInitialPopup = %5")
+                         .arg(QString::fromUtf8("[%1,%2]").arg(p.x()).arg(p.y()))
+                         .arg(QString::fromUtf8("[%1,%2]").arg(cursorPos.x()).arg(cursorPos.y()))
+                         .arg(QString::fromUtf8("[%1,%2]").arg(infoDialogMenu->sizeHint().width()).arg(infoDialogMenu->sizeHint().height()))
+                         .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(displayedMenu->rect().x()).arg(displayedMenu->rect().y()).arg(displayedMenu->rect().width()).arg(displayedMenu->rect().height()))
+                         .arg(menuWidthInitialPopup)
+                         .toUtf8().constData());
         }
     }
 
@@ -4054,6 +4108,15 @@ void MegaApplication::showTrayMenu(QPoint *point)
                 QPoint p = pointValue  - QPoint(displayedMenu->sizeHint().width(), 0);
                 displayedMenu->update();
                 displayedMenu->popup(p);
+
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Poping up Info Dialog workaround: p = %1, pointValue = %2, displayedMenu size hint = %3, displayedMenu = %4, menuWidthInitialPopup = %5")
+                             .arg(QString::fromUtf8("[%1,%2]").arg(p.x()).arg(p.y()))
+                             .arg(QString::fromUtf8("[%1,%2]").arg(pointValue.x()).arg(pointValue.y()))
+                             .arg(QString::fromUtf8("[%1,%2]").arg(displayedMenu->sizeHint().width()).arg(displayedMenu->sizeHint().height()))
+                             .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(displayedMenu->rect().x()).arg(displayedMenu->rect().y()).arg(displayedMenu->rect().width()).arg(displayedMenu->rect().height()))
+                             .arg(menuWidthInitialPopup)
+                             .toUtf8().constData());
+
             }
         });
     }
