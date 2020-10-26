@@ -2,6 +2,12 @@
 #include "ui_AlertItem.h"
 #include <QDateTime>
 #include "MegaApplication.h"
+#include <QFutureWatcher>
+#include <QFuture>
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
 
 using namespace mega;
 
@@ -14,6 +20,20 @@ AlertItem::AlertItem(QWidget *parent) :
 
     ui->sIconWidget->hide();
     ui->wNotificationIcon->hide();
+    ui->lNew->hide();
+
+    connect(&getAlertNodeWatcher, &QFutureWatcher<void>::finished, this, [=](){
+
+        alertNode.reset(static_cast<MegaNode*>(getAlertNodeWatcher.result()));
+
+        setAlertType(alertUser->getType());
+        setAlertHeading(alertUser.get());
+        setAlertContent(alertUser.get());
+        setAlertTimeStamp(alertUser->getTimestamp(0));
+        alertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+
+        emit refreshAlertItem(alertUser->getId());
+        });
 }
 
 AlertItem::~AlertItem()
@@ -23,11 +43,12 @@ AlertItem::~AlertItem()
 
 void AlertItem::setAlertData(MegaUserAlert *alert)
 {
-    setAlertType(alert->getType());
-    setAlertHeading(alert);
-    setAlertContent(alert);
-    setAlertTimeStamp(alert->getTimestamp(0));
-    alert->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+    alertUser.reset(alert->copy());
+    MegaHandle handle = alertUser->getNodeHandle();
+    getAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
+    {
+        return megaApi->getNodeByHandle(handle);
+    }));
 }
 
 void AlertItem::setAlertType(int type)
@@ -187,17 +208,11 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
         {
             ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
             ui->sIconWidget->show();
-            MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
-            notificationHeading = QString::fromUtf8(node ? node->getName() : alert->getName());
+            notificationHeading = QString::fromUtf8(alertNode ? alertNode->getName() : alert->getName());
 
             if (notificationHeading.isEmpty())
             {
                 notificationHeading = tr("Shared Folder Activity");
-            }
-
-            if (node)
-            {
-                delete node;
             }
             break;
         }
@@ -367,25 +382,22 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             // Takedown notifications
             case MegaUserAlert::TYPE_TAKEDOWN:
             {
-                MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
-                if (node)
+                if (alertNode)
                 {
-                    if (node->getType() == MegaNode::TYPE_FILE)
+                    if (alertNode->getType() == MegaNode::TYPE_FILE)
                     {
                         notificationContent = tr("Your publicly shared file ([A]) has been taken down")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alertNode->getName())));
                     }
-                    else if (node->getType() == MegaNode::TYPE_FOLDER)
+                    else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                     {
                         notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alertNode->getName())));
                     }
                     else
                     {
                         notificationContent = tr("Your publicly shared has been taken down");
                     }
-
-                    delete node;
                 }
                 else
                 {
@@ -395,25 +407,22 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
             }
             case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
             {
-                MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
-                if (node)
+                if (alertNode)
                 {
-                    if (node->getType() == MegaNode::TYPE_FILE)
+                    if (alertNode->getType() == MegaNode::TYPE_FILE)
                     {
                         notificationContent = tr("Your publicly shared file ([A]) has been reinstated")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alertNode->getName())));
                     }
-                    else if (node->getType() == MegaNode::TYPE_FOLDER)
+                    else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                     {
                         notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(node->getName())));
+                                .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alertNode->getName())));
                     }
                     else
                     {
                         notificationContent = tr("Your taken down has been reinstated");
                     }
-
-                    delete node;
                 }
                 else
                 {
@@ -434,9 +443,9 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
     if (ts != -1)
     {
         QString dateTimeFormat;
-        const auto dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
-        const auto sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
-        const auto sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
+        const QDateTime dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
+        const bool sameYear(dateTime.date().year() == QDateTime::currentDateTime().date().year());
+        const bool sameWeek{QDateTime::currentDateTime().date().weekNumber() == dateTime.date().weekNumber()};
 
         if(sameWeek && sameYear)
         {
@@ -449,9 +458,9 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
             dateTimeFormat.append(QStringLiteral("yyyy "));
         }
 
-        const auto language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
+        const QString language{static_cast<MegaApplication*>(qApp)->getCurrentLanguageCode()};
         dateTimeFormat.append(QLocale(language).timeFormat(QLocale::ShortFormat));
-        const auto dateTimeTranslated{QLocale(language).toString(dateTime, dateTimeFormat)};
+        const QString dateTimeTranslated{QLocale(language).toString(dateTime, dateTimeFormat)};
         ui->lTimeStamp->setText(dateTimeTranslated);
     }
     else

@@ -9,9 +9,11 @@
 
 #include <QDir>
 #include <QIcon>
+#include <functional>
 #include <QLabel>
 #include <QEasingCurve>
 #include "megaapi.h"
+#include "ThreadPool.h"
 
 #include <functional>
 
@@ -20,7 +22,6 @@
 #ifdef __APPLE__
 #define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
-                             chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
 
@@ -167,6 +168,23 @@ private:
     std::vector<IAccountObserver*> accountObservers;
 };
 
+class ThreadPoolSingleton
+{
+    private:
+        static std::unique_ptr<ThreadPool> instance;
+        ThreadPoolSingleton() {}
+
+    public:
+        static ThreadPool* getInstance()
+        {
+            if (instance == nullptr)
+            {
+                instance.reset(new ThreadPool(1));
+            }
+
+            return instance.get();
+        }
+};
 
 
 /**
@@ -288,6 +306,9 @@ public:
     static QString getAvatarPath(QString email);
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
+
+    static void queueFunctionInAppThread(std::function<void()> fun);
+
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
 
@@ -297,6 +318,8 @@ public:
     static QString getExtensionPixmapName(QString fileName, QString prefix);
 
     static long long getSystemsAvailableMemory();
+
+    static void sleepMilliseconds(long long milliseconds);
 };
 
 #endif // UTILITIES_H

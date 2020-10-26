@@ -90,6 +90,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncDeleted(std::shared_ptr<SyncSetting>)));
 
+    mThreadPool = ThreadPoolSingleton::getInstance();
+
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
@@ -488,6 +490,7 @@ void SettingsDialog::syncStateChanged(int state)
         }
     }
 #endif
+
     syncsChanged = true;
     stateChanged();
 }
@@ -1131,16 +1134,26 @@ void SettingsDialog::loadSettings()
         }
 
         //Account
-        char *email = megaApi->getMyEmail();
-        if (email)
-        {
-            ui->lEmail->setText(QString::fromUtf8(email));
-            delete [] email;
-        }
-        else
-        {
-            ui->lEmail->setText(preferences->email());
-        }
+        ui->lEmail->setText(preferences->email());
+        mThreadPool->push([=]()
+        {//thread pool function
+
+            char *email = megaApi->getMyEmail();
+            if (email)
+            {
+                Utilities::queueFunctionInAppThread([=]()
+                {//queued function
+
+                    ui->lEmail->setText(QString::fromUtf8(email));
+                    delete [] email;
+
+                });//end of queued function
+            }
+
+        });// end of thread pool function
+
+
+
 
         // account type and details
         updateAccountElements();
@@ -1328,8 +1341,6 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
 
 int SettingsDialog::saveSettings()
 {
-    onSavingSettingsProgress(0);
-
     saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
@@ -1378,8 +1389,12 @@ int SettingsDialog::saveSettings()
             preferences->setLanguage(selectedLanguageCode);
             app->changeLanguage(selectedLanguageCode);
             QString currentLanguageCode = app->getCurrentLanguageCode();
-            megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
-            megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());
+            mThreadPool->push([=]()
+            {
+                megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
+                megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());
+            });
+
         }
 
         //Account
@@ -1408,6 +1423,8 @@ int SettingsDialog::saveSettings()
         //Syncs
         if (syncsChanged)
         {
+            onSavingSettingsProgress(0);
+
             // 1 - loop through the syncs in the model to remove or update
             for (int i = 0; i < model->getNumSyncedFolders(); i++)
             {
@@ -1999,9 +2016,10 @@ void SettingsDialog::on_bPermissions_clicked()
     }
 }
 #endif
-void SettingsDialog::on_bAdd_clicked()
+
+void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {
-    const auto dismissed{app->showSyncOverquotaDialog()};
+    const bool dismissed{app->showSyncOverquotaDialog()};
     if(!dismissed)
     {
         return;
@@ -2017,6 +2035,10 @@ void SettingsDialog::on_bAdd_clicked()
     }
 
     QPointer<BindFolderDialog> dialog = new BindFolderDialog(app, syncNames, currentLocalFolders, currentMegaFoldersPaths, this);
+    if(megaFolderHandle > 0)
+    {
+        dialog->setMegaFolder(megaFolderHandle);
+    }
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)
     {
@@ -2066,6 +2088,12 @@ void SettingsDialog::on_bAdd_clicked()
 
     syncsChanged = true;
     stateChanged();
+}
+
+void SettingsDialog::on_bAdd_clicked()
+{
+    const auto invalidMegaFolderHandle{0};
+    addSyncFolder(invalidMegaFolderHandle);
 }
 
 void SettingsDialog::on_bApply_clicked()

@@ -838,5 +838,11 @@
         <file>images/settings-syncs.png</file>
         <file>images/settings-syncs@2x.png</file>
         <file>images/settings-syncs@3x.png</file>
+        <file>images/new_contact@3x.png</file>
+        <file>images/Storage_Quota_full@3x.png</file>
+        <file>images/Storage_Quota_almost_full@3x.png</file>
+        <file>images/Folder@3x.png</file>
+        <file>images/File_download_succeed@3x.png</file>
+        <file>images/Failed_to_download@3x.png</file>
     </qresource>
 </RCC>

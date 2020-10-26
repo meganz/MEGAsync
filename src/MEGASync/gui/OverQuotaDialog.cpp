@@ -35,10 +35,10 @@ std::unique_ptr<OverQuotaDialog> OverQuotaDialog::createDialog(OverQuotaDialogTy
 
 void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
 {
-    const auto styleLabelAperture{QString::fromUtf8("<p style=\"line-height: 20px;\">")};
-    const auto styleLabelClosure{QString::fromUtf8("</p>")};
-    const auto storageFullTitle{tr("Storage full")};
-    const auto transferQuotaDepletedTitle{tr("Depleted transfer quota")};
+    const QString styleLabelAperture{QString::fromUtf8("<p style=\"line-height: 20px;\">")};
+    const QString styleLabelClosure{QString::fromUtf8("</p>")};
+    const QString storageFullTitle{tr("Storage full")};
+    const QString transferQuotaDepletedTitle{tr("Depleted transfer quota")};
 
     if(type == OverQuotaDialogType::STORAGE_SYNCS)
     {
@@ -110,7 +110,7 @@ void OverQuotaDialog::configureDialog(OverQuotaDialogType type)
 
 void OverQuotaDialog::onUpgradeClicked()
 {
-    auto url{QString::fromUtf8("mega://#pro")};
+    QString url{QString::fromUtf8("mega://#pro")};
     Utilities::getPROurlWithParameters(url);
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
     QDialog::accept();

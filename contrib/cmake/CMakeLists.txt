@@ -183,7 +183,10 @@ endif()
 
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
+    ${MEGAsyncDir}/DesktopNotifications.h
     ${MEGAsyncDir}/TransferQuota.h
+    ${MEGAsyncDir}/RemovedSharesNotificator.h
+    ${MEGAsyncDir}/UserAlertTimedClustering.h
     ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
@@ -197,6 +200,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/Preferences.h
     ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
+    ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/MegaController.h
     ${MEGAsyncDir}/model/SyncSettings.h
     ${MEGAsyncDir}/model/Model.h
@@ -327,7 +331,10 @@ endif()
 
 set (SRCS
     ${MEGAsyncDir}/MegaApplication.cpp
+    ${MEGAsyncDir}/DesktopNotifications.cpp
     ${MEGAsyncDir}/TransferQuota.cpp
+    ${MEGAsyncDir}/RemovedSharesNotificator.cpp
+    ${MEGAsyncDir}/UserAlertTimedClustering.cpp
     ${MEGAsyncDir}/ScaleFactorManager.cpp
 
     ${FORMS}
@@ -417,6 +424,7 @@ set (SRCS
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
     ${MEGAsyncDir}/control/UpdateTask.cpp
+    ${MEGAsyncDir}/control/ThreadPool.cpp
     ${MEGAsyncDir}/control/EncryptedSettings.cpp
     ${MEGAsyncDir}/control/CrashHandler.cpp
     ${MEGAsyncDir}/control/ExportProcessor.cpp

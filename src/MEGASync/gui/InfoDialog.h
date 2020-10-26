@@ -100,6 +100,7 @@ public:
     long long getUnseenNotifications() const;
     void closeSyncsMenu();
     int getLoggedInMode() const;
+    void showNotifications();
 
 private:
     InfoDialog() = default;

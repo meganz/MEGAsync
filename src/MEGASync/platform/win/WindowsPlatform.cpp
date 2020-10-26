@@ -1452,7 +1452,7 @@ ShellNotifier::~ShellNotifier()
 
     // signal the thread to stop
     {
-        unique_lock lock(mQueueAccessMutex);
+        std::unique_lock<std::mutex> lock(mQueueAccessMutex);
         mExit = true;
         mWaitCondition.notify_all();
     }
@@ -1468,7 +1468,7 @@ void ShellNotifier::enqueueItemChange(std::string&& localPath)
         mThread = std::thread([this]() { doInThread(); });
     }
 
-    unique_lock lock(mQueueAccessMutex);
+    std::unique_lock<std::mutex> lock(mQueueAccessMutex);
 
     mPendingNotifications.emplace(localPath);
     mWaitCondition.notify_one();
@@ -1481,7 +1481,7 @@ void ShellNotifier::doInThread()
         std::string path;
 
         { // lock scope
-            unique_lock lock(mQueueAccessMutex);
+            std::unique_lock<std::mutex> lock(mQueueAccessMutex);
 
             if (mPendingNotifications.empty())
             {

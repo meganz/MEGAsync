@@ -34,6 +34,7 @@
 #include "control/MegaDownloader.h"
 #include "control/UpdateTask.h"
 #include "control/MegaSyncLogger.h"
+#include "control/ThreadPool.h"
 #include "control/MegaController.h"
 #include "model/Model.h"
 #include "megaapi.h"
@@ -41,6 +42,7 @@
 #include "gui/QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
+#include "DesktopNotifications.h"
 #include "TransferQuota.h"
 
 #ifdef __APPLE__
@@ -189,7 +191,11 @@ public:
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
+    std::shared_ptr<mega::MegaNode> getInboxNode(bool forceReset = false);
+    std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
+
     MegaSyncLogger& getLogger() const;
+    void pushToThreadPool(std::function<void()> functor);
     SetupWizard *getSetupWizard() const;
 
     /**
@@ -238,6 +244,7 @@ public slots:
     void onMessageClicked();
     void start();
     void openSettings(int tab = -1);
+    void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
     void openInfoWizard();
     void importLinks();
     void officialWeb();
@@ -284,6 +291,7 @@ public slots:
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void showInfoDialog();
+    void showInfoDialogNotifications();
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);
@@ -316,15 +324,12 @@ public slots:
     void onHttpServerConnectionError();
     void onGlobalSyncStateChangedTimeout();
     void onCheckDeferredPreferencesSyncTimeout();
-    void redirectToUpgrade(int activationButton);
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
 private slots:
-    void showInFolder(int activationButton);
     void openFolderPath(QString path);
-    void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
@@ -356,8 +361,6 @@ protected:
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
-    void sendOverStorageNotification(int state);
-    void sendBusinessWarningNotification();
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
 
@@ -439,7 +442,10 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
+    ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
+    std::shared_ptr<mega::MegaNode> mInboxNode;
+    std::shared_ptr<mega::MegaNode> mRubbishNode;
     bool mFetchingNodes = false;
     bool mQueringWhyAmIBlocked = false;
     int numTransfers[2];
@@ -470,6 +476,8 @@ protected:
     QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
     QTimer *firstTransferTimer;
+    std::unique_ptr<std::thread> mMutexStealerThread;
+
     QTranslator translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
@@ -488,7 +496,6 @@ protected:
 
     QThread *updateThread;
     UpdateTask *updateTask;
-    Notificator *notificator;
     long long lastActiveTime;
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
@@ -533,6 +540,7 @@ protected:
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
+    std::shared_ptr<DesktopNotifications> mOsNotifications;
 
 private:
 #ifdef _WIN32

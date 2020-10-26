@@ -38,6 +38,7 @@ void MacNotificationHandler::showNotification(MegaNotification *notification)
     Notificator::notifications[currentNotificationId] = notification;
     currentNotificationId++;
 
+    //TODO: Migrate to UNUserNotificationCenter 10.14+
     NSUserNotificationCenter *notificationCenterInstance = [NSUserNotificationCenter defaultUserNotificationCenter];
     [notificationCenterInstance setDelegate:(NotificationDelegate *)notificationDelegate];
     [notificationCenterInstance deliverNotification:userNotification];

@@ -120,10 +120,10 @@ ChangePassword::~ChangePassword()
 
 void ChangePassword::on_bOk_clicked()
 {
-    const auto fieldIsEmpty{newPassword().isEmpty() || confirmNewPassword().isEmpty()};
-    const auto passwordsAreEqual{!newPassword().compare(confirmNewPassword())};
-    const auto newAndOldPasswordsAreTheSame{megaApi->checkPassword(newPassword().toUtf8())};
-    const auto passwordIsWeak{megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
+    const bool fieldIsEmpty{newPassword().isEmpty() || confirmNewPassword().isEmpty()};
+    const bool passwordsAreEqual{!newPassword().compare(confirmNewPassword())};
+    const bool newAndOldPasswordsAreTheSame{megaApi->checkPassword(newPassword().toUtf8())};
+    const bool passwordIsWeak{megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
     if (fieldIsEmpty)
     {

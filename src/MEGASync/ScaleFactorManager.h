@@ -32,6 +32,7 @@ public:
 
 private:
     OsType mOsType;
+    std::string mOsName;
     ScreensInfo mScreensInfo;
     mutable std::vector<std::string> mLogMessages;
     std::vector<double> mCalculatedScales;

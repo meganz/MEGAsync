@@ -125,11 +125,17 @@ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 }
 
 SOURCES += $$PWD/MegaApplication.cpp \
+    $$PWD/DesktopNotifications.cpp \
+    $$PWD/RemovedSharesNotificator.cpp \
     $$PWD/TransferQuota.cpp \
+    $$PWD/UserAlertTimedClustering.cpp \
     $$PWD/ScaleFactorManager.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
+    $$PWD/DesktopNotifications.h \
+    $$PWD/RemovedSharesNotificator.h \
     $$PWD/TransferQuota.h \
+    $$PWD/UserAlertTimedClustering.h \
     $$PWD/ScaleFactorManager.h
 
 TRANSLATIONS = \

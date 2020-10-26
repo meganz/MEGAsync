@@ -799,7 +799,7 @@ void InfoDialog::updateState()
 
 void InfoDialog::addSync()
 {
-    const auto upgradingDissmised{app->showSyncOverquotaDialog()};
+    const bool upgradingDissmised{app->showSyncOverquotaDialog()};
     if(upgradingDissmised)
     {
         addSync(INVALID_HANDLE);
@@ -844,7 +844,7 @@ void InfoDialog::onAllTransfersFinished()
 void InfoDialog::updateDialogState()
 {
     updateState();
-    const auto transferOverQuotaEnabled{transferOverquotaState == QuotaState::FULL &&
+    const bool transferOverQuotaEnabled{transferOverquotaState == QuotaState::FULL &&
                 transferOverquotaAlertEnabled};
 
     if (storageState == Preferences::STATE_PAYWALL)
@@ -852,7 +852,7 @@ void InfoDialog::updateDialogState()
         MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
         const char *email = megaApi->getMyEmail();
 
-        auto numFiles{preferences->cloudDriveFiles() + preferences->inboxFiles() + preferences->rubbishFiles()};
+        long long numFiles{preferences->cloudDriveFiles() + preferences->inboxFiles() + preferences->rubbishFiles()};
         QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + ui->lOverDiskQuotaLabel->text()
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
@@ -898,8 +898,8 @@ void InfoDialog::updateDialogState()
     }
     else if(storageState == Preferences::STATE_OVER_STORAGE)
     {
-        const auto transferIsOverQuota{transferOverquotaState == QuotaState::FULL};
-        const auto userIsFree{preferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
+        const bool transferIsOverQuota{transferOverquotaState == QuotaState::FULL};
+        const bool userIsFree{preferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
         if(transferIsOverQuota && userIsFree)
         {
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_transfer_full_FREE.png")));
@@ -2028,6 +2028,11 @@ void InfoDialog::on_bOpenSyncSettings_clicked()
 int InfoDialog::getLoggedInMode() const
 {
     return loggedInMode;
+}
+
+void InfoDialog::showNotifications()
+{
+    on_tNotifications_clicked();
 }
 
 void InfoDialog::setBlockedStateLabel(QString state)

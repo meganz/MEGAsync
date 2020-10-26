@@ -59,6 +59,7 @@ public:
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
     void storageChanged();
+    void addSyncFolder(mega::MegaHandle megaFolderHandle);
 
 public slots:
     void stateChanged();
@@ -196,6 +197,7 @@ private:
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
     bool reloadUIpage;
+    ThreadPool* mThreadPool;
 
 
 #ifndef WIN32
