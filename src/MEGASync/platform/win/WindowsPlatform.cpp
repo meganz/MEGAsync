@@ -891,6 +891,8 @@ QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
 
     if (!CryptProtectData(&dataIn, L"", &entropy, NULL, NULL, 0, &dataOut))
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error encrypting data: %1. data.size = %2, key.size = %3")
+                     .arg(GetLastError()).arg(data.size()).arg(key.size()).toUtf8().constData());
         return data;
     }
 
@@ -911,7 +913,11 @@ QByteArray WindowsPlatform::decrypt(QByteArray data, QByteArray key)
     entropy.cbData = key.size();
 
     if (!CryptUnprotectData(&dataIn, NULL, &entropy, NULL, NULL, 0, &dataOut))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error encrypting data: %1. data.size = %2, key.size = %3")
+                     .arg(GetLastError()).arg(data.size()).arg(key.size()).toUtf8().constData());
         return data;
+    }
 
     QByteArray result((const char *)dataOut.pbData, dataOut.cbData);
     LocalFree(dataOut.pbData);
@@ -923,27 +929,45 @@ QByteArray WindowsPlatform::getLocalStorageKey()
     HANDLE hToken = NULL;
     if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error getting Local Storage key. At OpenProcessToken: %1")
+                     .arg(GetLastError()).toUtf8().constData());
         return QByteArray();
     }
 
     DWORD dwBufferSize = 0;
-    GetTokenInformation(hToken, TokenUser, NULL, 0, &dwBufferSize);
-    if (!dwBufferSize)
+    auto r = GetTokenInformation(hToken, TokenUser, NULL, 0, &dwBufferSize); //Note: return value can be ERROR_INSUFFICIENT_BUFFER in an otherwise succesful call (just getting size)
+    if ((!r && GetLastError() != ERROR_INSUFFICIENT_BUFFER) || !dwBufferSize)
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error getting Local Storage key. At GetTokenInformation size retrieval: %1")
+                     .arg(GetLastError()).toUtf8().constData());
         CloseHandle(hToken);
         return QByteArray();
     }
 
     PTOKEN_USER userToken = (PTOKEN_USER)new char[dwBufferSize];
-    if (!GetTokenInformation(hToken, TokenUser, userToken, dwBufferSize, &dwBufferSize) ||
-            !IsValidSid(userToken->User.Sid))
+    if (!GetTokenInformation(hToken, TokenUser, userToken, dwBufferSize, &dwBufferSize))
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error getting Local Storage key. At GetTokenInformation: %1")
+                     .arg(GetLastError()).toUtf8().constData());
         CloseHandle(hToken);
         delete userToken;
         return QByteArray();
     }
 
-    DWORD dwLength =  GetLengthSid(userToken->User.Sid);
+    if (!IsValidSid(userToken->User.Sid))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error getting Local Storage key. At IsValidSid: %1")
+                     .arg(GetLastError()).toUtf8().constData());
+        CloseHandle(hToken);
+        delete userToken;
+        return QByteArray();
+    }
+
+    DWORD dwLength = GetLengthSid(userToken->User.Sid);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Getting Local Storage key. Sid length: %1")
+                 .arg(dwLength).toUtf8().constData());
+
     QByteArray result((char *)userToken->User.Sid, dwLength);
     CloseHandle(hToken);
     delete userToken;

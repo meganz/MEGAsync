@@ -1214,6 +1214,7 @@ void MegaApplication::initialize()
     preferences->initialize(dataPath);
     if (preferences->error())
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Encountered corrupt prefrences.").toUtf8().constData());
         QMegaMessageBox::critical(nullptr, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"));
     }
 
