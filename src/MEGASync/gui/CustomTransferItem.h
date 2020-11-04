@@ -7,6 +7,7 @@
 #include <QMenu>
 #include "TransferItem.h"
 #include "megaapi.h"
+#include "TransferRemainingTime.h"
 
 namespace Ui {
 class CustomTransferItem;
@@ -52,6 +53,8 @@ private:
     void setActionTransferIcon(const QString &name);
     void setShowInFolderIcon(const QString &name);
     void updateFinishedIco(int transferType, bool transferErrors);
+
+    TransferRemainingTime mTransferRemainingTime;
 
 protected:
     bool actionButtonsEnabled;

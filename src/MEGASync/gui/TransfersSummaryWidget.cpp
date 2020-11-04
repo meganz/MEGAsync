@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QPainterPath>
 #include <QTimer>
+#include "Utilities.h"
 
 TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     QWidget(parent),
@@ -449,12 +450,10 @@ void TransfersSummaryWidget::adjustFontSizeToText(QFont *font, int maxWidth, QSt
 int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minWidth, int margins, long long partial, long long total, int &posDotsPartial, int &posDotsTotal, QString &text, int fontsize)
 {
 
-    QString spartial = QString::fromUtf8("%1").arg(partial);
-    QString stotal = QString::fromUtf8("%1").arg(total);
+    QString spartial = Utilities::getQuantityString(partial);
+    QString stotal = Utilities::getQuantityString(total);
 
     text = QString::fromUtf8("%1/%2").arg(spartial).arg(stotal);
-
-    QString::fromUtf8("%1/%2").arg(spartial).arg(stotal);
 
     int measuredWidth;
     font->setPixelSize(fontsize);
@@ -465,8 +464,8 @@ int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minW
 
     if (maxWidth && measuredWidth > textMaxWidth)
     {
-        posDotsPartial = QString::fromUtf8("%1").arg(partial).size();
-        posDotsTotal = QString::fromUtf8("%1").arg(total).size();
+        posDotsPartial = spartial.size();
+        posDotsTotal = stotal.size();
     }
     else
     {
@@ -497,7 +496,7 @@ int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minW
 void TransfersSummaryWidget::updateUploadsText(bool force)
 {
     QString previousText = uploadsText;
-    uploadsText = QString::fromUtf8("%1/%2").arg(completedUploads).arg(totalUploads);
+    uploadsText = Utilities::getQuantityString(completedUploads) + QStringLiteral("/") + Utilities::getQuantityString(totalUploads);
     int prevUpEllipseWidth = upEllipseWidth;
 
     if (!completedUploads && !totalUploads)
@@ -526,8 +525,8 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
     }
     else if (uploadsText != previousText)
     {
-        QString spartial = QString::fromUtf8("%1").arg(completedUploads);
-        QString stotal = QString::fromUtf8("%1").arg(totalUploads);
+        QString spartial = Utilities::getQuantityString(completedUploads);
+        QString stotal = Utilities::getQuantityString(totalUploads);
         if (upPosDotsPartial && upPosDotsPartial < spartial.size())
         {
             spartial = spartial.mid(0, upPosDotsPartial) + QString::fromUtf8("...") + spartial.mid(spartial.size() - trailingChars);
@@ -543,7 +542,7 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
 void TransfersSummaryWidget::updateDownloadsText(bool force)
 {
     QString previousText = downloadsText;
-    downloadsText = QString::fromUtf8("%1/%2").arg(completedDownloads).arg(totalDownloads);
+    downloadsText = Utilities::getQuantityString(completedDownloads) + QStringLiteral("/") + Utilities::getQuantityString(totalDownloads);
     int prevDlEllipseWidth = dlEllipseWidth;
 
     if (!completedDownloads && !totalDownloads)
@@ -578,8 +577,8 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
     }
     else if (downloadsText != previousText)
     {
-        QString spartial = QString::fromUtf8("%1").arg(completedDownloads);
-        QString stotal = QString::fromUtf8("%1").arg(totalDownloads);
+        QString spartial = Utilities::getQuantityString(completedDownloads);
+        QString stotal = Utilities::getQuantityString(totalDownloads);
         if (dlPosDotsPartial && dlPosDotsPartial < spartial.size())
         {
             spartial = spartial.mid(0, dlPosDotsPartial) + QString::fromUtf8("...") + spartial.mid(spartial.size() - trailingChars);

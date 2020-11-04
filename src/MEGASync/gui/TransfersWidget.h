@@ -22,7 +22,7 @@ class TransfersWidget : public QWidget
 public:
     explicit TransfersWidget(QWidget *parent = 0);
     void setupFinishedTransfers(QList<mega::MegaTransfer* > transferData, int modelType = QTransfersModel::TYPE_FINISHED);
-    void setupTransfers(mega::MegaTransferData *transferData, int type);
+    void setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, int type);
     void refreshTransferItems();
     void clearTransfers();
     void pausedTransfers(bool paused);
