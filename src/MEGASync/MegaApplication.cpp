@@ -5794,9 +5794,10 @@ void MegaApplication::processDownloads()
 
     QString defaultPath = preferences->downloadFolder();
     if (preferences->hasDefaultDownloadFolder()
-            && QFile(defaultPath).exists())
+            && QDir(defaultPath).exists())
     {
-        QTemporaryFile *test = new QTemporaryFile(defaultPath + QDir::separator());
+        QString qFilePath = QDir::fromNativeSeparators(defaultPath); // QFile always wants `/` as separator
+        QTemporaryFile *test = new QTemporaryFile(qFilePath + QDir::separator());
         if (test->open())
         {
             delete test;
@@ -8523,6 +8524,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                     }
                 }
 
+                // update the path before showing the notification, in case the destination file was renamed
+                data->localPath = QString::fromUtf8(transfer->getPath());
+
+#ifdef WIN32 // this should really be done in a function, not all over the code...
+                if (data->localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                {
+                    data->localPath = data->localPath.mid(4);
+                }
+#endif
+
                 data->pendingTransfers--;
                 showNotificationFinishedTransfers(notificationId);
             }
@@ -9141,7 +9152,17 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
 
     DeferPreferencesSyncForScope deferrer(this);
 
+#ifdef _WIN32
+    if (!mShellNotifier)
+    {
+        mShellNotifier = make_shared<ShellNotifier>();
+    }
+
+    Platform::notifyItemChange(localPath, newState, mShellNotifier);
+
+#else
     Platform::notifyItemChange(localPath, newState);
+#endif
 }
 
 MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)

@@ -27,7 +27,7 @@ unix:!macx {
 macx {
     SUBDIRS += MEGAUpdater
     SUBDIRS += MEGALoader
-    SUBDIRS += MEGADeprecatedVersion
+    #SUBDIRS += MEGADeprecatedVersion
 }
 
 CONFIG(with_updater) {
