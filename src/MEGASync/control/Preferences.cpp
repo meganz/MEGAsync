@@ -455,6 +455,8 @@ void Preferences::initialize(QString dataPath)
         }
         else
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Settings does not contain current account group. Will try to use backup settings")
+                         .toUtf8().constData());
             errorFlag = true;
             retryFlag = true;
         }
@@ -487,6 +489,8 @@ void Preferences::initialize(QString dataPath)
                 }
                 else
                 {
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Settings does not contain current account group in backup setting either.")
+                                 .toUtf8().constData());
                     errorFlag = true;
                 }
             }
@@ -495,6 +499,7 @@ void Preferences::initialize(QString dataPath)
 
     if (errorFlag)
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Cleaning settings after error encountered.").toUtf8().constData());
         clearAll();
     }
 }
@@ -2709,6 +2714,8 @@ bool Preferences::hasEmail(QString email)
         value = !storedEmail.compare(email);
         if (!value)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Email key differs from requested email: %1. Removing the old entry: %2")
+                         .arg(email).arg(storedEmail).toUtf8().constData());
             settings->remove(QString::fromAscii(""));
         }
         settings->endGroup();
