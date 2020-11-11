@@ -484,7 +484,7 @@ background-color: rgba(0,0,0,0.1);
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
             </property>
             <property name="iconSize">
@@ -1647,14 +1647,14 @@ background-color: rgba(0,0,0,0.1);
                <attribute name="horizontalHeaderCascadingSectionResizes">
                 <bool>true</bool>
                </attribute>
+               <attribute name="horizontalHeaderMinimumSectionSize">
+                <number>201</number>
+               </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
                 <number>201</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>201</number>
                </attribute>
                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                 <bool>false</bool>
@@ -2012,7 +2012,7 @@ border: none;</string>
           <string notr="true"/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -2780,9 +2780,15 @@ border: none;</string>
       </layout>
      </widget>
      <widget class="QWidget" name="pSecurity">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_12">
        <property name="spacing">
-        <number>7</number>
+        <number>10</number>
        </property>
        <property name="leftMargin">
         <number>32</number>
@@ -2797,6 +2803,9 @@ border: none;</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="title">
           <string/>
@@ -2816,6 +2825,12 @@ border: none;</string>
           </property>
           <item>
            <widget class="QWidget" name="wLeftBackup" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>203</width>
@@ -2832,11 +2847,14 @@ border: none;</string>
              <enum>Qt::LeftToRight</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_22">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>5</number>
+              <number>0</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
@@ -2856,6 +2874,7 @@ border: none;</string>
                 <string notr="true"> color: rgba(0,0,0,0.85);
  font-family: &quot;SF Pro Text&quot;;
  font-size: 13px;
+
 </string>
                </property>
                <property name="text">
@@ -2872,12 +2891,12 @@ border: none;</string>
                 <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeType">
-                <enum>QSizePolicy::Minimum</enum>
+                <enum>QSizePolicy::Preferred</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
                  <width>20</width>
-                 <height>20</height>
+                 <height>40</height>
                 </size>
                </property>
               </spacer>
@@ -2887,9 +2906,15 @@ border: none;</string>
           </item>
           <item>
            <widget class="QWidget" name="wRightBackup" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_23">
              <property name="spacing">
-              <number>-1</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -2904,46 +2929,48 @@ border: none;</string>
               <number>0</number>
              </property>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_32">
-               <item>
-                <widget class="QPushButton" name="bExportMasterKey">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>Backup Recovery Key</string>
-                 </property>
-                 <property name="autoDefault">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_12">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
+              <widget class="QWidget" name="wExportMasterKey" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_32">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="bExportMasterKey">
+                  <property name="text">
+                   <string>Backup Recovery Key</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>202</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
              </item>
              <item>
               <widget class="QWidget" name="wBackupDesc" native="true">
@@ -3034,6 +3061,12 @@ border: none;</string>
        </item>
        <item>
         <widget class="QGroupBox" name="gChangePassword">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="title">
           <string/>
          </property>
@@ -3137,6 +3170,9 @@ border: none;</string>
              </property>
              <property name="horizontalSpacing">
               <number>10</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>18</number>
              </property>
              <item row="0" column="0">
               <widget class="QLabel" name="lNewPassword">
@@ -3251,6 +3287,9 @@ border: none;</string>
         <spacer name="verticalSpacer_7">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -3593,7 +3632,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3864,7 +3903,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -4131,7 +4170,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -4252,7 +4291,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -4865,8 +4904,7 @@ margin-right: 32px;</string>
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
  <slots>
