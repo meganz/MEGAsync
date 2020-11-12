@@ -12,14 +12,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.6.0";
-const int Preferences::VERSION_CODE = 4306;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.7.0";
+const int Preferences::VERSION_CODE = 4307;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.6");
-QString Preferences::SDK_ID = QString::fromAscii("a2ec5c1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.7");
+QString Preferences::SDK_ID = QString::fromAscii("ba4834c");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fixed crash on OSX 10.9 systems."));
+    "- Fixed issue verifying downloads integrity."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -455,6 +455,8 @@ void Preferences::initialize(QString dataPath)
         }
         else
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Settings does not contain current account group. Will try to use backup settings")
+                         .toUtf8().constData());
             errorFlag = true;
             retryFlag = true;
         }
@@ -487,6 +489,8 @@ void Preferences::initialize(QString dataPath)
                 }
                 else
                 {
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Settings does not contain current account group in backup setting either.")
+                                 .toUtf8().constData());
                     errorFlag = true;
                 }
             }
@@ -495,6 +499,7 @@ void Preferences::initialize(QString dataPath)
 
     if (errorFlag)
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Cleaning settings after error encountered.").toUtf8().constData());
         clearAll();
     }
 }
@@ -2709,6 +2714,8 @@ bool Preferences::hasEmail(QString email)
         value = !storedEmail.compare(email);
         if (!value)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Email key differs from requested email: %1. Removing the old entry: %2")
+                         .arg(email).arg(storedEmail).toUtf8().constData());
             settings->remove(QString::fromAscii(""));
         }
         settings->endGroup();
