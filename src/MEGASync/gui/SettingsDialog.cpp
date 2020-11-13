@@ -295,6 +295,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ((MegaApplication*)qApp)->attachBandwidthObserver(*this);
     ((MegaApplication*)qApp)->attachAccountObserver(*this);
 
+    connect(app, &MegaApplication::avatarReady, this, &SettingsDialog::setAvatar);
+    setAvatar();
     connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
     storageStateChanged(app->getAppliedStorageState());
 
@@ -424,10 +426,12 @@ void SettingsDialog::stateChanged()
         return;
     }
 
+    //TODO: CHECK APPLY WORKFLOW USED BY SETTINGS
 #ifndef __APPLE__
     ui->bApply->setEnabled(true);
 #else
-    this->on_bApply_clicked();
+    //TODO: SAVE SETTINGS APPLY BUTTON -> LOGOUT
+    saveSettings();
 #endif
 }
 
@@ -675,7 +679,10 @@ void SettingsDialog::on_bAccount_clicked()
 #ifdef __APPLE__
     checkNSToolBarItem(toolBar.get(), bAccount.get());
 
-    ui->bApply->hide();
+    ui->bApply->setText(tr("Logout"));
+    ui->bApply->setEnabled(true);
+    ui->bApply->show();
+
     ui->pAccount->hide();
 
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
@@ -890,6 +897,7 @@ void SettingsDialog::on_bProxies_clicked()
 #ifdef __APPLE__
     checkNSToolBarItem(toolBar.get(), bProxies.get());
 
+    ui->bApply->setText(tr("Apply"));
     ui->bApply->show();
     ui->pProxies->hide();
     animateSettingPage(SETTING_ANIMATION_PROXY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
@@ -1135,25 +1143,8 @@ void SettingsDialog::loadSettings()
 
         //Account
         ui->lEmail->setText(preferences->email());
-        mThreadPool->push([=]()
-        {//thread pool function
-
-            char *email = megaApi->getMyEmail();
-            if (email)
-            {
-                Utilities::queueFunctionInAppThread([=]()
-                {//queued function
-
-                    ui->lEmail->setText(QString::fromUtf8(email));
-                    delete [] email;
-
-                });//end of queued function
-            }
-
-        });// end of thread pool function
-
-
-
+        auto fullName {(preferences->firstName() + QStringLiteral(" ")+ preferences->lastName()).trimmed()};
+        ui->lName->setText(fullName);
 
         // account type and details
         updateAccountElements();
@@ -2098,7 +2089,15 @@ void SettingsDialog::on_bAdd_clicked()
 
 void SettingsDialog::on_bApply_clicked()
 {
-    saveSettings();
+    // If we are at account tab, button performs logout, other pages performs saveSettings()
+    if (ui->wStack->currentWidget() == ui->pAccount)
+    {
+        on_bUnlink_clicked();
+    }
+    else
+    {
+        saveSettings();
+    }
 }
 
 void SettingsDialog::on_bUnlink_clicked()
@@ -2680,7 +2679,7 @@ void SettingsDialog::updateAccountElements()
     }
 
     ui->lAccountImage->setIcon(icon);
-    ui->lAccountImage->setIconSize(QSize(32, 32));
+    ui->lAccountImage->setIconSize(QSize(11, 11));
 }
 
 void SettingsDialog::onProxyTestError()
@@ -2792,6 +2791,16 @@ void SettingsDialog::onAnimationFinished()
     else if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
         ui->pAdvanced->show();
+    }
+}
+
+void SettingsDialog::setAvatar()
+{
+    const char *email = megaApi->getMyEmail();
+    if (email)
+    {
+        ui->wAvatar->drawAvatarFromEmail(QString::fromUtf8(email));
+        delete [] email;
     }
 }
 

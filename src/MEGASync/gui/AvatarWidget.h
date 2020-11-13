@@ -12,6 +12,7 @@ public:
 
     void setAvatarLetter(QChar letter, QString color);
     void setAvatarImage(QString pathToFile);
+    void drawAvatarFromEmail(QString email);
     void clearData();
 
     QSize minimumSizeHint() const;

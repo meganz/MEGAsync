@@ -99,6 +99,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->bTransferManager, SIGNAL(dlAreaHovered(QMouseEvent *)), this, SLOT(dlAreaHovered(QMouseEvent *)));
 
     connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(on_bActualFilter_clicked()));
+    connect(app, &MegaApplication::avatarReady, this, &InfoDialog::setAvatar);
 
 
     //Set window properties
@@ -1669,47 +1670,7 @@ void InfoDialog::regenerateLayout(int blockState, InfoDialog* olddialog)
 
 void InfoDialog::drawAvatar(QString email)
 {
-    QString avatarsPath = Utilities::getAvatarPath(email);
-    QFileInfo avatar(avatarsPath);
-    if (avatar.exists())
-    {
-        ui->bAvatar->setAvatarImage(Utilities::getAvatarPath(email));
-    }
-    else
-    {
-        QString color;
-        const char* userHandle = megaApi->getMyUserHandle();
-        const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
-        if (avatarColor)
-        {
-            color = QString::fromUtf8(avatarColor);
-            delete [] avatarColor;
-        }
-
-        Preferences *preferences = Preferences::instance();
-        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
-        if (fullname.isEmpty())
-        {
-            char *email = megaApi->getMyEmail();
-            if (email)
-            {
-                fullname = QString::fromUtf8(email);
-                delete [] email;
-            }
-            else
-            {
-                fullname = preferences->email();
-            }
-
-            if (fullname.isEmpty())
-            {
-                fullname = QString::fromUtf8(" ");
-            }
-        }
-
-        ui->bAvatar->setAvatarLetter(fullname.at(0).toUpper(), color);
-        delete [] userHandle;
-    }
+    ui->bAvatar->drawAvatarFromEmail(email);
 }
 
 void InfoDialog::animateStates(bool opt)

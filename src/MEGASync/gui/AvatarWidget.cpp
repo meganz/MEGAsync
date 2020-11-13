@@ -26,6 +26,57 @@ void AvatarWidget::setAvatarImage(QString pathToFile)
     update();
 }
 
+void AvatarWidget::drawAvatarFromEmail(QString email)
+{
+    mega::MegaApi *megaApi = ((MegaApplication *)qApp)->getMegaApi();
+    if (!megaApi)
+    {
+        return;
+    }
+
+    QString avatarsPath = Utilities::getAvatarPath(email);
+    QFileInfo avatar(avatarsPath);
+    if (avatar.exists())
+    {
+        setAvatarImage(Utilities::getAvatarPath(email));
+    }
+    else
+    {
+        QString color;
+        const char* userHandle = megaApi->getMyUserHandle();
+        const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
+        if (avatarColor)
+        {
+            color = QString::fromUtf8(avatarColor);
+            delete [] avatarColor;
+        }
+
+        Preferences *preferences = Preferences::instance();
+        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
+        if (fullname.isEmpty())
+        {
+            char *email = megaApi->getMyEmail();
+            if (email)
+            {
+                fullname = QString::fromUtf8(email);
+                delete [] email;
+            }
+            else
+            {
+                fullname = preferences->email();
+            }
+
+            if (fullname.isEmpty())
+            {
+                fullname = QString::fromUtf8(" ");
+            }
+        }
+
+        setAvatarLetter(fullname.at(0).toUpper(), color);
+        delete [] userHandle;
+    }
+}
+
 void AvatarWidget::clearData()
 {
     letter = QChar();
@@ -58,35 +109,16 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
                            | QPainter::HighQualityAntialiasing);
 
     qreal factor = width() / 36.0;
-    int backgroundUnscaledWidth = qFloor(36.0 * factor/2) * 2;
-    int backgroundUnscaledHeight = qFloor(36.0 * factor/2) * 2;
-
-    if (!lastloadedwidth || lastloadedwidth != width())
-    {
-        if (!lastloadedwidth)
-        {
-            backgroundPixmapOriginal = QIcon(QString::fromUtf8(":/images/avatar_frame.png")).pixmap(36.0, 36.0);
-        }
-
-    #if QT_VERSION >= 0x050000
-        if (width() != 36.0 )
-        {
-            backgroundPixmap = backgroundPixmapOriginal.scaled(backgroundUnscaledWidth*qApp->devicePixelRatio(), backgroundUnscaledHeight*qApp->devicePixelRatio());
-            backgroundPixmap.setDevicePixelRatio(QCoreApplication::testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0);
-        }
-        else
-    #endif
-        {
-            backgroundPixmap = backgroundPixmapOriginal;
-        }
-
-        lastloadedwidth = width();
-    }
-
     int innercirclediam = qFloor(24.0 * factor / 2) * 2;
-
     painter.translate(width() / 2, height() / 2);
-    painter.drawPixmap(- qRound(backgroundUnscaledWidth / 2.0 ), - qRound(backgroundUnscaledHeight / 2.0), backgroundPixmap);
+
+    //Paint grey border of avatar with 4px pen width
+    painter.setPen(QPen(QColor(172, 172, 172), 4.0));
+    painter.drawEllipse(QRect(-innercirclediam  / 2, -innercirclediam / 2 , innercirclediam, innercirclediam));
+
+    //Paint white border of avatar with 3.5px pen width
+    painter.setPen(QPen(QColor(Qt::white),3.5));
+    painter.drawEllipse(QRect(-innercirclediam  / 2, -innercirclediam / 2 , innercirclediam, innercirclediam));
 
     if (QFileInfo(pathToFile).exists())
     {

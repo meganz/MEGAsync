@@ -6710,10 +6710,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
             }
 
-            if (infoDialog)
-            {
-                infoDialog->setAvatar();
-            }
+            emit avatarReady();
         }
         else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
         {

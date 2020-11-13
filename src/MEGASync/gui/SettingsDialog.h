@@ -149,6 +149,7 @@ private slots:
     void on_bSendBug_clicked();
 
     void onAnimationFinished();
+    void setAvatar();
 
 signals:
     void userActivity();
