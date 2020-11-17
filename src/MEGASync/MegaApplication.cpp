@@ -8289,7 +8289,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, tr("Your sync \"%1\" has been re-enabled. State = %2. Errror = %3")
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, tr("Your sync \"%1\" has been re-enabled. State = %2. Error = %3")
                  .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
 
 
