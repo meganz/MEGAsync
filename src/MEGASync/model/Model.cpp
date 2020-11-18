@@ -108,6 +108,7 @@ void Model::removeAllFolders()
     }
     configuredSyncs.clear();
     configuredSyncsMap.clear();
+    syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
 }
 
@@ -178,10 +179,26 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     bool wasActive = false;
     bool wasInactive = false;
 
-    if (configuredSyncsMap.contains(sync->getTag())) //existing configuration (an update or a resume after picked from old sync config)
+    auto oldcsitr = syncsSettingPickedFromOldConfig.find(sync->getTag());
+
+    if (oldcsitr != syncsSettingPickedFromOldConfig.end()) // resumed after picked from old sync config)
+    {
+        cs = oldcsitr.value();
+
+        //move into the configuredSyncsMap
+        configuredSyncsMap.insert(sync->getTag(), cs);
+        configuredSyncs.append(sync->getTag());
+
+        // remove from picked
+        syncsSettingPickedFromOldConfig.erase(oldcsitr);
+    }
+    else if (configuredSyncsMap.contains(sync->getTag())) //existing configuration (an update)
     {
         cs = configuredSyncsMap[sync->getTag()];
+    }
 
+    if (cs)
+    {
         wasEnabled = cs->isEnabled();
         wasActive = cs->isActive();
         wasInactive = !cs->isActive();
@@ -262,12 +279,9 @@ void Model::pickInfoFromOldSync(const SyncData &osd, int tag, bool loadedFromPre
 
     assert (!configuredSyncsMap.contains(tag) && "picking already configured sync!"); //this should always be the case
 
-    cs = configuredSyncsMap[tag] = std::make_shared<SyncSetting>(osd, loadedFromPreviousSessions);
+    cs = syncsSettingPickedFromOldConfig[tag] = std::make_shared<SyncSetting>(osd, loadedFromPreviousSessions);
 
     cs->setTag(tag); //assign the new tag given by the sdk
-
-    assert(!configuredSyncs.contains(tag));
-    configuredSyncs.append(tag);
 
     preferences->writeSyncSetting(cs);
 }
@@ -277,6 +291,7 @@ void Model::reset()
     QMutexLocker qm(&syncMutex);
     configuredSyncs.clear();
     configuredSyncsMap.clear();
+    syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
     isFirstSyncDone = false;
 }
