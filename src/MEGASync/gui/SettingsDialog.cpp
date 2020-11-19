@@ -349,6 +349,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     // Attach to the window
     this->window()->winId(); // create window->windowhandle()
     toolBar->attachToWindow(this->window()->windowHandle());
+
+
+    //Configure segmented control for +/- syncs
+    ui->wSegmentedControl->configureTableSegment();
 #endif
 }
 

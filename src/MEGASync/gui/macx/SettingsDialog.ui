@@ -430,7 +430,7 @@ margin-right: 32px;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -1945,8 +1945,11 @@ margin-right: 32px;</string>
            <number>10</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget_9" native="true">
+           <widget class="QWidget" name="wSyncsTable" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_16">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <property name="leftMargin">
               <number>6</number>
              </property>
@@ -2010,10 +2013,10 @@ margin-right: 32px;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>201</number>
+                <number>264</number>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>201</number>
+                <number>264</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
@@ -2062,6 +2065,28 @@ margin-right: 32px;</string>
                  <string/>
                 </property>
                </column>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSegmentedControl" name="wSegmentedControl" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>19</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>19</height>
+                </size>
+               </property>
               </widget>
              </item>
             </layout>
@@ -5289,6 +5314,12 @@ background:transparent;</string>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSegmentedControl</class>
+   <extends>QWidget</extends>
+   <header location="global">QSegmentedControl.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
