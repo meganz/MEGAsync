@@ -128,7 +128,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->eMaxDownloadConnections->setRange(1, 6);
     ui->eMaxUploadConnections->setRange(1, 6);
 
-    ui->tNoHttp->viewport()->setCursor(Qt::ArrowCursor);
     downloadButtonGroup.addButton(ui->rDownloadLimit);
     downloadButtonGroup.addButton(ui->rDownloadNoLimit);
     uploadButtonGroup.addButton(ui->rUploadLimit);
@@ -277,7 +276,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         {
             setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
             setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
-            ui->gStorageSpace->setMinimumHeight(103);
+            ui->gStorageSpace->setMinimumHeight(103);//TODO: check and adjust size for animations
         }
 
         ui->pProxies->hide();
@@ -770,7 +769,7 @@ void SettingsDialog::on_bBandwidth_clicked()
 
     int bwHeight;
     ui->gBandwidthQuota->show();
-    ui->bSeparatorBandwidth->show();
+//    ui->bSeparatorBandwidth->show();
 
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -1289,7 +1288,7 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
     if (accType == Preferences::ACCOUNT_TYPE_FREE) //Free user
     {
         ui->gBandwidthQuota->show();
-        ui->bSeparatorBandwidth->show();
+//        ui->bSeparatorBandwidth->show();
         ui->pUsedBandwidth->show();
         ui->pUsedBandwidth->setValue(0);
         ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
@@ -1299,7 +1298,7 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
     else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->gBandwidthQuota->show();
-        ui->bSeparatorBandwidth->show();
+//        ui->bSeparatorBandwidth->show();
         ui->pUsedBandwidth->hide();
         ui->lBandwidth->setText(tr("%1 used")
               .arg(Utilities::getSizeString(preferences->usedBandwidth())));
@@ -1310,7 +1309,7 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
         if (totalBandwidth == 0)
         {
             ui->gBandwidthQuota->hide();
-            ui->bSeparatorBandwidth->hide();
+//            ui->bSeparatorBandwidth->hide();
             ui->pUsedBandwidth->show();
             ui->pUsedBandwidth->setValue(0);
             ui->lBandwidth->setText(tr("Data temporarily unavailable"));
@@ -1318,7 +1317,7 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
         else
         {
             ui->gBandwidthQuota->show();
-            ui->bSeparatorBandwidth->show();
+//            ui->bSeparatorBandwidth->show();
             int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
             ui->pUsedBandwidth->show();
             ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
@@ -2387,7 +2386,9 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
 
+        bAccount.get()->setText(tr("Account"));
 #ifdef __APPLE__
+        //review and check
         setWindowTitle(tr("Preferences - MEGAsync"));
         ui->cStartOnStartup->setText(tr("Open at login"));
 #endif
@@ -2636,12 +2637,10 @@ void SettingsDialog::updateAccountElements()
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->bUpgrade->hide();
-        ui->bUpgradeBandwidth->hide();
     }
     else
     {
         ui->bUpgrade->show();
-        ui->bUpgradeBandwidth->show();
     }
 
     QIcon icon;
