@@ -68,6 +68,11 @@ unix:!macx {
         desktop.commands = update-desktop-database &> /dev/null || true
         INSTALLS += desktop
 
+        # metainfo
+        metainfo.path = $$DESKTOP_DESTDIR/share/metainfo
+        metainfo.files = $$PWD/linux/data/nz.mega.MEGAsync.metainfo.xml
+        INSTALLS += metainfo
+
         HICOLOR = $$DESKTOP_DESTDIR/share/icons/hicolor
 
         # icons
