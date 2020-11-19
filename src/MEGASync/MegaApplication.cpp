@@ -7901,29 +7901,30 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         return;
     }
 
-    bool doSynchronously = list; // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
+    bool doSynchronously = (list != NULL); // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
                                  // since we are not copying the list, and we need to process it before it goes out of scope.
-    auto funcToThreadPool = [=, &list]()
+    auto funcToThreadPool = [this, list, doSynchronously]()
     {//thread pool function
         bool copyRequired = true;
 
-        if (!list)//User alerts already loaded: get the list from MegaApi::getUserAlerts
+
+        MegaUserAlertList *theList = list;
+        if (!theList)//User alerts already loaded: get the list from MegaApi::getUserAlerts
         {
-            list = megaApi->getUserAlerts();
+            theList = megaApi->getUserAlerts();
             copyRequired = false;
         }
 
-        auto callBackFunctionForQt = [=]()
+        auto callBackFunctionForQt = [this, theList, copyRequired]()
         {//queued function
 
-            //CHECK it triggers a lot
             assert((!copyRequired || notificationsModel) && "onUserAlertsUpdate with !alerts should have happened before!");
 
-            mOsNotifications->addUserAlertList(list);
+            mOsNotifications->addUserAlertList(theList);
 
             if (!notificationsModel)
             {
-                notificationsModel = new QAlertsModel(list, copyRequired);
+                notificationsModel = new QAlertsModel(theList, copyRequired);
                 notificationsProxyModel = new QFilterAlertsModel();
                 notificationsProxyModel->setSourceModel(notificationsModel);
                 notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
@@ -7937,7 +7938,7 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
             }
             else
             {
-                notificationsModel->insertAlerts(list, copyRequired);
+                notificationsModel->insertAlerts(theList, copyRequired);
             }
 
             if (infoDialog)
@@ -7951,8 +7952,8 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 
             if (!copyRequired)
             {
-                list->clear(); //empty the list otherwise they will be deleted
-                delete list;
+                theList->clear(); //empty the list otherwise they will be deleted
+                delete theList;
             }
         };
 
