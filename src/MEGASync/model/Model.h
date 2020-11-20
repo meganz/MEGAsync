@@ -56,6 +56,7 @@ protected:
     ///////////////// SYNCS ///////////////////////
     QList<int> configuredSyncs; //Tags of configured syncs
     QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
+    QMap<int, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
 
     QSet<int> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
     ///////////// END OF SYNCS ////////////////////
