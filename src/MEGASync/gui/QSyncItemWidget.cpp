@@ -16,9 +16,14 @@ QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
     isCacheAvailable = false;
 }
 
-void QSyncItemWidget::setText(QString path)
+void QSyncItemWidget::setText(const QString &path)
 {
     ui->lSyncName->setText(path);
+}
+
+void QSyncItemWidget::setToolTip(const QString &tooltip)
+{
+    ui->lSyncName->setToolTip(toolTip());
 }
 
 QString QSyncItemWidget::text()

@@ -16,7 +16,8 @@ class QSyncItemWidget : public QWidget
 public:
     explicit QSyncItemWidget(QWidget *parent = 0);
 
-    void setText(QString path);
+    void setText(const QString &path);
+    void setToolTip(const QString &tooltip);
     QString text();
     void localCacheAvailable(bool op);
 
