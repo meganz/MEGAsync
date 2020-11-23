@@ -183,7 +183,11 @@ endif()
 
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
+    ${MEGAsyncDir}/DesktopNotifications.h
     ${MEGAsyncDir}/TransferQuota.h
+    ${MEGAsyncDir}/RemovedSharesNotificator.h
+    ${MEGAsyncDir}/UserAlertTimedClustering.h
+    ${MEGAsyncDir}/ScaleFactorManager.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/EncryptedSettings.h
@@ -194,7 +198,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
     ${MEGAsyncDir}/control/Preferences.h
+    ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
+    ${MEGAsyncDir}/control/ThreadPool.h
+    ${MEGAsyncDir}/control/MegaController.h
+    ${MEGAsyncDir}/model/SyncSettings.h
+    ${MEGAsyncDir}/model/Model.h
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
     ${MEGAsyncDir}/gui/BugReportDialog.h
@@ -261,6 +270,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
+    ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
     ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/platform/notificator.h
@@ -300,6 +310,8 @@ else()
         ${MEGAsyncDir}/gui/PermissionsDialog.h
         ${MEGAsyncDir}/gui/PermissionsWidget.h
 
+        ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
+
         ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
         ${MEGAsyncDir}/platform/macx/macnotificationhandler.h
@@ -317,14 +329,17 @@ else()
         )
 endif()
 
-set (SRCS 
+set (SRCS
     ${MEGAsyncDir}/MegaApplication.cpp
+    ${MEGAsyncDir}/DesktopNotifications.cpp
+    ${MEGAsyncDir}/TransferQuota.cpp
+    ${MEGAsyncDir}/RemovedSharesNotificator.cpp
+    ${MEGAsyncDir}/UserAlertTimedClustering.cpp
+    ${MEGAsyncDir}/ScaleFactorManager.cpp
 
     ${FORMS}
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
-
-    ${MEGAsyncDir}/TransferQuota.cpp
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
@@ -393,6 +408,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
+    ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
     ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
 
@@ -408,6 +424,7 @@ set (SRCS
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
     ${MEGAsyncDir}/control/UpdateTask.cpp
+    ${MEGAsyncDir}/control/ThreadPool.cpp
     ${MEGAsyncDir}/control/EncryptedSettings.cpp
     ${MEGAsyncDir}/control/CrashHandler.cpp
     ${MEGAsyncDir}/control/ExportProcessor.cpp
@@ -415,6 +432,11 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaDownloader.cpp
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
+    ${MEGAsyncDir}/control/TransferRemainingTime.cpp
+    ${MEGAsyncDir}/control/MegaController.cpp
+
+    ${MEGAsyncDir}/model/SyncSettings.cpp
+    ${MEGAsyncDir}/model/Model.cpp
 
     ${MEGAsyncDir}/platform/notificator.cpp
 
@@ -485,6 +507,8 @@ else()
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.mm
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
+
+        ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
 
@@ -565,13 +589,13 @@ if(CMAKE_HOST_APPLE)
     set(MAC_RESOURCES "${MEGAsyncDir}/app.icns" "${MEGAsyncDir}/folder.icns" "${MEGAsyncDir}/folder_yosemite.icns" "${MEGAsyncDir}/appicon32.tiff")
 
     set_source_files_properties(${MAC_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${SRCS} ${QM_FILES})
+    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
     set_target_properties(MEGAsync PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${MEGAsyncDir}/Info_MEGA.plist")
 elseif(CMAKE_HOST_WIN32)
-    add_executable(MEGAsync WIN32 ${SRCS} ${QM_FILES})
+    add_executable(MEGAsync WIN32 ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
     set_property(TARGET MEGAsync PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 else()
-    add_executable(MEGAsync ${SRCS} ${QM_FILES})
+    add_executable(MEGAsync ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
 endif()
 
 
@@ -677,8 +701,8 @@ ImportStdVcpkgLibrary(cryptopp-staticcrt        cryptopp-staticcrt cryptopp-stat
 if(CMAKE_HOST_APPLE)
 #    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATER_FILES} ) 
 elseif(CMAKE_HOST_WIN32)
-    #add_executable(MEGAupdater WIN32 ${UPDATER_FILES} )
-    add_executable(MEGAupdater ${UPDATER_FILES} )
+    add_executable(MEGAupdater WIN32 ${UPDATER_FILES} )
+    #add_executable(MEGAupdater ${UPDATER_FILES} )
     target_link_libraries(MEGAupdater cryptopp-staticcrt Urlmon.lib Shlwapi.lib)
     set_property(TARGET MEGAupdater PROPERTY AUTOMOC OFF)
     set_property(TARGET MEGAupdater PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
@@ -708,3 +732,29 @@ if(CMAKE_HOST_WIN32)
     set_property(TARGET MEGAShellExt PROPERTY AUTOMOC OFF)
     set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
+
+#-------------- MEGA Sync unit tests --------------------
+add_library(catch INTERFACE)
+target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/catch")
+add_library(trompeloeil INTERFACE)
+target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloeil")
+
+set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
+set(UNIT_TEST_FILES
+    ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
+    ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
+    ${MEGASyncUnitTestsDir}/Utilities.test.cpp
+    ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp
+    ${MEGASyncUnitTestsDir}/main.cpp
+    )
+add_executable(MEGASync_unit_tests ${UNIT_TEST_FILES} ${SRCS} ${QM_FILES})
+
+target_link_libraries(MEGASync_unit_tests
+    catch
+    trompeloeil
+    Mega
+    ${MEGA_QT_LINK_LIBRARIES}
+    ${TARGET_LINK_LIBRARIES_PLATFORM}
+    )
+
+target_include_directories(MEGASync_unit_tests PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )

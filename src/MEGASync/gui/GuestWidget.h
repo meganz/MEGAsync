@@ -34,6 +34,7 @@ public:
     };
 
     explicit GuestWidget(QWidget *parent = 0);
+    GuestWidget(mega::MegaApi* megaApi, QWidget *parent = 0);
 
     ~GuestWidget();
 

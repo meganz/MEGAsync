@@ -184,23 +184,13 @@ void TransferManagerItem::updateTransfer()
         {
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
-            int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
+            const auto totalRemainingSeconds{mTransferRemainigTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
 
             QString remainingTime;
-            if (totalRemainingSeconds)
+            const auto printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
+            if (printableValue)
             {
-                if (totalRemainingSeconds < 60)
-                {
-                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
-                }
-                else
-                {
-                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
-                }
-            }
-            else
-            {
-                remainingTime = QString::fromAscii("");
+                remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
             }
             ui->lRemainingTime->setText(remainingTime);
 

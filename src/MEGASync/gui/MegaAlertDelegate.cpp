@@ -56,12 +56,10 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         if (!ti)
         {
             ti = new AlertItem();
-            ti->setAlertData(alert);
+            connect(ti, SIGNAL(refreshAlertItem(unsigned)), model, SLOT(refreshAlertItem(unsigned)));
+
             model->alertItems.insert(alert->getId(), ti);
-        }
-        else
-        {
-            ti->setAlertData(alert);
+            ti->setAlertData(alert); //Just set when created and when updated at QAlertsModel
         }
 
         painter->save();

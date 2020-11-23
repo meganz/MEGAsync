@@ -319,9 +319,8 @@ void NodeSelector::onDeleteClicked()
         }
         else
         {
-            MegaNode *rubbish = megaApi->getRubbishNode();
-            megaApi->moveNode(node, rubbish, delegateListener);
-            delete rubbish;
+            auto rubbish = ((MegaApplication*)qApp)->getRubbishNode();
+            megaApi->moveNode(node, rubbish.get(), delegateListener);
         }
     }
     delete node;

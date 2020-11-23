@@ -110,6 +110,9 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
 void AccountDetailsDialog::updateStorageElements()
 {
     refresh(Preferences::instance());
+
+    // prevent other updates of these fields (due to events), after the first one
+    ((MegaApplication*)qApp)->dettachStorageObserver(*this);
 }
 
 void AccountDetailsDialog::usageDataAvailable(bool isAvailable)

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "megaapi.h"
+#include <QFutureWatcher>
+#include <memory>
 
 namespace Ui {
 class AlertItem;
@@ -27,6 +29,9 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
+signals:
+    void refreshAlertItem(unsigned item);
+
 private:
     void setAvatar(mega::MegaUserAlert *alert);
     QString formatRichString(QString str);
@@ -35,6 +40,9 @@ private:
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;
     QString notificationHeading;
+    std::unique_ptr<mega::MegaNode> alertNode;
+    std::unique_ptr<mega::MegaUserAlert> alertUser;
+    QFutureWatcher<mega::MegaNode*> getAlertNodeWatcher;
 };
 
 #endif // ALERTITEM_H

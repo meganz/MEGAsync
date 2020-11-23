@@ -4,20 +4,28 @@
 #include <QString>
 #include <QHash>
 #include <QPixmap>
+#include <QProgressDialog>
+#include <control/MegaController.h>
+
 #include <QDir>
 #include <QIcon>
+#include <functional>
 #include <QLabel>
 #include <QEasingCurve>
 #include "megaapi.h"
+#include "ThreadPool.h"
+
+#include <functional>
 
 #include <sys/stat.h>
 
 #ifdef __APPLE__
 #define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
-                             chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
+
+#define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
 
 struct PlanInfo
 {
@@ -94,7 +102,7 @@ public:
     }
     void dettachStorageObserver(IStorageObserver& obs)
     {
-        storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs));
+        storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs), storageObservers.end());
     }
 
     void notifyStorageObservers()
@@ -160,6 +168,60 @@ private:
     std::vector<IAccountObserver*> accountObservers;
 };
 
+class ThreadPoolSingleton
+{
+    private:
+        static std::unique_ptr<ThreadPool> instance;
+        ThreadPoolSingleton() {}
+
+    public:
+        static ThreadPool* getInstance()
+        {
+            if (instance == nullptr)
+            {
+                instance.reset(new ThreadPool(1));
+            }
+
+            return instance.get();
+        }
+};
+
+
+/**
+ * @brief The MegaListenerFuncExecuter class
+ *
+ * it takes an std::function as parameter that will be called upon request finish.
+ *
+ */
+class MegaListenerFuncExecuter : public mega::MegaRequestListener
+{
+private:
+    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
+    bool mAutoremove = true;
+    bool mExecuteInAppThread = true;
+
+public:
+
+    /**
+     * @brief MegaListenerFuncExecuter
+     * @param func to call upon onRequestFinish
+     * @param autoremove whether this should be deleted after func is called
+     */
+    MegaListenerFuncExecuter(bool autoremove = false,
+                             std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
+                            )
+        : mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
+    {
+    }
+
+    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
+    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) {}
+    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
+    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+
+    void setExecuteInAppThread(bool executeInAppThread);
+};
+
 
 class ClickableLabel : public QLabel {
     Q_OBJECT
@@ -202,6 +264,7 @@ class Utilities
 public:
     static QString getSizeString(unsigned long long bytes);
     static QString getTimeString(long long secs, bool secondPrecision = true);
+    static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
     static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
@@ -223,6 +286,12 @@ public:
     // i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
     static void getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remaininDays, int64_t &remainingHours);
 
+    // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
+    // but the object will be deleted when the progress closes
+    static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
+
+    static void delayFirstSyncStart();
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
@@ -237,6 +306,9 @@ public:
     static QString getAvatarPath(QString email);
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
+
+    static void queueFunctionInAppThread(std::function<void()> fun);
+
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
 
@@ -246,6 +318,8 @@ public:
     static QString getExtensionPixmapName(QString fileName, QString prefix);
 
     static long long getSystemsAvailableMemory();
+
+    static void sleepMilliseconds(long long milliseconds);
 };
 
 #endif // UTILITIES_H

@@ -11,6 +11,7 @@
 #include <QDesktopWidget>
 #include "MegaApplication.h"
 #include "control/gzjoin.h"
+#include "platform/Platform.h"
 
 #ifndef WIN32
 #include "megaapi.h"
@@ -24,6 +25,8 @@ using namespace mega;
 
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, QString> Utilities::languageNames;
+
+std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const unsigned long long KB = 1024;
 const unsigned long long MB = 1024 * KB;
@@ -141,6 +144,12 @@ void Utilities::initializeExtensions()
      extensionIcons[QString::fromAscii("pages")] = QString::fromAscii("pages.png");
      extensionIcons[QString::fromAscii("numbers")] = QString::fromAscii("numbers.png");
      extensionIcons[QString::fromAscii("key")] = QString::fromAscii("keynote.png");
+}
+
+
+void Utilities::queueFunctionInAppThread(std::function<void()> fun) {
+   QObject temporary;
+   QObject::connect(&temporary, &QObject::destroyed, qApp, std::move(fun), Qt::QueuedConnection);
 }
 
 void Utilities::getFolderSize(QString folderPath, long long *size)
@@ -398,6 +407,15 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
+
+void replaceLeadingZeroCharacterWithSpace(QString& string)
+{
+    if(!string.isEmpty() && string.at(0) == QLatin1Char('0'))
+    {
+        string.replace(0, 1, QLatin1Char(' '));
+    }
+}
+
 QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     int seconds = (int) secs % 60;
@@ -411,39 +429,76 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (days)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days, 2, 10, QLatin1Char('0')));
     }
 
     if (items || hours)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours, 2, 10, QLatin1Char('0')));
     }
 
     if (items == 2)
     {
         time = time.trimmed();
+        replaceLeadingZeroCharacterWithSpace(time);
         return time;
     }
 
     if (items || minutes)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes, 2, 10, QLatin1Char('0')));
     }
 
     if (items == 2)
     {
         time = time.trimmed();
+        replaceLeadingZeroCharacterWithSpace(time);
         return time;
     }
 
     if (secondPrecision)
     {
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds, 2, 10, QLatin1Char('0')));
     }
     time = time.trimmed();
+    replaceLeadingZeroCharacterWithSpace(time);
     return time;
+}
+
+struct Postfix
+{
+    double value;
+    std::string letter;
+};
+
+const std::vector<Postfix> postfixes = {{1e12, "T"},
+                                     {1e9,  "G"},
+                                     {1e6,  "M"},
+                                     {1e3,  "K"}};
+
+constexpr auto maxStringSize{4};
+
+QString Utilities::getQuantityString(unsigned long long quantity)
+{
+    for (const auto& postfix : postfixes)
+    {
+        if(static_cast<double>(quantity) >= postfix.value)
+        {
+            const auto value{static_cast<double>(quantity) / postfix.value};
+            // QString::number(value, 'G', 3) is another way to do it but it rounds the result
+
+            auto valueString{QString::number(value).left(maxStringSize)};
+            if(valueString.contains(QStringLiteral(".")))
+            {
+                valueString.remove(QRegExp(QStringLiteral("0+$"))); // Remove any number of trailing 0's
+                valueString.remove(QRegExp(QStringLiteral("\\.$"))); // If the last character is just a '.' then remove it
+            }
+            return valueString + QString::fromStdString(postfix.letter);
+        }
+    }
+    return QString::number(quantity);
 }
 
 QString Utilities::getFinishedTimeString(long long secs)
@@ -840,7 +895,8 @@ QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
     int products = pricing->getNumProducts();
     for (int i = 0; i < products; i++)
     {
-        if (pricing->getMonths(i) == 1)
+        //Skip business & non monthly plans to offer
+        if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
         {
             if (usedStorage < (pricing->getGBStorage(i) * GB))
             {
@@ -946,6 +1002,47 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &rem
     remainHours = floor((msecsTimestamps - currDate) / 36e5); //ms difference to hours
 }
 
+QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, QWidget *parent)
+{
+    QProgressDialog *progressDialog = new QProgressDialog(progressHelper->description(), QString()/*no cancel button*/, 0, 100, parent);
+    progressDialog->setWindowFlags(progressDialog->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    progressDialog->setWindowModality(Qt::WindowModal);
+    progressDialog->setMinimumDuration(0);
+    progressDialog->setValue(0);
+    progressDialog->setAutoClose(false);
+    progressDialog->setAutoReset(false);
+    QObject::connect(progressDialog, SIGNAL(close()), progressDialog, SLOT(deleteLater()));
+    progressDialog->show();
+    auto startTime = QDateTime::currentMSecsSinceEpoch();
+
+    QObject::connect(progressHelper, &ProgressHelper::progress, progressDialog, [progressDialog](double percentage){
+        progressDialog->setValue(static_cast<int>(percentage * 100));
+    });
+
+    QObject::connect(progressHelper, &ProgressHelper::completed, progressDialog, [progressDialog, startTime](){
+        progressDialog->setValue(100);
+
+        //delay closing if thing went too fast, to avoid show/close glitch
+        auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - startTime) );
+        QTimer::singleShot(closeDelay, [progressDialog] () {progressDialog->close(); });
+    });
+
+    return progressDialog;
+}
+
+void Utilities::delayFirstSyncStart()
+{
+#ifdef __APPLE__
+    double time = Platform::getUpTime();
+
+    if (time >= 0 && time < Preferences::MAX_FIRST_SYNC_DELAY_S)
+    {
+        sleep(std::min(Preferences::MIN_FIRST_SYNC_DELAY_S, Preferences::MAX_FIRST_SYNC_DELAY_S - (int)time));
+    }
+#endif
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
@@ -967,4 +1064,53 @@ long long Utilities::getSystemsAvailableMemory()
     availMemory = (pages * page_size);
 #endif
     return availMemory;
+}
+
+void Utilities::sleepMilliseconds(long long milliseconds)
+{
+#ifdef WIN32
+    Sleep(milliseconds);
+#else
+    usleep(milliseconds * 1000);
+#endif
+}
+
+void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)
+{
+    mExecuteInAppThread = executeInAppThread;
+}
+
+void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+{
+    if (mExecuteInAppThread)
+    {
+        MegaRequest *requestCopy = request->copy();
+        MegaError *errorCopy = e->copy();
+        QObject temporary;
+        QObject::connect(&temporary, &QObject::destroyed, qApp, [this, api, requestCopy, errorCopy](){
+
+            if (onRequestFinishCallback)
+            {
+                onRequestFinishCallback(api, requestCopy, errorCopy);
+            }
+
+            if (mAutoremove)
+            {
+                delete this;
+            }
+
+        }, Qt::QueuedConnection);
+    }
+    else
+    {
+        if (onRequestFinishCallback)
+        {
+            onRequestFinishCallback(api, request, e);
+        }
+
+        if (mAutoremove)
+        {
+            delete this;
+        }
+    }
 }

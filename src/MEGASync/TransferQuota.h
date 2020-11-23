@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Preferences.h"
-#include "notificator.h"
+#include "DesktopNotifications.h"
 #include <memory>
 #include "UpgradeDialog.h"
 #include <QObject>
@@ -30,7 +30,7 @@ class TransferQuota: public QObject
 {
     Q_OBJECT
 public:
-    TransferQuota(mega::MegaApi* mMegaApi, Preferences *mPreferences, Notificator *mNotificator);
+    TransferQuota(mega::MegaApi* megaApi, Preferences *preferences, std::shared_ptr<DesktopNotifications> desktopNotifications);
     void setOverQuota(std::chrono::milliseconds waitTime);
     void setQuotaOk();
     bool isOverQuota();
@@ -49,12 +49,11 @@ private:
     mega::MegaApi* mMegaApi;
     mega::MegaPricing* mPricing;
     Preferences* mPreferences;
-    Notificator *mNotificator;
+    std::shared_ptr<DesktopNotifications> mOsNotifications;
     UpgradeDialog* mUpgradeDialog;
     QuotaState mQuotaState;
     std::chrono::system_clock::time_point mWaitTimeUntil;
 
-    void sendNotification(const QString& title);
     void sendQuotaWarningOsNotification();
     void sendOverQuotaOsNotification();
     void checkExecuteDialog();
