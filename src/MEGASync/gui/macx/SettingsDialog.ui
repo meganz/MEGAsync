@@ -1967,8 +1967,16 @@ margin-right: 32px;</string>
                <property name="enabled">
                 <bool>true</bool>
                </property>
+               <property name="cursor" stdset="0">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">QTableWidget::item:alternate { background-color: #ffffff; }
+QTableWidget::item:selected { background-color: #2e74f6; }
+QTableWidget::item:hover { background-color: #ebebeb; }
+QTableWidget::item { background-color: #F5F5F5; }
+
+</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -1981,6 +1989,9 @@ margin-right: 32px;</string>
                </property>
                <property name="editTriggers">
                 <set>QAbstractItemView::NoEditTriggers</set>
+               </property>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
                </property>
                <property name="selectionMode">
                 <enum>QAbstractItemView::SingleSelection</enum>
@@ -1995,6 +2006,9 @@ margin-right: 32px;</string>
                 <enum>QAbstractItemView::ScrollPerPixel</enum>
                </property>
                <property name="showGrid">
+                <bool>true</bool>
+               </property>
+               <property name="sortingEnabled">
                 <bool>true</bool>
                </property>
                <property name="wordWrap">
@@ -2013,10 +2027,10 @@ margin-right: 32px;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>264</number>
+                <number>271</number>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>264</number>
+                <number>271</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
@@ -2040,7 +2054,7 @@ margin-right: 32px;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="verticalHeaderShowSortIndicator" stdset="0">
-                <bool>false</bool>
+                <bool>true</bool>
                </attribute>
                <attribute name="verticalHeaderStretchLastSection">
                 <bool>false</bool>
@@ -2070,20 +2084,20 @@ margin-right: 32px;</string>
              <item>
               <widget class="QSegmentedControl" name="wSegmentedControl" native="true">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>0</width>
+                 <width>580</width>
                  <height>19</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>580</width>
                  <height>19</height>
                 </size>
                </property>
@@ -2122,56 +2136,6 @@ margin-right: 32px;</string>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
-              <widget class="QPushButton" name="bAdd">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
-               </property>
-               <property name="text">
-                <string>Add</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="bDelete">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
-               </property>
-               <property name="text">
-                <string>Delete</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
              <item>
               <spacer name="hSyncs">
                <property name="orientation">
@@ -5331,8 +5295,6 @@ background:transparent;</string>
   <tabstop>bUpdate</tabstop>
   <tabstop>cLanguage</tabstop>
   <tabstop>tSyncs</tabstop>
-  <tabstop>bDelete</tabstop>
-  <tabstop>bAdd</tabstop>
   <tabstop>rNoProxy</tabstop>
   <tabstop>rProxyAuto</tabstop>
   <tabstop>rProxyManual</tabstop>

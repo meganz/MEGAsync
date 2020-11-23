@@ -353,6 +353,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     //Configure segmented control for +/- syncs
     ui->wSegmentedControl->configureTableSegment();
+    connect(ui->wSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
+    connect(ui->wSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+
+    ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 #endif
 }
 
@@ -2161,6 +2165,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 {
+    //FIXME: When using custom widget for row items, remove double check or use cellwidget to fix it.
     if (!index.column())
     {
         QString localFolderPath = ui->tSyncs->item(index.row(), 0)->text();
