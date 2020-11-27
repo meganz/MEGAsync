@@ -849,9 +849,6 @@
         <file>images/Folder@3x.png</file>
         <file>images/Storage_Quota_almost_full@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
-        <file>images/ic_options hover@3x.png</file>
-        <file>images/ic_options hover.png</file>
-        <file>images/ic_options hover@2x.png</file>
         <file>images/ic_options.png</file>
         <file>images/ic_options@2x.png</file>
         <file>images/ic_options@3x.png</file>
@@ -864,5 +861,8 @@
         <file>images/settings-syncs-error.png</file>
         <file>images/settings-syncs-error@2x.png</file>
         <file>images/settings-syncs-error@3x.png</file>
+        <file>images/ic_options_hover.png</file>
+        <file>images/ic_options_hover@2x.png</file>
+        <file>images/ic_options_hover@3x.png</file>
     </qresource>
 </RCC>

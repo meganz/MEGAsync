@@ -579,8 +579,6 @@
         <file>images/settings-transfers@2x.png</file>
         <file>images/settings-security.png</file>
         <file>images/settings-security@2x.png</file>
-        <file>images/ic_options hover.png</file>
-        <file>images/ic_options hover@2x.png</file>
         <file>images/ic_options@2x.png</file>
         <file>images/ic_options.png</file>
         <file>images/ic_sync_warning.png</file>
@@ -589,5 +587,7 @@
         <file>images/ic_two_way_sync@2x.png</file>
         <file>images/settings-syncs-error.png</file>
         <file>images/settings-syncs-error@2x.png</file>
+        <file>images/ic_options_hover.png</file>
+        <file>images/ic_options_hover@2x.png</file>
     </qresource>
 </RCC>
