@@ -844,5 +844,20 @@
         <file>images/Folder@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
         <file>images/Failed_to_download@3x.png</file>
+        <file>images/ic_options hover.png</file>
+        <file>images/ic_options hover@2x.png</file>
+        <file>images/ic_options hover@3x.png</file>
+        <file>images/ic_options.png</file>
+        <file>images/ic_options@2x.png</file>
+        <file>images/ic_options@3x.png</file>
+        <file>images/ic_sync_warning.png</file>
+        <file>images/ic_sync_warning@2x.png</file>
+        <file>images/ic_sync_warning@3x.png</file>
+        <file>images/ic_two_way_sync.png</file>
+        <file>images/ic_two_way_sync@2x.png</file>
+        <file>images/ic_two_way_sync@3x.png</file>
+        <file>images/settings-syncs-error.png</file>
+        <file>images/settings-syncs-error@2x.png</file>
+        <file>images/settings-syncs-error@3x.png</file>
     </qresource>
 </RCC>
