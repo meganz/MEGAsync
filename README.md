@@ -18,7 +18,7 @@ https://mega.nz/sync
 git clone --recursive https://github.com/meganz/MEGAsync.git
 ```
 
-This algo places SDK from https://github.com/meganz/sdk.git into `<local repository>/MEGASync/src/mega`
+This also places SDK from https://github.com/meganz/sdk.git into `<local repository>/MEGASync/src/mega`
 
 Please refer to `<local repository>/MEGASync/src/mega/README.md` to download 3rdparty, if you haven't done so
 
@@ -40,29 +40,29 @@ A typical layout may look like this:
 
 # Installing Qt 5.12.8 (open source version):
 
-Download Qt online installer from https://www.qt.io/download-open-source?hsCtaTracking=9f6a2170-a938-42df-a8e2-a9f0b1d6cdce%7C6cb0de4f-9bb5-4778-ab02-bfb62735f3e5
+Download Qt online installer from [here](https://www.qt.io/download-open-source?hsCtaTracking=9f6a2170-a938-42df-a8e2-a9f0b1d6cdce%7C6cb0de4f-9bb5-4778-ab02-bfb62735f3e5)
 
-* Go to the bottom of the page and download the `Qt Online Installer"
+* Go to the bottom of the page and download the `Qt Online Installer`
 * Start the installer and go to the component selection page
-* If v5.12.8 is not available at first, select "Archive" and it will automatically go to the next page
+* If 5.12.8 is not available at first, select "Archive" and it will automatically go to the next page
 * Go back (at top left). It will generate the available Qt versions
 * Select 5.12.8 and install
 
-##### Preparation (Using QT Creator):
+##### Preparation (Using Qt Creator):
 
-1. Prepare QTCreator to use the Visual Studio 2015 or 2017 toolchain and Qt 5.12.8 - 32 bits
+1. Prepare Qt Creator to use the Visual Studio 2015 or 2017 toolchain and Qt 5.12.8 - 32 bits
 2. Clone or download this repo
 3. Create a folder `Release_x32` inside the root of the code that you have just downloaded
 4. Download the required third party libraries from this link:
 https://mega.nz/#!8tZglCTR!cZ_B39i9YxLgt3_8x9LsOpFhFDHuAh4jdz78IuQTQT4
 5. Uncompress that file into `src\MEGASync\mega\bindings\qt`
-6. Open the project `src/MEGA.pro` with QTCreator
+6. Open the project `src/MEGA.pro` with Qt Creator
 7. Select the folder `Release_x32` as the target for Release and Debug builds
 8. Build the project
 9. Copy or move the .dll files from the folder `src\MEGASync\mega\bindings\qt\3rdparty\bin` to the folder `Release_x32\MEGASync`
 10.  Enjoy!
 
-It's recommended to go to `Project -> Run` in QTCreator and disable the option `Run in terminal`
+It's recommended to go to `Project -> Run` in Qt Creator and disable the option `Run in terminal`
 
 ##### Preparation (Using CMake):
 
