@@ -2,33 +2,51 @@
 #include "ui_QSyncItemWidget.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "megaapi.h"
+#include "SyncInfo.h"
 
-QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
-    QWidget(parent),
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
+QSyncItemWidget::QSyncItemWidget(int itemType, QWidget *parent) :
+    QWidget(parent), itemType(itemType),
     ui(new Ui::QSyncItemWidget)
 {
     ui->setupUi(this);
 
     optionsMenu = NULL;
-    openFolder = NULL;
+    syncInfo = NULL;
     openDebris = NULL;
     deleteSync = NULL;
     isCacheAvailable = false;
+
+    installEventFilter(this);
+
+    configureSyncTypeUI(itemType);
 }
 
 void QSyncItemWidget::setText(const QString &path)
 {
-    ui->lSyncName->setText(path);
+    fullPath = path;
+
+    QString syncName {QFileInfo(fullPath).fileName()};
+    if (syncName.isEmpty())
+    {
+        syncName = QDir::toNativeSeparators(fullPath);
+    }
+    syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+    ui->lSyncName->setText(syncName);
 }
 
 void QSyncItemWidget::setToolTip(const QString &tooltip)
 {
-    ui->lSyncName->setToolTip(toolTip());
+    ui->lSyncName->setToolTip(tooltip);
 }
 
 QString QSyncItemWidget::text()
 {
-    return ui->lSyncName->text();
+    return fullPath;
 }
 
 void QSyncItemWidget::localCacheAvailable(bool op)
@@ -38,6 +56,7 @@ void QSyncItemWidget::localCacheAvailable(bool op)
 
 QSyncItemWidget::~QSyncItemWidget()
 {
+    //TODO: Ask UI team and apply colourful icons for open debris, info and delete syncs
     if (optionsMenu)
     {
         QList<QAction *> actions = optionsMenu->actions();
@@ -72,19 +91,7 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
         }
     }
 
-    if (openFolder)
-    {
-        openFolder->deleteLater();
-        openFolder = NULL;
-    }
-
-#ifndef __APPLE__
-    openFolder = new MenuItemAction(tr("Open in file explorer"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")), true);
-#else
-    openFolder = new MenuItemAction(tr("Open in Finder"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")), true);
-#endif
-    connect(openFolder, SIGNAL(triggered()), this, SIGNAL(onOpenSync()), Qt::QueuedConnection);
-
+    //Add local cache item (if available)
     if (isCacheAvailable)
     {
         if (openDebris)
@@ -94,27 +101,35 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
         }
 
     #ifndef __APPLE__
-        openDebris = new MenuItemAction(tr("Open Rubbish folder"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")), true);
+        auto openLocalDebris{tr("Open Rubbish folder")};
     #else
-        openDebris = new MenuItemAction(tr("Open .debris folder"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")), true);
+        auto openLocalDebris{tr("Open .debris folder")};
     #endif
+        openDebris = new MenuItemAction(openLocalDebris, QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
         connect(openDebris, SIGNAL(triggered()), this, SIGNAL(onOpenLocalCache()), Qt::QueuedConnection);
     }
 
+    //Add sync info menu item
+    if (syncInfo)
+    {
+        syncInfo->deleteLater();
+        syncInfo = NULL;
+    }
+
+    syncInfo = new MenuItemAction(tr("Info"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
+    connect(syncInfo, SIGNAL(triggered()), this, SIGNAL(onSyncInfo()), Qt::QueuedConnection);
+
+    //Add deleteSync item
     if (deleteSync)
     {
         deleteSync->deleteLater();
         deleteSync = NULL;
     }
 
-#ifndef __APPLE__
-    deleteSync = new MenuItemAction(tr("Delete Sync"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")), true);
-#else
-    deleteSync = new MenuItemAction(tr("Delete Sync"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")), true);
-#endif
+    deleteSync = new MenuItemAction(tr("Delete Sync"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
     connect(deleteSync, SIGNAL(triggered()), this, SIGNAL(onDeleteSync()), Qt::QueuedConnection);
 
-    optionsMenu->addAction(openFolder);
+    optionsMenu->addAction(syncInfo);
 
     if (isCacheAvailable)
     {
@@ -133,4 +148,75 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
     QPoint p = !point.isNull() ? point - QPoint(ui->bSyncOptions->width(), 0)
                              : QCursor::pos();
     optionsMenu->popup(p);
+
+    ui->bReveal->hide();
 }
+
+void QSyncItemWidget::on_bReveal_clicked()
+{
+    switch (itemType)
+    {
+        case LOCAL_FOLDER:
+        {
+            QString localFolderPath {ui->lSyncName->text()};
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
+        }
+        break;
+        case REMOTE_FOLDER:
+        {
+            QString megaFolderPath {ui->lSyncName->text()};
+            const auto megaApp{static_cast<MegaApplication*>(qApp)};
+            mega::MegaNode *node = megaApp->getMegaApi()->getNodeByPath(megaFolderPath.toUtf8().constData());
+            if (node)
+            {
+                QtConcurrent::run(QDesktopServices::openUrl,
+                                  QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(node->getBase64Handle()))));
+                delete node;
+            }
+        }
+        break;
+        default:
+        break;
+    }
+
+    ui->bReveal->hide();
+}
+
+void QSyncItemWidget::configureSyncTypeUI(int type) const
+{
+    switch (type)
+    {
+        case LOCAL_FOLDER:
+        {
+            ui->bSyncState->show();
+            ui->bSyncOptions->hide();
+        }
+        break;
+        case REMOTE_FOLDER:
+        {
+            ui->bSyncState->hide();
+            ui->bSyncOptions->show();
+        }
+        break;
+        default:
+        break;
+    }
+
+    ui->bReveal->hide();
+}
+
+bool QSyncItemWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::Enter)
+    {
+        ui->bReveal->show();
+    }
+
+    if (event->type() == QEvent::Leave)
+    {
+        ui->bReveal->hide();
+    }
+
+    return QWidget::eventFilter(obj,event);
+}
+

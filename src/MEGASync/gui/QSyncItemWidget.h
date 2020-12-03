@@ -14,7 +14,11 @@ class QSyncItemWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit QSyncItemWidget(QWidget *parent = 0);
+    enum {
+      LOCAL_FOLDER = 0,
+      REMOTE_FOLDER = 1
+    };
+    explicit QSyncItemWidget(int itemType, QWidget *parent = nullptr);
 
     void setText(const QString &path);
     void setToolTip(const QString &tooltip);
@@ -25,9 +29,10 @@ public:
 
 private slots:
     void on_bSyncOptions_clicked();
+    void on_bReveal_clicked();
 
 signals:
-    void onOpenSync();
+    void onSyncInfo();
     void onOpenLocalCache();
     void onDeleteSync();
 
@@ -35,10 +40,17 @@ private:
     Ui::QSyncItemWidget *ui;
 
     QMenu *optionsMenu;
-    MenuItemAction *openFolder;
+    MenuItemAction *syncInfo;
     MenuItemAction *openDebris;
     MenuItemAction *deleteSync;
     bool isCacheAvailable;
+    int itemType;
+    QString fullPath;
+
+    void configureSyncTypeUI(int type) const;
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 
 };
 
