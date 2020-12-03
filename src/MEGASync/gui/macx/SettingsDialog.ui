@@ -289,7 +289,7 @@ background-color: rgba(0,0,0,0.1);
            <item>
             <widget class="QLabel" name="lSavingSyncs">
              <property name="text">
-              <string>Saving sync...</string>
+              <string>Saving syncs...</string>
              </property>
             </widget>
            </item>

@@ -2318,7 +2318,7 @@ border: none;</string>
              <item>
               <widget class="QLabel" name="lSavingSyncs">
                <property name="text">
-                <string>Saving sync...</string>
+                <string>Saving syncs...</string>
                </property>
               </widget>
              </item>

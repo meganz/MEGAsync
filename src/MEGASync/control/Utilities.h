@@ -102,7 +102,7 @@ public:
     }
     void dettachStorageObserver(IStorageObserver& obs)
     {
-        storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs));
+        storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs), storageObservers.end());
     }
 
     void notifyStorageObservers()
