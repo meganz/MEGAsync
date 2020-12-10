@@ -277,7 +277,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
 )
 
@@ -415,7 +414,6 @@ set (SRCS
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaEvent.cpp
 
