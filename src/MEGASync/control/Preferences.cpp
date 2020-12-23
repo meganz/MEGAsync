@@ -2191,7 +2191,7 @@ void Preferences::setLastExit(long long value)
     mutex.unlock();
 }
 
-QSet<int> Preferences::getDisabledSyncTags()
+QSet<MegaHandle> Preferences::getDisabledSyncTags()
 {
     QMutexLocker qm(&mutex);
     assert(logged());
@@ -2199,24 +2199,24 @@ QSet<int> Preferences::getDisabledSyncTags()
     QStringList stringTagList = getValueConcurrent<QString>(disabledSyncsKey).split(QString::fromUtf8("0x1E"), QString::SkipEmptyParts);
     if (!stringTagList.isEmpty())
     {
-        QList<int> tagList;
+        QList<mega::MegaHandle> tagList;
         for (auto &tag : stringTagList)
         {
-            tagList.append(tag.toInt());
+            tagList.append(tag.toULong());
         }
 
-        return QSet<int>::fromList(tagList);
+        return QSet<mega::MegaHandle>::fromList(tagList);
     }
 
-    return QSet<int>();
+    return QSet<mega::MegaHandle>();
 }
 
-void Preferences::setDisabledSyncTags(QSet<int> disabledSyncs)
+void Preferences::setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs)
 {
     QMutexLocker qm(&mutex);
     assert(logged());
 
-    QList<int> disabledTags = disabledSyncs.toList();
+    QList<mega::MegaHandle> disabledTags = disabledSyncs.toList();
     QStringList tags;
 
     for(auto &tag : disabledTags)
@@ -2792,7 +2792,7 @@ void Preferences::loadExcludedSyncNames()
 }
 
 
-QMap<int, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
+QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
 {
     return loadedSyncsMap;
 }

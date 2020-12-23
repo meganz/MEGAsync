@@ -123,7 +123,7 @@ void SyncSetting::setSync(MegaSync *sync)
     {
         mSync.reset(sync->copy());
 
-        assert(mTag == 0 || mTag == sync->getTag());
+        assert(mTag == INVALID_HANDLE || mTag == sync->getTag());
         mTag = sync->getTag();
         mEnabled = sync->isEnabled();
 
@@ -167,11 +167,6 @@ bool SyncSetting::isActive()  const
     return mActive;
 }
 
-int SyncSetting::getState() const
-{
-    return mSync->getState();
-}
-
 bool SyncSetting::isTemporaryDisabled()  const
 {
     return mSync->isTemporaryDisabled();
@@ -182,12 +177,12 @@ int SyncSetting::getError() const
     return mSync->getError();
 }
 
-int SyncSetting::tag() const
+mega::MegaHandle SyncSetting::tag() const
 {
     return mTag;
 }
 
-void SyncSetting::setTag(int tag)
+void SyncSetting::setTag(mega::MegaHandle tag)
 {
     mTag = tag;
 }

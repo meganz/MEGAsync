@@ -12,7 +12,7 @@ class SyncSetting
 {
 private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
-    int mTag = 0;
+    mega::MegaHandle mTag = ::mega::INVALID_HANDLE;
     QString mSyncID;
 
     bool mEnabled = false;
@@ -30,8 +30,8 @@ public:
     SyncSetting& operator=(SyncSetting&& a) = default;
 
     SyncSetting(mega::MegaSync *sync);
-    int tag() const;
-    void setTag(int tag);
+    mega::MegaHandle tag() const;
+    void setTag(mega::MegaHandle tag);
     QString name() const;
 
     void setEnabled(bool value);
@@ -44,7 +44,6 @@ public:
     long long getMegaHandle() const;
     bool isEnabled() const; //enabled by user
     bool isActive() const; //not disabled by user nor failed (nor being removed)
-    int getState() const;
     bool isTemporaryDisabled() const;
     int getError() const;
 

@@ -54,7 +54,7 @@ void Model::removeSyncedFolder(int num)
     emit syncRemoved(cs);
 }
 
-void Model::removeSyncedFolderByTag(int tag)
+void Model::removeSyncedFolderByTag(MegaHandle tag)
 {
     QMutexLocker qm(&syncMutex);
     if (!configuredSyncsMap.contains(tag))
@@ -141,7 +141,7 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
     }
     isFirstSyncDone = true;
 
-    if ( !preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Error::LOCAL_IS_FAT)
+    if ( !preferences->isFatWarningShown() && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_FAT)
     {
         QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
          tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
@@ -149,7 +149,7 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
         preferences->setFatWarningShown();
     }
-    else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Error::LOCAL_IS_HGFS)
+    else if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING) && syncSetting->getError() == MegaSync::Warning::LOCAL_IS_HGFS)
     {
         QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
             tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage."));
@@ -271,7 +271,7 @@ void Model::rewriteSyncSettings()
     }
 }
 
-void Model::pickInfoFromOldSync(const SyncData &osd, int tag, bool loadedFromPreviousSessions)
+void Model::pickInfoFromOldSync(const SyncData &osd, MegaHandle tag, bool loadedFromPreviousSessions)
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged() || loadedFromPreviousSessions);
@@ -364,7 +364,7 @@ std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
 }
 
 
-std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(int tag)
+std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(mega::MegaHandle tag)
 {
     QMutexLocker qm(&syncMutex);
     if (configuredSyncsMap.contains(tag))
@@ -382,21 +382,21 @@ void Model::saveUnattendedDisabledSyncs()
     }
 }
 
-void Model::addUnattendedDisabledSync(int tag)
+void Model::addUnattendedDisabledSync(mega::MegaHandle tag)
 {
     unattendedDisabledSyncs.insert(tag);
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }
 
-void Model::removeUnattendedDisabledSync(int tag)
+void Model::removeUnattendedDisabledSync(MegaHandle tag)
 {
     unattendedDisabledSyncs.remove(tag);
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }
 
-void Model::setUnattendedDisabledSyncs(QSet<int> tags)
+void Model::setUnattendedDisabledSyncs(QSet<MegaHandle> tags)
 {
     //REVIEW: If possible to get enable/disable callbacks before loading from settings.Merge both lists of tags.
     unattendedDisabledSyncs = tags;

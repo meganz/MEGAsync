@@ -1441,7 +1441,7 @@ int SettingsDialog::saveSettings()
                 for (int j = 0; j < ui->tSyncs->rowCount(); j++)
                 {
                     auto tagItem = ui->tSyncs->cellWidget(j,3);
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toInt() == syncSetting->tag())
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->tag())
                     {
                         found = true;
                         break;
@@ -1473,7 +1473,7 @@ int SettingsDialog::saveSettings()
 
                     auto tagItem = ui->tSyncs->cellWidget(j,3);
 
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toInt() == syncSetting->tag())
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->tag())
                     {
 #ifdef SYNC_ADVANCED_TEST_MODE
                         if (disabled && syncSetting->isEnabled()) //sync disabled
