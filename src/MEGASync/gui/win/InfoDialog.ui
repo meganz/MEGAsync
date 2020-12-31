@@ -507,12 +507,6 @@ border: none;
                 <height>120</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">#wPSA
-{
-background-color: #F4F6F8;
-}</string>
-              </property>
              </widget>
             </item>
             <item>
