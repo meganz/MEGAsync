@@ -1970,7 +1970,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #333333;
   font-family: Lato;
   font-size: 16px;
-  letter-spacing: 0;
   line-height: 24px;
 }</string>
                                </property>
@@ -2026,7 +2025,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #666666;
   font-family: Lato;
   font-size: 13px;
-  letter-spacing: 0;
 }</string>
                                </property>
                                <property name="text">
