@@ -849,5 +849,8 @@
         <file>images/Folder@3x.png</file>
         <file>images/Storage_Quota_almost_full@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
+        <file>images/ic_sync_warning@3x.png</file>
+        <file>images/ic_sync_warning.png</file>
+        <file>images/ic_sync_warning@2x.png</file>
     </qresource>
 </RCC>
