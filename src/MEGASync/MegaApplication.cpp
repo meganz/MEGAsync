@@ -1175,6 +1175,53 @@ void MegaApplication::requestUserData()
     });// end of thread pool function
 }
 
+void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRequired)
+{
+    if (!theList)
+    {
+        return;
+    }
+
+    if (mOsNotifications)
+    {
+        mOsNotifications->addUserAlertList(theList);
+    }
+
+    if (!notificationsModel)
+    {
+        notificationsModel = new QAlertsModel(theList, copyRequired);
+        notificationsProxyModel = new QFilterAlertsModel();
+        notificationsProxyModel->setSourceModel(notificationsModel);
+        notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+
+        notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
+
+        if (infoDialog)
+        {
+            infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
+        }
+    }
+    else
+    {
+        notificationsModel->insertAlerts(theList, copyRequired);
+    }
+
+    if (infoDialog)
+    {
+        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
+        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
+    }
+
+    if (!copyRequired)
+    {
+        theList->clear(); //empty the list otherwise they will be deleted
+        delete theList;
+    }
+}
+
 void MegaApplication::loggedIn(bool fromWizard)
 {
     if (appfinished)
@@ -7895,89 +7942,33 @@ void MegaApplication::pushToThreadPool(std::function<void()> functor)
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
-    Q_UNUSED(api);
+    Q_UNUSED(api)
+
     if (appfinished)
     {
         return;
     }
 
-    bool doSynchronously = (list != NULL); // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
+    bool doSynchronously {(list != NULL)}; // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
                                  // since we are not copying the list, and we need to process it before it goes out of scope.
-    auto funcToThreadPool = [this, list, doSynchronously]()
-    {//thread pool function
-        bool copyRequired = true;
-
-
-        MegaUserAlertList *theList = list;
-        if (!theList)//User alerts already loaded: get the list from MegaApi::getUserAlerts
-        {
-            theList = megaApi->getUserAlerts();
-            copyRequired = false;
-        }
-
-        auto callBackFunctionForQt = [this, theList, copyRequired]()
-        {//queued function
-
-            assert((!copyRequired || notificationsModel) && "onUserAlertsUpdate with !alerts should have happened before!");
-
-            mOsNotifications->addUserAlertList(theList);
-
-            if (!notificationsModel)
-            {
-                notificationsModel = new QAlertsModel(theList, copyRequired);
-                notificationsProxyModel = new QFilterAlertsModel();
-                notificationsProxyModel->setSourceModel(notificationsModel);
-                notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-
-                notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
-
-                if (infoDialog)
-                {
-                    infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
-                }
-            }
-            else
-            {
-                notificationsModel->insertAlerts(theList, copyRequired);
-            }
-
-            if (infoDialog)
-            {
-                infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
-                infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
-                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
-                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
-                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
-            }
-
-            if (!copyRequired)
-            {
-                theList->clear(); //empty the list otherwise they will be deleted
-                delete theList;
-            }
-        };
-
-      if (doSynchronously)
-      {
-          callBackFunctionForQt();
-      }
-      else
-      {
-          Utilities::queueFunctionInAppThread(callBackFunctionForQt);//end of queued function
-      }
-    };// end of thread pool function
-
-
     if (doSynchronously)
     {
-        funcToThreadPool();
+        populateUserAlerts(list, true);
     }
     else
     {
+        auto funcToThreadPool = [this]()
+        {//thread pool function
+            MegaUserAlertList *theList;
+            theList = megaApi->getUserAlerts();
+
+            auto callBackFunctionForQt = [this, theList]() { populateUserAlerts(theList, false);};
+            Utilities::queueFunctionInAppThread(callBackFunctionForQt);//end of queued function
+
+        };// end of thread pool function
         mThreadPool->push(funcToThreadPool);
     }
 }
-
 
 //Called when contacts have been updated in MEGA
 void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
