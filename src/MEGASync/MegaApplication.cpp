@@ -7949,7 +7949,7 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         return;
     }
 
-    bool doSynchronously {(list != NULL)}; // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
+    bool doSynchronously {list != NULL}; // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
                                  // since we are not copying the list, and we need to process it before it goes out of scope.
     if (doSynchronously)
     {
