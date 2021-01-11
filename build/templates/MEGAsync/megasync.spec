@@ -12,6 +12,7 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 BuildRequires: zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: ffmpeg-mega
+BuildRequires: libudev-devel
 
 #OpenSUSE
 %if 0%{?suse_version} || 0%{?sle_version}
@@ -293,6 +294,9 @@ make install DESTDIR=%{buildroot}%{_bindir}
 
 mkdir -p  %{buildroot}/etc/sysctl.d/
 echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-megasync-inotify-limit.conf
+
+mkdir -p  %{buildroot}/etc/udev/rules.d/
+echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > %{buildroot}/etc/udev/rules.d/100-megasync-udev.conf
 
 
 %post
