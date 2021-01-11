@@ -7962,8 +7962,9 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
             MegaUserAlertList *theList;
             theList = megaApi->getUserAlerts();
 
-            auto callBackFunctionForQt = [this, theList]() { populateUserAlerts(theList, false);};
-            Utilities::queueFunctionInAppThread(callBackFunctionForQt);//end of queued function
+            Utilities::queueFunctionInAppThread([this, theList]() {
+                populateUserAlerts(theList, false);
+            });//end of queued function
 
         };// end of thread pool function
         mThreadPool->push(funcToThreadPool);
