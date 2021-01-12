@@ -41,28 +41,28 @@ void Model::removeSyncedFolder(int num)
         deactivateSync(cs);
     }
 
-    auto tag = cs->tag();
+    auto backupId = cs->backupId();
 
     assert(preferences->logged());
     preferences->removeSyncSetting(cs);
     configuredSyncsMap.remove(configuredSyncs.at(num));
     configuredSyncs.removeAt(num);
 
-    removeUnattendedDisabledSync(tag);
+    removeUnattendedDisabledSync(backupId);
 
 
     emit syncRemoved(cs);
 }
 
-void Model::removeSyncedFolderByTag(MegaHandle tag)
+void Model::removeSyncedFolderByBackupId(MegaHandle backupId)
 {
     QMutexLocker qm(&syncMutex);
-    if (!configuredSyncsMap.contains(tag))
+    if (!configuredSyncsMap.contains(backupId))
     {
         return;
     }
 
-    auto cs = configuredSyncsMap[tag];
+    auto cs = configuredSyncsMap[backupId];
 
     if (cs->isActive())
     {
@@ -71,12 +71,12 @@ void Model::removeSyncedFolderByTag(MegaHandle tag)
     assert(preferences->logged());
 
     preferences->removeSyncSetting(cs);
-    configuredSyncsMap.remove(tag);
+    configuredSyncsMap.remove(backupId);
 
     auto it = configuredSyncs.begin();
     while (it != configuredSyncs.end())
     {
-        if ((*it) == tag)
+        if ((*it) == backupId)
         {
             it = configuredSyncs.erase(it);
         }
@@ -86,7 +86,7 @@ void Model::removeSyncedFolderByTag(MegaHandle tag)
         }
     }
 
-    removeUnattendedDisabledSync(tag);
+    removeUnattendedDisabledSync(backupId);
 
     emit syncRemoved(cs);
 }
@@ -179,22 +179,22 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     bool wasActive = false;
     bool wasInactive = false;
 
-    auto oldcsitr = syncsSettingPickedFromOldConfig.find(sync->getTag());
+    auto oldcsitr = syncsSettingPickedFromOldConfig.find(sync->getBackupId());
 
     if (oldcsitr != syncsSettingPickedFromOldConfig.end()) // resumed after picked from old sync config)
     {
         cs = oldcsitr.value();
 
         //move into the configuredSyncsMap
-        configuredSyncsMap.insert(sync->getTag(), cs);
-        configuredSyncs.append(sync->getTag());
+        configuredSyncsMap.insert(sync->getBackupId(), cs);
+        configuredSyncs.append(sync->getBackupId());
 
         // remove from picked
         syncsSettingPickedFromOldConfig.erase(oldcsitr);
     }
-    else if (configuredSyncsMap.contains(sync->getTag())) //existing configuration (an update)
+    else if (configuredSyncsMap.contains(sync->getBackupId())) //existing configuration (an update)
     {
-        cs = configuredSyncsMap[sync->getTag()];
+        cs = configuredSyncsMap[sync->getBackupId()];
     }
 
     if (cs)
@@ -210,17 +210,17 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
         assert(addingState && "!addingState and didn't find previously configured sync");
 
         auto loaded = preferences->getLoadedSyncsMap();
-        if (loaded.contains(sync->getTag())) //existing configuration from previous executions (we get the data that the sdk might not be providing from our cache)
+        if (loaded.contains(sync->getBackupId())) //existing configuration from previous executions (we get the data that the sdk might not be providing from our cache)
         {
-            cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(*loaded[sync->getTag()].get());
+            cs = configuredSyncsMap[sync->getBackupId()] = std::make_shared<SyncSetting>(*loaded[sync->getBackupId()].get());
             cs->setSync(sync);
         }
         else // new addition (no reference in the cache)
         {
-            cs = configuredSyncsMap[sync->getTag()] = std::make_shared<SyncSetting>(sync);
+            cs = configuredSyncsMap[sync->getBackupId()] = std::make_shared<SyncSetting>(sync);
         }
 
-        configuredSyncs.append(sync->getTag());
+        configuredSyncs.append(sync->getBackupId());
     }
 
 
@@ -271,17 +271,17 @@ void Model::rewriteSyncSettings()
     }
 }
 
-void Model::pickInfoFromOldSync(const SyncData &osd, MegaHandle tag, bool loadedFromPreviousSessions)
+void Model::pickInfoFromOldSync(const SyncData &osd, MegaHandle backupId, bool loadedFromPreviousSessions)
 {
     QMutexLocker qm(&syncMutex);
     assert(preferences->logged() || loadedFromPreviousSessions);
     std::shared_ptr<SyncSetting> cs;
 
-    assert (!configuredSyncsMap.contains(tag) && "picking already configured sync!"); //this should always be the case
+    assert (!configuredSyncsMap.contains(backupId) && "picking already configured sync!"); //this should always be the case
 
-    cs = syncsSettingPickedFromOldConfig[tag] = std::make_shared<SyncSetting>(osd, loadedFromPreviousSessions);
+    cs = syncsSettingPickedFromOldConfig[backupId] = std::make_shared<SyncSetting>(osd, loadedFromPreviousSessions);
 
-    cs->setTag(tag); //assign the new tag given by the sdk
+    cs->setBackupId(backupId); //assign the new tag given by the sdk
 
     preferences->writeSyncSetting(cs);
 }
@@ -319,7 +319,7 @@ QStringList Model::getSyncIDs()
     QStringList value;
     for (auto &cs : configuredSyncs)
     {
-        value.append(QString::number(configuredSyncsMap[cs]->tag()));
+        value.append(QString::number(configuredSyncsMap[cs]->backupId()));
     }
     return value;
 }

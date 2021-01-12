@@ -1441,7 +1441,7 @@ int SettingsDialog::saveSettings()
                 for (int j = 0; j < ui->tSyncs->rowCount(); j++)
                 {
                     auto tagItem = ui->tSyncs->cellWidget(j,3);
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->tag())
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->backupId())
                     {
                         found = true;
                         break;
@@ -1473,7 +1473,7 @@ int SettingsDialog::saveSettings()
 
                     auto tagItem = ui->tSyncs->cellWidget(j,3);
 
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->tag())
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->backupId())
                     {
 #ifdef SYNC_ADVANCED_TEST_MODE
                         if (disabled && syncSetting->isEnabled()) //sync disabled
@@ -1961,7 +1961,7 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
 
         // Col 4: tag. HIDDEN
         QLabel *lTag = new QLabel();
-        lTag->setText(QString::number(syncSetting->tag()));
+        lTag->setText(QString::number(syncSetting->backupId()));
         ui->tSyncs->setCellWidget(i, 3, lTag);
 
         // Col 5: MegaHandle. HIDDEN

@@ -85,11 +85,11 @@ public:
     void rewriteSyncSettings();
 
     // load into sync model the information from an old cached sync
-    void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle tag, bool loadedFromPreviousSessions);
+    void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 
     // remove syncs from model
     void removeSyncedFolder(int num);
-    void removeSyncedFolderByTag(mega::MegaHandle tag);
+    void removeSyncedFolderByBackupId(mega::MegaHandle backupId);
     void removeAllFolders();
 
     // Getters

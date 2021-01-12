@@ -16,7 +16,7 @@ SyncSetting::~SyncSetting()
 }
 
 SyncSetting::SyncSetting(const SyncSetting& a) :
-    mSync(a.getSync()->copy()), mTag(a.tag()),
+    mSync(a.getSync()->copy()), mBackupId(a.backupId()),
     mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
     mActive(a.isActive())
 {
@@ -25,7 +25,7 @@ SyncSetting::SyncSetting(const SyncSetting& a) :
 SyncSetting& SyncSetting::operator=(const SyncSetting& a)
 {
     mSync.reset(a.getSync()->copy());
-    mTag = a.tag();
+    mBackupId = a.backupId();
     mSyncID = a.getSyncID();
     mEnabled = a.isEnabled();
     mActive = a.isActive();
@@ -77,7 +77,7 @@ SyncSetting::SyncSetting(QString initializer)
         if (i<parts.size()) { cacheVersion = parts.at(i++).toInt(); }
         if (cacheVersion >= 1)
         {
-            if (i<parts.size()) { mTag = parts.at(i++).toInt(); }
+            if (i<parts.size()) { mBackupId = parts.at(i++).toInt(); }
             if (i<parts.size()) { mSyncID = parts.at(i++); }
         }
         else
@@ -111,7 +111,7 @@ QString SyncSetting::toString()
 {
     QStringList toret;
     toret.append(QString::number(CACHE_VERSION));
-    toret.append(QString::number(mTag));
+    toret.append(QString::number(mBackupId));
     toret.append(mSyncID);
 
     return toret.join(QString::fromUtf8("0x1E"));
@@ -123,8 +123,8 @@ void SyncSetting::setSync(MegaSync *sync)
     {
         mSync.reset(sync->copy());
 
-        assert(mTag == INVALID_HANDLE || mTag == sync->getTag());
-        mTag = sync->getTag();
+        assert(mBackupId == INVALID_HANDLE || mBackupId == sync->getBackupId());
+        mBackupId = sync->getBackupId();
         mEnabled = sync->isEnabled();
 
         mActive = sync->isActive(); //override active with the actual value
@@ -177,12 +177,12 @@ int SyncSetting::getError() const
     return mSync->getError();
 }
 
-mega::MegaHandle SyncSetting::tag() const
+MegaHandle SyncSetting::backupId() const
 {
-    return mTag;
+    return mBackupId;
 }
 
-void SyncSetting::setTag(mega::MegaHandle tag)
+void SyncSetting::setBackupId(MegaHandle backupId)
 {
-    mTag = tag;
+    mBackupId = backupId;
 }

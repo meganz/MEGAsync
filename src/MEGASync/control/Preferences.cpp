@@ -2811,9 +2811,9 @@ void Preferences::readFolders()
         settings->beginGroup(i);
 
         auto sc = std::make_shared<SyncSetting>(settings->value(configuredSyncsKey).value<QString>());
-        if (sc->tag())
+        if (sc->backupId())
         {
-            loadedSyncsMap[sc->tag()] = sc;
+            loadedSyncsMap[sc->backupId()] = sc;
         }
         else
         {
@@ -2987,7 +2987,7 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
     settings->beginGroup(syncsGroupByTagKey);
 
-    settings->beginGroup(QString::number(syncSettings->tag()));
+    settings->beginGroup(QString::number(syncSettings->backupId()));
 
     settings->remove(QString::fromAscii("")); //removes group and all its settings
 
@@ -3005,7 +3005,7 @@ void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
         settings->beginGroup(syncsGroupByTagKey);
 
-        settings->beginGroup(QString::number(syncSettings->tag()));
+        settings->beginGroup(QString::number(syncSettings->backupId()));
 
         settings->setValue(configuredSyncsKey, syncSettings->toString());
 

@@ -8276,10 +8276,10 @@ void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
 
     if (sync->getError())
     {
-        model->addUnattendedDisabledSync(sync->getTag());
+        model->addUnattendedDisabledSync(sync->getBackupId());
     }
 
-    onSyncDisabled(model->getSyncSettingByTag(sync->getTag()));
+    onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
 }
 
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
@@ -8297,7 +8297,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
     showErrorMessage(tr("Your sync \"%1\" has been enabled")
                      .arg(syncSetting->name()));
 
-    model->removeUnattendedDisabledSync(syncSetting->tag());
+    model->removeUnattendedDisabledSync(syncSetting->backupId());
 }
 
 void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
@@ -8307,7 +8307,7 @@ void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    onSyncEnabled(model->getSyncSettingByTag(sync->getTag()));
+    onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
 }
 
 void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
@@ -8340,7 +8340,7 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    model->removeSyncedFolderByTag(sync->getTag());
+    model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
 }
