@@ -531,7 +531,7 @@ void SettingsDialog::onSavingSettingsProgress(double progress)
 
 void SettingsDialog::onSavingSettingsCompleted()
 {
-    auto closeDelay = max(qint64(0), 3500 - (QDateTime::currentMSecsSinceEpoch() - ui->wSpinningIndicator->getStartTime()));
+    auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - ui->wSpinningIndicator->getStartTime()));
     QTimer::singleShot(closeDelay, [this] () {
         isSavingSyncsOnGoing = false;
         syncsStateInformation(NO_ERROR);
