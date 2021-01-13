@@ -221,6 +221,45 @@ public:
 
     void raiseInfoDialog();
 
+    // Manage events sent to servers for debug purpose.
+    static const int FIRST_EVENT_ID {99500};
+    static const int LAST_EVENT_ID {FIRST_EVENT_ID+99};
+    enum {
+        EVENT_1ST_START                         = MegaApplication::FIRST_EVENT_ID,
+        EVENT_1ST_SYNC                          = MegaApplication::FIRST_EVENT_ID+1,
+        EVENT_1ST_SYNCED_FILE                   = MegaApplication::FIRST_EVENT_ID+2,
+        EVENT_1ST_WEBCLIENT_DL                  = MegaApplication::FIRST_EVENT_ID+3,
+        EVENT_INSTALL_STATS                     = MegaApplication::FIRST_EVENT_ID+4,
+        EVENT_ACC_CREATION_START                = MegaApplication::FIRST_EVENT_ID+5,
+        //EVENT_                                = MegaApplication::FIRST_EVENT_ID+6,
+        //EVENT_                                = MegaApplication::FIRST_EVENT_ID+7,
+        EVENT_PRO_REDIRECT                      = MegaApplication::FIRST_EVENT_ID+8,
+        EVENT_MEM_USAGE                         = MegaApplication::FIRST_EVENT_ID+9,
+        EVENT_UPDATE                            = MegaApplication::FIRST_EVENT_ID+10,
+        EVENT_UPDATE_OK                         = MegaApplication::FIRST_EVENT_ID+11,
+        EVENT_DUP_FINISHED_TRSF                 = MegaApplication::FIRST_EVENT_ID+12,
+        EVENT_DUP_ACTIVE_TRSF_DURING_INIT       = MegaApplication::FIRST_EVENT_ID+13,
+        EVENT_DUP_ACTIVE_TRSF_DURING_INSERT     = MegaApplication::FIRST_EVENT_ID+14,
+        //EVENT_                                = MegaApplication::FIRST_EVENT_ID+15,
+        //EVENT_                                = MegaApplication::FIRST_EVENT_ID+16,
+        EVENT_LOCAL_SSL_CERT_RENEWED            = MegaApplication::FIRST_EVENT_ID+17,
+        EVENT_OVER_STORAGE_DIAL                 = MegaApplication::FIRST_EVENT_ID+18,
+        EVENT_OVER_STORAGE_NOTIF                = MegaApplication::FIRST_EVENT_ID+19,
+        EVENT_OVER_STORAGE_MSG                  = MegaApplication::FIRST_EVENT_ID+20,
+        EVENT_ALMOST_OVER_STORAGE_MSG           = MegaApplication::FIRST_EVENT_ID+21,
+        EVENT_ALMOST_OVER_STORAGE_NOTIF         = MegaApplication::FIRST_EVENT_ID+22,
+        EVENT_MAIN_DIAL_WHILE_OVER_QUOTA        = MegaApplication::FIRST_EVENT_ID+23,
+        EVENT_MAIN_DIAL_WHILE_ALMOST_OVER_QUOTA = MegaApplication::FIRST_EVENT_ID+24,
+        EVENT_RED_LIGHT_USED_STORAGE_MISMATCH   = MegaApplication::FIRST_EVENT_ID+25,
+        EVENT_TRSF_OVER_QUOTA_DIAL              = MegaApplication::FIRST_EVENT_ID+26,
+        EVENT_TRSF_OVER_QUOTA_NOTIF             = MegaApplication::FIRST_EVENT_ID+27,
+        EVENT_TRSF_OVER_QUOTA_MSG               = MegaApplication::FIRST_EVENT_ID+28,
+        EVENT_TRSF_ALMOST_OVER_QUOTA_MSG        = MegaApplication::FIRST_EVENT_ID+29,
+        EVENT_PAYWALL_NOTIF                     = MegaApplication::FIRST_EVENT_ID+30,
+        EVENT_SYNC_ADD_FAIL_API_EACCESS         = MegaApplication::FIRST_EVENT_ID+31,
+        EVENT_TRSF_ALMOST_OVERQUOTA_NOTIF       = MegaApplication::FIRST_EVENT_ID+32,
+    };
+
 signals:
     void startUpdaterThread();
     void tryUpdate();

@@ -137,7 +137,8 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
     //send event for the first sync
     if (!isFirstSyncDone && !preferences->isFirstSyncDone())
     {
-        MegaSyncApp->getMegaApi()->sendEvent(99501, "MEGAsync first sync");
+        MegaSyncApp->getMegaApi()->sendEvent(MegaApplication::EVENT_1ST_SYNC,
+                                             "MEGAsync first sync");
     }
     isFirstSyncDone = true;
 
