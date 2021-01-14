@@ -2343,43 +2343,70 @@ border: none;</string>
                         <height>16</height>
                        </size>
                       </property>
-                      <widget class="QMacSpinningProgressIndicator" name="wSpinningIndicator" native="true">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>16</width>
-                         <height>16</height>
-                        </rect>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_27">
+                       <property name="spacing">
+                        <number>0</number>
                        </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>16</width>
-                         <height>16</height>
-                        </size>
+                       <property name="leftMargin">
+                        <number>0</number>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16</width>
-                         <height>16</height>
-                        </size>
+                       <property name="topMargin">
+                        <number>0</number>
                        </property>
-                       <property name="styleSheet">
-                        <string notr="true"/>
+                       <property name="rightMargin">
+                        <number>0</number>
                        </property>
-                      </widget>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="WaitingSpinnerWidget" name="wSpinningIndicator" native="true">
+                         <property name="minimumSize">
+                          <size>
+                           <width>16</width>
+                           <height>16</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16</width>
+                           <height>16</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLabel" name="lSavingSyncs">
-                      <property name="maximumSize">
+                     <spacer name="horizontalSpacer_10">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
                        <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
+                        <width>5</width>
+                        <height>0</height>
                        </size>
                       </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="lSavingSyncs">
                       <property name="text">
                        <string>Saving syncs...</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -2430,7 +2457,7 @@ border: none;</string>
                     <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot;background-color: white; vertical-align: middle;&quot;&gt;Some syncs have been disabled by your safety. For more information, move your mouse over&lt;/span&gt;&lt;span&gt;&lt;img src=&quot;:/images/ic_sync_warning24.png&quot;  style=&quot;vertical-align:middle;&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
+                    <string>&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot;background-color: white; vertical-align: middle;&quot;&gt;Some syncs have been disabled by your safety. For more information, move your mouse over&lt;/span&gt;&lt;span&gt;&lt;img src=&quot;:/images/ic_sync_warning.png&quot;  style=&quot;vertical-align:middle;&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
 </string>
                    </property>
                    <property name="alignment">

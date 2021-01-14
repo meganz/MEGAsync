@@ -575,9 +575,7 @@
         <file>images/File_download_succeed@3x.png</file>
         <file>images/Failed_to_download@3x.png</file>
         <file>images/new_contact@3x.png</file>
-        <file>images/ic_sync_warning@2x.png</file>
         <file>images/ic_sync_warning.png</file>
-        <file>images/ic_sync_warning24.png</file>
-        <file>images/ic_sync_warning24@2x.png</file>
+        <file>images/ic_sync_warning@2x.png</file>
     </qresource>
 </RCC>
