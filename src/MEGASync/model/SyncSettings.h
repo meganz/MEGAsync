@@ -12,8 +12,8 @@ class SyncSetting
 {
 private:
     std::unique_ptr<mega::MegaSync> mSync; //shall not need to be persisted
-    mega::MegaHandle mBackupId = ::mega::INVALID_HANDLE;
-    QString mSyncID;
+    mega::MegaHandle mBackupId = ::mega::INVALID_HANDLE; //identifier given by the api
+    QString mSyncID; //some id for platform specific settings
 
     bool mEnabled = false;
     bool mActive = false;
@@ -41,7 +41,7 @@ public:
     QString getLocalFolder() const;
     long long getLocalFingerprint() const;
     QString getMegaFolder() const;
-    long long getMegaHandle() const;
+    mega::MegaHandle getMegaHandle() const;
     bool isEnabled() const; //enabled by user
     bool isActive() const; //not disabled by user nor failed (nor being removed)
     bool isTemporaryDisabled() const;

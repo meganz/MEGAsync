@@ -109,7 +109,7 @@ public:
     QStringList getSyncIDs();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
-    QList<long long> getMegaFolderHandles();
+    QList<mega::MegaHandle> getMegaFolderHandles();
 
     ///////////// END OF SYNCS ////////////////////
 

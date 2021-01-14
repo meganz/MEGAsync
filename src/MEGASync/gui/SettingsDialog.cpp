@@ -1441,7 +1441,7 @@ int SettingsDialog::saveSettings()
                 for (int j = 0; j < ui->tSyncs->rowCount(); j++)
                 {
                     auto tagItem = ui->tSyncs->cellWidget(j,3);
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->backupId())
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
                     {
                         found = true;
                         break;
@@ -1459,7 +1459,6 @@ int SettingsDialog::saveSettings()
                 // 1.2 - enable/disable changed syncs
                 QString localPath = syncSetting->getLocalFolder();
                 QString megaPath = syncSetting->getMegaFolder();
-                MegaHandle megaHandle = syncSetting->getMegaHandle();
                 for (int j = 0; j < ui->tSyncs->rowCount(); j++)
                 {
                     QString newLocalPath = ui->tSyncs->item(j, 0)->text();
@@ -1473,7 +1472,7 @@ int SettingsDialog::saveSettings()
 
                     auto tagItem = ui->tSyncs->cellWidget(j,3);
 
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULong() == syncSetting->backupId())
+                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
                     {
 #ifdef SYNC_ADVANCED_TEST_MODE
                         if (disabled && syncSetting->isEnabled()) //sync disabled
@@ -1546,7 +1545,7 @@ int SettingsDialog::saveSettings()
                     {
                         QString localFolderPath = ui->tSyncs->item(j, 0)->text();
                         QString megaFolderPath = ui->tSyncs->item(j, 1)->text();
-                        MegaHandle nodeHandle = static_cast<QLabel *>(ui->tSyncs->cellWidget(j, 4))->text().toLongLong();
+                        MegaHandle nodeHandle = static_cast<QLabel *>(ui->tSyncs->cellWidget(j, 4))->text().toULongLong();
                         QString syncName =static_cast<QLabel *>(ui->tSyncs->cellWidget(j, 5))->text();
 
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync from Settings: %1 - %2")

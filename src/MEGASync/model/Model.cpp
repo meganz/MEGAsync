@@ -346,10 +346,10 @@ QStringList Model::getLocalFolders()
     return value;
 }
 
-QList<long long> Model::getMegaFolderHandles()
+QList<MegaHandle> Model::getMegaFolderHandles()
 {
     QMutexLocker qm(&syncMutex);
-    QList<long long> value;
+    QList<MegaHandle> value;
     for (auto &cs : configuredSyncs)
     {
         value.append(configuredSyncsMap[cs]->getMegaHandle());
@@ -364,7 +364,7 @@ std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
 }
 
 
-std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(mega::MegaHandle tag)
+std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(MegaHandle tag)
 {
     QMutexLocker qm(&syncMutex);
     if (configuredSyncsMap.contains(tag))
@@ -382,7 +382,7 @@ void Model::saveUnattendedDisabledSyncs()
     }
 }
 
-void Model::addUnattendedDisabledSync(mega::MegaHandle tag)
+void Model::addUnattendedDisabledSync(MegaHandle tag)
 {
     unattendedDisabledSyncs.insert(tag);
     saveUnattendedDisabledSyncs();

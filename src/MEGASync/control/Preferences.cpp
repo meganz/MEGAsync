@@ -2202,7 +2202,7 @@ QSet<MegaHandle> Preferences::getDisabledSyncTags()
         QList<mega::MegaHandle> tagList;
         for (auto &tag : stringTagList)
         {
-            tagList.append(tag.toULong());
+            tagList.append(tag.toULongLong());
         }
 
         return QSet<mega::MegaHandle>::fromList(tagList);

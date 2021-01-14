@@ -77,7 +77,7 @@ SyncSetting::SyncSetting(QString initializer)
         if (i<parts.size()) { cacheVersion = parts.at(i++).toInt(); }
         if (cacheVersion >= 1)
         {
-            if (i<parts.size()) { mBackupId = parts.at(i++).toInt(); }
+            if (i<parts.size()) { mBackupId = parts.at(i++).toULongLong(); }
             if (i<parts.size()) { mSyncID = parts.at(i++); }
         }
         else
@@ -152,7 +152,7 @@ QString SyncSetting::getMegaFolder()  const
     return folder ? QString::fromUtf8(folder) : QString();
 }
 
-long long SyncSetting::getMegaHandle()  const
+MegaHandle SyncSetting::getMegaHandle()  const
 {
     return mSync->getMegaHandle();
 }
