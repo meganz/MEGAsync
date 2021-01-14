@@ -991,27 +991,36 @@ void Utilities::animateProperty(QWidget *object, int msecs, const char * propert
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-void Utilities::getDaysToTimestamp(int64_t msecsTimestamps, int64_t &remainDays)
+// Returns remaining days until given Unix timestamp in seconds.
+void Utilities::getDaysToTimestamp(int64_t secsTimestamps, int64_t &remainDays)
 {
-    if (!msecsTimestamps)
+    // Reference timestamp shouldn't be 0
+    if (!secsTimestamps)
     {
         return;
     }
 
     int64_t hours = 0;
-    getDaysAndHoursToTimestamp(msecsTimestamps, remainDays, hours);
+    getDaysAndHoursToTimestamp(secsTimestamps, remainDays, hours);
 }
 
-void Utilities::getDaysAndHoursToTimestamp(int64_t msecsTimestamps, int64_t &remainDays, int64_t &remainHours)
+// Returns remaining days / hours until given Unix timestamp in seconds.
+// Note: remainingHours and remaininDays represent the same value.
+// i.e. for 1 day & 3 hours remaining, remainingHours will be 27, not 3.
+void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &remainDays, int64_t &remainHours)
 {
-    if (!msecsTimestamps)
+    // Reference timestamp shouldn't be 0
+    if (!secsTimestamps)
     {
         return;
     }
 
-    int64_t currDate = QDateTime::currentDateTimeUtc().toMSecsSinceEpoch();
-    remainDays  = floor((msecsTimestamps - currDate) / 864e5); //ms difference to days
-    remainHours = floor((msecsTimestamps - currDate) / 36e5); //ms difference to hours
+    // Get seconcs diff between now and secsTimestamps
+    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toSecsSinceEpoch();
+
+    // Compute in hours, then in days
+    remainHours = tDiff / 3600;
+    remainDays  = remainHours / 24;
 }
 
 QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, QWidget *parent)
