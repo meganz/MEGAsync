@@ -1078,12 +1078,23 @@ long long Utilities::getSystemsAvailableMemory()
     return availMemory;
 }
 
-void Utilities::sleepMilliseconds(long long milliseconds)
+void Utilities::sleepMilliseconds(unsigned int milliseconds)
 {
 #ifdef WIN32
     Sleep(milliseconds);
 #else
-    usleep(milliseconds * 1000);
+    // usleep accepts unsigned int argument.
+    //Init to max allowed value, will be changed only if no overflow
+    unsigned int usecs(std::numeric_limits<unsigned int>::max());
+
+    // Avoid overflow. If no overflow, use passed value.
+    if (milliseconds < (usecs/1000))
+    {
+        usecs = milliseconds * 1000;
+    }
+
+    // Call safely
+    usleep(usecs);
 #endif
 }
 

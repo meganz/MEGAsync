@@ -319,7 +319,7 @@ public:
 
     static long long getSystemsAvailableMemory();
 
-    static void sleepMilliseconds(long long milliseconds);
+    static void sleepMilliseconds(unsigned int milliseconds);
 };
 
 #endif // UTILITIES_H
