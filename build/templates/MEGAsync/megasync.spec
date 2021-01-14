@@ -514,7 +514,7 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
 /etc/sysctl.d/100-megasync-inotify-limit.conf
-/etc/udev/rules.d/99-zz-megasync-udev.conf
+/etc/udev/rules.d/99-zz-megasync-udev.rules
 %if 0%{?centos_version} && 0%{?centos_version} < 800
 /opt/*
 %endif
