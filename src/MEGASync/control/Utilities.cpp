@@ -572,7 +572,7 @@ QString Utilities::getFinishedTimeString(long long secs)
     // We might not need century precision... give years.
     else
     {
-        // Compute months. We need at least 64bits to avoid any overflow.
+        // Compute years. We need at least 64 bits to avoid any overflow.
         long long int years = secs/31536000;
         if (years == 1)
         {
