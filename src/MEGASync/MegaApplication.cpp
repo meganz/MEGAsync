@@ -3891,7 +3891,7 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                model->pickInfoFromOldSync(osd, request->getTransferTag(), needsMigratingFromOldSession);
+                model->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
                 preferences->removeOldCachedSync(osd.mPos, email);
             }
             else
@@ -8209,16 +8209,15 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Your sync \"%1\" has been disabled. State = %2. Error = %3")
-                 .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Your sync \"%1\" has been disabled. Error = %2")
+                 .arg(syncSetting->name()).arg(syncSetting->getError()).toUtf8().constData());
 
     if (syncSetting->isTemporaryDisabled() && syncSetting->getError() != MegaSync::Error::LOGGED_OUT)
     {
         showErrorMessage(tr("Your sync \"%1\" has been temporarily disabled").arg(syncSetting->name()).append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));
     }
-
-    if (syncSetting->getState() == MegaSync::SYNC_FAILED)
+    else if (syncSetting->getError() != MegaSync::NO_SYNC_ERROR && syncSetting->getError() != MegaSync::Error::LOGGED_OUT)
     {
         switch(syncSetting->getError())
         {
@@ -8276,10 +8275,10 @@ void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
 
     if (sync->getError())
     {
-        model->addUnattendedDisabledSync(sync->getTag());
+        model->addUnattendedDisabledSync(sync->getBackupId());
     }
 
-    onSyncDisabled(model->getSyncSettingByTag(sync->getTag()));
+    onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
 }
 
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
@@ -8290,14 +8289,14 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, tr("Your sync \"%1\" has been re-enabled. State = %2. Error = %3")
-                 .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, tr("Your sync \"%1\" has been re-enabled. Error = %2")
+                 .arg(syncSetting->name()).arg(syncSetting->getError()).toUtf8().constData());
 
 
     showErrorMessage(tr("Your sync \"%1\" has been enabled")
                      .arg(syncSetting->name()));
 
-    model->removeUnattendedDisabledSync(syncSetting->tag());
+    model->removeUnattendedDisabledSync(syncSetting->backupId());
 }
 
 void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
@@ -8307,7 +8306,7 @@ void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    onSyncEnabled(model->getSyncSettingByTag(sync->getTag()));
+    onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
 }
 
 void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
@@ -8340,7 +8339,7 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    model->removeSyncedFolderByTag(sync->getTag());
+    model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
 }
