@@ -933,10 +933,10 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     }
 
     QString readableTimes;
-    for (int it = qMax(0, list->size() - 3); it < list->size() ; it++)//Display only the most recet 3 times
+    for (int it = qMax(0, list->size() - 3); it < list->size(); it++)//Display only the most recent 3 times
     {
         int64_t ts = list->get(it);
-        QDateTime date = QDateTime::fromTime_t(ts);
+        QDateTime date = QDateTime::fromSecsSinceEpoch(ts);
         readableTimes.append(QLocale().toString(date.date(), QLocale::LongFormat));
 
         if (it != list->size() - 1)
