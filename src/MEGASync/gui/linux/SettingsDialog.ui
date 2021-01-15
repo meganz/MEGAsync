@@ -1970,7 +1970,7 @@ padding-left: 10px;
               <number>1</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <item>
               <widget class="QTableWidget" name="tSyncs">
@@ -2201,13 +2201,13 @@ padding-left: 10px;
            <widget class="QWidget" name="wOQError" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_26">
              <property name="leftMargin">
-              <number>7</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>10</number>
              </property>
              <property name="rightMargin">
-              <number>7</number>
+              <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="lOQWarning">
@@ -2315,20 +2315,26 @@ padding-left: 10px;
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QWidget" name="wSavingSync" native="true">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
+                  <widget class="QWidget" name="wContainerSpinning" native="true">
                    <property name="minimumSize">
                     <size>
-                     <width>0</width>
-                     <height>0</height>
+                     <width>16</width>
+                     <height>16</height>
                     </size>
                    </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_30">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16</width>
+                     <height>16</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_27">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="leftMargin">
                      <number>0</number>
                     </property>
@@ -2342,7 +2348,7 @@ padding-left: 10px;
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QWidget" name="wContainerSpinning" native="true">
+                     <widget class="WaitingSpinnerWidget" name="wSpinningIndicator" native="true">
                       <property name="minimumSize">
                        <size>
                         <width>16</width>
@@ -2355,48 +2361,52 @@ padding-left: 10px;
                         <height>16</height>
                        </size>
                       </property>
-                      <widget class="QMacSpinningProgressIndicator" name="wSpinningIndicator" native="true">
-                       <property name="geometry">
-                        <rect>
-                         <x>0</x>
-                         <y>0</y>
-                         <width>16</width>
-                         <height>16</height>
-                        </rect>
-                       </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>16</width>
-                         <height>16</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16</width>
-                         <height>16</height>
-                        </size>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                      </widget>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="lSavingSyncs">
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>Saving syncs...</string>
+                      <property name="styleSheet">
+                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
                    </layout>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>5</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lSavingSyncs">
+                   <property name="text">
+                    <string>Saving syncs...</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_11">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <spacer name="horizontalSpacer_13">
@@ -2419,13 +2429,13 @@ padding-left: 10px;
                   <number>1</number>
                  </property>
                  <property name="leftMargin">
-                  <number>7</number>
+                  <number>0</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>7</number>
+                  <number>0</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
@@ -2442,7 +2452,7 @@ padding-left: 10px;
                     <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot;background-color: white; vertical-align: middle;&quot;&gt;Some syncs have been disabled by your safety. For more information, move your mouse over&lt;/span&gt;&lt;span&gt;&lt;img src=&quot;:/images/ic_sync_warning24.png&quot;  style=&quot;vertical-align:middle;&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
+                    <string>&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot;background-color: white; vertical-align: middle;&quot;&gt;Some syncs have been disabled by your safety. For more information, move your mouse over&lt;/span&gt;&lt;span&gt;&lt;img src=&quot;:/images/ic_sync_warning.png&quot;  style=&quot;vertical-align:middle;&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
 </string>
                    </property>
                    <property name="alignment">

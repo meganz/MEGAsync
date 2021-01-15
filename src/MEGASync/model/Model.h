@@ -54,11 +54,11 @@ protected:
     QMutex syncMutex;
 
     ///////////////// SYNCS ///////////////////////
-    QList<int> configuredSyncs; //Tags of configured syncs
-    QMap<int, std::shared_ptr<SyncSetting>> configuredSyncsMap;
-    QMap<int, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
+    QList<mega::MegaHandle> configuredSyncs; //Tags of configured syncs
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
 
-    QSet<int> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
+    QSet<mega::MegaHandle> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
     ///////////// END OF SYNCS ////////////////////
 
 
@@ -85,31 +85,31 @@ public:
     void rewriteSyncSettings();
 
     // load into sync model the information from an old cached sync
-    void pickInfoFromOldSync(const SyncData &osd, int tag, bool loadedFromPreviousSessions);
+    void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 
     // remove syncs from model
     void removeSyncedFolder(int num);
-    void removeSyncedFolderByTag(int tag);
+    void removeSyncedFolderByBackupId(mega::MegaHandle backupId);
     void removeAllFolders();
 
     // Getters
     std::shared_ptr<SyncSetting> getSyncSetting(int num);
-    std::shared_ptr<SyncSetting> getSyncSettingByTag(int num);
+    std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle num);
 
     int getNumSyncedFolders();
 
     //unattended disabled syncs
     bool hasUnattendedDisabledSyncs() const;
-    void addUnattendedDisabledSync(int tag);
-    void removeUnattendedDisabledSync(int tag);
-    void setUnattendedDisabledSyncs(QSet<int> tags);
+    void addUnattendedDisabledSync(mega::MegaHandle tag);
+    void removeUnattendedDisabledSync(mega::MegaHandle tag);
+    void setUnattendedDisabledSyncs(QSet<mega::MegaHandle> tags);
     void dismissUnattendedDisabledSyncs();
 
     QStringList getSyncNames();
     QStringList getSyncIDs();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
-    QList<long long> getMegaFolderHandles();
+    QList<mega::MegaHandle> getMegaFolderHandles();
 
     ///////////// END OF SYNCS ////////////////////
 

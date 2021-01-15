@@ -15,16 +15,18 @@ class QSyncItemWidget : public QWidget
 public:
     explicit QSyncItemWidget(QWidget *parent = nullptr);
 
-    void setText(const QString &path);
+    void setPathAndName(const QString &path, const QString &name);
+    void setPathAndGuessName(const QString &path);
+
     void setToolTip(const QString &tooltip);
     void setError(int error);
-    QString text();
+    QString fullPath();
 
     ~QSyncItemWidget();
 
 private:
     Ui::QSyncItemWidget *ui;
-    QString fullPath;
+    QString mFullPath;
     int error;
 };
 

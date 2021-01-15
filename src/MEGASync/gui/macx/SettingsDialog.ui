@@ -2186,7 +2186,7 @@ border: none;</string>
                     <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot;background-color: white; vertical-align: middle;&quot;&gt;Some syncs have been disabled by your safety. For more information, move your mouse over&lt;/span&gt;&lt;span&gt;&lt;img src=&quot;:/images/ic_sync_warning24.png&quot;  style=&quot;vertical-align:middle;&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
+                    <string>&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot;background-color: white; vertical-align: middle;&quot;&gt;Some syncs have been disabled by your safety. For more information, move your mouse over&lt;/span&gt;&lt;span&gt;&lt;img src=&quot;:/images/ic_sync_warning.png&quot;  style=&quot;vertical-align:middle;&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
 </string>
                    </property>
                    <property name="alignment">

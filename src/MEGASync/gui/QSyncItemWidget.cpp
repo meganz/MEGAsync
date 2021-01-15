@@ -18,14 +18,20 @@ QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
     error = 0;
 }
 
-void QSyncItemWidget::setText(const QString &path)
+void QSyncItemWidget::setPathAndName(const QString &path, const QString &syncName)
 {
-    fullPath = path;
+    mFullPath = path;
+    ui->lSyncName->setText(syncName);
+}
 
-    QString syncName {QFileInfo(fullPath).fileName()};
+void QSyncItemWidget::setPathAndGuessName(const QString &path)
+{
+    mFullPath = path;
+
+    QString syncName {QFileInfo(mFullPath).fileName()};
     if (syncName.isEmpty())
     {
-        syncName = QDir::toNativeSeparators(fullPath);
+        syncName = QDir::toNativeSeparators(mFullPath);
     }
     syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
     ui->lSyncName->setText(syncName);
@@ -47,9 +53,9 @@ void QSyncItemWidget::setError(int error)
     }
 }
 
-QString QSyncItemWidget::text()
+QString QSyncItemWidget::fullPath()
 {
-    return fullPath;
+    return mFullPath;
 }
 
 QSyncItemWidget::~QSyncItemWidget()
