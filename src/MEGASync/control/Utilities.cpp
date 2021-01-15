@@ -478,7 +478,7 @@ const std::vector<Postfix> postfixes = {{1e12, "T"},
                                      {1e6,  "M"},
                                      {1e3,  "K"}};
 
-constexpr auto maxStringSize{4};
+constexpr int maxStringSize = 4;
 
 QString Utilities::getQuantityString(unsigned long long quantity)
 {
@@ -486,10 +486,10 @@ QString Utilities::getQuantityString(unsigned long long quantity)
     {
         if(static_cast<double>(quantity) >= postfix.value)
         {
-            const auto value{static_cast<double>(quantity) / postfix.value};
+            const double value{static_cast<double>(quantity) / postfix.value};
             // QString::number(value, 'G', 3) is another way to do it but it rounds the result
 
-            auto valueString{QString::number(value).left(maxStringSize)};
+            QString valueString{QString::number(value).left(maxStringSize)};
             if(valueString.contains(QStringLiteral(".")))
             {
                 valueString.remove(QRegExp(QStringLiteral("0+$"))); // Remove any number of trailing 0's

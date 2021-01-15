@@ -250,13 +250,13 @@ void TransferQuota::reset()
 
 void TransferQuota::sendQuotaWarningOsNotification()
 {
-    const auto title{tr("Limited available transfer quota.")};
+    const QString title{tr("Limited available transfer quota.")};
     mOsNotifications->sendOverTransferNotification(title);
 }
 
 void TransferQuota::sendOverQuotaOsNotification()
 {
-    const auto title{tr("Depleted transfer quota.")};
+    const QString title{tr("Depleted transfer quota.")};
     mOsNotifications->sendOverTransferNotification(title);
 }
 

@@ -501,21 +501,21 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
 {
     updateAnimation(td);
     QString remainingTimeString;
-    const auto undeterminedRemainingTimeString{QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>")};
+    const QString undeterminedRemainingTimeString{QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>")};
 
     switch (td->transferState)
     {
     case MegaTransfer::STATE_ACTIVE:
     {
-        const auto infiniteRemainingTime{td->remainingTimeSeconds.count() && td->remainingTimeSeconds == std::chrono::seconds::max()};
-        const auto lowerThanMinute{td->remainingTimeSeconds.count() && td->remainingTimeSeconds < std::chrono::minutes{1}};
+        const bool infiniteRemainingTime{td->remainingTimeSeconds.count() && td->remainingTimeSeconds == std::chrono::seconds::max()};
+        const bool lowerThanMinute{td->remainingTimeSeconds.count() && td->remainingTimeSeconds < std::chrono::minutes{1}};
         if (infiniteRemainingTime)
         {
             remainingTimeString = undeterminedRemainingTimeString;
         }
         else if(lowerThanMinute)
         {
-            const auto lowerThanMinuteTimeString{QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"))};
+            const QString lowerThanMinuteTimeString{QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"))};
             remainingTimeString = lowerThanMinuteTimeString;
         }
         else if (td->remainingTimeSeconds.count())
@@ -718,6 +718,6 @@ void TransferData::clear()
 
 void TransferData::updateRemainingTimeSeconds()
 {
-    const auto remainingBytes{totalSize - totalTransferredBytes};
+    const long long remainingBytes{totalSize - totalTransferredBytes};
     remainingTimeSeconds = mTransferRemainingTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes);
 }

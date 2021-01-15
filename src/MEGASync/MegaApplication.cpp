@@ -704,7 +704,7 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::setTrayIconFromTheme(QString icon)
 {
     QString name = QString(icon).replace(QString::fromAscii("://images/"), QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
-    const auto needsToBeUpdated{name != trayIcon->icon().name()};
+    const bool needsToBeUpdated{name != trayIcon->icon().name()};
     if(needsToBeUpdated)
     {
         trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
@@ -3834,8 +3834,8 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         if (mOsNotifications && !message.isEmpty())
         {           
             preferences->setLastTransferNotificationTimestamp();
-            const auto totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
-            const auto extraData{totalTransfersString + data->localPath};
+            const QString totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
+            const QString extraData{totalTransfersString + data->localPath};
             mOsNotifications->sendFinishedTransferNotification(title, message, extraData);
         }
 
