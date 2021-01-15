@@ -52,12 +52,32 @@ void SizeLimitDialog::setLowerSizeLimit(bool value)
 
 void SizeLimitDialog::setUpperSizeLimitValue(long long limit)
 {
-    ui->eUpperThan->setValue(limit);
+    // Avoid overflow. Cap to max int value.
+    int lLimit(std::numeric_limits<int>::max());
+
+    // Check if value in range. Should always be >0.
+    if (limit < lLimit)
+    {
+        lLimit = static_cast<int>(limit);
+    }
+
+    // Set value.
+    ui->eUpperThan->setValue(lLimit);
 }
 
 void SizeLimitDialog::setLowerSizeLimitValue(long long limit)
 {
-    ui->eLowerThan->setValue(limit);
+    // Avoid overflow. Cap to max int value.
+    int lLimit(std::numeric_limits<int>::max());
+
+    // Check if value in range. Should always be >0.
+    if (limit < lLimit)
+    {
+        lLimit = static_cast<int>(limit);
+    }
+
+    // Set value.
+    ui->eLowerThan->setValue(lLimit);
 }
 
 long long SizeLimitDialog::upperSizeLimitValue()
