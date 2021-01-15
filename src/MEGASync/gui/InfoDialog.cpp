@@ -415,7 +415,12 @@ void InfoDialog::setUsage()
         }
         else
         {
-            int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+            // Compute percentage
+            long double usedS(preferences->usedStorage());
+            long double totalS(preferences->totalStorage());
+            // We can safely cast to int, because the percentage should fit.
+            int percentage = static_cast<int>(100. * usedS / totalS);
+
             ui->wCircularStorage->setValue(percentage);
 
             QString usageColorS = (percentage < 90 ? QString::fromUtf8("#666666")
@@ -469,8 +474,13 @@ void InfoDialog::setUsage()
         }
         else
         {
-            int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-            ui->wCircularQuota->setValue((percentage < 100) ? percentage : 100);
+            // Compute percentage
+            long double usedB(preferences->usedBandwidth());
+            long double totalB(preferences->totalBandwidth());
+            // We can safely cast to int, because the percentage should fit.
+            int percentage = static_cast<int>(100. * usedB / totalB);
+
+            ui->wCircularQuota->setValue(std::min(percentage, 100));
 
             QString usageColorB = (percentage < 90 ? QString::fromUtf8("#666666")
                                                           : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
@@ -1353,7 +1363,8 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedDownloadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                    ui->bTransferManager->setPercentDownloads( qreal(completedDownloadBytes)
+                                                               / qreal(leftDownloadBytes));
                 }
             }
 
@@ -1377,7 +1388,8 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedUploadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+                    ui->bTransferManager->setPercentUploads(qreal(completedUploadBytes)
+                                                            / qreal(leftUploadBytes));
                 }
             }
 
@@ -1418,7 +1430,8 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
             currentCompletedDownloadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                ui->bTransferManager->setPercentDownloads(qreal(completedDownloadBytes)
+                                                          / qreal(leftDownloadBytes));
             }
             else
             {
@@ -1431,7 +1444,8 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
                 {
                     downloadActiveTransferPriority = transfer->getPriority();
                     downloadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentDownloads(currentCompletedDownloadBytes *1.0 /currentDownloadBytes);
+                    ui->bTransferManager->setPercentDownloads(qreal(currentCompletedDownloadBytes)
+                                                              / qreal(currentDownloadBytes));
                 }
             }
         }
@@ -1442,7 +1456,8 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
             currentCompletedUploadBytes = transfer->getTransferredBytes();
             if (circlesShowAllActiveTransfersProgress)
             {
-                ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+                ui->bTransferManager->setPercentUploads(qreal(completedUploadBytes)
+                                                        / qreal(leftUploadBytes));
             }
             else
             {
@@ -1455,7 +1470,8 @@ void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
                 {
                     uploadActiveTransferPriority = transfer->getPriority();
                     uploadActiveTransferState = transfer->getState();
-                    ui->bTransferManager->setPercentUploads(currentCompletedUploadBytes *1.0 /currentUploadBytes);
+                    ui->bTransferManager->setPercentUploads(qreal(currentCompletedUploadBytes)
+                                                            / qreal(currentUploadBytes));
                 }
             }
         }

@@ -266,8 +266,14 @@ void GuestWidget::onRequestUpdate(MegaApi*, MegaRequest *request)
     {
         if (request->getTotalBytes() > 0)
         {
-            ui->progressBar->setMaximum(request->getTotalBytes());
-            ui->progressBar->setValue(request->getTransferredBytes());
+            // Use percentage instead of raw values, to stay within int range.
+            ui->progressBar->setMaximum(100);
+
+            // Compute percentage
+            long double totalB(request->getTotalBytes());
+            long double transferredB(request->getTransferredBytes());
+            // We can cast because the percentage will be <= 100
+            ui->progressBar->setValue(static_cast<int>(100. * transferredB / totalB));
         }
     }
 }
