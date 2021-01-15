@@ -167,7 +167,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->eMaxUploadConnections, SIGNAL(valueChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cbUseHttps, SIGNAL(clicked()), this, SLOT(stateChanged()));
 
-    syncsStateInformation(NO_ERROR);
+    syncsStateInformation(SyncStateInformation::NO_ERRORS);
 
 #ifndef WIN32
     #ifndef __APPLE__
@@ -524,7 +524,7 @@ void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 
 void SettingsDialog::onSavingSettingsProgress(double progress)
 {
-    syncsStateInformation(SAVING_SYNCS);
+    syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
     savingSyncs(false, ui->pSyncs);
     isSavingSyncsOnGoing = true;
 }
@@ -534,7 +534,7 @@ void SettingsDialog::onSavingSettingsCompleted()
     auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - ui->wSpinningIndicator->getStartTime()));
     QTimer::singleShot(closeDelay, [this] () {
         isSavingSyncsOnGoing = false;
-        syncsStateInformation(NO_ERROR);
+        syncsStateInformation(SyncStateInformation::NO_ERRORS);
         savingSyncs(true, ui->pSyncs);
     });
 }
@@ -1986,8 +1986,8 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
         syncNames.append(syncSetting->name());
     }
 
-    areSyncsDisabled ? syncsStateInformation(DISABLED_SYNCS) :
-                       syncsStateInformation(NO_ERROR);
+    areSyncsDisabled ? syncsStateInformation(SyncStateInformation::DISABLED_SYNCS) :
+                       syncsStateInformation(SyncStateInformation::NO_ERRORS);
 }
 
 void SettingsDialog::loadSizeLimits()
