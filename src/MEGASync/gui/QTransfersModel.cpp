@@ -56,7 +56,10 @@ void QTransfersModel::refreshTransfers()
 {
     if (transferOrder.size())
     {
-        emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size() - 1, 0, QModelIndex()));
+        // We can safely cast transferOrder.size() to int, because an int should enough
+        // to represent that value.
+        emit dataChanged(index(0, 0, QModelIndex()),
+                         index(static_cast<int>(transferOrder.size()) - 1, 0, QModelIndex()));
     }
 }
 
