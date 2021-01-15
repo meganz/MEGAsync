@@ -63,7 +63,13 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     else
     {
         ui->sHeader->setCurrentWidget(ui->pUsedData);
-        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+
+        // Get float version of values, with max precision
+        long double usedS(preferences->usedStorage());
+        long double totalS(preferences->totalStorage());
+        // We can safely cast to int, as the percentage should be well in range of an int.
+        int percentage = static_cast<int>(100. * (usedS/totalS));
+
         ui->pUsageStorage->setValue(percentage > ui->pUsageStorage->maximum() ? ui->pUsageStorage->maximum() : percentage);
         if (percentage > 100)
         {
