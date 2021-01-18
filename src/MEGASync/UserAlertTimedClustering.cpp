@@ -51,7 +51,7 @@ QString getRemovedItemsMessage(int64_t removedItems, const QString& email)
 void UserAlertTimedClustering::onClusterTimerTimeout()
 {
     std::lock_guard<std::mutex> lock(mUserAlertMutex);
-    const int64_t totalRemovedItems = mUserAlert->getNumber(0);
+    const auto totalRemovedItems = mUserAlert->getNumber(0);
     const auto currentRemovedItems = totalRemovedItems - mPreviousTotalRemovedItems;
     mPreviousTotalRemovedItems = totalRemovedItems;
     const QString email{QString::fromUtf8(mUserAlert->getEmail())};

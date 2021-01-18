@@ -478,7 +478,7 @@ const std::vector<Postfix> postfixes = {{1e12, "T"},
                                      {1e6,  "M"},
                                      {1e3,  "K"}};
 
-constexpr int maxStringSize = 4;
+constexpr auto maxStringSize = 4;
 
 QString Utilities::getQuantityString(unsigned long long quantity)
 {

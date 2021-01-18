@@ -31,11 +31,11 @@ double getWindowScalingFactorOnXcfe()
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
     QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    const bool outputCorrect = e.isEmpty() && output.size() == 1;
+    const bool outputCorrect{e.isEmpty() && output.size() == 1};
     if (outputCorrect)
     {
         bool conversionOk;
-        const double scalingFactor = output.toDouble(&conversionOk);
+        const auto scalingFactor = output.toDouble(&conversionOk);
         if(conversionOk)
         {
             windowScalingFactor = scalingFactor;
@@ -74,7 +74,7 @@ ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
         screenInfo.availableHeightPixels = screen->availableGeometry().height();
         screenInfo.devicePixelRatio = screen->devicePixelRatio();
 
-        const bool isLinuxAndDpiCalculationIsCorrect = osType==OsType::LINUX && linuxDpi > 0;
+        const bool isLinuxAndDpiCalculationIsCorrect{osType==OsType::LINUX && linuxDpi > 0};
         screenInfo.dotsPerInch = isLinuxAndDpiCalculationIsCorrect ? linuxDpi : screen->logicalDotsPerInch();
 
         screensInfo.push_back(screenInfo);
@@ -141,12 +141,12 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
     {
         if(mOsName == "Deepin 20")
         {
-            const double scale = getDpiOnLinux() / 96.0;
+            const auto scale = getDpiOnLinux() / 96.0;
             qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
             return;
         }
 
-        const bool needsRescaling = computeScales();
+        const bool needsRescaling{computeScales()};
         if(needsRescaling)
         {
             if(mScreensInfo.size() > 1)
@@ -202,7 +202,7 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
         bool screenScaleFactorsValid = true;
         for (const auto& screenInfo : mScreensInfo)
         {
-            const bool textFound = predefinedScreenScaleFactors.find(screenInfo.name) != std::string::npos;
+            const bool textFound{predefinedScreenScaleFactors.find(screenInfo.name) != std::string::npos};
             if (!textFound)
             {
                 screenScaleFactorsValid = false;
@@ -253,12 +253,12 @@ bool ScaleFactorManager::computeScales()
         {
             scale = computeScaleLinux(screenInfo);
         }
-        const double maxScale = calculateMaxScale(screenInfo);
+        const auto maxScale = calculateMaxScale(screenInfo);
         scale = std::min(scale, maxScale);
         scale = adjustScaleValueToSuitableIncrement(scale, maxScale, screenInfo.devicePixelRatio);
 
-        const bool hdpiAutoEnabled = screenInfo.devicePixelRatio > 1.0;
-        const bool scaleNeedsToBeAdjusted = scale < 1.0 && !hdpiAutoEnabled;
+        const bool hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
+        const bool scaleNeedsToBeAdjusted{scale < 1.0 && !hdpiAutoEnabled};
         if(scaleNeedsToBeAdjusted)
         {
             scale = 1.0;
@@ -275,7 +275,7 @@ bool ScaleFactorManager::computeScales()
 
 double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
 {
-    const bool hdpiAutoEnabled = screenInfo.devicePixelRatio > 1.0;
+    const bool hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
     if(hdpiAutoEnabled)
     {
         return 1.0;
@@ -283,7 +283,7 @@ double ScaleFactorManager::computeScaleLinux(const ScreenInfo &screenInfo) const
 
     constexpr auto baseDpi = 96.;
     auto scale = 1.;
-    const bool highDpi = screenInfo.dotsPerInch > baseDpi;
+    const bool highDpi{screenInfo.dotsPerInch > baseDpi};
     if (highDpi)
     {
         scale = screenInfo.dotsPerInch / baseDpi;

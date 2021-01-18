@@ -580,7 +580,7 @@ void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
         if(dbusMssage.arguments().size() > 1)
         {
             const QString actionText{dbusMssage.arguments().at(1).toString()};
-            const int actionIndex{getActions().indexOf(actionText)};
+            const auto actionIndex = getActions().indexOf(actionText);
             if(actionIndex == 0)
             {
                 emit activated(Action::firstButton);

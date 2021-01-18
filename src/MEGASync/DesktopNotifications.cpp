@@ -149,7 +149,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 {
     if(mPreferences->showNotifications())
     {
-        const int unseenAlertsCount{countUnseenAlerts(alertList)};
+        const auto unseenAlertsCount = countUnseenAlerts(alertList);
         const bool tooManyAlertsUnseen{unseenAlertsCount > maxNumberOfUnseenNotifications};
         if(tooManyAlertsUnseen || (mIsFirstTime && unseenAlertsCount))
         {
@@ -471,8 +471,8 @@ void DesktopNotifications::viewContactOnWebClient(MegaNotification::Action activ
     if (userVisible)
     {
         const QString userHandle{QString::fromUtf8(megaApi->userHandleToBase64(userMail->getHandle()))};
-        const bool actionIsViewContact = checkIfActionIsValid(activationButton);
-        const bool actionIsOpenChat = activationButton == MegaNotification::Action::secondButton;
+        const bool actionIsViewContact{checkIfActionIsValid(activationButton)};
+        const bool actionIsOpenChat{activationButton == MegaNotification::Action::secondButton};
         if(actionIsViewContact)
         {
             url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(userHandle));
@@ -691,8 +691,8 @@ void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, con
 
 void DesktopNotifications::replayNewShareReceived(MegaNotification::Action action) const
 {
-    const bool actionIsViewOnWebClient = checkIfActionIsValid(action);
-    const bool actionIsSyncShare = action == MegaNotification::Action::secondButton;
+    const bool actionIsViewOnWebClient{checkIfActionIsValid(action)};
+    const bool actionIsSyncShare{action == MegaNotification::Action::secondButton};
     if(actionIsViewOnWebClient)
     {
         viewShareOnWebClient(action);

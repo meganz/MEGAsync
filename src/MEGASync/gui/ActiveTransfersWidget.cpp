@@ -718,6 +718,6 @@ void TransferData::clear()
 
 void TransferData::updateRemainingTimeSeconds()
 {
-    const long long remainingBytes{totalSize - totalTransferredBytes};
+    const auto remainingBytes = totalSize - totalTransferredBytes;
     remainingTimeSeconds = mTransferRemainingTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes);
 }
