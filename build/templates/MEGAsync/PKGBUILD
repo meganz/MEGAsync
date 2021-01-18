@@ -76,5 +76,5 @@ package() {
 	mkdir -p $pkgdir/etc/sysctl.d/
 	echo "fs.inotify.max_user_watches = 524288" > $pkgdir/etc/sysctl.d/100-megasync-inotify-limit.conf
 	mkdir -p $pkgdir/etc/udev/rules.d/
-	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > $pkgdir/etc/udev/rules.d/100-megasync-udev.rules
+	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > $pkgdir/etc/udev/rules.d/99-megasync-udev.rules
 }
