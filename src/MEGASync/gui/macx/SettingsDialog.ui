@@ -1713,7 +1713,7 @@ border: none;</string>
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>6</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QWidget" name="widget_9" native="true">
@@ -2160,20 +2160,96 @@ border: none;</string>
                <widget class="QWidget" name="pSyncsDisabled">
                 <layout class="QHBoxLayout" name="horizontalLayout_34">
                  <property name="spacing">
-                  <number>1</number>
+                  <number>3</number>
                  </property>
                  <property name="leftMargin">
-                  <number>7</number>
+                  <number>6</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>7</number>
+                  <number>6</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
+                 <item>
+                  <widget class="QWidget" name="wWarningIco" native="true">
+                   <property name="minimumSize">
+                    <size>
+                     <width>16</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_12">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QToolButton" name="bWarningIco">
+                      <property name="minimumSize">
+                       <size>
+                        <width>16</width>
+                        <height>16</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16</width>
+                        <height>16</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">#bWarningIco
+{
+border: none;
+}</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normalon>:/images/ic_sync_warning.png</normalon>
+                       </iconset>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_6">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>13</width>
+                        <height>16</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                  <item>
                   <widget class="QLabel" name="lDisabledSyncs">
                    <property name="sizePolicy">
@@ -2186,11 +2262,10 @@ border: none;</string>
                     <string notr="true"/>
                    </property>
                    <property name="text">
-                    <string>&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot;background-color: white; vertical-align: middle;&quot;&gt;Some syncs have been disabled by your safety. For more information, move your mouse over&lt;/span&gt;&lt;span&gt;&lt;img src=&quot;:/images/ic_sync_warning.png&quot;  style=&quot;vertical-align:middle;&quot;/&gt;&lt;/span&gt;&lt;/p&gt;
-</string>
+                    <string>Some syncs have been disabled. For more information, move your mouse over the warning icon.</string>
                    </property>
                    <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
                    </property>
                    <property name="wordWrap">
                     <bool>true</bool>
