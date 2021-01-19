@@ -34,5 +34,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/MegaController.h \
     $$PWD/MegaSyncLogger.h \
     $$PWD/ConnectivityChecker.h \
+    $$PWD/app_stats_events.h \
     $$PWD/gzjoin.h
 

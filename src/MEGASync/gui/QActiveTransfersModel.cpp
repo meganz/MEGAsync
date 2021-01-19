@@ -1,6 +1,10 @@
 #include "QActiveTransfersModel.h"
 #include "MegaApplication.h"
+
+#include "control/app_stats_events.h"
+
 #include <assert.h>
+
 
 using namespace mega;
 
@@ -99,7 +103,7 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
     if (transferOrder.size() != transfers.size())
     {
         assert(false);
-        megaApi->sendEvent(MegaApplication::EVENT_DUP_ACTIVE_TRSF_DURING_INIT,
+        megaApi->sendEvent(APP_STATS_EVENTS::EVENT_DUP_ACTIVE_TRSF_DURING_INIT,
                            "Duplicated active transfer during initialization");
     }
 }
@@ -233,7 +237,7 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
         if (transfers.count(item->data.tag))
         {
             assert(false);
-            megaApi->sendEvent(MegaApplication::EVENT_DUP_ACTIVE_TRSF_DURING_INSERT,
+            megaApi->sendEvent(APP_STATS_EVENTS::EVENT_DUP_ACTIVE_TRSF_DURING_INSERT,
                                QString::fromUtf8("Duplicated active transfer during insertion: %1")
                                .arg(QString::number(item->data.tag)).toUtf8().constData());
             delete item;
