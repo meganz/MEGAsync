@@ -58,9 +58,14 @@ https://mega.nz/#!8tZglCTR!cZ_B39i9YxLgt3_8x9LsOpFhFDHuAh4jdz78IuQTQT4
 5. Uncompress that file into `src\MEGASync\mega\bindings\qt`
 6. Open the project `src/MEGA.pro` with Qt Creator
 7. Select the folder `Release_x32` as the target for Release and Debug builds
-8. Build the project
-9. Copy or move the .dll files from the folder `src\MEGASync\mega\bindings\qt\3rdparty\bin` to the folder `Release_x32\MEGASync`
-10.  Enjoy!
+8. From the `src` directory, run:
+```
+lrelease MEGASync/MEGASync.pro
+```
+to generate translation files. Alternatively, you can add it as a custom step in the build process, right afer `qmake` (`Command: lrelease`; `Arguments: MEGASync/MEGASync.pro`; `Working directory: %{sourceDir}`). 
+9. Build the project
+10. Copy or move the .dll files from the folder `src\MEGASync\mega\bindings\qt\3rdparty\bin` to the folder `Release_x32\MEGASync`
+11.  Enjoy!
 
 It's recommended to go to `Project -> Run` in Qt Creator and disable the option `Run in terminal`
 
