@@ -2092,7 +2092,7 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 
 void SettingsDialog::on_bAdd_clicked()
 {
-    const auto invalidMegaFolderHandle{0};
+    const auto invalidMegaFolderHandle = 0;
     addSyncFolder(invalidMegaFolderHandle);
 }
 
