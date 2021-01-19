@@ -229,7 +229,7 @@ background-color: rgba(0, 0, 0, 10%);
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
             </property>
             <property name="iconSize">
@@ -471,7 +471,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_win.qrc">
                         <normaloff>:/images/pause_big_ico.png</normaloff>:/images/pause_big_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -627,7 +627,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_win.qrc">
                         <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -747,7 +747,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_win.qrc">
                         <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -819,7 +819,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_win.qrc">
                      <normaloff>:/images/download_item_ico.png</normaloff>:/images/download_item_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -931,7 +931,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_win.qrc">
                      <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1180,7 +1180,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_win.qrc">
                         <normaloff>:/images/pause_big_ico.png</normaloff>:/images/pause_big_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -1330,7 +1330,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_win.qrc">
                         <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -1453,7 +1453,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_win.qrc">
                         <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -1525,7 +1525,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_win.qrc">
                      <normaloff>:/images/upload_item_ico.png</normaloff>:/images/upload_item_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1637,7 +1637,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_win.qrc">
                      <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1849,7 +1849,7 @@ background-color: rgba(0, 0, 0, 10%);
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

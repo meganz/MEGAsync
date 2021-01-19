@@ -242,7 +242,7 @@ background: transparent;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/img_wizard_1.png</normaloff>:/images/img_wizard_1.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -330,7 +330,7 @@ background: transparent;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/img_wizard_2.png</normaloff>:/images/img_wizard_2.png</iconset>
                </property>
                <property name="iconSize">
@@ -414,7 +414,7 @@ background: transparent;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/img_wizard_3.png</normaloff>:/images/img_wizard_3.png</iconset>
                </property>
                <property name="iconSize">
@@ -499,7 +499,7 @@ background: transparent;</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/icon_sync.png</normaloff>:/images/icon_sync.png</iconset>
               </property>
               <property name="iconSize">
@@ -655,7 +655,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/icon_left_slice.png</normaloff>:/images/icon_left_slice.png</iconset>
            </property>
            <property name="iconSize">
@@ -691,7 +691,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/icon_slice_dot.png</normaloff>:/images/icon_slice_dot.png</iconset>
         </property>
         <property name="iconSize">
@@ -724,7 +724,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/icon_slice_dot.png</normaloff>:/images/icon_slice_dot.png</iconset>
         </property>
         <property name="iconSize">
@@ -757,7 +757,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/icon_slice_dot.png</normaloff>:/images/icon_slice_dot.png</iconset>
         </property>
         <property name="iconSize">
@@ -820,7 +820,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/icon_right_slide.png</normaloff>:/images/icon_right_slide.png</iconset>
            </property>
            <property name="iconSize">
@@ -1351,7 +1351,7 @@ background: transparent;</string>
   <tabstop>bStep3</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
