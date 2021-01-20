@@ -2001,7 +2001,7 @@ void MegaApplication::checkMemoryUsage()
         {
             preferences->setMaxMemoryUsage(maxMemoryUsage);
             preferences->setMaxMemoryReportTime(currentTime);
-            megaApi->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, QString::fromUtf8("%1 %2 %3")
+            megaApi->sendEvent(AppStatsEvents::EVENT_MEM_USAGE, QString::fromUtf8("%1 %2 %3")
                                .arg(maxMemoryUsage)
                                .arg(numNodes)
                                .arg(numLocalNodes).toUtf8().constData());
