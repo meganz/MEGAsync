@@ -1,6 +1,6 @@
 #include "mega/types.h"
 #include "TransferQuota.h"
-#include "control/app_stats_events.h"
+#include "control/AppStatsEvents.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 
@@ -68,7 +68,7 @@ void TransferQuota::checkExecuteDialog()
     if(dialogExecutionEnabled)
     {
         mPreferences->setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::now());
-        mMegaApi->sendEvent(APP_STATS_EVENTS::EVENT_TRSF_OVER_QUOTA_DIAL,
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_DIAL,
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
         if (!mUpgradeDialog)
         {
@@ -97,7 +97,7 @@ void TransferQuota::checkExecuteNotification()
     if (notificationExecutionEnabled)
     {
         mPreferences->setTransferOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
-        mMegaApi->sendEvent(APP_STATS_EVENTS::EVENT_TRSF_OVER_QUOTA_NOTIF,
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_NOTIF,
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_OS_NOTIFICATION);
         sendOverQuotaOsNotification();
     }
@@ -109,7 +109,7 @@ void TransferQuota::checkExecuteUiMessage()
     const bool uiAlertExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (uiAlertExecutionEnabled)
     {
-        mMegaApi->sendEvent(APP_STATS_EVENTS::EVENT_TRSF_OVER_QUOTA_MSG,
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_MSG,
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT);
         emit overQuotaUiMessage();
     }
@@ -122,7 +122,7 @@ void TransferQuota::checkExecuteWarningOsNotification()
     if (notificationExecutionEnabled)
     {
         mPreferences->setTransferAlmostOverQuotaOsNotificationLastExecution(std::chrono::system_clock::now());
-        mMegaApi->sendEvent(APP_STATS_EVENTS::EVENT_TRSF_ALMOST_OVERQUOTA_NOTIF,
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVERQUOTA_NOTIF,
                            EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION);
         sendQuotaWarningOsNotification();
     }
@@ -134,7 +134,7 @@ void TransferQuota::checkExecuteWarningUiMessage()
     const bool executeUiWarningAlert{std::chrono::system_clock::now() >= disabledUntil};
     if (executeUiWarningAlert)
     {
-        mMegaApi->sendEvent(APP_STATS_EVENTS::EVENT_TRSF_ALMOST_OVER_QUOTA_MSG,
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVER_QUOTA_MSG,
                             EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT);
         emit almostOverQuotaUiMessage();
     }

@@ -1,6 +1,6 @@
 #include "HTTPServer.h"
 #include "Preferences.h"
-#include "app_stats_events.h"
+#include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 
@@ -423,7 +423,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
             if (!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
             {
-                megaApi->sendEvent(APP_STATS_EVENTS::EVENT_1ST_WEBCLIENT_DL,
+                megaApi->sendEvent(AppStatsEvents::EVENT_1ST_WEBCLIENT_DL,
                                    "MEGAsync first webclient download");
                 isFirstWebDownloadDone = true;
             }

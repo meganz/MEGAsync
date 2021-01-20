@@ -1,8 +1,8 @@
-#ifndef APP_STATS_EVENTS_H
-#define APP_STATS_EVENTS_H
+#ifndef APPSTATSEVENTS_H
+#define APPSTATSEVENTS_H
 
 // Event IDs sent to servers for statistics purpose.
-enum APP_STATS_EVENTS
+enum AppStatsEvents
 {
     EVENT_1ST_START                         = 99500,
     EVENT_1ST_SYNC                          = 99501,
@@ -39,4 +39,4 @@ enum APP_STATS_EVENTS
     EVENT_TRSF_ALMOST_OVERQUOTA_NOTIF       = 99532,
 };
 
-#endif // APP_STATS_EVENTS_H
+#endif // APPSTATSEVENTS_H
