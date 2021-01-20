@@ -223,7 +223,7 @@ int main(int argc, char *argv[])
                 base64stats.resize(base64stats.size() - 1);
             }
 
-            megaApi->sendEvent(APP_STATS_EVENTS::EVENT_INSTALL_STATS, base64stats.constData());
+            megaApi->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, base64stats.constData());
             Sleep(5000);
         }
 #endif
