@@ -1,6 +1,7 @@
 
 #include "Model.h"
 #include "platform/Platform.h"
+#include "control/AppStatsEvents.h"
 
 #include <assert.h>
 
@@ -137,7 +138,8 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
     //send event for the first sync
     if (!isFirstSyncDone && !preferences->isFirstSyncDone())
     {
-        MegaSyncApp->getMegaApi()->sendEvent(99501, "MEGAsync first sync");
+        MegaSyncApp->getMegaApi()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
+                                             "MEGAsync first sync");
     }
     isFirstSyncDone = true;
 

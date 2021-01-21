@@ -20,6 +20,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/ConnectivityChecker.cpp
 
 HEADERS  +=  $$PWD/HTTPServer.h \
+    $$PWD/AppStatsEvents.h \
     $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \
