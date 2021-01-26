@@ -331,7 +331,7 @@
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] heeft u als een contact gevestigd</translation>
+        <translation type="unfinished">[A] uw contact verzoek geaccepteerd</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -421,7 +421,7 @@
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation type="unfinished">PRO abonnement verloopt binnenkort</translation>
+        <translation type="unfinished">Pro-lidmaatschap verloopt binnenkort</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
@@ -836,7 +836,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">U staat op het punt een instelling toe te staan die ervoor kan zorgen dat uw communicatie wordt onderbroken. Uw gegevens zijn nog steeds ontoegankelijk voor aanvallers door onze eind-tot-eind codering, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijder ze of ontzeg de toegang tot uw account.</translation>
+        <translation type="unfinished">U staat op het punt een instelling toe te staan die ervoor kan zorgen dat uw communicatie wordt onderbroken. Uw gegevens zijn nog steeds ontoegankelijk voor aanvallers door onze end-to-end encryptie, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijder ze of ontzeg de toegang tot uw account.</translation>
     </message>
 </context>
 <context>
@@ -924,6 +924,274 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
         <translation type="unfinished">Overdracht tegoed overschreden</translation>
+    </message>
+</context>
+<context>
+    <name>DesktopNotifications</name>
+    <message>
+        <source>[A] added 1 item</source>
+        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
+        <translation type="unfinished">[A] 1 item toegevoegd</translation>
+    </message>
+    <message>
+        <source>[A] added [B] items</source>
+        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
+        <translation type="unfinished">[A] toegevoegde [B] items</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in 1 day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
+        <translation type="unfinished">Uw PRO lidmaatschap abonnement verloopt na 1 dag</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in [A] days</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation type="unfinished">Uw PRO lidmaatschap verloopt na [A] dagen</translation>
+    </message>
+    <message>
+        <source>PRO membership plan expiring soon</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
+        <translation type="unfinished">Pro-lidmaatschap verloopt binnenkort</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired 1 day ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
+        <translation type="unfinished">Uw PRO lidmaatschap is 1 dag geleden verlopen</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired [A] days ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
+        <translation type="unfinished">Uw PRO lidmaatschap is [A] dagen geleden verlopen</translation>
+    </message>
+    <message>
+        <source>[A] has left the shared folder</source>
+        <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
+        <translation type="unfinished">[A] heeft de gedeelde map verlaten</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
+        <translation type="unfinished">Toegang tot de gedeelde map was verwijderd</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed by [A]</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
+        <translation type="unfinished">Toegang tot een gedeelde map was verwijderd door [A]</translation>
+    </message>
+    <message>
+        <source>New Contact Request</source>
+        <translatorcomment>Title of the notification when a contact request has been received</translatorcomment>
+        <translation type="unfinished">Nieuw contact verzoek</translation>
+    </message>
+    <message>
+        <source>[A] sent you a contact request</source>
+        <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
+        <translation type="unfinished">[A] heeft u een contact verzoek verzonden</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translatorcomment>Button label of system notification to accept the notification.</translatorcomment>
+        <translation type="unfinished">Accepteren</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
+        <translation type="unfinished">Weigeren</translation>
+    </message>
+    <message>
+        <source>Cancelled Contact Request</source>
+        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
+        <translation type="unfinished">Contactverzoek Geannuleerd</translation>
+    </message>
+    <message>
+        <source>[A] cancelled the contact request</source>
+        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
+        <translation type="unfinished">[A] heeft hun contactverzoek geannuleerd</translation>
+    </message>
+    <message>
+        <source>Reminder</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation type="unfinished">Herinnering</translation>
+    </message>
+    <message>
+        <source>You have a contact request</source>
+        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
+        <translation type="unfinished">U heeft een contact verzoek</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Button label of system notification to view all unread notifications.</translatorcomment>
+        <translation type="unfinished">Weergeven</translation>
+    </message>
+    <message>
+        <source>New Contact Established</source>
+        <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
+        <translation type="unfinished">Nieuw Contact Gelegd</translation>
+    </message>
+    <message>
+        <source>New contact with [A] has been established</source>
+        <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
+        <translation type="unfinished">Er is nieuw contact gelegd met [A]</translation>
+    </message>
+    <message>
+        <source>Chat</source>
+        <translatorcomment>Button of system notification that forwards the user to webclient to chat section.</translatorcomment>
+        <translation type="unfinished">Gesprek</translation>
+    </message>
+    <message>
+        <source>Shared Folder Received</source>
+        <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
+        <translation type="unfinished">Gedeelde Map Ontvangen</translation>
+    </message>
+    <message>
+        <source>New shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Nieuwe gedeelde map van [X]</translation>
+    </message>
+    <message>
+        <source>Shared Folder Removed</source>
+        <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
+        <translation type="unfinished">Gedeelde Map Verwijderd</translation>
+    </message>
+    <message>
+        <source>Shared Folder Updated</source>
+        <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Gedeelde Map Bijgewerkt</translation>
+    </message>
+    <message>
+        <source>Payment Info</source>
+        <translatorcomment>Notification label related to a payment.</translatorcomment>
+        <translation type="unfinished">Betalingsinformatie</translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translatorcomment>Button label of system notification to upgrade the current account.</translatorcomment>
+        <translation type="unfinished">Upgraden</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Gedeelde Map Activiteit</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translatorcomment>Button label of system notification to show incoming shared folder received.</translatorcomment>
+        <translation type="unfinished">Weergeven</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button label of system notification to set a new sync when an incoming shared folder is received</translatorcomment>
+        <translation type="unfinished">Synchroniseren</translation>
+    </message>
+    <message>
+        <source>You have unread notifications</source>
+        <translatorcomment>Label to indicate that actual user has unread notification.</translatorcomment>
+        <translation type="unfinished">U heeft ongelezen notificaties</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Uw openbaar gedeelde bestand ([A]) is hersteld</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Uw openbaar gedeelde bestand ([A]) is verwijderd</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Uw openbaar gedeelde map ([A]) is hersteld</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Uw openbaar gedeelde map ([A]) is verwijderd</translation>
+    </message>
+    <message>
+        <source>Your taken down has been reinstated</source>
+        <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
+        <translation type="unfinished">Uw publieke deling is hersteld.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared has been taken down</source>
+        <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
+        <translation type="unfinished">Uw publieke deling is verwijderd.</translation>
+    </message>
+    <message>
+        <source>Takedown Notice</source>
+        <translatorcomment>Notification label related to takedown notice</translatorcomment>
+        <translation type="unfinished">Bericht van takedown</translation>
+    </message>
+    <message>
+        <source>Your account is almost full.</source>
+        <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
+        <translation type="unfinished">Uw account is bijna vol.</translation>
+    </message>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">Upgrade nu naar een PRO account.</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished">Neem PRO</translation>
+    </message>
+    <message>
+        <source>Your account is full.</source>
+        <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
+        <translation type="unfinished">Uw account is vol</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation type="unfinished">Uw gegevens lopen risico</translation>
+    </message>
+    <message>
+        <source>You have [A] days left to save your data</source>
+        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
+        <translation type="unfinished">U heeft [A] dagen over om uw gegevens te redden</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Weergeven in map</translation>
+    </message>
+    <message>
+        <source>Payment Failed</source>
+        <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">Betaling mislukt</translation>
+    </message>
+    <message>
+        <source>Please resolve your payment issue to avoid suspension of your account.</source>
+        <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
+        <translation type="unfinished">Los uw betalingsprobleem op om opschorting van uw zakelijke account te voorkomen.</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
+        <translation type="unfinished">Betaal nu</translation>
+    </message>
+    <message>
+        <source>Your Business account is expired</source>
+        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
+        <translation type="unfinished">Uw zakelijke account is verlopen</translation>
+    </message>
+    <message>
+        <source>Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
+        <translation type="unfinished">Uw account is verlopen als alleen-lezen totdat u doorgaat met de benodigde betalingen.</translation>
+    </message>
+    <message>
+        <source>Account Suspended</source>
+        <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
+        <translation type="unfinished">Account Geschorst.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
+        <translation type="unfinished">Neem contact op met uw zakelijke accountbeheerder om het probleem op te lossen en uw account te activeren.</translation>
     </message>
 </context>
 <context>
@@ -1361,7 +1629,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importeer naar mijn cloud schijf</translation>
+        <translation>Importeer naar mijn Cloud Schijf</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1555,6 +1823,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
         <translation type="unfinished">Instellingen</translation>
     </message>
     <message>
@@ -1877,7 +2146,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished">You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+        <translation type="unfinished">U heeft nog [A] [B] uur [/A] om te upgraden. Daarna worden uw gegevens verwijderd.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled</source>
+        <translatorcomment>Label to indicate that some syncs have been disable due to some error.</translatorcomment>
+        <translation type="unfinished">Een of meer synchronisaties zijn uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to sync your folders.</source>
+        <translatorcomment>Label to indicate that an error occurs while trying to resume the syncs</translatorcomment>
+        <translation type="unfinished">Er is iets misgegaan bij het synchroniseren van uw mappen.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translation type="unfinished">Instellingen Openen</translation>
     </message>
 </context>
 <context>
@@ -2358,7 +2642,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="unfinished">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
+        <translation type="unfinished">Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem aanhoudt, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2472,7 +2756,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Uw sync &quot;%1&quot; is uitgeschakeld, omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund als gevolg van tekortkomingen in dat bestandssysteem.</translation>
+        <translation type="unfinished">Uw synchronisatie ”%1″ is uitgeschakeld omdat de synchronisatie van VirtualBox gedeelde mappen niet wordt ondersteund vanwege gebreken in dat bestandssysteem.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2581,7 +2865,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">U synchroniseert een lokale map met een FAT bestandssysteem. Dit bestandssysteem moeite met grote bestanden en wijzigingstijden die synchronisatie problemen kunnen veroorzaken (bijvoorbeeld: wanneer de zomertijd ingaat), dus het wordt sterk aanbevolen dat u alleen mappen synchroniseert geformatteerd met meer betrouwbare bestandssystemen zoals NTFS (meer informatie [A]hier[/A].</translation>
+        <translation type="obsolete">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
@@ -2634,17 +2918,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation type="unfinished">Uw account is bijna vol.</translation>
+        <translation type="obsolete">Your account is almost full.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Upgrade nu naar een PRO account.</translation>
+        <translation type="obsolete">Upgrade now to a PRO account.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation type="unfinished">Uw account is vol</translation>
+        <translation type="obsolete">Your account is full.</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
@@ -2759,17 +3043,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">U bent een lokale map aan het synchroniseren met VMWare. Deze mappen ondersteunen geen bestandssysteem notificaties dus MEGAsync moet steeds worden gescand om wijzigingen te detecteren in uw bestanden en mappen. Gebruik een andere map mits mogelijk om het CPU verbruik te verminderen.</translation>
+        <translation type="obsolete">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Neem PRO</translation>
+        <translation type="obsolete">Get PRO</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation type="unfinished">Weergeven in map</translation>
+        <translation type="obsolete">Show in folder</translation>
     </message>
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
@@ -2814,7 +3098,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Uw account is verlopen als alleen-lezen totdat u doorgaat met de benodigde betalingen.</translation>
+        <translation type="obsolete">Your account is expired as read only until you proceed with the needed payments.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2834,7 +3118,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished">Het blijkt dat de betaling voor uw zakelijke account is mislukt. Uw account is verlopen als alleen lezen totdat u doorgaat met de benodigde betalingen.</translation>
+        <translation type="unfinished">Het lijkt erop dat de betaling voor uw zakelijke account is mislukt. Uw account is verlopen en heeft alleen-lezen toegangsrechten gekregen totdat u doorgaat met de vereiste betaling.</translation>
     </message>
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
@@ -2854,12 +3138,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">herstel uw betalingsprobleem om schorsing van uw zakelijke account te vermijden.</translation>
+        <translation type="obsolete">Please resolve your payment issue to avoid suspension of your business account.</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation type="unfinished">Neem contact op met uw zakelijke accountbeheerder om het probleem op te lossen en uw account te activeren,.</translation>
+        <translation type="obsolete">Contact your business account administrator to resolve the issue and activate your account.</translation>
     </message>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
@@ -2874,7 +3158,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished">Uw account is momenteel [A]geschorst[/A]. U kunt alleen uw gegevens doorbladeren.</translation>
+        <translation type="unfinished">Uw account is [A]verlopen[/A]. U kunt alleen door uw gegevens bladeren.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2914,22 +3198,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation type="unfinished">Uw gegevens lopen gevaar</translation>
+        <translation type="obsolete">Your data is at risk</translation>
     </message>
     <message>
         <source>You have [A] days left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation type="unfinished">U heeft nog [A] dagen om je gegevens op te slaan</translation>
+        <translation type="obsolete">You have [A] days left to save your data</translation>
     </message>
     <message>
         <source>You have [A] hours left to save your data</source>
         <translatorcomment>Notification content to inform the hours the user have to save the date before possible deletion. [A] will be replace with remaining hours amount.</translatorcomment>
-        <translation type="unfinished">You have [A] hours left to save your data</translation>
+        <translation type="obsolete">You have [A] hours left to save your data</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Notification content to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation type="unfinished">U moet meteen reageren om uw gegevens te redden</translation>
+        <translation type="obsolete">You must act immediately to save your data</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled</source>
+        <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
+        <translation type="unfinished">Een of meer synchronisaties zijn uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Your syncs have been enabled</source>
+        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
+        <translation type="unfinished">Uw synchronisaties zijn ingeschakeld</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
+        <translation type="unfinished">Fout bij het toevoegen van synchronisatie</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be added: %1. Reason: %2</source>
+        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
+        <translation type="unfinished">Deze synchronisatie kan niet worden toegevoegd: %1. Reden: %2</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
+        <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="unfinished">Uw synchronisatie ”%1″ is tijdelijk uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
+        <translation type="unfinished">Uw synchronisatie ‘%1’ is uitgeschakeld. Reden: %2</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been re-enabled. State = %2. Error = %3</source>
+        <translatorcomment>Notification message launched when a sync has been re-enabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime, %2 with current sync state and %3 with error.</translatorcomment>
+        <translation type="obsolete">Your sync “%1” has been re-enabled. State = %2. Error = %3</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been enabled</source>
+        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
+        <translation type="unfinished">Uw synchronisatie ”%1″ is ingeschakeld</translation>
     </message>
 </context>
 <context>
@@ -3147,6 +3471,154 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>MegaSyncError</name>
+    <message>
+        <source>No error</source>
+        <translatorcomment>Label to show that an SDK operation has been completed successfully.</translatorcomment>
+        <translation type="unfinished">Geen fout</translation>
+    </message>
+    <message>
+        <source>Unknown error</source>
+        <translatorcomment>Label to show that an unknown error occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Onbekende fout</translation>
+    </message>
+    <message>
+        <source>File system not supported</source>
+        <translatorcomment>Label to show that an error related with a file system not supported for a sync occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Het bestandssysteem wordt niet ondersteund</translation>
+    </message>
+    <message>
+        <source>Remote node is not valid</source>
+        <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">De map voor externe synchronisatie is niet geldig</translation>
+    </message>
+    <message>
+        <source>Local path is not valid</source>
+        <translatorcomment>Label to show that local path is invalid for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Het lokale pad is niet geldig</translation>
+    </message>
+    <message>
+        <source>Initial scan failed</source>
+        <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
+        <translation type="unfinished">De eerste scan is mislukt</translation>
+    </message>
+    <message>
+        <source>Local path temporarily unavailable</source>
+        <translatorcomment>Label to show that local path is temporarely unavailable for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Het lokale pad is tijdelijk niet beschikbaar</translation>
+    </message>
+    <message>
+        <source>Local path not available</source>
+        <translatorcomment>Label to show that local path is unavailable for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Het lokale pad is niet beschikbaar</translation>
+    </message>
+    <message>
+        <source>Remote node not found</source>
+        <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">De map voor externe synchronisatie is niet gevonden</translation>
+    </message>
+    <message>
+        <source>Reached storage quota limit</source>
+        <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Opslagtegoed overschreden</translation>
+    </message>
+    <message>
+        <source>Business account expired</source>
+        <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Uw zakelijke account is verlopen</translation>
+    </message>
+    <message>
+        <source>Foreign target storage quota reached</source>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Het account van de eigenaar van de synchronisatiemap heeft zijn opslaglimiet overschreden.</translation>
+    </message>
+    <message>
+        <source>Remote path has changed</source>
+        <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Het pad van de externe synchronisatiemap is gewijzigd</translation>
+    </message>
+    <message>
+        <source>Remote node moved to Rubbish Bin</source>
+        <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
+        <translation type="unfinished">De map voor externe synchronisatie is verplaatst naar de Prullenbak</translation>
+    </message>
+    <message>
+        <source>Share without full access</source>
+        <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
+        <translation type="unfinished">U heeft geen volledige toegang tot de map voor externe synchronisatie</translation>
+    </message>
+    <message>
+        <source>Local fingerprint mismatch</source>
+        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
+        <translation type="unfinished">Er is een wijziging in het lokale bestandssysteem gedetecteerd</translation>
+    </message>
+    <message>
+        <source>Put nodes error</source>
+        <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
+        <translation type="unfinished">]Fout bij het maken van nieuwe items in MEGA</translation>
+    </message>
+    <message>
+        <source>Active sync below path</source>
+        <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
+        <translation type="unfinished">Er is al een actieve synchronisatie in uw externe map</translation>
+    </message>
+    <message>
+        <source>Active sync above path</source>
+        <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
+        <translation type="unfinished">De externe map maakt al deel uit van een bestaande actieve synchronisatie</translation>
+    </message>
+    <message>
+        <source>Remote node has been deleted</source>
+        <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
+        <translation type="unfinished">De map voor externe synchronisatie is verwijderd</translation>
+    </message>
+    <message>
+        <source>Remote node is inside Rubbish Bin</source>
+        <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
+        <translation type="unfinished">De map voor externe synchronisatie bevindt zich in uw Prullenbak</translation>
+    </message>
+    <message>
+        <source>Unsupported VBoxSharedFolderFS filesystem</source>
+        <translatorcomment>SDK error label shown when local filesystem is the unsupported VBoxSharedFolderFS during setting a sync</translatorcomment>
+        <translation type="unfinished">VBoxSharedFolderFS-bestandssystemen worden niet ondersteund</translation>
+    </message>
+    <message>
+        <source>Local path collides with an existing sync</source>
+        <translatorcomment>SDK error label shown when local path collides due to an existing sync while setting a new one.</translatorcomment>
+        <translation type="unfinished">Het lokale pad is al gesynchroniseerd</translation>
+    </message>
+    <message>
+        <source>Local filesystem is FAT</source>
+        <translatorcomment>SDK error label shown when local filesystem is FAT during setting a sync</translatorcomment>
+        <translation type="unfinished">FAT-bestandssystemen worden niet ondersteund</translation>
+    </message>
+    <message>
+        <source>Local filesystem is HGFS</source>
+        <translatorcomment>SDK error label shown when local filesystem is HGFS during setting a sync</translatorcomment>
+        <translation type="unfinished">HGFS-bestandssystemen worden niet ondersteund</translation>
+    </message>
+    <message>
+        <source>Your account is blocked</source>
+        <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
+        <translation type="unfinished">Uw account is geblokkeerd</translation>
+    </message>
+    <message>
+        <source>Unknown temporary error</source>
+        <translatorcomment>SDK error label shown for a unknown temporary error.</translatorcomment>
+        <translation type="unfinished">Onbekende tijdelijke fout</translation>
+    </message>
+    <message>
+        <source>Too many changes in account, local state invalid</source>
+        <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
+        <translation type="unfinished">Ongeldige synchronisatiestatus vanwege te veel wijzigingen in uw account</translation>
+    </message>
+    <message>
+        <source>Undefined error</source>
+        <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Ongedefinieerde fout</translation>
+    </message>
+</context>
+<context>
     <name>MegaTransferDelegate</name>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
@@ -3269,6 +3741,24 @@ Are you sure?</source>
         <source>Upload failed</source>
         <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
         <translation type="unfinished">Uploaden mislukt</translation>
+    </message>
+</context>
+<context>
+    <name>Model</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Label used for title of a system message box.</translatorcomment>
+        <translation type="unfinished">MEGASynchronisatie</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
+        <translation type="unfinished">U synchroniseert een lokale map die is geformatteerd met een FAT-bestandssysteem. Dat bestandssysteem heeft tekortkomingen bij het beheren van grote bestanden en wijzigingstijden die synchronisatieproblemen kunnen veroorzaken (bijvoorbeeld wanneer de zomertijd verandert), dus het wordt sterk aanbevolen om alleen mappen te synchroniseren die zijn geformatteerd met betrouwbaardere bestandssystemen zoals NTFS (meer informatie [A]hier[/A]).</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
+        <translation type="unfinished">U bent een lokale map aan het synchroniseren met VMWare. Deze mappen ondersteunen geen bestandssysteem notificaties dus MEGAsync moet steeds worden gescand om wijzigingen te detecteren in uw bestanden en mappen. Gebruik een andere map mits mogelijk om het CPU verbruik te verminderen.</translation>
     </message>
 </context>
 <context>
@@ -3399,6 +3889,19 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
         <source>MEGAsync</source>
         <translatorcomment>Product name.</translatorcomment>
         <translation type="unfinished">MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>OsNotifications</name>
+    <message>
+        <source>[A] removed 1 item</source>
+        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
+        <translation type="unfinished">[A] Verwijderd 1 item</translation>
+    </message>
+    <message>
+        <source>[A] removed [B] items</source>
+        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
+        <translation type="unfinished">[A] verwijderd [B] items</translation>
     </message>
 </context>
 <context>
@@ -3656,7 +4159,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Storage and transfers</source>
         <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
-        <translation type="unfinished">Opslag en Overdracht</translation>
+        <translation type="obsolete">Storage and Transfer</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -3667,6 +4170,11 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
         <translation type="unfinished">per gebruiker %1</translation>
+    </message>
+    <message>
+        <source>SCALABLE</source>
+        <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
+        <translation type="unfinished">SCHAALBAAR</translation>
     </message>
 </context>
 <context>
@@ -3815,14 +4323,24 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
-        <translation type="unfinished">- Verbetering van de gebruikerservaring wanneer de overdrachtstegoed worden overschreden. 
-- Bijgewerkte vertalingen. 
--Opgeloste problemen tijdens de verwerking van RAW-afbeeldingen. 
--Minder geheugengebruik op macOS. 
--Bestandsnamen kunnen niet langer ontsnappen wanneer speciale tekens worden ondersteund door het doelbestandssysteem. 
-- Integratie van 2FA-formulier in het hoofdvenster. 
--Andere UI-fixes en aanpassingen. 
-- Andere prestatieverbeteringen en aanpassingen.</translation>
+        <translation type="obsolete">- User experience improvement when transfer quota is exceeded.
+- Updated translations.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS.
+- Filenames are no longer escaped when special characters are supported by the target file system.
+- Integration of 2FA form within the main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
+    </message>
+    <message>
+        <source>- Fixed crash on OSX 10.9 systems.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.6</translatorcomment>
+        <translation type="obsolete">- Fixed crash on OSX 10.9 systems.</translation>
+    </message>
+    <message>
+        <source>- Fixed decryption errors for downloads during integrity verification.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
+        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
     </message>
 </context>
 <context>
@@ -4564,17 +5082,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>PRO I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>PRO II</source>
         <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
-        <translation>PRO II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>PRO III</source>
         <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
-        <translation>PRO III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
@@ -4772,7 +5290,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Activeren / Deactiveren</translation>
+        <translation>Inschakelen/uitschakelen</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -4910,7 +5428,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">PRO LITE</translation>
+        <translation type="unfinished">Pro Lite</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -5021,6 +5539,36 @@ when the application starts again</source>
         <translatorcomment>Button label to export master key of the current user. </translatorcomment>
         <translation type="unfinished">Reservekopie Herstelsleutel</translation>
     </message>
+    <message>
+        <source>Saving syncs...</source>
+        <translatorcomment>Label shown when a sync operation is being saved (enable, disable, create a new one, etc)</translatorcomment>
+        <translation type="unfinished">Synchronisaties opslaan…</translation>
+    </message>
+    <message>
+        <source>Unexpected error disabling sync %1</source>
+        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1</translatorcomment>
+        <translation type="unfinished">Onverwachte fout bij het uitschakelen van synchronisatie %1</translation>
+    </message>
+    <message>
+        <source>Error enabling sync</source>
+        <translatorcomment>Error message shown when an error occurs while trying to enable a sync.</translatorcomment>
+        <translation type="unfinished">Fout bij inschakelen van synchronisatie</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
+        <translatorcomment>Error message shown when an error occurs trying to enabling a sync. %1 name of sync, %2 reason of error.</translatorcomment>
+        <translation type="unfinished">Uw synchronisatie ‘%1’ kan niet worden ingeschakeld. Reden: %2</translation>
+    </message>
+    <message>
+        <source>Saving settings</source>
+        <translatorcomment>Title of dialog shown when settings are being saved.</translatorcomment>
+        <translation type="unfinished">Instellingen opslaan</translation>
+    </message>
+    <message>
+        <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
+        <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
+        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5092,7 +5640,7 @@ when the application starts again</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Synchroniseer uw volledige cloud schijf</translation>
+        <translation>Synchroniseer uw volledige Cloud Schijf</translation>
     </message>
     <message>
         <source>Full account sync</source>
@@ -5106,7 +5654,7 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation type="vanished">Synchroniseer specifieke mappen in uw cloud schijf</translation>
+        <translation type="vanished">Synchroniseer specifieke mappen in uw Cloud Schijf</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -5285,7 +5833,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem blijft bestaan, neem dan contact met ons op via bug@mega.nz</translation>
+        <translation>Kan het bestandssysteem niet ophalen. Probeer het opnieuw. Als het probleem aanhoudt, neem dan contact met ons op via bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -5418,7 +5966,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Synchroniseer specifieke mappen in uw cloud schijf</translation>
+        <translation type="unfinished">Synchroniseer specifieke mappen in uw Cloud Schijf</translation>
     </message>
     <message>
         <source>Selective sync:</source>
@@ -5898,12 +6446,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
         <translation type="unfinished">Instellingen</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
         <translation type="unfinished">Voorkeur</translation>
     </message>
     <message>
@@ -5987,12 +6535,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Informative label of system notification to encourage user to upgrade account.</translatorcomment>
-        <translation type="unfinished">Upgrade nu naar een PRO account.</translation>
+        <translation type="obsolete">Upgrade now to a PRO account.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished">Neem PRO</translation>
+        <translation type="obsolete">Get PRO</translation>
     </message>
     <message>
         <source>Limited available transfer quota.</source>
