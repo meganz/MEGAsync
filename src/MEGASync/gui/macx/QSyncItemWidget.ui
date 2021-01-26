@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <property name="styleSheet">
    <string notr="true">#bWarning
@@ -108,6 +108,9 @@ border: none;
           <height>16777215</height>
          </size>
         </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
         <property name="styleSheet">
          <string notr="true">#lSyncName
 {
@@ -115,7 +118,7 @@ border: none;
 }</string>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string notr="true"/>
         </property>
        </widget>
       </item>
