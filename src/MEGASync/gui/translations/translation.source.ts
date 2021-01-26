@@ -2160,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Open Preferences</translation>
+        <translation type="unfinished">Open Settings</translation>
     </message>
 </context>
 <context>
