@@ -331,7 +331,7 @@
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] established you as a contact</translation>
+        <translation type="unfinished">[A] accepted your contact request</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -411,27 +411,27 @@
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in 1 day</translation>
+        <translation type="unfinished">Your Pro membership plan will expire in 1 day</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in [A] days</translation>
+        <translation type="unfinished">Your Pro membership plan will expire in [A] days</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation type="unfinished">PRO membership plan expiring soon</translation>
+        <translation type="unfinished">Pro membership plan expiring soon</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired 1 day ago</translation>
+        <translation type="unfinished">Your Pro membership plan expired 1 day ago</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired [A] days ago</translation>
+        <translation type="unfinished">Your Pro membership plan expired [A] days ago</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
@@ -941,27 +941,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in 1 day</translation>
+        <translation type="unfinished">Your Pro membership plan will expire in 1 day</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in [A] days</translation>
+        <translation type="unfinished">Your Pro membership plan will expire in [A] days</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation type="unfinished">PRO membership plan expiring soon</translation>
+        <translation type="unfinished">Pro membership plan expiring soon</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired 1 day ago</translation>
+        <translation type="unfinished">Your Pro membership plan expired 1 day ago</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired [A] days ago</translation>
+        <translation type="unfinished">Your Pro membership plan expired [A] days ago</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -1006,7 +1006,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A] cancelled the contact request</source>
         <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation type="unfinished">[A] cancelled the contact request</translation>
+        <translation type="unfinished">[A] cancelled their contact request</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1176,7 +1176,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your business account is expired</translation>
+        <translation type="unfinished">Your business account has expired</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1257,7 +1257,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
         <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation type="unfinished">[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over your current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</translation>
+        <translation type="unfinished">[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over your current limit. To remove this limit, you can upgrade to Pro, which will give you your own transfer quota package and also ample extra storage space.[/A]</translation>
     </message>
 </context>
 <context>
@@ -1428,7 +1428,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login to MEGA</source>
         <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation type="unfinished">Login to MEGA</translation>
+        <translation type="unfinished">Log in to MEGA</translation>
     </message>
     <message>
         <source>Email address</source>
@@ -1822,6 +1822,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
         <translation type="unfinished">Settings</translation>
     </message>
     <message>
@@ -2159,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Open Preferences</translation>
+        <translation type="unfinished">Open Settings</translation>
     </message>
 </context>
 <context>
@@ -2640,7 +2641,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="unfinished">Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="unfinished">Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2754,7 +2755,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that file system.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -3091,7 +3092,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your business account is expired</translation>
+        <translation type="unfinished">Your business account has expired</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3116,7 +3117,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished">It seems the payment for your business account has failed. Your account is expired as read only until you proceed with the needed payments.</translation>
+        <translation type="unfinished">It seems the payment for your Business account has failed. Your account has expired and has been granted with read-only access permissions until you proceed with the payment required.</translation>
     </message>
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
@@ -3156,7 +3157,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished">Your account is currently [A]suspended[/A]. You can only browse your data.</translation>
+        <translation type="unfinished">Your account has [A]expired[/A]. You can only browse your data.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -3231,27 +3232,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This sync can&apos;t be added: %1. Reason: %2</source>
         <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
-        <translation type="unfinished">This sync can&apos;t be added: %1. Reason: %2</translation>
+        <translation type="unfinished">This sync can’t be added: %1. Reason: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been temporarily disabled</translation>
+        <translation type="unfinished">Your sync “%1” has been temporarily disabled</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. Reason: %2</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled. Reason: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been re-enabled. State = %2. Error = %3</source>
         <translatorcomment>Notification message launched when a sync has been re-enabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime, %2 with current sync state and %3 with error.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been re-enabled. State = %2. Error = %3</translation>
+        <translation type="obsolete">Your sync “%1” has been re-enabled. State = %2. Error = %3</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been enabled</translation>
+        <translation type="unfinished">Your sync “%1” has been enabled</translation>
     </message>
 </context>
 <context>
@@ -3483,122 +3484,122 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File system not supported</source>
         <translatorcomment>Label to show that an error related with a file system not supported for a sync occurs during a SDK operation.</translatorcomment>
-        <translation type="unfinished">File system not supported</translation>
+        <translation type="unfinished">The file system is not supported</translation>
     </message>
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Remote node is not valid</translation>
+        <translation type="unfinished">The remote sync folder is not valid</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
         <translatorcomment>Label to show that local path is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Local path is not valid</translation>
+        <translation type="unfinished">The local path is not valid</translation>
     </message>
     <message>
         <source>Initial scan failed</source>
         <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Initial scan failed</translation>
+        <translation type="unfinished">The initial scan failed</translation>
     </message>
     <message>
         <source>Local path temporarily unavailable</source>
         <translatorcomment>Label to show that local path is temporarely unavailable for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Local path temporarily unavailable</translation>
+        <translation type="unfinished">The local path is temporarily unavailable</translation>
     </message>
     <message>
         <source>Local path not available</source>
         <translatorcomment>Label to show that local path is unavailable for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Local path not available</translation>
+        <translation type="unfinished">The local path is unavailable</translation>
     </message>
     <message>
         <source>Remote node not found</source>
         <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Remote node not found</translation>
+        <translation type="unfinished">The remote sync folder has not been found</translation>
     </message>
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Reached storage quota limit</translation>
+        <translation type="unfinished">Storage quota exceeded</translation>
     </message>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Business account expired</translation>
+        <translation type="unfinished">Your business account has expired</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Foreign target storage quota reached</translation>
+        <translation type="unfinished">The sync folder owner’s account has exceeded their storage quota.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
         <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Remote path has changed</translation>
+        <translation type="unfinished">The remote sync folder path has changed</translation>
     </message>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation type="unfinished">Remote node moved to Rubbish Bin</translation>
+        <translation type="unfinished">The remote sync folder has been moved to Rubbish Bin</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation type="unfinished">Share without full access</translation>
+        <translation type="unfinished">You don’t have full access to the remote sync folder</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
         <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation type="unfinished">Local fingerprint mismatch</translation>
+        <translation type="unfinished">A local file system change has been detected</translation>
     </message>
     <message>
         <source>Put nodes error</source>
         <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
-        <translation type="unfinished">Put nodes error</translation>
+        <translation type="unfinished">Error creating new items in MEGA</translation>
     </message>
     <message>
         <source>Active sync below path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
-        <translation type="unfinished">Active sync below path</translation>
+        <translation type="unfinished">There is already an active sync within your remote folder</translation>
     </message>
     <message>
         <source>Active sync above path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
-        <translation type="unfinished">Active sync above path</translation>
+        <translation type="unfinished">The remote folder is already part of an existing active sync</translation>
     </message>
     <message>
         <source>Remote node has been deleted</source>
         <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
-        <translation type="unfinished">Remote node has been deleted</translation>
+        <translation type="unfinished">The remote sync folder has been deleted</translation>
     </message>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation type="unfinished">Remote node is inside Rubbish Bin</translation>
+        <translation type="unfinished">The remote sync folder is in your Rubbish Bin</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
         <translatorcomment>SDK error label shown when local filesystem is the unsupported VBoxSharedFolderFS during setting a sync</translatorcomment>
-        <translation type="unfinished">Unsupported VBoxSharedFolderFS filesystem</translation>
+        <translation type="unfinished">VBoxSharedFolderFS file systems are not supported</translation>
     </message>
     <message>
         <source>Local path collides with an existing sync</source>
         <translatorcomment>SDK error label shown when local path collides due to an existing sync while setting a new one.</translatorcomment>
-        <translation type="unfinished">Local path collides with an existing sync</translation>
+        <translation type="unfinished">The local path is already synced</translation>
     </message>
     <message>
         <source>Local filesystem is FAT</source>
         <translatorcomment>SDK error label shown when local filesystem is FAT during setting a sync</translatorcomment>
-        <translation type="unfinished">Local filesystem is FAT</translation>
+        <translation type="unfinished">FAT file systems are not supported</translation>
     </message>
     <message>
         <source>Local filesystem is HGFS</source>
         <translatorcomment>SDK error label shown when local filesystem is HGFS during setting a sync</translatorcomment>
-        <translation type="unfinished">Local filesystem is HGFS</translation>
+        <translation type="unfinished">HGFS file systems are not supported</translation>
     </message>
     <message>
         <source>Your account is blocked</source>
         <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
-        <translation type="unfinished">Your account is blocked</translation>
+        <translation type="unfinished">Your account has been locked</translation>
     </message>
     <message>
         <source>Unknown temporary error</source>
@@ -3608,7 +3609,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Too many changes in account, local state invalid</source>
         <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
-        <translation type="unfinished">Too many changes in account, local state invalid</translation>
+        <translation type="unfinished">Invalid sync status due to too many changes in your account</translation>
     </message>
     <message>
         <source>Undefined error</source>
@@ -4333,7 +4334,12 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>- Fixed crash on OSX 10.9 systems.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.6</translatorcomment>
-        <translation type="unfinished">- Fixed crash on OSX 10.9 systems.</translation>
+        <translation type="obsolete">- Fixed crash on OSX 10.9 systems.</translation>
+    </message>
+    <message>
+        <source>- Fixed decryption errors for downloads during integrity verification.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
+        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
     </message>
 </context>
 <context>
@@ -5075,17 +5081,17 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>PRO I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>PRO II</source>
         <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
-        <translation>PRO II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>PRO III</source>
         <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
-        <translation>PRO III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
@@ -5283,7 +5289,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Enable / disable</translation>
+        <translation>Enable/disable</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -5421,7 +5427,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">Pro Lite</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -5535,7 +5541,7 @@ when the application starts again</source>
     <message>
         <source>Saving syncs...</source>
         <translatorcomment>Label shown when a sync operation is being saved (enable, disable, create a new one, etc)</translatorcomment>
-        <translation type="unfinished">Saving syncs...</translation>
+        <translation type="unfinished">Saving syncs…</translation>
     </message>
     <message>
         <source>Unexpected error disabling sync %1</source>
@@ -5550,12 +5556,17 @@ when the application starts again</source>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error message shown when an error occurs trying to enabling a sync. %1 name of sync, %2 reason of error.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</translation>
+        <translation type="unfinished">Your sync “%1” can’t be enabled. Reason: %2</translation>
     </message>
     <message>
         <source>Saving settings</source>
         <translatorcomment>Title of dialog shown when settings are being saved.</translatorcomment>
         <translation type="unfinished">Saving settings</translation>
+    </message>
+    <message>
+        <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
+        <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
+        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
     </message>
 </context>
 <context>
@@ -5821,7 +5832,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>Unable to get the file system. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -6433,12 +6444,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
         <translation type="unfinished">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
         <translation type="unfinished">Preferences</translation>
     </message>
     <message>
