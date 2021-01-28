@@ -3852,7 +3852,7 @@ padding-bottom: 3px;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_20">
+            <layout class="QHBoxLayout" name="horizontalLayout_201">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -4597,7 +4597,7 @@ background:transparent;</string>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_9">
+           <spacer name="horizontalSpacer_91">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
