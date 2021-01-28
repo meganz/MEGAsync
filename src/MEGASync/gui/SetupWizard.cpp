@@ -3,6 +3,7 @@
 
 #include "MegaApplication.h"
 #include "control/Utilities.h"
+#include "control/AppStatsEvents.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
 #include "platform/Platform.h"
@@ -128,7 +129,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->ePassword->clear();
                 ui->eRepeatPassword->clear();
 
-                megaApi->sendEvent(99505, "MEGAsync account creation start");
+                megaApi->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
+                                   "MEGAsync account creation start");
                 if (!preferences->accountCreationTime())
                 {
                     preferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);

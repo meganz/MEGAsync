@@ -3,37 +3,43 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "megaapi.h"
-#include "SyncInfo.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
 
 QSyncItemWidget::QSyncItemWidget(int itemType, QWidget *parent) :
-    QWidget(parent), itemType(itemType),
+    QWidget(parent), mItemType(itemType),
     ui(new Ui::QSyncItemWidget)
 {
     ui->setupUi(this);
 
-    optionsMenu = NULL;
-    syncInfo = NULL;
-    openDebris = NULL;
-    deleteSync = NULL;
-    isCacheAvailable = false;
+    mOptionsMenu = NULL;
+    mSyncInfo = NULL;
+    mOpenDebris = NULL;
+    mDeleteSync = NULL;
+    mIsCacheAvailable = false;
+    mError = 0;
 
     installEventFilter(this);
 
     configureSyncTypeUI(itemType);
 }
 
-void QSyncItemWidget::setText(const QString &path)
+void QSyncItemWidget::setPathAndName(const QString &path, const QString &syncName)
 {
-    fullPath = path;
+    mFullPath = path;
+    ui->lSyncName->setText(syncName);
+}
 
-    QString syncName {QFileInfo(fullPath).fileName()};
+void QSyncItemWidget::setPathAndGuessName(const QString &path)
+{
+    mFullPath = path;
+
+    QString syncName {QFileInfo(mFullPath).fileName()};
     if (syncName.isEmpty())
     {
-        syncName = QDir::toNativeSeparators(fullPath);
+        syncName = QDir::toNativeSeparators(mFullPath);
     }
     syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
     ui->lSyncName->setText(syncName);
@@ -44,60 +50,50 @@ void QSyncItemWidget::setToolTip(const QString &tooltip)
     ui->lSyncName->setToolTip(tooltip);
 }
 
-QString QSyncItemWidget::text()
-{
-    return fullPath;
-}
-
-void QSyncItemWidget::localCacheAvailable(bool op)
-{
-    isCacheAvailable = op;
-}
-
 QSyncItemWidget::~QSyncItemWidget()
 {
     //TODO: Ask UI team and apply colourful icons for open debris, info and delete syncs
-    if (optionsMenu)
+    if (mOptionsMenu)
     {
-        QList<QAction *> actions = optionsMenu->actions();
+        QList<QAction *> actions = mOptionsMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
-            optionsMenu->removeAction(actions[i]);
+            mOptionsMenu->removeAction(actions[i]);
             delete actions[i];
         }
-        delete optionsMenu;
+        delete mOptionsMenu;
     }
-    optionsMenu = NULL;
+    mOptionsMenu = NULL;
     delete ui;
 }
 
 void QSyncItemWidget::on_bSyncOptions_clicked()
 {
-    if(!optionsMenu)
+    if(!mOptionsMenu)
     {
-        optionsMenu = new QMenu();
+        mOptionsMenu = new QMenu();
 #ifdef __APPLE__
-        optionsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        mOptionsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
         optionsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
     }
     else
     {
-        QList<QAction *> actions = optionsMenu->actions();
+        QList<QAction *> actions = mOptionsMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
-            optionsMenu->removeAction(actions[i]);
+            mOptionsMenu->removeAction(actions[i]);
         }
     }
 
     //Add local cache item (if available)
-    if (isCacheAvailable)
+    if (mIsCacheAvailable)
     {
-        if (openDebris)
+        if (mOpenDebris)
         {
-            openDebris->deleteLater();
-            openDebris = NULL;
+            mOpenDebris->deleteLater();
+            mOpenDebris = NULL;
         }
 
     #ifndef __APPLE__
@@ -105,56 +101,56 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
     #else
         auto openLocalDebris{tr("Open .debris folder")};
     #endif
-        openDebris = new MenuItemAction(openLocalDebris, QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
-        connect(openDebris, SIGNAL(triggered()), this, SIGNAL(onOpenLocalCache()), Qt::QueuedConnection);
+        mOpenDebris = new MenuItemAction(openLocalDebris, QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
+        connect(mOpenDebris, SIGNAL(triggered()), this, SIGNAL(onOpenLocalCache()), Qt::QueuedConnection);
     }
 
     //Add sync info menu item
-    if (syncInfo)
+    if (mSyncInfo)
     {
-        syncInfo->deleteLater();
-        syncInfo = NULL;
+        mSyncInfo->deleteLater();
+        mSyncInfo = NULL;
     }
 
-    syncInfo = new MenuItemAction(tr("Info"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
-    connect(syncInfo, SIGNAL(triggered()), this, SIGNAL(onSyncInfo()), Qt::QueuedConnection);
+    mSyncInfo = new MenuItemAction(tr("Info"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
+    connect(mSyncInfo, SIGNAL(triggered()), this, SIGNAL(onSyncInfo()), Qt::QueuedConnection);
 
     //Add deleteSync item
-    if (deleteSync)
+    if (mDeleteSync)
     {
-        deleteSync->deleteLater();
-        deleteSync = NULL;
+        mDeleteSync->deleteLater();
+        mDeleteSync = NULL;
     }
 
-    deleteSync = new MenuItemAction(tr("Delete Sync"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
-    connect(deleteSync, SIGNAL(triggered()), this, SIGNAL(onDeleteSync()), Qt::QueuedConnection);
+    mDeleteSync = new MenuItemAction(tr("Delete Sync"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
+    connect(mDeleteSync, SIGNAL(triggered()), this, SIGNAL(onDeleteSync()), Qt::QueuedConnection);
 
-    optionsMenu->addAction(syncInfo);
+    mOptionsMenu->addAction(mSyncInfo);
 
-    if (isCacheAvailable)
+    if (mIsCacheAvailable)
     {
-        optionsMenu->addAction(openDebris);
+        mOptionsMenu->addAction(mOpenDebris);
     }
 
-    optionsMenu->addSeparator();
-    optionsMenu->addAction(deleteSync);
+    mOptionsMenu->addSeparator();
+    mOptionsMenu->addAction(mDeleteSync);
 
-    if (optionsMenu->isVisible())
+    if (mOptionsMenu->isVisible())
     {
-        optionsMenu->close();
+        mOptionsMenu->close();
     }
 
     QPoint point = ui->bSyncOptions->mapToGlobal(QPoint(ui->bSyncOptions->width(), ui->bSyncOptions->height() + 2));
     QPoint p = !point.isNull() ? point - QPoint(ui->bSyncOptions->width(), 0)
                              : QCursor::pos();
-    optionsMenu->popup(p);
+    mOptionsMenu->popup(p);
 
     ui->bReveal->hide();
 }
 
 void QSyncItemWidget::on_bReveal_clicked()
 {
-    switch (itemType)
+    switch (mItemType)
     {
         case LOCAL_FOLDER:
         {
@@ -182,14 +178,24 @@ void QSyncItemWidget::on_bReveal_clicked()
     ui->bReveal->hide();
 }
 
+bool QSyncItemWidget::getIsCacheAvailable() const
+{
+    return mIsCacheAvailable;
+}
+
+void QSyncItemWidget::setIsCacheAvailable(bool value)
+{
+    mIsCacheAvailable = value;
+}
+
 void QSyncItemWidget::configureSyncTypeUI(int type) const
 {
     switch (type)
     {
-        case LOCAL_FOLDER:
-        {
-            ui->bSyncState->show();
-            ui->bSyncOptions->hide();
+    case LOCAL_FOLDER:
+    {
+        ui->bSyncState->show();
+        ui->bSyncOptions->hide();
         }
         break;
         case REMOTE_FOLDER:
@@ -218,5 +224,20 @@ bool QSyncItemWidget::eventFilter(QObject *obj, QEvent *event)
     }
 
     return QWidget::eventFilter(obj,event);
+}
+
+void QSyncItemWidget::setError(int error)
+{
+    this->mError = error;
+
+    if (error)
+    {
+        ui->bSyncState->setToolTip(QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(error)));
+    }
+}
+
+QString QSyncItemWidget::fullPath()
+{
+    return mFullPath;
 }
 

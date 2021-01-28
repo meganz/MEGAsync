@@ -4,6 +4,7 @@
 #include "gui/MegaProxyStyle.h"
 #include "gui/ConfirmSSLexception.h"
 #include "gui/QMegaMessageBox.h"
+#include "control/AppStatsEvents.h"
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
@@ -339,7 +340,7 @@ void MegaApplication::showInterface(QString)
     QDir dataDir(dataPath);
     if (dataDir.exists(QString::fromAscii("megasync.show")))
     {
-        QFile showFile(dataDir.filePath(QString::fromAscii("megasync.show"))); 
+        QFile showFile(dataDir.filePath(QString::fromAscii("megasync.show")));
         if (showFile.open(QIODevice::ReadOnly))
         {
             show = showFile.size() > 0;
@@ -704,7 +705,7 @@ void MegaApplication::changeLanguage(QString languageCode)
 void MegaApplication::setTrayIconFromTheme(QString icon)
 {
     QString name = QString(icon).replace(QString::fromAscii("://images/"), QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
-    const auto needsToBeUpdated{name != trayIcon->icon().name()};
+    const bool needsToBeUpdated{name != trayIcon->icon().name()};
     if(needsToBeUpdated)
     {
         trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
@@ -1047,7 +1048,7 @@ void MegaApplication::start()
         initLocalServer();
         if (updated)
         {
-            megaApi->sendEvent(99510, "MEGAsync update");
+            megaApi->sendEvent(AppStatsEvents::EVENT_UPDATE, "MEGAsync update");
             checkupdate = true;
         }
         updated = false;
@@ -1075,7 +1076,7 @@ void MegaApplication::start()
 
         if (!preferences->isFirstStartDone())
         {
-            megaApi->sendEvent(99500, "MEGAsync first start");
+            megaApi->sendEvent(AppStatsEvents::EVENT_1ST_START, "MEGAsync first start");
             openInfoWizard();
         }
         else if (!QSystemTrayIcon::isSystemTrayAvailable() && !getenv("START_MEGASYNC_IN_BACKGROUND"))
@@ -1140,7 +1141,7 @@ void MegaApplication::start()
 
         if (updated)
         {
-            megaApi->sendEvent(99510, "MEGAsync update");
+            megaApi->sendEvent(AppStatsEvents::EVENT_UPDATE, "MEGAsync update");
             checkupdate = true;
         }
     }
@@ -1173,6 +1174,53 @@ void MegaApplication::requestUserData()
         });//end of queued function
 
     });// end of thread pool function
+}
+
+void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRequired)
+{
+    if (!theList)
+    {
+        return;
+    }
+
+    if (mOsNotifications)
+    {
+        mOsNotifications->addUserAlertList(theList);
+    }
+
+    if (notificationsModel)
+    {
+        notificationsModel->insertAlerts(theList, copyRequired);
+    }
+    else
+    {
+        notificationsModel = new QAlertsModel(theList, copyRequired);
+        notificationsProxyModel = new QFilterAlertsModel();
+        notificationsProxyModel->setSourceModel(notificationsModel);
+        notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+
+        notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
+
+        if (infoDialog)
+        {
+            infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
+        }
+    }
+
+    if (infoDialog)
+    {
+        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
+        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
+                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
+                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
+    }
+
+    if (!copyRequired)
+    {
+        theList->clear(); //empty the list otherwise they will be deleted
+        delete theList;
+    }
 }
 
 void MegaApplication::loggedIn(bool fromWizard)
@@ -1953,7 +2001,7 @@ void MegaApplication::checkMemoryUsage()
         {
             preferences->setMaxMemoryUsage(maxMemoryUsage);
             preferences->setMaxMemoryReportTime(currentTime);
-            megaApi->sendEvent(99509, QString::fromUtf8("%1 %2 %3")
+            megaApi->sendEvent(AppStatsEvents::EVENT_MEM_USAGE, QString::fromUtf8("%1 %2 %3")
                                .arg(maxMemoryUsage)
                                .arg(numNodes)
                                .arg(numLocalNodes).toUtf8().constData());
@@ -1974,7 +2022,8 @@ void MegaApplication::checkOverStorageStates()
                 || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
-            megaApi->sendEvent(99518, "Overstorage dialog shown");
+            megaApi->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_DIAL,
+                               "Overstorage dialog shown");
             if (!storageOverquotaDialog)
             {
                 storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
@@ -1991,7 +2040,8 @@ void MegaApplication::checkOverStorageStates()
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
-            megaApi->sendEvent(99519, "Overstorage notification shown");
+            megaApi->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_NOTIF,
+                               "Overstorage notification shown");
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
         }
 
@@ -2002,7 +2052,8 @@ void MegaApplication::checkOverStorageStates()
             {
                 if (infoDialog->updateOverStorageState(Preferences::STATE_OVER_STORAGE))
                 {
-                    megaApi->sendEvent(99520, "Overstorage warning shown");
+                    megaApi->sendEvent(AppStatsEvents::EVENT_OVER_STORAGE_MSG,
+                                       "Overstorage warning shown");
                 }
             }
             else
@@ -2020,7 +2071,8 @@ void MegaApplication::checkOverStorageStates()
             {
                 if (infoDialog->updateOverStorageState(Preferences::STATE_ALMOST_OVER_STORAGE))
                 {
-                    megaApi->sendEvent(99521, "Almost overstorage warning shown");
+                    megaApi->sendEvent(AppStatsEvents::EVENT_ALMOST_OVER_STORAGE_MSG,
+                                       "Almost overstorage warning shown");
                 }
             }
             else
@@ -2035,7 +2087,8 @@ void MegaApplication::checkOverStorageStates()
                               && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS))
         {
             preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
-            megaApi->sendEvent(99522, "Almost overstorage notification shown");
+            megaApi->sendEvent(AppStatsEvents::EVENT_ALMOST_OVER_STORAGE_NOTIF,
+                               "Almost overstorage notification shown");
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
 
@@ -2061,7 +2114,8 @@ void MegaApplication::checkOverStorageStates()
                 if (remainDaysOut > 0) //Only show notification if at least there is one day left
                 {
                     preferences->setPayWallNotificationExecution(QDateTime::currentMSecsSinceEpoch());
-                    megaApi->sendEvent(99530, "Paywall notification shown");
+                    megaApi->sendEvent(AppStatsEvents::EVENT_PAYWALL_NOTIF,
+                                       "Paywall notification shown");
                     mOsNotifications->sendOverStorageNotification(Preferences::STATE_PAYWALL);
                 }
             }
@@ -2129,7 +2183,7 @@ void MegaApplication::periodicTasks()
             if (checkupdate)
             {
                 checkupdate = false;
-                megaApi->sendEvent(99511, "MEGAsync updated OK");
+                megaApi->sendEvent(AppStatsEvents::EVENT_UPDATE_OK, "MEGAsync updated OK");
             }
 
             networkConfigurationManager.updateConfigurations();
@@ -2443,11 +2497,13 @@ void MegaApplication::showInfoDialog()
         {
             if (storageState == MegaApi::STORAGE_STATE_RED)
             {
-                megaApi->sendEvent(99523, "Main dialog shown while overquota");
+                megaApi->sendEvent(AppStatsEvents::EVENT_MAIN_DIAL_WHILE_OVER_QUOTA,
+                                   "Main dialog shown while overquota");
             }
             else if (storageState == MegaApi::STORAGE_STATE_ORANGE)
             {
-                megaApi->sendEvent(99524, "Main dialog shown while almost overquota");
+                megaApi->sendEvent(AppStatsEvents::EVENT_MAIN_DIAL_WHILE_ALMOST_OVER_QUOTA,
+                                   "Main dialog shown while almost overquota");
             }
 
             repositionInfoDialog();
@@ -3543,7 +3599,7 @@ void MegaApplication::checkFirstTransfer()
     }
 
     if (numTransfers[MegaTransfer::TYPE_UPLOAD] && activeTransferPriority[MegaTransfer::TYPE_UPLOAD] == 0xFFFFFFFFFFFFFFFFULL)
-    {        
+    {
         mThreadPool->push([=]()
         {//thread pool function
 
@@ -3785,10 +3841,10 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         }
 
         if (mOsNotifications && !message.isEmpty())
-        {           
+        {
             preferences->setLastTransferNotificationTimestamp();
-            const auto totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
-            const auto extraData{totalTransfersString + data->localPath};
+            const QString totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
+            const QString extraData{totalTransfersString + data->localPath};
             mOsNotifications->sendFinishedTransferNotification(title, message, extraData);
         }
 
@@ -3891,7 +3947,7 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                model->pickInfoFromOldSync(osd, request->getTransferTag(), needsMigratingFromOldSession);
+                model->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
                 preferences->removeOldCachedSync(osd.mPos, email);
             }
             else
@@ -4153,7 +4209,7 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
 {
     QMap<int, MegaTransfer*>::iterator it = finishedTransfers.find(transferTag);
     if (it != finishedTransfers.end())
-    {     
+    {
         for (QList<MegaTransfer*>::iterator it2 = finishedTransferOrder.begin(); it2 != finishedTransferOrder.end(); it2++)
         {
             if ((*it2)->getTag() == transferTag)
@@ -5097,7 +5153,7 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 {
     MegaNode *node = NULL;
 
-#ifdef WIN32   
+#ifdef WIN32
     if (!localPath.startsWith(QByteArray((const char *)L"\\\\", 4)))
     {
         localPath.insert(0, QByteArray((const char *)L"\\\\?\\", 8));
@@ -5636,7 +5692,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
         }
 #ifdef _WIN32
-        // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.  
+        // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.
         // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
         if (!infoDialog || (chrono::steady_clock::now() - infoDialog->lastWindowHideTime > 100ms))
 #endif
@@ -6473,7 +6529,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.setDefaultButton(QMessageBox::Yes);
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
-                    {                        
+                    {
                         QString url = QString::fromUtf8("mega://#repay");
                         Utilities::getPROurlWithParameters(url);
                         QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
@@ -6605,7 +6661,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             applyStorageState(MegaApi::STORAGE_STATE_PAYWALL);
         }
     }
-    
+
     switch (request->getType())
     {
     case MegaRequest::TYPE_EXPORT:
@@ -6924,7 +6980,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                 preferences->setHttpsCertIntermediate(intermediates);
                 preferences->setHttpsCertExpiration(request->getNumber());
-                megaApi->sendEvent(99517, "Local SSL certificate renewed");
+                megaApi->sendEvent(AppStatsEvents::EVENT_LOCAL_SSL_CERT_RENEWED,
+                                   "Local SSL certificate renewed");
                 delete httpsServer;
                 httpsServer = NULL;
                 startHttpsServer();
@@ -7141,7 +7198,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
             {
-                megaApi->sendEvent(99525, "Red light does not match used storage");
+                megaApi->sendEvent(AppStatsEvents::EVENT_RED_LIGHT_USED_STORAGE_MISMATCH,
+                                   "Red light does not match used storage");
                 preferences->setUsedStorage(preferences->totalStorage());
             }
             else
@@ -7292,7 +7350,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (e->getErrorCode() == MegaError::API_EACCESS)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Sync addition returns API_EACCESS").toUtf8().constData());
-            megaApi->sendEvent(99531, "Sync addition fails with API_EACCESS"); //this would enforce a fetchNodes in the past
+            megaApi->sendEvent(AppStatsEvents::EVENT_SYNC_ADD_FAIL_API_EACCESS,
+                               "Sync addition fails with API_EACCESS"); //this would enforce a fetchNodes in the past
         }
         break;
     }
@@ -7306,7 +7365,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         const char *url = request->getText();
         if (url && !memcmp(url, "pro", 3))
         {
-            megaApi->sendEvent(99508, "Redirection to PRO");
+            megaApi->sendEvent(AppStatsEvents::EVENT_PRO_REDIRECT, "Redirection to PRO");
         }
 
         QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8(request->getLink())));
@@ -7392,7 +7451,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setBlockedState(blockState);
             }
 
-            requestUserData(); // querying some user attributes might have been rejected: we query them again            
+            requestUserData(); // querying some user attributes might have been rejected: we query them again
 
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer blocked").toUtf8().constData());
 
@@ -7562,7 +7621,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (finishedTransfers.count(transfer->getTag()))
         {
             assert(false);
-            megaApi->sendEvent(99512, QString::fromUtf8("Duplicated finished transfer: %1").arg(QString::number(transfer->getTag())).toUtf8().constData());
+            megaApi->sendEvent(AppStatsEvents::EVENT_DUP_FINISHED_TRSF,
+                               QString::fromUtf8("Duplicated finished transfer: %1").arg(QString::number(transfer->getTag())).toUtf8().constData());
             removeFinishedTransfer(transfer->getTag());
         }
 
@@ -7656,7 +7716,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             && !isFirstFileSynced
             && !preferences->isFirstFileSynced())
     {
-        megaApi->sendEvent(99502, "MEGAsync first synced file");
+        megaApi->sendEvent(AppStatsEvents::EVENT_1ST_SYNCED_FILE, "MEGAsync first synced file");
         isFirstFileSynced = true;
     }
 
@@ -7892,89 +7952,33 @@ void MegaApplication::pushToThreadPool(std::function<void()> functor)
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
-    Q_UNUSED(api);
+    Q_UNUSED(api)
+
     if (appfinished)
     {
         return;
     }
 
-    bool doSynchronously = (list != NULL); // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
-                                 // since we are not copying the list, and we need to process it before it goes out of scope.
-    auto funcToThreadPool = [this, list, doSynchronously]()
-    {//thread pool function
-        bool copyRequired = true;
-
-
-        MegaUserAlertList *theList = list;
-        if (!theList)//User alerts already loaded: get the list from MegaApi::getUserAlerts
-        {
-            theList = megaApi->getUserAlerts();
-            copyRequired = false;
-        }
-
-        auto callBackFunctionForQt = [this, theList, copyRequired]()
-        {//queued function
-
-            assert((!copyRequired || notificationsModel) && "onUserAlertsUpdate with !alerts should have happened before!");
-
-            mOsNotifications->addUserAlertList(theList);
-
-            if (!notificationsModel)
-            {
-                notificationsModel = new QAlertsModel(theList, copyRequired);
-                notificationsProxyModel = new QFilterAlertsModel();
-                notificationsProxyModel->setSourceModel(notificationsModel);
-                notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-
-                notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
-
-                if (infoDialog)
-                {
-                    infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
-                }
-            }
-            else
-            {
-                notificationsModel->insertAlerts(theList, copyRequired);
-            }
-
-            if (infoDialog)
-            {
-                infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
-                infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
-                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
-                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
-                                                   notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
-            }
-
-            if (!copyRequired)
-            {
-                theList->clear(); //empty the list otherwise they will be deleted
-                delete theList;
-            }
-        };
-
-      if (doSynchronously)
-      {
-          callBackFunctionForQt();
-      }
-      else
-      {
-          Utilities::queueFunctionInAppThread(callBackFunctionForQt);//end of queued function
-      }
-    };// end of thread pool function
-
+    // if we have a list, we don't need to query megaApi for it and block the sdk mutex, we do this
+    // synchronously, since we are not copying the list, and we need to process it before it goes out of scope.
+    bool doSynchronously{list != NULL};
 
     if (doSynchronously)
     {
-        funcToThreadPool();
+        populateUserAlerts(list, true);
     }
     else
     {
+        auto funcToThreadPool = [this]()
+        { //thread pool function
+            MegaUserAlertList *theList;
+            theList = megaApi->getUserAlerts();
+            //queued function
+            Utilities::queueFunctionInAppThread([this, theList]() { populateUserAlerts(theList, false); });
+        }; // end of thread pool function
         mThreadPool->push(funcToThreadPool);
     }
 }
-
 
 //Called when contacts have been updated in MEGA
 void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
@@ -8103,7 +8107,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
     {
         onGlobalSyncStateChangedTimer.reset();
     }
-    else 
+    else
     {
         if (!onGlobalSyncStateChangedTimer)
         {
@@ -8206,16 +8210,15 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Your sync \"%1\" has been disabled. State = %2. Error = %3")
-                 .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Your sync \"%1\" has been disabled. Error = %2")
+                 .arg(syncSetting->name()).arg(syncSetting->getError()).toUtf8().constData());
 
     if (syncSetting->isTemporaryDisabled() && syncSetting->getError() != MegaSync::Error::LOGGED_OUT)
     {
         showErrorMessage(tr("Your sync \"%1\" has been temporarily disabled").arg(syncSetting->name()).append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncSetting->getError()))));
     }
-
-    if (syncSetting->getState() == MegaSync::SYNC_FAILED)
+    else if (syncSetting->getError() != MegaSync::NO_SYNC_ERROR && syncSetting->getError() != MegaSync::Error::LOGGED_OUT)
     {
         switch(syncSetting->getError())
         {
@@ -8273,10 +8276,10 @@ void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
 
     if (sync->getError())
     {
-        model->addUnattendedDisabledSync(sync->getTag());
+        model->addUnattendedDisabledSync(sync->getBackupId());
     }
 
-    onSyncDisabled(model->getSyncSettingByTag(sync->getTag()));
+    onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
 }
 
 void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
@@ -8287,14 +8290,14 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, tr("Your sync \"%1\" has been re-enabled. State = %2. Error = %3")
-                 .arg(syncSetting->name()).arg(syncSetting->getState()).arg(syncSetting->getError()).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Your sync \"%1\" has been re-enabled. Error = %2")
+                 .arg(syncSetting->name()).arg(syncSetting->getError()).toUtf8().constData());
 
 
     showErrorMessage(tr("Your sync \"%1\" has been enabled")
                      .arg(syncSetting->name()));
 
-    model->removeUnattendedDisabledSync(syncSetting->tag());
+    model->removeUnattendedDisabledSync(syncSetting->backupId());
 }
 
 void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
@@ -8304,7 +8307,7 @@ void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    onSyncEnabled(model->getSyncSettingByTag(sync->getTag()));
+    onSyncEnabled(model->getSyncSettingByTag(sync->getBackupId()));
 }
 
 void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionState)
@@ -8337,7 +8340,7 @@ void MegaApplication::onSyncDeleted(MegaApi *api, MegaSync *sync)
         return;
     }
 
-    model->removeSyncedFolderByTag(sync->getTag());
+    model->removeSyncedFolderByBackupId(sync->getBackupId());
 
     onGlobalSyncStateChanged(api);
 }

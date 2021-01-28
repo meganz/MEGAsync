@@ -24,7 +24,7 @@ std::chrono::seconds TransferRemainingTime::calculateRemainingTimeSeconds(long l
     {
         mRemainingTimesBuffer[mUpdateRemainingTimeCounter] = std::numeric_limits<int>::max();
     }
-    const auto bufferIsFull{mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE - 1};
+    const bool bufferIsFull{mUpdateRemainingTimeCounter == REMAINING_SECONDS_BUFFER_SIZE - 1};
     if(bufferIsFull)
     {
         mUpdateRemainingTimeCounter = 0;

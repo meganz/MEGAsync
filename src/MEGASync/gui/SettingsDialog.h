@@ -50,6 +50,8 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
 public:
     enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
 
+    enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
+
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
@@ -199,6 +201,8 @@ private:
     QButtonGroup uploadButtonGroup;
     bool reloadUIpage;
     ThreadPool* mThreadPool;
+    bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
+    bool isSavingSyncsOnGoing;
 
 
 #ifndef WIN32
@@ -229,6 +233,7 @@ private:
     void onCacheSizeAvailable();
     void onClearCache();
     void savingSyncs(bool completed, QObject *item);
+    void syncsStateInformation(int state);
 
 public:
     void updateStorageElements();

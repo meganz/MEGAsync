@@ -21,6 +21,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/qrcodegen.c
 
 HEADERS  +=  $$PWD/HTTPServer.h \
+    $$PWD/AppStatsEvents.h \
     $$PWD/Preferences.h \
     $$PWD/LinkProcessor.h \
     $$PWD/MegaUploader.h \

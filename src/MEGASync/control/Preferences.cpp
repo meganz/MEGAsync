@@ -12,14 +12,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.8.0";
-const int Preferences::VERSION_CODE = 4308;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.3.9.0";
+const int Preferences::VERSION_CODE = 4309;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.8");
-QString Preferences::SDK_ID = QString::fromAscii("37b346c");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.9");
+QString Preferences::SDK_ID = QString::fromAscii("c917ddc");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fixed decryption errors for downloads during integrity verification."));
+    "- Fixed detected crashes on Windows and Linux."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -2191,7 +2191,7 @@ void Preferences::setLastExit(long long value)
     mutex.unlock();
 }
 
-QSet<int> Preferences::getDisabledSyncTags()
+QSet<MegaHandle> Preferences::getDisabledSyncTags()
 {
     QMutexLocker qm(&mutex);
     assert(logged());
@@ -2199,24 +2199,24 @@ QSet<int> Preferences::getDisabledSyncTags()
     QStringList stringTagList = getValueConcurrent<QString>(disabledSyncsKey).split(QString::fromUtf8("0x1E"), QString::SkipEmptyParts);
     if (!stringTagList.isEmpty())
     {
-        QList<int> tagList;
+        QList<mega::MegaHandle> tagList;
         for (auto &tag : stringTagList)
         {
-            tagList.append(tag.toInt());
+            tagList.append(tag.toULongLong());
         }
 
-        return QSet<int>::fromList(tagList);
+        return QSet<mega::MegaHandle>::fromList(tagList);
     }
 
-    return QSet<int>();
+    return QSet<mega::MegaHandle>();
 }
 
-void Preferences::setDisabledSyncTags(QSet<int> disabledSyncs)
+void Preferences::setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs)
 {
     QMutexLocker qm(&mutex);
     assert(logged());
 
-    QList<int> disabledTags = disabledSyncs.toList();
+    QList<mega::MegaHandle> disabledTags = disabledSyncs.toList();
     QStringList tags;
 
     for(auto &tag : disabledTags)
@@ -2792,7 +2792,7 @@ void Preferences::loadExcludedSyncNames()
 }
 
 
-QMap<int, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
+QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > Preferences::getLoadedSyncsMap() const
 {
     return loadedSyncsMap;
 }
@@ -2811,9 +2811,9 @@ void Preferences::readFolders()
         settings->beginGroup(i);
 
         auto sc = std::make_shared<SyncSetting>(settings->value(configuredSyncsKey).value<QString>());
-        if (sc->tag())
+        if (sc->backupId())
         {
-            loadedSyncsMap[sc->tag()] = sc;
+            loadedSyncsMap[sc->backupId()] = sc;
         }
         else
         {
@@ -2987,7 +2987,7 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
     settings->beginGroup(syncsGroupByTagKey);
 
-    settings->beginGroup(QString::number(syncSettings->tag()));
+    settings->beginGroup(QString::number(syncSettings->backupId()));
 
     settings->remove(QString::fromAscii("")); //removes group and all its settings
 
@@ -3005,7 +3005,7 @@ void Preferences::writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings)
 
         settings->beginGroup(syncsGroupByTagKey);
 
-        settings->beginGroup(QString::number(syncSettings->tag()));
+        settings->beginGroup(QString::number(syncSettings->backupId()));
 
         settings->setValue(configuredSyncsKey, syncSettings->toString());
 

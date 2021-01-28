@@ -21,11 +21,17 @@ public:
     explicit QSyncItemWidget(int itemType, QWidget *parent = nullptr);
 
     void setText(const QString &path);
+    void setPathAndName(const QString &path, const QString &name);
+    void setPathAndGuessName(const QString &path);
     void setToolTip(const QString &tooltip);
     QString text();
-    void localCacheAvailable(bool op);
+    QString fullPath();
+    void setError(int error);
 
     ~QSyncItemWidget();
+
+    bool getIsCacheAvailable() const;
+    void setIsCacheAvailable(bool value);
 
 private slots:
     void on_bSyncOptions_clicked();
@@ -39,19 +45,19 @@ signals:
 private:
     Ui::QSyncItemWidget *ui;
 
-    QMenu *optionsMenu;
-    MenuItemAction *syncInfo;
-    MenuItemAction *openDebris;
-    MenuItemAction *deleteSync;
-    bool isCacheAvailable;
-    int itemType;
-    QString fullPath;
+    QMenu *mOptionsMenu;
+    MenuItemAction *mSyncInfo;
+    MenuItemAction *mOpenDebris;
+    MenuItemAction *mDeleteSync;
+    bool mIsCacheAvailable;
+    int mItemType;
+    QString mFullPath;
+    int mError;
 
     void configureSyncTypeUI(int type) const;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
-
 };
 
 #endif // QSYNCITEMWIDGET_H

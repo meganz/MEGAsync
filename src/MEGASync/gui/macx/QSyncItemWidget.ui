@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>367</width>
+    <width>256</width>
     <height>31</height>
    </rect>
   </property>
@@ -39,6 +39,9 @@
        <width>16</width>
        <height>16</height>
       </size>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="text">
       <string/>

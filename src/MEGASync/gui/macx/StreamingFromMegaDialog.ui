@@ -567,7 +567,7 @@ font-size: 11px;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/streaming_link.png</normaloff>:/images/streaming_link.png</iconset>
               </property>
              </widget>
@@ -734,7 +734,7 @@ font-size: 11px;
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/icon_error.png</normaloff>:/images/icon_error.png</iconset>
         </property>
         <property name="iconSize">
@@ -802,7 +802,7 @@ font-size: 11px;
   <zorder>wContainer</zorder>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

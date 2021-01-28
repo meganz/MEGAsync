@@ -155,6 +155,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
+    ${MEGAsyncDir}/gui/${UiDir}/QSyncItemWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
@@ -254,6 +255,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/QMegaModel.h
     ${MEGAsyncDir}/gui/QTransfersModel.h
+    ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/SizeLimitDialog.h
@@ -277,7 +279,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
 )
 
@@ -382,6 +383,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransferManager.cpp
     ${MEGAsyncDir}/gui/TransfersWidget.cpp
     ${MEGAsyncDir}/gui/QTransfersModel.cpp
+    ${MEGAsyncDir}/gui/QSyncItemWidget.cpp
     ${MEGAsyncDir}/gui/QActiveTransfersModel.cpp
     ${MEGAsyncDir}/gui/QFinishedTransfersModel.cpp
     ${MEGAsyncDir}/gui/MegaTransferDelegate.cpp
@@ -415,7 +417,6 @@ set (SRCS
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaEvent.cpp
 

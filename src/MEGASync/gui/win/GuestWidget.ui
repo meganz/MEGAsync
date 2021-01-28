@@ -280,7 +280,7 @@ margin-top: -1px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -438,7 +438,7 @@ image: none;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_win.qrc">
                     <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -884,7 +884,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -1211,7 +1211,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -2567,7 +2567,7 @@ background-color: #F0373A;
                <string notr="true"/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_win.qrc">
                 <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
               </property>
               <property name="iconSize">
@@ -2774,7 +2774,7 @@ background-color: #F0373A;
   <tabstop>bLogoSettingUp</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
