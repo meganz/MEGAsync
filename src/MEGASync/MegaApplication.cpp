@@ -3642,7 +3642,7 @@ void MegaApplication::checkOperatingSystem()
                     long majorVersion = strtol(token, &endPtr, 10);
                     if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
                     {
-                        if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
+                        if((int)majorVersion < 14) // Older versions from 10.10 (yosemite)
                         {
                             isOSdeprecated = true;
                         }
@@ -3664,7 +3664,7 @@ void MegaApplication::checkOperatingSystem()
             QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
                                  tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
-                                 + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
+                                 + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.")
 #elif defined(_WIN32)
                                  + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.")
 #else
