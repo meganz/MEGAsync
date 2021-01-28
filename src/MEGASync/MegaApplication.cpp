@@ -340,7 +340,7 @@ void MegaApplication::showInterface(QString)
     QDir dataDir(dataPath);
     if (dataDir.exists(QString::fromAscii("megasync.show")))
     {
-        QFile showFile(dataDir.filePath(QString::fromAscii("megasync.show"))); 
+        QFile showFile(dataDir.filePath(QString::fromAscii("megasync.show")));
         if (showFile.open(QIODevice::ReadOnly))
         {
             show = showFile.size() > 0;
@@ -1188,7 +1188,11 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
         mOsNotifications->addUserAlertList(theList);
     }
 
-    if (!notificationsModel)
+    if (notificationsModel)
+    {
+        notificationsModel->insertAlerts(theList, copyRequired);
+    }
+    else
     {
         notificationsModel = new QAlertsModel(theList, copyRequired);
         notificationsProxyModel = new QFilterAlertsModel();
@@ -1202,17 +1206,13 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
             infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
         }
     }
-    else
-    {
-        notificationsModel->insertAlerts(theList, copyRequired);
-    }
 
     if (infoDialog)
     {
         infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
         infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
-                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
-                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
+                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
+                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
                                            notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
     }
 
@@ -3599,7 +3599,7 @@ void MegaApplication::checkFirstTransfer()
     }
 
     if (numTransfers[MegaTransfer::TYPE_UPLOAD] && activeTransferPriority[MegaTransfer::TYPE_UPLOAD] == 0xFFFFFFFFFFFFFFFFULL)
-    {        
+    {
         mThreadPool->push([=]()
         {//thread pool function
 
@@ -3841,7 +3841,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         }
 
         if (mOsNotifications && !message.isEmpty())
-        {           
+        {
             preferences->setLastTransferNotificationTimestamp();
             const QString totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
             const QString extraData{totalTransfersString + data->localPath};
@@ -4209,7 +4209,7 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
 {
     QMap<int, MegaTransfer*>::iterator it = finishedTransfers.find(transferTag);
     if (it != finishedTransfers.end())
-    {     
+    {
         for (QList<MegaTransfer*>::iterator it2 = finishedTransferOrder.begin(); it2 != finishedTransferOrder.end(); it2++)
         {
             if ((*it2)->getTag() == transferTag)
@@ -5153,7 +5153,7 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 {
     MegaNode *node = NULL;
 
-#ifdef WIN32   
+#ifdef WIN32
     if (!localPath.startsWith(QByteArray((const char *)L"\\\\", 4)))
     {
         localPath.insert(0, QByteArray((const char *)L"\\\\?\\", 8));
@@ -5692,7 +5692,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             }
         }
 #ifdef _WIN32
-        // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.  
+        // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.
         // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
         if (!infoDialog || (chrono::steady_clock::now() - infoDialog->lastWindowHideTime > 100ms))
 #endif
@@ -6529,7 +6529,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.setDefaultButton(QMessageBox::Yes);
                     int ret = msgBox.exec();
                     if (ret == QMessageBox::AcceptRole)
-                    {                        
+                    {
                         QString url = QString::fromUtf8("mega://#repay");
                         Utilities::getPROurlWithParameters(url);
                         QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
@@ -6661,7 +6661,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             applyStorageState(MegaApi::STORAGE_STATE_PAYWALL);
         }
     }
-    
+
     switch (request->getType())
     {
     case MegaRequest::TYPE_EXPORT:
@@ -7454,7 +7454,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setBlockedState(blockState);
             }
 
-            requestUserData(); // querying some user attributes might have been rejected: we query them again            
+            requestUserData(); // querying some user attributes might have been rejected: we query them again
 
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer blocked").toUtf8().constData());
 
@@ -7962,8 +7962,10 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         return;
     }
 
-    bool doSynchronously {list != NULL}; // if we have a list (no't need to query megaApi for it and block the sdk mutex), we do this synchrnously
-                                 // since we are not copying the list, and we need to process it before it goes out of scope.
+    // if we have a list, we don't need to query megaApi for it and block the sdk mutex, we do this
+    // synchronously, since we are not copying the list, and we need to process it before it goes out of scope.
+    bool doSynchronously{list != NULL};
+
     if (doSynchronously)
     {
         populateUserAlerts(list, true);
@@ -7971,15 +7973,12 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
     else
     {
         auto funcToThreadPool = [this]()
-        {//thread pool function
+        { //thread pool function
             MegaUserAlertList *theList;
             theList = megaApi->getUserAlerts();
-
-            Utilities::queueFunctionInAppThread([this, theList]() {
-                populateUserAlerts(theList, false);
-            });//end of queued function
-
-        };// end of thread pool function
+            //queued function
+            Utilities::queueFunctionInAppThread([this, theList]() { populateUserAlerts(theList, false); });
+        }; // end of thread pool function
         mThreadPool->push(funcToThreadPool);
     }
 }
@@ -8111,7 +8110,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
     {
         onGlobalSyncStateChangedTimer.reset();
     }
-    else 
+    else
     {
         if (!onGlobalSyncStateChangedTimer)
         {

@@ -73,5 +73,6 @@ install_manifest.txt
 src/.qmake.stash
 
 *.orig
+*.rej
 
 /contrib/cmake/cmake-build-*
