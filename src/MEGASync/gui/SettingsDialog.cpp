@@ -540,6 +540,7 @@ void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 
 void SettingsDialog::onSavingSettingsProgress(double progress)
 {
+    Q_UNUSED(progress)
     syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
     savingSyncs(false, ui->pSyncs);
     isSavingSyncsOnGoing = true;
@@ -1462,6 +1463,7 @@ int SettingsDialog::saveSettings()
 
                             connect(disableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
                             {
+                                Q_UNUSED(request)
                                 if (error->getErrorCode())
                                 {
                                     QObject temporary;
