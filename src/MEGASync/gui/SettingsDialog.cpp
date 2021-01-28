@@ -1833,8 +1833,6 @@ int SettingsDialog::saveSettings()
 #endif
             return 2;
         }
-
-        QT_TR_NOOP("Do you want to restart MEGAsync now?");
     }
 
     ui->bApply->setEnabled(false);
