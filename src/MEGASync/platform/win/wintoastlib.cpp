@@ -1,6 +1,10 @@
 #include "wintoastlib.h"
+#include "Preferences.h"
+#include <VersionHelpers.h>
 #include <memory>
 #include <assert.h>
+#include <QMessageBox>
+#include <QPushButton>
 
 #pragma comment(lib,"shlwapi")
 #pragma comment(lib,"user32")
@@ -439,6 +443,32 @@ std::wstring WinToast::configureAUMI(_In_ const std::wstring &companyName,
     return aumi;
 }
 
+bool getCreateLinkUserPreference(const std::wstring &appName)
+{
+    // Load user preference
+    Preferences* p = Preferences::instance();
+    if (p->neverCreateLink())
+        return false;
+
+    // Create user dialog
+    const QString& title = QString::fromWCharArray(appName.c_str());
+    QMessageBox msgbox(QMessageBox::Question, title,
+        title + QObject::tr(" did not find a valid link in Start Menu. "
+            "Not having a link may prevent the correct functioning of desktop notifications.\n\n"
+            "Do you want to create one?"));
+    auto yesButton = msgbox.addButton(QObject::tr("Yes (recommended)"), QMessageBox::YesRole);
+    msgbox.addButton(QObject::tr("No"), QMessageBox::NoRole);
+    auto neverButton = msgbox.addButton(QObject::tr("No (never ask again)"), QMessageBox::NoRole);
+
+    msgbox.exec();
+    auto clickedButton = msgbox.clickedButton();
+
+    // Evaluate user option
+    if (clickedButton == neverButton)
+        p->setNeverCreateLink(true);
+
+    return clickedButton == yesButton;
+}
 
 enum WinToast::ShortcutResult WinToast::createShortcut() {
     if (_aumi.empty() || _appName.empty()) {
@@ -469,6 +499,11 @@ enum WinToast::ShortcutResult WinToast::createShortcut() {
     if (SUCCEEDED(hr))
         return wasChanged ? SHORTCUT_WAS_CHANGED : SHORTCUT_UNCHANGED;
 
+    // If shortcut was not found, get user preference for creating one
+    bool create = getCreateLinkUserPreference(_appName);
+    if (!create)
+        return SHORTCUT_CREATE_SKIPPED;
+
     hr = createShellLinkHelper();
     if (SUCCEEDED(hr))
         return SHORTCUT_WAS_CREATED;
@@ -478,7 +513,7 @@ enum WinToast::ShortcutResult WinToast::createShortcut() {
 bool WinToast::initialize() {
     _isInitialized = false;
 
-    if (createShortcut() < 0)
+    if (createShortcut() < 0 && !IsWindows10OrGreater()) // for Win10 allow fallback notifications when toasts don't work
         return false;
 
     if (FAILED(DllImporter::SetCurrentProcessExplicitAppUserModelID(_aumi.c_str()))) {
