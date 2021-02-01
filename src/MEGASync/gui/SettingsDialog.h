@@ -7,8 +7,11 @@
 #include <QtCore>
 #include <QNetworkProxy>
 #include <QButtonGroup>
-#include <QMacToolBar>
 #include <ConnectivityChecker.h>
+
+#ifdef __APPLE__
+#include <QMacToolBar>
+#endif
 
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"

@@ -20,7 +20,6 @@
 #include "gui/BugReportDialog.h"
 #include "gui/QSyncItemWidget.h"
 #include <assert.h>
-#include <QMacToolBar>
 #include "mega/types.h"
 
 #ifdef __APPLE__
@@ -2407,8 +2406,8 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
 
-        bAccount.get()->setText(tr("Account"));
 #ifdef __APPLE__
+        bAccount.get()->setText(tr("Account"));
         //review and check
         setWindowTitle(tr("Preferences - MEGAsync"));
         ui->cStartOnStartup->setText(tr("Open at login"));
