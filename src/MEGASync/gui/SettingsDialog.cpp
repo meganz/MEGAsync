@@ -421,6 +421,11 @@ void SettingsDialog::fileVersioningStateChanged()
 
 void SettingsDialog::syncStateChanged(int state)
 {
+    if (state)
+    {
+        Platform::prepareForSync();
+    }
+
     syncsChanged = true;
     stateChanged();
 }
