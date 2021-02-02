@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>256</width>
+    <width>201</width>
     <height>31</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>201</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>201</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string notr="true"/>
@@ -20,7 +32,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>5</number>
+    <number>3</number>
    </property>
    <property name="leftMargin">
     <number>8</number>
