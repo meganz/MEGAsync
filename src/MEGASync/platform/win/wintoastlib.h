@@ -129,7 +129,7 @@ namespace WinToastLib {
             SHORTCUT_INCOMPATIBLE_OS = -2,
             SHORTCUT_COM_INIT_FAILURE = -3,
             SHORTCUT_CREATE_FAILED = -4,
-            SHORTCUT_CREATE_SKIPPED = -5
+            SHORTCUT_CREATE_SKIPPED = -5,
         };
         virtual enum ShortcutResult createShortcut();
     protected:

@@ -371,7 +371,7 @@ const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPu
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
-const QString Preferences::neverCreateLinkKey       = QString::fromAscii("neverCreateLink");
+const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
