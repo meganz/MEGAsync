@@ -23,10 +23,13 @@ public:
     QString fullPath();
 
     ~QSyncItemWidget();
+private:
+    void elidePathLabel();
 
 private:
     Ui::QSyncItemWidget *ui;
     QString mFullPath;
+    QString mSyncName;
     int error;
 };
 
