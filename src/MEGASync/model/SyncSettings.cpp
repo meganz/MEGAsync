@@ -148,7 +148,7 @@ long long SyncSetting::getLocalFingerprint()  const
 
 QString SyncSetting::getMegaFolder()  const
 {
-    auto folder = mSync->getMegaFolder();
+    auto folder = mSync->getLastKnownMegaFolder();
     return folder ? QString::fromUtf8(folder) : QString();
 }
 
