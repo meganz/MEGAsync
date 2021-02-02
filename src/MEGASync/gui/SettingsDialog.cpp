@@ -421,44 +421,6 @@ void SettingsDialog::fileVersioningStateChanged()
 
 void SettingsDialog::syncStateChanged(int state)
 {
-#ifndef SYNC_ADVANCED_TEST_MODE
-    //with this code enabled, it will disallow the option to "disable" a tristate checkbox for failed syncs
-    //we should rather handle error only when `saving` changes. Note, we might want to keep prepareForSync call anyway
-
-    if (state)
-    {
-        Platform::prepareForSync();
-        QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
-        for (int j = 0; j < ui->tSyncs->rowCount(); j++)
-        {
-            if (ui->tSyncs->cellWidget(j, 2) == c)
-            {
-                QString newLocalPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 0))->fullPath();
-                QFileInfo fi(newLocalPath);
-                if (!fi.exists() || !fi.isDir())
-                {
-                    c->setCheckState(Qt::Unchecked);
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                       tr("This sync can't be enabled because the local folder doesn't exist"));
-                    return;
-                }
-
-                QString newMegaPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 1))->fullPath();
-                MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
-                if (!n)
-                {
-                    c->setCheckState(Qt::Unchecked);
-                    QMegaMessageBox::critical(nullptr, tr("Error"),
-                       tr("This sync can't be enabled because the remote folder doesn't exist"));
-                    return;
-                }
-                delete n;
-                break;
-            }
-        }
-    }
-#endif
-
     syncsChanged = true;
     stateChanged();
 }
