@@ -6887,6 +6887,33 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>WinToastLib</name>
+    <message>
+        <source> did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</source>
+        <translatorcomment>Message from the app, asking the user how to proceed when no expected link was found.</translatorcomment>
+        <translation type="unfinished"> did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</translation>
+    </message>
+    <message>
+        <source>Yes (recommended)</source>
+        <translatorcomment>Button label with the affirmative and recommended user option.</translatorcomment>
+        <translation type="unfinished">Yes (recommended)</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Button label with the negative user option.</translatorcomment>
+        <translation type="unfinished">No</translation>
+    </message>
+    <message>
+        <source>No (never ask again)</source>
+        <translatorcomment>Button label with the negative user option, which will also prevent the dialog from being shown again.</translatorcomment>
+        <translation type="unfinished">No (never ask again)</translation>
+    </message>
+</context>
+<context>
     <name>WindowsPlatform</name>
     <message>
         <source>MEGA synced folder</source>
