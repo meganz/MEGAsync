@@ -26,6 +26,9 @@ public:
 private:
     void elidePathLabel();
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+
 private:
     Ui::QSyncItemWidget *ui;
     QString mFullPath;

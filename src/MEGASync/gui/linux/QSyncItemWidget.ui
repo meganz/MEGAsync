@@ -10,18 +10,6 @@
     <height>31</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>201</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>201</width>
-    <height>16777215</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
@@ -83,71 +71,19 @@ border: none;
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="wSyncName" native="true">
-     <property name="maximumSize">
-      <size>
-       <width>275</width>
-       <height>16777215</height>
-      </size>
+    <widget class="QLabel" name="lSyncName">
+     <property name="accessibleDescription">
+      <string notr="true"/>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>-1</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="lSyncName">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="accessibleDescription">
-         <string notr="true"/>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#lSyncName
+     <property name="styleSheet">
+      <string notr="true">#lSyncName
 {
 	margin-bottom: 2px;
 }</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
   </layout>

@@ -71,7 +71,11 @@ QSyncItemWidget::~QSyncItemWidget()
 void QSyncItemWidget::elidePathLabel()
 {
     QFontMetrics metrics(ui->lSyncName->fontMetrics());
-    // Calculate exact width available depending if there is an error or not.
-    auto size = error ? minimumWidth() - ui->bWarning->width() : minimumWidth();
-    ui->lSyncName->setText(metrics.elidedText(mSyncName, Qt::ElideMiddle, size));
+    ui->lSyncName->setText(metrics.elidedText(mSyncName, Qt::ElideMiddle, ui->lSyncName->width()));
+}
+
+void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
+{
+    elidePathLabel();
+    QWidget::resizeEvent(event);
 }
