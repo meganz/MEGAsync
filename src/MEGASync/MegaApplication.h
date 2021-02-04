@@ -119,29 +119,30 @@ public:
     void updateTrayIcon();
     void repositionInfoDialog();
 
-    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onAccountUpdate(mega::MegaApi *api);
-    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list);
-    virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
-    virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
-    virtual void onReloadNeeded(mega::MegaApi* api);
-    virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
-    virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
-    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
+    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
+    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) override;
+    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    virtual void onAccountUpdate(mega::MegaApi *api) override;
+    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
+    virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
+    virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
+    virtual void onReloadNeeded(mega::MegaApi* api) override;
+    virtual void onGlobalSyncStateChanged(mega::MegaApi *api) override;
+    virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
+    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
 
-    virtual void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState);
-    virtual void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync);
-    virtual void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync);
-    virtual void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync);
+    virtual void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState) override;
+    virtual void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    virtual void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    virtual void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
+    void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());

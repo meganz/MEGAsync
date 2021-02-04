@@ -449,8 +449,6 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
-    megaApi->setKeepSyncsAfterLogout(true);
-
 
     controller = Controller::instance();
     controller->setApi(this->megaApi);
@@ -3153,7 +3151,7 @@ void MegaApplication::unlink(bool keepLogs)
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
-    megaApi->logout();
+    megaApi->logout(true, nullptr);
     Platform::notifyAllSyncFoldersRemoved();
 
     for (unsigned i = 3; i--; )
@@ -8107,10 +8105,15 @@ void MegaApplication::onReloadNeeded(MegaApi*)
 
 void MegaApplication::onGlobalSyncStateChangedTimeout()
 {
-    onGlobalSyncStateChanged(NULL, true);
+    onGlobalSyncStateChangedImpl(NULL, true);
 }
 
-void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
+void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
+{
+    onGlobalSyncStateChangedImpl(api, false);
+}
+
+void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
 {
     if (appfinished)
     {
