@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QCoreApplication>
 
 #pragma comment(lib,"shlwapi")
 #pragma comment(lib,"user32")
@@ -453,12 +454,12 @@ bool getCreateLinkUserPreference(const std::wstring &appName)
     // Create user dialog
     const QString& title = QString::fromWCharArray(appName.c_str());
     QMessageBox msgbox(QMessageBox::Question, title,
-        title + QObject::tr(" did not find a valid link in Start Menu. "
+        title + QCoreApplication::translate("WinToastLib", " did not find a valid link in Start Menu. "
             "Not having a link may prevent the correct functioning of desktop notifications.\n\n"
             "Do you want to create one?"));
-    auto yesButton = msgbox.addButton(QObject::tr("Yes (recommended)"), QMessageBox::YesRole);
-    msgbox.addButton(QObject::tr("No"), QMessageBox::NoRole);
-    auto neverButton = msgbox.addButton(QObject::tr("No (never ask again)"), QMessageBox::NoRole);
+    auto yesButton = msgbox.addButton(QCoreApplication::translate("WinToastLib", "Yes (recommended)"), QMessageBox::YesRole);
+    msgbox.addButton(QCoreApplication::translate("WinToastLib", "No"), QMessageBox::NoRole);
+    auto neverButton = msgbox.addButton(QCoreApplication::translate("WinToastLib", "No (never ask again)"), QMessageBox::NoRole);
 
     msgbox.exec();
     auto clickedButton = msgbox.clickedButton();
