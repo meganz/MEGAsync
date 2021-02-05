@@ -449,8 +449,6 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
-    megaApi->setKeepSyncsAfterLogout(true);
-
 
     controller = Controller::instance();
     controller->setApi(this->megaApi);
@@ -3153,7 +3151,7 @@ void MegaApplication::unlink(bool keepLogs)
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
-    megaApi->logout();
+    megaApi->logout(true, nullptr);
     Platform::notifyAllSyncFoldersRemoved();
 
     for (unsigned i = 3; i--; )
@@ -3915,8 +3913,8 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
     int cachedStorageState = 999;
 
     auto oldCachedSyncs = preferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
-    int oldCacheSyncsCount = oldCachedSyncs.size();
-    if (oldCacheSyncsCount > 0)
+    std::shared_ptr<int>oldCacheSyncsCount(new int(oldCachedSyncs.size()));
+    if (*oldCacheSyncsCount > 0)
     {
         if (cachedBusinessState == -2)
         {
@@ -3944,6 +3942,7 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
                                      osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
                                      new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi* api,  MegaRequest *request, MegaError *e)
         {
+
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
@@ -3955,7 +3954,17 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
             }
 
+            --*oldCacheSyncsCount;
+            if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
+            {
+                megaApi->fetchNodes();
+            }
          }));
+    }
+
+    if (*oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
+    {
+        megaApi->fetchNodes();
     }
 }
 
@@ -3974,7 +3983,8 @@ void MegaApplication::fetchNodes(QString email)
     assert(!mFetchingNodes);
     mFetchingNodes = true;
     migrateSyncConfToSdk(email);
-    megaApi->fetchNodes();
+    //We can restore fetchnodes once we finish the migration of syncsconfigs
+    //megaApi->fetchNodes();
 }
 
 void MegaApplication::whyAmIBlocked(bool periodicCall)
@@ -8095,10 +8105,15 @@ void MegaApplication::onReloadNeeded(MegaApi*)
 
 void MegaApplication::onGlobalSyncStateChangedTimeout()
 {
-    onGlobalSyncStateChanged(NULL, true);
+    onGlobalSyncStateChangedImpl(NULL, true);
 }
 
-void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
+void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
+{
+    onGlobalSyncStateChangedImpl(api, false);
+}
+
+void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
 {
     if (appfinished)
     {
