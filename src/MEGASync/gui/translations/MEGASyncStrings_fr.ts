@@ -2160,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Ouvrir les paramètres</translation>
+        <translation type="unfinished">Ouvrir Préférences</translation>
     </message>
 </context>
 <context>
@@ -4339,7 +4339,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="unfinished">– Correctif d’erreurs de déchiffrement pour les téléchargements lors de la vérification de l’intégrité.</translation>
     </message>
 </context>
 <context>
@@ -5566,7 +5566,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Certaines synchronisations ont été désactivées. Pour plus de précisions, survolez avec votre curseur l’icône d’avertissement située à côté de chaque synchronisation désactivée.</translation>
     </message>
 </context>
 <context>
