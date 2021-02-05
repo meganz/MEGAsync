@@ -388,7 +388,7 @@ void NodeSelector::on_bNewFolder_clicked()
 
     QString text = id->textValue();
     text = text.trimmed();
-    if (!text.isEmpty() && !text.contains(QRegExp(QString::fromUtf8("[\\/\\:]"), Qt::CaseInsensitive, QRegExp::Wildcard)))
+    if (!text.isEmpty() && !text.contains(QRegExp(QString::fromUtf8("[/:\\]"), Qt::CaseInsensitive, QRegExp::Wildcard)))
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         if (!parent)
