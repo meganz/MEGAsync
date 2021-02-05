@@ -1826,6 +1826,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Settings</translation>
     </message>
     <message>
+        <source>Preferences</source>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in MacOS.</translatorcomment>
+        <translation type="obsolete">Settings</translation>
+    </message>
+    <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
         <translation type="obsolete">Resume downloads</translation>
@@ -2159,7 +2164,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">Open Preferences</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">Open Settings</translation>
     </message>
 </context>
@@ -2495,8 +2505,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Exit</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Exit</translation>
     </message>
     <message>
         <source>About</source>
@@ -2505,8 +2515,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Settings</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Settings</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2664,13 +2674,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Quit</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Quit</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Preferences</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Preferences</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -4182,6 +4192,29 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     </message>
 </context>
 <context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Quit</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">Settings</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">Exit</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
         <source>- New design for the main dialog
@@ -4859,7 +4892,7 @@ Do you want to delete it anyway?</translation>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>Settings - MEGAsync</translation>
     </message>
     <message>
@@ -5242,7 +5275,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>Preferences - MEGAsync</translation>
     </message>
     <message>
@@ -6451,16 +6484,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Download from MEGA</source>
         <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
         <translation type="obsolete">Download from MEGA</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">Settings</translation>
-    </message>
-    <message>
-        <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>

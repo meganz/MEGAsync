@@ -35,7 +35,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Settings - MEGAsync</string>
+   <string>Preferences - MEGAsync</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget

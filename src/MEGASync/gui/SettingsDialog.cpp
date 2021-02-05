@@ -2364,12 +2364,11 @@ void SettingsDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
-
 #ifdef __APPLE__
-        setWindowTitle(tr("Preferences - MEGAsync"));
         ui->cStartOnStartup->setText(tr("Open at login"));
 #endif
         ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));

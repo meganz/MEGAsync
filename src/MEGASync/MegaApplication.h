@@ -173,8 +173,13 @@ public:
     void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
+    // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
+    // Create menus used in the app.
     void createAppMenus();
+    // Create menus for the tray icon.
+    void createTrayIconMenus();
+    // Create menus for the "..." menu in InfoDialog view.
     void createInfoDialogMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
@@ -368,9 +373,9 @@ protected:
 
     QSystemTrayIcon *trayIcon;
 
-    QAction *changeProxyAction;
+    QAction *guestSettingsAction;
     QAction *initialExitAction;
-    std::unique_ptr<QMenu> initialMenu;
+    std::unique_ptr<QMenu> initialTrayMenu;
 
 #ifdef _WIN32
     std::unique_ptr<QMenu> windowsMenu;
