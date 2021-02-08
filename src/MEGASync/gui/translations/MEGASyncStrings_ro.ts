@@ -1001,7 +1001,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancelled Contact Request</source>
         <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation type="unfinished">Cancelled Contact Request</translation>
+        <translation type="unfinished">Cerere de contact anulată</translation>
     </message>
     <message>
         <source>[A] cancelled the contact request</source>
@@ -1036,12 +1036,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Chat</source>
         <translatorcomment>Button of system notification that forwards the user to webclient to chat section.</translatorcomment>
-        <translation type="unfinished">Chat</translation>
+        <translation type="unfinished">Chatuiește</translation>
     </message>
     <message>
         <source>Shared Folder Received</source>
         <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
-        <translation type="unfinished">Shared Folder Received</translation>
+        <translation type="unfinished">Folder partajat primit</translation>
     </message>
     <message>
         <source>New shared folder from [X]</source>
@@ -1051,12 +1051,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Shared Folder Removed</source>
         <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
-        <translation type="unfinished">Shared Folder Removed</translation>
+        <translation type="unfinished">Folder partajat eliminat</translation>
     </message>
     <message>
         <source>Shared Folder Updated</source>
         <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Updated</translation>
+        <translation type="unfinished">Folder partajat actualizat</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -1081,7 +1081,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Sync</source>
         <translatorcomment>Button label of system notification to set a new sync when an incoming shared folder is received</translatorcomment>
-        <translation type="unfinished">Sync</translation>
+        <translation type="unfinished">Sincronizează</translation>
     </message>
     <message>
         <source>You have unread notifications</source>
@@ -1166,7 +1166,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">Please resolve your payment issue to avoid suspension of your business account.</translation>
+        <translation type="unfinished">Te rugăm să îți rezolvi problema legată de plată pentru a evita suspendarea contului business.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1191,7 +1191,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation type="unfinished">Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation type="unfinished">Contactează administratorul contului business pentru a rezolva problema și a-ți activa contul.</translation>
     </message>
 </context>
 <context>
@@ -2160,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Deschide setările</translation>
+        <translation type="unfinished">Deschide preferințele</translation>
     </message>
 </context>
 <context>
@@ -2572,7 +2572,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>Actualizare disponibilă!</translation>
+        <translation>Este disponibilă o actualizare</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2655,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>O versiune nouă de MEGAsync este disponibilă!</translation>
+        <translation>O versiune nouă de MEGAsync este disponibilă</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -3529,7 +3529,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Cota de stocare a folderului de sincronizare a proprietarului a fost depășită</translation>
+        <translation type="unfinished">Contul proprietarului folderului de sincronizare și-a depășit cota de stocare.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3609,7 +3609,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Too many changes in account, local state invalid</source>
         <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
-        <translation type="unfinished">Invalid sync status due to too many changes in your account</translation>
+        <translation type="unfinished">Stare de sincronizare nevalidă din cauza prea multor modificări în contul tău</translation>
     </message>
     <message>
         <source>Undefined error</source>
@@ -3752,7 +3752,7 @@ Are you sure?</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <translation type="unfinished">Sincronizezi un folder local formatat cu un sistem de fișiere FAT. Acest sistem de fișiere are deficiențe la gestionarea fișierelor mari și timpilor de modificare care pot provoca probleme de sincronizare (de ex., când se modifică ora de vară), așadar se recomandă insistent să sincronizezi doar foldere formatate cu sisteme de fișiere mai fiabile precum NTFS (mai multe informații [A]aici[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -6125,7 +6125,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">Limitele de dimensiuni nu pot fi zero</translation>
+        <translation type="unfinished">Limita dimensiunii nu poate fi zero</translation>
     </message>
     <message>
         <source>Bytes</source>
