@@ -14,7 +14,7 @@ class QFinishedTransfersModel : public QTransfersModel
     Q_OBJECT
 
 public:
-    explicit QFinishedTransfersModel(QList<mega::MegaTransfer *>finishedTransfers, int type = QTransfersModel::TYPE_FINISHED, QObject *parent = 0);
+    explicit QFinishedTransfersModel(QList<mega::MegaTransfer *>finishedTransfers, ModelType type = QTransfersModel::TYPE_FINISHED, QObject *parent = 0);
     void setupModelTransfers();
 
     virtual mega::MegaTransfer *getTransferByTag(int tag);

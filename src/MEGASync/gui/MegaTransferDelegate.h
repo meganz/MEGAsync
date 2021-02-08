@@ -19,7 +19,7 @@ public:
     bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
 
 protected:
-    QTransfersModel *model;
+    QTransfersModel *mModel;
     void processCancel(int tag);
     void processShowInFolder(int tag);
 };

@@ -4,7 +4,7 @@
 
 using namespace mega;
 
-QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedTransfers, int type, QObject *parent) :
+QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedTransfers, ModelType type, QObject *parent) :
     QTransfersModel(type, parent)
 {
     int numTransfers = finishedTransfers.size();

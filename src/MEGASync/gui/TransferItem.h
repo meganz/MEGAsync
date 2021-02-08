@@ -9,8 +9,8 @@ class TransferItem : public QWidget
 public:
 
     enum {
-        ACTION_BUTTON = 0,
-        SHOW_IN_FOLDER_BUTTON,
+        ACTION_BUTTON         = 0,
+        SHOW_IN_FOLDER_BUTTON = 1,
     };
 
     explicit TransferItem(QWidget *parent = 0);
@@ -68,23 +68,23 @@ signals:
     void refreshTransfer(int tag);
 
 protected:
-    QString fileName;
-    int type;
-    int transferState;
-    int transferTag;
-    int transferError;
-    long long transferErrorValue;
-    long long transferSpeed;
-    long long meanTransferSpeed;
-    long long totalSize;
-    long long totalTransferredBytes;
-    bool regular;
-    bool isLinkAvailable;
-    int nodeAccess;
-    unsigned long long priority;
-    bool cancelButtonEnabled;
-    bool isSyncTransfer;
-    long long dsFinishedTime;
+    QString mFileName;
+    int mType;
+    int mTransferState;
+    int mTransferTag;
+    int mTransferError;
+    long long mTransferErrorValue;
+    long long mTransferSpeed;
+    long long mMeanTransferSpeed;
+    long long mTotalSize;
+    long long mTotalTransferredBytes;
+    bool mRegular;
+    bool mIsLinkAvailable;
+    int mNodeAccess;
+    unsigned long long mPriority;
+    bool mCancelButtonEnabled;
+    bool mIsSyncTransfer;
+    long long mDsFinishedTime;
     bool mTransferFinishedWhileBlocked;
 
 };

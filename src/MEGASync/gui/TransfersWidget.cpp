@@ -16,9 +16,9 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     app = (MegaApplication *)qApp;
 }
 
-void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferData, int type)
+void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferData, QTransfersModel::ModelType type)
 {
-    this->type = type;
+    mType = type;
     model = new QActiveTransfersModel(type, transferData);
 
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
@@ -34,9 +34,9 @@ void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferD
     }
 }
 
-void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData, int modelType)
+void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData, QTransfersModel::ModelType modelType)
 {
-    this->type = modelType;
+    mType = modelType;
     model = new QFinishedTransfersModel(transferData, modelType);
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
@@ -83,7 +83,7 @@ void TransfersWidget::configureTransferView()
     }
 
     tDelegate = new MegaTransferDelegate(model, this);
-    ui->tvTransfers->setup(type);
+    ui->tvTransfers->setup(mType);
     ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
     ui->tvTransfers->header()->close();
     ui->tvTransfers->setSelectionMode(QAbstractItemView::ContiguousSelection);
@@ -93,7 +93,7 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tvTransfers->setModel(model);
 
-    switch (type)
+    switch (mType)
     {
         case QTransfersModel::TYPE_DOWNLOAD:
             ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
@@ -138,7 +138,7 @@ void TransfersWidget::noTransfers()
     }
     else
     {
-        switch (type)
+        switch (mType)
         {
             case QTransfersModel::TYPE_DOWNLOAD:
                 ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);

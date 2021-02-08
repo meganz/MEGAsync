@@ -36,7 +36,7 @@ public:
     void updateFinishedTime();
     void loadDefaultTransferIcon() {}
     void updateAnimation() {}
-    bool cancelButtonClicked(QPoint pos) { return false;}
+    bool cancelButtonClicked(QPoint pos) {return false;}
     void setStateLabel(QString labelState);
 
     bool eventFilter(QObject *, QEvent * ev);
@@ -44,11 +44,11 @@ public:
     QSize sizeHint() const;
 
 private:
-    Ui::CustomTransferItem *ui;
-    mega::MegaApi *megaApi;
+    Ui::CustomTransferItem *mUi;
+    mega::MegaApi *mMgaApi;
 
-    QString lastActionTransferIconName;
-    QString lastShowInFolderIconName;
+    QString mLastActionTransferIconName;
+    QString mLastShowInFolderIconName;
 
     void setActionTransferIcon(const QString &name);
     void setShowInFolderIcon(const QString &name);
@@ -57,7 +57,7 @@ private:
     TransferRemainingTime mTransferRemainingTime;
 
 protected:
-    bool actionButtonsEnabled;
+    bool mActionButtonsEnabled;
 };
 
 #endif // CUSTOMTRANSFERITEM_H

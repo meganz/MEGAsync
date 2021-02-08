@@ -19,7 +19,7 @@ bool priority_comparator(TransferItemData* i, TransferItemData *j)
     return i->data.tag < j->data.tag;
 }
 
-QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTransferData> transferData, QObject *parent) :
+QActiveTransfersModel::QActiveTransfersModel(ModelType type, std::shared_ptr<MegaTransferData> transferData, QObject *parent) :
     QTransfersModel(type, parent)
 {
     QPointer<QActiveTransfersModel> model = this;
@@ -103,7 +103,7 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
     if (transferOrder.size() != transfers.size())
     {
         assert(false);
-        megaApi->sendEvent(AppStatsEvents::EVENT_DUP_ACTIVE_TRSF_DURING_INIT,
+        mMegaApi->sendEvent(AppStatsEvents::EVENT_DUP_ACTIVE_TRSF_DURING_INIT,
                            "Duplicated active transfer during initialization");
     }
 }
@@ -211,11 +211,11 @@ bool QActiveTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, 
     {
         if (item)
         {
-            megaApi->moveTransferBeforeByTag(selectedTags[i], item->data.tag);
+            mMegaApi->moveTransferBeforeByTag(selectedTags[i], item->data.tag);
         }
         else
         {
-            megaApi->moveTransferToLastByTag(selectedTags[i]);
+            mMegaApi->moveTransferToLastByTag(selectedTags[i]);
         }
     }
     return true;
@@ -223,12 +223,12 @@ bool QActiveTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, 
 
 MegaTransfer *QActiveTransfersModel::getTransferByTag(int tag)
 {
-    return megaApi->getTransferByTag(tag);
+    return mMegaApi->getTransferByTag(tag);
 }
 
 void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-    if (transfer->getType() == type)
+    if (transfer->getType() == mType)
     {
         TransferItemData *item = new TransferItemData(transfer);
 
@@ -237,7 +237,7 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
         if (transfers.count(item->data.tag))
         {
             assert(false);
-            megaApi->sendEvent(AppStatsEvents::EVENT_DUP_ACTIVE_TRSF_DURING_INSERT,
+            mMegaApi->sendEvent(AppStatsEvents::EVENT_DUP_ACTIVE_TRSF_DURING_INSERT,
                                QString::fromUtf8("Duplicated active transfer during insertion: %1")
                                .arg(QString::number(item->data.tag)).toUtf8().constData());
             delete item;
@@ -258,7 +258,7 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
 void QActiveTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer, MegaError *)
 {
-    if (transfer->getType() == type)
+    if (transfer->getType() == mType)
     {
         removeTransferByTag(transfer->getTag());
     }
@@ -266,7 +266,7 @@ void QActiveTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer, 
 
 void QActiveTransfersModel::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-    if (transfer->getType() == type)
+    if (transfer->getType() == mType)
     {
         updateTransferInfo(transfer);
     }
@@ -274,7 +274,7 @@ void QActiveTransfersModel::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 
 void QActiveTransfersModel::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer, MegaError *)
 {
-    if (transfer->getType() == type)
+    if (transfer->getType() == mType)
     {
         updateTransferInfo(transfer);
     }

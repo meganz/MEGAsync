@@ -3,14 +3,13 @@
 
 using namespace mega;
 
-QTransfersModel::QTransfersModel(int type, QObject *parent) :
-    QAbstractItemModel(parent)
+QTransfersModel::QTransfersModel(QTransfersModel::ModelType type, QObject *parent) :
+    QAbstractItemModel(parent),
+    mType(type),
+    mMegaApi(((MegaApplication *)qApp)->getMegaApi()),
+    mThreadPool(ThreadPoolSingleton::getInstance())
 {
-    this->type = type;
-    this->megaApi = ((MegaApplication *)qApp)->getMegaApi();
     this->transferItems.setMaxCost(16);
-
-    mThreadPool = ThreadPoolSingleton::getInstance();
 }
 
 int QTransfersModel::columnCount(const QModelIndex &parent) const
@@ -69,9 +68,9 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
     return transferOrder.size();
 }
 
-int QTransfersModel::getModelType()
+QTransfersModel::ModelType QTransfersModel::getModelType()
 {
-    return type;
+    return mType;
 }
 
 QTransfersModel::~QTransfersModel()

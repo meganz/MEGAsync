@@ -19,7 +19,7 @@ public:
       DOWNLOAD = 0x04
     };
 
-    explicit QCustomTransfersModel(int type, QObject *parent = 0);
+    explicit QCustomTransfersModel(ModelType type, QObject *parent = 0);
 
     void refreshTransfers();
     virtual mega::MegaTransfer *getTransferByTag(int tag);

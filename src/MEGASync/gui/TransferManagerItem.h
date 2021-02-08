@@ -1,11 +1,12 @@
 #ifndef TRANSFERMANAGERITEM_H
 #define TRANSFERMANAGERITEM_H
 
+#include "TransferItem.h"
+#include "TransferRemainingTime.h"
+
 #include <QWidget>
 #include <QDateTime>
 #include <QMovie>
-#include "TransferItem.h"
-#include "TransferRemainingTime.h"
 
 namespace Ui {
 class TransferManagerItem;
@@ -43,7 +44,7 @@ public:
     bool eventFilter(QObject *, QEvent * ev);
 
 private:
-    Ui::TransferManagerItem *ui;
+    Ui::TransferManagerItem *mUi;
 
 private slots:
     void frameChanged(int);
@@ -53,8 +54,8 @@ private:
     TransferRemainingTime mTransferRemainigTime;
 
 protected:
-    QMovie *animation;
-    QPixmap loadIconResource;
+    QMovie* mAnimation;
+    QPixmap mLoadIconResource;
 };
 
 #endif // TRANSFERMANAGERITEM_H

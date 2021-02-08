@@ -9,23 +9,19 @@ using namespace mega;
 
 TransferManagerItem::TransferManagerItem(QWidget *parent) :
     TransferItem(parent),
-    ui(new Ui::TransferManagerItem)
+    mUi(new Ui::TransferManagerItem),
+    mAnimation(nullptr)
 {
-    ui->setupUi(this);
-
-    animation = NULL;
+    mUi->setupUi(this);
 
     // Choose the right icon for initial load (hdpi/normal displays)
-    qreal ratio = 1.0;
-#if QT_VERSION >= 0x050000
-    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
-#endif
-    loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+    qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+    mLoadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
                                          : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
-    ui->lActionType->setPixmap(loadIconResource);
+    mUi->lActionType->setPixmap(mLoadIconResource);
 
-    ui->lCancelTransfer->installEventFilter(this);
-    ui->lCancelTransferCompleted->installEventFilter(this);
+    mUi->lCancelTransfer->installEventFilter(this);
+    mUi->lCancelTransferCompleted->installEventFilter(this);
     update();
 }
 
@@ -33,36 +29,40 @@ void TransferManagerItem::setFileName(QString fileName)
 {
     TransferItem::setFileName(fileName);
 
-    ui->lTransferNameCompleted->ensurePolished();
-    ui->lTransferNameCompleted->setText(ui->lTransferNameCompleted->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lTransferNameCompleted->width()));
-    ui->lTransferNameCompleted->setToolTip(fileName);
+    mUi->lTransferNameCompleted->ensurePolished();
+    mUi->lTransferNameCompleted->setText(mUi->lTransferNameCompleted->fontMetrics()
+                                         .elidedText(fileName, Qt::ElideMiddle,
+                                                     mUi->lTransferNameCompleted->width()));
+    mUi->lTransferNameCompleted->setToolTip(fileName);
 
-    ui->lTransferName->ensurePolished();
-    ui->lTransferName->setText(ui->lTransferName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lTransferName->width()));
-    ui->lTransferName->setToolTip(fileName);
+    mUi->lTransferName->ensurePolished();
+    mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
+                                .elidedText(fileName, Qt::ElideMiddle,
+                                            mUi->lTransferName->width()));
+    mUi->lTransferName->setToolTip(fileName);
 
     QIcon icon = Utilities::getExtensionPixmapSmall(fileName);
-    ui->lFileType->setIcon(icon);
-    ui->lFileType->setIconSize(QSize(24, 24));
-    ui->lFileTypeCompleted->setIcon(icon);
-    ui->lFileTypeCompleted->setIconSize(QSize(24, 24));
+    mUi->lFileType->setIcon(icon);
+    mUi->lFileType->setIconSize(QSize(24, 24));
+    mUi->lFileTypeCompleted->setIcon(icon);
+    mUi->lFileTypeCompleted->setIconSize(QSize(24, 24));
 }
 
 void TransferManagerItem::setStateLabel(QString labelState)
 {
-    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(labelState));
-    ui->lRemainingTime->setText(QString::fromUtf8(""));
+    mUi->lSpeed->setText(QString::fromUtf8("(%1)").arg(labelState));
+    mUi->lRemainingTime->setText(QString());
 }
 
 QString TransferManagerItem::getTransferName()
 {
-    if (ui->sTransferState->currentWidget() == ui->stateCompleted)
+    if (mUi->sTransferState->currentWidget() == mUi->stateCompleted)
     {
-        return ui->lTransferNameCompleted->text();
+        return mUi->lTransferNameCompleted->text();
     }
     else
     {
-        return ui->lTransferName->text();
+        return mUi->lTransferName->text();
     }
 }
 
@@ -71,120 +71,119 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
     TransferItem::setType(type, isSyncTransfer);
     QIcon icon;
 
-    qreal ratio = 1.0;
-#if QT_VERSION >= 0x050000
-    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
-#endif
+    qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
 
     if (isSyncTransfer)
     {
-        this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
+        mLoadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
                                                    : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
-        delete animation;
-        animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
+        delete mAnimation;
+        mAnimation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                          : QString::fromUtf8(":/images/synching@2x.gif"));
-        connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+        connect(mAnimation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     }
     else
     {
-        this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+        mLoadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
                                                    : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
     }
-    ui->lActionTypeCompleted->setPixmap(loadIconResource);
-    ui->lActionType->setPixmap(loadIconResource);
+    mUi->lActionTypeCompleted->setPixmap(mLoadIconResource);
+    mUi->lActionType->setPixmap(mLoadIconResource);
 
     switch (type)
     {
         case MegaTransfer::TYPE_UPLOAD:
-
+        {
             if (!isSyncTransfer)
             {
-                delete animation;
-                animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
+                delete mAnimation;
+                mAnimation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
                                                  : QString::fromUtf8(":/images/uploading@2x.gif"));
-                connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+                connect(mAnimation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
-            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+            mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
+        }
         case MegaTransfer::TYPE_DOWNLOAD:
-
+        {
             if (!isSyncTransfer)
             {
-                delete animation;
-                animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
+                delete mAnimation;
+                mAnimation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
                                                  : QString::fromUtf8(":/images/downloading@2x.gif"));
-                connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+                connect(mAnimation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
-            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+            mUi->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
+        }
         default:
             break;
     }
 
-    ui->lTransferType->setIcon(icon);
-    ui->lTransferType->setIconSize(QSize(12, 12));
-    ui->lTransferTypeCompleted->setIcon(icon);
-    ui->lTransferTypeCompleted->setIconSize(QSize(12, 12));
+    mUi->lTransferType->setIcon(icon);
+    mUi->lTransferType->setIconSize(QSize(12, 12));
+    mUi->lTransferTypeCompleted->setIcon(icon);
+    mUi->lTransferTypeCompleted->setIconSize(QSize(12, 12));
 }
 
 
 TransferManagerItem::~TransferManagerItem()
 {
-    delete ui;
-    delete animation;
+    delete mUi;
+    delete mAnimation;
 }
 
 void TransferManagerItem::setTransferState(int value)
 {
     TransferItem::setTransferState(value);
-    switch (transferState)
+    switch (mTransferState)
     {
-    case MegaTransfer::STATE_COMPLETED:
-    case MegaTransfer::STATE_FAILED:
-        finishTransfer();
-        break;
-    case MegaTransfer::STATE_CANCELLED:
-        break;
-    default:
-        updateTransfer();
-        break;
+        case MegaTransfer::STATE_COMPLETED:
+        case MegaTransfer::STATE_FAILED:
+            finishTransfer();
+            break;
+        case MegaTransfer::STATE_CANCELLED:
+            break;
+        default:
+            updateTransfer();
+            break;
     }
 }
 
 void TransferManagerItem::finishTransfer()
 {
-    ui->lCompleted->setIconSize(QSize(12, 12));
-    ui->sTransferState->setCurrentWidget(ui->stateCompleted);
-    if (transferError < 0)
+    mUi->lCompleted->setIconSize(QSize(12, 12));
+    mUi->sTransferState->setCurrentWidget(mUi->stateCompleted);
+    if (mTransferError < 0)
     {
-        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
+        mUi->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
         updateFinishedIco(true);
     }
     else
     {
-        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+        mUi->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
         updateFinishedIco(false);
     }
 
-    ui->lTotalCompleted->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
+    mUi->lTotalCompleted->setText(Utilities::getSizeString(mTotalSize));
 }
 
 void TransferManagerItem::updateTransfer()
 {
-    ui->sTransferState->setCurrentWidget(ui->stateActive);
-    switch (transferState)
+    mUi->sTransferState->setCurrentWidget(mUi->stateActive);
+    switch (mTransferState)
     {
         case MegaTransfer::STATE_ACTIVE:
         {
             // Update remaining time
-            long long remainingBytes = totalSize - totalTransferredBytes;
-            const auto totalRemainingSeconds = mTransferRemainigTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes);
+            long long remainingBytes = mTotalSize - mTotalTransferredBytes;
+            const auto totalRemainingSeconds = mTransferRemainigTime.calculateRemainingTimeSeconds(mTransferSpeed, remainingBytes);
 
             QString remainingTime;
             const bool printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
@@ -192,121 +191,138 @@ void TransferManagerItem::updateTransfer()
             {
                 remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
             }
-            ui->lRemainingTime->setText(remainingTime);
+            mUi->lRemainingTime->setText(remainingTime);
 
             // Update current transfer speed
             QString downloadString;
 
-            if (!totalTransferredBytes)
+            if (!mTotalTransferredBytes)
             {
                 downloadString = QString::fromUtf8("(%1)").arg(tr("starting"));
             }
             else
             {
                 QString pattern(QString::fromUtf8("(%1/s)"));
-                downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
+                downloadString = pattern.arg(Utilities::getSizeString(mTransferSpeed));
             }
 
-            ui->lSpeed->setText(downloadString);
+            mUi->lSpeed->setText(downloadString);
             break;
         }
         case MegaTransfer::STATE_PAUSED:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("paused")));
-            ui->lRemainingTime->setText(QString::fromUtf8(""));
+        {
+            mUi->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("paused")));
+            mUi->lRemainingTime->setText(QString());
             break;
+        }
         case MegaTransfer::STATE_QUEUED:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("queued")));
-            ui->lRemainingTime->setText(QString::fromUtf8(""));
+        {
+            mUi->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("queued")));
+            mUi->lRemainingTime->setText(QString());
             break;
+        }
         case MegaTransfer::STATE_RETRYING:
-            if (transferError == MegaError::API_EOVERQUOTA)
+        {
+            if (mTransferError == MegaError::API_EOVERQUOTA)
             {
-                if (transferErrorValue)
+                if (mTransferErrorValue)
                 {
-                    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Transfer quota exceeded")));
+                    mUi->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Transfer quota exceeded")));
                 }
                 else
                 {
-                    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+                    mUi->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
                 }
             }
             else
             {
-                ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
+                mUi->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
             }
 
-            ui->lRemainingTime->setText(QString::fromUtf8(""));
+            mUi->lRemainingTime->setText(QString());
             break;
+        }
         case MegaTransfer::STATE_COMPLETING:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("completing")));
-            ui->lRemainingTime->setText(QString::fromUtf8(""));
+        {
+            mUi->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("completing")));
+            mUi->lRemainingTime->setText(QString());
             break;
+        }
         default:
-            ui->lSpeed->setText(QString::fromUtf8(""));
-            ui->lRemainingTime->setText(QString::fromUtf8(""));
+        {
+            mUi->lSpeed->setText(QString::fromUtf8(""));
+            mUi->lRemainingTime->setText(QString());
             break;
+        }
     }
 
     // Update progress bar
-    unsigned int permil = (totalSize > 0) ? ((1000 * totalTransferredBytes) / totalSize) : 0;
-    ui->pbTransfer->setValue(permil);
+    unsigned int permil = (mTotalSize > 0) ? ((1000 * mTotalTransferredBytes) / mTotalSize) : 0;
+    mUi->pbTransfer->setValue(permil);
 
     // Update transferred bytes
-    const QString totalBytesText{Utilities::getSizeString(totalSize)};
-    const QString totalBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalBytesText)};
-    if(totalTransferredBytes)
+    const QString totalBytesText{Utilities::getSizeString(mTotalSize)};
+    const QString totalBytesStyled{QStringLiteral("<span style=\"color:#333333;"
+                                                    "text-decoration:none;"
+                                                    "\">%1</span>").arg(totalBytesText)};
+    if (mTotalTransferredBytes)
     {
-        const QString totalTransferredBytesText{Utilities::getSizeString(totalTransferredBytes)};
-        const QString totalTransferredBytesStyled{QStringLiteral("<span style=\"color:#333333; text-decoration:none;\">%1</span>").arg(totalTransferredBytesText)};
+        const QString totalTransferredBytesText{Utilities::getSizeString(mTotalTransferredBytes)};
+        const QString totalTransferredBytesStyled{QStringLiteral("<span style=\"color:#333333;"
+                                                                  "text-decoration:none;"
+                                                                  "\">%1</span>").arg(totalTransferredBytesText)};
         QString transferredBytesText{tr("%1 of %2")};
         transferredBytesText.replace(QStringLiteral("%1"), totalTransferredBytesStyled);
         transferredBytesText.replace(QStringLiteral("%2"), totalBytesStyled);
-        ui->lTotal->setText(transferredBytesText);
+        mUi->lTotal->setText(transferredBytesText);
     }
     else
     {
-        ui->lTotal->setText(totalBytesStyled);
+        mUi->lTotal->setText(totalBytesStyled);
     }
-
 }
 
 void TransferManagerItem::updateFinishedTime()
 {
-    if (!dsFinishedTime)
+    if (!mDsFinishedTime)
     {
         return;
     }
 
     Preferences *preferences = Preferences::instance();
     QDateTime now = QDateTime::currentDateTime();
-    qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + dsFinishedTime) ) / 10;
-    ui->lRemainingTimeCompleted->setText(Utilities::getFinishedTimeString(secs));
+    qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + mDsFinishedTime) ) / 10;
+    mUi->lRemainingTimeCompleted->setText(Utilities::getFinishedTimeString(secs));
 }
 
 bool TransferManagerItem::cancelButtonClicked(QPoint pos)
 {
-    if (!cancelButtonEnabled)
+    if (!mCancelButtonEnabled)
     {
         return false;
     }
 
-    switch (transferState)
+    switch (mTransferState)
     {
-    case MegaTransfer::STATE_COMPLETED:
-    case MegaTransfer::STATE_FAILED:
-        if (ui->lCancelTransferCompleted->rect().contains(ui->lCancelTransferCompleted->mapFrom(this, pos)))
+        case MegaTransfer::STATE_COMPLETED:
+        case MegaTransfer::STATE_FAILED:
         {
-            return true;
+            if (mUi->lCancelTransferCompleted->rect().contains(mUi->lCancelTransferCompleted->mapFrom(this, pos)))
+            {
+                return true;
+            }
+            break;
         }
-        break;
-    case MegaTransfer::STATE_CANCELLED:
-        break;
-    default:
-        if (ui->lCancelTransfer->rect().contains(ui->lCancelTransfer->mapFrom(this, pos)))
+        case MegaTransfer::STATE_CANCELLED:
+            break;
+        default:
         {
-            return true;
+            if (mUi->lCancelTransfer->rect().contains(mUi->lCancelTransfer->mapFrom(this, pos)))
+            {
+                return true;
+            }
+            break;
         }
-        break;
     }
 
     return false;
@@ -314,10 +330,10 @@ bool TransferManagerItem::cancelButtonClicked(QPoint pos)
 
 bool TransferManagerItem::mouseHoverRetryingLabel(QPoint pos)
 {
-    switch (transferState)
+    switch (mTransferState)
     {
         case MegaTransfer::STATE_RETRYING:
-            if (ui->lSpeed->rect().contains(ui->lSpeed->mapFrom(this, pos)))
+            if (mUi->lSpeed->rect().contains(mUi->lSpeed->mapFrom(this, pos)))
             {
                 return true;
             }
@@ -332,26 +348,27 @@ void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
     if (isHover)
     {
-        if (isSyncTransfer && !(transferState == MegaTransfer::STATE_COMPLETED || transferSpeed == MegaTransfer::STATE_FAILED))
+        if (mIsSyncTransfer && !(mTransferState == MegaTransfer::STATE_COMPLETED
+                                 || mTransferSpeed == MegaTransfer::STATE_FAILED))
         {
-            ui->lCancelTransfer->installEventFilter(this);
-            ui->lCancelTransfer->update();
+            mUi->lCancelTransfer->installEventFilter(this);
+            mUi->lCancelTransfer->update();
             return;
         }
 
-        cancelButtonEnabled = true;
-        ui->lCancelTransfer->removeEventFilter(this);
-        ui->lCancelTransfer->update();
-        ui->lCancelTransferCompleted->removeEventFilter(this);
-        ui->lCancelTransferCompleted->update();
+        mCancelButtonEnabled = true;
+        mUi->lCancelTransfer->removeEventFilter(this);
+        mUi->lCancelTransfer->update();
+        mUi->lCancelTransferCompleted->removeEventFilter(this);
+        mUi->lCancelTransferCompleted->update();
     }
     else
     {
-        cancelButtonEnabled = false;
-        ui->lCancelTransfer->installEventFilter(this);
-        ui->lCancelTransfer->update();
-        ui->lCancelTransferCompleted->installEventFilter(this);
-        ui->lCancelTransferCompleted->update();
+        mCancelButtonEnabled = false;
+        mUi->lCancelTransfer->installEventFilter(this);
+        mUi->lCancelTransfer->update();
+        mUi->lCancelTransferCompleted->installEventFilter(this);
+        mUi->lCancelTransferCompleted->update();
     }
 
     emit refreshTransfer(this->getTransferTag());
@@ -359,33 +376,33 @@ void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
 
 void TransferManagerItem::updateFinishedIco(bool transferErrors)
 {
-    QIcon iconCompleted;
+    QIcon icon;
 
-    switch (type)
+    switch (mType)
     {
         case MegaTransfer::TYPE_UPLOAD:
-            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/upload_fail_item_ico.png")
-                                                                      : QString::fromUtf8(":/images/uploaded_item_ico.png"));
+            icon = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/upload_fail_item_ico.png")
+                                                             : QString::fromUtf8(":/images/uploaded_item_ico.png"));
             break;
         case MegaTransfer::TYPE_DOWNLOAD:
-            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/download_fail_item_ico.png")
-                                                                      : QString::fromUtf8(":/images/downloaded_item_ico.png"));
+            icon = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/download_fail_item_ico.png")
+                                                             : QString::fromUtf8(":/images/downloaded_item_ico.png"));
             break;
         default:
             break;
     }
 
-    ui->lTransferTypeCompleted->setIcon(iconCompleted);
-    ui->lTransferTypeCompleted->setIconSize(QSize(ui->lTransferTypeCompleted->width(), ui->lTransferTypeCompleted->height()));
+    mUi->lTransferTypeCompleted->setIcon(icon);
+    mUi->lTransferTypeCompleted->setIconSize(mUi->lTransferTypeCompleted->size());
 }
 
 void TransferManagerItem::loadDefaultTransferIcon()
 {
-    if (animation && animation->state() != QMovie::NotRunning)
+    if (mAnimation && mAnimation->state() != QMovie::NotRunning)
     {
-        animation->stop();
-        ui->lActionType->setMovie(NULL);
-        ui->lActionType->setPixmap(loadIconResource);
+        mAnimation->stop();
+        mUi->lActionType->setMovie(nullptr);
+        mUi->lActionType->setPixmap(mLoadIconResource);
     }
 }
 
@@ -401,27 +418,22 @@ void TransferManagerItem::frameChanged(int)
 
 void TransferManagerItem::updateAnimation()
 {
-    if (!animation)
+    if (!mAnimation)
     {
         return;
     }
 
-    switch (transferState)
+    switch (mTransferState)
     {
         case MegaTransfer::STATE_ACTIVE:
-            if (animation->state() != QMovie::Running)
+            if (mAnimation->state() != QMovie::Running)
             {
-                ui->lActionType->setMovie(animation);
-                animation->start();
+                mUi->lActionType->setMovie(mAnimation);
+                mAnimation->start();
             }
             break;
         default:
-            if (animation->state() != QMovie::NotRunning)
-            {
-                animation->stop();
-                ui->lActionType->setMovie(NULL);
-                ui->lActionType->setPixmap(loadIconResource);
-            }
+            loadDefaultTransferIcon();
             break;
     }
 }

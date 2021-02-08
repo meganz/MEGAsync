@@ -15,9 +15,8 @@
 using namespace mega;
 
 MegaTransferDelegate::MegaTransferDelegate(QTransfersModel *model, QObject *parent)
-    : QStyledItemDelegate(parent)
+    : QStyledItemDelegate(parent), mModel(model)
 {
-    this->model = model;
 }
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -30,8 +29,8 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
 
         int tag = index.internalId();
-        int modelType = model->getModelType();
-        TransferItem *ti = model->transferItems[tag];
+        QTransfersModel::ModelType modelType = mModel->getModelType();
+        TransferItem *ti = mModel->transferItems[tag];
         if (!ti)
         {
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
@@ -44,9 +43,9 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             }
 
             ti->setTransferTag(tag);
-            connect(ti, SIGNAL(refreshTransfer(int)), model, SLOT(refreshTransferItem(int)));
-            model->transferItems.insert(tag, ti);
-            TransferItemData *tData = model->data(index, Qt::UserRole).value<TransferItemData*>();
+            connect(ti, SIGNAL(refreshTransfer(int)), mModel, SLOT(refreshTransferItem(int)));
+            mModel->transferItems.insert(tag, ti);
+            TransferItemData *tData = mModel->data(index, Qt::UserRole).value<TransferItemData*>();
 
             if (tData)
             {                       
@@ -101,7 +100,9 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
 
         Preferences *preferences = Preferences::instance();
-        if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        auto tiModelType = ti->getType();
+
+        if (tiModelType == MegaTransfer::TYPE_DOWNLOAD)
         {
             if (preferences->getDownloadsPaused())
             {
@@ -120,7 +121,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->updateAnimation();
             }
         }
-        else if (ti->getType() == MegaTransfer::TYPE_UPLOAD)
+        else if (tiModelType == MegaTransfer::TYPE_UPLOAD)
         {
             if (preferences->getUploadsPaused())
             {
@@ -161,7 +162,7 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 {
     if (index.isValid())
     {
-        int modelType = model->getModelType();
+        int modelType = mModel->getModelType();
         if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
         {
             return QSize(400, 60);
@@ -177,13 +178,13 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 
 void MegaTransferDelegate::processCancel(int tag)
 {
-    if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+    if (mModel->getModelType() == QTransfersModel::TYPE_FINISHED)
     {
-        model->removeTransferByTag(tag);
+        mModel->removeTransferByTag(tag);
     }
     else
     {
-        QPointer<QTransfersModel> modelPointer = model;
+        QPointer<QTransfersModel> modelPointer = mModel;
 
         QMessageBox warning;
         HighDpiResize hDpiResizer(&warning);
@@ -195,7 +196,7 @@ void MegaTransferDelegate::processCancel(int tag)
         int result = warning.exec();
         if (modelPointer && result == QMessageBox::Yes)
         {
-            model->megaApi->cancelTransferByTag(tag);
+            mModel->mMegaApi->cancelTransferByTag(tag);
         }
     }
 }
@@ -205,7 +206,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
     if (QEvent::MouseButtonPress ==  event->type())
     {
         int tag = index.internalId();
-        TransferItem *item = model->transferItems[tag];
+        TransferItem *item = mModel->transferItems[tag];
         if (!item)
         {
             return true;
@@ -218,16 +219,16 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
         }
         else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
         {
-            int modelType = model->getModelType();
+            int modelType = mModel->getModelType();
             if (modelType == QTransfersModel::TYPE_FINISHED
                     || modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
-                const auto &ti = model->transferItems[tag];
+                const auto &ti = mModel->transferItems[tag];
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS && !ti->getIsLinkAvailable() && !ti->getTransferError())
                 {
                     processShowInFolder(tag);
                 }
-                else if (MegaTransfer *transfer = model->getTransferByTag(tag) )
+                else if (MegaTransfer *transfer = mModel->getTransferByTag(tag) )
                 {
                     if (!transfer->getLastError().getErrorCode())
                     {
@@ -271,7 +272,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
         }
         else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
         {
-            if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+            if (mModel->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
                 processShowInFolder(tag);
                 return true; // click consumed
@@ -279,14 +280,14 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             // we are not consuming the click; fall through to do the usual thing (of selecting the clicked row)
         }
     }
-    else if (QEvent::MouseButtonDblClick == event->type() && model->getModelType() == QTransfersModel::TYPE_FINISHED)
+    else if (QEvent::MouseButtonDblClick == event->type() && mModel->getModelType() == QTransfersModel::TYPE_FINISHED)
     {
         int tag = index.internalId();
         processShowInFolder(tag);
         return true; // double-click consumed
     }
 
-    return QAbstractItemDelegate::editorEvent(event, model, option, index);
+    return QAbstractItemDelegate::editorEvent(event, mModel, option, index);
 }
 
 bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
@@ -294,22 +295,22 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
     if (event->type() == QEvent::ToolTip)
     {
         int tag = index.internalId();
-        TransferItem *item = model->transferItems[tag];
+        TransferItem *item = mModel->transferItems[tag];
         if (item)
         {
             if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
             {
-                int modelType = model->getModelType();
+                int modelType = mModel->getModelType();
 
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                 {
-                    const auto &ti = model->transferItems[tag];
+                    const auto &ti = mModel->transferItems[tag];
 
                     if (!ti->getIsLinkAvailable() && !ti->getTransferError())
                     {
                         QToolTip::showText(event->globalPos(), tr("Show in folder"));
                     }
-                    else if (MegaTransfer *transfer = model->getTransferByTag(tag) )
+                    else if (MegaTransfer *transfer = mModel->getTransferByTag(tag) )
                     {
                         if (!transfer->getLastError().getErrorCode())
                         {
@@ -326,7 +327,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
             }
             else if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
             {
-                int modelType = model->getModelType();
+                int modelType = mModel->getModelType();
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                 {
                     QToolTip::showText(event->globalPos(), tr("Show in folder"));
@@ -348,7 +349,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
 void MegaTransferDelegate::processShowInFolder(int tag)
 {
     MegaTransfer *transfer = NULL;
-    transfer = model->getTransferByTag(tag);
+    transfer = mModel->getTransferByTag(tag);
     if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
                  && transfer->getPath())
     {

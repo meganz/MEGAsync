@@ -17,7 +17,7 @@ class QActiveTransfersModel : public QTransfersModel
     Q_OBJECT
 
 public:
-    explicit QActiveTransfersModel(int type, std::shared_ptr<mega::MegaTransferData> transferData, QObject *parent = 0);
+    explicit QActiveTransfersModel(ModelType type, std::shared_ptr<mega::MegaTransferData> transferData, QObject *parent = 0);
     void removeTransferByTag(int transferTag);
     void removeAllTransfers();
 

@@ -3,173 +3,156 @@
 
 using namespace mega;
 
-TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
+TransferItem::TransferItem(QWidget *parent) :
+    QWidget(parent),
+    mType(-1),
+    mTransferError(0),
+    mTransferErrorValue(0),
+    mTotalSize(0),
+    mTotalTransferredBytes(0),
+    mTransferSpeed(0),
+    mMeanTransferSpeed(0),
+    mRegular(false),
+    mIsLinkAvailable(false),
+    mNodeAccess(MegaShare::ACCESS_UNKNOWN),
+    mCancelButtonEnabled(false),
+    mIsSyncTransfer(false),
+    mPriority(0),
+    mTransferState(0),
+    mTransferTag(0),
+    mDsFinishedTime(0),
+    mTransferFinishedWhileBlocked(false)
 {
-    type = -1;
-    transferError = 0;
-    transferErrorValue = 0;
-    totalSize = 0;
-    totalTransferredBytes = 0;
-    transferSpeed = 0;
-    meanTransferSpeed = 0;
-    regular = false;
-    isLinkAvailable = false;
-    nodeAccess = MegaShare::ACCESS_UNKNOWN;
-    cancelButtonEnabled = false;
-    isSyncTransfer = false;
-    priority = 0;
-    transferState = 0;
-    transferTag = 0;
-    dsFinishedTime = 0;
-    mTransferFinishedWhileBlocked = false;
 }
 
 void TransferItem::setFileName(QString fileName)
 {
-    this->fileName = fileName;
+    mFileName = fileName;
 }
 
 QString TransferItem::getFileName()
 {
-    return fileName;
+    return mFileName;
 }
 
 void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool cancellable)
 {
-    this->totalTransferredBytes = totalTransferredBytes;
-    if (this->totalTransferredBytes < 0)
-    {
-        this->totalTransferredBytes = 0;
-    }
-    if (this->totalTransferredBytes > this->totalSize)
-    {
-        this->totalTransferredBytes = this->totalSize;
-    }
-    regular = cancellable;
+    mTotalTransferredBytes = std::min(mTotalSize, std::max(0LL, totalTransferredBytes));
+    mRegular = cancellable;
 }
 
 void TransferItem::setSpeed(long long transferSpeed, long long meanSpeed)
 {
-    if (transferSpeed < 0)
-    {
-        this->transferSpeed = 0;
-    }
-    else
-    {
-        this->transferSpeed = transferSpeed;
-    }
-    meanTransferSpeed = meanSpeed;
+    mTransferSpeed = std::max(0LL, transferSpeed);
+    mMeanTransferSpeed = meanSpeed;
 }
 
 void TransferItem::setTotalSize(long long size)
-{
-    this->totalSize = size;
-    if (this->totalSize < 0)
+{ 
+    mTotalSize = std::max(0LL, size);
+
+    if (mTotalTransferredBytes > mTotalSize)
     {
-        this->totalSize = 0;
-    }
-    if (this->totalTransferredBytes > this->totalSize)
-    {
-        this->totalTransferredBytes = this->totalSize;
+        mTotalTransferredBytes = mTotalSize;
     }
 }
 
 void TransferItem::setFinishedTime(long long time)
 {
-    dsFinishedTime = time;
+    mDsFinishedTime = time;
 }
 
 long long TransferItem::getFinishedTime()
 {
-    return dsFinishedTime;
+    return mDsFinishedTime;
 }
 
 void TransferItem::setType(int type, bool isSyncTransfer)
 {
-    this->type = type;
-    this->isSyncTransfer = isSyncTransfer;
+    mType = type;
+    mIsSyncTransfer = isSyncTransfer;
 }
 
 int TransferItem::getType()
 {
-    return type;
+    return mType;
 }
 
 void TransferItem::setPriority(unsigned long long priority)
 {
-    this->priority = priority;
+    mPriority = priority;
 }
 
 unsigned long long TransferItem::getPriority()
 {
-    return this->priority;
+    return mPriority;
 }
 
 int TransferItem::getTransferState()
 {
-    return transferState;
+    return mTransferState;
 }
 
 void TransferItem::setTransferState(int value)
 {
-    transferState = value;
+    mTransferState = value;
 }
 
 bool TransferItem::isTransferFinished()
 {
-    return transferState == mega::MegaTransfer::STATE_COMPLETED
-            || transferState == mega::MegaTransfer::STATE_FAILED;
+    return mTransferState == mega::MegaTransfer::STATE_COMPLETED
+            || mTransferState == mega::MegaTransfer::STATE_FAILED;
 }
 
 int TransferItem::getTransferError()
 {
-    return transferError;
+    return mTransferError;
 }
 
 void TransferItem::setTransferError(int error, long long value)
 {
-    transferError = error;
-    transferErrorValue = value;
+    mTransferError = error;
+    mTransferErrorValue = value;
 }
 
 int TransferItem::getTransferTag()
 {
-    return transferTag;    
+    return mTransferTag;
 }
 
 void TransferItem::setTransferTag(int value)
 {
-    transferTag = value;    
+    mTransferTag = value;
 }
 
 bool TransferItem::getRegular()
 {
-    return regular;    
+    return mRegular;
 }
 
 void TransferItem::setRegular(bool value)
 {
-    regular = value;    
+    mRegular = value;
 }
 
 bool TransferItem::getIsLinkAvailable()
 {
-    return isLinkAvailable;
+    return mIsLinkAvailable;
 }
 
 void TransferItem::setIsLinkAvailable(bool value)
 {
-    isLinkAvailable = value;
+    mIsLinkAvailable = value;
 }
 
 int TransferItem::getNodeAccess()
 {
-    return nodeAccess;
+    return mNodeAccess;
 }
 
 void TransferItem::setNodeAccess(int value)
 {
-    nodeAccess = value;
+    mNodeAccess = value;
 }
 
 bool TransferItem::getTransferFinishedWhileBlocked() const

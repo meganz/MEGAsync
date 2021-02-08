@@ -4,7 +4,7 @@
 
 using namespace mega;
 
-QCustomTransfersModel::QCustomTransfersModel(int type, QObject *parent)
+QCustomTransfersModel::QCustomTransfersModel(ModelType type, QObject *parent)
     : QTransfersModel(type, parent)
 {
     modelState = IDLE;
@@ -28,7 +28,7 @@ MegaTransfer *QCustomTransfersModel::getTransferByTag(int tag)
         return transfer->copy();
     }
 
-    return megaApi->getTransferByTag(tag);
+    return mMegaApi->getTransferByTag(tag);
 }
 
 void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer)

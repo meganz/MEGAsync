@@ -3,11 +3,9 @@
 #include "platform/Platform.h"
 #include "control/Utilities.h"
 #include "gui/QMegaMessageBox.h"
-#include <QScrollBar>
 
-#if QT_VERSION >= 0x050000
+#include <QScrollBar>
 #include <QtConcurrent/QtConcurrent>
-#endif
 
 using namespace mega;
 
@@ -98,14 +96,8 @@ void MegaTransferView::createContextMenu()
 #else
                                    "QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"
 #endif
-
-#if QT_VERSION < 0x050000
-                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 16px 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 15px 4px 7px;}"
-#else
                                    "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 7px;}"
-#endif
                                    "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"
                                    "QMenu::item:disabled {background-color: #ffffff; color: rgba(119,119,119,0.3); border: none; margin: 5px 9px 5px 9px;}"));
     }
@@ -199,13 +191,8 @@ void MegaTransferView::createCompletedContextMenu()
         contextCompleted = new QMenu(this);
         contextCompleted->setStyleSheet(QString::fromAscii(
                                    "QMenu {background: #ffffff;}"
-#if QT_VERSION < 0x050000
-                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 4px 15px 4px 7px;}"
-#else
                                    "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 5px 8px;}"
-#endif
                                    ));
     }
     else
@@ -532,7 +519,7 @@ void MegaTransferView::pauseTransferClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->megaApi->pauseTransferByTag(transferTagSelected[i], true);
+            model->mMegaApi->pauseTransferByTag(transferTagSelected[i], true);
         }
     }
 }
@@ -544,7 +531,7 @@ void MegaTransferView::resumeTransferClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->megaApi->pauseTransferByTag(transferTagSelected[i], false);
+            model->mMegaApi->pauseTransferByTag(transferTagSelected[i], false);
         }
     }
 }
@@ -556,7 +543,7 @@ void MegaTransferView::moveToTopClicked()
     {
         for (int i = transferTagSelected.size() - 1; i >= 0; i--)
         {
-            model->megaApi->moveTransferToFirstByTag(transferTagSelected[i]);
+            model->mMegaApi->moveTransferToFirstByTag(transferTagSelected[i]);
         }
     }
 }
@@ -568,7 +555,7 @@ void MegaTransferView::moveUpClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->megaApi->moveTransferUpByTag(transferTagSelected[i]);
+            model->mMegaApi->moveTransferUpByTag(transferTagSelected[i]);
         }
     }
 }
@@ -580,7 +567,7 @@ void MegaTransferView::moveDownClicked()
     {
         for (int i = transferTagSelected.size() - 1; i >= 0 ; i--)
         {
-            model->megaApi->moveTransferDownByTag(transferTagSelected[i]);
+            model->mMegaApi->moveTransferDownByTag(transferTagSelected[i]);
         }
     }
 }
@@ -592,7 +579,7 @@ void MegaTransferView::moveToBottomClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->megaApi->moveTransferToLastByTag(transferTagSelected[i]);
+            model->mMegaApi->moveTransferToLastByTag(transferTagSelected[i]);
         }
     }
 }
@@ -614,7 +601,7 @@ void MegaTransferView::cancelTransferClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->megaApi->cancelTransferByTag(transferTagSelected[i]);
+            model->mMegaApi->cancelTransferByTag(transferTagSelected[i]);
         }
     }
 }

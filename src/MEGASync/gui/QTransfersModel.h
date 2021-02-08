@@ -68,14 +68,15 @@ class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferList
     Q_OBJECT
 
 public:
-    enum {
-        TYPE_DOWNLOAD = 0,
-        TYPE_UPLOAD,
-        TYPE_FINISHED,
-        TYPE_CUSTOM_TRANSFERS
+    enum ModelType
+    {
+        TYPE_DOWNLOAD         = 0,
+        TYPE_UPLOAD           = 1,
+        TYPE_FINISHED         = 2,
+        TYPE_CUSTOM_TRANSFERS = 3,
     };
 
-    explicit QTransfersModel(int type, QObject *parent = 0);
+    explicit QTransfersModel(ModelType type, QObject *parent = 0);
 
     void refreshTransfers();
     virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
@@ -83,7 +84,7 @@ public:
     virtual QModelIndex parent(const QModelIndex & index) const;
     virtual QModelIndex index(int row, int column, const QModelIndex &parent) const;
     virtual int rowCount(const QModelIndex &parent) const;
-    int getModelType();
+    ModelType getModelType();
     virtual ~QTransfersModel();
 
     virtual void removeTransferByTag(int transferTag) = 0;
@@ -91,7 +92,7 @@ public:
     virtual mega::MegaTransfer *getTransferByTag(int tag) = 0;
 
     QCache<int, TransferItem> transferItems;
-    mega::MegaApi *megaApi;
+    mega::MegaApi* mMegaApi;
 
 signals:
     void noTransfers();
@@ -103,7 +104,7 @@ private slots:
 protected:
     QMap<int, TransferItemData*> transfers;
     std::deque<TransferItemData*> transferOrder;
-    int type;
+    ModelType mType;
     ThreadPool* mThreadPool;
 };
 

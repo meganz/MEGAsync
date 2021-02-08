@@ -1,15 +1,18 @@
 #ifndef TRANSFERMANAGER_H
 #define TRANSFERMANAGER_H
 
-#include <QDialog>
-#include <QMenu>
+
 #include "megaapi.h"
 #include "Preferences.h"
 #include "MenuItemAction.h"
-#include <QGraphicsEffect>
-#include <QTimer>
 #include "QTMegaTransferListener.h"
 #include "Utilities.h"
+
+#include <QGraphicsEffect>
+#include <QTimer>
+#include <QDialog>
+#include <QMenu>
+
 
 namespace Ui {
 class TransferManager;
@@ -20,11 +23,12 @@ class TransferManager : public QDialog, public mega::MegaTransferListener
     Q_OBJECT
 
 public:
-    enum {
+    enum
+    {
         ALL_TRANSFERS_TAB = 0,
-        DOWNLOADS_TAB   = 1,
-        UPLOADS_TAB = 2,
-        COMPLETED_TAB = 3
+        DOWNLOADS_TAB     = 1,
+        UPLOADS_TAB       = 2,
+        COMPLETED_TAB     = 3,
     };
 
     static const int COMPLETED_ITEMS_LIMIT = 999;
@@ -47,17 +51,17 @@ signals:
     void userActivity();
 
 private:
-    Ui::TransferManager *ui;
-    mega::MegaApi *megaApi;
-    QMenu *addMenu;
-    MenuItemAction *settingsAction;
-    MenuItemAction *importLinksAction;
-    MenuItemAction *uploadAction;
-    MenuItemAction *downloadAction;
-    Preferences *preferences;
-    QPoint dragPosition;
-    long long notificationNumber;
-    QTimer *refreshTransferTime;
+    Ui::TransferManager* mUi;
+    mega::MegaApi* mMegaApi;
+    QMenu* mAddMenu;
+    MenuItemAction* mSettingsAction;
+    MenuItemAction* mImportLinksAction;
+    MenuItemAction* mUploadAction;
+    MenuItemAction* mDownloadAction;
+    Preferences* mPreferences;
+    QPoint mDragPosition;
+    long long mNotificationNumber;
+    QTimer* mRefreshTransferTime;
     ThreadPool* mThreadPool;
 
     void createAddMenu();
