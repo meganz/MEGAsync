@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QScreen>
+#include <stdexcept>
 
 double getDpiOnLinux()
 {

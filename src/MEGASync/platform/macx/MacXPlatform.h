@@ -62,6 +62,9 @@ public:
 
     static int fd;
 
+    static const char* settingsString;
+    static const char* exitString;
+
 private:
     static void disableSignalHandler();
 };

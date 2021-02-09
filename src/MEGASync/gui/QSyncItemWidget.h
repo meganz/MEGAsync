@@ -23,10 +23,16 @@ public:
     QString fullPath();
 
     ~QSyncItemWidget();
+private:
+    void elidePathLabel();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     Ui::QSyncItemWidget *ui;
     QString mFullPath;
+    QString mSyncName;
     int error;
 };
 

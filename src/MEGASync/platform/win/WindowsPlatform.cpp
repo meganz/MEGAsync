@@ -1537,3 +1537,7 @@ void ShellNotifier::notify(const std::string& path) const
     // same as in WindowsPlatform::notifyItemChange()
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
 }
+
+// Platform-specific strings
+const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
+const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};

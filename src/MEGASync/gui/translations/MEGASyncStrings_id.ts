@@ -1176,7 +1176,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Akun bisnis Anda kedaluwarsa</translation>
+        <translation type="unfinished">Akun bisnis anda telah kedaluwarsa</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -2160,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Buka Pengaturan</translation>
+        <translation type="unfinished">Buka Preferensi</translation>
     </message>
 </context>
 <context>
@@ -2572,7 +2572,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>Update telah tersedia!</translation>
+        <translation>Update telah tersedia</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2655,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>Versi terbaru MEGAsync telah tersedia!</translation>
+        <translation>Versi baru MEGAsync telah tersedia</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -3092,7 +3092,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Akun bisnis Anda kedaluwarsa</translation>
+        <translation type="unfinished">Akun bisnis anda telah kedaluwarsa</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3529,7 +3529,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Kuota penyimpanan folder sinkronisasi pemilik telah terlampaui</translation>
+        <translation type="unfinished">Akun pemilik folder sinkronisasi telah melebihi kuota penyimpanan mereka.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3599,7 +3599,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is blocked</source>
         <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
-        <translation type="unfinished">Akun anda telah diblokir</translation>
+        <translation type="unfinished">Akun anda telah terkunci</translation>
     </message>
     <message>
         <source>Unknown temporary error</source>
@@ -3837,7 +3837,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">Anda butuh Read &amp; Write atau akses penuh untuk dapat men-upload ke folder terpilih.</translation>
+        <translation type="unfinished">Anda memerlukan hak akses Baca dan Tulis atau Penuh untuk dapat mengunggah ke folder yang dipilih.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -4339,7 +4339,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="unfinished">- Memperbaiki kesalahan dekripsi untuk unduhan selama verifikasi integritas.</translation>
     </message>
 </context>
 <context>
@@ -5566,7 +5566,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Beberapa sinkronisasi telah dinonaktifkan. Untuk informasi lebih lanjut, gerakkan mouse anda ke ikon peringatan di sebelah setiap sinkronisasi yang dinonaktifkan.</translation>
     </message>
 </context>
 <context>

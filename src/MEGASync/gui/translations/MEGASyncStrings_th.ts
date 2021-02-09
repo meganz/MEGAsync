@@ -2655,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>MEGAsync  มีเวอร์ชันใหม่พร้อมใช้งานแล้ว</translation>
+        <translation>MEGAsync เวอร์ชันใหม่พร้อมใช้งานแล้ว</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -3837,7 +3837,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">คุณจะต้องสามารถอ่านและเขียนหรือมีสิทธิ์การเข้าถึงแบบเต็มที่ จึงจะสามารถอัปโหลดไปยังโฟลเดอร์ที่เลือกได้</translation>
+        <translation type="unfinished">คุณต้องมีสิทธิ์ในการอ่านและเขียนหรือสิทธิ์การเข้าถึงแบบเต็มที่ เพื่อให้สามารถอัปโหลดไปยังโฟลเดอร์ที่เลือกได้</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -6125,7 +6125,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">ไม่สามารถกำหนดค่าเป็นศูนย์</translation>
+        <translation type="unfinished">การจำกัดขนาดไม่สามารถกำหนดค่าเป็นศูนย์ได้</translation>
     </message>
     <message>
         <source>Bytes</source>

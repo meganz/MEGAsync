@@ -2161,7 +2161,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Instellingen Openen</translation>
+        <translation type="unfinished">Open voorkeuren</translation>
     </message>
 </context>
 <context>
@@ -2573,7 +2573,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>Update beschikbaar!</translation>
+        <translation>Een update is beschikbaar</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>Een nieuwe versie van MEGAsync is beschikbaar!</translation>
+        <translation>Een nieuwe versie van MEGAsynchronisatie is beschikbaar</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -3838,7 +3838,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">U moet Lees &amp; Schrijf recht of Volledige toegang hebben om te kunnen uploaden naar de geselecteerde map.</translation>
+        <translation type="unfinished">U heeft Lezen en Schrijven nodig of Volledige toegangsrechten om de geselecteerde map te kunnen uploaden.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -4340,7 +4340,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="unfinished">- Decoderingsfouten opgelost voor downloads tijdens integriteitsverificatie.</translation>
     </message>
 </context>
 <context>
@@ -5567,7 +5567,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Sommige synchronisaties zijn uitgeschakeld. Beweeg voor meer informatie uw muis over het waarschuwingspictogram naast elke uitgeschakelde synchronisatie.</translation>
     </message>
 </context>
 <context>
@@ -6127,7 +6127,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">Grootte limieten kunnen geen nul zijn</translation>
+        <translation type="unfinished">De grootte van het limiet kan geen nul zijn</translation>
     </message>
     <message>
         <source>Bytes</source>

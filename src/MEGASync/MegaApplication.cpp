@@ -200,7 +200,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsAction = NULL;
     settingsActionGuest = NULL;
     importLinksAction = NULL;
-    initialMenu = NULL;
+    initialTrayMenu = nullptr;
     lastHovered = NULL;
     isPublic = false;
     prevVersion = 0;
@@ -247,7 +247,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 
 #endif
-    changeProxyAction = NULL;
+    guestSettingsAction = nullptr;
     initialExitAction = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
@@ -448,8 +448,6 @@ void MegaApplication::initialize()
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
-
-    megaApi->setKeepSyncsAfterLogout(true);
 
 
     controller = Controller::instance();
@@ -2284,7 +2282,7 @@ void MegaApplication::cleanAll()
     notificationsDelegate = NULL;
 
     // Delete menus and menu items
-    deleteMenu(initialMenu.release());
+    deleteMenu(initialTrayMenu.release());
     deleteMenu(infoDialogMenu.release());
     deleteMenu(syncsMenu.release());
     deleteMenu(guestMenu.release());
@@ -3153,7 +3151,7 @@ void MegaApplication::unlink(bool keepLogs)
     mFetchingNodes = false;
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
-    megaApi->logout();
+    megaApi->logout(true, nullptr);
     Platform::notifyAllSyncFoldersRemoved();
 
     for (unsigned i = 3; i--; )
@@ -3642,7 +3640,7 @@ void MegaApplication::checkOperatingSystem()
                     long majorVersion = strtol(token, &endPtr, 10);
                     if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
                     {
-                        if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
+                        if((int)majorVersion < 14) // Older versions from 10.10 (yosemite)
                         {
                             isOSdeprecated = true;
                         }
@@ -3664,7 +3662,7 @@ void MegaApplication::checkOperatingSystem()
             QMegaMessageBox::warning(nullptr, tr("MEGAsync"),
                                  tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
 #ifdef __APPLE__
-                                 + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
+                                 + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.")
 #elif defined(_WIN32)
                                  + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.")
 #else
@@ -3915,8 +3913,8 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
     int cachedStorageState = 999;
 
     auto oldCachedSyncs = preferences->readOldCachedSyncs(&cachedBusinessState, &cachedBlockedState, &cachedStorageState, email);
-    int oldCacheSyncsCount = oldCachedSyncs.size();
-    if (oldCacheSyncsCount > 0)
+    std::shared_ptr<int>oldCacheSyncsCount(new int(oldCachedSyncs.size()));
+    if (*oldCacheSyncsCount > 0)
     {
         if (cachedBusinessState == -2)
         {
@@ -3944,6 +3942,7 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
                                      osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
                                      new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi* api,  MegaRequest *request, MegaError *e)
         {
+
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
@@ -3955,7 +3954,17 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
             }
 
+            --*oldCacheSyncsCount;
+            if (*oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
+            {
+                megaApi->fetchNodes();
+            }
          }));
+    }
+
+    if (*oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes
+    {
+        megaApi->fetchNodes();
     }
 }
 
@@ -3974,7 +3983,8 @@ void MegaApplication::fetchNodes(QString email)
     assert(!mFetchingNodes);
     mFetchingNodes = true;
     migrateSyncConfToSdk(email);
-    megaApi->fetchNodes();
+    //We can restore fetchnodes once we finish the migration of syncsconfigs
+    //megaApi->fetchNodes();
 }
 
 void MegaApplication::whyAmIBlocked(bool periodicCall)
@@ -4763,7 +4773,7 @@ void MegaApplication::updateTrayIconMenu()
         }
         else
         {
-            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
+            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu.get() : &emptyMenu);
         }
 #else
 
@@ -4772,14 +4782,14 @@ void MegaApplication::updateTrayIconMenu()
         if (preferences && preferences->logged() && getRootNode() && !blockState)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
-            trayIcon->setContextMenu(windowsMenu?windowsMenu.get():&emptyMenu);
+            trayIcon->setContextMenu(windowsMenu ? windowsMenu.get() : &emptyMenu);
 #else
-            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
+            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu.get() : &emptyMenu);
 #endif
         }
         else
         {
-            trayIcon->setContextMenu(initialMenu?initialMenu.get():&emptyMenu);
+            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu.get() : &emptyMenu);
         }
 #endif
     }
@@ -5882,68 +5892,78 @@ void MegaApplication::createAppMenus()
         return;
     }
 
-    lastHovered = NULL;
+    createTrayIconMenus();
+    createInfoDialogMenus();
 
-    if (initialMenu)
+    updateTrayIconMenu();
+}
+
+// Create menus for the tray icon.
+void MegaApplication::createTrayIconMenus()
+{
+    lastHovered = nullptr;
+
+    // First, create the initial Menu, shown while not connected
+
+    // Clear menu if it exists
+    if (initialTrayMenu)
     {
-        QList<QAction *> actions = initialMenu->actions();
+        QList<QAction *> actions = initialTrayMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
-            initialMenu->removeAction(actions[i]);
+            initialTrayMenu->removeAction(actions[i]);
         }
     }
 #ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
     else
 #endif
     {
-        initialMenu.reset(new QMenu());
+        initialTrayMenu.reset(new QMenu());
     }
 
-
-    if (changeProxyAction)
+    if (guestSettingsAction)
     {
-        changeProxyAction->deleteLater();
-        changeProxyAction = NULL;
+        guestSettingsAction->deleteLater();
+        guestSettingsAction = nullptr;
     }
-    changeProxyAction = new QAction(tr("Settings"), this);
-    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+    guestSettingsAction = new QAction(QCoreApplication::translate("Platform", Platform::settingsString), this);
+
+    // When triggered, open "Settings" window. As the user is not logged in, it
+    // will only show proxy settings.
+    connect(guestSettingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
     if (initialExitAction)
     {
         initialExitAction->deleteLater();
-        initialExitAction = NULL;
+        initialExitAction = nullptr;
     }
-    initialExitAction = new QAction(tr("Exit"), this);
+    initialExitAction = new QAction(QCoreApplication::translate("Platform", Platform::exitString), this);
     connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
-    initialMenu->addAction(changeProxyAction);
-    initialMenu->addAction(initialExitAction);
+    initialTrayMenu->addAction(guestSettingsAction);
+    initialTrayMenu->addAction(initialExitAction);
 
-
+    // On Linux, add a "Show Status" action, which opens the Info Dialog.
     if (isLinux && infoDialog)
     {
+        // Create action
         if (showStatusAction)
         {
             showStatusAction->deleteLater();
-            showStatusAction = NULL;
+            showStatusAction = nullptr;
         }
-
         showStatusAction = new QAction(tr("Show status"), this);
         connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
 
-        initialMenu->insertAction(changeProxyAction, showStatusAction);
+        initialTrayMenu->insertAction(guestSettingsAction, showStatusAction);
     }
 
 #ifdef _WIN32
     //The following should not be required, but
     //prevents it from being truncated on the first display
-    initialMenu->show();
-    initialMenu->hide();
+    initialTrayMenu->show();
+    initialTrayMenu->hide();
 #endif
-
-
-    createInfoDialogMenus();
-    updateTrayIconMenu();
 }
 
 void MegaApplication::createInfoDialogMenus()
@@ -5973,7 +5993,7 @@ void MegaApplication::createInfoDialogMenus()
         windowsExitAction = NULL;
     }
 
-    windowsExitAction = new QAction(tr("Exit"), this);
+    windowsExitAction = new QAction(QCoreApplication::translate("Platform", Platform::exitString), this);
     connect(windowsExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
     if (windowsSettingsAction)
@@ -5982,7 +6002,7 @@ void MegaApplication::createInfoDialogMenus()
         windowsSettingsAction = NULL;
     }
 
-    windowsSettingsAction = new QAction(tr("Settings"), this);
+    windowsSettingsAction = new QAction(QCoreApplication::translate("Platform", Platform::settingsString), this);
     connect(windowsSettingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
     if (windowsImportLinksAction)
@@ -6096,11 +6116,7 @@ void MegaApplication::createInfoDialogMenus()
         exitAction = NULL;
     }
 
-#ifndef __APPLE__
-    exitAction = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/ico_quit.png")), true);
-#else
-    exitAction = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/ico_quit.png")), true);
-#endif
+    exitAction = new MenuItemAction(QCoreApplication::translate("Platform", Platform::exitString), QIcon(QString::fromUtf8("://images/ico_quit.png")), true);
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()), Qt::QueuedConnection);
 
     if (settingsAction)
@@ -6109,11 +6125,7 @@ void MegaApplication::createInfoDialogMenus()
         settingsAction = NULL;
     }
 
-#ifndef __APPLE__
-    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/ico_preferences.png")), true);
-#else
-    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences.png")), true);
-#endif
+    settingsAction = new MenuItemAction(QCoreApplication::translate("Platform", Platform::settingsString), QIcon(QString::fromUtf8("://images/ico_preferences.png")), true);
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()), Qt::QueuedConnection);
 
     if (myCloudAction)
@@ -6338,11 +6350,8 @@ void MegaApplication::createGuestMenu()
         exitActionGuest = NULL;
     }
 
-#ifndef __APPLE__
-    exitActionGuest = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/ico_quit.png")));
-#else
-    exitActionGuest = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/ico_quit.png")));
-#endif
+    exitActionGuest = new MenuItemAction(QCoreApplication::translate("Platform", Platform::exitString), QIcon(QString::fromUtf8("://images/ico_quit.png")));
+
     connect(exitActionGuest, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
     if (updateActionGuest)
@@ -6366,12 +6375,8 @@ void MegaApplication::createGuestMenu()
         settingsActionGuest->deleteLater();
         settingsActionGuest = NULL;
     }
+    settingsActionGuest = new MenuItemAction(QCoreApplication::translate("Platform", Platform::settingsString), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
 
-#ifndef __APPLE__
-    settingsActionGuest = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
-#else
-    settingsActionGuest = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
-#endif
     connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(openSettings()));
 
     guestMenu->addAction(updateActionGuest);
@@ -8095,10 +8100,15 @@ void MegaApplication::onReloadNeeded(MegaApi*)
 
 void MegaApplication::onGlobalSyncStateChangedTimeout()
 {
-    onGlobalSyncStateChanged(NULL, true);
+    onGlobalSyncStateChangedImpl(NULL, true);
 }
 
-void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
+void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
+{
+    onGlobalSyncStateChangedImpl(api, false);
+}
+
+void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
 {
     if (appfinished)
     {

@@ -2161,7 +2161,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Abrir ajustes</translation>
+        <translation type="unfinished">Abrir preferencias</translation>
     </message>
 </context>
 <context>
@@ -2573,7 +2573,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>¡Actualización disponible!</translation>
+        <translation>Hay una actualización disponible</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2656,7 +2656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>¡Hay una nueva versión de MEGAsync disponible!</translation>
+        <translation>Hay una nueva versión de MEGAsync disponible</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -4340,7 +4340,7 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="unfinished">- Se han corregido errores de descifrado en las descargas durante la verificación de integridad.</translation>
     </message>
 </context>
 <context>
@@ -5567,7 +5567,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Algunas sincronizaciones se han desactivado. Para obtener más información, coloca el ratón sobre el ícono de aviso junto a cada sincronización desactivada.</translation>
     </message>
 </context>
 <context>
@@ -6127,7 +6127,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">Los límites de tamaño no pueden ser cero</translation>
+        <translation type="unfinished">El límite de tamaño no puede ser cero</translation>
     </message>
     <message>
         <source>Bytes</source>

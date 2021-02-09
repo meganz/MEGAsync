@@ -21,7 +21,8 @@ QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
 void QSyncItemWidget::setPathAndName(const QString &path, const QString &syncName)
 {
     mFullPath = path;
-    ui->lSyncName->setText(syncName);
+    mSyncName = syncName;
+    elidePathLabel();
 }
 
 void QSyncItemWidget::setPathAndGuessName(const QString &path)
@@ -34,7 +35,9 @@ void QSyncItemWidget::setPathAndGuessName(const QString &path)
         syncName = QDir::toNativeSeparators(mFullPath);
     }
     syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
-    ui->lSyncName->setText(syncName);
+
+    mSyncName = syncName;
+    elidePathLabel();
 }
 
 void QSyncItemWidget::setToolTip(const QString &tooltip)
@@ -51,6 +54,8 @@ void QSyncItemWidget::setError(int error)
         ui->bWarning->setToolTip(QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(error)));
         ui->bWarning->show();
     }
+
+    elidePathLabel();
 }
 
 QString QSyncItemWidget::fullPath()
@@ -61,4 +66,16 @@ QString QSyncItemWidget::fullPath()
 QSyncItemWidget::~QSyncItemWidget()
 {
     delete ui;
+}
+
+void QSyncItemWidget::elidePathLabel()
+{
+    QFontMetrics metrics(ui->lSyncName->fontMetrics());
+    ui->lSyncName->setText(metrics.elidedText(mSyncName, Qt::ElideMiddle, ui->lSyncName->width()));
+}
+
+void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
+{
+    elidePathLabel();
+    QWidget::resizeEvent(event);
 }

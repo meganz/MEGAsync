@@ -303,11 +303,7 @@ void TransferManager::createAddMenu()
         settingsAction = NULL;
     }
 
-#ifndef __APPLE__
-    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
-#else
-    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
-#endif
+    settingsAction = new MenuItemAction(QCoreApplication::translate("Platform", Platform::settingsString), QIcon(QString::fromUtf8("://images/ico_preferences.png")));
     connect(settingsAction, SIGNAL(triggered()), qApp, SLOT(openSettings()), Qt::QueuedConnection);
 
     addMenu->addAction(importLinksAction);
@@ -501,7 +497,6 @@ void TransferManager::updatePauseState()
         {
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
             ui->bPause->setText(tr("Resume"));
-
         }
         else
         {

@@ -2160,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Apri le Impostazioni</translation>
+        <translation type="unfinished">Apri le Preferenze</translation>
     </message>
 </context>
 <context>
@@ -2572,7 +2572,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>Aggiornamento disponibile!</translation>
+        <translation>Un aggiornamento è disponibile</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2655,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>Una nuova versione di MEGAsync è disponibile!</translation>
+        <translation>Una nuova versione di MEGAsync è disponibile</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -4339,7 +4339,7 @@ Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:�
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="unfinished">- Sistemati errori di decriptazione per i download in corso durante la verifica di integrità.</translation>
     </message>
 </context>
 <context>
@@ -4535,7 +4535,7 @@ Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:�
     <message>
         <source>Remove</source>
         <translatorcomment>Contextual action for removing a new file or folder in the sidebar</translatorcomment>
-        <translation type="unfinished">Elimina</translation>
+        <translation type="unfinished">Rimuovi</translation>
     </message>
     <message>
         <source>My Computer</source>
@@ -5566,7 +5566,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Alcune sincronizzazioni sono state disabilitate. Per maggiori informazioni, sposta il tuo mouse sull’icona affianco ogni sincronizzazione disabilitata.</translation>
     </message>
 </context>
 <context>
