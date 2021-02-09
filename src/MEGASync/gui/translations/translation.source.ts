@@ -6927,11 +6927,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>WinToastLib</name>
     <message>
-        <source> did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+        <source>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
 
 Do you want to create one?</source>
-        <translatorcomment>Message from the app, asking the user how to proceed when no expected link was found.</translatorcomment>
-        <translation type="unfinished"> did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+        <translatorcomment>
+            Message from the app, asking the user how to proceed when no expected link was found.
+            The placeholder will be replaced with the app name at runtime, so it must be kept, and only moved to a different position when translation requires it,
+            i.e. "Un Start Menu link valid pentru %1 nu a fost gasit"
+        </translatorcomment>
+        <translation type="unfinished">%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
 
 Do you want to create one?</translation>
     </message>
