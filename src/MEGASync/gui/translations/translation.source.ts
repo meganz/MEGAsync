@@ -3264,6 +3264,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
     </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">Open Preferences</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Open Settings</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -4191,7 +4206,7 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferences</translation>
     </message>
     <message>
         <source>Quit</source>
