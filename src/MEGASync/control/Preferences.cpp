@@ -12,14 +12,21 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.9.0";
-const int Preferences::VERSION_CODE = 4309;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.5.0.0";
+const int Preferences::VERSION_CODE = 4500;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.9");
-QString Preferences::SDK_ID = QString::fromAscii("c917ddc");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.5.0");
+QString Preferences::SDK_ID = QString::fromAscii("");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fixed detected crashes on Windows and Linux."));
+    "- New improvements for the management of the syncs."
+    "- Improved user experience when syncs are disabled."
+    "- Enhanced system notifications to notify various account events."
+    "- Improved user experience while working with huge number of transfers and syncs."
+    "- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu 20.04."
+    "- Fixed detected crashes on Windows and Linux."
+    "- Other performance improvements and adjustments."
+    "- Other UI fixes and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
