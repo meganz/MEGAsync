@@ -454,9 +454,9 @@ bool getCreateLinkUserPreference(const std::wstring &appName)
     // Create user dialog
     const QString& title = QString::fromWCharArray(appName.c_str());
     QMessageBox msgbox(QMessageBox::Question, title,
-        title + QCoreApplication::translate("WinToastLib", " did not find a valid link in Start Menu. "
+        QCoreApplication::translate("WinToastLib", "%1 did not find a valid link in Start Menu. "
             "Not having a link may prevent the correct functioning of desktop notifications.\n\n"
-            "Do you want to create one?"));
+            "Do you want to create one?").arg(title));
     auto yesButton = msgbox.addButton(QCoreApplication::translate("WinToastLib", "Yes (recommended)"), QMessageBox::YesRole);
     msgbox.addButton(QCoreApplication::translate("WinToastLib", "No"), QMessageBox::NoRole);
     auto neverButton = msgbox.addButton(QCoreApplication::translate("WinToastLib", "No (never ask again)"), QMessageBox::NoRole);
