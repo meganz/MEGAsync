@@ -864,5 +864,7 @@
         <file>images/ic_options_hover.png</file>
         <file>images/ic_options_hover@2x.png</file>
         <file>images/ic_options_hover@3x.png</file>
+        <file>images/settings-security.png</file>
+        <file>images/settings-security@2x.png</file>
     </qresource>
 </RCC>

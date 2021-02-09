@@ -1,4 +1,4 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QRect>
@@ -244,6 +244,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
 #endif
 
     ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
@@ -386,6 +387,8 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bSyncs->setChecked(false);
         ui->bBandwidth->setEnabled(false);
         ui->bBandwidth->setChecked(false);
+        ui->bSecurity->setEnabled(false);
+        ui->bSecurity->setChecked(false);
         ui->bProxies->setChecked(true);
 #endif
         ui->wStack->setCurrentWidget(ui->pProxies);
@@ -535,6 +538,7 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
     loadSettings(); //alt: look for item with syncSetting->tag & update enable/disable checkbox
 
 }
+
 void SettingsDialog::proxyStateChanged()
 {
     if (modifyingSettings)
@@ -657,6 +661,7 @@ void SettingsDialog::onCacheSizeAvailable()
     #endif
     }
 }
+
 void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
@@ -681,6 +686,7 @@ void SettingsDialog::on_bAccount_clicked()
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
+    ui->bSecurity->setChecked(false);
 #endif
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
@@ -725,11 +731,12 @@ void SettingsDialog::on_bSyncs_clicked()
     }
 
 #ifndef __APPLE__
-    ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(true);
+    ui->bAccount->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
+    ui->bSecurity->setChecked(false);
 #endif
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible(true);
@@ -762,11 +769,12 @@ void SettingsDialog::on_bBandwidth_clicked()
     }
 
 #ifndef __APPLE__
+    ui->bBandwidth->setChecked(true);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
-    ui->bBandwidth->setChecked(true);
     ui->bAdvanced->setChecked(false);
     ui->bProxies->setChecked(false);
+    ui->bSecurity->setChecked(false);
 #endif
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
@@ -812,11 +820,12 @@ void SettingsDialog::on_bSecurity_clicked()
     }
 
 #ifndef __APPLE__
+    ui->bSecurity->setChecked(true);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
-    ui->bProxies->setChecked(true);
+    ui->bProxies->setChecked(false);
 #endif
     ui->wStack->setCurrentWidget(ui->pSecurity);
     ui->bOk->setFocus();
@@ -848,11 +857,12 @@ void SettingsDialog::on_bAdvanced_clicked()
     }
 
 #ifndef __APPLE__
+    ui->bAdvanced->setChecked(true);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
-    ui->bAdvanced->setChecked(true);
     ui->bProxies->setChecked(false);
+    ui->bSecurity->setChecked(false);
 #endif
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
@@ -876,7 +886,6 @@ void SettingsDialog::on_bAdvanced_clicked()
 #endif
 }
 
-
 void SettingsDialog::on_bProxies_clicked()
 {
     emit userActivity();
@@ -894,11 +903,12 @@ void SettingsDialog::on_bProxies_clicked()
     }
 
 #ifndef __APPLE__
+    ui->bProxies->setChecked(true);
     ui->bAccount->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
-    ui->bProxies->setChecked(true);
+    ui->bSecurity->setChecked(false);
 #endif
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
@@ -2630,6 +2640,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bAdvanced->setEnabled(completed);
     ui->bBandwidth->setEnabled(completed);
     ui->bProxies->setEnabled(completed);
+    ui->bSecurity->setEnabled(completed);
 #else
     enableNSToolBarItem(bAccount.get(), completed);
     enableNSToolBarItem(bSyncs.get() , completed);

@@ -862,5 +862,7 @@
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
         <file>images/ic_sync_warning@3x.png</file>
+        <file>images/settings-security.png</file>
+        <file>images/settings-security@2x.png</file>
     </qresource>
 </RCC>
