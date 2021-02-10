@@ -2159,8 +2159,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
         <translation type="unfinished">開啟偏好設定</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">開啟設定</translation>
     </message>
 </context>
 <context>
@@ -2495,8 +2500,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>離開</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">離開</translation>
     </message>
     <message>
         <source>About</source>
@@ -2505,8 +2510,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>設定</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">設定</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2664,13 +2669,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>離開</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">離開</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>偏好</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">偏好</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -2872,7 +2877,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync將繼續運作，但OS X Mavericks之前的版本將不再支援更新。</translation>
+        <translation type="obsolete">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -3253,6 +3258,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
         <translation type="unfinished">您的同步 “%1” 已經啟用。</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync將可繼續運作，但OS X Yosemite之前的版本將不再支援更新。</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">開啟偏好設定</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">開啟設定</translation>
     </message>
 </context>
 <context>
@@ -4177,6 +4202,29 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished">Preferences</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">離開</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">設定</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">離開</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
         <source>- New design for the main dialog
@@ -4339,7 +4387,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- 修復完整性驗證過程中下載的解密錯誤。</translation>
+        <translation type="obsolete">- Fixed decryption errors for downloads during integrity verification.</translation>
+    </message>
+    <message>
+        <source>- Fixed detected crashes on Windows and Linux.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -4849,7 +4921,7 @@ Do you want to delete it anyway?</source>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>設定 - MEGAsync同步</translation>
     </message>
     <message>
@@ -5232,7 +5304,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>首選 - MEGAsync同步</translation>
     </message>
     <message>
@@ -5275,12 +5347,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>本地資料夾不存在，無法同步</translation>
+        <translation type="vanished">本地資料夾不存在，無法同步</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>同步未啟用因為遠端資料夾不存在</translation>
+        <translation type="vanished">同步未啟用因為遠端資料夾不存在</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -6445,12 +6517,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">設定</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">偏好</translation>
+        <translation type="obsolete">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>

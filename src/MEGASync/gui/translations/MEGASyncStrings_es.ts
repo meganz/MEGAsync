@@ -2160,8 +2160,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
         <translation type="unfinished">Abrir preferencias</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Abrir los ajustes</translation>
     </message>
 </context>
 <context>
@@ -2496,8 +2501,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Salir</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Salir</translation>
     </message>
     <message>
         <source>About</source>
@@ -2506,8 +2511,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Ajustes</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Ajustes</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2665,13 +2670,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Salir</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Salir</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Preferencias</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Preferencias</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -2873,7 +2878,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync seguirá funcionando, sin embargo las actualizaciones pronto dejarán de ser compatibles con versiones anteriores a OS X Mavericks.</translation>
+        <translation type="obsolete">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -3255,6 +3260,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
         <translation type="unfinished">Tu sincronización ”%1” se ha activado.</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">Abrir preferencias</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Abrir los ajustes</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3490,7 +3515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">La carpeta remota de sincronización no es válida</translation>
+        <translation type="unfinished">La carpeta sincronizada remota no es válida</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3515,7 +3540,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node not found</source>
         <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">No se ha encontrado la carpeta remota de sincronización</translation>
+        <translation type="unfinished">No se ha encontrado la carpeta sincronizada remota</translation>
     </message>
     <message>
         <source>Reached storage quota limit</source>
@@ -3535,17 +3560,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote path has changed</source>
         <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">La ruta de la carpeta remota de sincronización ha cambiado</translation>
+        <translation type="unfinished">La ruta de la carpeta sincronizada remota ha cambiado</translation>
     </message>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation type="unfinished">La carpeta remota de sincronización se ha movido a la papelera</translation>
+        <translation type="unfinished">La carpeta sincronizada remota se ha movido a la papelera</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation type="unfinished">No tienes acceso completo a la carpeta remota de sincronización</translation>
+        <translation type="unfinished">No tienes acceso completo a la carpeta sincronizada remota</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3570,12 +3595,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node has been deleted</source>
         <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
-        <translation type="unfinished">Se ha eliminado la carpeta remota de sincronización</translation>
+        <translation type="unfinished">Se ha eliminado la carpeta sincronizada remota</translation>
     </message>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation type="unfinished">La carpeta remota de sincronización está en la papelera</translation>
+        <translation type="unfinished">La carpeta sincronizada remota está en la papelera</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -4178,6 +4203,29 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
     </message>
 </context>
 <context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished">Preferences</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Salir</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">Ajustes</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">Salir</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
         <source>- New design for the main dialog
@@ -4340,7 +4388,31 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Se han corregido errores de descifrado en las descargas durante la verificación de integridad.</translation>
+        <translation type="obsolete">- Fixed decryption errors for downloads during integrity verification.</translation>
+    </message>
+    <message>
+        <source>- Fixed detected crashes on Windows and Linux.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -4850,7 +4922,7 @@ Do you want to delete it anyway?</source>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>MEGAsync - Preferencias</translation>
     </message>
     <message>
@@ -5233,7 +5305,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>MEGAsync - Preferencias</translation>
     </message>
     <message>
@@ -5276,12 +5348,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>La sincronización no se puede activar porque la carpeta local no existe</translation>
+        <translation type="vanished">La sincronización no se puede activar porque la carpeta local no existe</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>La sincronización no se puede activar porque la carpeta remota no existe</translation>
+        <translation type="vanished">La sincronización no se puede activar porque la carpeta remota no existe</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -6447,12 +6519,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">Ajustes</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferencias</translation>
+        <translation type="obsolete">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>

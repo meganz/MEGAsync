@@ -2160,7 +2160,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">افتح التفضيلات</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">أفتح الإعدادات</translation>
     </message>
 </context>
@@ -2496,8 +2501,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>الخروج</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">الخروج</translation>
     </message>
     <message>
         <source>About</source>
@@ -2506,8 +2511,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>الاعدادات</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">الاعدادات</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2573,7 +2578,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>تحديث متاح!</translation>
+        <translation>تحديث متاح</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2656,7 +2661,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>نسخة جديدة من MEGAsync متاحة!</translation>
+        <translation>نسخة جديدة من MEGAsync متاحة</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2665,13 +2670,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>إنهاء</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">إنهاء</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>التفضيلات</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">التفضيلات</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -2873,7 +2878,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">سوف يواصل MEGAsync العمل، ولكن التحديثات لن تكون مدعومة للإصدارات قبل OS X Mavericks قريبا.</translation>
+        <translation type="obsolete">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -3254,6 +3259,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
         <translation type="unfinished">تم تمكين المزامنة “%1”</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">افتح التفضيلات</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">أفتح الإعدادات</translation>
     </message>
 </context>
 <context>
@@ -3838,7 +3863,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">انتا في حاجة الي القراء و الكتابة او حق الوصول الكامل حتي تتمكن من رفع المجلد المحدد.</translation>
+        <translation type="unfinished">تحتاج إلى إذن القراءة و الكتابة أو إذن الوصول الكامل حتي تتمكن من رفع المجلد المحدد.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -4178,6 +4203,29 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished">Preferences</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">إنهاء</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">الاعدادات</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">الخروج</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
         <source>- New design for the main dialog
@@ -4340,7 +4388,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="obsolete">- Fixed decryption errors for downloads during integrity verification.</translation>
+    </message>
+    <message>
+        <source>- Fixed detected crashes on Windows and Linux.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -4850,7 +4922,7 @@ Do you want to delete it anyway?</source>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>الإعدادات - MEGAsync</translation>
     </message>
     <message>
@@ -5233,7 +5305,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>التفضيلات - MEGAsync</translation>
     </message>
     <message>
@@ -5276,12 +5348,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>يتعذر تمكين هذه المزامنة بسبب عدم وجود المجلد المحلي</translation>
+        <translation type="vanished">يتعذر تمكين هذه المزامنة بسبب عدم وجود المجلد المحلي</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>لا يمكن تمكين هذه المزامنة بسبب عدم وجود المجلد البعيد</translation>
+        <translation type="vanished">لا يمكن تمكين هذه المزامنة بسبب عدم وجود المجلد البعيد</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -5567,7 +5639,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">تم تعطيل بعض عمليات المزامنة. لمزيد من المعلومات، حرك الماوس فوق رمز التحذير الموجود بجوار كل مزامنة معطلة.</translation>
     </message>
 </context>
 <context>
@@ -6127,7 +6199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">حدود الحجم لا يمكن أن تكون صفر</translation>
+        <translation type="unfinished">لا يمكن أن يكون حد الحجم صفر</translation>
     </message>
     <message>
         <source>Bytes</source>
@@ -6447,12 +6519,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">الاعدادات</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">التفضيلات</translation>
+        <translation type="obsolete">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>
