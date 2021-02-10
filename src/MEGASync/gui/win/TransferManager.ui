@@ -31,7 +31,13 @@
   <property name="styleSheet">
    <string notr="true">#TransferManager
 {
-	border-radius: 0 4px 4px 0;
+	border-radius: 4px;
+	border: 1px solid black;
+}
+
+QLabel, QPushButton, QLineEdit, QGroupBox
+{
+	font-family: Lato;
 }
 
 #wLeftPane
@@ -46,23 +52,43 @@
 
 #lTransfers
 {
-  color: #333333;
-  font-family: Lato;
-  font-size: 20px;
-  font-weight: 600;
+	color: #333333;
+	font-size: 20px;
+	font-weight: 600;
+	padding-left: 12px;
 	qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#wMediaType QWidget &gt; QLabel, #wTransferring QWidget &gt; QLabel
+#wMediaType QWidget &gt; QLabel, #wTransferring QFrame &gt; QLabel
 {
-  color: #777777;
-  font-family: Lato;
-  font-size: 10px;
-  font-weight: bold;
+	height: 24px;
+	min-height: 24px;
+	max-height: 24px;
+	color: #777777;
+	font-size: 10px;
+	font-weight: bold;
 	qproperty-alignment: 'AlignRight | AlignVCenter';
+
 }
 
-#wMediaType QWidget, #wTransferring QWidget
+#fDownloads[itsOn=true]
+{
+	background-color: solid white;
+}
+
+#fDownloads[itsOn=true] QLabel
+{
+	background-color: #FAFAFA;
+	border-radius: 12px;
+}
+
+#fDownloads[itsOn=true] QPushButton
+{
+	font-weight: bold;
+}
+
+
+#wMediaType QWidget, #wTransferring QWidget, QFrame
 {
 	height: 36px;
 }
@@ -70,18 +96,29 @@
 #lTransferring, #lMediaType, #lSearch
 {
     color: #666666;
-    font-family: Lato;
     font-size: 12px;
     padding-left: 12px;
 	qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-QPushButton
+QGroupBox
+{
+    font-size: 12px;
+	border: none;
+}
+
+QGroupBox::title
+{
+	font-family: Lato;
+   color: #666666;
+	padding-left: 12px;
+}
+
+#wMediaType QPushButton, #wTransferring QPushButton
 {
 	width: 200px;
 	min-width: 200px;
 	max-width: 200px;
-    font-family: &quot;Lato&quot;;
     font-size: 14px;
     color: #333333;
 	border: none;
@@ -98,27 +135,30 @@ QPushButton
 
 #wSearchField
 {
-	height: 32px;
+	height: 34px;
+	min-height: 34px;
+	max-height: 34px;
 	width: 232px;
-	border-radius: 16px;
+	min-width: 232px;
+	max-width: 232px;
+	border-radius: 17px;
 	background-color: #E9E9E9;
 }
 
 #leSearchField
 {
     color: #333333;
-    font-family: Lato;
     font-size: 14px;
 	background-color: #E9E9E9;
 }
 
 #wSearchField QToolButton
 {
-	height: 32px;
+	height: 34px;
 	width: 18px;
-	min-height: 32px;
+	min-height: 34px;
 	min-width: 18px;
-	max-height: 32px;
+	max-height: 34px;
 	max-width: 18px;
 	qProperty-iconSize: 18px;
     border: none;
@@ -145,7 +185,7 @@ QPushButton
 	qProperty-iconSize: 18px;
 	border: 1px solid rgba(0,0,0,0.2);
 	background-color: #E9E9E9;
-	border-radius: 16px;
+	border-radius: 17px;
 	margin-left: 4px;
 	margin-right: 4px;
 }
@@ -154,8 +194,8 @@ QPushButton
 {
 	  height: 24px;
   	  width: 24px;
-		background-color: light-red;
-		border-radius: 12px;
+		background-color: grey;
+		border-radius: 13px;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -163,7 +203,7 @@ QPushButton
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -196,13 +236,13 @@ QPushButton
        <number>12</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
       <property name="rightMargin">
        <number>12</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
       <item>
        <widget class="QStackedWidget" name="wTitleAndSearch">
@@ -280,8 +320,8 @@ QPushButton
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>232</width>
+            <height>34</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="wSearchFieldLayout">
@@ -338,7 +378,7 @@ QPushButton
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wTransferring" native="true">
+       <widget class="QGroupBox" name="wTransferring">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -351,7 +391,13 @@ QPushButton
           <height>600</height>
          </size>
         </property>
-        <layout class="QVBoxLayout" name="wTabHeaderLayout">
+        <property name="title">
+         <string>TRANSFERRING</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -359,7 +405,7 @@ QPushButton
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>7</number>
+          <number>14</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -368,18 +414,8 @@ QPushButton
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="lTransferring">
-           <property name="text">
-            <string>TRANSFERRING</string>
-           </property>
-           <property name="buddy">
-            <cstring>wSearchField</cstring>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" name="wAllTransfersTab" native="true">
-           <layout class="QHBoxLayout" name="wAllTransfersTabLayout">
+          <widget class="QFrame" name="fAllTransfers">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -410,6 +446,12 @@ QPushButton
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -423,8 +465,14 @@ QPushButton
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wDownloadsTab" native="true">
-           <layout class="QHBoxLayout" name="wDownloadsTabLayout">
+          <widget class="QFrame" name="fDownloads">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -455,6 +503,9 @@ QPushButton
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -468,8 +519,14 @@ QPushButton
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wUploadsTab" native="true">
-           <layout class="QHBoxLayout" name="wUploadsTabLayout">
+          <widget class="QFrame" name="fUploads">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -500,6 +557,9 @@ QPushButton
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -513,8 +573,14 @@ QPushButton
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wCompletedTab" native="true">
-           <layout class="QHBoxLayout" name="wCompletedTabLayout">
+          <widget class="QFrame" name="fCompleted">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -532,6 +598,9 @@ QPushButton
             </property>
             <item>
              <widget class="QPushButton" name="tCompleted">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -545,6 +614,9 @@ QPushButton
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -555,24 +627,9 @@ QPushButton
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="bNumberCompleted">
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>200</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
+             <widget class="QLabel" name="lCompletedNb">
               <property name="text">
-               <string notr="true"/>
+               <string>XXXX</string>
               </property>
              </widget>
             </item>
@@ -931,13 +988,13 @@ QPushButton
           <widget class="QPushButton" name="bClose">
            <property name="minimumSize">
             <size>
-             <width>200</width>
+             <width>0</width>
              <height>32</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>200</width>
+             <width>16777215</width>
              <height>32</height>
             </size>
            </property>
@@ -1000,13 +1057,13 @@ QPushButton
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>0</width>
            <height>32</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>200</width>
+           <width>16777215</width>
            <height>32</height>
           </size>
          </property>
