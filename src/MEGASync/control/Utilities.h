@@ -290,8 +290,6 @@ public:
     // but the object will be deleted when the progress closes
     static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
 
-    static void delayFirstSyncStart();
-
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

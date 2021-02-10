@@ -387,8 +387,6 @@ void MegaApplication::initialize()
     isLinux = false;
 #endif
 
-    Utilities::delayFirstSyncStart();
-
     //Register own url schemes
     QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
