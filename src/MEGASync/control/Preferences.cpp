@@ -378,6 +378,7 @@ const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPu
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
+const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -2232,6 +2233,16 @@ void Preferences::setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs)
     }
 
     setValueAndSyncConcurrent(disabledSyncsKey, tags.join(QString::fromUtf8("0x1E")));
+}
+
+bool Preferences::getNotifyDisabledSyncsOnLogin()
+{
+    return getValueConcurrent<bool>(notifyDisabledSyncsKey, false);
+}
+
+void Preferences::setNotifyDisabledSyncsOnLogin(bool notify)
+{
+    setValueAndSyncConcurrent(notifyDisabledSyncsKey, notify);
 }
 
 QString Preferences::getHttpsKey()
