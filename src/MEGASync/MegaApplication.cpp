@@ -1311,6 +1311,28 @@ if (!preferences->lastExecutionTime())
     infoDialog->setUsage();
     infoDialog->setAccountType(preferences->accountType());
 
+
+    if (preferences->getNotifyDisabledSyncsOnLogin())
+    {
+        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
+                        tr("One or more syncs have been disabled. Go to preferences to enable them again."));
+#ifdef __APPLE__
+        QPushButton *openPreferences = msg.addButton(tr("Open Preferences"), QMessageBox::YesRole);
+#else
+        QPushButton *openPreferences = msg.addButton(tr("Open Settings"), QMessageBox::YesRole);
+#endif
+        msg.addButton(tr("Dismiss"), QMessageBox::NoRole);
+        msg.setDefaultButton(openPreferences);
+        msg.exec();
+        if (msg.clickedButton() == openPreferences)
+        {
+            openSettings(SettingsDialog::SYNCS_TAB);
+        }
+
+        preferences->setNotifyDisabledSyncsOnLogin(false);
+        model->dismissUnattendedDisabledSyncs();
+    }
+
     model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
 
     createAppMenus();
@@ -6937,6 +6959,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             unlink();
         }
 
+        //Check for any sync disabled by logout to warn user on next login with user&password
+        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        {
+            auto syncSetting = model->getSyncSetting(i);
+            if (syncSetting->getError() == MegaSync::Error::LOGGED_OUT)
+            {
+                preferences->setNotifyDisabledSyncsOnLogin(true);
+                break;
+            }
+        }
         model->reset();
 
         if (preferences)
