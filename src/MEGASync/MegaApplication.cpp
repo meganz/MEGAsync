@@ -387,6 +387,8 @@ void MegaApplication::initialize()
     isLinux = false;
 #endif
 
+    Utilities::delayFirstSyncStart();
+
     //Register own url schemes
     QDesktopServices::setUrlHandler(QString::fromUtf8("mega"), this, "handleMEGAurl");
     QDesktopServices::setUrlHandler(QString::fromUtf8("local"), this, "handleLocalPath");
@@ -8409,9 +8411,5 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 
 void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
 {
-    if (e->getType() == MegaEvent::EVENT_FIRST_SYNC_RESUMING )
-    {
-        Utilities::delayFirstSyncStart();
-    }
     QTMegaListener::onEvent(api, e);
 }
