@@ -8409,9 +8409,5 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 
 void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
 {
-    if (e->getType() == MegaEvent::EVENT_FIRST_SYNC_RESUMING )
-    {
-        Utilities::delayFirstSyncStart();
-    }
     QTMegaListener::onEvent(api, e);
 }
