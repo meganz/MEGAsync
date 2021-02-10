@@ -19,13 +19,13 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.5.0");
 QString Preferences::SDK_ID = QString::fromAscii("");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- New improvements for the management of the syncs."
-    "- Improved user experience when syncs are disabled."
-    "- Enhanced system notifications to notify various account events."
-    "- Improved user experience while working with huge number of transfers and syncs."
-    "- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu 20.04."
-    "- Fixed detected crashes on Windows and Linux."
-    "- Other performance improvements and adjustments."
+    "- New improvements for the management of the syncs.\n"
+    "- Improved user experience when syncs are disabled.\n"
+    "- Enhanced system notifications to notify various account events.\n"
+    "- Improved user experience while working with huge number of transfers and syncs.\n"
+    "- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.\n"
+    "- Fixed detected crashes on Windows and Linux.\n"
+    "- Other performance improvements and adjustments.\n"
     "- Other UI fixes and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
