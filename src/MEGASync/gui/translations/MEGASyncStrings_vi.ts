@@ -266,7 +266,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Hai bạn có tên liên lạc của nhau</translation>
+        <translation type="unfinished">Tên liên lạc đã được thiết lập</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -1001,12 +1001,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancelled Contact Request</source>
         <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
-        <translation type="unfinished">Cancelled Contact Request</translation>
+        <translation type="unfinished">Yêu Cầu Liên Lạc Bị Hủy</translation>
     </message>
     <message>
         <source>[A] cancelled the contact request</source>
         <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
-        <translation type="unfinished">[A] cancelled their contact request</translation>
+        <translation type="unfinished">[A] đã hủy bỏ yêu cầu thêm tên liên lạc</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1026,12 +1026,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>New Contact Established</source>
         <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
-        <translation type="unfinished">New Contact Established</translation>
+        <translation type="unfinished">Liên Lạc Mới Đã Được Thành Lập</translation>
     </message>
     <message>
         <source>New contact with [A] has been established</source>
         <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
-        <translation type="unfinished">New contact with [A] has been established</translation>
+        <translation type="unfinished">[A] đã được lưu lại vào sổ liên lạc</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1146,12 +1146,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation type="unfinished">Your data is at risk</translation>
+        <translation type="unfinished">Dữ liệu sắp bị mất</translation>
     </message>
     <message>
         <source>You have [A] days left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation type="unfinished">You have [A] days left to save your data</translation>
+        <translation type="unfinished">Quý khách có [A] ngày để giữ dữ liệu của mình</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1166,7 +1166,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">Please resolve your payment issue to avoid suspension of your business account.</translation>
+        <translation type="unfinished">Xin giải quyết vấn đề thanh toán để tránh bị đình chỉ tài khoản.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1191,7 +1191,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation type="unfinished">Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation type="unfinished">Liên lạc với người quản lý tài khoản doanh nghiệp để giải quyết vấn đề và kích hoạt lại toàn khoản.</translation>
     </message>
 </context>
 <context>
@@ -2115,7 +2115,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Label to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation type="unfinished">Bạn cần hành động ngay để lưu giữ dữ liệu của mình</translation>
+        <translation type="unfinished">Quý khách cần hành động ngay để lưu giữ dữ liệu của mình</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
@@ -2150,17 +2150,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Label to indicate that some syncs have been disable due to some error.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled</translation>
+        <translation type="unfinished">Một hoặc vài phiên đồng bộ đã bị vô hiệu</translation>
     </message>
     <message>
         <source>Something went wrong while trying to sync your folders.</source>
         <translatorcomment>Label to indicate that an error occurs while trying to resume the syncs</translatorcomment>
-        <translation type="unfinished">Something went wrong while trying to sync your folders.</translation>
+        <translation type="unfinished">Có vấn đề nào đó đã xảy ra khi thực hiện đồng bộ một số thư mục.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
-        <translation type="unfinished">Mở phần Thiết Đặt</translation>
+        <translation type="unfinished">Mở phần Tùy Chỉnh</translation>
     </message>
 </context>
 <context>
@@ -2572,7 +2572,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>Có bản cập nhật mới!</translation>
+        <translation>Có bản cập nhật mới</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2655,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>Đang có một bản cập nhật mới cho MEGAsync!</translation>
+        <translation>Có bản cập nhật mới cho MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2705,12 +2705,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Đồng bộ &quot;%1&quot; của bạn đã bị ngắt do thư mục bạn chọn không có tồn tại</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã bị vô hiệu do thư mục bạn đã chọn không có tồn tại</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Đồng bộ cho &quot;%1&quot; vừa bị hủy vì thư mục chứa nó trên máy này bị mất</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã bị vô hiệu vì thư mục chứa nó trong máy này không có tồn tại</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2740,12 +2740,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Đồng bộ cho &quot;%1&quot; vừa bị hủy bởi vì thư mục gốc trong máy đã thay đổi hoặc bị xóa</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã bị vô hiệu bởi vì thư mục gốc trong máy đã thay đổi hoặc bị xóa</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Phiên đồng bộ cho &quot;%1&quot; đã bị ngưng. Vì thư mục (hay một phần của thư mục) có giới hạn quyền truy cập</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã bị vô hiệu. Thư mục đã chọn (hay một phần của thư mục) có giới hạn quyền khi truy cập</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2755,7 +2755,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Đồng bộ cho ”%1″ đã bị hủy vì việc đồng bộ các thư mục được chia sẻ trên VirtualBox không được hỗ trợ do mâu thuẫn từ file system.</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã bị vô hiệu vì thao tác đồng bộ các thư mục được chia sẻ trên VirtualBox không được hỗ trợ do mâu thuẫn từ file system.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -3117,7 +3117,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished">It seems the payment for your Business account has failed. Your account has expired and has been granted with read-only access permissions until you proceed with the payment required.</translation>
+        <translation type="unfinished">Có vẻ như giao dịch thanh toán cho tài khoản Doanh Nghiệp của quý khách bị thất bại. Tài khoản của quý khách đã bị hết hạn và quyền truy cập vài dữ liệu sẽ bị giới hạn thành chỉ được xem cho đến khi quý khách thực hiện việc trả phí.</translation>
     </message>
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
@@ -3217,17 +3217,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled</translation>
+        <translation type="unfinished">Một hoặc vài phiên đồng bộ đã bị vô hiệu</translation>
     </message>
     <message>
         <source>Your syncs have been enabled</source>
         <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
-        <translation type="unfinished">Your syncs have been enabled</translation>
+        <translation type="unfinished">Các phiên đồng bộ đã được hiệu lực</translation>
     </message>
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
-        <translation type="unfinished">Error adding sync</translation>
+        <translation type="unfinished">Lỗi khi thêm phiên đồng bộ</translation>
     </message>
     <message>
         <source>This sync can&apos;t be added: %1. Reason: %2</source>
@@ -3237,12 +3237,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
         <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been temporarily disabled</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã tạm thời bị vô hiệu</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
         <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled. Reason: %2</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã bị vô hiệu. Lý do: %2</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been re-enabled. State = %2. Error = %3</source>
@@ -3252,7 +3252,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been enabled</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” đã được hiệu lực</translation>
     </message>
 </context>
 <context>
@@ -3489,92 +3489,92 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The remote sync folder is not valid</translation>
+        <translation type="unfinished">Thư mục cho việc đồng bộ từ xa không hợp lệ</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
         <translatorcomment>Label to show that local path is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The local path is not valid</translation>
+        <translation type="unfinished">Đường dẫn thư mục nội bộ không hợp lệ</translation>
     </message>
     <message>
         <source>Initial scan failed</source>
         <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The initial scan failed</translation>
+        <translation type="unfinished">Quá trình quyét khởi động thất bại</translation>
     </message>
     <message>
         <source>Local path temporarily unavailable</source>
         <translatorcomment>Label to show that local path is temporarely unavailable for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The local path is temporarily unavailable</translation>
+        <translation type="unfinished">Đường dẫn thư mục nội bộ tạm thời không truy cập được</translation>
     </message>
     <message>
         <source>Local path not available</source>
         <translatorcomment>Label to show that local path is unavailable for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The local path is unavailable</translation>
+        <translation type="unfinished">Đường dẫn thư mục nội bộ không truy cập được</translation>
     </message>
     <message>
         <source>Remote node not found</source>
         <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The remote sync folder has not been found</translation>
+        <translation type="unfinished">Thư mục cho việc đồng bộ từ xa không được tìm thấy</translation>
     </message>
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Storage quota exceeded</translation>
+        <translation type="unfinished">Vượt mức giới hạn lưu trữ</translation>
     </message>
     <message>
         <source>Business account expired</source>
         <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Your business account has expired</translation>
+        <translation type="unfinished">Tài khoản doanh nghiệp bị hết hạn</translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The sync folder owner’s account has exceeded their storage quota.</translation>
+        <translation type="unfinished">Thư mục đồng bộ từ tài khoản của chủ sở hữu bị vượt quá mức lưu trữ.</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
         <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The remote sync folder path has changed</translation>
+        <translation type="unfinished">Đường dẫn thư mục cho việc đồng bộ từ xa đã bị thay đổi</translation>
     </message>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation type="unfinished">The remote sync folder has been moved to Rubbish Bin</translation>
+        <translation type="unfinished">Thư mục cho việc đồng bộ từ xa đã bị chuyển vào Thùng Rác</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation type="unfinished">You don’t have full access to the remote sync folder</translation>
+        <translation type="unfinished">Bạn không có cấp toàn quyền để đi vào thư mục đồng bộ từ xa</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
         <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation type="unfinished">A local file system change has been detected</translation>
+        <translation type="unfinished">Phát hiện thay đổi trong file system của máy nội bộ</translation>
     </message>
     <message>
         <source>Put nodes error</source>
         <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
-        <translation type="unfinished">Error creating new items in MEGA</translation>
+        <translation type="unfinished">Lỗi khi tạo thêm mục mới trong MEGA</translation>
     </message>
     <message>
         <source>Active sync below path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
-        <translation type="unfinished">There is already an active sync within your remote folder</translation>
+        <translation type="unfinished">Hiện đã có một phiên đồng bộ đã được bật cho thư mục từ xa này rồi</translation>
     </message>
     <message>
         <source>Active sync above path</source>
         <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
-        <translation type="unfinished">The remote folder is already part of an existing active sync</translation>
+        <translation type="unfinished">Thư mục từ xa này đã là thành phần trong một phiên đồng bộ có sẵn rồi</translation>
     </message>
     <message>
         <source>Remote node has been deleted</source>
         <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
-        <translation type="unfinished">The remote sync folder has been deleted</translation>
+        <translation type="unfinished">Thư mục cho việc đồng bộ từ xa đã bị xóa</translation>
     </message>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation type="unfinished">The remote sync folder is in your Rubbish Bin</translation>
+        <translation type="unfinished">Thư mục cho việc đồng bộ từ xa nằm trong Thùng Rác</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3584,7 +3584,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Local path collides with an existing sync</source>
         <translatorcomment>SDK error label shown when local path collides due to an existing sync while setting a new one.</translatorcomment>
-        <translation type="unfinished">The local path is already synced</translation>
+        <translation type="unfinished">Đường dẫn nội bộ đã được đồng bộ rồi</translation>
     </message>
     <message>
         <source>Local filesystem is FAT</source>
@@ -3599,7 +3599,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is blocked</source>
         <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
-        <translation type="unfinished">Your account has been locked</translation>
+        <translation type="unfinished">Tài khoản bị khóa</translation>
     </message>
     <message>
         <source>Unknown temporary error</source>
@@ -3609,12 +3609,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Too many changes in account, local state invalid</source>
         <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
-        <translation type="unfinished">Invalid sync status due to too many changes in your account</translation>
+        <translation type="unfinished">Tình trạng đồng bộ không hợp lệ do có quá nhiều thay đổi trong tài khoản</translation>
     </message>
     <message>
         <source>Undefined error</source>
         <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Undefined error</translation>
+        <translation type="unfinished">Lỗi không xác định được</translation>
     </message>
 </context>
 <context>
@@ -3752,7 +3752,7 @@ Are you sure?</source>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <translation type="unfinished">Bạn đang cố đồng bộ hóa một thư mục nội bộ được định dạng với filesystem FAT. Hệ thống tệp này có thiếu sót trong việc quản lý và đánh dấu thời gian với các tệp lớn, có thể gây ra sự cố khi đồng bộ hóa (ví dụ: việc thay đồi giờ theo mùa ở một số quốc gia), vì vậy chỉ nên đồng bộ hóa các thư mục được định dạng với hệ thống tệp đáng tin cậy hơn như NTFS (để biết thêm [A]clíck vào đây[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
@@ -3837,7 +3837,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">Bạn cần có quyền Xem &amp; Sửa hoặc Toàn Quyền để có thể đăng tải nội dung vào thư mục này.</translation>
+        <translation type="unfinished">Bạn cần có quyền Xem và Sửa hoặc Toàn Quyền để có thể đăng tải nội dung vào thư mục này.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -4173,7 +4173,7 @@ Xin chắc rằng tên thư mục không có chứa các ký tự như ‘\’ �
     <message>
         <source>SCALABLE</source>
         <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
-        <translation type="unfinished">SCALABLE</translation>
+        <translation type="unfinished">MỞ RỘNG ĐƯỢC</translation>
     </message>
 </context>
 <context>
@@ -4339,7 +4339,7 @@ Xin chắc rằng tên thư mục không có chứa các ký tự như ‘\’ �
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="unfinished">- Sửa lỗi giải mã cho các phiên tải xuống trong quá trình xác minh toàn vẹn.</translation>
     </message>
 </context>
 <context>
@@ -5541,22 +5541,22 @@ when the application starts again</source>
     <message>
         <source>Saving syncs...</source>
         <translatorcomment>Label shown when a sync operation is being saved (enable, disable, create a new one, etc)</translatorcomment>
-        <translation type="unfinished">Saving syncs…</translation>
+        <translation type="unfinished">Đang lưu lại các phiên đồng bộ…</translation>
     </message>
     <message>
         <source>Unexpected error disabling sync %1</source>
         <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1</translatorcomment>
-        <translation type="unfinished">Unexpected error disabling sync %1</translation>
+        <translation type="unfinished">Lỗi phát sinh khi vô hiệu phiên đồng bộ %1</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
         <translatorcomment>Error message shown when an error occurs while trying to enable a sync.</translatorcomment>
-        <translation type="unfinished">Error enabling sync</translation>
+        <translation type="unfinished">Lỗi khi hiệu lực phiên đồng bộ</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
         <translatorcomment>Error message shown when an error occurs trying to enabling a sync. %1 name of sync, %2 reason of error.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” can’t be enabled. Reason: %2</translation>
+        <translation type="unfinished">Phiên đồng bộ cho “%1” không thể hiệu lực lại được. Lý do: %2</translation>
     </message>
     <message>
         <source>Saving settings</source>
@@ -5566,7 +5566,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Một số phiên đồng bộ đã bị vô hiệu. Để biết thêm thông tin, rê con trỏ chuột vào biểu tượng chú ý nằm bên cạnh từng phiên đồng bộ bị vô hiệu.</translation>
     </message>
 </context>
 <context>
@@ -5896,7 +5896,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Đang tạo thư mục...</translation>
+        <translation type="unfinished">Đang tạo thư mục…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -6125,7 +6125,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">Giới hạn kích thước không được nhỏ hơn 0</translation>
+        <translation type="unfinished">Giới hạn kích thước không được nhỏ hơn số không</translation>
     </message>
     <message>
         <source>Bytes</source>

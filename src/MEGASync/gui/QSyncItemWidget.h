@@ -29,6 +29,11 @@ public:
     void setError(int error);
 
     ~QSyncItemWidget();
+private:
+    void elidePathLabel();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
     bool getIsCacheAvailable() const;
     void setIsCacheAvailable(bool value);
@@ -52,6 +57,7 @@ private:
     bool mIsCacheAvailable;
     int mItemType;
     QString mFullPath;
+    QString mSyncName;
     int mError;
 
     void configureSyncTypeUI(int type) const;

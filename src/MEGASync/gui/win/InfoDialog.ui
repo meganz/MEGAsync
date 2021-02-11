@@ -2624,7 +2624,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>Open Preferences</string>
+                                <string>Open Settings</string>
                                </property>
                               </widget>
                              </item>

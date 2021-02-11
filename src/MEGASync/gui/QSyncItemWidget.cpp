@@ -21,15 +21,19 @@ QSyncItemWidget::QSyncItemWidget(int itemType, QWidget *parent) :
     mIsCacheAvailable = false;
     mError = 0;
 
-    installEventFilter(this);
+    QSizePolicy spRetain = ui->bReveal->sizePolicy();
+    spRetain.setRetainSizeWhenHidden(true);
+    ui->bReveal->setSizePolicy(spRetain);
 
+    installEventFilter(this);
     configureSyncTypeUI(itemType);
 }
 
 void QSyncItemWidget::setPathAndName(const QString &path, const QString &syncName)
 {
     mFullPath = path;
-    ui->lSyncName->setText(syncName);
+    mSyncName = syncName;
+    elidePathLabel();
 }
 
 void QSyncItemWidget::setPathAndGuessName(const QString &path)
@@ -42,7 +46,9 @@ void QSyncItemWidget::setPathAndGuessName(const QString &path)
         syncName = QDir::toNativeSeparators(mFullPath);
     }
     syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
-    ui->lSyncName->setText(syncName);
+
+    mSyncName = syncName;
+    elidePathLabel();
 }
 
 void QSyncItemWidget::setToolTip(const QString &tooltip)
@@ -150,6 +156,8 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
 
 void QSyncItemWidget::on_bReveal_clicked()
 {
+    //TODO: Path is not longer presetn at lSyncName, so we need to figure out how to get that in order to open it
+    // both local or remote.
     switch (mItemType)
     {
         case LOCAL_FOLDER:
@@ -234,6 +242,8 @@ void QSyncItemWidget::setError(int error)
     {
         ui->bSyncState->setToolTip(QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(error)));
     }
+
+    elidePathLabel();
 }
 
 QString QSyncItemWidget::fullPath()
@@ -241,3 +251,14 @@ QString QSyncItemWidget::fullPath()
     return mFullPath;
 }
 
+void QSyncItemWidget::elidePathLabel()
+{
+    QFontMetrics metrics(ui->lSyncName->fontMetrics());
+    ui->lSyncName->setText(metrics.elidedText(mSyncName, Qt::ElideMiddle, ui->lSyncName->width()));
+}
+
+void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
+{
+    elidePathLabel();
+    QWidget::resizeEvent(event);
+}
