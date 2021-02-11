@@ -4,6 +4,7 @@
 #include "HighDpiResize.h"
 #include "Preferences.h"
 #include "MegaApplication.h"
+
 #include <QMessageBox>
 
 using namespace mega;
@@ -11,24 +12,22 @@ using namespace mega;
 ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ActiveTransfersWidget),
-    previousTotalUploads{0}, previousTotalDownloads{0}
+    previousTotalUploads{0}, previousTotalDownloads{0},
+    mWhichGraphsStyleSheet{1},
+    mThreadPool{ThreadPoolSingleton::getInstance()},
+    animationDown{nullptr}, animationUp{nullptr}
 {
     ui->setupUi(this);
 
-    // Choose the right icon for initial load (hdpi/normal displays)
-    qreal ratio = 1.0;
-#if QT_VERSION >= 0x050000
-    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
-#endif
+    // Choose the right icon for initial load (hdpi/normal displays
+    qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+
     ui->lDownAnimation->setPixmap(QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
                                                    : QString::fromUtf8(":/images/cloud_item_ico@2x.png")));
     ui->lUpAnimation->setPixmap(QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
                                                    : QString::fromUtf8(":/images/cloud_item_ico@2x.png")));
 
     activeDownload.clear();
-    animationDown = animationUp = NULL;
-
-    mThreadPool = ThreadPoolSingleton::getInstance();
 
     ui->bDownPaused->setVisible(false);
     ui->bUpPaused->setVisible(false);
@@ -37,7 +36,6 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
     ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
                                                            "border: none; "));
-    mWhichGraphsStyleSheet = 1;
 }
 
 void ActiveTransfersWidget::init(MegaApi *megaApi, MegaTransfer *activeUpload, MegaTransfer *activeDownload)

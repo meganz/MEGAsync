@@ -53,18 +53,12 @@ signals:
 private:
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
-    QMenu* mAddMenu;
-    MenuItemAction* mSettingsAction;
-    MenuItemAction* mImportLinksAction;
-    MenuItemAction* mUploadAction;
-    MenuItemAction* mDownloadAction;
     Preferences* mPreferences;
     QPoint mDragPosition;
     long long mNotificationNumber;
     QTimer* mRefreshTransferTime;
     ThreadPool* mThreadPool;
 
-    void createAddMenu();
     void onTransfersActive(bool exists);  
 
 public slots:
@@ -75,7 +69,6 @@ private slots:
     void on_tDownloads_clicked();
     void on_tUploads_clicked();
     void on_tAllTransfers_clicked();
-    void on_bAdd_clicked();
     void on_bClose_clicked();
     void on_bPause_clicked();
     void on_bClearAll_clicked();

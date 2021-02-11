@@ -13,13 +13,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::TransferManager),
     mPreferences(Preferences::instance()),
-    mRefreshTransferTime(new QTimer(this)),
-    mAddMenu(nullptr),
-    mImportLinksAction(nullptr),
-    mUploadAction(nullptr),
-    mDownloadAction(nullptr),
-    mSettingsAction(nullptr),
     mMegaApi(megaApi),
+    mRefreshTransferTime(new QTimer(this)),
     mThreadPool(ThreadPoolSingleton::getInstance())
 {
     mUi->setupUi(this);
@@ -76,14 +71,14 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     });// end of thread pool function
 
-//    if (((MegaApplication *)qApp)->getFinishedTransfers().size() > 0)
-//    {
-//        mUi->wCompletedTab->setVisible(true);
-//    }
-//    else
-//    {
-//        mUi->wCompletedTab->setVisible(false);
-//    }
+    if (((MegaApplication *)qApp)->getFinishedTransfers().size() > 0)
+    {
+        mUi->fCompleted->setVisible(true);
+    }
+    else
+    {
+        mUi->fCompleted->setVisible(false);
+    }
 
     mUi->wCompleted->setupFinishedTransfers(((MegaApplication *)qApp)->getFinishedTransfers());
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
@@ -91,11 +86,16 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->wCompleted->getModel(), SIGNAL(noTransfers()), this, SLOT(updateState()));
     connect(mUi->wCompleted->getModel(), SIGNAL(onTransferAdded()), this, SLOT(updateState()));
 
-    updatePauseState();
-    on_tAllTransfers_clicked();
-    createAddMenu();
+
+    QObject::connect(mUi->bImportLinks, SIGNAL(clicked()), qApp, SLOT(importLinks()));
+    QObject::connect(mUi->tCogWheel, SIGNAL(clicked()), qApp, SLOT(openSettings()));
+    QObject::connect(mUi->bDownload, SIGNAL(clicked()), qApp, SLOT(downloadActionClicked()));
+    QObject::connect(mUi->bUpload, SIGNAL(clicked()), qApp, SLOT(uploadActionClicked()));
+
 
     Platform::enableDialogBlur(this);
+
+    on_tAllTransfers_clicked();
 }
 
 void TransferManager::setActiveTab(int t)
@@ -160,7 +160,7 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     }
 
     mUi->wCompleted->getModel()->onTransferFinish(api, transfer, e);
-//    mUi->wCompletedTab->setVisible(true);
+    mUi->fCompleted->setVisible(true);
 
     if (mNotificationNumber >= transfer->getNotificationNumber())
     {
@@ -244,76 +244,6 @@ void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     }
 }
 
-void TransferManager::createAddMenu()
-{
-    if (mAddMenu)
-    {
-        QList<QAction *> actions = mAddMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            mAddMenu->removeAction(actions[i]);
-        }
-#ifdef _WIN32
-        mAddMenu->deleteLater();
-#endif
-    }
-#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
-    else
-#endif
-    {
-        mAddMenu = new QMenu(this);
-#ifdef __APPLE__
-        addMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        mAddMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
-#endif
-    }
-
-    if (mImportLinksAction)
-    {
-        mImportLinksAction->deleteLater();
-        mImportLinksAction = nullptr;
-    }
-
-    mImportLinksAction = new MenuItemAction(tr("Open links"),
-                                            QIcon(QString::fromAscii("://images/ico_Import_links.png")));
-    connect(mImportLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()), Qt::QueuedConnection);
-
-    if (mUploadAction)
-    {
-        mUploadAction->deleteLater();
-        mUploadAction = nullptr;
-    }
-
-    mUploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/ico_upload.png")));
-    connect(mUploadAction, SIGNAL(triggered()), qApp, SLOT(uploadActionClicked()), Qt::QueuedConnection);
-
-    if (mDownloadAction)
-    {
-        mDownloadAction->deleteLater();
-        mDownloadAction = nullptr;
-    }
-
-    mDownloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/ico_download.png")));
-    connect(mDownloadAction, SIGNAL(triggered()), qApp, SLOT(downloadActionClicked()), Qt::QueuedConnection);
-
-    if (mSettingsAction)
-    {
-        mSettingsAction->deleteLater();
-        mSettingsAction = nullptr;
-    }
-
-    mSettingsAction = new MenuItemAction(QCoreApplication::translate("Platform", Platform::settingsString),
-                                         QIcon(QString::fromUtf8("://images/ico_preferences.png")));
-    connect(mSettingsAction, SIGNAL(triggered()), qApp, SLOT(openSettings()), Qt::QueuedConnection);
-
-    mAddMenu->addAction(mImportLinksAction);
-    mAddMenu->addAction(mUploadAction);
-    mAddMenu->addAction(mDownloadAction);
-    mAddMenu->addSeparator();
-    mAddMenu->addAction(mSettingsAction);
-}
-
 void TransferManager::on_tCompleted_clicked()
 {
     emit userActivity();
@@ -326,21 +256,21 @@ void TransferManager::on_tCompleted_clicked()
     emit viewedCompletedTransfers();
     emit completedTransfersTabActive(true);
 
-//    mUi->lCompleted->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
-//    mUi->lAll->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-//    mUi->lUploads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-//    mUi->lDownloads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+    mUi->fDownloads->setProperty("itsOn", false);
+    mUi->fUploads->setProperty("itsOn", false);
+    mUi->fAllTransfers->setProperty("itsOn", false);
+    mUi->fCompleted->setProperty("itsOn", true);
 
-//    mUi->tAllTransfers->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tCompleted->setStyleSheet(QString::fromUtf8("color: #333333; padding-right: 19px;"));
-//    mUi->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     mUi->bPause->setVisible(false);
     mUi->wTransfers->setCurrentWidget(mUi->wCompleted);
     updateState();
     updatePauseState();
     mUi->wCompleted->refreshTransferItems();
-//    mUi->wCompletedTab->setVisible(true);
+    mUi->fCompleted->setVisible(true);
+
+    mUi->lCurrentContent->setText(tr("Finished"));
+
+    setStyleSheet(styleSheet());
 }
 
 void TransferManager::on_tDownloads_clicked()
@@ -359,25 +289,16 @@ void TransferManager::on_tDownloads_clicked()
     mUi->fUploads->setProperty("itsOn", false);
     mUi->fAllTransfers->setProperty("itsOn", false);
     mUi->fCompleted->setProperty("itsOn", false);
-    mUi->fDownloads->style()->unpolish(mUi->fDownloads);
-    mUi->fDownloads->style()->polish(mUi->fDownloads);
-    mUi->wTransferring->style()->unpolish(mUi->wTransferring);
-    mUi->wTransferring->style()->polish(mUi->wTransferring);
 
-//    mUi->lDownloads->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
-//    mUi->lAll->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-//    mUi->lUploads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-//    mUi->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-
-//    mUi->tAllTransfers->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999; padding-right: 5px;"));
-//    mUi->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tDownloads->setStyleSheet(QString::fromUtf8("color: #333333;"));
     mUi->bPause->setVisible(true);
+
+    mUi->lCurrentContent->setText(tr("Downloads"));
 
     mUi->wTransfers->setCurrentWidget(mUi->wDownloads);
     updateState();
     updatePauseState();
+
+    setStyleSheet(styleSheet());
 }
 
 void TransferManager::on_tUploads_clicked()
@@ -392,20 +313,20 @@ void TransferManager::on_tUploads_clicked()
     // Enable tracking of completed transfers
     emit completedTransfersTabActive(false);
 
-//    mUi->lUploads->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
-//    mUi->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent; padding-right: 5px;"));
-//    mUi->lAll->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-//    mUi->lDownloads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-
-//    mUi->tAllTransfers->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tUploads->setStyleSheet(QString::fromUtf8("color: #333333;"));
-//    mUi->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
+    mUi->fDownloads->setProperty("itsOn", false);
+    mUi->fUploads->setProperty("itsOn", true);
+    mUi->fAllTransfers->setProperty("itsOn", false);
+    mUi->fCompleted->setProperty("itsOn", false);
     mUi->bPause->setVisible(true);
 
     mUi->wTransfers->setCurrentWidget(mUi->wUploads);
+
+    mUi->lCurrentContent->setText(tr("Uploads"));
+
     updateState();
     updatePauseState();
+
+    setStyleSheet(styleSheet());
 }
 
 void TransferManager::on_tAllTransfers_clicked()
@@ -420,58 +341,21 @@ void TransferManager::on_tAllTransfers_clicked()
     // Enable tracking of completed transfers
     emit completedTransfersTabActive(false);
 
-//    mUi->lAll->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
-//    mUi->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent; padding-right: 5px;"));
-//    mUi->lUploads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-//    mUi->lDownloads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
-
-//    mUi->tAllTransfers->setStyleSheet(QString::fromUtf8("color: #333333;"));
-//    mUi->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
-//    mUi->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
+    mUi->fDownloads->setProperty("itsOn", false);
+    mUi->fUploads->setProperty("itsOn", false);
+    mUi->fAllTransfers->setProperty("itsOn", true);
+    mUi->fCompleted->setProperty("itsOn", false);
     mUi->bPause->setVisible(true);
 
     mUi->wTransfers->setCurrentWidget(mUi->wActiveTransfers);
+
+    mUi->lCurrentContent->setText(tr("All Transfers"));
+
     updateState();
     updatePauseState();
-}
-
-void TransferManager::on_bAdd_clicked()
-{
-    emit userActivity();
-
-#ifdef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
-    createAddMenu();
-#endif
-
-    auto menuWidthInitialPopup = mAddMenu->sizeHint().width();
-    auto displayedMenu = mAddMenu;
-    QPoint point = mUi->bAdd->mapToGlobal(QPoint(mUi->bAdd->width() , mUi->bAdd->height() + 4));
-    QPoint p = !point.isNull() ? point - QPoint(mAddMenu->sizeHint().width(), 0) : QCursor::pos();
 
 
-#ifdef __APPLE__
-    addMenu->exec(p);
-#else
-    mAddMenu->popup(p);
-
-    // Menu width might be incorrect the first time it's shown.
-    // This works around that and repositions the menu at the expected position afterwards.
-    if (!point.isNull())
-    {
-        QPoint pointValue = point;
-        QTimer::singleShot(1, displayedMenu, [displayedMenu, pointValue, menuWidthInitialPopup] () {
-            displayedMenu->update();
-            displayedMenu->ensurePolished();
-            if (menuWidthInitialPopup != displayedMenu->sizeHint().width())
-            {
-                QPoint p = pointValue - QPoint(displayedMenu->sizeHint().width(), 0);
-                displayedMenu->update();
-                displayedMenu->popup(p);
-            }
-        });
-    }
-#endif
+    setStyleSheet(styleSheet());
 }
 
 void TransferManager::on_bClose_clicked()
@@ -506,16 +390,7 @@ void TransferManager::updatePauseState()
         return;
     }
 
-    if (isPaused)
-    {
-        mUi->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
-        mUi->bPause->setText(tr("Resume"));
-    }
-    else
-    {
-        mUi->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
-        mUi->bPause->setText(tr("Pause"));
-    }
+    setProperty("isPaused", isPaused);
 }
 
 void TransferManager::updateState()
@@ -563,6 +438,8 @@ void TransferManager::on_bPause_clicked()
     {
         mMegaApi->pauseTransfers(!mPreferences->getUploadsPaused(), MegaTransfer::TYPE_UPLOAD);
     }
+
+    setStyleSheet(styleSheet());
 }
 
 void TransferManager::on_bClearAll_clicked()
@@ -642,7 +519,6 @@ void TransferManager::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
-        createAddMenu();
         QWidget *w = mUi->wTransfers->currentWidget();
         if (w == mUi->wActiveTransfers)
         {

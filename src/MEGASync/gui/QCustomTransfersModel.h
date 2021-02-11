@@ -14,9 +14,9 @@ class QCustomTransfersModel : public QTransfersModel
 public:
 
     enum MODEL_STATE{
-      IDLE = 0x01,
-      UPLOAD = 0x02,
-      DOWNLOAD = 0x04
+      IDLE     = 1,
+      UPLOAD   = 2,
+      DOWNLOAD = 4,
     };
 
     explicit QCustomTransfersModel(ModelType type, QObject *parent = 0);
