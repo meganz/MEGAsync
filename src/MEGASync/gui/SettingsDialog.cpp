@@ -19,8 +19,9 @@
 #include "gui/AddExclusionDialog.h"
 #include "gui/BugReportDialog.h"
 #include "gui/QSyncItemWidget.h"
-#include <assert.h>
 #include "mega/types.h"
+
+#include <assert.h>
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -34,6 +35,22 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 
 using namespace mega;
 using namespace std;
+
+#ifdef __APPLE__
+//Const values used for macOS Settings dialog resize animation
+constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
+constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
+constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
+constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
+constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT{464};
+constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS{444};
+constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
+constexpr auto SETTING_ANIMATION_PROXY_TAB_HEIGHT{359};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
+constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE{519};
+#endif
 
 long long calculateCacheSize()
 {
@@ -235,7 +252,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bOk->hide();
     ui->bCancel->hide();
 #else
-
     ui->bAccount->setChecked(true);
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
@@ -288,7 +304,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         sp_retain.setRetainSizeWhenHidden(true);
         ui->bApply->setSizePolicy(sp_retain);
         ui->bApply->hide();
-
     }
 #endif
 
@@ -1980,6 +1995,7 @@ void SettingsDialog::loadSizeLimits()
     daysLimit = preferences->cleanerDaysLimitValue();
     ui->lLocalCleanerState->setText(getFormatLimitDays());
 }
+
 #ifndef WIN32
 void SettingsDialog::on_bPermissions_clicked()
 {
@@ -2800,6 +2816,7 @@ void SettingsDialog::on_bFullCheck_clicked()
     }
 }
 
+#ifdef __APPLE__
 void SettingsDialog::onAnimationFinished()
 {
     if (ui->wStack->currentWidget() == ui->pAccount)
@@ -2827,6 +2844,7 @@ void SettingsDialog::onAnimationFinished()
         ui->pAdvanced->show();
     }
 }
+#endif
 
 void SettingsDialog::setAvatar()
 {

@@ -26,21 +26,6 @@
 #include "megaapi.h"
 #include "HighDpiResize.h"
 
-//Const values
-constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
-constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
-constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT{464};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS{444};
-constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
-constexpr auto SETTING_ANIMATION_PROXY_TAB_HEIGHT{359};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE{519};
-
-
 namespace Ui {
 class SettingsDialog;
 }
@@ -49,14 +34,14 @@ class MegaApplication;
 class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
     Q_OBJECT
-    
+
 public:
     enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
-
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
     ~SettingsDialog();
+
     void setProxyOnly(bool proxyOnly);
     void setOverQuotaMode(bool mode);
     void loadSettings();
@@ -65,6 +50,16 @@ public:
     void openSettingsTab(int tab);
     void storageChanged();
     void addSyncFolder(mega::MegaHandle megaFolderHandle);
+    void loadSyncSettings();
+    void updateUploadFolder();
+    void updateDownloadFolder();
+
+    void updateStorageElements() override;
+    void updateBandwidthElements() override;
+    void updateAccountElements() override;
+
+signals:
+    void userActivity();
 
 public slots:
     void stateChanged();
@@ -80,36 +75,24 @@ public slots:
     void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
 
 private slots:
-
     void onSavingSettingsProgress(double progress);
     void onSavingSettingsCompleted();
 
     void on_bAccount_clicked();
-
     void on_bSyncs_clicked();
-
     void on_bBandwidth_clicked();
-
     void on_bSecurity_clicked();
-
     void on_bAdvanced_clicked();
-
     void on_bProxies_clicked();
 
     void on_bCancel_clicked();
-
     void on_bOk_clicked();
-
     void on_bHelp_clicked();
-
 #ifndef __APPLE__
     void on_bHelpIco_clicked();
 #endif
-
     void on_rProxyManual_clicked();
-
     void on_rProxyAuto_clicked();
-
     void on_rNoProxy_clicked();
 
     void on_bUpgrade_clicked();
@@ -153,18 +136,25 @@ private slots:
     void on_bChangePassword_clicked();
     void on_bSendBug_clicked();
 
-    void onAnimationFinished();
     void setAvatar();
 
-signals:
-    void userActivity();
+#ifdef __APPLE__
+    void onAnimationFinished();
+#endif
 
 protected:
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent * event) override;
     QString getFormatString();
     QString getFormatLimitDays();
 
 private:
+    void loadSizeLimits();
+    int saveSettings();
+    void onCacheSizeAvailable();
+    void onClearCache();
+    void savingSyncs(bool completed, QObject *item);
+    void syncsStateInformation(int state);
+
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
@@ -206,14 +196,13 @@ private:
     ThreadPool* mThreadPool;
     bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
     bool isSavingSyncsOnGoing;
-
+    int debugCounter; // Easter Egg
 
 #ifndef WIN32
     int folderPermissions;
     int filePermissions;
     bool permissionsChanged;
 #endif
-    int debugCounter;
 
 #ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;
@@ -231,20 +220,6 @@ private:
     void animateSettingPage(int endValue, int duration = 150);
 #endif
 
-    void loadSizeLimits();
-    int saveSettings();
-    void onCacheSizeAvailable();
-    void onClearCache();
-    void savingSyncs(bool completed, QObject *item);
-    void syncsStateInformation(int state);
-
-public:
-    void updateStorageElements();
-    void updateBandwidthElements();
-    void updateAccountElements();
-    void loadSyncSettings();
-    void updateUploadFolder();
-    void updateDownloadFolder();
 };
 
 #endif // SETTINGSDIALOG_H
