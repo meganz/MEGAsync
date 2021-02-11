@@ -162,15 +162,13 @@ void QSyncItemWidget::on_bReveal_clicked()
     {
         case LOCAL_FOLDER:
         {
-            QString localFolderPath {ui->lSyncName->text()};
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localFolderPath));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(mFullPath));
         }
         break;
         case REMOTE_FOLDER:
         {
-            QString megaFolderPath {ui->lSyncName->text()};
             const auto megaApp{static_cast<MegaApplication*>(qApp)};
-            mega::MegaNode *node = megaApp->getMegaApi()->getNodeByPath(megaFolderPath.toUtf8().constData());
+            mega::MegaNode *node = megaApp->getMegaApi()->getNodeByPath(mFullPath.toUtf8().constData());
             if (node)
             {
                 QtConcurrent::run(QDesktopServices::openUrl,
