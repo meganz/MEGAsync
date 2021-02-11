@@ -602,7 +602,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation type="unfinished">โปรดอธิบายปัญหาที่คุณพบอย่างชัดเจน ยิ่งคุณให้รายละเอียดมากเท่าไหร่เราก็จะยิ่งแก้ไขได้ง่ายขึ้นเท่านั้น การส่งรายงานปัญหาของคุณจะถูกตรวจสอบโดยทีมพัฒนาของเรา</translation>
+        <translation type="unfinished">กรุณาอธิบายปัญหาที่คุณพบโดยละเอียด ยิ่งคุณให้รายละเอียดมากเท่าไหร่เราก็จะยิ่งแก้ไขได้ง่ายขึ้นเท่านั้น การส่งรายงานปัญหาของคุณจะถูกตรวจสอบโดยทีมพัฒนาของเรา</translation>
     </message>
     <message>
         <source>Title</source>
@@ -2359,7 +2359,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">ตั้งกำหนดการเคลียร์ %1</translation>
+        <translation type="unfinished">ตั้งกำหนดการล้าง %1</translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3262,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync จะยังคงทำงานต่อไปได้ แต่ถึงอย่างนั้นก็จะไม่สนับสนุนการอัปเดตเวอร์ชันที่เก่ากว่า OS X Yosemite ในเร็ว ๆ นี้</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
@@ -3725,12 +3725,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation type="unfinished">เคลียร์</translation>
+        <translation type="unfinished">ล้าง</translation>
     </message>
     <message>
         <source>Clear All</source>
         <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
-        <translation type="unfinished">ลบทั้งหมด</translation>
+        <translation type="unfinished">ล้างทั้งหมด</translation>
     </message>
     <message>
         <source>Resume Transfer</source>
@@ -5221,7 +5221,7 @@ when the application starts again.</source>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>เคลียร์</translation>
+        <translation>ล้าง</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -5463,7 +5463,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Clear local backup</source>
-        <translation type="unfinished">ล้างการสำรองข้อมูลภายในเครื่อง</translation>
+        <translation type="unfinished">ล้างข้อมูลสำรองในเครื่อง</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
@@ -5471,7 +5471,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Clear remote backup</source>
-        <translation type="unfinished">ล้างการสำรองข้อมูลระยะไกล</translation>
+        <translation type="unfinished">ล้างข้อมูลสำรองระยะไกล</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
@@ -5578,7 +5578,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">ตั้งกำหนดการเคลียร์ %1</translation>
+        <translation type="unfinished">ตั้งกำหนดการล้าง %1</translation>
     </message>
     <message>
         <source>%1 used</source>
@@ -6492,7 +6492,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear all</source>
         <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation type="unfinished">ลบทั้งหมด</translation>
+        <translation type="unfinished">ล้างทั้งหมด</translation>
     </message>
     <message>
         <source>Close</source>
