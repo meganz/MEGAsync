@@ -105,7 +105,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
     connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncDeleted(std::shared_ptr<SyncSetting>)));
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
 
     mThreadPool = ThreadPoolSingleton::getInstance();
 
@@ -544,11 +544,6 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 }
 
 void SettingsDialog::onSyncStateChanged(std::shared_ptr<SyncSetting>)
-{
-    loadSyncSettings();
-}
-
-void SettingsDialog::onSyncDeleted(std::shared_ptr<SyncSetting>)
 {
     loadSyncSettings();
 }
