@@ -141,6 +141,11 @@ private slots:
     void onAnimationFinished();
 #endif
 
+    void on_cShowNotifications_toggled(bool checked);
+    void on_cAutoUpdate_toggled(bool checked);
+    void on_cStartOnStartup_toggled(bool checked);
+    void on_cLanguage_currentIndexChanged(int index);
+
 protected:
     void changeEvent(QEvent * event) override;
     QString getFormatString();

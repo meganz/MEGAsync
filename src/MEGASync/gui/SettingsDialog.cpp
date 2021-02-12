@@ -165,11 +165,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->cProxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyStateChanged()));
     connect(ui->cProxyRequiresPassword, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
 
-    connect(ui->cStartOnStartup, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
-    connect(ui->cShowNotifications, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
-    connect(ui->cAutoUpdate, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
-    connect(ui->cLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cDisableFileVersioning, SIGNAL(clicked(bool)), this, SLOT(fileVersioningStateChanged()));
 
     connect(ui->rDownloadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
@@ -1274,51 +1270,7 @@ int SettingsDialog::saveSettings()
     modifyingSettings++;
     if (!proxyOnly)
     {
-        //General
-        preferences->setShowNotifications(ui->cShowNotifications->isChecked());
-
-        if (ui->cAutoUpdate->isEnabled())
-        {
-            bool updateAutomatically = ui->cAutoUpdate->isChecked();
-            if (updateAutomatically != preferences->updateAutomatically())
-            {
-                preferences->setUpdateAutomatically(updateAutomatically);
-                if (updateAutomatically)
-                {
-                    on_bUpdate_clicked();
-                }
-            }
-        }
-
-        bool startOnStartup = ui->cStartOnStartup->isChecked();
-        if (!Platform::startOnStartup(startOnStartup))
-        {
-            // in case of failure - make sure configuration keeps the right value
-            //LOG_debug << "Failed to " << (startOnStartup ? "enable" : "disable") << " MEGASync on startup.";
-            preferences->setStartOnStartup(!startOnStartup);
-        }
-        else
-        {
-            preferences->setStartOnStartup(startOnStartup);
-        }
-
-        //Language
-        int currentIndex = ui->cLanguage->currentIndex();
-        QString selectedLanguageCode = languageCodes[currentIndex];
-        if (preferences->language() != selectedLanguageCode)
-        {
-            preferences->setLanguage(selectedLanguageCode);
-            app->changeLanguage(selectedLanguageCode);
-            QString currentLanguageCode = app->getCurrentLanguageCode();
-            mThreadPool->push([=]()
-            {
-                megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
-                megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());
-            });
-
-        }
-
-        //Account
+        // Default Upload Folder
         MegaNode *node = megaApi->getNodeByPath(ui->eUploadFolder->text().toUtf8().constData());
         if (node)
         {
@@ -1332,6 +1284,7 @@ int SettingsDialog::saveSettings()
         }
         delete node;
 
+        // Default Download Folder
         QString defaultDownloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
         if (ui->eDownloadFolder->text().compare(QDir::toNativeSeparators(defaultDownloadPath))
                 || preferences->downloadFolder().size())
@@ -1518,6 +1471,7 @@ int SettingsDialog::saveSettings()
 
             syncsChanged = false;
         }
+
 #ifdef _WIN32
         bool iconsDisabled = ui->cDisableIcons->isChecked();
         if (preferences->leftPaneIconsDisabled() != iconsDisabled)
@@ -2923,3 +2877,54 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
     animationGroup->start();
 }
 #endif
+
+void SettingsDialog::on_cShowNotifications_toggled(bool checked)
+{
+    if (modifyingSettings) return;
+    preferences->setShowNotifications(checked);
+}
+
+void SettingsDialog::on_cAutoUpdate_toggled(bool checked)
+{
+    if (modifyingSettings) return;
+    if (ui->cAutoUpdate->isEnabled() && (checked != preferences->updateAutomatically()))
+    {
+        preferences->setUpdateAutomatically(checked);
+        if (checked)
+        {
+            on_bUpdate_clicked();
+        }
+    }
+}
+
+void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
+{
+    if (modifyingSettings) return;
+    if (!Platform::startOnStartup(checked))
+    {
+        // in case of failure - make sure configuration keeps the right value
+        //LOG_debug << "Failed to " << (checked ? "enable" : "disable") << " MEGASync on startup.";
+        preferences->setStartOnStartup(!checked);
+    }
+    else
+    {
+        preferences->setStartOnStartup(checked);
+    }
+}
+
+void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
+{
+    if (modifyingSettings) return;
+    QString selectedLanguage = languageCodes[index];
+    if (preferences->language() != selectedLanguage)
+    {
+        preferences->setLanguage(selectedLanguage);
+        app->changeLanguage(selectedLanguage);
+        QString currentLanguage = app->getCurrentLanguageCode();
+        mThreadPool->push([=]()
+        {
+            megaApi->setLanguage(currentLanguage.toUtf8().constData());
+            megaApi->setLanguagePreference(currentLanguage.toUtf8().constData());
+        });
+    }
+}
