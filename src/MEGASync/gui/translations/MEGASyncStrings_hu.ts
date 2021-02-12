@@ -2648,112 +2648,112 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">1 fájl és 1 mappa sikeresen feltöltve</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">%1 fájl és 1 mappa sikeresen feltöltve</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully uploaded</translation>
+        <translation type="unfinished">1 fájl és %1 mappa sikeresen feltöltve</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully uploaded</translation>
+        <translation type="unfinished">%1 fájl és %2 mappa sikeresen feltöltve</translation>
     </message>
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">Folder Upload</translation>
+        <translation type="unfinished">Mappa feltöltés</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully uploaded</translation>
+        <translation type="unfinished">1 mappa sikeresen feltöltve</translation>
     </message>
     <message>
         <source>%1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully uploaded</translation>
+        <translation type="unfinished">%1 mappa sikeresen feltöltve</translation>
     </message>
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation type="unfinished">File Upload</translation>
+        <translation type="unfinished">Fájl feltöltés</translation>
     </message>
     <message>
         <source>1 file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully uploaded</translation>
+        <translation type="unfinished">1 fájl feltöltése sikeresen megtörtént</translation>
     </message>
     <message>
         <source>%1 files were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully uploaded</translation>
+        <translation type="unfinished">%1 fájl feltöltése sikeresen megtörtént</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">1 fájl és 1 mappa sikeresen letöltve</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">%1 fájl és 1 mappa sikeresen letöltve</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully downloaded</translation>
+        <translation type="unfinished">1 fájl és %1 mappa sikeresen letöltve</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully downloaded</translation>
+        <translation type="unfinished">%1 fájl és %2 mappa sikeresen letöltve</translation>
     </message>
     <message>
         <source>Folder Download</source>
         <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation type="unfinished">Folder Download</translation>
+        <translation type="unfinished">Mappa letöltés</translation>
     </message>
     <message>
         <source>1 folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully downloaded</translation>
+        <translation type="unfinished">1 mappa sikeresen letöltve</translation>
     </message>
     <message>
         <source>%1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully downloaded</translation>
+        <translation type="unfinished">%1 mappa sikeresen letöltve</translation>
     </message>
     <message>
         <source>File Download</source>
         <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation type="unfinished">File Download</translation>
+        <translation type="unfinished">Fájl letöltés</translation>
     </message>
     <message>
         <source>1 file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully downloaded</translation>
+        <translation type="unfinished">1 fájl letöltése sikeresen megtörtént</translation>
     </message>
     <message>
         <source>%1 files were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully downloaded</translation>
+        <translation type="unfinished">%1 fájl letöltése sikeresen megtörtént</translation>
     </message>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Menu item to add a new synchronization</translatorcomment>
-        <translation type="unfinished">Add Sync</translation>
+        <translation type="unfinished">Új szinkronizálás</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Menu item to show current synchronizations</translatorcomment>
-        <translation type="unfinished">Syncs</translation>
+        <translation type="unfinished">Szinkronizálások</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
