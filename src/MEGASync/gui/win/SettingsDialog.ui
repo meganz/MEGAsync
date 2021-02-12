@@ -252,6 +252,9 @@ padding-bottom: 6px;
         <property name="checkable">
          <bool>true</bool>
         </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
@@ -296,6 +299,9 @@ padding-bottom: 6px;
          </size>
         </property>
         <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
          <bool>true</bool>
         </property>
         <property name="toolButtonStyle">
@@ -344,6 +350,9 @@ padding-bottom: 6px;
         <property name="checkable">
          <bool>true</bool>
         </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
@@ -385,6 +394,9 @@ padding-bottom: 6px;
          </size>
         </property>
         <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
          <bool>true</bool>
         </property>
         <property name="toolButtonStyle">
@@ -430,6 +442,9 @@ padding-bottom: 6px;
         <property name="checkable">
          <bool>true</bool>
         </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
         <property name="toolButtonStyle">
          <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
@@ -471,6 +486,9 @@ padding-bottom: 6px;
          </size>
         </property>
         <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
          <bool>true</bool>
         </property>
         <property name="toolButtonStyle">

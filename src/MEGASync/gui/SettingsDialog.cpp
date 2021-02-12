@@ -391,21 +391,18 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     this->proxyOnly = proxyOnly;
 
+#ifndef __APPLE__
+    ui->bAccount->setEnabled(!proxyOnly);
+    ui->bSecurity->setEnabled(!proxyOnly);
+    ui->bSyncs->setEnabled(!proxyOnly);
+    ui->bBandwidth->setEnabled(!proxyOnly);
+    ui->bAdvanced->setEnabled(!proxyOnly);
+    ui->bBandwidth->setEnabled(!proxyOnly);
+#endif
     if (proxyOnly)
     {
-#ifndef __APPLE__
-        ui->bAccount->setEnabled(false);
-        ui->bAccount->setChecked(false);
-        ui->bAdvanced->setEnabled(false);
-        ui->bAdvanced->setChecked(false);
-        ui->bSyncs->setEnabled(false);
-        ui->bSyncs->setChecked(false);
-        ui->bBandwidth->setEnabled(false);
-        ui->bBandwidth->setChecked(false);
-        ui->bSecurity->setEnabled(false);
-        ui->bSecurity->setChecked(false);
+        ui->bProxies->setEnabled(true);
         ui->bProxies->setChecked(true);
-#endif
         ui->wStack->setCurrentWidget(ui->pProxies);
         ui->pProxies->show();
 
@@ -413,15 +410,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         setMinimumHeight(435);
         setMaximumHeight(435);
         ui->bApply->show();
-#endif
-    }
-    else
-    {
-#ifndef __APPLE__
-        ui->bAccount->setEnabled(true);
-        ui->bAdvanced->setEnabled(true);
-        ui->bSyncs->setEnabled(true);
-        ui->bBandwidth->setEnabled(true);
 #endif
     }
 }
@@ -648,9 +636,7 @@ void SettingsDialog::on_bAccount_clicked()
 
     if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
-#ifndef __APPLE__
-        ui->bAccount->setChecked(true);
-#else
+#ifdef __APPLE__
         checkNSToolBarItem(toolBar.get(), bAccount.get());
 #endif
         return;
@@ -658,14 +644,6 @@ void SettingsDialog::on_bAccount_clicked()
 
     reloadUIpage = false;
 
-#ifndef __APPLE__
-    ui->bAccount->setChecked(true);
-    ui->bSyncs->setChecked(false);
-    ui->bBandwidth->setChecked(false);
-    ui->bAdvanced->setChecked(false);
-    ui->bProxies->setChecked(false);
-    ui->bSecurity->setChecked(false);
-#endif
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
 
@@ -700,22 +678,12 @@ void SettingsDialog::on_bSyncs_clicked()
 
     if (ui->wStack->currentWidget() == ui->pSyncs)
     {
-#ifndef __APPLE__
-        ui->bSyncs->setChecked(true);
-#else
+#ifdef __APPLE__
         checkNSToolBarItem(toolBar.get(), bSyncs.get());
 #endif
         return;
     }
 
-#ifndef __APPLE__
-    ui->bSyncs->setChecked(true);
-    ui->bAccount->setChecked(false);
-    ui->bBandwidth->setChecked(false);
-    ui->bAdvanced->setChecked(false);
-    ui->bProxies->setChecked(false);
-    ui->bSecurity->setChecked(false);
-#endif
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible(true);
     ui->bOk->setFocus();
@@ -738,22 +706,12 @@ void SettingsDialog::on_bBandwidth_clicked()
 
     if (ui->wStack->currentWidget() == ui->pBandwidth)
     {
-#ifndef __APPLE__
-        ui->bBandwidth->setChecked(true);
-#else
+#ifdef __APPLE__
        checkNSToolBarItem(toolBar.get(), bBandwidth.get());
 #endif
         return;
     }
 
-#ifndef __APPLE__
-    ui->bBandwidth->setChecked(true);
-    ui->bAccount->setChecked(false);
-    ui->bSyncs->setChecked(false);
-    ui->bAdvanced->setChecked(false);
-    ui->bProxies->setChecked(false);
-    ui->bSecurity->setChecked(false);
-#endif
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
 
@@ -789,22 +747,12 @@ void SettingsDialog::on_bSecurity_clicked()
 
     if (ui->wStack->currentWidget() == ui->pSecurity)
     {
-#ifndef __APPLE__
-        ui->bSecurity->setChecked(true);
-#else
+#ifdef __APPLE__
         checkNSToolBarItem(toolBar.get(), bSecurity.get());
 #endif
         return;
     }
 
-#ifndef __APPLE__
-    ui->bSecurity->setChecked(true);
-    ui->bAccount->setChecked(false);
-    ui->bSyncs->setChecked(false);
-    ui->bBandwidth->setChecked(false);
-    ui->bAdvanced->setChecked(false);
-    ui->bProxies->setChecked(false);
-#endif
     ui->wStack->setCurrentWidget(ui->pSecurity);
     ui->bOk->setFocus();
 
@@ -826,22 +774,12 @@ void SettingsDialog::on_bAdvanced_clicked()
 
     if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
-#ifndef __APPLE__
-        ui->bAdvanced->setChecked(true);
-#else
+#ifdef __APPLE__
         checkNSToolBarItem(toolBar.get(), bAdvanced.get());
 #endif
         return;
     }
 
-#ifndef __APPLE__
-    ui->bAdvanced->setChecked(true);
-    ui->bAccount->setChecked(false);
-    ui->bSyncs->setChecked(false);
-    ui->bBandwidth->setChecked(false);
-    ui->bProxies->setChecked(false);
-    ui->bSecurity->setChecked(false);
-#endif
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
 
@@ -872,22 +810,12 @@ void SettingsDialog::on_bProxies_clicked()
 
     if (ui->wStack->currentWidget() == ui->pProxies)
     {
-#ifndef __APPLE__
-        ui->bProxies->setChecked(true);
-#else
+#ifdef __APPLE__
         checkNSToolBarItem(toolBar.get(), bProxies.get());
 #endif
         return;
     }
 
-#ifndef __APPLE__
-    ui->bProxies->setChecked(true);
-    ui->bAccount->setChecked(false);
-    ui->bSyncs->setChecked(false);
-    ui->bBandwidth->setChecked(false);
-    ui->bAdvanced->setChecked(false);
-    ui->bSecurity->setChecked(false);
-#endif
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
 
@@ -2885,7 +2813,7 @@ void SettingsDialog::openSettingsTab(int tab)
     case ACCOUNT_TAB:
         reloadUIpage = true;
 #ifndef __APPLE__
-        on_bAccount_clicked();
+        ui->bAccount->click();
 #else
         emit bAccount.get()->activated();
 #endif
@@ -2893,7 +2821,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case SYNCS_TAB:
 #ifndef __APPLE__
-        on_bSyncs_clicked();
+        ui->bSyncs->click();
 #else
         emit bSyncs.get()->activated();
 #endif
@@ -2901,7 +2829,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case BANDWIDTH_TAB:
 #ifndef __APPLE__
-        on_bBandwidth_clicked();
+        ui->bBandwidth->click();
 #else
         emit bBandwidth.get()->activated();
 #endif
@@ -2909,7 +2837,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case SECURITY_TAB:
 #ifndef __APPLE__
-        on_bSecurity_clicked();
+        ui->bSecurity->click();
 #else
         emit bSecurity.get()->activated();
 #endif
@@ -2917,7 +2845,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case PROXY_TAB:
 #ifndef __APPLE__
-        on_bProxies_clicked();
+        ui->bProxies->click();
 #else
         emit bProxies.get()->activated();
 #endif
@@ -2925,7 +2853,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case ADVANCED_TAB:
 #ifndef __APPLE__
-        on_bAdvanced_clicked();
+        ui->bAdvanced->click();
 #else
         emit bAdvanced.get()->activated();
 #endif
