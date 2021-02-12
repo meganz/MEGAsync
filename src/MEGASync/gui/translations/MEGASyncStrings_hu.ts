@@ -2426,224 +2426,224 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
+        <translation type="unfinished">A(z) "%1" szinkronizálása letiltva, mert a helyi mappa nem létezik</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Your account has been blocked. Please contact support@mega.nz</translation>
+        <translation type="unfinished">A fiókja zárolva. Vegye fel a kapcsolatot velünk: support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation type="unfinished">Login error: %1</translation>
+        <translation type="unfinished">Bejelentkezési hiba: %1</translation>
     </message>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation type="unfinished">You have been logged out on this computer from another location</translation>
+        <translation type="unfinished">Egy másik helyen jelentkeztek ki erről a számítógépről</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation type="unfinished">You have been logged out because of this error: %1</translation>
+        <translation type="unfinished">A hiba miatt kiléptette a rendszer: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the remote folder is in the Rubbish Bin</translation>
+        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva, mert a távoli mappa a lomtárban van</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the local folder has changed</translation>
+        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva, mert a helyi mappa megváltozott</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
+        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva. A távoli mappához (vagy annak egy részéhez) nincs teljes hozzáférése</translation>
     </message>
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation type="unfinished">Over quota</translation>
+        <translation type="unfinished">Kvóta túllépés</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
+        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva, mert a megosztott VirtualBox mappák szinkronizálása az adott fájlrendszer hiányosságai miatt nem támogatott.</translation>
     </message>
     <message>
         <source>Logout</source>
         <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation type="unfinished">Logout</translation>
+        <translation type="unfinished">Kijelentkezés</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
         <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
-        <translation type="obsolete">Transfer failed:</translation>
+        <translation type="obsolete">Átviteli hiba:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
-        <translation type="unfinished">Error getting link information</translation>
+        <translation type="unfinished">Hiba a linkinformációk lekérésekor</translation>
     </message>
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">HIBAKERESÉS mód letiltva</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">HIBAKERESÉS mód engedélyezve. Naplófájl kerül mentésre az asztalon (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation type="unfinished">Error: Invalid destination folder. The download has been cancelled.</translation>
+        <translation type="unfinished">Hiba: Érvénytelen célmappa. A letöltés törölve.</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <translation type="unfinished">Az SSL kulcsunk nem ellenőrizhető. OK lehet egy közbeékelődéses támadás vagy a víruskereső szoftver blokkolhatja a kommunikációt és okozhatja ezt a problémát. Kérjük, tiltsa le, és próbálja újra.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation type="unfinished">No Internet connection</translation>
+        <translation type="unfinished">Nincs internet kapcsolat</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation type="unfinished">Fetching file list…</translation>
+        <translation type="unfinished">Fájllista beolvasása…</translation>
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">Temporary error, retrying.</translation>
+        <translation type="obsolete">Átmeneti hiba, újrapróbálkozás.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">I don’t care</translation>
+        <translation type="unfinished">Mellőzés</translation>
     </message>
     <message>
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Retry</translation>
+        <translation type="unfinished">Újra</translation>
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation type="unfinished">Transfer canceled</translation>
+        <translation type="unfinished">Az átvitel leállítva</translation>
     </message>
     <message>
         <source>You are not logged in</source>
-        <translation type="unfinished">You are not logged in</translation>
+        <translation type="unfinished">Nincs bejelentkezve</translation>
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">Are you sure you want to exit?</translation>
+        <translation type="unfinished">Biztosan kilép?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
-        <translation type="unfinished">Transfer manager</translation>
+        <translation type="unfinished">Átvitel kezelő</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">Could not find a system tray to place the MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">Nem található rendszertálca a MEGAsync ikonjának elhelyezéséhez. A MEGAsync rendszertálca ikonnal való használattal a legpraktikusabb, de anélkül is jól működik. Ha meg akarja nyitni a kezelőfelületet, próbálkozzon újra a MEGAsync megnyitásával.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
         <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
-        <translation type="unfinished">Error getting link:</translation>
+        <translation type="unfinished">Hiba a link lekérésekor:</translation>
     </message>
     <message>
         <source>File not found</source>
         <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
-        <translation type="unfinished">File not found</translation>
+        <translation type="unfinished">A fájl nem található</translation>
     </message>
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation type="unfinished">The link can’t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+        <translation type="unfinished">A link nem hozható létre, mert a fájl egy bejövő megosztott mappában vagy a Lomtárban található.</translation>
     </message>
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">Upload</translation>
+        <translation type="unfinished">Feltöltés</translation>
     </message>
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Download</translation>
+        <translation type="unfinished">Letöltés</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <translation type="unfinished">Egy FAT fájlrendszerrel formázott helyi mappa szinkronizálására készül. Ennek a fájlrendszernek hiányosságai vannak a nagy fájlok és a módosítási idők kezelésében, amelyek szinkronizálási problémákat okozhatnak (pl. Nyári időszámításkor), ezért erősen ajánlott, hogy csak megbízhatóbb fájlrendszerekkel formázott mappákat szinkronizáljon, mint pl NTFS (további információ [A]itt[/A]).</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translation type="unfinished">Please consider updating your operating system.</translation>
+        <translation type="unfinished">Fontolja meg az operációs rendszere frissítését.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+        <translation type="unfinished">A MEGAsync továbbra is működni fog, azonban a frissítések az OS X Mavericks előtti verziókat már nem támogatják.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Resume Transfers</translation>
+        <translation type="obsolete">Átvitelek folytatása</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Pause Transfers</translation>
+        <translation type="obsolete">Átvitelek szüneteltetése</translation>
     </message>
     <message>
         <source>Stream</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Stream</translation>
+        <translation type="unfinished">Adatfolyam</translation>
     </message>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">MEGA website</translation>
+        <translation type="obsolete">MEGA weboldal</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however you may not receive new updates.</translation>
+        <translation type="unfinished">A MEGAsync továbbra is működni fog, de előfordulhat, hogy nem kap új frissítéseket.</translation>
     </message>
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished">Password changed</translation>
+        <translation type="unfinished">A jelszó megváltoztatva</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">Your password has been changed.</translation>
+        <translation type="unfinished">A jelszava megváltozott.</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
         <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
-        <translation type="obsolete">Temporarily not available</translation>
+        <translation type="obsolete">Átmenetileg nem elérhető</translation>
     </message>
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation type="unfinished">Your account is almost full.</translation>
+        <translation type="unfinished">A fiókja majdnem megtelt.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+        <translation type="unfinished">Frissítsen most a PRO verzióra.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation type="unfinished">Your account is full.</translation>
+        <translation type="unfinished">A fiókja megtelt.</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
