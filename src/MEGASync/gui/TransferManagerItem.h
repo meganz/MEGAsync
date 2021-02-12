@@ -28,10 +28,10 @@ public:
 
     void finishTransfer();
     void updateTransfer();
-    void updateAnimation();
+    void updateAnimation() {};
     void updateFinishedTime();
     void mouseHoverTransfer(bool isHover, const QPoint &pos);
-    void loadDefaultTransferIcon();
+    void loadDefaultTransferIcon() {};
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
@@ -54,7 +54,6 @@ private:
     TransferRemainingTime mTransferRemainigTime;
 
 protected:
-    QMovie* mAnimation;
     QPixmap mLoadIconResource;
 };
 

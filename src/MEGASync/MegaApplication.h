@@ -242,6 +242,7 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
+    void pauseStateChanged();
 
 public slots:
     void unlink(bool keepLogs = false);

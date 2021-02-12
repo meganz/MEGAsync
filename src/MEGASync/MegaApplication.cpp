@@ -7339,10 +7339,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             this->paused = false;
         }
 
-        if (transferManager)
-        {
-            transferManager->updatePauseState();
-        }
+        emit pauseStateChanged();
 
         if (infoDialog)
         {
