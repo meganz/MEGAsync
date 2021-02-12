@@ -1002,17 +1002,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to indicate that only contact notifications will be shown.</translatorcomment>
-        <translation type="unfinished">Contacts</translation>
+        <translation type="unfinished">Partnerek</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that only Incoming Shares notifications will be shown.</translatorcomment>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="unfinished">Beérkező megosztások</translation>
     </message>
     <message>
         <source>Payment</source>
         <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">Fizetés</translation>
     </message>
 </context>
 <context>
@@ -1020,46 +1020,46 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Finder context menu option to generate a public MEGA link</translatorcomment>
-        <translation type="unfinished">Get MEGA link</translation>
+        <translation type="unfinished">MEGA link generálása</translation>
     </message>
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">View on MEGA</translation>
+        <translation type="unfinished">Megtekintés a MEGA fiókomban</translation>
     </message>
     <message>
         <source>No options available</source>
         <translatorcomment>Finder context menu label when no option is available for selected items</translatorcomment>
-        <translation type="unfinished">No options available</translation>
+        <translation type="unfinished">Nincs elérhető opció</translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation type="unfinished">Click the toolbar item for a menu.</translation>
+        <translation type="unfinished">Kattintson egy menü megjelenítéséhez az eszköztár elemre.</translation>
     </message>
     <message>
         <source>1 file</source>
         <translatorcomment>Context menu option label to indicate the user has selected a file</translatorcomment>
-        <translation type="unfinished">1 file</translation>
+        <translation type="unfinished">1 fájl</translation>
     </message>
     <message>
         <source>%i files</source>
         <translatorcomment>Context menu option label to indicate the user has selected %i number of files</translatorcomment>
-        <translation type="unfinished">%i files</translation>
+        <translation type="unfinished">%i fájl</translation>
     </message>
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">1 folder</translation>
+        <translation type="unfinished">1 mappa</translation>
     </message>
     <message>
         <source>%i folders</source>
         <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
-        <translation type="unfinished">%i folders</translation>
+        <translation type="unfinished">%i mappa</translation>
     </message>
     <message>
         <source>View previous versions</source>
-        <translation type="unfinished">View previous versions</translation>
+        <translation type="unfinished">Korábbi verziók megtekintése</translation>
     </message>
 </context>
 <context>
@@ -1067,62 +1067,62 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Local folder:</translation>
+        <translation>Helyi mappa:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>MEGA folder:</translation>
+        <translation>MEGA mappa:</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választása</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don’t have write permissions in this folder.</translation>
+        <translation type="obsolete">Nincs írási engedélye ebben a mappában.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync won’t be able to download anything here.</translation>
+        <translation>A MEGAsync nem tud semmit letölteni ide.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation>Do you want to continue?</translation>
+        <translation>Folytatja?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási engedélye ebben a helyi mappában.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Egy rendkívül nagy mappát próbál szinkronizálni. A teljes indító kötetek szinkronizálásának megakadályozása érdekében, amely nem hatékony és veszélyes, kérjük, hogy kezdjen egy kisebb mappával, és adjon hozzá több adatot, amíg a MEGAsync fut.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation type="unfinished">You can not sync a shared folder without Full Access permissions</translation>
+        <translation type="unfinished">Megosztott mappát teljes hozzáférés engedély nélkül nem szinkronizálhat</translation>
     </message>
 </context>
 <context>
@@ -1130,138 +1130,138 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="obsolete">MEGAsync is in guest mode</translation>
+        <translation type="obsolete">A MEGAsync vendég módban fut</translation>
     </message>
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Login</translation>
+        <translation type="unfinished">Bejelentkezés</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation type="obsolete">Cancel all downloads</translation>
+        <translation type="obsolete">Minden letöltés leállítása</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="obsolete">Cancel download</translation>
+        <translation type="obsolete">Letöltés leállítása</translation>
     </message>
     <message>
         <source>Create account</source>
         <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Create account</translation>
+        <translation type="unfinished">Fiók létrehozása</translation>
     </message>
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="obsolete">[A]Log in[/A] or [B]Create an account[/B] to fully experience MEGA</translation>
+        <translation type="obsolete">[A]Bejelentkezés[/A] vagy [B]Fiók létrehozása[/B] a teljes MEGA élményhez</translation>
     </message>
     <message>
         <source>Login to MEGA</source>
         <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation type="unfinished">Login to MEGA</translation>
+        <translation type="unfinished">Bejelentkezés a MEGA-ba</translation>
     </message>
     <message>
         <source>Email address</source>
         <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation type="unfinished">Email address</translation>
+        <translation type="unfinished">Email-cím</translation>
     </message>
     <message>
         <source>Password</source>
         <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation type="unfinished">Password</translation>
+        <translation type="unfinished">Jelszó</translation>
     </message>
     <message>
         <source>Forgot password?</source>
         <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation type="unfinished">Forgot password?</translation>
+        <translation type="unfinished">Elfelejtett jelszó?</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation type="unfinished">Setting up your account…</translation>
+        <translation type="unfinished">Fiók beállítása…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation type="unfinished">Logging in…</translation>
+        <translation type="unfinished">Bejelentkezés…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation type="unfinished">Fetching file list…</translation>
+        <translation type="unfinished">Fájllista beolvasása…</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation type="unfinished">Error</translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation type="unfinished">Incorrect email and/or password.</translation>
+        <translation type="unfinished">Hibás email-cím és/vagy jelszó.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Message shown after a failed login to recommend the user to verify his account.</translatorcomment>
-        <translation type="obsolete">Have you verified your account?</translation>
+        <translation type="obsolete">Aktiválta a fiókját?</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
-        <translation type="unfinished">Please check your email and click the link to confirm your account.</translation>
+        <translation type="unfinished">Kérjük, ellenőrizze e-mailjeit és kattintson a küldött linkre a fiók aktiválásához.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
-        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation type="unfinished">Túl sok bejelentkezési próbálkozás.[BR]Várjon %1-ig majd próbálja újra.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation type="unfinished">Your account has been blocked. Please contact support@mega.nz</translation>
+        <translation type="unfinished">A fiókja zárolásra került. Vegye fel velünk a kapcsolatot a support@mega.nz email-címen</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="obsolete">Unable to get the filesystem. Please try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="obsolete">Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, Vegye fel velünk a kapcsolatot a bug@mega.nz email-címen</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation type="unfinished">Please enter your email address</translation>
+        <translation type="unfinished">Adja meg az email-címét</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation type="unfinished">Please enter a valid email address</translation>
+        <translation type="unfinished">Kérjük valós e-mail címet adjon meg</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation type="unfinished">Please enter your password</translation>
+        <translation type="unfinished">Adja meg a jelszavát</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation type="unfinished">Logging out…</translation>
+        <translation type="unfinished">Kijelentkezés…</translation>
     </message>
     <message>
         <source>Locked Account</source>
         <translatorcomment>Label to indicate the current account is locked</translatorcomment>
-        <translation type="unfinished">Locked Account</translation>
+        <translation type="unfinished">Zárolt fiók</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">Az Ön biztonsága érdekében fiókját ideiglenesen lezártuk. Kérjük, ellenőrizze e-mailjeit, és kövesse az emailben megadott lépéseket a fiók feloldásához.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1281,52 +1281,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify now</source>
         <translatorcomment>Button label to forward the user to webclient, in order to verify and unlock the account.</translatorcomment>
-        <translation type="unfinished">Verify now</translation>
+        <translation type="unfinished">Azonosítás most</translation>
     </message>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation type="unfinished">Creating account…</translation>
+        <translation type="unfinished">Fiók létrehozása…</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation type="unfinished">Why am I seeing this?</translation>
+        <translation type="unfinished">Miért látom ezt?</translation>
     </message>
     <message>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation type="unfinished">Resend email</translation>
+        <translation type="unfinished">Email újraküldése</translation>
     </message>
     <message>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation type="unfinished">Email sent</translation>
+        <translation type="unfinished">Email elküldve</translation>
     </message>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation type="unfinished">Please enter the code generated by your authentication app</translation>
+        <translation type="unfinished">Kérjük, adja meg a hitelesítő alkalmazás által generált kódot</translation>
     </message>
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation type="unfinished">6 digit code:</translation>
+        <translation type="unfinished">6 számjegyű kód:</translation>
     </message>
     <message>
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation type="unfinished">Invalid code</translation>
+        <translation type="unfinished">Helytelen kód</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation type="unfinished">Next</translation>
+        <translation type="unfinished">Következő</translation>
     </message>
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Elveszítette a hitelesítő eszközét?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1334,7 +1334,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
-        <translation type="unfinished">Your download has started</translation>
+        <translation type="unfinished">A letöltés elkezdődött</translation>
     </message>
 </context>
 <context>
@@ -1342,7 +1342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Please wait…</translation>
+        <translation type="unfinished">Kérjük, várjon…</translation>
     </message>
 </context>
 <context>
@@ -1350,17 +1350,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation type="vanished">Import links</translation>
+        <translation type="vanished">Linkek importálása</translation>
     </message>
     <message>
         <source>Download to my computer</source>
         <translatorcomment>Label to indicate if the user wants to download the imported MEGA link(s) to his computer.</translatorcomment>
-        <translation>Download to my computer</translation>
+        <translation>Letöltés a saját gépre</translation>
     </message>
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Import to my Cloud Drive</translation>
+        <translation>Importálás a felhő tárhelyemre</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1370,55 +1370,55 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
-        <translation type="obsolete">/MEGAsync Downloads</translation>
+        <translation type="obsolete">/MEGAsync Letöltések</translation>
     </message>
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation type="obsolete">/MEGAsync Imports</translation>
+        <translation type="obsolete">/MEGAsync Importálások</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decryption error</translation>
+        <translation>Dekódolási hiba</translation>
     </message>
     <message>
         <source>Not found</source>
         <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
-        <translation>Not found</translation>
+        <translation>Nem található</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation type="vanished">Warning</translation>
+        <translation type="vanished">Figyelmeztetés</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Label button for Choose action</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási engedélye ebben a helyi mappában.</translation>
     </message>
     <message>
         <source>Open links</source>
         <translatorcomment>Title for the dialog used to open links in order to import and/or download.</translatorcomment>
-        <translation type="unfinished">Open links</translation>
+        <translation type="unfinished">Linkek megnyitása</translation>
     </message>
 </context>
 <context>
@@ -1426,82 +1426,82 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
-        <translation type="vanished">MEGAsync is up to date</translation>
+        <translation type="vanished">A MEGAsync naprakész</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
         <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
-        <translation type="vanished">RECENTLY UPDATED</translation>
+        <translation type="vanished">MOSTANÁBAN FRISSÍTVE</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation type="vanished">Usage: Data temporarily unavailable</translation>
+        <translation type="vanished">Felhasznált: Az adatok ideiglenesen nem érhetők el</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>Syncs</translation>
+        <translation>Szinkr.</translation>
     </message>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label with an URL link to MEGA website</translatorcomment>
-        <translation type="vanished">MEGA website</translation>
+        <translation type="vanished">MEGA weboldala</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation type="vanished">%1 of %2</translation>
+        <translation type="vanished">%1 / %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation type="vanished">Usage: %1</translation>
+        <translation type="vanished">Fekhasznált: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1, %2 and %3 codes beacuse they are used to include the number of pending, total files and actual speed.</translatorcomment>
-        <translation type="vanished">%1 of %2 (%3/s)</translation>
+        <translation type="vanished">%1 / %2 (%3/s)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation type="vanished">%1 of %2 (paused)</translation>
+        <translation type="vanished">%1 / %2 (szünetel)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation type="vanished">File transfers paused</translation>
+        <translation type="vanished">A fájlátvitel szünetel</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation type="vanished">MEGAsync is scanning</translation>
+        <translation type="vanished">A MEGAsync keres</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>All transfers have been completed</translation>
+        <translation>Minden átvitel befejeződött</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation type="vanished">Cancel all downloads</translation>
+        <translation type="vanished">Minden letöltés leállítása</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="vanished">Cancel download</translation>
+        <translation type="vanished">Letöltés leállítása</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation type="vanished">Cancel all uploads</translation>
+        <translation type="vanished">Minden feltöltés leállítása</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation type="vanished">Cancel upload</translation>
+        <translation type="vanished">Feltöltés leállítása</translation>
     </message>
     <message>
         <source>Add Sync</source>
