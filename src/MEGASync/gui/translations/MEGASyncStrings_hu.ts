@@ -11,17 +11,17 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Felhő</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="unfinished">Postaláda</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Rubbish Bin</translation>
+        <translation type="obsolete">Lomtár</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -51,35 +51,35 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished">Loading…</translation>
+        <translation type="unfinished">Betöltés…</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="unfinished">Beérkező megosztások</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Rubbish Bin</translation>
+        <translation type="unfinished">Lomtár</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation type="unfinished">Elérhető</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished">Total size taken up by file versions:</translation>
+        <translation type="unfinished">A fájlverziók által elfoglalt teljes méret:</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
-        <translation type="unfinished">USED STORAGE %1</translation>
+        <translation type="unfinished">FOGLALT TÁRHELY %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
-        <translation type="unfinished">Data temporarily unavailable</translation>
+        <translation type="unfinished">Az adat ideiglenesen nem érhető el</translation>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation type="unfinished">%1 / %2</translation>
     </message>
 </context>
 <context>
@@ -87,57 +87,57 @@
     <message>
         <source>No Transfers</source>
         <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation type="unfinished">No Transfers</translation>
+        <translation type="unfinished">Nincs átvitel</translation>
     </message>
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished">Remaining Downloads</translation>
+        <translation type="unfinished">Hátralévő letöltések</translation>
     </message>
     <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation type="unfinished">download speed</translation>
+        <translation type="unfinished">letöltési sebesség</translation>
     </message>
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation type="unfinished">No Downloads</translation>
+        <translation type="unfinished">Nincs letöltés</translation>
     </message>
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished">Remaining Uploads</translation>
+        <translation type="unfinished">Hátralévő feltöltések</translation>
     </message>
     <message>
         <source>upload speed</source>
         <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
-        <translation type="unfinished">upload speed</translation>
+        <translation type="unfinished">feltöltési sebesség</translation>
     </message>
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation type="unfinished">No Uploads</translation>
+        <translation type="unfinished">Nincs feltöltés</translation>
     </message>
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
+        <translation type="unfinished">SZÜNETELTETVE</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
+        <translation type="unfinished">Biztosan leállítja ezt az átvitelt?</translation>
     </message>
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation type="unfinished">Remaining Download</translation>
+        <translation type="unfinished">Hátralévő letöltés</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation type="unfinished">Remaining Upload</translation>
+        <translation type="unfinished">Hátralévő feltöltés</translation>
     </message>
 </context>
 <context>
@@ -145,27 +145,27 @@
     <message>
         <source>Add exclusion</source>
         <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Add exclusion</translation>
+        <translation type="unfinished">Kivétel hozzáadása</translation>
     </message>
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Adjon meg egy nevet, egy abszolút elérési utat (a * és ? helyettesítő karakterek megengedettek), vagy válassza ki, melyik fájlt vagy mappát szeretné kizárni a szinkronizálásból.</translation>
     </message>
     <message>
         <source>Choose File</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Choose File</translation>
+        <translation type="unfinished">Fájl választása</translation>
     </message>
     <message>
         <source>Choose Folder</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Choose Folder</translation>
+        <translation type="unfinished">Mappa választása</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
     <message>
         <source>OK</source>
@@ -175,32 +175,32 @@
     <message>
         <source>Choose</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Choose</translation>
+        <translation type="unfinished">Választás</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Warning</translation>
+        <translation type="unfinished">Figyelmeztetés</translation>
     </message>
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation type="unfinished">Please enter a valid file name or absolute path.</translation>
+        <translation type="unfinished">Érvényes fájlnevet vagy abszolút elérési utat adjon meg.</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file or folder you want to exclude</translation>
+        <translation type="unfinished">Válassza ki a kizárni kívánt fájlt vagy mappát</translation>
     </message>
     <message>
         <source>Select the folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the folder you want to exclude</translation>
+        <translation type="unfinished">Válassza ki a kizárni kívánt mappát</translation>
     </message>
     <message>
         <source>Select the file you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file you want to exclude</translation>
+        <translation type="unfinished">Válassza ki a kizárni kívánt fájlt</translation>
     </message>
 </context>
 <context>
@@ -208,22 +208,22 @@
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that the application is showing all types of notifications</translatorcomment>
-        <translation type="unfinished">All notifications</translation>
+        <translation type="unfinished">Az összes értesítés</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to indicate that the application is showing only contact notifications</translatorcomment>
-        <translation type="unfinished">Contacts</translation>
+        <translation type="unfinished">Névjegyek</translation>
     </message>
     <message>
         <source>Payment</source>
         <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">Fizetés</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="unfinished">Beérkező megosztások</translation>
     </message>
 </context>
 <context>
@@ -231,92 +231,92 @@
     <message>
         <source>NEW</source>
         <translatorcomment>Label that indicates there is a new notification available.</translatorcomment>
-        <translation type="unfinished">NEW</translation>
+        <translation type="unfinished">ÚJ</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translatorcomment>Label title for Contacts category of a notification</translatorcomment>
-        <translation type="unfinished">Contacts</translation>
+        <translation type="unfinished">Névjegyek</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="unfinished">Beérkező megosztások</translation>
     </message>
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">Fizetés</translation>
     </message>
     <message>
         <source>Takedown notice</source>
         <translatorcomment>Label title for Takedown category of a notification</translatorcomment>
-        <translation type="unfinished">Takedown notice</translation>
+        <translation type="unfinished">Eltávolítási értesítés</translation>
     </message>
     <message>
         <source>New Contact Request</source>
         <translatorcomment>Notification label that indicates the user has a new contact request </translatorcomment>
-        <translation type="unfinished">New contact request</translation>
+        <translation type="unfinished">Új kapcsolatfelvételi kérelem</translation>
     </message>
     <message>
         <source>Contact Deleted</source>
         <translatorcomment>Notification label that indicates the user has removed a contact</translatorcomment>
-        <translation type="unfinished">Contact deleted</translation>
+        <translation type="unfinished">Névjegy törölve</translation>
     </message>
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Contact relationship established</translation>
+        <translation type="unfinished">Kapcsolatfelvétel létrejött</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
         <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
-        <translation type="unfinished">Contact blocked</translation>
+        <translation type="unfinished">Névjegy blokkolva</translation>
     </message>
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Contact request updated</translation>
+        <translation type="unfinished">Kapcsolatfelvételi kérelem kezelve</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Contact request accepted</translation>
+        <translation type="unfinished">Kapcsolatfelvételi kérelem elfogadva</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact request declined</translation>
+        <translation type="unfinished">Kapcsolatfelvételi kérelem elutasítva</translation>
     </message>
     <message>
         <source>Payment Info</source>
         <translatorcomment>Notification label related to a payment.</translatorcomment>
-        <translation type="unfinished">Payment info</translation>
+        <translation type="unfinished">Fizetési információ</translation>
     </message>
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation type="unfinished">Takedown notice</translation>
+        <translation type="unfinished">Eltávolítási értesítés</translation>
     </message>
     <message>
         <source>Notification</source>
         <translatorcomment>Title label for notification item.</translatorcomment>
-        <translation type="unfinished">Notification</translation>
+        <translation type="unfinished">Értesítés</translation>
     </message>
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation type="unfinished">[A] sent you a contact request</translation>
+        <translation type="unfinished">[A] kapcsolatfelvételi kérelmet küldött önnek</translation>
     </message>
     <message>
         <source>[A] cancelled their contact request</source>
         <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
-        <translation type="unfinished">[A] cancelled their contact request</translation>
+        <translation type="unfinished">[A] visszavonta kapcsolatfelvételi kérelmét</translation>
     </message>
     <message>
         <source>You have a contact request</source>
         <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation type="unfinished">You have a contact request</translation>
+        <translation type="unfinished">Kapcsolatfelvételi kérelme van</translation>
     </message>
     <message>
         <source>[A] deleted you as a contact</source>
@@ -411,92 +411,92 @@
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in 1 day</translation>
+        <translation type="unfinished">A PRO tagsága 1 napon belül lejár</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in [A] days</translation>
+        <translation type="unfinished">A PRO tagsági terve [A] napon belül lejár</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation type="unfinished">PRO membership plan expiring soon</translation>
+        <translation type="unfinished">A PRO tagsága hamarosan lejár</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired 1 day ago</translation>
+        <translation type="unfinished">A PRO tagsága 1 napja lejárt</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired [A] days ago</translation>
+        <translation type="unfinished">A PRO tagsága [A] napja lejárt</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">Your publicly shared %1 (%2) has been taken down.</translation>
+        <translation type="obsolete">Az Ön által nyilvánosan megosztott %1 (%2) eltávolításra került.</translation>
     </message>
     <message>
         <source>file</source>
         <translatorcomment>Label to indicate a file</translatorcomment>
-        <translation type="obsolete">file</translation>
+        <translation type="obsolete">fájl</translation>
     </message>
     <message>
         <source>folder</source>
         <translatorcomment>Label to indicate a folder</translatorcomment>
-        <translation type="obsolete">folder</translation>
+        <translation type="obsolete">mappa</translation>
     </message>
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">Your public share has been taken down.</translation>
+        <translation type="unfinished">A nyilvánosan megosztása eltávolításra került.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">Your publicly shared [A] ([B]) has been reinstated</translation>
+        <translation type="obsolete">Az Ön által nyilvánosan megosztott %1 (%2) visszaállításra került.</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">Your public share has been reinstated.</translation>
+        <translation type="unfinished">A nyilvánosan megosztása visszaállításra került.</translation>
     </message>
     <message>
         <source>Reminder</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation type="unfinished">Reminder</translation>
+        <translation type="unfinished">Emlékeztető</translation>
     </message>
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation type="unfinished">Access to a shared folder was removed by [A]</translation>
+        <translation type="unfinished">[A] megszüntette a hozzáférést egy megosztott mappához</translation>
     </message>
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="obsolete">(unknown shared folder)</translation>
+        <translation type="obsolete">(ismeretlen megosztott mappa)</translation>
     </message>
     <message>
         <source>New Shared folder from [X]</source>
         <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">New shared folder from [X]</translation>
+        <translation type="unfinished">Új megosztott mappa tőle: [X]</translation>
     </message>
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">Your publicly shared [%1] ([%2]) has been taken down</translation>
+        <translation type="obsolete">Az Ön által nyilvánosan megosztott [%1] ([%2]) eltávolításra került</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
         <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
-        <translation type="unfinished">Shared Folder Activity</translation>
+        <translation type="unfinished">Megosztott mappa tevékenység</translation>
     </message>
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
-        <translation type="unfinished">Access to shared folder was removed</translation>
+        <translation type="unfinished">A megosztott mappához való hozzáférés megszüntetésre került</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
@@ -700,56 +700,56 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Terms of Service</translation>
+        <translation type="unfinished">Felhasználási feltételek</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Privacy Policy</translation>
+        <translation type="unfinished">Adatvédelem</translation>
     </message>
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation type="unfinished">New in this version:</translation>
+        <translation type="unfinished">Újdonságok:</translation>
     </message>
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation type="unfinished">Credits</translation>
+        <translation type="unfinished">Alkalmazásinformációk</translation>
     </message>
     <message>
         <source>Data Protection Regulation</source>
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
-        <translation type="unfinished">Data Protection Regulation</translation>
+        <translation type="unfinished">Adatvédelmi szabályozás (GDPR)</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
         <translatorcomment>Tail part of the footer message after copyright year Mega Limited.</translatorcomment>
-        <translation type="unfinished">All rights reserved.</translation>
+        <translation type="unfinished">Minden jog fenntartva.</translation>
     </message>
     <message>
         <source>[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU LESSER GENERAL PUBLIC LICENSE Version 3[/A]</source>
         <translatorcomment>QT copyright notice shown at changelog dialog. [A][/A] placeholders used to provide ui style and [C] placeholder will be replaced by copyright symbol.</translatorcomment>
-        <translation type="unfinished">[A]This software uses Qt ([C] 2018 The Qt Company Ltd) which is covered by GNU Lesser General Public License Version 3[/A]</translation>
+        <translation type="unfinished">[A]A szoftver a Qt-t használja ([C] 2018 The Qt Company Ltd) amelyre a GNU Lesser General Public License Version 3[/A] vonatkozik</translation>
     </message>
 </context>
 <context>
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Change password</translation>
+        <translation type="unfinished">Jelszó megváltoztatása</translation>
     </message>
     <message>
         <source>New password</source>
-        <translation type="unfinished">New password</translation>
+        <translation type="unfinished">Új jelszó</translation>
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation type="unfinished">Confirm new password</translation>
+        <translation type="unfinished">Új jelszó megerősítése</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
     <message>
         <source>OK</source>
@@ -757,45 +757,45 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="obsolete">Password changed</translation>
+        <translation type="obsolete">A jelszó megváltoztatva</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="obsolete">Your password has been changed.</translation>
+        <translation type="obsolete">A jelszava megváltozott.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="obsolete">Wrong password</translation>
+        <translation type="obsolete">Hibás jelszó</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Warning</translation>
+        <translation type="obsolete">Figyelmeztetés</translation>
     </message>
     <message>
         <source>Please enter your password</source>
-        <translation type="unfinished">Please enter your password</translation>
+        <translation type="unfinished">Írja be a jelszavát</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation type="unfinished">The entered passwords don’t match</translation>
+        <translation type="unfinished">A megadott jelszavak nem egyeznek</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">Please enter a stronger password</translation>
+        <translation type="unfinished">Kérjük, erősebb jelszót adjon meg</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
         <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
-        <translation type="unfinished">Too many requests. Please wait.</translation>
+        <translation type="unfinished">Túl sok lekérés. Kérjük, várjon.</translation>
     </message>
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation type="unfinished">You have entered your current password, please enter a new password.</translation>
+        <translation type="unfinished">A jelenlegi jelszavát adta meg, kérjük, eltérő jelszót adjon meg.</translation>
     </message>
 </context>
 <context>
@@ -811,32 +811,32 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation type="unfinished">Warning</translation>
+        <translation type="unfinished">Figyelmeztetés</translation>
     </message>
     <message>
         <source>Are you sure you want to continue?</source>
         <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation type="unfinished">Are you sure you want to continue?</translation>
+        <translation type="unfinished">Biztosan folytatja?</translation>
     </message>
     <message>
         <source>Remember my decision and don&apos;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don’t ask me again</translation>
+        <translation type="unfinished">Jegyezze meg a döntésem és ne kérdezze újra</translation>
     </message>
     <message>
         <source>No</source>
         <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">No</translation>
+        <translation type="unfinished">Nem</translation>
     </message>
     <message>
         <source>Yes</source>
         <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">Yes</translation>
+        <translation type="unfinished">Igen</translation>
     </message>
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to allow a setting that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Olyan beállítás engedélyezésére készül, amely lehetővé teheti kommunikációjának lehallgatását. Az Ön adatai a végpontok közötti titkosítás miatt továbbra sem lesznek hozzáférhetők a támadók számára, de vakon áthelyezhetik a fájljait és mappáit a MEGA-ban, törölhetik vagy megtagadhatják a fiókjához való hozzáférést.</translation>
     </message>
 </context>
 <context>
@@ -844,33 +844,33 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Error report</translation>
+        <translation>Hibajelentés</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync has detected a problem. These are the details:</translation>
+        <translation>A MEGAsync problémát talált. Részletek:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>You can help us to improve MEGAsync by sending this error report. It doesn’t contain any personal information. If you want to give us more details, please write them below:</translation>
+        <translation>A hibajelentés elküldésével segíthet a MEGAsync fejlesztésében. Személyes adatok nem kerülnek elküldésre. Ha további részleteket szeretne megosztani velünk, kérjük, írja be alább:</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Send report</translation>
+        <translation>Jelentés elküldése</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging
-(in some cases it may contain details about your data, such as file or folder names)</translation>
+        <translation type="unfinished">Diagnosztikai naplófájlok is kerüljenek csatolásra a hibakereséshez
+(egyes esetekben részleteket tartalmazhat bizonyos adatairól, például fájl- vagy mappanevekről)</translation>
     </message>
 </context>
 <context>
@@ -878,52 +878,52 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>failed:</source>
         <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
-        <translation type="unfinished">failed:</translation>
+        <translation type="unfinished">hiba:</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
-        <translation type="obsolete">%1 of %2</translation>
+        <translation type="obsolete">%1 / %2</translation>
     </message>
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation type="unfinished">starting…</translation>
+        <translation type="unfinished">kezdés…</translation>
     </message>
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
+        <translation type="unfinished">SZÜNETELTETVE</translation>
     </message>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
-        <translation type="unfinished">queued</translation>
+        <translation type="unfinished">várakozó</translation>
     </message>
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation type="unfinished">retrying…</translation>
+        <translation type="unfinished">újrapróbálkozás…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation type="unfinished">completing…</translation>
+        <translation type="unfinished">folyamatban…</translation>
     </message>
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation type="unfinished">Added [A]</translation>
+        <translation type="unfinished">Hozzáadva [A]</translation>
     </message>
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">A tárhely betelt</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
-        <translation type="unfinished">Transfer quota exceeded</translation>
+        <translation type="unfinished">Átviteli kvóta túllépve</translation>
     </message>
 </context>
 <context>
@@ -931,22 +931,22 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Download from MEGA</translation>
+        <translation>Letöltés a MEGA-ról</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Please select the download folder for your files:</translation>
+        <translation>Válassza ki a fájlok letöltési mappáját:</translation>
     </message>
     <message>
         <source>Local folder:</source>
         <translatorcomment>Label to indicate the user the local folder in which the selected files/folders will be downloaded (String short as possible)</translatorcomment>
-        <translation>Local folder:</translation>
+        <translation>Helyi mappa:</translation>
     </message>
     <message>
         <source>Always download to this destination</source>
         <translatorcomment>Label to let the user select a default download folder with a checkbox.</translatorcomment>
-        <translation>Always download to this destination</translation>
+        <translation>Mindig ide töltse le</translation>
     </message>
     <message>
         <source>OK</source>
@@ -956,27 +956,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the download folder.</translatorcomment>
-        <translation>Select local folder</translation>
+        <translation>Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási engedélye ebben a mappában.</translation>
     </message>
 </context>
 <context>
@@ -984,12 +984,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Dynamic transfer quota</source>
         <translatorcomment>Title label to indicate about the dynamic transfer quota used by current account.</translatorcomment>
-        <translation type="unfinished">Dynamic transfer quota</translation>
+        <translation type="unfinished">Dinamikus átviteli kvóta</translation>
     </message>
     <message>
         <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
         <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation type="unfinished">[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over your current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</translation>
+        <translation type="unfinished">[A]Az Ön által használt IP-cím %1 adatátviteli keretet használt fel az elmúlt 6 órában, ami túllépte a jelenlegi korlátot. A korlát  megszüntetéhez frissíthet a PRO verzióra, amely saját átviteli kvóta csomagot és bőséges extra tárhelyet biztosít.[/A]</translation>
     </message>
 </context>
 <context>
@@ -997,7 +997,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all types of notifications will be shown.</translatorcomment>
-        <translation type="unfinished">All notifications</translation>
+        <translation type="unfinished">Minden értesítés</translation>
         </message>
     <message>
         <source>Contacts</source>
