@@ -236,7 +236,7 @@
     <message>
         <source>Contacts</source>
         <translatorcomment>Label title for Contacts category of a notification</translatorcomment>
-        <translation type="unfinished">Névjegyek</translation>
+        <translation type="unfinished">Kapcsolatok</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -1999,7 +1999,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+        <translation type="unfinished">Tudjon meg többet a MEGA Asztali verzióról. [A]Read more[/A]</translation>
     </message>
 </context>
 <context>
@@ -2007,27 +2007,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose Users</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
-        <translation>Choose Users</translation>
+        <translation>FElhasználó választása</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
-        <translation>Choose for which users you want to install $(^NameDA).</translation>
+        <translation>Válassza ki az érintett felhasználókat $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>Válassza ki, hogy telepíteni $(^NameDA) saját maga vagy a számítógép minden felhasználója számára kívánja-e. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is for anyone using this computer.</translatorcomment>
-        <translation>Install for anyone using this computer</translation>
+        <translation>Telepítés mindenki számára ezen a számítógépen</translation>
     </message>
     <message>
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
-        <translation>Install just for me</translation>
+        <translation>Telepítés csak számomra</translation>
     </message>
 </context>
 <context>
@@ -2035,22 +2035,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 cleaning scheduler</translation>
+        <translation type="obsolete">%1 törlési ütemező</translation>
     </message>
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
-        <translation type="unfinished">Remove files older than</translation>
+        <translation type="unfinished">Törölje a fájlokat, melyek régebbiek, mint</translation>
     </message>
     <message>
         <source>days</source>
         <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
-        <translation type="unfinished">days</translation>
+        <translation type="unfinished">nap</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2060,17 +2060,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Warning</translation>
+        <translation type="unfinished">Figyelmeztetés</translation>
     </message>
     <message>
         <source>Please enter a valid value</source>
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
-        <translation type="unfinished">Please enter a valid value</translation>
+        <translation type="unfinished">Valós értéket adjon meg</translation>
     </message>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 clearing scheduler</translation>
+        <translation type="unfinished">%1 törlési ütemező</translation>
     </message>
 </context>
 <context>
@@ -2078,17 +2078,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation type="unfinished">[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</translation>
+        <translation type="unfinished">[A]Lehetséges, hogy ugyanazt a jelszót használja a MEGA-fiókjához, mint más szolgáltatásokhoz, és hogy ezen szolgáltatások közül legalább az egyiket adatvesztés érheti.[/A]</translation>
     </message>
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation type="unfinished">[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</translation>
+        <translation type="unfinished">[A]Jelszava kiszivárgott és visszaélhetnek vele a fiókokba való bejelentkezéshez, beleértve, de nem kizárólag, a MEGA-fiókját is.[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative popover which informs users about the lock situation.</translatorcomment>
-        <translation type="unfinished">Locked Accounts</translation>
+        <translation type="unfinished">Zárolt fiókok</translation>
     </message>
 </context>
 <context>
@@ -2096,7 +2096,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login Verification</source>
         <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation type="unfinished">Login Verification</translation>
+        <translation type="unfinished">Bejelentkezés érvényesítése</translation>
     </message>
     <message>
         <source>Please enter the code generated by your authentication app</source>
