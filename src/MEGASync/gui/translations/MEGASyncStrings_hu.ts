@@ -3059,41 +3059,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</translation>
+        <translation type="unfinished">Fiókját felfüggesztettük a MEGA Általános Szerződési Feltételeinek többszörös megsértése miatt. Kérjük, ellenőrizze a postaládáját.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to a breach of MEGA’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">Fiókját megszüntettük a MEGA Általános Szerződési Feltételeinek megsértése, például mások jogaival való visszaélés; illegális adatok megosztása és/vagy importálása; vagy rendszerbeli visszaélés miatt.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
-        <translation type="unfinished">SSL verification failed</translation>
+        <translation type="unfinished">Az SSL-hitelesítés sikertelen</translation>
     </message>
     <message>
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
-        <translation type="unfinished">Not enough quota</translation>
+        <translation type="unfinished">Nincs elegendő kvóta</translation>
     </message>
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation type="unfinished">Terms of Service breached</translation>
+        <translation type="unfinished">A szolgáltatási feltételeket megsértették</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+        <translation type="unfinished">Nem elérhető a Szolgáltatási feltételek vagy a Méltányolható használat irányelveinek megsértése miatt</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation type="unfinished">Transfer failed due to a recursive directory structure</translation>
+        <translation type="unfinished">Rekurzív könyvtárstruktúra miatt nem sikerült az átvitel</translation>
     </message>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished">Storage Quota Exceeded. Please upgrade now</translation>
+        <translation type="unfinished">Túllépte a tárhely kvótát. Kérjük, frissítsen most</translation>
     </message>
 </context>
 <context>
@@ -3101,27 +3101,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation type="unfinished">Why am I seeing this?</translation>
+        <translation type="unfinished">Miért látom ezt?</translation>
     </message>
     <message>
         <source>Close</source>
         <translatorcomment>Button label to close current message box</translatorcomment>
-        <translation type="unfinished">Close</translation>
+        <translation type="unfinished">Bezárás</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
         <translatorcomment>Title of informative message box which informs users about the lock situation.</translatorcomment>
-        <translation type="unfinished">Locked Accounts</translation>
+        <translation type="unfinished">Zárolt fiók</translation>
     </message>
     <message>
         <source>It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation type="unfinished">It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.</translation>
+        <translation type="unfinished">Lehetséges, hogy ugyanazt a jelszót használja a MEGA-fiókjához, mint más szolgáltatásokhoz és hogy ezen szolgáltatások közül legalább az egyiket adatszivárgás érinti.</translation>
     </message>
     <message>
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation type="unfinished">Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</translation>
+        <translation type="unfinished">Jelszava kiszivárgott és most hackerek használják a fiókokba való bejelentkezéshez, beleértve, de nem kizárólag, a MEGA-fiókját is.</translation>
     </message>
 </context>
 <context>
@@ -3129,7 +3129,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Felhő</translation>
     </message>
 </context>
 <context>
@@ -3142,7 +3142,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation type="unfinished">Please wait…</translation>
+        <translation type="unfinished">Kérjük, várjon…</translation>
     </message>
 </context>
 <context>
@@ -3150,32 +3150,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
+        <translation type="unfinished">Biztosan törli ezt az átvitelt?</translation>
     </message>
     <message>
         <source>paused</source>
         <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
-        <translation type="unfinished">paused</translation>
+        <translation type="unfinished">szüneteltetve</translation>
     </message>
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
+        <translation type="unfinished">SZÜNETELTETVE</translation>
     </message>
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">Get Link</translation>
+        <translation type="unfinished">Link kérése</translation>
     </message>
     <message>
         <source>Retry</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
-        <translation type="unfinished">Retry</translation>
+        <translation type="unfinished">Újra</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Show in folder&quot; button related to a transfer</translatorcomment>
-        <translation type="unfinished">Show in folder</translation>
+        <translation type="unfinished">Mutatás mappában</translation>
     </message>
 </context>
 <context>
@@ -3183,70 +3183,70 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pause Transfer</source>
         <translatorcomment>Label of context menu option to pause selected transfer</translatorcomment>
-        <translation type="unfinished">Pause Transfer</translation>
+        <translation type="unfinished">Átvitel szüneteltetése</translation>
     </message>
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
-        <translation type="unfinished">Move to top</translation>
+        <translation type="unfinished">Mozgatás felülre</translation>
     </message>
     <message>
         <source>Move up</source>
         <translatorcomment>Label of context menu option to move selected transfer one step up of the list and give it more priority</translatorcomment>
-        <translation type="unfinished">Move up</translation>
+        <translation type="unfinished">Mozgatás fel</translation>
     </message>
     <message>
         <source>Move down</source>
         <translatorcomment>Label of context menu option to move selected transfer one step down of the list and give it less priority</translatorcomment>
-        <translation type="unfinished">Move down</translation>
+        <translation type="unfinished">Mozgatás le</translation>
     </message>
     <message>
         <source>Move to bottom</source>
         <translatorcomment>Label of context menu option to move selected transfer to the bottom of the list and give it lowest priority</translatorcomment>
-        <translation type="unfinished">Move to bottom</translation>
+        <translation type="unfinished">Mozgatás alulra</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
-        <translation type="unfinished">Get MEGA link</translation>
+        <translation type="unfinished">MEGA link kérése</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
-        <translation type="unfinished">Open</translation>
+        <translation type="unfinished">Megnyitás</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation type="unfinished">Show in folder</translation>
+        <translation type="unfinished">Mutatás mappában</translation>
     </message>
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation type="unfinished">Clear</translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <source>Clear All</source>
         <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
-        <translation type="unfinished">Clear All</translation>
+        <translation type="unfinished">Összes törlése</translation>
     </message>
     <message>
         <source>Resume Transfer</source>
         <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
-        <translation type="unfinished">Resume Transfer</translation>
+        <translation type="unfinished">Átvitel folytatása</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
-        <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
+        <translation type="unfinished">Biztosan törli az átvitelt?</translation>
     </message>
     <message>
         <source>View on MEGA</source>
-        <translation type="unfinished">View on MEGA</translation>
+        <translation type="unfinished">Megtekintés a MEGA-n</translation>
     </message>
 </context>
 <context>
@@ -3254,7 +3254,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Warning</translation>
+        <translation type="obsolete">Figyelmeztetés</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file
@@ -3262,12 +3262,12 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
+        <translation type="obsolete">A célmappa szinkronizálva van és már van benne egy fájl ugyanezzel a névvel (%1). Ha folytatja a feltöltést, a fájl felülírásra kerül. Folytatja?</translation>
     </message>
     <message>
         <source>Upload failed</source>
         <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
-        <translation type="unfinished">Upload failed</translation>
+        <translation type="unfinished">Sikertelen feltöltés</translation>
     </message>
 </context>
 <context>
@@ -3275,22 +3275,22 @@ Are you sure?</source>
     <message>
         <source>Folder Selection</source>
         <translatorcomment>Label to indicate the user the selection of folders for a synchronization (String short as possible)</translatorcomment>
-        <translation>Folder Selection</translation>
+        <translation>Mappa választás</translation>
     </message>
     <message>
         <source>Select a MEGA folder:</source>
         <translatorcomment>Label to indicate the user to select a MEGA folder for a synchronization (String short as possible). Keep capital letters.</translatorcomment>
-        <translation>Select a MEGA folder:</translation>
+        <translation>MEGA mappa választása:</translation>
     </message>
     <message>
         <source>Retrieving folders...</source>
         <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
-        <translation type="obsolete">Retrieving folders…</translation>
+        <translation type="obsolete">Mappák lekérése…</translation>
     </message>
     <message>
         <source>New folder</source>
         <translatorcomment>Button label to create a New folder at your MEGA cloud drive. Keep capital letters. String as short as possible.</translatorcomment>
-        <translation>New folder</translation>
+        <translation>Új mappa</translation>
     </message>
     <message>
         <source>OK</source>
@@ -3300,96 +3300,96 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Cloud Drive</translation>
+        <translation type="obsolete">Felhő</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Enter the new folder name:</translation>
+        <translation>Az új mappa neve:</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">The root folder can’t be synced. Please select a subfolder.</translation>
+        <translation type="obsolete">A gyökérmappa nem szinkronizálható. Válasszon egy almappát.</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
+        <translation type="obsolete">%1 van ebben a mappában. Biztosan szinkronizálni szeretné?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Invalid folder for synchronization. Please ensure that you don’t use characters like “\”, “/” or “:” in your folder names.</translation>
+        <translation type="unfinished">Érvénytelen mappa a szinkronizáláshoz. Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/” vagy “:” a mappa nevekben.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to inform the user upload files/folder to a default destination. with a checkbox.</translatorcomment>
-        <translation>Always upload to this destination</translation>
+        <translation>Feltöltés mindig erre a helyre</translation>
     </message>
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</translation>
+        <translation type="unfinished">A kiválasztott mappába történő feltöltéshez olvasási és írási vagy teljes hozzáférési jogra van szükség.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">You need Full access rights to be able to sync the selected folder.</translation>
+        <translation type="unfinished">A kiválasztott mappába történő feltöltéshez teljes hozzáférési jogra van szükség.</translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="obsolete">Please enter a valid folder name</translation>
+        <translation type="obsolete">Kérjük, adjon meg egy érvényes mappa nevet</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Are you sure that you want to delete “%1”?</translation>
+        <translation type="unfinished">Biztosan törli ezt: “%1”?</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">Only files can be used for streaming.</translation>
+        <translation type="unfinished">Adatfolyamhoz csak fájlok használhatók.</translation>
     </message>
     <message>
         <source>Select items</source>
-        <translation type="unfinished">Select items</translation>
+        <translation type="unfinished">Elemek kiválasztása</translation>
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Select just one file.</translation>
+        <translation type="unfinished">Csak egy fájlt válasszon.</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation type="unfinished">Get MEGA link</translation>
+        <translation type="unfinished">MEGA link kérése</translation>
     </message>
     <message>
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Invalid folder name.
-Please ensure that you don’t use characters like “\” “/” or “:” in your folder names.</translation>
+        <translation type="unfinished">Érvénytelen mappanév.
+Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/” vagy “:” a mappa nevekben.</translation>
     </message>
 </context>
 <context>
@@ -3405,87 +3405,87 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation type="unfinished">Storage Full</translation>
+        <translation type="unfinished">A tárhely megtelt</translation>
     </message>
     <message>
         <source>Download syncs are temporarily disabled.</source>
         <translatorcomment>Label to indicate that syncs downloads are temporarily disabled because a situation of over transfer quota.</translatorcomment>
-        <translation type="obsolete">Download syncs are temporarily disabled.</translation>
+        <translation type="obsolete">A letöltési szinkronizálás ideiglenesen le van tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting set syncs but disabled until there is enough free storage space within the account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space in your account.</translation>
+        <translation type="unfinished">Túllépte a fiókjában rendelkezésre álló tárhelyet. Hozzáadhatja a szinkronizálásokat, de azok kikapcsolva maradnak, amíg nem lesz elegendő hely a fiókjában.</translation>
     </message>
     <message>
         <source>Buy more space</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation type="unfinished">Buy more space</translation>
+        <translation type="unfinished">További tárhely vásárlása</translation>
     </message>
     <message>
         <source>Uploads are temporarily disabled.</source>
         <translatorcomment>Label to indicate that uploads are temporarily disabled due to a storage space limit has been reached.</translatorcomment>
-        <translation type="unfinished">Uploads are temporarily disabled.</translation>
+        <translation type="unfinished">A feltöltések ideiglenesen le vannak tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the storage limit, letting to add new uploads that will be queued until there is enough free storage space within the account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available storage space for your account. You can add uploads but transfers will remain queued until there is enough space in your account.</translation>
+        <translation type="unfinished">Túllépte a fiókjában rendelkezésre álló tárhelyet. Hozzáadhat feltöltéseket, de azok várakozó állapotban maradnak, amíg elegendő hely nem lesz a fiókjában.</translation>
     </message>
     <message>
         <source>Empty transfer quota</source>
         <translatorcomment>Window title for dialog that shows informative messages about a situation of depleted transfer quota.</translatorcomment>
-        <translation type="obsolete">Transfer quota exceeded</translation>
+        <translation type="obsolete">Átviteli kvóta túllépés</translation>
     </message>
     <message>
         <source>Syncs are temporarily disabled.</source>
         <translatorcomment>Label to indicate that syncs are temporarily disabled due to transfer quota limit has been reached.</translatorcomment>
-        <translation type="unfinished">Syncs are temporarily disabled.</translation>
+        <translation type="unfinished">A szinkronizálás ideiglenesen le van tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add syncs but they will remain disable until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new syncs that will be disabled until the situation is fixed.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add syncs but they will remain disabled until your account has more transfer quota available.</translation>
+        <translation type="unfinished">Túllépte a fiókjában rendelkezésre álló átviteli kvótát. Hozzáadhatja a szinkronizálásokat, de azok kikapcsolva maradnak, amíg a fiókjában nem áll rendelkezésre több átviteli kvóta.</translation>
     </message>
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation type="unfinished">Upgrade Account</translation>
+        <translation type="unfinished">Fiók frissítése (Pro)</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
         <translatorcomment>Label to indicate that import links feature is temporarily disabled due to a situation of over transfer quota. User will be able to import but not to download.</translatorcomment>
-        <translation type="unfinished">Importing links is temporarily disabled.</translation>
+        <translation type="unfinished">A linkek importálása átmenetileg le van tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to import links but not download until there is enough bandwidth for the account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can import links but transfers will remain queued until your account has more transfer quota available.</translation>
+        <translation type="unfinished">Túllépte a fiókjában rendelkezésre álló átviteli kvótát. Importálhat linkeket, de azok várakozó állapotban maradnak, amíg fiókjában nem áll rendelkezésre több átviteli kvóta.</translation>
     </message>
     <message>
         <source>Downloads are temporarily disabled.</source>
         <translatorcomment>Label to indicate that downloads are temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Downloads are temporarily disabled.</translation>
+        <translation type="unfinished">A letöltések átmenetileg le vannak tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to add new downloads that will remain queued until there is enough bandwidth for the current account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add downloads but transfers will remain queued until your account has more transfer quota available.</translation>
+        <translation type="unfinished">Túllépte a fiókjában rendelkezésre álló átviteli kvótát. Hozzáadhat letöltéseket, de azok várakozó állapotban maradnak, amíg fiókjában nem áll rendelkezésre több átviteli kvóta.</translation>
     </message>
     <message>
         <source>Streams are temporarily disabled.</source>
         <translatorcomment>Label to indicate that streaming transfers  of MEGAsync (context menu, stream option) is temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Streaming is temporarily disabled.</translation>
+        <translation type="unfinished">Az adatfolyam átmenetileg le van tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
         <translatorcomment>Informative label to indicate the user has exceeded the available transfer quota limit, letting to start stream transfer but will remain stuck until there is enough bandwidth on the current account.</translatorcomment>
-        <translation type="unfinished">You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until your account has more transfer quota available.</translation>
+        <translation type="unfinished">Túllépte a fiókjában rendelkezésre álló átviteli kvótát. Hozzáadhat adatfolyamokat, de azok váarakozó állapotban maradnak, amíg fiókjában nem áll rendelkezésre több átviteli kvóta.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation type="unfinished">Depleted transfer quota</translation>
+        <translation type="unfinished">Kimerült az átviteli kvóta</translation>
     </message>
 </context>
 <context>
@@ -3493,17 +3493,17 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate that current account has reached storage limit.</translatorcomment>
-        <translation type="unfinished">Storage Full</translation>
+        <translation type="unfinished">A tárhely megtelt</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss the warning about storage full.</translatorcomment>
-        <translation type="unfinished">Dismiss</translation>
+        <translation type="unfinished">Elvetés</translation>
     </message>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
-        <translation type="unfinished">Upgrade</translation>
+        <translation type="unfinished">Frissítés (Pro)</translation>
     </message>
 </context>
 <context>
@@ -3511,12 +3511,12 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="obsolete">Know More</translation>
+        <translation type="obsolete">Tudjon meg többet</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
-        <translation type="unfinished">Dismiss</translation>
+        <translation type="unfinished">Elvetés</translation>
     </message>
 </context>
 <context>
@@ -3524,47 +3524,47 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation type="vanished">Import links</translation>
+        <translation type="vanished">Linkek importálása</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Enter one or multiple MEGA file links</translation>
+        <translation>Egy vagy több MEGA fájllink megadása</translation>
     </message>
     <message>
         <source>Submit</source>
         <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
-        <translation>Submit</translation>
+        <translation>Küldés</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Enter one or more MEGA file links</translation>
+        <translation>Egy vagy több MEGA fájllink megadása</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation type="obsolete">No valid MEGA links found. (Folder links aren’t yet supported)</translation>
+        <translation type="obsolete">Nem található érvényes MEGA-link. (Mappalinkek egyelőre nem támogatottak)</translation>
     </message>
     <message>
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
-        <translation type="unfinished">Invalid MEGA Link</translation>
+        <translation type="unfinished">Érvénytelen MEGA Link</translation>
     </message>
     <message>
         <source>Enter links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation type="unfinished">Enter links</translation>
+        <translation type="unfinished">Linkek megadása</translation>
     </message>
 </context>
 <context>
@@ -3572,42 +3572,42 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">Új mappák és fájlok engedélyei</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Header for the section that allows to set the default permissions for new folders created by MEGAsync. Please keep the first capital letter</translatorcomment>
-        <translation type="unfinished">Folders</translation>
+        <translation type="unfinished">Mappák</translation>
     </message>
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation type="unfinished">Numeric value:</translation>
+        <translation type="unfinished">Numerikus érték:</translation>
     </message>
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">Csoport engedélyek:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">Nyilvános engedélyek:</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
-        <translation type="unfinished">Files</translation>
+        <translation type="unfinished">Fájlok</translation>
     </message>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don’t need to change them, please leave them on the default settings for security reasons.</translation>
+        <translation type="unfinished">A fájloknak és mappáknak van tulajdonosuk és a felhasználók egy csoportjához tartoznak. A párbeszédpanel használatával különböző hozzáférési engedélyeket adhat a MEGAsync által létrehozott új fájlokhoz és mappákhoz az ugyanahhoz a csoporthoz tartozó felhasználóknak és a számítógép többi felhasználójának. Ha nem kell módosítania őket, biztonsági okokból hagyja meg az alapértelmezett beállításokat.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Owner permissions:</translation>
+        <translation type="unfinished">Tulajdonos engedélyek:</translation>
     </message>
 </context>
 <context>
@@ -3615,57 +3615,57 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Read</translation>
+        <translation type="unfinished">Olvasás</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Write</translation>
+        <translation type="unfinished">Írás</translation>
     </message>
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Execution</translation>
+        <translation type="unfinished">Végrehajtás</translation>
     </message>
 </context>
 <context>
     <name>PlanWidget</name>
     <message>
         <source>month</source>
-        <translation type="unfinished">month</translation>
+        <translation type="unfinished">hónap</translation>
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Storage</translation>
+        <translation type="unfinished">Tárhely</translation>
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation type="obsolete">Bandwidth</translation>
+        <translation type="obsolete">Sávszélesség</translation>
     </message>
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="obsolete">Popular!</translation>
+        <translation type="obsolete">Népszerű!</translation>
     </message>
     <message>
         <source>UNLIMITED</source>
         <translatorcomment>Label to indicate that business pro plan has unlimited storage and transfers quota.</translatorcomment>
-        <translation type="unfinished">UNLIMITED</translation>
+        <translation type="unfinished">KORLÁTLAN</translation>
     </message>
     <message>
         <source>Storage and transfers</source>
         <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
-        <translation type="unfinished">Storage and Transfer</translation>
+        <translation type="unfinished">Tárhely és átvitel</translation>
     </message>
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
-        <translation type="unfinished">Transfer</translation>
+        <translation type="unfinished">Átvitel</translation>
     </message>
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">felhasználónként %1</translation>
     </message>
 </context>
 <context>
@@ -3695,10 +3695,10 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="obsolete">- Fix bug with selection of transfer manager items
-- Fix bug of context menu not shown over transfer manager items
-- New design for the main dialog
-- Improved setup assistant
+        <translation type="obsolete">- Az átvitelkezelő elemkiválasztásával kapcsolatos hiba javítása
+- A helyi menü hibájának javítása, amely nem jelenik meg az átvitelkezelő elemei felett
+- Új dizájn a fő párbeszédpanelen
+- Továbbfejlesztett beállítási asszisztens
 - Support to show Public Service Announcements
 - Modern notifications
 - Updated third-party libraries
@@ -3829,12 +3829,12 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>&amp;Yes</source>
         <translatorcomment>Label for confirm button. Keep capital letter.</translatorcomment>
-        <translation>&amp;Yes</translation>
+        <translation>&amp;Igen</translation>
     </message>
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&amp;No</translation>
+        <translation>&amp;Nem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -3844,7 +3844,7 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&amp;Cancel</translation>
+        <translation>&amp;Mégse</translation>
     </message>
 </context>
 <context>
@@ -3852,152 +3852,152 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Look in:</source>
         <translatorcomment>Label to indicate the current filesystem path containing the files and folders that are being listed</translatorcomment>
-        <translation type="unfinished">Look in:</translation>
+        <translation type="unfinished">Betekintés:</translation>
     </message>
     <message>
         <source>Back</source>
         <translatorcomment>Button for going backwards in the navigating in the filesystem</translatorcomment>
-        <translation type="unfinished">Back</translation>
+        <translation type="unfinished">Vissza</translation>
     </message>
     <message>
         <source>Go back</source>
         <translatorcomment>Back button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Go back</translation>
+        <translation type="unfinished">Visszalépés</translation>
     </message>
     <message>
         <source>Alt+Left</source>
         <translatorcomment>Shortcut for Back button.It is shown in the button tooltip.</translatorcomment>
-        <translation type="unfinished">Alt+Left</translation>
+        <translation type="unfinished">Alt+balra</translation>
     </message>
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation type="unfinished">Forward</translation>
+        <translation type="unfinished">Előre</translation>
     </message>
     <message>
         <source>Go forward</source>
         <translatorcomment>Forward button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Go forward</translation>
+        <translation type="unfinished">Előrelépés</translation>
     </message>
     <message>
         <source>Alt+Right</source>
         <translatorcomment>Shortcut for Forward button.It is shown in the button tooltip.</translatorcomment>
-        <translation type="unfinished">Alt+Right</translation>
+        <translation type="unfinished">Alt+jobbra</translation>
     </message>
     <message>
         <source>Parent Directory</source>
         <translatorcomment>Button to move to the parent directory</translatorcomment>
-        <translation type="unfinished">Parent Directory</translation>
+        <translation type="unfinished">Szülőkönyvtár</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
         <translatorcomment>Parent directory button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Go to the parent directory</translation>
+        <translation type="unfinished">Szülőkönyvtárra lépés</translation>
     </message>
     <message>
         <source>Alt+Up</source>
         <translatorcomment>Shortcut for Parent Directory button.It is shown in the button tooltip.</translatorcomment>
-        <translation type="unfinished">Alt+Up</translation>
+        <translation type="unfinished">Alt+fel</translation>
     </message>
     <message>
         <source>Create New Folder</source>
         <translatorcomment>Button for creating a new folder</translatorcomment>
-        <translation type="unfinished">Create New Folder</translation>
+        <translation type="unfinished">Új mappa</translation>
     </message>
     <message>
         <source>Create a New Folder</source>
         <translatorcomment>Create a new folder button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Create a New Folder</translation>
+        <translation type="unfinished">Új mappa létrehozása</translation>
     </message>
     <message>
         <source>List View</source>
         <translatorcomment>Button for changing to filesystem list view mode</translatorcomment>
-        <translation type="unfinished">List View</translation>
+        <translation type="unfinished">Listanézet</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
         <translatorcomment>Change to list view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Change to list view mode</translation>
+        <translation type="unfinished">Listanézetre váltás</translation>
     </message>
     <message>
         <source>Detail View</source>
         <translatorcomment>Button for changing to filesystem detail view mode</translatorcomment>
-        <translation type="unfinished">Detailed View</translation>
+        <translation type="unfinished">Részletes nézet</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
         <translatorcomment>Change to detail view mode button message used by assistive technologies (such as screen readers)</translatorcomment>
-        <translation type="unfinished">Change to detail view mode</translation>
+        <translation type="unfinished">Részletes nézetre váltás</translation>
     </message>
     <message>
         <source>Sidebar</source>
         <translatorcomment>Name of the side bar area of the window</translatorcomment>
-        <translation type="unfinished">Sidebar</translation>
+        <translation type="unfinished">Oldalsáv</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
         <translatorcomment>Name to indicate the list of places and bookmarks area of the window</translatorcomment>
-        <translation type="unfinished">List of places and bookmarks</translation>
+        <translation type="unfinished">Helyek és könyvjelzők listája</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Label for a list of files</translatorcomment>
-        <translation type="unfinished">Files</translation>
+        <translation type="unfinished">Fájlok</translation>
     </message>
     <message>
         <source>Files of type:</source>
         <translatorcomment>Label for choosing a type for filtering files</translatorcomment>
-        <translation type="unfinished">Files of type:</translation>
+        <translation type="unfinished">Fájlok típus szerint:</translation>
     </message>
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation type="unfinished">Find Directory</translation>
+        <translation type="unfinished">Mappa kereése</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Window title when opening a file</translatorcomment>
-        <translation type="unfinished">Open</translation>
+        <translation type="unfinished">Megnyitás</translation>
     </message>
     <message>
         <source>Save As</source>
         <translatorcomment>Window title when saving a file</translatorcomment>
-        <translation type="unfinished">Save As</translation>
+        <translation type="unfinished">Mentés másként</translation>
     </message>
     <message>
         <source>Directory:</source>
         <translatorcomment>Selected directory text box label when choosing a directory</translatorcomment>
-        <translation type="unfinished">Directory:</translation>
+        <translation type="unfinished">Mappa:</translation>
     </message>
     <message>
         <source>All Files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation type="unfinished">All Files (*)</translation>
+        <translation type="unfinished">Minden fájl (*)</translation>
     </message>
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Show </translation>
+        <translation type="unfinished">Mutatás </translation>
     </message>
     <message>
         <source>All files (*)</source>
         <translatorcomment>File of type option for not filtering files by extension</translatorcomment>
-        <translation type="unfinished">All files (*)</translation>
+        <translation type="unfinished">Minden fájl (*)</translation>
     </message>
     <message>
         <source>Directories</source>
         <translatorcomment>Name of the option for showing only directories</translatorcomment>
-        <translation type="unfinished">Directories</translation>
+        <translation type="unfinished">Könyvtárak</translation>
     </message>
     <message>
         <source>New Folder</source>
         <translatorcomment>Default folder new when creating a new folder</translatorcomment>
-        <translation type="unfinished">New Folder</translation>
+        <translation type="unfinished">Új mappa</translation>
     </message>
     <message>
         <source>Delete</source>
         <translatorcomment>Deleting warning dialog window title</translatorcomment>
-        <translation type="unfinished">Delete</translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
