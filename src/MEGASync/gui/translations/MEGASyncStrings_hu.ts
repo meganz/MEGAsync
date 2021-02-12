@@ -6,7 +6,7 @@
     <message>
         <source>Account usage details</source>
         <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
-        <translation>Account usage details</translation>
+        <translation>A fiókhasználat részletei</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -26,22 +26,22 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Storage</translation>
+        <translation type="obsolete">Tárhely</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Files</translation>
+        <translation type="obsolete">Fájlok</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Folders</translation>
+        <translation type="obsolete">Mappák</translation>
     </message>
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation type="vanished">Refresh</translation>
+        <translation type="vanished">Frissítés</translation>
     </message>
     <message>
         <source>OK</source>
