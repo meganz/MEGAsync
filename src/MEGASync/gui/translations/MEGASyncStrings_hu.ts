@@ -4002,52 +4002,52 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder</translatorcomment>
-        <translation type="obsolete">Are you sure you want to delete  “%1”?</translation>
+        <translation type="obsolete">Biztosan törli ezt: “%1”?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
         <translatorcomment>Info message shown when failing deleting a directory</translatorcomment>
-        <translation type="unfinished">Could not delete directory.</translation>
+        <translation type="unfinished">Nem sikerült törölni a könyvtárat.</translation>
     </message>
     <message>
         <source>Recent Places</source>
         <translatorcomment>List of recent filesystem places</translatorcomment>
-        <translation type="unfinished">Recent Places</translation>
+        <translation type="unfinished">Legutóbbi helyek</translation>
     </message>
     <message>
         <source>Remove</source>
         <translatorcomment>Contextual action for removing a new file or folder in the sidebar</translatorcomment>
-        <translation type="unfinished">Remove</translation>
+        <translation type="unfinished">Eltávolítás</translation>
     </message>
     <message>
         <source>My Computer</source>
         <translatorcomment>Label to name the top level of the filesystem</translatorcomment>
-        <translation type="unfinished">My Computer</translation>
+        <translation type="unfinished">Sajátgép</translation>
     </message>
     <message>
         <source>Drive</source>
         <translatorcomment>Label to name physical storage drives</translatorcomment>
-        <translation type="unfinished">Drive</translation>
+        <translation type="unfinished">Meghajtó</translation>
     </message>
     <message>
         <source>%1 File</source>
         <translatorcomment>Option for filtering files by extension. %1 is a file name suffix, for example txt.</translatorcomment>
-        <translation type="unfinished">%1 File</translation>
+        <translation type="unfinished">%1 fájl</translation>
     </message>
     <message>
         <source>File</source>
         <translatorcomment>Label to desing a file matching</translatorcomment>
-        <translation type="unfinished">File</translation>
+        <translation type="unfinished">Fájl</translation>
     </message>
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation type="unfinished">File Folder</translation>
+        <translation type="unfinished">Fájl mappa</translation>
     </message>
     <message>
         <source>Folder</source>
         <translatorcomment>Label to desing a folder matching all other platforms</translatorcomment>
-        <translation type="unfinished">Folder</translation>
+        <translation type="unfinished">Mappa</translation>
     </message>
     <message>
         <source>Alias</source>
@@ -4057,67 +4057,67 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Shortcut</source>
         <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
-        <translation type="unfinished">Shortcut</translation>
+        <translation type="unfinished">Parancsikon</translation>
     </message>
     <message>
         <source>Unknown</source>
         <translatorcomment>Name when the file or folder does not match</translatorcomment>
-        <translation type="unfinished">Unknown</translation>
+        <translation type="unfinished">Ismeretlen</translation>
     </message>
     <message>
         <source>%1 already exists.Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation type="obsolete">%1 already exists.Do you want to replace it?</translation>
+        <translation type="obsolete">%1 már létezik. Lecseréli?</translation>
     </message>
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="obsolete">”%1” is write protected. Do you want to delete it anyway?</translation>
+        <translation type="obsolete">”%1” írásvédett. mindenképpen törli?</translation>
     </message>
     <message>
         <source>&amp;Open</source>
         <translatorcomment>Ok Button text when the dialog is executed for opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation type="unfinished">&amp;Open</translation>
+        <translation type="unfinished">&amp;Megnyitás</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
         <translatorcomment>Ok Button text when the dialog is executed for choosing a directory. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Save).</translatorcomment>
-        <translation type="unfinished">&amp;Choose</translation>
+        <translation type="unfinished">&amp;Választás</translation>
     </message>
     <message>
         <source>&amp;Save</source>
         <translatorcomment>Ok Button text when the dialog is executed for saving a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (File &amp;name, &amp;Open, &amp;Choose).</translatorcomment>
-        <translation type="unfinished">&amp;Save</translation>
+        <translation type="unfinished">&amp;Mentés</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
         <translatorcomment>Contextual menu action for renaming a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Delete, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation type="unfinished">&amp;Rename</translation>
+        <translation type="unfinished">&amp;Átnevezés</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
         <translatorcomment>Contextual menu action for deleting a folder or a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, Show &amp;hidden files, &amp;New Folder).</translatorcomment>
-        <translation type="unfinished">&amp;Delete</translation>
+        <translation type="unfinished">&amp;Törlés</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
         <translatorcomment>Contextual menu action for showing or not showing hidden files. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, &amp;New Folder).</translatorcomment>
-        <translation type="unfinished">Show &amp;hidden files</translation>
+        <translation type="unfinished">&amp;Rejtett fájlok muatatása</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
         <translatorcomment>Contextual menu action for creating a new folder. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, Show &amp;hidden files).</translatorcomment>
-        <translation type="unfinished">&amp;New Folder</translation>
+        <translation type="unfinished">&amp;Új mappa</translation>
     </message>
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation type="unfinished">Are you sure you want to delete “%1”?</translation>
+        <translation type="unfinished">Biztosan törli ezt: “%1”?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
         <translatorcomment>Selected file text box label when opening a file. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Open, &amp;Choose, &amp;Save).</translatorcomment>
-        <translation type="unfinished">File &amp;name:</translation>
+        <translation type="unfinished">Fájl&amp;név:</translation>
     </message>
     <message>
         <source>%1
@@ -4125,15 +4125,15 @@ Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
         <translation type="unfinished">%1
-Directory not found.
-Please verify the correct directory name was given.</translation>
+A könyvtár nem található.
+Kérjük, ellenőrizze, hogy a helyes könyvtárnév van-e megadva.</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translatorcomment>Warning message thrown when the file alredy exists when saving</translatorcomment>
-        <translation type="unfinished">%1 already exists.
-Do you want to replace it?</translation>
+        <translation type="unfinished">%1 már létezik.
+Lecseréli?</translation>
     </message>
     <message>
         <source>%1
@@ -4141,15 +4141,15 @@ File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
         <translation type="unfinished">%1
-File not found.
-Please verify the correct file name was given.</translation>
+A fájl nem található
+Kérjük, ellenőrizze, hogy a helyes fájlnév van-e megadva.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="unfinished">”%1” is write protected.
-Do you want to delete it anyway?</translation>
+        <translation type="unfinished">”%1” írásvédett.
+Mindenképpen törli?</translation>
     </message>
 </context>
 <context>
@@ -4177,68 +4177,68 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation type="unfinished">%1 bytes</translation>
+        <translation type="unfinished">%1 byte</translation>
     </message>
     <message>
         <source>Invalid filename</source>
         <translatorcomment>Name of an invalid filename</translatorcomment>
-        <translation type="unfinished">Invalid filename</translation>
+        <translation type="unfinished">Érvénytelen fájlnév</translation>
     </message>
     <message>
         <source>Name</source>
         <translatorcomment>Header name of the column that shows file names</translatorcomment>
-        <translation type="unfinished">Name</translation>
+        <translation type="unfinished">Név</translation>
     </message>
     <message>
         <source>Size</source>
         <translatorcomment>Header name of the column that shows files sizes</translatorcomment>
-        <translation type="unfinished">Size</translation>
+        <translation type="unfinished">Méret</translation>
     </message>
     <message>
         <source>Kind</source>
         <translatorcomment>Header name of the column that shows file kind</translatorcomment>
-        <translation type="unfinished">Kind</translation>
+        <translation type="unfinished">Fajta</translation>
     </message>
     <message>
         <source>Type</source>
         <translatorcomment>Header name of the column that shows file type</translatorcomment>
-        <translation type="unfinished">Type</translation>
+        <translation type="unfinished">Típus</translation>
     </message>
     <message>
         <source>Date Modified</source>
         <translatorcomment>Header name of the column that shows file modified dates</translatorcomment>
-        <translation type="unfinished">Date Modified</translation>
+        <translation type="unfinished">Módosítva</translation>
     </message>
     <message>
         <source>My Computer</source>
         <translatorcomment>Name of the top level of the filesystem in windows platform</translatorcomment>
-        <translation type="unfinished">My Computer</translation>
+        <translation type="unfinished">Sajátgép</translation>
     </message>
     <message>
         <source>Computer</source>
         <translatorcomment>Name of the top level of the filesystem in unix platform</translatorcomment>
-        <translation type="unfinished">Computer</translation>
+        <translation type="unfinished">Számítógép</translation>
     </message>
     <message>
         <source>%1 byte(s)</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation type="unfinished">%1 byte(s)</translation>
+        <translation type="unfinished">%1 byte</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation type="unfinished">&lt;b&gt;The name “%1” cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</translation>
+        <translation type="unfinished">&lt;b&gt;A “%1” név nem használható.&lt;/b&gt;&lt;p&gt;Próbáljon meg másik nevet használni, kevesebb karakterrel vagy írásjelek nélkül.</translation>
     </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished">&amp;Yes</translation>
+        <translation type="unfinished">&amp;Igen</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;No</translation>
+        <translation type="unfinished">&amp;Nem</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4246,7 +4246,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
 </context>
 <context>
