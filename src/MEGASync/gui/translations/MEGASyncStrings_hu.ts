@@ -6017,33 +6017,33 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused Transfers</source>
         <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
-        <translation type="unfinished">Paused Transfers</translation>
+        <translation type="unfinished">Szüneteltetett átvitelek</translation>
     </message>
 </context>
 <context>
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="obsolete">Free transfer quota exceeded</translation>
+        <translation type="obsolete">Az ingyenes átviteli kvóta elérve</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</translation>
+        <translation type="unfinished">A letöltés nem folytatódhat, mert meghaladja az IP-címe jelenlegi ingyenes átviteli lehetőségét. Ez a korlát dinamikus és függ a rendelkezésünkre álló kihasználatlan sávszélesség mértékétől.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
         <translatorcomment>Label to indicate that current account has reached transfer limit and need to wait %1 time or upgrade the account to continue.</translatorcomment>
-        <translation type="unfinished">Please upgrade your account to continue immediately, or wait %1 to continue for free.</translation>
+        <translation type="unfinished">Kérjük, frissítse fiókját az azonnali folytatáshoz, vagy várjon az ingyenes folytatáshoz ennyit: %1.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
-        <translation type="unfinished">The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade your account[/A], which will give you your own transfer quota package and also ample extra storage space.</translation>
+        <translation type="unfinished">Az Ön által használt IP-cím %1 adatátvitelt végzett az elmúlt 6 órában, ami túllépte a jelenlegi korlátot. A korlát megszüntetése érdekében [A]frissítheti fiókját Pro-ra[/A], amely saját átviteli kvóta csomagot és bőséges extra tárhelyet is biztosít.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation type="unfinished">Depleted transfer quota</translation>
+        <translation type="unfinished">Az átviteli kvóta kimerült</translation>
     </message>
 </context>
 <context>
@@ -6051,37 +6051,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage full</source>
         <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation type="unfinished">Storage Full</translation>
+        <translation type="unfinished">A tárhely megtelt</translation>
     </message>
     <message>
         <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
         <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
-        <translation type="obsolete">Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</translation>
+        <translation type="obsolete">A fióktárhelye megtelt ([A] / [B]). A fájlok feltöltése a MEGA-ba jelenleg le van tiltva.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Please upgrade your account to enjoy more storage space (your uploads will automatically resume).</translation>
+        <translation type="unfinished">Kérjük, frissítse fiókját Pro-ra, hogy több tárhelyet szerezhessen (a feltöltések automatikusan folytatódni fognak).</translation>
     </message>
     <message>
         <source>Earn more storage quota with [A]Achievements[/A].</source>
         <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
-        <translation type="unfinished">Earn more storage quota with [A]Achievements[/A].</translation>
+        <translation type="unfinished">Szerezzen több tárolási kvótát az [A]Eredmények[/A] segítségével.</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full.</translation>
+        <translation type="unfinished">A MEGA fióktárhelye megtelt.</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation type="unfinished">%1 / %2</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
         <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
-        <translation type="unfinished">USED STORAGE %1</translation>
+        <translation type="unfinished">FELHASZNÁLT TÁRHELY %1</translation>
     </message>
 </context>
 <context>
@@ -6089,17 +6089,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="obsolete">month</translation>
+        <translation type="obsolete">hónap</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="obsolete">Storage</translation>
+        <translation type="obsolete">Tárhely</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="obsolete">Transfer</translation>
+        <translation type="obsolete">Átvitel</translation>
     </message>
 </context>
 <context>
@@ -6107,32 +6107,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>Upload to MEGA</translation>
+        <translation>FEltöltés a MEGA-ra</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Please select the upload folder for your files:</translation>
+        <translation>Kérjük, válassza ki a fájlok feltöltési mappáját:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
         <translatorcomment>Label to indicate the user the MEGA folder in which the selected files/folders will be uploaded (String short as possible)</translatorcomment>
-        <translation>MEGA folder:</translation>
+        <translation>MEGA mappa:</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
         <translatorcomment>Label to let the user select a default upload folder with a checkbox.</translatorcomment>
-        <translation>Always upload to this destination</translation>
+        <translation>Mindig erre a helyre töltsön fel</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation type="obsolete">/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync Feltöltések</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation type="obsolete">MEGAsync Uploads</translation>
+        <translation type="obsolete">MEGAsync Letöltések</translation>
     </message>
     <message>
         <source>OK</source>
@@ -6142,58 +6142,58 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
 </context>
 <context>
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">Inbox</translation>
+        <translation type="obsolete">Postaláda</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="obsolete">Incoming Shares</translation>
+        <translation type="obsolete">Beérkezett megosztások</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="obsolete">Cloud Drive</translation>
+        <translation type="obsolete">Felhő meghajtó</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="obsolete">Rubbish Bin</translation>
+        <translation type="obsolete">Lomtár</translation>
     </message>
 </context>
 <context>
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Felhő meghajtó</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Rubbish Bin</translation>
+        <translation type="unfinished">Lomtár</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="unfinished">Beérkezett megosztások</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="unfinished">Postaláda/translation>
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">Used</translation>
+        <translation type="unfinished">Foglalt</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation type="unfinished">Elérhető</translation>
     </message>
 </context>
 <context>
@@ -6201,62 +6201,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>just now</source>
         <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
-        <translation type="unfinished">just now</translation>
+        <translation type="unfinished">éppen most</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 seconds ago</translatorcomment>
-        <translation type="unfinished">%1 seconds ago</translation>
+        <translation type="unfinished">%1 mp-cel ezelőtt</translation>
     </message>
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
-        <translation type="unfinished">1 minute ago</translation>
+        <translation type="unfinished">1 perccel ezelőtt</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 minutes ago</translatorcomment>
-        <translation type="unfinished">%1 minutes ago</translation>
+        <translation type="unfinished">%1 perccel ezelőtt</translation>
     </message>
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
-        <translation type="unfinished">1 hour ago</translation>
+        <translation type="unfinished">1 órával ezelőtt</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
-        <translation type="unfinished">%1 hours ago</translation>
+        <translation type="unfinished">%1 órával ezelőtt</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation type="unfinished">1 day ago</translation>
+        <translation type="unfinished">1 nappal ezelőtt</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 days ago</translatorcomment>
-        <translation type="unfinished">%1 days ago</translation>
+        <translation type="unfinished">%1 nappal ezelőtt</translation>
     </message>
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 month ago</translatorcomment>
-        <translation type="unfinished">1 month ago</translation>
+        <translation type="unfinished">1 hónappal ezelőtt</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 months ago</translatorcomment>
-        <translation type="unfinished">%1 months ago</translation>
+        <translation type="unfinished">%1 hónappal ezelőtt</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 year ago</translatorcomment>
-        <translation type="unfinished">1 year ago</translation>
+        <translation type="unfinished">1 évvel ezelőtt</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
-        <translation type="unfinished">%1 years ago</translation>
+        <translation type="unfinished">%1 évvel ezelőtt</translation>
     </message>
     <message>
         <source>TB</source>
@@ -6281,7 +6281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation type="unfinished">Bytes</translation>
+        <translation type="unfinished">Byte</translation>
     </message>
 </context>
 <context>
@@ -6289,52 +6289,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Why am I seeing this?</source>
         <translatorcomment>Label to inform the user about why the account is locked and needs verification (email verification)</translatorcomment>
-        <translation type="unfinished">Why am I seeing this?</translation>
+        <translation type="unfinished">Miért látom ezt?</translation>
     </message>
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout the current account</translatorcomment>
-        <translation type="unfinished">Logout</translation>
+        <translation type="unfinished">Kijelentkezés</translation>
     </message>
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation type="unfinished">Verify your email</translation>
+        <translation type="unfinished">Email-cím ellenőrzése</translation>
     </message>
     <message>
         <source>Locked account</source>
         <translatorcomment>Title of dialog that inform user about locked account.</translatorcomment>
-        <translation type="unfinished">Locked Account</translation>
+        <translation type="unfinished">Zárolt fiók</translation>
     </message>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily locked for your safety. Please verify your email and follow its steps to unlock your account.</translation>
+        <translation type="unfinished">Az Ön biztonsága érdekében fiókját ideiglenesen lezártuk. Kérjük, igazolja e-mail címét, és kövesse annak lépéseit a fiók feloldásához.</translation>
     </message>
     <message>
         <source>Resend email</source>
         <translatorcomment>Button label to send email with detailed information abot how to unlock the account</translatorcomment>
-        <translation type="unfinished">Resend email</translation>
+        <translation type="unfinished">Email újraküldése</translation>
     </message>
     <message>
         <source>Verify your account</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm phone number.</translatorcomment>
-        <translation type="unfinished">Verify your account</translation>
+        <translation type="unfinished">Fiók ellenőrzése</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation type="unfinished">Fiókját ideiglenesen zároltuk lehetséges visszaélések miatt. Kérjük, igazolja telefonszámát a fiók feloldásához.</translation>
     </message>
     <message>
         <source>Verify now</source>
         <translatorcomment>Button label to forward user to webclient to unlock account (phone number verification or email verification)</translatorcomment>
-        <translation type="unfinished">Verify now</translation>
+        <translation type="unfinished">Igazolás most</translation>
     </message>
     <message>
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
-        <translation type="unfinished">Email sent</translation>
+        <translation type="unfinished">Email elküldve</translation>
     </message>
 </context>
 <context>
@@ -6342,7 +6342,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA synced folder</source>
         <translatorcomment>Label to indicate the synced MEGA folder.</translatorcomment>
-        <translation>MEGA synced folder</translation>
+        <translation>MEGA szinkronizált mappa</translation>
     </message>
 </context>
 </TS>
