@@ -5391,87 +5391,87 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
+        <translation type="unfinished">Az asszisztens befejezése után további mappák szinkronizálását állíthatja be a beállítások párbeszédpanelen</translation>
     </message>
     <message>
         <source>Learn more</source>
         <translatorcomment>Label to redirect the user to a website with information about the different synchronization modes</translatorcomment>
-        <translation type="obsolete">Learn more</translation>
+        <translation type="obsolete">Tudjon meg többet</translation>
     </message>
     <message>
         <source>First name:</source>
         <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation type="unfinished">First name:</translation>
+        <translation type="unfinished">Keresztnév:</translation>
     </message>
     <message>
         <source>Last name:</source>
         <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation type="unfinished">Last name:</translation>
+        <translation type="unfinished">Vezetéknév:</translation>
     </message>
     <message>
         <source>Check your inbox</source>
         <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation type="unfinished">Check your inbox</translation>
+        <translation type="unfinished">Ellenőrizze a postaládáját</translation>
     </message>
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Sync specific folders in your Cloud Drive</translation>
+        <translation type="unfinished">Adott mappák szinkronizálása a Felhő meghajtóban</translation>
     </message>
     <message>
         <source>Selective sync:</source>
         <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
-        <translation type="unfinished">Selective sync</translation>
+        <translation type="unfinished">Szelektív szinkronizálás</translation>
     </message>
     <message>
         <source>Enjoy MEGAsync!</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation type="unfinished">Enjoy MEGAsync!</translation>
+        <translation type="unfinished">Élvezze a MEGAsync-et!</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation type="unfinished">Please enter your last name</translation>
+        <translation type="unfinished">Kérjük, adja meg a vezetéknevét</translation>
     </message>
     <message>
         <source>Setup selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup selective sync</translation>
+        <translation type="unfinished">Szelektív szinkronizálás beállításai</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Specific folders in your Cloud Drive will be synchronised with a matching local folder.</translation>
+        <translation type="unfinished">A Felhő meghajtó bizonyos mappái lesznek szinkronizálva egy helyi mappával.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
         <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation type="unfinished">Select local folder</translation>
+        <translation type="unfinished">Válassza ki a helyi mappát</translation>
     </message>
     <message>
         <source>Setup full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup full sync</translation>
+        <translation type="unfinished">Teljes szinkronizálás beállításai</translation>
     </message>
     <message>
         <source>Full Sync</source>
         <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation type="unfinished">Full sync</translation>
+        <translation type="unfinished">eljes szinkronizálás</translation>
     </message>
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Your entire Cloud Drive will be synchronized with a local folder.</translation>
+        <translation type="unfinished">A teljes Felhő meghajtója lesz szinkronizálva egy helyi mappával.</translation>
     </message>
     <message>
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation type="unfinished">We are all done!</translation>
+        <translation type="unfinished">Készen vagyunk!</translation>
     </message>
     <message>
         <source>Login</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation type="unfinished">Login</translation>
+        <translation type="unfinished">Bejelentkezés</translation>
     </message>
 </context>
 <context>
@@ -5479,42 +5479,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Upload to MEGA</translation>
+        <translation>Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Get MEGA link</translation>
+        <translation>MEGA link kérése</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
-        <translation>Share with a MEGA user</translation>
+        <translation>Megosztás egy MEGA felhasználóval</translation>
     </message>
     <message>
         <source>Send to a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
-        <translation>Send to a MEGA user</translation>
+        <translation>Küldés egy MEGA felhasználónak</translation>
     </message>
     <message>
         <source>1 file</source>
         <translatorcomment>Label to indicate one file.</translatorcomment>
-        <translation>1 file</translation>
+        <translation>1 fájl</translation>
     </message>
     <message>
         <source>%1 files</source>
         <translatorcomment>Label to indicate several file. Keep %1 code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation>%1 files</translation>
+        <translation>%1 fájl</translation>
     </message>
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 folder</translation>
+        <translation>1 mappa</translation>
     </message>
     <message>
         <source>%1 folders</source>
         <translatorcomment>Label to indicate several folders. Keep %1 code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation>%1 folders</translation>
+        <translation>%1 mappa</translation>
     </message>
     <message>
         <source>%1 (%2, %3)</source>
@@ -5529,17 +5529,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remove from left pane</source>
         <translatorcomment>Context menu option to remove MEGA item from explorer left pane</translatorcomment>
-        <translation type="unfinished">Remove from left pane</translation>
+        <translation type="unfinished">Eltávolításl a bal oldali panelről</translation>
     </message>
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Context menu option to view a file or folder through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">View on MEGA</translation>
+        <translation type="unfinished">Megtekintés a  MEGA-n</translation>
     </message>
     <message>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">View previous versions</translation>
+        <translation type="unfinished">Korábbi verziók megtekintése</translation>
     </message>
 </context>
 <context>
@@ -5547,22 +5547,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Title of the dialog to set exclusion based on file size.</translatorcomment>
-        <translation type="unfinished">Exclude by size</translation>
+        <translation type="unfinished">Kizárás méret alapján</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
         <translatorcomment>Label to indicate the upper limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation type="unfinished">Exclude files bigger than</translation>
+        <translation type="unfinished">Kizárás, ha nagyobb mint</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
         <translatorcomment>Label to indicate the lower limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation type="unfinished">Exclude files smaller than</translation>
+        <translation type="unfinished">Kizárás, ha kisebb mint</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
     <message>
         <source>OK</source>
@@ -5572,17 +5572,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation type="unfinished">Warning</translation>
+        <translation type="unfinished">Figyelmeztetés</translation>
     </message>
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">Size limits cannot be zero</translation>
+        <translation type="unfinished">A mérethatár nem lehet nulla</translation>
     </message>
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation type="unfinished">Bytes</translation>
+        <translation type="unfinished">Byte</translation>
     </message>
     <message>
         <source>KB</source>
@@ -5605,57 +5605,57 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Starting</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
-        <translation type="unfinished">Starting</translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <source>Paused</source>
         <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
-        <translation type="unfinished">Paused</translation>
+        <translation type="unfinished">Szüneteltetve</translation>
     </message>
     <message>
         <source>Waiting</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
-        <translation type="unfinished">Waiting</translation>
+        <translation type="unfinished">Várakozás</translation>
     </message>
     <message>
         <source>Scanning...</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="obsolete">Scanning…</translation>
+        <translation type="obsolete">Beolvasás…</translation>
     </message>
     <message>
         <source>Account full</source>
         <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
-        <translation type="unfinished">Account full</translation>
+        <translation type="unfinished">A fiók megtelt</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
-        <translation type="unfinished">Up to date</translation>
+        <translation type="unfinished">Naprakész</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
-        <translation type="obsolete">Resume Transfers</translation>
+        <translation type="obsolete">Átvitelek folytatása</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
-        <translation type="obsolete">Pause Transfers</translation>
+        <translation type="obsolete">Átvitelek szüneteltetése</translation>
     </message>
     <message>
         <source>Scanning</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Scanning</translation>
+        <translation type="unfinished">Beolvasás</translation>
     </message>
     <message>
         <source>Syncing</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
-        <translation type="unfinished">Syncing</translation>
+        <translation type="unfinished">Szinkronizálás</translation>
     </message>
     <message>
         <source>Transferring</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync has ongoing transfers</translatorcomment>
-        <translation type="unfinished">Transferring</translation>
+        <translation type="unfinished">Átvitel</translation>
     </message>
 </context>
 <context>
@@ -5663,102 +5663,102 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">Átvitel a MEGA-ról</translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from…</translation>
+        <translation type="unfinished">Média választása innen…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Felhő meghajtó</translation>
     </message>
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation type="unfinished">Public link</translation>
+        <translation type="unfinished">Nyilvános link</translation>
     </message>
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">File info:</translation>
+        <translation type="unfinished">Fájl információ:</translation>
     </message>
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation type="unfinished">Nothing selected</translation>
+        <translation type="unfinished">Semmi nincs kiválasztva</translation>
     </message>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">Open with:</translation>
+        <translation type="unfinished">Megnyitás ezzel:</translation>
     </message>
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation type="unfinished">Default application</translation>
+        <translation type="unfinished">Alapértelmezett alkalmazás</translation>
     </message>
     <message>
         <source>Choose application</source>
         <translatorcomment>Text of the button to open a streaming link with a custom application</translatorcomment>
-        <translation type="unfinished">Choose application</translation>
+        <translation type="unfinished">Alkalmazás választása</translation>
     </message>
     <message>
         <source>Close</source>
         <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Close</translation>
+        <translation type="unfinished">Bezárás</translation>
     </message>
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">Biztosan leállíja az adatfolyamot?</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation type="unfinished">Error</translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <source>File not found</source>
         <translatorcomment>Error message shown when a file is not found</translatorcomment>
-        <translation type="unfinished">File not found</translation>
+        <translation type="unfinished">A fájl nem található</translation>
     </message>
     <message>
         <source>Open link</source>
         <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Open link</translation>
+        <translation type="unfinished">Link megnyitása</translation>
     </message>
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Enter a MEGA file link:</translation>
+        <translation type="unfinished">MEGA fájllink megadása:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
-        <translation type="unfinished">The link has been copied to the clipboard</translation>
+        <translation type="unfinished">A link a vágólapra másolva</translation>
     </message>
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">Hiba az adatfolyam-link létrehozása során</translation>
     </message>
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Decryption error</translation>
+        <translation type="unfinished">Dekódolási hiba</translation>
     </message>
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
-        <translation type="unfinished">Error getting link information</translation>
+        <translation type="unfinished">Hiba a linkinformáció lekérésekor</translation>
     </message>
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation type="unfinished">Streaming error: transfer quota exceeded.</translation>
+        <translation type="unfinished">Adatfolyam hiba: átviteli kvóta túllépés.</translation>
     </message>
 </context>
 <context>
@@ -5766,75 +5766,75 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>paused</source>
         <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">paused</translation>
+        <translation type="obsolete">szüneteltetve</translation>
     </message>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">queued</translation>
+        <translation type="obsolete">várakozik</translation>
     </message>
     <message>
         <source>retrying</source>
         <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">retrying</translation>
+        <translation type="obsolete">újrapróbálkozás</translation>
     </message>
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">completing</translation>
+        <translation type="obsolete">befejezve</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation type="obsolete">just now</translation>
+        <translation type="obsolete">éppen most/translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
-        <translation type="obsolete">%1 seconds ago</translation>
+        <translation type="obsolete">%1 mp-cel ezelőtt</translation>
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="obsolete">1 minute ago</translation>
+        <translation type="obsolete">1 perccel ezelőtt</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
-        <translation type="obsolete">%1 minutes ago</translation>
+        <translation type="obsolete">%1 perccel ezelőtt</translation>
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="obsolete">1 hour ago</translation>
+        <translation type="obsolete">1 órával ezelőtt</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
-        <translation type="obsolete">%1 hours ago</translation>
+        <translation type="obsolete">%1 órával ezelőtt</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="obsolete">1 day ago</translation>
+        <translation type="obsolete">1 nappal ezelőtt</translation>
     </message>
     <message>
         <source>%1 days ago</source>
-        <translation type="obsolete">%1 days ago</translation>
+        <translation type="obsolete">%1 nappal ezelőtt</translation>
     </message>
     <message>
         <source>1 month ago</source>
-        <translation type="obsolete">1 month ago</translation>
+        <translation type="obsolete">1 hónappal ezelőtt</translation>
     </message>
     <message>
         <source>%1 months ago</source>
-        <translation type="obsolete">%1 months ago</translation>
+        <translation type="obsolete">%1 hónappal ezelőtt</translation>
     </message>
     <message>
         <source>1 year ago</source>
-        <translation type="obsolete">1 year ago</translation>
+        <translation type="obsolete">1 évvel ezelőtt</translation>
     </message>
     <message>
         <source>%1 years ago</source>
-        <translation type="obsolete">%1 years ago</translation>
+        <translation type="obsolete">%1 évvel ezelőtt</translation>
     </message>
     <message>
         <source>starting</source>
         <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">starting</translation>
+        <translation type="obsolete">kezdés</translation>
     </message>
 </context>
 <context>
@@ -5842,99 +5842,98 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
-        <translation type="unfinished">Transfer Manager</translation>
+        <translation type="unfinished">Átvitelkezelő</translation>
     </message>
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Add…</translation>
+        <translation type="unfinished">Új…</translation>
     </message>
     <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
-        <translation type="unfinished">Downloads</translation>
+        <translation type="unfinished">Letöltések</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation type="unfinished">Uploads</translation>
+        <translation type="unfinished">FEltöltések</translation>
     </message>
     <message>
         <source>Completed</source>
         <translatorcomment>Label of tab to access all completed transfers</translatorcomment>
-        <translation type="unfinished">Completed</translation>
+        <translation type="unfinished">Befejezve</translation>
     </message>
     <message>
         <source>Pause</source>
         <translatorcomment>Button label to pause visible transfers</translatorcomment>
-        <translation type="unfinished">Pause</translation>
+        <translation type="unfinished">Szünet</translation>
     </message>
     <message>
         <source>Clear all</source>
         <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation type="unfinished">Clear all</translation>
+        <translation type="unfinished">Összes törlése</translation>
     </message>
     <message>
         <source>Close</source>
         <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Close</translation>
+        <translation type="unfinished">Bezárás</translation>
     </message>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">Import links</translation>
+        <translation type="obsolete">Linkek importálása</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">Upload to MEGA</translation>
+        <translation type="obsolete">Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">Download from MEGA</translation>
+        <translation type="obsolete">Letöltés a MEGA-ról</translation>
     </message>
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
-        <translation type="unfinished">Settings</translation>
+        <translation type="unfinished">Beállítások</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Tulajdonságok</translation>
     </message>
     <message>
         <source>Cancel all</source>
         <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
-        <translation type="unfinished">Cancel all</translation>
+        <translation type="unfinished">Összes leállítása</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel all transfers?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel all transfers?</translation>
+        <translation type="unfinished">Biztosan leállítja az összes átvitelt?</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation type="unfinished">Resume</translation>
+        <translation type="unfinished">Folytatás</translation>
     </message>
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Active Transfers</translation>
+        <translation type="unfinished">Actív átvitelek</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">Upload</translation>
-    </message>
+        <translation type="unfinished">Feltöltés</translation>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Download</translation>
+        <translation type="unfinished">Letöltés</translation>
     </message>
     <message>
         <source>Open links</source>
         <translatorcomment>Menu action item to open MEGA public links. It will let you to import and/or download.</translatorcomment>
-        <translation type="unfinished">Open links</translation>
+        <translation type="unfinished">Linkek megnyitása</translation>
     </message>
 </context>
 <context>
@@ -5942,42 +5941,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>starting</source>
         <translatorcomment>Label to indicate that a transfer is starting</translatorcomment>
-        <translation type="unfinished">starting</translation>
+        <translation type="unfinished">kezdés</translation>
     </message>
     <message>
         <source>paused</source>
         <translatorcomment>Label to indicate that a transfer is paused</translatorcomment>
-        <translation type="unfinished">paused</translation>
+        <translation type="unfinished">szüneteltetve</translation>
     </message>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
-        <translation type="unfinished">queued</translation>
+        <translation type="unfinished">várakozik</translation>
     </message>
     <message>
         <source>retrying</source>
         <translatorcomment>Label to indicate that a transfer is being retried</translatorcomment>
-        <translation type="unfinished">retrying</translation>
+        <translation type="unfinished">újrapróbálkozás</translation>
     </message>
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
-        <translation type="unfinished">completing</translation>
+        <translation type="unfinished">befejezve</translation>
     </message>
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">A tárhely elfogyott</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
-        <translation type="unfinished">Transfer quota exceeded</translation>
+        <translation type="unfinished">Átviteli kvóta túllépés</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation type="unfinished">%1 / %2</translation>
     </message>
 </context>
 <context>
@@ -5985,22 +5984,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Informative label of system notification to encourage user to upgrade account.</translatorcomment>
-        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+        <translation type="unfinished">Frissítés PRO fiókra.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished">Get PRO</translation>
+        <translation type="unfinished">Ugrás a PRO-hoz</translation>
     </message>
     <message>
         <source>Limited available transfer quota.</source>
         <translatorcomment>System notification title to inform the user about limited available transfer quota. Above 90 percent of transfer quota usage reached.</translatorcomment>
-        <translation type="unfinished">Limited available transfer quota.</translation>
+        <translation type="unfinished">Korlátozott rendelkezésre álló átviteli kvóta.</translation>
     </message>
     <message>
         <source>Depleted transfer quota.</source>
         <translatorcomment>System notification title to inform the user about depleted transfer quota situation.</translatorcomment>
-        <translation type="unfinished">Depleted transfer quota.</translation>
+        <translation type="unfinished">Kimerült átviteli kvóta.</translation>
     </message>
 </context>
 <context>
@@ -6008,12 +6007,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation type="unfinished">No Downloads</translation>
+        <translation type="unfinished">Nincsenek letöltések</translation>
     </message>
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation type="unfinished">No Uploads</translation>
+        <translation type="unfinished">Nincsenek feltöltések</translation>
     </message>
     <message>
         <source>Paused Transfers</source>
