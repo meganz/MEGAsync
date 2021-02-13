@@ -5304,32 +5304,32 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</translation>
+        <translation>A helyi mappa és a MEGA Felhő meghajtó automatikusan szinkronizálva lesz.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation type="vanished">Your Cloud Drive will be synchronized with this folder:</translation>
+        <translation type="vanished">A Felhő meghajtója szinkronizálva lesz ezzel a mappával:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási engedélye ebben a helyi mappában.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync won’t be able to download anything here.</translation>
+        <translation>A MEGAsync nem tud semmit letölteni itt.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Do you want to continue?</translation>
+        <translation>Folytatja?</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Your account has been blocked. Please contact support@mega.nz</translation>
+        <translation type="unfinished">Fiókja blokkolva. Kérjük, lépjen kapcsolatba velünk a support@mega.nz címen</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -5338,55 +5338,55 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel this wizard and undo all changes?</translation>
+        <translation type="unfinished">Biztosan kilép a varázslóból és visszavonja az összes módosítást?</translation>
     </message>
     <message>
         <source>Skip</source>
         <translatorcomment>Button label to skip the Setup Wizard configuration.</translatorcomment>
-        <translation type="unfinished">Skip</translation>
+        <translation type="unfinished">Kihagyás</translation>
     </message>
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Creating folder…</translation>
+        <translation type="unfinished">Mappa létrehozása…</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Logging out…</translation>
+        <translation type="unfinished">Kijelentkezés…</translation>
     </message>
     <message>
         <source>Very Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation type="unfinished">Very weak</translation>
+        <translation type="unfinished">Nagyon gyenge</translation>
     </message>
     <message>
         <source>Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Weak security </translatorcomment>
-        <translation type="unfinished">Weak</translation>
+        <translation type="unfinished">Gyenge</translation>
     </message>
     <message>
         <source>Medium</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation type="unfinished">Medium</translation>
+        <translation type="unfinished">Közepes</translation>
     </message>
     <message>
         <source>Good</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation type="unfinished">Good</translation>
+        <translation type="unfinished">Jó</translation>
     </message>
     <message>
         <source>Strong</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
-        <translation type="unfinished">Strong</translation>
+        <translation type="unfinished">Erős</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Please check your email and click the link to confirm your account.</translation>
+        <translation type="unfinished">Kérjük, ellenőrizze e-mailjeit, és kattintson a megküldött linkre a fiók megerősítéséhez.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation type="unfinished">Túl sok bejelentkezési próbálkozás.[BR]VÁrjon %1-ig, majd próbálja újra.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
