@@ -4254,77 +4254,77 @@ Mindenképpen törli?</translation>
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation type="vanished">%1 hours ago</translation>
+        <translation type="vanished">%1 órával ezelőtt</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation type="vanished">Get MEGA link</translation>
+        <translation type="vanished">MEGA link kérése</translation>
     </message>
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation type="vanished">just now</translation>
+        <translation type="vanished">éppen most</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
         <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation type="vanished">%1 seconds ago</translation>
+        <translation type="vanished">%1 mp-cel ezelőtt</translation>
     </message>
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation type="vanished">1 minute ago</translation>
+        <translation type="vanished">1 perccel ezelőtt</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
         <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation type="vanished">%1 minutes ago</translation>
+        <translation type="vanished">%1 perccel ezelőtt</translation>
     </message>
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation type="vanished">1 hour ago</translation>
+        <translation type="vanished">1 órával ezelőtt</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation type="vanished">1 day ago</translation>
+        <translation type="vanished">1 nappal ezelőtt</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation type="vanished">%1 days ago</translation>
+        <translation type="vanished">%1 nappal ezelőtt</translation>
     </message>
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
-        <translation type="vanished">1 month ago</translation>
+        <translation type="vanished">1 hónappal ezelőtt</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation type="vanished">%1 months ago</translation>
+        <translation type="vanished">%1 hónappal ezelőtt</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
-        <translation type="vanished">1 year ago</translation>
+        <translation type="vanished">1 évvel ezelőtt</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation type="vanished">%1 years ago</translation>
+        <translation type="vanished">%1 évvel ezelőtt</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation type="vanished">Open</translation>
+        <translation type="vanished">Megnyitás</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
-        <translation type="vanished">Show in folder</translation>
+        <translation type="vanished">Mutatás mappában</translation>
     </message>
 </context>
 <context>
@@ -4332,36 +4332,36 @@ Mindenképpen törli?</translation>
     <message>
         <source>Settings - MEGAsync</source>
         <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
-        <translation>Settings - MEGAsync</translation>
+        <translation>Beállítások - MEGAsync</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="obsolete">General</translation>
+        <translation type="obsolete">Általános</translation>
     </message>
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>Account</translation>
+        <translation>Fiók</translation>
     </message>
     <message>
         <source>Syncs</source>
         <translatorcomment>Tab label of Syncs dialog. Max 15 characters.</translatorcomment>
-        <translation>Syncs</translation>
+        <translation>Szinkronizálások</translation>
     </message>
     <message>
         <source>Bandwidth</source>
         <translatorcomment>Tab label of Bandwidth dialog. Max 15 characters.</translatorcomment>
-        <translation>Bandwidth</translation>
+        <translation>Sávszélesség</translation>
     </message>
     <message>
         <source>Advanced</source>
         <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
-        <translation>Advanced</translation>
+        <translation>Haladó</translation>
     </message>
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help.</translatorcomment>
-        <translation>Help</translation>
+        <translation>Súgó</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4371,101 +4371,101 @@ Mindenképpen törli?</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Apply</source>
         <translatorcomment>Label for apply settings button.</translatorcomment>
-        <translation>Apply</translation>
+        <translation>Alkalmaz</translation>
     </message>
     <message>
         <source>Show notifications</source>
         <translatorcomment>Label to let the user enable desktop notifications with a checkbox.</translatorcomment>
-        <translation>Show notifications</translation>
+        <translation>Értesítések mutatása</translation>
     </message>
     <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Start on startup</translation>
+        <translation>Automatikus indítás</translation>
     </message>
     <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
-        <translation>Update automatically</translation>
+        <translation>Automatikus frissítés</translation>
     </message>
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
-        <translation>Language</translation>
+        <translation>Nyelv</translation>
     </message>
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation type="obsolete">English</translation>
+        <translation type="obsolete">Angol</translation>
     </message>
     <message>
         <source>Details</source>
         <translatorcomment>Button label to show the account usage details for the current user of the application. Strins as short as possible.</translatorcomment>
-        <translation>Details</translation>
+        <translation>Részletek</translation>
     </message>
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Free</translation>
+        <translation>Ingyenes</translation>
     </message>
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
-        <translation>Logout</translation>
+        <translation>Kijelentkezés</translation>
     </message>
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Storage space</translation>
+        <translation>Tárhelyfoglaltság</translation>
     </message>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Upgrade</translation>
+        <translation>Frissítés(Pro)</translation>
     </message>
     <message>
         <source>Synced folders</source>
-        <translation type="obsolete">Synced folders</translation>
+        <translation type="obsolete">Szinkronizált mappák</translation>
     </message>
     <message>
         <source>Delete</source>
         <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>Delete</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Add</source>
         <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>Add</translation>
+        <translation>Új</translation>
     </message>
     <message>
         <source>Local Folder</source>
         <translatorcomment>Label to indicate the local folder for a synchronization. String as short as possible.</translatorcomment>
-        <translation>Local Folder</translation>
+        <translation>Helyi mappa</translation>
     </message>
     <message>
         <source>MEGA folder</source>
         <translatorcomment>Label to indicate the MEGA folder for a synchronization. String as short as possible.</translatorcomment>
-        <translation>MEGA folder</translation>
+        <translation>MEGA mappa</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
-        <translation>Upload rate limit</translation>
+        <translation>Feltöltési sebesség korlát</translation>
     </message>
     <message>
         <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
-        <translation>Don’t limit</translation>
+        <translation>Nincs korlát</translation>
     </message>
     <message>
         <source>Limit to:</source>
         <translatorcomment>Label to indicate that there is rate upload limit. Keep colon.</translatorcomment>
-        <translation>Limit to:</translation>
+        <translation>Legfeljebb:</translation>
     </message>
     <message>
         <source>KB</source>
@@ -4475,45 +4475,45 @@ Mindenképpen törli?</translation>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automatikus</translation>
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
-        <translation>(about 90% of the available bandwidth)</translation>
+        <translation>(a rendelkezésre álló sávszélesség kb 90% -a)</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation type="vanished">Bandwidth quota</translation>
+        <translation type="vanished">Sávszélesség kvóta</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">Upload limits are per upload server and are applied when starting new uploads</translation>
+        <translation type="obsolete">A feltöltési korlátok feltöltési kiszolgálókra vonatkoznak, és az új feltöltések indításakor érvényesek</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Folder for uploads from Windows Explorer</translation>
+        <translation type="obsolete">Mappa feltöltésekhez a Windows Intézőből</translation>
     </message>
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Excluded file names</translation>
+        <translation type="obsolete">Kizárt fájlnevek</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
         <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
-        <translation>Proxy Settings</translation>
+        <translation>Proxy beállítások/translation>
     </message>
     <message>
         <source>No proxy</source>
         <translatorcomment>Label to indicate MEGAsync not to use any proxy. String as short as possible.</translatorcomment>
-        <translation>No proxy</translation>
+        <translation>Nincs proxy</translation>
     </message>
     <message>
         <source>Auto-detect</source>
         <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
-        <translation>Auto-detect</translation>
+        <translation>Automatikus</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -4523,12 +4523,12 @@ Mindenképpen törli?</translation>
     <message>
         <source>Proxy type:</source>
         <translatorcomment>Label to indicate the proxy type to be used. String as short as possible.</translatorcomment>
-        <translation>Proxy type:</translation>
+        <translation>Proxy típusa:</translation>
     </message>
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server IP to be used. String as short as possible.</translatorcomment>
-        <translation>Server:</translation>
+        <translation>Kiszolgáló:</translation>
     </message>
     <message>
         <source>:</source>
@@ -4538,27 +4538,27 @@ Mindenképpen törli?</translation>
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>Proxy server requires a password</translation>
+        <translation>A proxy kiszolgálóhoz jelszó szükséges</translation>
     </message>
     <message>
         <source>Username:</source>
         <translatorcomment>Label to indicate the username of the proxy. String as short as possible.</translatorcomment>
-        <translation>Username:</translation>
+        <translation>Felhasználónév:</translation>
     </message>
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
-        <translation>Password:</translation>
+        <translation>Jelszó:</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data is temporarily unavailable. String as short as possible.</translatorcomment>
-        <translation>Data temporarily unavailable</translation>
+        <translation>Az adat ideiglenesen nem érhető el</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
-        <translation>%1 (%2%) of %3 used</translation>
+        <translation>%1 (%2%) / %3 felhasználva</translation>
     </message>
     <message>
         <source>PRO I</source>
@@ -4578,60 +4578,60 @@ Mindenképpen törli?</translation>
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation type="obsolete">/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync feltöltések</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Warning</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">You are already syncing your entire Cloud Drive.</translation>
+        <translation type="obsolete">Már szinkronizálja a teljes felhő meghajtót.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
         <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
-        <translation>Synchronization will stop working.</translation>
+        <translation>A szinkronizálás le fog állni.</translation>
     </message>
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Are you sure?</translation>
+        <translation>Biztos benne?</translation>
     </message>
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation type="vanished">Excluded name</translation>
+        <translation type="vanished">Kizárt fájneveke</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>Transfers</translation>
+        <translation>Átvitelek</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation type="obsolete">Az új kizárt fájlneveket akkor lesznek figyelembe véve, amikor az alkalmazás újraindul.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Cache</translation>
+        <translation type="obsolete">Gyorsítótár</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
         <translatorcomment>Label to indicate the user the total amount of space used by cache. Keep %1 code because it will be filled with the size amount used.</translatorcomment>
-        <translation type="obsolete">Current cache size: %1</translation>
+        <translation type="obsolete">Pillanatnyi gyorsítótár méret: %1</translation>
     </message>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>Clear</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -4641,271 +4641,271 @@ when the application starts again.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Your proxy settings are invalid or the proxy doesn’t respond</translation>
+        <translation>A proxy beállítások érvénytelenek vagy a proxy nem válaszol</translation>
     </message>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation type="vanished">Please wait…</translation>
+        <translation type="vanished">Kérjük, várjon…</translation>
     </message>
     <message>
         <source>Check for updates</source>
         <translatorcomment>Button label to let the user check for new application updates.</translatorcomment>
-        <translation>Check for updates</translation>
+        <translation>Frissítések keresése</translation>
     </message>
     <message>
         <source>Selective sync active</source>
-        <translation type="obsolete">Selective sync active</translation>
+        <translation type="obsolete">A szelektív szinkronizálás aktív</translation>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation type="obsolete">Enable full account sync</translation>
+        <translation type="obsolete">A teljes fiókszinkronizálás engedélyezése</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
-        <translation type="obsolete">Enabling full account sync will disable all your current syncs</translation>
+        <translation type="obsolete">A teljes fiókszinkronizálás engedélyezése leállít minden jelenlegi szinkronizálást</translation>
     </message>
     <message>
         <source>Full account sync active</source>
-        <translation type="obsolete">Full account sync active</translation>
+        <translation type="obsolete">A teljes fiókszinkronizálás aktív</translation>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">Disabling full account sync will allow you to set up selective folder syncing</translation>
+        <translation type="obsolete">A teljes fiókszinkronizálás leállítása lehetővé teszi a szelektív mappaszinkronizálás beállítását</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation type="obsolete">Disable full account sync</translation>
+        <translation type="obsolete">A teljes fiókszinkronizálás leállítása</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="obsolete">Other</translation>
+        <translation type="obsolete">Egyéb</translation>
     </message>
     <message>
         <source>Disable overlay icons</source>
         <translatorcomment>Label to let the user disable overlay icon for the specific File browser.</translatorcomment>
-        <translation>Disable overlay icons</translation>
+        <translation>A fedvény ikonok letiltása</translation>
     </message>
     <message>
         <source>Force a full scan</source>
         <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
-        <translation>Force a full scan</translation>
+        <translation>Teljes beolvasás kényszerítése</translation>
     </message>
     <message>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
-        <translation>Full scan</translation>
+        <translation>Teljes beolvasás</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">A MEGAsync az indításkor teljes körűen beolvassa a szinkronizált mappákat. Újra indítja most a MEGAsync alkalmazást?</translation>
     </message>
     <message>
         <source>Install update</source>
         <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
-        <translation>Install update</translation>
+        <translation>Frissítés telepítése</translation>
     </message>
     <message>
         <source>Folder for uploads from this computer</source>
-        <translation type="obsolete">Folder for uploads from this computer</translation>
+        <translation type="obsolete">Feltöltési mappa erről a számítógépről</translation>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
         <translatorcomment>Title label of the settings dialog.</translatorcomment>
-        <translation>Preferences - MEGAsync</translation>
+        <translation>Tulajdonságok - MEGAsync</translation>
     </message>
     <message>
         <source>Open at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Open at login</translation>
+        <translation>Megnyitás bejelentkezéskor</translation>
     </message>
     <message>
         <source>Show Mac OS notifications</source>
         <translatorcomment>Label to let the user enable Mac OS desktop notifications with a checkbox.</translatorcomment>
-        <translation type="obsolete">Show Mac OS notifications</translation>
+        <translation type="obsolete">Mac OS értesítések megjelenítése</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation>A MEGAsync az indításkor teljes körűen beolvassa a szinkronizált mappákat. Újra indítja most a MEGAsync alkalmazást?</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Choose</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Default folders</source>
         <translatorcomment>Label to indicate the default path for Uploads and Downloads.</translatorcomment>
-        <translation>Default folders</translation>
+        <translation>Alapértelmezett mappák</translation>
     </message>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
-        <translation>Uploads:</translation>
+        <translation>Feltöltések:</translation>
     </message>
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads. String as short as possible</translatorcomment>
-        <translation>Downloads:</translation>
+        <translation>Letöltések:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>This sync can’t be enabled because the local folder doesn’t exist</translation>
+        <translation>Ez a szinkronizálás nem engedélyezhető, mert a helyi mappa nem létezik</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can’t be enabled because the remote folder doesn’t exist</translation>
+        <translation>Ez a szinkronizálás nem engedélyezhető, mert a távoli mappa nem létezik</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation type="obsolete">You are already syncing your entire Cloud Drive</translation>
+        <translation type="obsolete">Már szinkronizálja a teljes felhő meghajtót</translation>
     </message>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Enable / disable</translation>
+        <translation>Engedélyezés / tiltás</translation>
     </message>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog to select the local folder for downloads.</translatorcomment>
-        <translation type="obsolete">Select local folder</translation>
+        <translation type="obsolete">Helyi mappa kiválasztása</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>You don’t have write permissions in this local folder.</translation>
+        <translation>Nincs írási engedélye ebben a helyi mappában.</translation>
     </message>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="obsolete">Export Key</translation>
+        <translation type="obsolete">Kulcs export</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Export Recovery Key</translation>
+        <translation type="unfinished">Helyreállító kulcs export</translation>
     </message>
     <message>
         <source>Unable to write file</source>
         <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
-        <translation type="unfinished">Unable to write file</translation>
+        <translation type="unfinished">A fájl nem volt írható</translation>
     </message>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation type="unfinished">A helyreállító kulcs exportálása és biztonságos helyen tartása lehetővé teszi új jelszó beállítását adatvesztés nélkül.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">Mindig tartsa fizikailag elkülönítve a helyreállítási kulcsot (pl. másik eszközön, külső tárhelyen vagy kinyomtatva).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Exclude by size</translation>
+        <translation type="unfinished">Kizárás méret alapján</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">The new excluded file names will be taken into account when the application starts again.</translation>
+        <translation type="unfinished">Az új kizárt fájlnevek a fiókban az alkalmazás újraindulása után lesznek figyelembe véve.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
         <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">The new excluded file sizes will be taken into account when the application starts again.</translation>
+        <translation type="unfinished">Az új, méret alapján kizárt fájlnevek a fiókban az alkalmazás újraindulása után lesznek figyelembe véve.</translation>
     </message>
     <message>
         <source>Disabled</source>
         <translatorcomment>Label to indicate the user if the feature of exclusion based by size is enabled/disabled.</translatorcomment>
-        <translation type="unfinished">Disabled</translation>
+        <translation type="unfinished">Letiltva</translation>
     </message>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Excluded file and folder names</translation>
+        <translation type="unfinished">Kizárt fájl- és mappanevek</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation type="unfinished">A számítógépen lévő szinkronizált fájlok korábbi verzióinak biztonsági mentése véglegesen törlődik. Kérjük, ellenőrizze a biztonsági mentési mappákat, hogy meg kell-e menteni valamit a folytatás előtt:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">A MEGA-ban szinkronizált fájlok korábbi verzióinak biztonsági mentése véglegesen törlődik. Kérjük, ellenőrizze a(z) [A] mappát a MEGA-fiók Lomtárában, hogy meg kell-e menteni valamit a folytatás előtt.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
-        <translation type="unfinished">Do you want to restart MEGAsync now?</translation>
+        <translation type="unfinished">Újra indítja most a MEGAsync alkalmazást?</translation>
     </message>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Permissions</translation>
+        <translation type="unfinished">Engedélyek</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation type="unfinished">Don’t use HTTP</translation>
+        <translation type="unfinished">Ne használjon HTTP-t</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don’t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Csak akkor engedélyezze ezt a lehetőséget, ha az átvitelek nem indulnak el. Normál körülmények között a HTTP megfelelő, mivel az összes átvitel már titkosított.</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
-        <translation type="unfinished">Local backup: %1</translation>
+        <translation type="unfinished">Helyi biztonsági mentés: %1</translation>
     </message>
     <message>
         <source>Remote backup: %1</source>
-        <translation type="unfinished">Remote backup: %1</translation>
+        <translation type="unfinished">Távoli biztonsági mentés: %1</translation>
     </message>
     <message>
         <source>Clear local backup</source>
-        <translation type="unfinished">Clear local backup</translation>
+        <translation type="unfinished">Helyi biztonsági mentés törlése</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Do you want to delete your local backups now?</translation>
+        <translation type="unfinished">Törli most a helyi biztonsági mentést?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
-        <translation type="unfinished">Clear remote backup</translation>
+        <translation type="unfinished">Távoli biztonsági mentés törlése</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
-        <translation type="unfinished">Do you want to delete your remote backup now?</translation>
+        <translation type="unfinished">Törli most a távoli biztonsági mentést?</translation>
     </message>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
-        <translation type="unfinished">Download rate limit</translation>
+        <translation type="unfinished">Letöltési sebesség korlát</translation>
     </message>
     <message>
         <source>Number of parallel TCP connections per transfer:</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
-        <translation type="unfinished">Number of parallel TCP connections per transfer:</translation>
+        <translation type="unfinished">Párhuzamos TCP-kapcsolatok száma átvitelenként:</translation>
     </message>
     <message>
         <source>Downloads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
-        <translation type="unfinished">Downloads</translation>
+        <translation type="unfinished">Letöltések</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
-        <translation type="unfinished">Uploads</translation>
+        <translation type="unfinished">Feltöltések</translation>
     </message>
     <message>
         <source>PRO Lite</source>
@@ -4914,91 +4914,91 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">Transfer quota</translation>
+        <translation type="unfinished">Átviteli kvóta</translation>
     </message>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation type="unfinished">Don’t show icons on the left pane of Windows Explorer</translation>
+        <translation type="unfinished">Ne mutasson ikonokat a Windows Intéző bal paneljén</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
         <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
-        <translation type="unfinished">Used quota for the last %1 hours: %2</translation>
+        <translation type="unfinished">Elhasznált kvóta az utolsó %1 órában: %2</translation>
     </message>
     <message>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
-        <translation type="unfinished">Restart</translation>
+        <translation type="unfinished">újraindítás</translation>
     </message>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 cleaning scheduler</translation>
+        <translation type="obsolete">%1 törlési ütemező</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
         <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
-        <translation type="unfinished">Disable file versioning</translation>
+        <translation type="unfinished">Fájlváltozatok tiltása</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
-        <translation type="unfinished">A local folder with a backup of files deleted in MEGA</translation>
+        <translation type="unfinished">Helyi mappa a MEGA-ban törölt fájlok biztonsági másolatával</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
-        <translation type="unfinished">A folder in MEGA with a backup of files deleted in the local computer</translation>
+        <translation type="unfinished">MEGA mappa a helyi számítógépen törölt fájlok biztonsági másolatával</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
-        <translation type="unfinished">Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</translation>
+        <translation type="unfinished">A fájlverziók letiltásával megakadályozható az új fájlverziók létrehozása és tárolása. Folytatja?</translation>
     </message>
     <message>
         <source>Remove files older than %1 days</source>
         <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
-        <translation type="unfinished">Remove files older than %1 days</translation>
+        <translation type="unfinished">%1 napnál régebbi fájlok törlése</translation>
     </message>
     <message>
         <source>Remove files older than 1 day</source>
         <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
-        <translation type="unfinished">Remove files older than 1 day</translation>
+        <translation type="unfinished">1 napnál régebbi fájlok törlése</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
-        <translation type="unfinished">You are about to permanently remove all file versions. Would you like to proceed?</translation>
+        <translation type="unfinished">Az összes fájlverzió végleges eltávolítására készül. Folytatja?</translation>
     </message>
     <message>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished">File versions: %1</translation>
+        <translation type="unfinished">Fájlverziók: %1</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Change password</translation>
+        <translation type="unfinished">Jelszó megváltoztatása</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</translation>
+        <translation type="unfinished">MEGA-fiókja megtelt. Minden feltöltés le van tiltva, ami hatással lehet a szinkronizált mappákra. [A]Vegyen több tárhelyet[/A]</translation>
     </message>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 clearing scheduler</translation>
+        <translation type="unfinished">%1 törlési ütemező</translation>
     </message>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation type="unfinished">%1 used</translation>
+        <translation type="unfinished">%1 felhasználva</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
-        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
+        <translation type="unfinished">MEGA-HELYREÁLLÍTÓKULCS</translation>
     </message>
     <message>
         <source>Please let us know if you find a bug</source>
