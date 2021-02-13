@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Felhő</translation>
+        <translation type="unfinished">Felhő meghajtó</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Beérkező megosztások</translation>
+        <translation type="unfinished">Beérkezett megosztások</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -102,7 +102,7 @@
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation type="unfinished">Nincs letöltés</translation>
+        <translation type="unfinished">Nincsenek letöltések</translation>
     </message>
     <message>
         <source>Remaining Uploads</source>
@@ -117,7 +117,7 @@
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation type="unfinished">Nincs feltöltés</translation>
+        <translation type="unfinished">Nincsenek feltöltések</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -208,12 +208,12 @@
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that the application is showing all types of notifications</translatorcomment>
-        <translation type="unfinished">Az összes értesítés</translation>
+        <translation type="unfinished">Összes értesítés</translation>
     </message>
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to indicate that the application is showing only contact notifications</translatorcomment>
-        <translation type="unfinished">Névjegyek</translation>
+        <translation type="unfinished">Kapcsolatok</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -223,7 +223,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
-        <translation type="unfinished">Beérkező megosztások</translation>
+        <translation type="unfinished">Beérkezett megosztások</translation>
     </message>
 </context>
 <context>
@@ -241,7 +241,7 @@
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label title for Incoming shares category of a notification</translatorcomment>
-        <translation type="unfinished">Beérkező megosztások</translation>
+        <translation type="unfinished">Beérkezett megosztások</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -271,7 +271,7 @@
     <message>
         <source>Contact Blocked</source>
         <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
-        <translation type="unfinished">Névjegy blokkolva</translation>
+        <translation type="unfinished">Partner blokkolva</translation>
     </message>
     <message>
         <source>Contact Updated</source>
@@ -336,32 +336,32 @@
     <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] blokkolt</translation>
+        <translation type="unfinished">[A] blokkolta</translation>
     </message>
     <message>
         <source>You ignored a contact request</source>
         <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
-        <translation type="unfinished">Elvetett egy kapcsolattartási kérést</translation>
+        <translation type="unfinished">Elvetett egy kapcsolatfelvételi kérést</translation>
     </message>
     <message>
         <source>You accepted a contact request</source>
         <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
-        <translation type="unfinished">Elfogadott egy kapcsolattartási kérést</translation>
+        <translation type="unfinished">Elfogadott egy kapcsolatfelvételikérést</translation>
     </message>
     <message>
         <source>You denied a contact request</source>
         <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
-        <translation type="unfinished">Elutasított egy kapcsolattartási kérést</translation>
+        <translation type="unfinished">Elutasított egy kapcsolatfelvételi kérést</translation>
     </message>
     <message>
         <source>[A] accepted your contact request</source>
         <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
-        <translation type="unfinished">[A] elfodta a kapcsolattartási kérését</translation>
+        <translation type="unfinished">[A] elfodta a kapcsolatfelvételi kérését</translation>
     </message>
     <message>
         <source>[A] denied your contact request</source>
         <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
-        <translation type="unfinished">[A] elutasította a kapcsolattartási kérését</translation>
+        <translation type="unfinished">[A] elutasította a kapcsolatfelvételi kérését</translation>
     </message>
     <message>
         <source>New Shared folder from [A]</source>
@@ -371,7 +371,7 @@
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
-        <translation type="unfinished">[A] has left the shared folder</translation>
+        <translation type="unfinished">[A] elhagyta a megosztott mappát</translation>
     </message>
     <message>
         <source>Access to folders shared was removed</source>
@@ -406,7 +406,7 @@
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished">Az [A] csomag fizetése sikertelen volt</translation>
+        <translation type="unfinished">Az [A] csomag kifizetése sikertelen volt</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
@@ -416,7 +416,7 @@
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">A PRO tagsági terve [A] napon belül lejár</translation>
+        <translation type="unfinished">A PRO tagsága [A] napon belül lejár</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -501,22 +501,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Nyilvánosan megosztott fájlját ([A]) eltávolítottuk</translation>
+        <translation type="unfinished">Nyilvánosan megosztott ([A]) fájlját eltávolítottuk</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Nyilvánosan megosztott mappáját([A]) eltávolítottuk</translation>
+        <translation type="unfinished">Nyilvánosan megosztott ([A]) mappáját eltávolítottuk</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Nyilvánosan megosztott fájlját ([A]) visszaállítottuk</translation>
+        <translation type="unfinished">Nyilvánosan megosztott ([A]) fájlját visszaállítottuk</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Nyilvánosan megosztott mappáját ([A]) visszaállítottuk</translation>
+        <translation type="unfinished">Nyilvánosan megosztott ([A]) mappáját visszaállítottuk</translation>
     </message>
 </context>
 <context>
@@ -583,7 +583,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">A helyi mappa túl nagy (ez a verzió %1 mappára illetve %2 fájlra korlátozódik). Válasszon másik mappát.</translation>
+        <translation type="obsolete">A helyi mappa túl nagy (ez a verzió %1 mappára illetve %2 fájlra korlátozott). Válasszon másik mappát.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -617,7 +617,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation type="unfinished">Diagnosztikai naplófájlokat csatolása</translation>
+        <translation type="unfinished">Diagnosztikai naplófájlok csatolása</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1007,7 +1007,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate that only Incoming Shares notifications will be shown.</translatorcomment>
-        <translation type="unfinished">Beérkező megosztások</translation>
+        <translation type="unfinished">Beérkezett megosztások</translation>
     </message>
     <message>
         <source>Payment</source>
@@ -1025,7 +1025,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">Megtekintés a MEGA fiókomban</translation>
+        <translation type="unfinished">Megtekintés a MEGA fiókban</translation>
     </message>
     <message>
         <source>No options available</source>
@@ -1082,7 +1082,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
-        <translation>Választása</translation>
+        <translation>Választás</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1231,7 +1231,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="obsolete">Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, Vegye fel velünk a kapcsolatot a bug@mega.nz email-címen</translation>
+        <translation type="obsolete">Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot a bug@mega.nz email-címen</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1241,7 +1241,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation type="unfinished">Kérjük valós e-mail címet adjon meg</translation>
+        <translation type="unfinished">Kérjük, valós e-mail címet adjon meg</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -1261,22 +1261,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Az Ön biztonsága érdekében fiókját ideiglenesen lezártuk. Kérjük, ellenőrizze e-mailjeit, és kövesse az emailben megadott lépéseket a fiók feloldásához.</translation>
+        <translation type="unfinished">Az Ön biztonsága érdekében fiókját ideiglenesen zároltuk. Kérjük, ellenőrizze e-mailjeit és kövesse az emailben megadott lépéseket a fiók feloldásához.</translation>
     </message>
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout the current account.</translatorcomment>
-        <translation type="unfinished">Logout</translation>
+        <translation type="unfinished">Kijelentkezés</translation>
     </message>
     <message>
         <source>Verify email</source>
         <translatorcomment>Button label to forward the user to verify email redirecting to webclient</translatorcomment>
-        <translation type="obsolete">Verify email</translation>
+        <translation type="obsolete">Email ellenőrzése</translation>
     </message>
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">Your account has been temporarily locked due to potential abuse. Please verify your phone number to unlock your account.</translation>
+        <translation type="unfinished">Fiókját ideiglenesen zároltuk lehetséges visszaélések miatt. Kérjük, igazolja telefonszámát a fiók feloldásához.</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -1311,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation type="unfinished">6 számjegyű kód:</translation>
+        <translation type="unfinished">6 jegyű kód:</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1436,7 +1436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation type="vanished">Felhasznált: Az adatok ideiglenesen nem érhetők el</translation>
+        <translation type="vanished">Felhasznált: Az adat ideiglenesen nem érhető el</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -1456,7 +1456,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation type="vanished">Fekhasznált: %1</translation>
+        <translation type="vanished">Felhasznált: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -1598,7 +1598,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
-        <translation type="obsolete">A MEGAsync jelenleg kikapcsolva </translation>
+        <translation type="obsolete">A MEGAsync jelenleg kikapcsolva</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
@@ -1608,7 +1608,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Fiók frissítése Pro-ra</translation>
+        <translation type="unfinished">Frissítés Pro-ra</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1643,7 +1643,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning...</source>
         <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
-        <translation type="obsolete">Keresés…</translation>
+        <translation type="obsolete">Beolvasás…</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -1653,7 +1653,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Felhő</translation>
+        <translation type="obsolete">Felhő meghajtó</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -1721,7 +1721,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="obsolete">Az összes fájlfeltöltés jelenleg le van tiltva. Kérjük, frissítse fiókját.</translation>
+        <translation type="obsolete">Az összes fájlfeltöltés jelenleg le van tiltva. Kérjük, frissítse fiókját PRO-ra.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1731,7 +1731,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation type="unfinished">Kérjük, frissítse fiókját.</translation>
+        <translation type="unfinished">Kérjük, frissítse fiókját PRO-ra.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1776,7 +1776,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No notifications</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
-        <translation type="unfinished">Nincs értesítés</translation>
+        <translation type="unfinished">Nincsenek értesítések</translation>
     </message>
     <message>
         <source>Pause/Resume</source>
@@ -1796,12 +1796,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to filter notifications  by contact type</translatorcomment>
-        <translation type="obsolete">Kapcsolatok</translation>
+        <translation type="obsolete">Pertnerek</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
-        <translation type="unfinished">Nincsenek kapcsolati értesítések</translation>
+        <translation type="unfinished">Nincsenek partner értesítések</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
@@ -1836,7 +1836,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to informa about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of days left to upgrade.</translatorcomment>
-        <translation type="unfinished">[A][B] napja [/A] maradt a frissítésre. Ezután az adatai törlődnek.</translation>
+        <translation type="unfinished">[A][B] napja[/A] maradt a frissítésre. Ezután az adatai törlődnek.</translation>
     </message>
     <message>
         <source>Upgrade account</source>
@@ -1861,12 +1861,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation type="unfinished">Frissítés</translation>
+        <translation type="unfinished">Frissítés PRO-ra</translation>
     </message>
     <message>
         <source>Limited available transfer quota</source>
         <translatorcomment>Title to indicate that current account has limited transfer quota. Transfer usage above 90 per cent of the total.</translatorcomment>
-        <translation type="unfinished">Korlátozott elérhető átviteli kvóta</translation>
+        <translation type="unfinished">Korlátozott átviteli kvóta</translation>
     </message>
     <message>
         <source>Your queued transfers exceed the current quota available for your IP address and can therefore be interrupted.</source>
@@ -1876,7 +1876,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished">[A][B] órája [/A] maradt a frissítésre. Ezután az adatai törlődnek.</translation>
+        <translation type="unfinished">[A][B] órája[/A] maradt a frissítésre. Ezután az adatai törlődnek.</translation>
     </message>
 </context>
 <context>
@@ -1925,7 +1925,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>InfoWizard</name>
     <message>
         <source>You are not logged in</source>
-        <translation type="unfinished">Be van jelentkezve</translation>
+        <translation type="unfinished">Nincs bejelentkezve</translation>
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
@@ -1945,7 +1945,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="obsolete">Lean &amp; mean resource usage</translation>
+        <translation type="obsolete">Kevés és átlagos erőforrás-felhasználás</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
@@ -2007,7 +2007,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose Users</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync.</translatorcomment>
-        <translation>FElhasználó választása</translation>
+        <translation>Felhasználó választása</translation>
     </message>
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
@@ -2137,7 +2137,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Köszönjük, hogy tesztelte a MEGAsync programot.&lt;br&gt;Ez a bétaverzió már nem aktuális, és lejárt.&lt;br&gt;Kövesse a &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; a Twitteren a frissítésekért.</translation>
+        <translation type="obsolete">Köszönjük, hogy tesztelte a MEGAsync programot.&lt;br&gt;Ez a bétaverzió már elavult, és lejárt.&lt;br&gt;Kövesse a &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; a Twitteren a frissítésekért.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2162,7 +2162,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">A(z) "%1" szinkronizálását letiltva, mert a távoli mappa nem létezik</translation>
+        <translation type="obsolete">A(z) "%1" szinkronizálását letiltva, mert a helyi mappa nem létezik</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2182,7 +2182,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">A szinkronizálás leáll. A nem futó törlések nem kerülnek érvényesítésre. Mindenképpen kilép?</translation>
+        <translation type="obsolete">A szinkronizálás leáll. A helyi törlések nem kerülnek érvényesítésre. Mindenképpen kilép?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2250,7 +2250,7 @@ Exit anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
-        <translation>Keresés</translation>
+        <translation>Beolvasás</translation>
     </message>
     <message>
         <source>Syncing</source>
@@ -2357,11 +2357,11 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="unfinished">Nem sikerült letölteni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot ezen az email-címen: bug@mega.nz</translation>
+        <translation type="unfinished">Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot ezen az email-címen: bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
-        <translation type="obsolete">Upload files/folders</translation>
+        <translation type="obsolete">Fájlok/mappák feltöltése</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
@@ -2441,12 +2441,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation type="unfinished">Egy másik helyen jelentkeztek ki erről a számítógépről</translation>
+        <translation type="unfinished">Máshonnan kijelentkeztek ebből a fiókból</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message.</translatorcomment>
-        <translation type="unfinished">A hiba miatt kiléptette a rendszer: %1</translation>
+        <translation type="unfinished">A következő hiba miatt kiléptette a rendszer: %1</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
@@ -2545,7 +2545,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer manager</source>
-        <translation type="unfinished">Átvitel kezelő</translation>
+        <translation type="unfinished">Átvitelkezelő</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
@@ -2778,7 +2778,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation type="unfinished">Felhő</translation>
+        <translation type="unfinished">Felhő meghajtó</translation>
     </message>
     <message>
         <source>Error transferring folder: </source>
@@ -2838,7 +2838,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
         <translatorcomment>Message shown when the current business account is suspended. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation type="obsolete">A fiók állapota: [A]expired[/A].</translation>
+        <translation type="obsolete">A fiók állapota: [A]lejárt[/A].</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -3059,11 +3059,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Fiókját felfüggesztettük a MEGA Általános Szerződési Feltételeinek többszörös megsértése miatt. Kérjük, ellenőrizze a postaládáját.</translation>
+        <translation type="unfinished">Fiókját felfüggesztettük a MEGA Felhasználási Feltételeinek többszörös megsértése miatt. Kérjük, ellenőrizze a postaládáját.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Fiókját megszüntettük a MEGA Általános Szerződési Feltételeinek megsértése, például mások jogaival való visszaélés; illegális adatok megosztása és/vagy importálása; vagy rendszerbeli visszaélés miatt.</translation>
+        <translation type="unfinished">Fiókját megszüntettük a MEGA Felhasználási Feltételeinek megsértése, például mások jogaival való visszaélés; illegális adatok megosztása és/vagy importálása; vagy rendszerbeli visszaélés miatt.</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3093,7 +3093,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished">Túllépte a tárhely kvótát. Kérjük, frissítsen most</translation>
+        <translation type="unfinished">Túllépte a tárhely kvótát. Frissítsen most PRO-ra</translation>
     </message>
 </context>
 <context>
@@ -3129,7 +3129,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">Felhő</translation>
+        <translation type="unfinished">Felhő meghajtó</translation>
     </message>
 </context>
 <context>
@@ -3305,7 +3305,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Felhő</translation>
+        <translation type="obsolete">Felhő meghajtó</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -3475,7 +3475,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Streams are temporarily disabled.</source>
         <translatorcomment>Label to indicate that streaming transfers  of MEGAsync (context menu, stream option) is temporarily disabled due to a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Az adatfolyam átmenetileg le van tiltva.</translation>
+        <translation type="unfinished">Az adatfolyamok átmenetileg le vannak tiltva.</translation>
     </message>
     <message>
         <source>You have exceeded the available transfer quota for your account. You can add streams but transfers will remain queued until there is enough bandwidth on your account.</source>
@@ -3503,7 +3503,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
-        <translation type="unfinished">Frissítés (Pro)</translation>
+        <translation type="unfinished">Frissítés PRO-ra</translation>
     </message>
 </context>
 <context>
@@ -3678,12 +3678,12 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="obsolete">- New design for the main dialog
-- Improved setup assistant
-- Support to show Public Service Announcements
-- Modern notifications
-- Updated third-party libraries
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Új kialakítás a fő párbeszédpanelen
+- Továbbfejlesztett beállítási asszisztens
+- Támogatás a nyilvános hirdetmények megjelenítéséhez
+- Modern értesítések
+- Frissített harmadik féltől származó könyvtárak
+- További kisebb hibajavítások és fejlesztések</translation>
     </message>
     <message>
         <source>- Fix bug with selection of transfer manager items
@@ -3755,7 +3755,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - A webkliensek és a nyilvános linkek letöltésének átviteli folytatásával kapcsolatos problémák javítása
 - Egyes PDF fájlok feldolgozása közbeni összeomlás kijavítása
 - Összeomlás után a függőben lévő átviteleket a következő indításkor folytatja
-- Include option to add synchronizations from the main dialog
+- Lehetőség a szinkronizációk hozzáadásához a fő párbeszédpanelen
 - További kisebb hibajavítások és fejlesztések</translation>
     </message>
     <message>
@@ -3952,7 +3952,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Find Directory</source>
         <translatorcomment>Window title when opening a directory</translatorcomment>
-        <translation type="unfinished">Mappa kereése</translation>
+        <translation type="unfinished">Mappa keresése</translation>
     </message>
     <message>
         <source>Open</source>
@@ -4102,7 +4102,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Show &amp;hidden files</source>
         <translatorcomment>Contextual menu action for showing or not showing hidden files. The ampersand means that the key after can be used for triggers the action instead of using the mouse to click it. The shortcut key chosen cannot be the same as the one chosen on the next strings (&amp;Rename, &amp;Delete, &amp;New Folder).</translatorcomment>
-        <translation type="unfinished">&amp;Rejtett fájlok muatatása</translation>
+        <translation type="unfinished">&amp;Rejtett fájlok mutatása</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
@@ -4489,11 +4489,11 @@ Mindenképpen törli?</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">A feltöltési korlátok feltöltési kiszolgálókra vonatkoznak, és az új feltöltések indításakor érvényesek</translation>
+        <translation type="obsolete">A feltöltési korlátok feltöltési kiszolgálókra vonatkoznak és az új feltöltések indításakor érvényesek</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Mappa feltöltésekhez a Windows Intézőből</translation>
+        <translation type="obsolete">Mappa a feltöltésekhez a Windows Intézőből</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -4786,12 +4786,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="obsolete">Kulcs export</translation>
+        <translation type="obsolete">Kulcs exportálása</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Helyreállító kulcs export</translation>
+        <translation type="unfinished">Helyreállító kulcs exportálása</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -4846,7 +4846,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
-        <translation type="unfinished">Újra indítja most a MEGAsync alkalmazást?</translation>
+        <translation type="unfinished">Újraindítja most a MEGAsync alkalmazást?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -4929,7 +4929,7 @@ when the application starts again</source>
     <message>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
-        <translation type="unfinished">újraindítás</translation>
+        <translation type="unfinished">Újraindítás</translation>
     </message>
     <message>
         <source>%1 cleaning scheduler</source>
@@ -5076,7 +5076,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Kérjük, igazolja fiókját az e-mail fiókjába elküldött megerősítő link használatával</translation>
+        <translation>Kérjük, igazolja fiókját az e-mailben elküldött megerősítő link használatával</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -5261,7 +5261,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">A helyi mappa túl nagy (ez a verzió %1 mappára illetve %2 fájlra korlátozódik). Válasszon másik mappát.</translation>
+        <translation type="obsolete">A helyi mappa túl nagy (ez a verzió %1 mappára illetve %2 fájlra korlátozott). Válasszon másik mappát.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -5284,7 +5284,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Nem sikerült letölteni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, kérjük, lépjen velünk kapcsolatba a bug@mega.nz címen</translation>
+        <translation>Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, kérjük, lépjen velünk kapcsolatba a bug@mega.nz címen</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -5456,7 +5456,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Full Sync</source>
         <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
-        <translation type="unfinished">eljes szinkronizálás</translation>
+        <translation type="unfinished">Teljes szinkronizálás</translation>
     </message>
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
@@ -5785,7 +5785,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>just now</source>
-        <translation type="obsolete">éppen most/translation>
+        <translation type="obsolete">éppen most</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -5857,7 +5857,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation type="unfinished">FEltöltések</translation>
+        <translation type="unfinished">Feltöltések</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5921,7 +5921,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Actív átvitelek</translation>
+        <translation type="unfinished">Aktív átvitelek</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -5989,7 +5989,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get PRO</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished">Ugrás a PRO-hoz</translation>
+        <translation type="unfinished">Váltás PRO-ra</translation>
     </message>
     <message>
         <source>Limited available transfer quota.</source>
@@ -6107,7 +6107,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>FEltöltés a MEGA-ra</translation>
+        <translation>Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
@@ -6132,7 +6132,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation type="obsolete">MEGAsync Letöltések</translation>
+        <translation type="obsolete">MEGAsync Feltöltések</translation>
     </message>
     <message>
         <source>OK</source>
@@ -6309,7 +6309,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">Az Ön biztonsága érdekében fiókját ideiglenesen lezártuk. Kérjük, igazolja e-mail címét, és kövesse annak lépéseit a fiók feloldásához.</translation>
+        <translation type="unfinished">Az Ön biztonsága érdekében fiókját ideiglenesen zároltuk. Kérjük, igazolja e-mail címét, és kövesse annak lépéseit a fiók feloldásához.</translation>
     </message>
     <message>
         <source>Resend email</source>
