@@ -501,22 +501,22 @@
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Your publicly shared file ([A]) has been taken down</translation>
+        <translation type="unfinished">Nyilvánosan megosztott fájlját ([A]) eltávolítottuk</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared folder ([A]) has been taken down</translation>
+        <translation type="unfinished">Nyilvánosan megosztott mappáját([A]) eltávolítottuk</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
-        <translation type="unfinished">Your publicly shared file ([A]) has been reinstated</translation>
+        <translation type="unfinished">Nyilvánosan megosztott fájlját ([A]) visszaállítottuk</translation>
     </message>
     <message>
         <source>Your publicly shared folder ([A]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared folder ([A]) has been reinstated</translation>
+        <translation type="unfinished">Nyilvánosan megosztott mappáját ([A]) visszaállítottuk</translation>
     </message>
 </context>
 <context>
@@ -524,46 +524,46 @@
     <message>
         <source>Add synchronized folder</source>
         <translatorcomment>Title of the dialog displayed when an user is creating a new synchronized folder.</translatorcomment>
-        <translation>Add synchronized folder</translation>
+        <translation>Szinkronizált mappa hozzáadása</translation>
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Please select a local folder and a MEGA folder</translation>
+        <translation>Válasszon egy helyi mappát és egy MEGA mappát</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding a local folder wich is already synced.</translatorcomment>
-        <translation>The selected local folder is already synced</translation>
+        <translation>A kiválasztott helyi mappa már szinkronizálva van</translation>
     </message>
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>A synced folder cannot be inside another synced folder</translation>
+        <translation>A szinkronizált mappa nem lehet egy másik szinkronizált mappában</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
         <translatorcomment>Message displayed when an user is adding an already synchronized remote folder.</translatorcomment>
-        <translation>The selected MEGA folder is already synced</translation>
+        <translation>A kiválasztott MEGA mappa már szinkronizálva van</translation>
     </message>
     <message>
         <source>Full account syncing is only possible without any selective syncs</source>
-        <translation type="obsolete">Full account syncing is only possible without any selective syncs</translation>
+        <translation type="obsolete">A fiók teljes szinkronizálása csak szelektív szinkronizálás nélkül lehetséges</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Warning</translation>
+        <translation type="obsolete">Figyelmeztetés</translation>
     </message>
     <message>
         <source>Sync name</source>
         <translatorcomment>Title of the dialog displayed when a user is using a name for a local folder that is already used.</translatorcomment>
-        <translation>Sync name</translation>
+        <translation>Szinkronizációs név</translation>
     </message>
     <message>
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name “%1” is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <translation>A(z) „%1” már használatban van egy másik szinkronizáláshoz. Kérjük, adjon meg egy másik nevet a szinkronizált mappa azonosításához:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -573,23 +573,23 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation>Error</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please select another folder.</translation>
+        <translation type="obsolete">A helyi mappa túl nagy (ez a verzió %1 mappára illetve %2 fájlra korlátozódik). Válasszon másik mappát.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">Rendkívül nagy mappát próbál szinkronizálni. A teljes indító kötetek szinkronizálásának megakadályozása érdekében, amely nem hatékony és veszélyes, kérjük, hogy kezdjen egy kisebb mappával, és adjon hozzá több adatot, mialatt a MEGAsync fut.</translation>
     </message>
 </context>
 <context>
@@ -597,102 +597,102 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation type="unfinished">Report issue</translation>
+        <translation type="unfinished">Hibajelentés</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation type="unfinished">Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.</translation>
+        <translation type="unfinished">Kérjük, világosan írja le a problémát. Minél több részletet ad meg, annál könnyebben tudjuk megoldani. Fejlesztői csapatunk foglalkozik a visszajelzésével.</translation>
     </message>
     <message>
         <source>Title</source>
         <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
-        <translation type="unfinished">Title</translation>
+        <translation type="unfinished">Tárgy</translation>
     </message>
     <message>
         <source>Describe the problem</source>
         <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
-        <translation type="unfinished">Describe the issue</translation>
+        <translation type="unfinished">Probléma leírása</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging</translation>
+        <translation type="unfinished">Diagnosztikai naplófájlokat csatolása</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the dialog.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation type="unfinished">Mégse</translation>
     </message>
     <message>
         <source>Submit</source>
         <translatorcomment>Button label to confirm and submit bug report and log files to support team.</translatorcomment>
-        <translation type="unfinished">Submit</translation>
+        <translation type="unfinished">Elküldés</translation>
     </message>
     <message>
         <source>Optional</source>
         <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
-        <translation type="unfinished">Optional</translation>
+        <translation type="unfinished">Opcionális</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
+        <translation type="unfinished">A bejelentett probléma feltöltése folyamatban, eltarthat néhány percig.</translation>
     </message>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished">Your issue has been reported successfully.</translation>
+        <translation type="unfinished">Problémája sikeresen bejelentve.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation type="unfinished">Your issue has been submitted, a confirmation email will be sent to you.</translation>
+        <translation type="unfinished">Problémája elküldve, megerősítő e-mailt küldünk Önnek.</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Error while uploading reported issue.</translation>
+        <translation type="unfinished">Hiba történt a bejelentett probléma feltöltésekor.</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Your issue cannot be uploaded due to an error. Please try again or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+        <translation type="unfinished">Problémája nem tölthető fel hiba miatt. Kérjük, próbálkozzon újra, vagy lépjen kapcsolatba ügyfélszolgálatunkkal a [A]support@mega.nz[/A] címen, ha a probléma továbbra is fennáll.</translation>
     </message>
     <message>
         <source>Ok</source>
         <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation type="unfinished">Ok</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel uploading your reported issue?</translation>
+        <translation type="unfinished">Biztosan megszakítja a bejelentett probléma feltöltését?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation type="unfinished">The issue will not be reported if you cancel uploading it.</translation>
+        <translation type="unfinished">A probléma nem lesz bejelentve, ha leállítja a feltöltést.</translation>
     </message>
     <message>
         <source>Continue</source>
         <translatorcomment>Button label to continue the upload of bug report.</translatorcomment>
-        <translation type="unfinished">Continue</translation>
+        <translation type="unfinished">Folytatás</translation>
     </message>
     <message>
         <source>Yes</source>
         <translatorcomment>Button label to confirm a message box.</translatorcomment>
-        <translation type="unfinished">Yes</translation>
+        <translation type="unfinished">Igen</translation>
     </message>
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation type="unfinished">There is currently another reported issue being uploaded.</translation>
+        <translation type="unfinished">Jelenleg egy másik bejelentett probléma töltődik fel.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation type="unfinished">Please wait until the current upload is completed.</translation>
+        <translation type="unfinished">Várjon, amíg az aktuális feltöltés befejeződik.</translation>
     </message>
 </context>
 <context>
@@ -3699,10 +3699,10 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - A helyi menü hibájának javítása, amely nem jelenik meg az átvitelkezelő elemei felett
 - Új dizájn a fő párbeszédpanelen
 - Továbbfejlesztett beállítási asszisztens
-- Support to show Public Service Announcements
-- Modern notifications
-- Updated third-party libraries
-- Other minor bug fixes and improvements</translation>
+- Támogatás a nyilvános hirdetmények megjelenítéséhez
+- Modern értesítések
+- Frissített harmadik féltől származó könyvtárak
+- További kisebb hibajavítások és fejlesztések</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3711,11 +3711,11 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
-- Improved GUI performance during the addition of many downloads
-- Restyled initial information wizard, with new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Javított megjelenés és hangulat a nagy felbontású kijelzőkön Windows és Linux rendszereken
+- Javított grafikus felhasználói felület teljesítmény sok letöltés hozzáadása közben
+- Áttervezett belső információ varázsló, új ikonokkal és a felület fejlesztéseivel
+- Üzleti fiókok támogatása
+- További kisebb hibajavítások és fejlesztések</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3725,12 +3725,12 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows and Linux
-- Enabled thumbnail support for PDF files
-- Improved GUI performance during the addition of many downloads
-- Restyled initial information wizard, with new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Javított megjelenés és hangulat a nagy felbontású kijelzőkön Windows és Linux rendszereken
+- PDF miniatűr támogatása
+- Javított grafikus felhasználói felület teljesítmény sok letöltés hozzáadása közben
+- Áttervezett belső információ varázsló, új ikonokkal és a felület fejlesztéseivel
+- Üzleti fiókok támogatása
+- További kisebb hibajavítások és fejlesztések</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3738,10 +3738,10 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
-        <translation type="obsolete">- Fix a crash during processing of some PDF files
-- Resume pending transfers after a crash on next startup
-- Include option to add synchronizations from the main dialog
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Összeomlást hba javítása egyes PDF fájlok feldolgozása közben
+- Összeomlás után a függőben lévő átviteleket a következő indításkor folytatja 
+- Új opció a szinkronizációk hozzáadásához a fő párbeszédpanelen
+- További kisebb hibajavítások és fejlesztések</translation>
     </message>
     <message>
         <source>- Fix sync issues on macOS 10.15
@@ -3751,12 +3751,12 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="obsolete">- Fix sync issues on macOS 10.15
-- Fix transfer resumption issues for webclient and public links downloads
-- Fix a crash during processing of some PDF files
-- Resume pending transfers after a crash on next startup
+        <translation type="obsolete">- Szinkronizálási problémák javítása a MacOS 10.15-en
+- A webkliensek és a nyilvános linkek letöltésének átviteli folytatásával kapcsolatos problémák javítása
+- Egyes PDF fájlok feldolgozása közbeni összeomlás kijavítása
+- Összeomlás után a függőben lévő átviteleket a következő indításkor folytatja
 - Include option to add synchronizations from the main dialog
-- Other minor bug fixes and improvements</translation>
+- További kisebb hibajavítások és fejlesztések</translation>
     </message>
     <message>
         <source>- Support for user notifications.
@@ -3769,19 +3769,19 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="obsolete">- Support for user notifications.
-- Bug reports can now be sent from the settings dialog.
-- Restyled the main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved business account usability.
-- Added support for links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 file systems.
-- Other performance improvements, UI fixes and adjustments.</translation>
+        <translation type="obsolete">- A felhasználói értesítések támogatása.
+- A hibajelentések mostantól elküldhetők a beállítások párbeszédpanelból.
+- Áttervezett fő párbeszédpanelt.
+- A teljesítmény javulása, amikor hatalmas mennyiségű szinkronizálást és átvitelt kezel.
+- Üzleti fiókok használhatóságának javítása.
+- Fájlok és mappák linkjeinek nyilvános mappa linkjén belüli támogatása.
+- Fejlesztések a FAT32 fájlrendszerekkel való szinkronizáláshoz.
+- Egyéb teljesítménybeli fejlesztések, felhasználói felület javítások és kiigazítások.</translation>
     </message>
     <message>
         <source>- Fix crash issue for OSX 10.9.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.2</translatorcomment>
-        <translation type="obsolete">- Fixed crash issue for OSX 10.9.</translation>
+        <translation type="obsolete">- Javítva az OSX 10.9 összeomlási problémája.</translation>
     </message>
     <message>
         <source>- New customized message boxes.
@@ -3794,15 +3794,15 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.3</translatorcomment>
-        <translation type="obsolete">- New customized message boxes.
-- Clean retroactive logs when logging out.
-- Fixed issues that disabled Finder extension under some circumstances.
-- Email verification for locked accounts.
-- SMS verification for locked accounts.
-- Support for the affiliate program.
-- Included option to send logs from crash report dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="obsolete">- Új testreszabott üzenetdobozok.
+- Visszamenőleges naplók törlése kijelentkezéskor.
+- Javítva azok a problémák, amelyek bizonyos körülmények között letiltották a Finder kiterjesztést.
+- E-mail ellenőrzés zárolt fiókokhoz.
+- SMS-ellenőrzés zárolt fiókokhoz.
+- Kapcsolt programok támogatása.
+- Naplók küldési opció az összeomlási jelentés párbeszédpanelen.
+- Egyéb felhasználói felület javítások és beállítások.
+- Egyéb teljesítménybeli fejlesztések és javítások.</translation>
     </message>
     <message>
         <source>- Improve user experience when exceeded transfer allowance.
@@ -3814,14 +3814,14 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
-        <translation type="unfinished">- User experience improvement when transfer quota is exceeded.
-- Updated translations.
-- Fixed issues during processing of RAW images.
-- Reduce memory usage on macOS.
-- Filenames are no longer escaped when special characters are supported by the target file system.
-- Integration of 2FA form within the main dialog.
-- Other UI fixes and adjustments.
-- Other performance improvements and adjustments.</translation>
+        <translation type="unfinished">- A felhasználói élmény javítása az átviteli kvóta túllépésekor.
+- Frissített fordítások.
+- Javítva a RAW képek feldolgozása során felmerülő problémák.
+- Memóriahasználat csökkentése MacOS-on.
+- A fájlnevek már nem hibásak, ha a fájlrendszer támogatja a speciális karaktereket.
+- A 2FA űrlap integrálása a fő párbeszédpanelen.
+- Egyéb felhasználói felület javítások és beállítások.
+- Egyéb teljesítménybeli fejlesztések és javítások.</translation>
     </message>
 </context>
 <context>
