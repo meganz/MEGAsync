@@ -61,10 +61,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             if (transferManager) //Check if this is not deleted
             {
                 mNotificationNumber = transferData->getNotificationNumber();
+                mUi->wActiveTransfers->setupTransfers(transferData, QTransfersModel::TYPE_CUSTOM_TRANSFERS);
                 mUi->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
                 mUi->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
-
-                mUi->wActiveTransfers->init(mMegaApi, firstUpload, firstDownload);
             }
             delete firstUpload;
             delete firstDownload;
@@ -142,14 +141,19 @@ void TransferManager::onTransferStart(MegaApi* api, MegaTransfer* transfer)
         return;
     }
 
-    mUi->wActiveTransfers->onTransferStart(api, transfer);
-
     if (!transfer->getPriority())
     {
         return;
     }
 
-    QTransfersModel* model = mUi->wUploads->getModel();
+    QTransfersModel* model = mUi->wActiveTransfers->getModel();
+
+    if (model)
+    {
+        model->onTransferStart(api, transfer);
+    }
+
+    model = mUi->wUploads->getModel();
     if (model)
     {
         model->onTransferStart(api, transfer);
@@ -177,8 +181,6 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
         return;
     }
 
-    mUi->wActiveTransfers->onTransferFinish(api, transfer, e);
-
     if (!transfer->getPriority())
     {
         return;
@@ -195,6 +197,13 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     {
         model->onTransferFinish(api, transfer, e);
     }
+
+    model = mUi->wActiveTransfers->getModel();
+    if (model)
+    {
+        model->onTransferFinish(api, transfer, e);
+    }
+
 }
 
 void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
@@ -204,8 +213,6 @@ void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
     {
         return;
     }
-
-    mUi->wActiveTransfers->onTransferUpdate(api, transfer);
 
     if (!transfer->getPriority())
     {
@@ -219,6 +226,12 @@ void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
     }
 
     model = mUi->wDownloads->getModel();
+    if (model)
+    {
+        model->onTransferUpdate(api, transfer);
+    }
+
+    model = mUi->wActiveTransfers->getModel();
     if (model)
     {
         model->onTransferUpdate(api, transfer);
@@ -234,8 +247,6 @@ void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         return;
     }
 
-    mUi->wActiveTransfers->onTransferTemporaryError(api, transfer, e);
-
     if (!transfer->getPriority())
     {
         return;
@@ -248,6 +259,12 @@ void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     }
 
     model = mUi->wDownloads->getModel();
+    if (model)
+    {
+        model->onTransferTemporaryError(api, transfer, e);
+    }
+
+    model = mUi->wActiveTransfers->getModel();
     if (model)
     {
         model->onTransferTemporaryError(api, transfer, e);
@@ -390,6 +407,8 @@ void TransferManager::updateState()
     {
         onTransfersActive(mUi->wActiveTransfers->areTransfersActive());
         isPaused = mPreferences->getGlobalPaused();
+        mUi->wActiveTransfers->pausedTransfers(isPaused);
+        mUi->wActiveTransfers->refreshTransferItems();
         bPauseTooltip = QLatin1String("All");
     }
     else if (w == mUi->wDownloads)
@@ -496,6 +515,9 @@ void TransferManager::on_tSearchIcon_clicked()
 {
     mUi->fSearchString->setProperty("itsOn", true);
     mUi->bSearchString->setText(mUi->leSearchField->text());
+    // Todo: use a stacked panel instead with search + number of results
+    mUi->lCurrentContent->setText(tr("Search: ") + mUi->leSearchField->text());
+    // Add number of found results
     setStyleSheet(styleSheet());
     mUi->wSearch->show();
 }

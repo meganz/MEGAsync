@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>784</width>
+    <width>756</width>
     <height>48</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>784</width>
+    <width>756</width>
     <height>48</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>784</width>
+    <width>756</width>
     <height>48</height>
    </size>
   </property>
@@ -26,56 +26,169 @@
    <string/>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">TransferManagerItem
-{
-	background-color: transparent;
-}
-#pbTransfer, #pbTransferCompleted
-{
-	border: none;
-}
-
-#lTransferType , #lFileType, #lActionType, #lCancelTransfer, #lCompleted,
-#lTransferTypeCompleted , #lFileTypeCompleted, #lActionTypeCompleted, #lCancelTransferCompleted, #lCompleted
-{
-	border: none;
-}
-#lTransferName, #lTransferNameCompleted
+   <string notr="true">*
 {
   font-family: &quot;Lato&quot;;
-  font-size: 16px;
-  font-weight: 400;
+}
+
+#TransferManagerItem, #sTransferState, #stateActive, #stateCompleted
+{
+    width: 756px;
+    height: 48px;
+    min-width: 756px;
+    min-height: 48px;
+    max-width: 756px;
+    max-height: 48px;
+    background-color: transparent;
+}
+
+#tFileType
+{
+    width: 38px;
+    height: 48px;
+    min-width: 38px;
+    min-height: 48px;
+    max-width: 38px;
+    max-height: 48px;
+    qProperty-iconSize: 40px;
+    background: transparent;
+}
+
+QPushButton, QToolButton
+{
+    border: none;
+}
+
+QPushButton
+{
+    background: transparent;
+}
+
+
+#wName
+{
+    width: 208px;
+    height: 48px;
+    min-width: 208px;
+    min-height: 48px;
+    max-width: 208px;
+    max-height: 48px;
+}
+
+#lTransferName
+{
+    width: 208px;
+    min-width: 208px;
+    max-width: 208px;
+  height: 20px;
+  color: #333333;
+  font-size: 14px;
+}
+
+QProgressBar
+{
+    width: 104px;
+    min-width: 104px;
+    max-width: 104px;
+    height: 4px;
+    min-height: 4px;
+    max-height: 4px;
+    border:0px;
+    border-radius: 2px;
+    background-color: #EEEEEE;
+    margin-bottom: 4px;
+}
+
+QProgressBar::chunk
+{
+  background-color: #6FD7FF;
+  border-radius: 2px;
+  border:0px;
+}
+
+#lDone, #lTotal
+{
+  font-size: 12px;
+  font-weight: bold;
+ qProperty-alignment: 'AlignLeft | AlignVCenter';
+
+}
+
+#lDone
+{
+  color: #999999;
+}
+
+#lTotal
+{
   color: #333333;
 }
-#lTotal, #lTotalCompleted
+
+#wSize, #bSpeed
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 13px;
-  font-weight: 400;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+#bSpeed
+{
   color: #333333;
-}
-#lSpeed
-{
-  font-family: &quot;Lato&quot;;
-  font-size: 13px;
-  font-weight: 400;
-  color: #aaaaaa;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
 }
 
-#lRemainingTimeCompleted
+#wStatus
 {
-   font: &quot;Lato&quot;;
-   font-size: 10px;
-   font-weight: normal;
-   color: #333333;
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
 }
 
-</string>
+#lStatus
+{
+  color: #00D26D;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#lQueued
+{
+  width: 43px;
+  color: #666666;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#lRemainingTime
+{
+    width: 92px;
+    min-width: 92px;
+    max-width: 92px;
+ color: #333333;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#tPauseTransfer, #tCancelTransfer
+{
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
+    background-color: #EEEEEE;
+    qProperty-iconSize: 16px;
+    border-radius: 4px;
+    margin-right: 12px;
+}</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QHBoxLayout" name="TransferManagerIemLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -93,40 +206,16 @@
    </property>
    <item>
     <widget class="QStackedWidget" name="sTransferState">
-     <property name="minimumSize">
-      <size>
-       <width>784</width>
-       <height>48</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>784</width>
-       <height>48</height>
-      </size>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="stateActive">
-      <property name="minimumSize">
-       <size>
-        <width>784</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>784</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="stateActiveLayout">
        <property name="spacing">
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>25</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
         <number>0</number>
@@ -138,20 +227,11 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QWidget" name="wContainerLeft" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>608</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>608</width>
-           <height>48</height>
-          </size>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
+        <widget class="QToolButton" name="tFileType"/>
+       </item>
+       <item>
+        <widget class="QWidget" name="wName" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -165,186 +245,13 @@
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>10</number>
+           <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="widget" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>608</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>608</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">padding-left: -2px;
-padding-top: 1px;</string>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <property name="spacing">
-              <number>2</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QPushButton" name="lTransferType">
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>12</width>
-                 <height>12</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="lFileType">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lTransferName">
-               <property name="minimumSize">
-                <size>
-                 <width>275</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">padding-left: 0px;</string>
-               </property>
-               <property name="text">
-                <string notr="true"/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>10</width>
-                 <height>16</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="lTotal">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">#lTotal
-{
-color:#777777;
-text-decoration:none;
-}</string>
-               </property>
-               <property name="text">
-                <string notr="true"/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lSpeed">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>80</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>195</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">padding-right: -2px;</string>
-               </property>
-               <property name="text">
-                <string notr="true"/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+           <widget class="QLabel" name="lTransferName"/>
           </item>
           <item>
            <widget class="QProgressBar" name="pbTransfer">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>2</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>2</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
             <property name="maximum">
              <number>1000</number>
             </property>
@@ -363,13 +270,13 @@ text-decoration:none;
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="wContainerRight" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <widget class="QWidget" name="wSize" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout">
           <property name="spacing">
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>5</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -381,93 +288,87 @@ text-decoration:none;
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="lActionType">
-            <property name="minimumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="pixmap">
-             <pixmap resource="../Resources_macx.qrc">:/images/cloud_item_ico.png</pixmap>
-            </property>
-           </widget>
+           <widget class="QLabel" name="lDone"/>
           </item>
           <item>
-           <widget class="QLabel" name="lRemainingTime">
-            <property name="minimumSize">
-             <size>
-              <width>70</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>70</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string notr="true"/>
-            </property>
-           </widget>
+           <widget class="QLabel" name="lTotal"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bSpeed">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="wStatus" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lStatus"/>
           </item>
           <item>
-           <widget class="QPushButton" name="lCancelTransfer">
-            <property name="minimumSize">
-             <size>
-              <width>12</width>
-              <height>12</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>12</width>
-              <height>12</height>
-             </size>
-            </property>
+           <widget class="QLabel" name="lQueued">
             <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
-              <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>12</width>
-              <height>12</height>
-             </size>
+             <string>Queued</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="lRemainingTime"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tPauseTransfer">
+         <property name="icon">
+          <iconset resource="../Resources_linux.qrc">
+           <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tCancelTransfer">
+         <property name="icon">
+          <iconset resource="../Resources_linux.qrc">
+           <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="stateCompleted">
-      <property name="minimumSize">
-       <size>
-        <width>784</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>784</width>
-        <height>16777215</height>
-       </size>
-      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
         <number>0</number>
@@ -486,18 +387,6 @@ text-decoration:none;
        </property>
        <item>
         <widget class="QWidget" name="wContainerLeftCompleted" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>550</width>
-           <height>38</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>550</width>
-           <height>38</height>
-          </size>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="spacing">
            <number>0</number>
@@ -516,18 +405,6 @@ text-decoration:none;
           </property>
           <item>
            <widget class="QWidget" name="widgetCompleted" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>550</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>550</width>
-              <height>16777215</height>
-             </size>
-            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <property name="spacing">
               <number>1</number>
@@ -586,13 +463,13 @@ text-decoration:none;
               <widget class="QLabel" name="lTransferNameCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>375</width>
+                 <width>200</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>375</width>
+                 <width>200</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -750,7 +627,7 @@ text-decoration:none;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -771,7 +648,7 @@ text-decoration:none;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

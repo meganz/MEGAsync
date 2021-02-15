@@ -39,7 +39,7 @@
     border: 1px solid black;
 }
 
-QLabel, QPushButton, QLineEdit, QGroupBox
+*
 {
     font-family: Lato;
 }
@@ -52,6 +52,9 @@ QLabel, QPushButton, QLineEdit, QGroupBox
 #wRightPane
 {
     background-color: white;
+    width: 768px;
+    min-width: 768px;
+    max-width: 768px;
 }
 
 #lTransfers, #lCurrentContent
@@ -101,7 +104,8 @@ QFrame
 	padding-right: 6px;
 	padding-left: 6px;
 }
-#wMediaType QWidget, #wTransferring QWidget , #wSearch QWidget, QFrame
+
+#wMediaType QWidget, #wTransferring QWidget , #wSearch QWidget, #wLeftPane QFrame
 {
     height: 36px;
 }
@@ -285,10 +289,9 @@ border: none;
 #wTableHeader QToolButton
 {
 	height: 16px;
-	widtht: 16px;
+    width: 16px;
 	border-radius: 4px;
 	margin-right: 12px;
-	qproperty-alignment: 'AlignHCenter';
     qProperty-iconSize: 16px;
 }
 
@@ -309,9 +312,15 @@ border: none;
   color: #FF9E4F;
   font-size: 12px;
   font-weight: bold;
-  letter-spacing: 0;
   line-height: 20px;
   padding-left: 14px;
+}
+
+#wTableHeader &gt; *
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
 }
 
 #wEmpty
@@ -320,11 +329,12 @@ border: none;
     min-width: 48px;
     max-width: 48px;
 }
+
 #lName
 {
-    width: 266px;
-    min-width: 2266px;
-    max-width: 400px;
+    width: 208px;
+    min-width: 208px;
+    max-width: 208px;
 }
 
 #lSize, #lSpeed
@@ -347,9 +357,10 @@ border: none;
     min-width: 92px;
     max-width: 92px;
 }
+
 </string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_5">
+  <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -452,7 +463,7 @@ border: none;
            <item>
             <widget class="QToolButton" name="bSearch">
              <property name="icon">
-              <iconset resource="../Resources_win.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
              </property>
             </widget>
@@ -495,7 +506,7 @@ border: none;
               </sizepolicy>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_win.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
              </property>
             </widget>
@@ -513,7 +524,7 @@ border: none;
            <item>
             <widget class="QToolButton" name="tSearchCancel">
              <property name="icon">
-              <iconset resource="../Resources_win.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
              </property>
             </widget>
@@ -586,7 +597,7 @@ border: none;
                <string>All Transfers</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_all_transfers.png</normaloff>:/images/ico_all_transfers.png</iconset>
               </property>
               <property name="autoDefault">
@@ -634,7 +645,7 @@ border: none;
                <string>Downloads</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
               <property name="autoDefault">
@@ -679,7 +690,7 @@ border: none;
                <string>Uploads</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="autoDefault">
@@ -727,7 +738,7 @@ border: none;
                <string>Finished</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_finished.png</normaloff>:/images/ico_finished.png</iconset>
               </property>
               <property name="autoDefault">
@@ -806,7 +817,7 @@ border: none;
                <string>Archives</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_compressed.png</normaloff>:/images/drag_compressed.png</iconset>
               </property>
               <property name="autoDefault">
@@ -854,7 +865,7 @@ border: none;
                <string>Documents</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
               </property>
               <property name="autoDefault">
@@ -902,7 +913,7 @@ border: none;
                <string>Images</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_image.png</normaloff>:/images/drag_image.png</iconset>
               </property>
               <property name="autoDefault">
@@ -950,7 +961,7 @@ border: none;
                <string>Videos</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_video.png</normaloff>:/images/drag_video.png</iconset>
               </property>
               <property name="autoDefault">
@@ -998,7 +1009,7 @@ border: none;
                <string>Music</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_audio.png</normaloff>:/images/drag_audio.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1046,7 +1057,7 @@ border: none;
                <string>Other</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_generic.png</normaloff>:/images/drag_generic.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1118,7 +1129,7 @@ border: none;
                <string notr="true"/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1132,7 +1143,7 @@ border: none;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
               </property>
              </widget>
@@ -1184,7 +1195,7 @@ border: none;
              <string notr="true">1.2 MB/s</string>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/download_fail_item_ico.png</normaloff>:/images/download_fail_item_ico.png</iconset>
             </property>
            </widget>
@@ -1195,7 +1206,7 @@ border: none;
              <string notr="true">820 KB/s</string>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/upload_fail_item_ico.png</normaloff>:/images/upload_fail_item_ico.png</iconset>
             </property>
            </widget>
@@ -1209,7 +1220,7 @@ border: none;
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
             </property>
            </widget>
@@ -1230,7 +1241,7 @@ border: none;
            <string>Up to date</string>
           </property>
           <property name="icon">
-           <iconset resource="../Resources_win.qrc">
+           <iconset resource="../Resources_linux.qrc">
             <normaloff>:/images/ico_menu_uptodate_state.png</normaloff>:/images/ico_menu_uptodate_state.png</iconset>
           </property>
          </widget>
@@ -1300,7 +1311,7 @@ border: none;
             <item row="0" column="7">
              <widget class="QToolButton" name="tCogWheel">
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
               </property>
              </widget>
@@ -1311,7 +1322,7 @@ border: none;
                <string>Import links</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
               </property>
              </widget>
@@ -1329,7 +1340,7 @@ border: none;
                <string>Download</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
              </widget>
@@ -1340,7 +1351,7 @@ border: none;
                <string>Upload</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
              </widget>
@@ -1391,6 +1402,18 @@ border: none;
             </item>
             <item>
              <widget class="QLabel" name="lName">
+              <property name="minimumSize">
+               <size>
+                <width>208</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>208</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="text">
                <string>Name</string>
               </property>
@@ -1427,7 +1450,7 @@ border: none;
             <item>
              <widget class="QToolButton" name="tPauseResumeAll">
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
               </property>
              </widget>
@@ -1435,10 +1458,23 @@ border: none;
             <item>
              <widget class="QToolButton" name="tCancelAll">
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </widget>
@@ -1448,77 +1484,13 @@ border: none;
       </item>
       <item>
        <widget class="QStackedWidget" name="wTransfers">
-        <property name="minimumSize">
-         <size>
-          <width>768</width>
-          <height>622</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>768</width>
-          <height>622</height>
-         </size>
-        </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
-        <widget class="ActiveTransfersWidget" name="wActiveTransfers">
-         <property name="minimumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-        </widget>
-        <widget class="TransfersWidget" name="wDownloads">
-         <property name="minimumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-        </widget>
-        <widget class="TransfersWidget" name="wUploads">
-         <property name="minimumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-        </widget>
-        <widget class="TransfersWidget" name="wCompleted">
-         <property name="minimumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>798</width>
-           <height>480</height>
-          </size>
-         </property>
-        </widget>
+        <widget class="TransfersWidget" name="wActiveTransfers"/>
+        <widget class="TransfersWidget" name="wDownloads"/>
+        <widget class="TransfersWidget" name="wUploads"/>
+        <widget class="TransfersWidget" name="wCompleted"/>
        </widget>
       </item>
      </layout>
@@ -1533,15 +1505,9 @@ border: none;
    <header>TransfersWidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>ActiveTransfersWidget</class>
-   <extends>QWidget</extends>
-   <header>ActiveTransfersWidget.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections>
   <connection>

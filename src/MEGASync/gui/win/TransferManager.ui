@@ -28,69 +28,86 @@
   <property name="windowTitle">
    <string>Transfer Manager</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme="mega">
+    <normaloff>../../../../../../.designer/backup</normaloff>../../../../../../.designer/backup</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">#TransferManager
 {
-	border-radius: 4px;
-	border: 1px solid black;
+    border-radius: 4px;
+    border: 1px solid black;
 }
 
-QLabel, QPushButton, QLineEdit, QGroupBox
+*
 {
-	font-family: Lato;
+    font-family: Lato;
 }
 
 #wLeftPane
 {
-	background-color: #FAFAFA;
+    background-color: #FAFAFA;
 }
 
-#wRightPaneHeader QWidget
+#wRightPane
 {
-	background-color: white;
+    background-color: white;
+    width: 768px;
+    min-width: 768px;
+    max-width: 768px;
 }
 
-#lTransfers
+#lTransfers, #lCurrentContent
 {
-	color: #333333;
-	font-size: 20px;
-	font-weight: 600;
-	padding-left: 12px;
-	qproperty-alignment: 'AlignLeft | AlignVCenter';
+    color: #333333;
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 12px;
+    qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 #wMediaType QWidget &gt; QLabel, #wTransferring QFrame &gt; QLabel
 {
-	height: 24px;
-	min-height: 24px;
-	max-height: 24px;
-	color: #777777;
-	font-size: 10px;
-	font-weight: bold;
-	qproperty-alignment: 'AlignRight | AlignVCenter';
-
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    color: #777777;
+    font-size: 10px;
+    font-weight: bold;
+    qproperty-alignment: 'AlignRight | AlignVCenter';
+    border: none;
 }
 
-#fDownloads[itsOn=true]
+QFrame[itsOn=true]
 {
-	background-color: solid white;
+    qproperty-frameShape: 'Box';
+    qproperty-frameShadow: 'Raised';
+    border: 1px solid rgba(0,0,0,0.2);
+    background-color: white;
 }
 
-#fDownloads[itsOn=true] QLabel
+QFrame[itsOn=true]  QLabel
 {
-	background-color: #FAFAFA;
-	border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background-color: #FAFAFA;
+    border-radius: 12px;
 }
 
-#fDownloads[itsOn=true] QPushButton
+QFrame[itsOn=true] QPushButton
 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
-
-#wMediaType QWidget, #wTransferring QWidget, QFrame
+QFrame
 {
-	height: 36px;
+    border: none;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+#wMediaType QWidget, #wTransferring QWidget , #wSearch QWidget, #wLeftPane QFrame
+{
+    height: 36px;
 }
 
 #lTransferring, #lMediaType, #lSearch
@@ -98,107 +115,252 @@ QLabel, QPushButton, QLineEdit, QGroupBox
     color: #666666;
     font-size: 12px;
     padding-left: 12px;
-	qproperty-alignment: 'AlignLeft | AlignVCenter';
+    qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 QGroupBox
 {
     font-size: 12px;
-	border: none;
+    border: none;
 }
 
 QGroupBox::title
 {
-	font-family: Lato;
+    font-family: Lato;
    color: #666666;
-	padding-left: 12px;
+    padding-left: 18px;
 }
 
-#wMediaType QPushButton, #wTransferring QPushButton
+#wMediaType QPushButton, #wTransferring QPushButton, #wSearch QPushButton
 {
-	width: 200px;
-	min-width: 200px;
-	max-width: 200px;
+    width: 200px;
+    min-width: 180px;
+    max-width: 200px;
     font-size: 14px;
     color: #333333;
-	border: none;
-	text-align: left;
-	qProperty-iconSize: 24px;
+    border: none;
+    text-align: left;
+    qProperty-iconSize: 24px;
 }
 
 #wTitleAndSearch
 {
-		height: 34px;
-		min-height: 34px;
-		max-height: 34px;
+        height: 34px;
+        min-height: 34px;
+        max-height: 34px;
 }
 
 #wSearchField
 {
-	height: 34px;
-	min-height: 34px;
-	max-height: 34px;
-	width: 232px;
-	min-width: 232px;
-	max-width: 232px;
-	border-radius: 17px;
-	background-color: #E9E9E9;
+    height: 34px;
+    min-height: 34px;
+    max-height: 34px;
+    width: 232px;
+    min-width: 232px;
+    max-width: 232px;
+    border-radius: 17px;
+    background-color: #E9E9E9;
 }
 
 #leSearchField
 {
     color: #333333;
     font-size: 14px;
-	background-color: #E9E9E9;
+    background-color: #E9E9E9;
 }
 
 #wSearchField QToolButton
 {
-	height: 34px;
-	width: 18px;
-	min-height: 34px;
-	min-width: 18px;
-	max-height: 34px;
-	max-width: 18px;
-	qProperty-iconSize: 18px;
+    height: 34px;
+    width: 18px;
+    min-height: 34px;
+    min-width: 18px;
+    max-height: 34px;
+    max-width: 18px;
+    qProperty-iconSize: 18px;
     border: none;
 }
 
-#bSearchCancel
+#tSearchCancel
 {
-	padding-right: 7px;
+    padding-right: 7px;
 }
 
-#bSearchIcon
+#tSearchIcon
 {
-	padding-left: 7px;
+    padding-left: 7px;
+}
+
+#tClearSearchResult
+{
+    qProperty-iconSize: 16px;
 }
 
 #wLogoHeader QToolButton
 {
-	height: 32px;
-	width: 32px;
-	min-height: 32px;
-	min-width: 32px;
-	max-height: 32px;
-	max-width: 32px;
-	qProperty-iconSize: 18px;
-	border: 1px solid rgba(0,0,0,0.2);
-	background-color: #E9E9E9;
-	border-radius: 17px;
-	margin-left: 4px;
-	margin-right: 4px;
+    height: 32px;
+    width: 32px;
+    min-height: 32px;
+    min-width: 32px;
+    max-height: 32px;
+    max-width: 32px;
+    qProperty-iconSize: 18px;
+    border: 1px solid rgba(0,0,0,0.2);
+    background-color: #E9E9E9;
+    border-radius: 17px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+#wStatus
+{
+    height: 28px;
+    min-height: 24px;
+    max-height: 24px;
+}
+
+#bUpToDate
+{
+    height: 24px;
+    width: 100px;
+    min-height: 24px;
+    max-height: 24px;
+    min-width: 100px;
+    max-width: 100px;
+border: none;
+
+  color: #333333;
+  font-size: 14px;
+}
+
+#wSpeedAndClear QPushButton
+{
+    height: 24px;
+    width: 74px;
+    min-height: 24px;
+    min-width: 74px;
+    max-height: 24px;
+    max-width: 74px;
+    border-radius: 12px;
+    background-color: #ECECEC;
+    color: #333333;
+    font-size: 10px;
+    font-weight: bold;
+    qProperty-iconSize: 12px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 
 #bClearAll
 {
-	  height: 24px;
-  	  width: 24px;
-		background-color: grey;
-		border-radius: 13px;
-}</string>
+    height: 24px;
+    width: 24px;
+     background-color: #F88183;
+     border-radius: 13px;
+    margin-left: 12px;
+}
+
+#wRightPaneHeader QPushButton, QToolButton
+{
+    border: none;
+  color: #333333;
+  font-size: 14px;
+  font-weight: 600;
+    qProperty-iconSize: 22px;
+}
+
+#wTableHeader
+{
+    height: 28px;
+    min-height: 28px;
+    max-height: 28px;
+}
+
+#wTableHeader QLabel
+{
+    height: 20px;
+    color: #666666;
+    font-size: 12px;
+    qproperty-alignment: 'AlignLeft';
+}
+
+#wTableHeader QToolButton
+{
+    height: 16px;
+    width: 16px;
+    border-radius: 4px;
+    margin-right: 12px;
+    qProperty-iconSize: 16px;
+}
+
+#tCancelAll
+{
+     background-color: #F88183;
+}
+
+#tPauseResumeAll
+{
+    background-color: #ECECEC;
+}
+
+#lPaused
+{
+  height: 20px;
+  width: 39px;
+  color: #FF9E4F;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+  padding-left: 14px;
+}
+
+#wTableHeader &gt; *
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+#wEmpty
+{
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+}
+
+#lName
+{
+    width: 208px;
+    min-width: 208px;
+    max-width: 208px;
+}
+
+#lSize, #lSpeed
+{
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+#lStatus
+{
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+#lTime
+{
+    width: 92px;
+    min-width: 92px;
+    max-width: 92px;
+}
+
+</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_5">
+  <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -233,13 +395,13 @@ QGroupBox::title
        <number>14</number>
       </property>
       <property name="leftMargin">
-       <number>12</number>
+       <number>6</number>
       </property>
       <property name="topMargin">
        <number>12</number>
       </property>
       <property name="rightMargin">
-       <number>12</number>
+       <number>6</number>
       </property>
       <property name="bottomMargin">
        <number>12</number>
@@ -296,17 +458,12 @@ QGroupBox::title
             </spacer>
            </item>
            <item>
-            <widget class="QToolButton" name="bPause">
-             <property name="icon">
-              <iconset resource="../Resources_win.qrc">
-               <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
-             </property>
-            </widget>
+            <widget class="QToolButton" name="bPause"/>
            </item>
            <item>
             <widget class="QToolButton" name="bSearch">
              <property name="icon">
-              <iconset resource="../Resources_win.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
              </property>
             </widget>
@@ -341,7 +498,7 @@ QGroupBox::title
             <number>0</number>
            </property>
            <item>
-            <widget class="QToolButton" name="bSearchIcon">
+            <widget class="QToolButton" name="tSearchIcon">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -349,7 +506,7 @@ QGroupBox::title
               </sizepolicy>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_win.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
              </property>
             </widget>
@@ -365,9 +522,9 @@ QGroupBox::title
             </widget>
            </item>
            <item>
-            <widget class="QToolButton" name="bSearchCancel">
+            <widget class="QToolButton" name="tSearchCancel">
              <property name="icon">
-              <iconset resource="../Resources_win.qrc">
+              <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
              </property>
             </widget>
@@ -440,22 +597,19 @@ QGroupBox::title
                <string>All Transfers</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_all_transfers.png</normaloff>:/images/ico_all_transfers.png</iconset>
               </property>
-              <property name="checkable">
-               <bool>true</bool>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
+              <property name="flat">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="lAll">
+             <widget class="QLabel" name="lAllTransfers">
               <property name="text">
                <string>XXXX</string>
               </property>
@@ -466,12 +620,6 @@ QGroupBox::title
          </item>
          <item>
           <widget class="QFrame" name="fDownloads">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_11">
             <property name="spacing">
              <number>0</number>
@@ -497,14 +645,11 @@ QGroupBox::title
                <string>Downloads</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -520,12 +665,6 @@ QGroupBox::title
          </item>
          <item>
           <widget class="QFrame" name="fUploads">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_12">
             <property name="spacing">
              <number>0</number>
@@ -551,14 +690,11 @@ QGroupBox::title
                <string>Uploads</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -574,12 +710,6 @@ QGroupBox::title
          </item>
          <item>
           <widget class="QFrame" name="fCompleted">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
            <layout class="QHBoxLayout" name="horizontalLayout_13">
             <property name="spacing">
              <number>0</number>
@@ -608,14 +738,11 @@ QGroupBox::title
                <string>Finished</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_finished.png</normaloff>:/images/ico_finished.png</iconset>
               </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -640,7 +767,10 @@ QGroupBox::title
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wMediaType" native="true">
+       <widget class="QGroupBox" name="wMediaType">
+        <property name="title">
+         <string>MEDIA TYPE</string>
+        </property>
         <layout class="QVBoxLayout" name="wMediaTypeLayout">
          <property name="spacing">
           <number>0</number>
@@ -649,7 +779,7 @@ QGroupBox::title
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>7</number>
+          <number>14</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -658,14 +788,7 @@ QGroupBox::title
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="lMediaType">
-           <property name="text">
-            <string>MEDIA TYPE</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" name="wArchives" native="true">
+          <widget class="QFrame" name="fArchives">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -694,8 +817,11 @@ QGroupBox::title
                <string>Archives</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_compressed.png</normaloff>:/images/drag_compressed.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -710,7 +836,7 @@ QGroupBox::title
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wDocuments" native="true">
+          <widget class="QFrame" name="fDocuments">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -739,8 +865,11 @@ QGroupBox::title
                <string>Documents</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -755,7 +884,7 @@ QGroupBox::title
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wImages" native="true">
+          <widget class="QFrame" name="fImages">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -784,8 +913,11 @@ QGroupBox::title
                <string>Images</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_image.png</normaloff>:/images/drag_image.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -800,7 +932,7 @@ QGroupBox::title
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wVideos" native="true">
+          <widget class="QFrame" name="fVideos">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -829,8 +961,11 @@ QGroupBox::title
                <string>Videos</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_video.png</normaloff>:/images/drag_video.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -845,7 +980,7 @@ QGroupBox::title
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wMusic" native="true">
+          <widget class="QFrame" name="fMusic">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -874,8 +1009,11 @@ QGroupBox::title
                <string>Music</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_audio.png</normaloff>:/images/drag_audio.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -890,7 +1028,7 @@ QGroupBox::title
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wOther" native="true">
+          <widget class="QFrame" name="fOther">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -919,8 +1057,11 @@ QGroupBox::title
                <string>Other</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/drag_generic.png</normaloff>:/images/drag_generic.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -938,16 +1079,76 @@ QGroupBox::title
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wSearch" native="true">
+       <widget class="QGroupBox" name="wSearch">
+        <property name="title">
+         <string>SEARCH</string>
+        </property>
         <layout class="QVBoxLayout" name="wSearchLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>14</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QLabel" name="lSearch">
-           <property name="enabled">
-            <bool>false</bool>
+          <widget class="QFrame" name="fSearchString">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
            </property>
-           <property name="text">
-            <string>SEARCH</string>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
            </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bSearchString">
+              <property name="text">
+               <string notr="true"/>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tClearSearchResult">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -967,8 +1168,110 @@ QGroupBox::title
        </spacer>
       </item>
       <item>
-       <widget class="QWidget" name="wOptions" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout">
+       <widget class="QStackedWidget" name="wStatus">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="wSpeedAndClear">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bDownSpeed">
+            <property name="text">
+             <string notr="true">1.2 MB/s</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/download_fail_item_ico.png</normaloff>:/images/download_fail_item_ico.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bUpSpeed">
+            <property name="text">
+             <string notr="true">820 KB/s</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/upload_fail_item_ico.png</normaloff>:/images/upload_fail_item_ico.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="bClearAll">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="pUpToDate">
+         <widget class="QPushButton" name="bUpToDate">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>100</width>
+            <height>24</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Up to date</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../Resources_linux.qrc">
+            <normaloff>:/images/ico_menu_uptodate_state.png</normaloff>:/images/ico_menu_uptodate_state.png</iconset>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wRightPane" native="true">
+     <layout class="QVBoxLayout" name="wRightPaneLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>12</number>
+      </property>
+      <property name="rightMargin">
+       <number>12</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="wRightPaneHeader" native="true">
+        <layout class="QVBoxLayout" name="wRightPaneHeaderLayout">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -985,191 +1288,213 @@ QGroupBox::title
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="bClose">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string>Close</string>
-           </property>
+          <widget class="QWidget" name="wStatusHeader" native="true">
+           <layout class="QGridLayout" name="wStatusHeaderLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="horizontalSpacing">
+             <number>24</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="7">
+             <widget class="QToolButton" name="tCogWheel">
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="bImportLinks">
+              <property name="text">
+               <string>Import links</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="lCurrentContent">
+              <property name="text">
+               <string>All Transfers</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="6">
+             <widget class="QPushButton" name="bDownload">
+              <property name="text">
+               <string>Download</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QPushButton" name="bUpload">
+              <property name="text">
+               <string>Upload</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lPaused">
+              <property name="text">
+               <string>Paused</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="bClearAll">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
-           </property>
+          <widget class="QWidget" name="wTableHeader" native="true">
+           <layout class="QHBoxLayout" name="wTableHeaderLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QWidget" name="wEmpty" native="true"/>
+            </item>
+            <item>
+             <widget class="QLabel" name="lName">
+              <property name="minimumSize">
+               <size>
+                <width>208</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>208</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Name</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lSize">
+              <property name="text">
+               <string>Size</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lSpeed">
+              <property name="text">
+               <string>Speed</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lStatus">
+              <property name="text">
+               <string>Status</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lTime">
+              <property name="text">
+               <string>Time left</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tPauseResumeAll">
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="tCancelAll">
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QStackedWidget" name="wTransfers">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="TransfersWidget" name="wActiveTransfers"/>
+        <widget class="TransfersWidget" name="wDownloads"/>
+        <widget class="TransfersWidget" name="wUploads"/>
+        <widget class="TransfersWidget" name="wCompleted"/>
+       </widget>
+      </item>
      </layout>
     </widget>
-   </item>
-   <item>
-    <layout class="QVBoxLayout" name="wRightPane">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QStackedWidget" name="wRightPaneHeader">
-       <property name="minimumSize">
-        <size>
-         <width>768</width>
-         <height>98</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>768</width>
-         <height>98</height>
-        </size>
-       </property>
-       <widget class="QWidget" name="page">
-        <widget class="QPushButton" name="bAdd">
-         <property name="geometry">
-          <rect>
-           <x>590</x>
-           <y>10</y>
-           <width>200</width>
-           <height>32</height>
-          </rect>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string>Add...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../Resources_win.qrc">
-           <normaloff>:/images/ico_drop_add_sync.png</normaloff>:/images/ico_drop_add_sync.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="page_2"/>
-      </widget>
-     </item>
-     <item>
-      <widget class="QStackedWidget" name="wTransfers">
-       <property name="minimumSize">
-        <size>
-         <width>768</width>
-         <height>622</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>768</width>
-         <height>622</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: white;</string>
-       </property>
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <widget class="ActiveTransfersWidget" name="wActiveTransfers">
-        <property name="minimumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="TransfersWidget" name="wDownloads">
-        <property name="minimumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="TransfersWidget" name="wUploads">
-        <property name="minimumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="TransfersWidget" name="wCompleted">
-        <property name="minimumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-       </widget>
-      </widget>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>
@@ -1180,15 +1505,42 @@ QGroupBox::title
    <header>TransfersWidget.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>ActiveTransfersWidget</class>
-   <extends>QWidget</extends>
-   <header>ActiveTransfersWidget.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>bSearch</sender>
+   <signal>clicked()</signal>
+   <receiver>leSearchField</receiver>
+   <slot>setFocus()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>222</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>55</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tClearSearchResult</sender>
+   <signal>clicked()</signal>
+   <receiver>wSearch</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>503</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>127</x>
+     <y>496</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

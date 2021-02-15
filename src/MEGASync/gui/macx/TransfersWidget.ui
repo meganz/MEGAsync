@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>TransfersWidget</class>
  <widget class="QWidget" name="TransfersWidget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>751</width>
-    <height>449</height>
-   </rect>
-  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
@@ -32,14 +24,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lStatus
-{
-  font-family: &quot;Lato&quot;;
-  font-size: 24px;
-  font-weight: 300;
-  color: rgba(51, 51, 51, 0.7)
-}
-
+   <string notr="true">
 #pNoTransfers
 {
      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -48,16 +33,16 @@
 
 #tvTransfers
 {
-	background-color: white;
-	paint-alternating-row-colors-for-empty-area: false;
+    background-color: white;
+    paint-alternating-row-colors-for-empty-area: false;
 }
 
 #tvTransfers::branch:selected
 {
-	background-color:  #f7f7f7;	
+    background-color:  #f7f7f7;
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="TransfersWidgetLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -97,7 +82,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="TransfersStateInfoWidget" name="pNoTransfers">
       <property name="sizePolicy">
@@ -118,7 +103,7 @@
         <height>16777215</height>
        </size>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <layout class="QHBoxLayout" name="pNoTransfersLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -152,7 +137,7 @@
       <property name="styleSheet">
        <string notr="true">border: none;</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="pTransfersLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -202,6 +187,9 @@
          </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="indentation">
+          <number>0</number>
          </property>
          <property name="rootIsDecorated">
           <bool>false</bool>

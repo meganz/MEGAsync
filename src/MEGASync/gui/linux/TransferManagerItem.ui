@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>768</width>
+    <width>756</width>
     <height>48</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>756</width>
+    <height>48</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>768</width>
+    <width>756</width>
     <height>48</height>
    </size>
   </property>
@@ -26,7 +26,7 @@
    <string/>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">*
@@ -34,26 +34,26 @@
   font-family: &quot;Lato&quot;;
 }
 
-TransferManagerItem
+#TransferManagerItem, #sTransferState, #stateActive, #stateCompleted
 {
 	width: 756px; 
-	heigth: 48px; 
+    height: 48px;
 	min-width: 756px; 
-	min-heigth: 48px; 
+    min-height: 48px;
 	max-width: 756px; 
-	max-heigth: 48px; 
+    max-height: 48px;
 	background-color: transparent;
 }
 
 #tFileType
 {
-	width: 48px; 
-	heigth: 48px; 
-	min-width: 48px; 
-	min-heigth: 48px; 
-	max-width: 48px; 
-	max-heigth: 48px; 
-	qProperty-iconSize: 48px;
+	width: 38px; 
+    height: 48px;
+	min-width: 38px; 
+    min-height: 48px;
+	max-width: 38px; 
+    max-height: 48px;
+	qProperty-iconSize: 40px;
 	background: transparent;
 }
 
@@ -67,18 +67,22 @@ QPushButton
 	background: transparent;
 }
 
+
 #wName
 {
-	width: 218px; 
-	heigth: 48px; 
-	min-width: 218px; 
-	min-heigth: 48px; 
-	max-width: 218px; 
-	max-heigth: 48px; 
+	width: 208px; 
+    height: 48px;
+	min-width: 208px; 
+    min-height: 48px;
+	max-width: 208px; 
+    max-height: 48px;
 }
 
 #lTransferName
 {
+	width: 208px; 
+	min-width: 208px; 
+	max-width: 208px; 
   height: 20px;
   color: #333333;
   font-size: 14px;
@@ -86,6 +90,9 @@ QPushButton
 
 QProgressBar
 {
+	width: 104px; 
+	min-width: 104px; 
+	max-width: 104px; 
     height: 4px;
     min-height: 4px;
     max-height: 4px;
@@ -101,21 +108,23 @@ QProgressBar::chunk
   border-radius: 2px;
   border:0px;
 }
+
 #lDone, #lTotal
 {
   font-size: 12px;
   font-weight: bold;
+ qProperty-alignment: 'AlignLeft | AlignVCenter';
+
 }
+
 #lDone
 {
   color: #999999;
- qProperty-alignment: 'AlignRight | AlignVCenter';
 }
 
 #lTotal
 {
   color: #333333;
- qProperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 #wSize, #bSpeed
@@ -130,7 +139,7 @@ QProgressBar::chunk
   color: #333333;
   font-size: 12px;
   font-weight: bold;
- qProperty-alignment: 'AlignLeft | AlignVCenter';
+  text-align: left;
 }
 
 #wStatus
@@ -168,18 +177,18 @@ QProgressBar::chunk
 #tPauseTransfer, #tCancelTransfer
 {
 	width: 16px; 
-	heigth: 16px; 
+    height: 16px;
 	min-width: 16px; 
-	min-heigth: 16px; 
+    min-height: 16px;
 	max-width: 16px; 
-	max-heigth: 16px; 
+    max-height: 16px;
 	background-color: #EEEEEE;
 	qProperty-iconSize: 16px;
 	border-radius: 4px;
 	margin-right: 12px;
 }</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
+  <layout class="QHBoxLayout" name="TransferManagerIemLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -197,35 +206,11 @@ QProgressBar::chunk
    </property>
    <item>
     <widget class="QStackedWidget" name="sTransferState">
-     <property name="minimumSize">
-      <size>
-       <width>768</width>
-       <height>48</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>768</width>
-       <height>48</height>
-      </size>
-     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="stateActive">
-      <property name="minimumSize">
-       <size>
-        <width>768</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>768</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="stateActiveLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -247,14 +232,26 @@ QProgressBar::chunk
        <item>
         <widget class="QWidget" name="wName" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="lTransferName"/>
           </item>
           <item>
            <widget class="QProgressBar" name="pbTransfer">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
             <property name="maximum">
              <number>1000</number>
             </property>
@@ -274,7 +271,22 @@ QProgressBar::chunk
        </item>
        <item>
         <widget class="QWidget" name="wSize" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="lDone"/>
           </item>
@@ -285,11 +297,30 @@ QProgressBar::chunk
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="bSpeed"/>
+        <widget class="QPushButton" name="bSpeed">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QWidget" name="wStatus" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="lStatus"/>
           </item>
@@ -322,21 +353,22 @@ QProgressBar::chunk
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="stateCompleted">
-      <property name="minimumSize">
-       <size>
-        <width>784</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>784</width>
-        <height>16777215</height>
-       </size>
-      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
         <number>0</number>
@@ -355,18 +387,6 @@ QProgressBar::chunk
        </property>
        <item>
         <widget class="QWidget" name="wContainerLeftCompleted" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>550</width>
-           <height>38</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>550</width>
-           <height>38</height>
-          </size>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="spacing">
            <number>0</number>
@@ -385,18 +405,6 @@ QProgressBar::chunk
           </property>
           <item>
            <widget class="QWidget" name="widgetCompleted" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>550</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>550</width>
-              <height>16777215</height>
-             </size>
-            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <property name="spacing">
               <number>1</number>
@@ -455,13 +463,13 @@ QProgressBar::chunk
               <widget class="QLabel" name="lTransferNameCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>375</width>
+                 <width>200</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>375</width>
+                 <width>200</width>
                  <height>16777215</height>
                 </size>
                </property>
