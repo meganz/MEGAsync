@@ -181,14 +181,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 
-#ifndef WIN32
-    #ifndef __APPLE__
+#ifdef Q_OS_LINUX
     ui->rProxyAuto->hide();
     ui->cDisableIcons->hide();
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
-    #endif
-#else
+#endif
+#ifdef __APPLE__
     connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
     ui->cDisableIcons->hide();
 
@@ -1590,7 +1589,7 @@ int SettingsDialog::saveSettings()
         if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
         {
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
-            #ifdef Q_OS_MACX
+            #ifdef __APPLE__
             Platform::notifyRestartSyncFolders();
             #else
             for (int i = 0; i < model->getNumSyncedFolders(); i++)
@@ -2693,36 +2692,6 @@ void SettingsDialog::on_bFullCheck_clicked()
     }
 }
 
-#ifdef __APPLE__
-void SettingsDialog::onAnimationFinished()
-{
-    if (ui->wStack->currentWidget() == ui->pAccount)
-    {
-        ui->pAccount->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pSyncs)
-    {
-        ui->pSyncs->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pBandwidth)
-    {
-        ui->pBandwidth->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pSecurity)
-    {
-        ui->pSecurity->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pProxies)
-    {
-        ui->pProxies->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pAdvanced)
-    {
-        ui->pAdvanced->show();
-    }
-}
-#endif
-
 void SettingsDialog::setAvatar()
 {
     const char *email = megaApi->getMyEmail();
@@ -2862,6 +2831,34 @@ void SettingsDialog::on_bHelpIco_clicked()
 #endif
 
 #ifdef __APPLE__
+void SettingsDialog::onAnimationFinished()
+{
+    if (ui->wStack->currentWidget() == ui->pAccount)
+    {
+        ui->pAccount->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pSyncs)
+    {
+        ui->pSyncs->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pBandwidth)
+    {
+        ui->pBandwidth->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pSecurity)
+    {
+        ui->pSecurity->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pProxies)
+    {
+        ui->pProxies->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pAdvanced)
+    {
+        ui->pAdvanced->show();
+    }
+}
+
 void SettingsDialog::animateSettingPage(int endValue, int duration)
 {
     minHeightAnimation->setTargetObject(this);
