@@ -617,7 +617,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
     #ifdef __APPLE__
         if (ui->wStack->currentWidget() == ui->pAdvanced)
-        {            
+        {
             animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE, SETTING_ANIMATION_PAGE_TIMEOUT);
         }
     #endif
@@ -788,7 +788,7 @@ void SettingsDialog::on_bAdvanced_clicked()
     onCacheSizeAvailable();
 
     if (!cacheSize && !remoteCacheSize)
-    {      
+    {
         animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
     else
