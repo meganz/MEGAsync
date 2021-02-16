@@ -2908,6 +2908,7 @@ void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
 void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
 {
     if (modifyingSettings) return;
+    if (index < 0) return; // QComboBox can emit with index -1; do nothing in that case
     QString selectedLanguage = languageCodes[index];
     if (preferences->language() != selectedLanguage)
     {
