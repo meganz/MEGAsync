@@ -102,11 +102,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->controller = Controller::instance();
     this->model = Model::instance();
 
-    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-
     mThreadPool = ThreadPoolSingleton::getInstance();
 
     syncsChanged = false;
@@ -154,6 +149,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     uploadButtonGroup.addButton(ui->rUploadAutoLimit);
 
     ui->wStack->setCurrentWidget(ui->pAccount);
+
+    loadSettings();
+
+    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
 
     connect(ui->rNoProxy, SIGNAL(clicked()), this, SLOT(stateChanged()));
     connect(ui->rProxyAuto, SIGNAL(clicked()), this, SLOT(stateChanged()));
@@ -486,22 +488,21 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
 {
     switch (errorCode)
     {
-    case MegaSync::Error::NO_SYNC_ERROR:
-    {
-        assert(false && "unexpected no error after enabling failed");
-        return;
-    }
-    default:
-    {
-        QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
-           tr("Your sync \"%1\" can't be enabled. Reason: %2").arg(syncSetting->name())
-          .arg(tr(MegaSync::getMegaSyncErrorCode(errorCode))));
-        break;
-    }
+        case MegaSync::Error::NO_SYNC_ERROR:
+        {
+            assert(false && "unexpected no error after enabling failed");
+            return;
+        }
+        default:
+        {
+            QMegaMessageBox::critical(nullptr, tr("Error enabling sync"),
+               tr("Your sync \"%1\" can't be enabled. Reason: %2").arg(syncSetting->name())
+              .arg(tr(MegaSync::getMegaSyncErrorCode(errorCode))));
+            break;
+        }
     }
 
-    loadSettings(); //alt: look for item with syncSetting->tag & update enable/disable checkbox
-
+    loadSyncSettings();
 }
 
 void SettingsDialog::proxyStateChanged()
@@ -2287,7 +2288,6 @@ void SettingsDialog::changeEvent(QEvent *event)
 #endif
         ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
-        loadSettings();
         onCacheSizeAvailable();
     }
     QDialog::changeEvent(event);
@@ -2659,10 +2659,6 @@ void SettingsDialog::onProxyTestSuccess()
     {
         shouldClose = false;
         this->close();
-    }
-    else
-    {
-        loadSettings();
     }
 }
 

@@ -5897,7 +5897,6 @@ void MegaApplication::openSettings(int tab)
 
     settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
-    settingsDialog->loadSettings();
     settingsDialog->show();
 }
 

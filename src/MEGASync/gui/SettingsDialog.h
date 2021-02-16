@@ -44,7 +44,6 @@ public:
 
     void setProxyOnly(bool proxyOnly);
     void setOverQuotaMode(bool mode);
-    void loadSettings();
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
@@ -152,8 +151,9 @@ protected:
     QString getFormatLimitDays();
 
 private:
-    void loadSizeLimits();
+    void loadSettings();
     int saveSettings();
+    void loadSizeLimits();
     void onCacheSizeAvailable();
     void onClearCache();
     void savingSyncs(bool completed, QObject *item);
