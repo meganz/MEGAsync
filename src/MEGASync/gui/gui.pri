@@ -2,11 +2,15 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialog.cpp \
+    $$PWD/MegaTransferDelegate2.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/QTransfersModel2.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
     $$PWD/BindFolderDialog.cpp \
+    $$PWD/TransferItem2.cpp \
+    $$PWD/TransferManagerItem2.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -72,11 +76,15 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
+    $$PWD/MegaTransferDelegate2.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/QTransfersModel2.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
     $$PWD/BindFolderDialog.h \
+    $$PWD/TransferItem2.h \
+    $$PWD/TransferManagerItem2.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \

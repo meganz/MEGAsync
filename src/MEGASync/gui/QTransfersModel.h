@@ -74,6 +74,7 @@ public:
         TYPE_UPLOAD           = 1,
         TYPE_FINISHED         = 2,
         TYPE_CUSTOM_TRANSFERS = 3,
+        TYPE_ALL_TRANSFERS    = 4,
     };
 
     explicit QTransfersModel(ModelType type, QObject *parent = 0);
