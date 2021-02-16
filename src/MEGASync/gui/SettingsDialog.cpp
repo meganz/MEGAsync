@@ -2736,7 +2736,7 @@ void SettingsDialog::openSettingsTab(int tab)
     case ACCOUNT_TAB:
         reloadUIpage = true;
 #ifndef __APPLE__
-        ui->bAccount->click();
+        ui->bAccount->setChecked(true);
 #else
         emit bAccount.get()->activated();
 #endif
@@ -2744,7 +2744,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case SYNCS_TAB:
 #ifndef __APPLE__
-        ui->bSyncs->click();
+        ui->bSyncs->setChecked(true);
 #else
         emit bSyncs.get()->activated();
 #endif
@@ -2752,7 +2752,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case BANDWIDTH_TAB:
 #ifndef __APPLE__
-        ui->bBandwidth->click();
+        ui->bBandwidth->setChecked(true);
 #else
         emit bBandwidth.get()->activated();
 #endif
@@ -2760,7 +2760,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case SECURITY_TAB:
 #ifndef __APPLE__
-        ui->bSecurity->click();
+        ui->bSecurity->setChecked(true);
 #else
         emit bSecurity.get()->activated();
 #endif
@@ -2768,7 +2768,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case PROXY_TAB:
 #ifndef __APPLE__
-        ui->bProxies->click();
+        ui->bProxies->setChecked(true);
 #else
         emit bProxies.get()->activated();
 #endif
@@ -2776,7 +2776,7 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case ADVANCED_TAB:
 #ifndef __APPLE__
-        ui->bAdvanced->click();
+        ui->bAdvanced->setChecked(true);
 #else
         emit bAdvanced.get()->activated();
 #endif
