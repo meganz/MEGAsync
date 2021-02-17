@@ -5,6 +5,9 @@
 #include "Utilities.h"
 #include "platform/Platform.h"
 
+// test
+#include "MegaTransferDelegate2.h"
+
 #include <QMouseEvent>
 
 using namespace mega;
@@ -43,30 +46,16 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
         std::shared_ptr<MegaTransferData> transferData(mMegaApi->getTransferData());
 
-        MegaTransfer* firstUpload   = nullptr;
-        MegaTransfer* firstDownload = nullptr;
-
-        if (transferData->getNumUploads() > 0)
-        {
-            firstUpload = mMegaApi->getTransferByTag(transferData->getUploadTag(0));
-        }
-        if (transferData->getNumDownloads() > 0)
-        {
-            firstDownload = mMegaApi->getTransferByTag(transferData->getDownloadTag(0));
-        }
-
-        Utilities::queueFunctionInAppThread([this, firstDownload, firstUpload, transferData, transferManager]()
+        Utilities::queueFunctionInAppThread([this, transferData, transferManager]()
         {//queued function
 
             if (transferManager) //Check if this is not deleted
             {
-                mNotificationNumber = transferData->getNotificationNumber();
-                mUi->wActiveTransfers->setupTransfers(transferData, QTransfersModel::TYPE_CUSTOM_TRANSFERS);
-                mUi->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
-                mUi->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
+                mUi->wActiveTransfers->setupTransfers();
+//                mUi->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
+//                mUi->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
             }
-            delete firstUpload;
-            delete firstDownload;
+
 
         });//end of queued function
 
@@ -84,8 +73,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mUi->wCompleted->setupFinishedTransfers(((MegaApplication *)qApp)->getFinishedTransfers());
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
 
-    connect(mUi->wCompleted->getModel(), SIGNAL(noTransfers()), this, SLOT(updateState()));
-    connect(mUi->wCompleted->getModel(), SIGNAL(onTransferAdded()), this, SLOT(updateState()));
+//    connect(mUi->wCompleted->getModel(), SIGNAL(noTransfers()), this, SLOT(updateState()));
+//    connect(mUi->wCompleted->getModel(), SIGNAL(onTransferAdded()), this, SLOT(updateState()));
 
 
     QObject::connect(mUi->bImportLinks, SIGNAL(clicked()), qApp, SLOT(importLinks()));
@@ -104,7 +93,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabFramesToggleGroup[UPLOADS_TAB]       = mUi->fUploads;
     mTabFramesToggleGroup[COMPLETED_TAB]     = mUi->fCompleted;
 
-    on_tAllTransfers_clicked(); 
+    on_tAllTransfers_clicked();
 }
 
 void TransferManager::setActiveTab(int t)
@@ -130,145 +119,6 @@ void TransferManager::setActiveTab(int t)
 TransferManager::~TransferManager()
 {
     delete mUi;
-}
-
-void TransferManager::onTransferStart(MegaApi* api, MegaTransfer* transfer)
-{
-    if (transfer->isStreamingTransfer()
-            || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber())
-    {
-        return;
-    }
-
-    if (!transfer->getPriority())
-    {
-        return;
-    }
-
-    QTransfersModel* model = mUi->wActiveTransfers->getModel();
-
-    if (model)
-    {
-        model->onTransferStart(api, transfer);
-    }
-
-    model = mUi->wUploads->getModel();
-    if (model)
-    {
-        model->onTransferStart(api, transfer);
-    }
-
-    model = mUi->wDownloads->getModel();
-    if (model)
-    {
-        model->onTransferStart(api, transfer);
-    }
-}
-
-void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
-{
-    if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
-    {
-        return;
-    }
-
-    mUi->wCompleted->getModel()->onTransferFinish(api, transfer, e);
-    mUi->fCompleted->setVisible(true);
-
-    if (mNotificationNumber >= transfer->getNotificationNumber())
-    {
-        return;
-    }
-
-    if (!transfer->getPriority())
-    {
-        return;
-    }
-
-    QTransfersModel* model = mUi->wUploads->getModel();
-    if (model)
-    {
-        model->onTransferFinish(api, transfer, e);
-    }
-
-    model = mUi->wDownloads->getModel();
-    if (model)
-    {
-        model->onTransferFinish(api, transfer, e);
-    }
-
-    model = mUi->wActiveTransfers->getModel();
-    if (model)
-    {
-        model->onTransferFinish(api, transfer, e);
-    }
-
-}
-
-void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
-{
-    if (transfer->isStreamingTransfer()
-            || transfer->isFolderTransfer() || mNotificationNumber >= transfer->getNotificationNumber())
-    {
-        return;
-    }
-
-    if (!transfer->getPriority())
-    {
-        return;
-    }
-
-    QTransfersModel* model = mUi->wUploads->getModel();
-    if (model)
-    {
-        model->onTransferUpdate(api, transfer);
-    }
-
-    model = mUi->wDownloads->getModel();
-    if (model)
-    {
-        model->onTransferUpdate(api, transfer);
-    }
-
-    model = mUi->wActiveTransfers->getModel();
-    if (model)
-    {
-        model->onTransferUpdate(api, transfer);
-    }
-}
-
-void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
-{
-    if (transfer->isStreamingTransfer()
-            || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber())
-    {
-        return;
-    }
-
-    if (!transfer->getPriority())
-    {
-        return;
-    }
-
-    QTransfersModel *model = mUi->wUploads->getModel();
-    if (model)
-    {
-        model->onTransferTemporaryError(api, transfer, e);
-    }
-
-    model = mUi->wDownloads->getModel();
-    if (model)
-    {
-        model->onTransferTemporaryError(api, transfer, e);
-    }
-
-    model = mUi->wActiveTransfers->getModel();
-    if (model)
-    {
-        model->onTransferTemporaryError(api, transfer, e);
-    }
 }
 
 void TransferManager::on_tCompleted_clicked()

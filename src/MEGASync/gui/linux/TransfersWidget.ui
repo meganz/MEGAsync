@@ -2,8 +2,16 @@
 <ui version="4.0">
  <class>TransfersWidget</class>
  <widget class="QWidget" name="TransfersWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>756</width>
+    <height>642</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -61,7 +69,7 @@
    <item>
     <widget class="QStackedWidget" name="sWidget">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -124,7 +132,7 @@
      <widget class="QWidget" name="pTransfers">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>756</width>
         <height>0</height>
        </size>
       </property>
@@ -156,15 +164,15 @@
        <item>
         <widget class="MegaTransferView" name="tvTransfers">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>0</height>
+           <width>756</width>
+           <height>642</height>
           </size>
          </property>
          <property name="maximumSize">

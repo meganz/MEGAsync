@@ -6,9 +6,10 @@ using namespace mega;
 QTransfersModel2::QTransfersModel2(QObject *parent) :
     QAbstractItemModel(parent),
     mMegaApi(((MegaApplication *)qApp)->getMegaApi()),
-    mTransfers(QMap<TransferTag, TransferData*>()),
+    mTransfers(QMap<TransferTag, TransferItem2*>()),
     mOrder(QList<TransferTag>()),
-    mThreadPool(ThreadPoolSingleton::getInstance())
+    mThreadPool(ThreadPoolSingleton::getInstance()),
+    mNotificationNumber(0)
 
 {
     // Connect to transfer changes signals
@@ -38,30 +39,9 @@ QVariant QTransfersModel2::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole)
     {
-
-        auto td (*(mTransfers.find(mOrder.at(index.row()))));
-        auto mt(mMegaApi->getTransferByTag(td->mMegaTransferTag));
-
-        TransferDataRow row(mt->getType(),
-                            mt->getLastError().getErrorCode(),
-                            mt->getState(),
-                            td->mMegaTransferTag,
-                            mt->getLastErrorExtended()->getValue(),
-                            td->mFinishedTime,
-                            td->mRemTime.mRemainingSeconds,
-                            mt->getTotalBytes(),
-                            mt->getPriority(),
-                            mt->getSpeed(),
-                            mt->getMeanSpeed(),
-                            mt->getTransferredBytes(),
-                            mt->getUpdateTime(),
-                            mt->getPublicMegaNode(),
-                            mt->isSyncTransfer(),
-                            td->mFileType,
-                            QString::fromUtf8(mt->getFileName()));
-
-        delete mt;
-        return QVariant::fromValue(row);
+        auto tag (mOrder.at(index.row()));
+        auto ti  (*(mTransfers.find(tag)));
+        return QVariant::fromValue(*ti);
     }
 
     return QVariant();
@@ -91,69 +71,185 @@ QTransfersModel2::~QTransfersModel2()
 void QTransfersModel2::initModel()
 {
     auto transfers (mMegaApi->getTransfers());
+    std::shared_ptr<MegaTransferData> transferData(mMegaApi->getTransferData());
+    mNotificationNumber = transferData->getNotificationNumber();
 
+    beginInsertRows(QModelIndex(), 0, transfers->size()); // Not good... can have folders....
     for (auto i (0); i < transfers->size(); ++i)
     {
-        TransferData* td = new TransferData();
         mega::MegaTransfer* mt (transfers->get(i));
 
-        td->mMegaTransferTag = mt->getTag();
-        // TODO: get right type
-        td->mFileType = TYPE_TEXT;
-        td->mFinishedTime = 0;
-        td->mRemTime = TransferRemainingTime();
-        td->mRemTime.calculateRemainingTimeSeconds(mt->getSpeed(), mt->getTransferredBytes());
+        if (!mt->isStreamingTransfer()
+                && !mt->isFolderTransfer()
+                && mt->getPriority())
+        {
+            TransferTag tag (mt->getTag());
 
-        mOrder.append(td->mMegaTransferTag);
+            TransferDataRow dataRow(
+                        mt->getType(),
+                        0,
+                        mt->getState(),
+                        tag,
+                        0,
+                        0,
+                        42,
+                        mt->getTotalBytes(),
+                        mt->getPriority(),
+                        mt->getSpeed(),
+                        mt->getMeanSpeed(),
+                        mt->getTransferredBytes(),
+                        mt->getUpdateTime(),
+                        false,
+                        mt->isSyncTransfer(),
+                        TYPE_TEXT,
+                        QString::fromUtf8(mt->getFileName()));
+
+            TransferItem2* ti = new TransferItem2(dataRow);
+
+            mOrder.append(tag);
+            mTransfers.insert(tag, ti);
+        }
     }
+    endInsertRows();
 
     delete transfers;
 }
 
 void QTransfersModel2::onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer)
 {
-    TransferTag tag (transfer->getTag());
-    auto td (new TransferData());
+
+    if (transfer->isStreamingTransfer()
+            || transfer->isFolderTransfer()
+            || mNotificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    if (!transfer->getPriority())
+    {
+        return;
+    }
+
     auto row (mOrder.size());
+    TransferTag tag (transfer->getTag());
 
     beginInsertRows(QModelIndex(), row, row);
 
-    td->mMegaTransferTag = tag;
-    td->mFileType = TYPE_TEXT;
-    td->mFinishedTime = 0;
-    td->mRemTime = TransferRemainingTime();
-    td->mRemTime.calculateRemainingTimeSeconds(transfer->getSpeed(), transfer->getTransferredBytes());
-    mTransfers.insert(tag, td);
+    TransferDataRow dataRow(
+                transfer->getType(),
+                0,
+                transfer->getState(),
+                tag,
+                0,
+                0,
+                42,
+                transfer->getTotalBytes(),
+                transfer->getPriority(),
+                transfer->getSpeed(),
+                transfer->getMeanSpeed(),
+                transfer->getTransferredBytes(),
+                transfer->getUpdateTime(),
+                false,
+                transfer->isSyncTransfer(),
+                TYPE_TEXT,
+                QString::fromUtf8(transfer->getFileName()));
+
+
+    TransferItem2* ti = new TransferItem2(dataRow);
+
     mOrder.append(tag);
+    mTransfers.insert(tag, ti);
 
     endInsertRows();
 }
 
 void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error)
 {
+    if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    {
+        return;
+    }
+
+    if (mNotificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    if (!transfer->getPriority())
+    {
+        return;
+    }
+
     TransferTag tag (transfer->getTag());
     auto row (mOrder.indexOf(tag));
-    auto td (*(mTransfers.find(tag)));
+    auto ti (*(mTransfers.find(tag)));
 
-    td->mFinishedTime = transfer->getUpdateTime();
-    td->mRemTime.calculateRemainingTimeSeconds(transfer->getSpeed(), transfer->getTransferredBytes());
+    ti->updateValuesTransferFinished(transfer->getUpdateTime(),
+                                     0,
+                                     0,
+                                     transfer->getMeanSpeed(),
+                                     transfer->getState(),
+                                     transfer->getTransferredBytes());
 
     emit dataChanged(index(row, 1), index(row, 1));
 }
 
 void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer)
 {
+    if (transfer->isStreamingTransfer()
+            || transfer->isFolderTransfer() || mNotificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    if (!transfer->getPriority())
+    {
+        return;
+    }
+
     TransferTag tag (transfer->getTag());
     auto row (mOrder.indexOf(tag));
-    auto td (*(mTransfers.find(tag)));
+    auto ti (*(mTransfers.find(tag)));
 
-    td->mRemTime.calculateRemainingTimeSeconds(transfer->getSpeed(), transfer->getTransferredBytes());
+    ti->updateValuesTransferUpdated(transfer->getUpdateTime(),
+                                    0,
+                                    0,
+                                    transfer->getMeanSpeed(),
+                                    transfer->getState(),
+                                    transfer->getPriority(),
+                                    transfer->getSpeed(),
+                                    transfer->getTransferredBytes());
 
     emit dataChanged(index(row, 1), index(row, 1));
 }
 
 void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTransfer *transfer, mega::MegaError* error)
 {
+    if (transfer->isStreamingTransfer()
+            || transfer->isFolderTransfer()
+            || mNotificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
 
+    if (!transfer->getPriority())
+    {
+        return;
+    }
+
+    TransferTag tag (transfer->getTag());
+    auto row (mOrder.indexOf(tag));
+    auto ti (*(mTransfers.find(tag)));
+
+    ti->updateValuesTransferUpdated(transfer->getUpdateTime(),
+                                    transfer->getLastError().getErrorCode(),
+                                    transfer->getLastErrorExtended()->getValue(),
+                                    transfer->getMeanSpeed(),
+                                    transfer->getState(),
+                                    transfer->getPriority(),
+                                    transfer->getSpeed(),
+                                    transfer->getTransferredBytes());
+
+    emit dataChanged(index(row, 1), index(row, 1));
 }
 

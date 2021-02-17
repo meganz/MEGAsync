@@ -11,7 +11,9 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     this->model = nullptr;
+    this->model2 = nullptr;
     tDelegate = nullptr;
+    tDelegate2 = nullptr;
     isPaused = false;
     app = (MegaApplication *)qApp;
 }
@@ -32,6 +34,19 @@ void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferD
     {
         onTransferAdded();
     }
+}
+
+void TransfersWidget::setupTransfers()
+{
+    model2 = new QTransfersModel2(this);
+
+//    connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
+//    connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
+
+  // noTransfers();
+    configureTransferView();
+    onTransferAdded();
+
 }
 
 void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData, QTransfersModel::ModelType modelType)
@@ -66,8 +81,10 @@ void TransfersWidget::clearTransfers()
 TransfersWidget::~TransfersWidget()
 {
     delete ui;
-    delete tDelegate;
-    delete model;
+    if (tDelegate) delete tDelegate;
+    if (tDelegate2) delete tDelegate2;
+    if (model) delete model;
+    if (model2) delete model2;
 }
 
 bool TransfersWidget::areTransfersActive()
@@ -77,34 +94,50 @@ bool TransfersWidget::areTransfersActive()
 
 void TransfersWidget::configureTransferView()
 {
-    if (!model)
+    if (!model && ! model2)
     {
         return;
     }
 
-    tDelegate = new MegaTransferDelegate(model, this);
-    ui->tvTransfers->setup(mType);
-    ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
+    if (model)
+    {
+        tDelegate = new MegaTransferDelegate(model, this);
+        ui->tvTransfers->setup(mType);
+        ui->tvTransfers->setItemDelegate(tDelegate);
+        ui->tvTransfers->setModel(model);
+
+    }
+    else
+    {
+        tDelegate2 = new MegaTransferDelegate2(model2, ui->tvTransfers);
+        ui->tvTransfers->setup();
+        ui->tvTransfers->setItemDelegate(tDelegate2);
+        ui->tvTransfers->setModel(model2);
+            model2->initModel();
+    }
+
     ui->tvTransfers->header()->close();
     ui->tvTransfers->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
-    ui->tvTransfers->setModel(model);
 
-    switch (mType)
-    {
-        case QTransfersModel::TYPE_DOWNLOAD:
-            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
-            break;
-        case QTransfersModel::TYPE_UPLOAD:
-            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
-            break;
-        default:
-            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
-            break;
-    }
+    // Test
+
+
+//    switch (mType)
+//    {
+//        case QTransfersModel::TYPE_DOWNLOAD:
+//            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
+//            break;
+//        case QTransfersModel::TYPE_UPLOAD:
+//            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
+//            break;
+//        default:
+//            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
+//            break;
+//    }
 }
 
 void TransfersWidget::pausedTransfers(bool paused)

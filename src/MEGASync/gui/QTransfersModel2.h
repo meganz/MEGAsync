@@ -4,65 +4,10 @@
 #include "QTMegaTransferListener.h"
 #include "Utilities.h"
 #include "TransferRemainingTime.h"
-
+#include "TransferItem2.h"
 #include <megaapi.h>
 
 #include <QAbstractItemModel>
-
-typedef int TransferTag;
-
-
-enum FileTypes
-{
-    TYPE_TEXT  = 0,
-    TYPE_AUDIO = 1,
-    TYPE_VIDEO = 2,
-};
-
-struct TransferData {
-    TransferTag           mMegaTransferTag;
-    TransferRemainingTime mRemTime;
-    FileTypes             mFileType;
-    uint64_t              mFinishedTime;
-};
-
-struct TransferDataRow {
-    int       mType;
-    int       mErrorCode;
-    int       mState;
-    int       mTag;
-    long long mErrorValue;
-    int64_t   mFinishedTime;
-    int64_t   mRemainingTime;
-    long long mTotalSize;
-    unsigned long long mPriority;
-    long long mSpeed;
-    long long mMeanSpeed;
-    long long mTransferredBytes;
-    int64_t   mUpdateTime;
-    bool      mPublicNode;
-    bool      mIsSyncTransfer;
-    FileTypes mFileType;
-    QString   mFilename;
-
-    TransferDataRow(){};
-
-    TransferDataRow(int type, int errorCode, int state, int tag, int errorValue,
-                    int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long mPriority,
-                    long long speed, long long MeanSpead, long long transferredBytes,
-                    int64_t updateTime, bool publicNode, bool isSyncTransfer, FileTypes fileType,
-                    QString fileName) :
-         mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
-         mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
-         mTotalSize(totalSize), mPriority(mPriority), mSpeed(speed), mMeanSpeed(MeanSpead),
-         mTransferredBytes(transferredBytes), mUpdateTime(updateTime),
-         mPublicNode(publicNode), mIsSyncTransfer(isSyncTransfer), mFileType(fileType),
-         mFilename(fileName){}
-};
-
-
-Q_DECLARE_METATYPE(TransferDataRow);
-
 
 class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener
 {
@@ -79,8 +24,6 @@ public:
 
     ~QTransfersModel2();
 
-    virtual void removeAllTransfers() = 0;
-
     void initModel();
 
     void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
@@ -96,9 +39,12 @@ private slots:
 
 protected:
     mega::MegaApi* mMegaApi;
-    QMap<TransferTag, TransferData*> mTransfers;
+    QMap<TransferTag, TransferItem2*> mTransfers;
     QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;
+
+    long long mNotificationNumber;
+
 };
 
 #endif // QTRANSFERSMODEL2_H

@@ -3,7 +3,6 @@
 
 #include "TransferItem2.h"
 
-#include <QWidget>
 #include <QDateTime>
 
 namespace Ui {
@@ -12,26 +11,17 @@ class TransferManagerItem;
 
 class TransferManagerItem2 : public TransferItem2
 {
-    Q_OBJECT
-
 public:
-    explicit TransferManagerItem2(TransferDataRow& transferData, QWidget *parent = 0);
-    virtual ~TransferManagerItem2();
+        TransferManagerItem2();
 
-    void paint(QPainter *painter, const QRect &rect) const;
+    void updateUi(Ui::TransferManagerItem* ui) const;
+    void setupUi(Ui::TransferManagerItem* ui, QWidget* view) const;
+
 
 private:
-    Ui::TransferManagerItem *mUi;
     QString mActiveStatus;
-
-signals:
-    void transferPaused(const TransferTag tag);
-    void transferCanceled(const TransferTag tag);
-
-
-private slots:
-    void on_tCancelTransfer_clicked();
-    void on_tPauseTransfer_clicked();
 };
+
+Q_DECLARE_METATYPE(TransferManagerItem2);
 
 #endif // TRANSFERMANAGERITEM2_H

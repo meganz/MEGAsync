@@ -69,6 +69,17 @@ void MegaTransferView::setup(int type)
     this->type = type;
 }
 
+void MegaTransferView::setup()
+{
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    // Disable and find out alternative way to position context menu,
+    // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
+    // connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    connect(this, SIGNAL(showContextMenu(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    createContextMenu();
+    createCompletedContextMenu();
+}
+
 void MegaTransferView::disableGetLink(bool disable)
 {
     disableLink = disable;
@@ -289,47 +300,47 @@ void MegaTransferView::customizeCompletedContextMenu(bool enableGetLink, bool en
 
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 {
-    QTransfersModel *model = (QTransfersModel*)this->model();
-    if (model)
-    {
-        QModelIndex index = indexAt(event->pos());
-        if (index.isValid())
-        {
-            int tag = index.internalId();
-            if (lastItemHoveredTag)
-            {
-                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-                if (lastItemHovered)
-                {
-                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
-                }
-            }
+    auto model = this->model();
+//    if (model)
+//    {
+//        QModelIndex index = indexAt(event->pos());
+//        if (index.isValid())
+//        {
+//            int tag = index.internalId();
+//            if (lastItemHoveredTag)
+//            {
+//                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+//                if (lastItemHovered)
+//                {
+//                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
+//                }
+//            }
 
-            TransferItem *item = model->transferItems[tag];
-            if (item)
-            {
-                lastItemHoveredTag = item->getTransferTag();
-                item->mouseHoverTransfer(true, event->pos() - visualRect(index).topLeft());
-            }
-            else
-            {
-                lastItemHoveredTag = 0;
-            }
-        }
-        else
-        {
-            if (lastItemHoveredTag)
-            {
-                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-                if (lastItemHovered)
-                {
-                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
-                    update();
-                }
-                lastItemHoveredTag = 0;
-            }
-        }
-    }
+//            TransferItem *item = model->transferItems[tag];
+//            if (item)
+//            {
+//                lastItemHoveredTag = item->getTransferTag();
+//                item->mouseHoverTransfer(true, event->pos() - visualRect(index).topLeft());
+//            }
+//            else
+//            {
+//                lastItemHoveredTag = 0;
+//            }
+//        }
+//        else
+//        {
+//            if (lastItemHoveredTag)
+//            {
+//                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+//                if (lastItemHovered)
+//                {
+//                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
+//                    update();
+//                }
+//                lastItemHoveredTag = 0;
+//            }
+//        }
+//    }
     QTreeView::mouseMoveEvent(event);
 }
 

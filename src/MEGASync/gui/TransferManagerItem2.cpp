@@ -8,128 +8,136 @@
 
 using namespace mega;
 
-TransferManagerItem2::TransferManagerItem2(TransferDataRow& transferData, QWidget *parent) :
-    TransferItem2(transferData, parent),
-    mUi(new Ui::TransferManagerItem)
+TransferManagerItem2::TransferManagerItem2()
+{ 
+    switch (d->mType)
+    {
+        case MegaTransfer::TYPE_DOWNLOAD:
+        case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
+        {
+            mActiveStatus = QObject::tr("Downloading");
+            break;
+        }
+        case MegaTransfer::TYPE_UPLOAD:
+        {
+            mActiveStatus = QObject::tr("Uploading");
+            break;
+        }
+    }
+}
+
+void TransferManagerItem2::updateUi(Ui::TransferManagerItem* ui) const
 {
-    mUi->setupUi(this);
+    // Display changing values
 
+    // File name
+    ui->lTransferName->setText(ui->lTransferName->fontMetrics()
+                                .elidedText(d->mFilename, Qt::ElideMiddle,
+                                            ui->lTransferName->width()));
+
+    // Amount transfered
+    ui->lDone->setText(Utilities::getSizeString(d->mTransferredBytes));
+
+    QString remTimeString;
+    QString speedString;
+    QString statusString;
+    bool isQueued (false);
+    QIcon pauseResumeIcon;
+
+    static int prevTransferState(MegaTransfer::STATE_NONE);
+
+    if (d->mState != prevTransferState)
+    {
+        switch (d->mState) {
+            case MegaTransfer::STATE_ACTIVE:
+            {
+                remTimeString = Utilities::getTimeString(d->mRemainingTime);
+                speedString = Utilities::getSizeString(d->mSpeed) + QLatin1Literal("/s");
+                statusString = mActiveStatus;
+                pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+                break;
+            }
+            case MegaTransfer::STATE_PAUSED:
+            {
+                statusString = QObject::tr("Paused");
+                pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_resume_transfers_state.png"));
+                break;
+            }
+            case MegaTransfer::STATE_QUEUED:
+            {
+                isQueued = true;
+                pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+                break;
+            }
+            case MegaTransfer::STATE_CANCELLED:
+            {
+                statusString = QObject::tr("Canceled");
+                break;
+            }
+            case MegaTransfer::STATE_COMPLETING:
+            {
+                statusString = QObject::tr("Completing");
+                break;
+            }
+            case MegaTransfer::STATE_FAILED:
+            {
+                statusString = QObject::tr("Failed");
+                break;
+            }
+            case MegaTransfer::STATE_RETRYING:
+            {
+                statusString = QObject::tr("Retrying");
+                pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+                break;
+            }
+        }
+
+        // Queued state
+        ui->lQueued->setVisible(isQueued);
+
+        // Status
+        ui->lStatus->setText(statusString);
+
+        // Progress bar
+        int permil = (d->mTotalSize > 0) ?
+                       ((1000 *d->mTransferredBytes) / d->mTotalSize)
+                       : 0;
+        ui->pbTransfer->setValue(permil);
+
+        prevTransferState = d->mState;
+    }
+
+    // Remaining time
+    ui->lRemainingTime->setText(remTimeString);
+
+    // Speed
+    ui->bSpeed->setText(speedString);
+}
+
+void TransferManagerItem2::setupUi(Ui::TransferManagerItem* ui, QWidget* view) const
+{
+    ui->setupUi(view);
     // Set fixed stuff
-    mUi->tFileType->setIcon(QIcon());
-    mUi->lTransferName->setToolTip(mTransferData.mFilename);
-    mUi->lTotal->setText(Utilities::getSizeString(mTransferData.mTotalSize));
-
+    ui->tFileType->setIcon(QIcon());
+    ui->lTransferName->setToolTip(d->mFilename);
+    ui->lTotal->setText(Utilities::getSizeString(d->mTotalSize));
 
     QIcon icon;
 
-    switch (mTransferData.mType)
+    switch (d->mType)
     {
         case MegaTransfer::TYPE_DOWNLOAD:
         case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
         {
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
-            mActiveStatus = tr("Downloading");
             break;
         }
         case MegaTransfer::TYPE_UPLOAD:
         {
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
-            mActiveStatus = tr("Uploading");
             break;
         }
     }
 
-    mUi->bSpeed->setIcon(icon);
-
-    update();
-}
-
-TransferManagerItem2::~TransferManagerItem2()
-{
-    delete mUi;
-}
-
-void TransferManagerItem2::paint(QPainter *painter, const QRect &rect) const
-{
-    // Display changing values
-
-    // File name
-    mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
-                                .elidedText(mTransferData.mFilename, Qt::ElideMiddle,
-                                            mUi->lTransferName->width()));
-
-    // Amount transfered
-    mUi->lDone->setText(Utilities::getSizeString(mTransferData.mTransferredBytes));
-
-    QString remTimeString;
-    QString speedString;
-    QString statusString;
-
-    bool isQueued (false);
-
-    switch (mTransferData.mState) {
-        case MegaTransfer::STATE_ACTIVE:
-        {
-            remTimeString = Utilities::getTimeString(mTransferData.mRemainingTime);
-            speedString = Utilities::getSizeString(mTransferData.mSpeed) + QLatin1Literal("/s");
-            statusString = mActiveStatus;
-            break;
-        }
-        case MegaTransfer::STATE_PAUSED:
-        {
-            statusString = tr("Paused");
-            break;
-        }
-        case MegaTransfer::STATE_QUEUED:
-        {
-            isQueued = true;
-            break;
-        }
-        case MegaTransfer::STATE_CANCELLED:
-        {
-            statusString = tr("Canceled");
-            break;
-        }
-        case MegaTransfer::STATE_COMPLETING:
-        {
-            statusString = tr("Completing");
-            break;
-        }
-        case MegaTransfer::STATE_FAILED:
-        {
-            statusString = tr("Failed");
-            break;
-        }
-        case MegaTransfer::STATE_RETRYING:
-        {
-            statusString = tr("Retrying");
-            break;
-        }
-    }
-
-    // Remaining time
-    mUi->lRemainingTime->setText(remTimeString);
-
-    // Speed
-    mUi->bSpeed->setText(speedString);
-
-    // Queued state
-    mUi->lQueued->setVisible(isQueued);
-
-    // Status
-    mUi->lStatus->setText(statusString);
-
-    // Progress bar
-    int permil = (mTotalSize > 0) ? ((1000 * mTotalTransferredBytes) / mTotalSize) : 0;
-    mUi->pbTransfer->setValue(permil);
-}
-
-void TransferManagerItem2::on_tCancelTransfer_clicked()
-{
-    emit transferCanceled(mTransferData.mTag);
-}
-
-void TransferManagerItem2::on_tPauseTransfer_clicked()
-{
-    emit transferPaused(mTransferData.mTag);
+    ui->bSpeed->setIcon(icon);
 }

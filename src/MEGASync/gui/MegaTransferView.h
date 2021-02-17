@@ -14,6 +14,7 @@ class MegaTransferView : public QTreeView
 public:
     MegaTransferView(QWidget *parent = 0);
     void setup(int type);
+    void setup();
     void disableGetLink(bool disable);
     void disableContextMenus(bool option);
     int getType() const;

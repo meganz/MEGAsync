@@ -18,7 +18,7 @@ namespace Ui {
 class TransferManager;
 }
 
-class TransferManager : public QDialog, public mega::MegaTransferListener
+class TransferManager : public QDialog
 {
     Q_OBJECT
 
@@ -41,11 +41,6 @@ public:
     void disableGetLink(bool disable);
     void updateNumberOfCompletedTransfers(int num);
     ~TransferManager();
-
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
 signals:
     void viewedCompletedTransfers();
