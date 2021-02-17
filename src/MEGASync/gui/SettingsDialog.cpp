@@ -431,6 +431,7 @@ void SettingsDialog::setOverQuotaMode(bool mode)
     return;
 }
 
+//FIXME: Remove
 void SettingsDialog::stateChanged()
 {
     if (modifyingSettings)
@@ -825,11 +826,13 @@ void SettingsDialog::on_bProxies_clicked()
 #endif
 }
 
+//FIXME: Remove
 void SettingsDialog::on_bCancel_clicked()
 {
     this->close();
 }
 
+//FIXME: Remove
 void SettingsDialog::on_bOk_clicked()
 {
     bool saved = 1;
@@ -1163,7 +1166,7 @@ void SettingsDialog::loadSettings()
     }
 
     ui->bApply->setEnabled(false);
-    this->update();
+    this->update(); //TODO: is this necessary?
     modifyingSettings--;
 }
 
@@ -1256,8 +1259,10 @@ void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandw
     }
 }
 
+    //FIXME: Remove
 int SettingsDialog::saveSettings()
 {
+    //FIXME: Remove ProgressHelper, unless saving syncs needs it still?
     saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
@@ -1980,6 +1985,7 @@ void SettingsDialog::on_bAdd_clicked()
     addSyncFolder(invalidMegaFolderHandle);
 }
 
+//FIXME: Remove
 void SettingsDialog::on_bApply_clicked()
 {
     // If we are at account tab, button performs logout, other pages performs saveSettings()
