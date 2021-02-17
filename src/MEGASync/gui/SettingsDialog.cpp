@@ -109,11 +109,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     sizeLimitsChanged = false;
     cleanerLimitsChanged = false;
     fileVersioningChanged = false;
-#ifndef WIN32
-    filePermissions = 0;
-    folderPermissions = 0;
-    permissionsChanged = false;
-#endif
+
     this->proxyOnly = proxyOnly;
     this->proxyTestProgressDialog = NULL;
     shouldClose = false;
@@ -1475,23 +1471,6 @@ int SettingsDialog::saveSettings()
         }
 #endif
 
-#ifndef WIN32
-        if (permissionsChanged)
-        {
-            megaApi->setDefaultFilePermissions(filePermissions);
-            filePermissions = megaApi->getDefaultFilePermissions();
-            preferences->setFilePermissionsValue(filePermissions);
-
-            megaApi->setDefaultFolderPermissions(folderPermissions);
-            folderPermissions = megaApi->getDefaultFolderPermissions();
-            preferences->setFolderPermissionsValue(folderPermissions);
-
-            permissionsChanged = false;
-            filePermissions   = 0;
-            folderPermissions = 0;
-        }
-#endif
-
         //Bandwidth
         if (ui->rUploadLimit->isChecked())
         {
@@ -1857,9 +1836,14 @@ void SettingsDialog::loadSizeLimits()
 #ifndef WIN32
 void SettingsDialog::on_bPermissions_clicked()
 {
+    megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
+    int folderPermissions = megaApi->getDefaultFolderPermissions();
+    megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
+    int filePermissions = megaApi->getDefaultFilePermissions();
+
     QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
-    dialog->setFolderPermissions(folderPermissions ? folderPermissions : megaApi->getDefaultFolderPermissions());
-    dialog->setFilePermissions(filePermissions ? filePermissions : megaApi->getDefaultFilePermissions());
+    dialog->setFolderPermissions(folderPermissions);
+    dialog->setFilePermissions(filePermissions);
 
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)
@@ -1872,11 +1856,11 @@ void SettingsDialog::on_bPermissions_clicked()
     folderPermissions = dialog->folderPermissions();
     delete dialog;
 
-    if (filePermissions != preferences->filePermissionsValue() ||
-       folderPermissions != preferences->folderPermissionsValue())
+    if (filePermissions != preferences->filePermissionsValue()
+        || folderPermissions != preferences->folderPermissionsValue())
     {
-        permissionsChanged = true;
-        stateChanged();
+        preferences->setFilePermissionsValue(filePermissions);
+        preferences->setFolderPermissionsValue(folderPermissions);
     }
 }
 #endif

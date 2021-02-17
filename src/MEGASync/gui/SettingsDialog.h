@@ -204,12 +204,6 @@ private:
     bool isSavingSyncsOnGoing;
     int debugCounter; // Easter Egg
 
-#ifndef WIN32
-    int folderPermissions;
-    int filePermissions;
-    bool permissionsChanged;
-#endif
-
 #ifdef __APPLE__
     QPropertyAnimation *minHeightAnimation;
     QPropertyAnimation *maxHeightAnimation;
