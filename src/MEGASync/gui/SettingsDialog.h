@@ -144,6 +144,8 @@ private slots:
     void on_cAutoUpdate_toggled(bool checked);
     void on_cStartOnStartup_toggled(bool checked);
     void on_cLanguage_currentIndexChanged(int index);
+    void on_eUploadFolder_textChanged(const QString &text);
+    void on_eDownloadFolder_textChanged(const QString &text);
 
 protected:
     void changeEvent(QEvent * event) override;
