@@ -322,4 +322,50 @@ public:
     static void sleepMilliseconds(long long milliseconds);
 };
 
+
+
+// This class encapsulates a MEGA node and adds useful information, like the origin
+// of the transfer.
+class WrappedNode
+{
+public:
+    // Enum used to record origin of trqnsfer
+    enum TransferOrigin {
+        FROM_UNKNOWN   = 0,
+        FROM_APP       = 1,
+        FROM_WEBSERVER = 2,
+    };
+
+    // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
+    WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
+                mega::MegaNode* node = nullptr)
+        : mTransfersFrom(from), mNode(node){}
+
+    // Destructor
+    ~WrappedNode()
+    {
+        // MEGA node should be deleted when this is deleted.
+        delete mNode;
+    }
+
+    // Get the transfer orgigin
+    WrappedNode::TransferOrigin getTransferOrigin()
+    {
+        return mTransfersFrom;
+    }
+
+    // Get the wrapped MEGA node pointer
+    mega::MegaNode* getMegaNode()
+    {
+        return mNode;
+    }
+
+private:
+    // Keep track of transfer origin
+    WrappedNode::TransferOrigin  mTransfersFrom;
+
+    // Wrapped MEGA node
+    mega::MegaNode* mNode;
+};
+
 #endif // UTILITIES_H
