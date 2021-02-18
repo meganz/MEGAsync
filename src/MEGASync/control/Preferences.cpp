@@ -2779,7 +2779,8 @@ void Preferences::loadExcludedSyncNames()
     if (getValue<int>(lastVersionKey) < 3400)
     {
         excludedSyncNames.append(QString::fromUtf8("*~.*"));
-        excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
+        // Avoid trigraph replacement by some pre-processors by splitting the string.("??-" --> "~").
+        excludedSyncNames.append(QString::fromUtf8("*.sb-????????""-??????"));
         excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 
