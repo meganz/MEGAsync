@@ -3263,9 +3263,6 @@ border: none;</string>
                <property name="layoutDirection">
                 <enum>Qt::LeftToRight</enum>
                </property>
-               <property name="text">
-                <string/>
-               </property>
                <property name="frame">
                 <bool>true</bool>
                </property>

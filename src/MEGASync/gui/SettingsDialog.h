@@ -6,7 +6,6 @@
 #include <QFutureWatcher>
 #include <QtCore>
 #include <QNetworkProxy>
-#include <QButtonGroup>
 #include <ConnectivityChecker.h>
 
 #ifdef __APPLE__
@@ -96,13 +95,6 @@ private slots:
     void on_bUpgrade_clicked();
     void on_bUpgradeBandwidth_clicked();
 
-    void on_rUploadAutoLimit_clicked();
-    void on_rUploadNoLimit_clicked();
-    void on_rUploadLimit_clicked();
-
-    void on_rDownloadNoLimit_clicked();
-    void on_rDownloadLimit_clicked();
-
     void on_cProxyRequiresPassword_clicked();
 #ifndef WIN32
     void on_bPermissions_clicked();
@@ -146,6 +138,17 @@ private slots:
     void on_cLanguage_currentIndexChanged(int index);
     void on_eUploadFolder_textChanged(const QString &text);
     void on_eDownloadFolder_textChanged(const QString &text);
+
+    void on_rUploadAutoLimit_toggled(bool checked);
+    void on_rUploadNoLimit_toggled(bool checked);
+    void on_rUploadLimit_toggled(bool checked);
+    void on_rDownloadNoLimit_toggled(bool checked);
+    void on_rDownloadLimit_toggled(bool checked);
+    void on_eUploadLimit_editingFinished();
+    void on_eDownloadLimit_editingFinished();
+    void on_eMaxDownloadConnections_valueChanged(int value);
+    void on_eMaxUploadConnections_valueChanged(int value);
+    void on_cbUseHttps_toggled(bool checked);
 
 protected:
     void changeEvent(QEvent * event) override;
@@ -196,8 +199,6 @@ private:
     int daysLimit;
     bool cleanerLimitsChanged;
     bool fileVersioningChanged;
-    QButtonGroup downloadButtonGroup;
-    QButtonGroup uploadButtonGroup;
     bool reloadUIpage;
     ThreadPool* mThreadPool;
     bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
