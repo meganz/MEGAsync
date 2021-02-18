@@ -3,16 +3,23 @@
 
 #include "ui_TransferManagerItem.h"
 
+#include "Utilities.h"
+
 #include <QSharedData>
+#include <QMimeDatabase>
 
 typedef int TransferTag;
 
 
 enum FileTypes
 {
-    TYPE_TEXT  = 0,
-    TYPE_AUDIO = 1,
-    TYPE_VIDEO = 2,
+    TYPE_OTHER    = 0,
+    TYPE_AUDIO    = 1,
+    TYPE_VIDEO    = 2,
+    TYPE_ARCHIVE  = 3,
+    TYPE_DOCUMENT = 4,
+    TYPE_IMAGE    = 5,
+    TYPE_TEXT     = 6,
 };
 
 class TransferDataRow : public QSharedData
@@ -58,7 +65,7 @@ class TransferDataRow : public QSharedData
          mPublicNode(publicNode), mIsSyncTransfer(isSyncTransfer), mFileType(fileType),
          mFilename(fileName){}
 };
-Q_DECLARE_TYPEINFO(TransferDataRow, Q_PRIMITIVE_TYPE);
+Q_DECLARE_TYPEINFO(TransferDataRow, Q_MOVABLE_TYPE);
 
 class TransferItem2
 {
@@ -69,8 +76,7 @@ public:
 
         ~TransferItem2() {}
 
-        void updateUi(Ui::TransferManagerItem* ui) const;
-        void setupUi(Ui::TransferManagerItem* ui, QWidget* view) const;
+        QSharedDataPointer<TransferDataRow> getTransferData() const;
 
         void updateValuesTransferFinished(uint64_t updateTime,
                                           int errorCode, long long errorValue,

@@ -7529,10 +7529,10 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              QString::fromUtf8(transfer->getPath()));
     }
 
-    if (transferManager)
-    {
-        transferManager->onTransferStart(megaApi, transfer);
-    }
+//    if (transferManager)
+//    {
+//        transferManager->onTransferStart(megaApi, transfer);
+//    }
     if (infoDialog)
     {
         infoDialog->onTransferStart(megaApi, transfer);
@@ -7665,10 +7665,10 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         finishedBlockedTransfers.insert(transfer->getTag());
     }
 
-    if (transferManager)
-    {
-        transferManager->onTransferFinish(megaApi, transfer, e);
-    }
+//    if (transferManager)
+//    {
+//        transferManager->onTransferFinish(megaApi, transfer, e);
+//    }
 
     if (infoDialog)
     {
@@ -7773,10 +7773,10 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    if (transferManager)
-    {
-        transferManager->onTransferUpdate(megaApi, transfer);
-    }
+//    if (transferManager)
+//    {
+//        transferManager->onTransferUpdate(megaApi, transfer);
+//    }
 
     if (infoDialog)
     {
@@ -7888,10 +7888,10 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    if (transferManager)
-    {
-        transferManager->onTransferTemporaryError(megaApi, transfer, e);
-    }
+//    if (transferManager)
+//    {
+//        transferManager->onTransferTemporaryError(megaApi, transfer, e);
+//    }
 
     onTransferUpdate(api, transfer);
     preferences->setTransferDownloadMethod(api->getDownloadMethod());

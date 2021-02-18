@@ -44,9 +44,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             return;
         }
 
-        std::shared_ptr<MegaTransferData> transferData(mMegaApi->getTransferData());
-
-        Utilities::queueFunctionInAppThread([this, transferData, transferManager]()
+        Utilities::queueFunctionInAppThread([this, transferManager]()
         {//queued function
 
             if (transferManager) //Check if this is not deleted

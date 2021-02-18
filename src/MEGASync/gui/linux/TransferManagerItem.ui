@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>756</width>
-    <height>48</height>
+    <height>64</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>756</width>
-    <height>48</height>
+    <height>64</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>756</width>
-    <height>48</height>
+    <height>64</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,15 +34,37 @@
   font-family: &quot;Lato&quot;;
 }
 
-#TransferManagerItem, #sTransferState, #stateActive, #stateCompleted
+#TransferManagerItem
 {
 	width: 756px; 
-    height: 48px;
+    height: 64px;
 	min-width: 756px; 
-    min-height: 48px;
+    min-height: 64px;
 	max-width: 756px; 
-    max-height: 48px;
+    max-height: 64px;
 	background-color: transparent;
+}
+
+#line
+{
+	width: 756px; 
+    height: 1px;
+	min-width: 756px; 
+    min-height: 1px;
+	max-width: 756px; 
+    max-height: 1px;
+    border: none;
+    background: #EEEEEE;
+}
+
+#sTransferState, #stateActive, #stateCompleted
+{
+	width: 756px; 
+    height: 63px;
+	min-width: 756px; 
+    min-height: 63px;
+	max-width: 756px; 
+    max-height: 63px;
 }
 
 #tFileType
@@ -53,7 +75,7 @@
     min-height: 48px;
 	max-width: 38px; 
     max-height: 48px;
-	qProperty-iconSize: 40px;
+	qProperty-iconSize: 48px;
 	background: transparent;
 }
 
@@ -188,7 +210,7 @@ QProgressBar::chunk
 	margin-right: 12px;
 }</string>
   </property>
-  <layout class="QHBoxLayout" name="TransferManagerIemLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -204,6 +226,13 @@ QProgressBar::chunk
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QStackedWidget" name="sTransferState">
      <property name="currentIndex">

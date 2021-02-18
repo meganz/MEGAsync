@@ -42,6 +42,7 @@ protected:
     QMap<TransferTag, TransferItem2*> mTransfers;
     QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;
+    QHash<QString, FileTypes> mFileTypes;
 
     long long mNotificationNumber;
 

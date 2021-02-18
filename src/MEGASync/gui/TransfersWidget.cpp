@@ -46,7 +46,6 @@ void TransfersWidget::setupTransfers()
   // noTransfers();
     configureTransferView();
     onTransferAdded();
-
 }
 
 void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData, QTransfersModel::ModelType modelType)
@@ -113,7 +112,7 @@ void TransfersWidget::configureTransferView()
         ui->tvTransfers->setup();
         ui->tvTransfers->setItemDelegate(tDelegate2);
         ui->tvTransfers->setModel(model2);
-            model2->initModel();
+        model2->initModel();
     }
 
     ui->tvTransfers->header()->close();
