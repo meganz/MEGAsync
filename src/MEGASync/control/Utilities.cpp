@@ -573,7 +573,7 @@ QString Utilities::getFinishedTimeString(long long secs)
     else
     {
         // Compute years. We need at least 64 bits to avoid any overflow.
-        long long int years = secs/31536000;
+        long long years = secs/31536000;
         if (years == 1)
         {
             return QCoreApplication::translate("Utilities", "1 year ago");
