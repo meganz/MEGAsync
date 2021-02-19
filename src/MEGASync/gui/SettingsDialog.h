@@ -152,17 +152,16 @@ private slots:
 
 protected:
     void changeEvent(QEvent * event) override;
-    QString getFormatLimitDays();
 
 private:
     void loadSettings();
     int saveSettings();
-    void loadSizeLimits();
     void onCacheSizeAvailable();
     void onClearCache();
     void savingSyncs(bool completed, QObject *item);
     void syncsStateInformation(int state);
-    QString getFormatString();
+    QString excludeBySizeInfo();
+    QString cacheDaysLimitInfo();
 
     Ui::SettingsDialog *ui;
     MegaApplication *app;
@@ -188,9 +187,6 @@ private:
     long long fileVersionsSize;
     bool hasDefaultUploadOption;
     bool hasDefaultDownloadOption;
-    bool hasDaysLimit;
-    int daysLimit;
-    bool cleanerLimitsChanged;
     bool fileVersioningChanged;
     bool reloadUIpage;
     ThreadPool* mThreadPool;

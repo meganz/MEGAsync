@@ -107,7 +107,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     syncsChanged = false;
     excludedNamesChanged = false;
-    cleanerLimitsChanged = false;
     fileVersioningChanged = false;
 
     this->proxyOnly = proxyOnly;
@@ -121,8 +120,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     reloadUIpage = false;
     debugCounter = 0;
-    hasDaysLimit = false;
-    daysLimit = 0;
     areSyncsDisabled = false;
     isSavingSyncsOnGoing = false;
 
@@ -1076,7 +1073,8 @@ void SettingsDialog::loadSettings()
             ui->lExcludedNames->addItem(excludedPaths[i]);
         }
 
-        loadSizeLimits();
+        ui->lLimitsInfo->setText(excludeBySizeInfo());
+        ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
         ui->cDisableFileVersioning->setChecked(preferences->fileVersioningDisabled());
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
@@ -1433,14 +1431,6 @@ int SettingsDialog::saveSettings()
         }
 #endif
 
-        if (cleanerLimitsChanged)
-        {
-            preferences->setCleanerDaysLimit(hasDaysLimit);
-            preferences->setCleanerDaysLimitValue(daysLimit);
-            app->cleanLocalCaches();
-            cleanerLimitsChanged = false;
-        }
-
         if (fileVersioningChanged && ui->cDisableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
         {
             megaApi->setFileVersionsOption(ui->cDisableFileVersioning->isChecked());
@@ -1717,14 +1707,6 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
     }
 
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
-}
-
-void SettingsDialog::loadSizeLimits()
-{
-    ui->lLimitsInfo->setText(getFormatString());
-    hasDaysLimit = preferences->cleanerDaysLimit();
-    daysLimit = preferences->cleanerDaysLimitValue();
-    ui->lLocalCleanerState->setText(getFormatLimitDays());
 }
 
 #ifndef WIN32
@@ -2075,8 +2057,7 @@ void SettingsDialog::on_bExcludeSize_clicked()
     dialog->setUpperSizeLimitUnit(preferences->upperSizeLimitUnit());
     dialog->setLowerSizeLimitUnit(preferences->lowerSizeLimitUnit());
 
-    int result = dialog->exec();
-    if (result == QDialog::Accepted)
+    if (dialog->exec() == QDialog::Accepted)
     {
         preferences->setUpperSizeLimit(dialog->upperSizeLimit());
         preferences->setLowerSizeLimit(dialog->lowerSizeLimit());
@@ -2085,10 +2066,10 @@ void SettingsDialog::on_bExcludeSize_clicked()
         preferences->setUpperSizeLimitUnit(dialog->upperSizeLimitUnit());
         preferences->setLowerSizeLimitUnit(dialog->lowerSizeLimitUnit());
         preferences->setCrashed(true); // TODO: Why?
+        ui->lLimitsInfo->setText(excludeBySizeInfo());
         QMegaMessageBox::information(this, tr("Warning"),
                                      tr("The new excluded file sizes will be taken into account when the application starts again."),
                                      QMessageBox::Ok);
-        ui->lLimitsInfo->setText(getFormatString());
     }
 
     delete dialog;
@@ -2096,28 +2077,19 @@ void SettingsDialog::on_bExcludeSize_clicked()
 
 void SettingsDialog::on_bLocalCleaner_clicked()
 {
-    QPointer<LocalCleanScheduler> dialog = new LocalCleanScheduler(this);
-    dialog->setDaysLimit(hasDaysLimit);
-    dialog->setDaysLimitValue(daysLimit);
+    LocalCleanScheduler *dialog = new LocalCleanScheduler(this);
+    dialog->setDaysLimit(preferences->cleanerDaysLimit());
+    dialog->setDaysLimitValue(preferences->cleanerDaysLimitValue());
 
-    int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted)
+    if (dialog->exec() == QDialog::Accepted)
     {
-        delete dialog;
-        return;
+        preferences->setCleanerDaysLimit(dialog->daysLimit());
+        preferences->setCleanerDaysLimitValue(dialog->daysLimitValue());
+        ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
+        app->cleanLocalCaches();
     }
 
-    hasDaysLimit = dialog->daysLimit();
-    daysLimit = dialog->daysLimitValue();
     delete dialog;
-
-    ui->lLocalCleanerState->setText(getFormatLimitDays());
-    if (hasDaysLimit != preferences->cleanerDaysLimit() ||
-       daysLimit != preferences->cleanerDaysLimitValue())
-    {
-        cleanerLimitsChanged = true;
-        stateChanged();
-    }
 }
 
 void SettingsDialog::changeEvent(QEvent *event)
@@ -2143,7 +2115,7 @@ void SettingsDialog::changeEvent(QEvent *event)
     modifyingSettings--;
 }
 
-QString SettingsDialog::getFormatString()
+QString SettingsDialog::excludeBySizeInfo()
 {
     QString format;
 
@@ -2184,9 +2156,11 @@ QString SettingsDialog::getFormatString()
     return format;
 }
 
-QString SettingsDialog::getFormatLimitDays()
+QString SettingsDialog::cacheDaysLimitInfo()
 {
     QString format;
+    bool hasDaysLimit = preferences->cleanerDaysLimit();
+    int  daysLimit = preferences->cleanerDaysLimitValue();
     if (hasDaysLimit)
     {
         if (daysLimit > 1)
