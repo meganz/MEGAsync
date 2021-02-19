@@ -9,19 +9,18 @@ namespace Ui {
 class TransferManagerItem;
 }
 
-class TransferManagerItem2 : public TransferItem2
+class TransferManagerItem2 : public QWidget
 {
+        Q_OBJECT
+
 public:
-        TransferManagerItem2();
+    explicit TransferManagerItem2(QWidget *parent = 0);
 
-    void updateUi(Ui::TransferManagerItem* ui) const;
-    void setupUi(Ui::TransferManagerItem* ui, QWidget* view) const;
+    void updateUi(const TransferItem2 transferItem);
+//    void setupUi(const TransferItem2 transferItem);
 
-
-private:
-    QString mActiveStatus;
+    private:
+        Ui::TransferManagerItem *mUi;
 };
-
-Q_DECLARE_METATYPE(TransferManagerItem2);
 
 #endif // TRANSFERMANAGERITEM2_H

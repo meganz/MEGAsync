@@ -28,22 +28,20 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
     if (index.isValid() && index.data().canConvert<TransferItem2>())
     {
         const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
-        auto ui = Ui::TransferManagerItem();
+        const auto nbRowsMaxInView (mView->height()/option.rect.height() + 1);
+        const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
 
-        QString widgetName (QLatin1Literal("r")+QString(index.row()));
-
-        auto w (mView->findChild<QWidget *>(widgetName));
+        auto w (mView->findChild<TransferManagerItem2 *>(widgetName));
 
         if (!w)
         {
-            w = new QWidget(mView);
-            setupUi(ui, transferItem, w);
-            ui.setupUi(w);
+            w = new TransferManagerItem2(mView);
             w->setObjectName(widgetName);
         }
         w->resize(option.rect.size());
+        w->move(option.rect.topLeft());
 
-        updateUi(ui, transferItem);
+        w->updateUi(transferItem);
 
         if (option.state & QStyle::State_Selected)
         {
@@ -52,11 +50,9 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
         painter->save();
 
         painter->translate(option.rect.topLeft());
-        w->update();
         w->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
 
         painter->restore();
-       // w->deleteLater();
     }
     else
     {
@@ -185,70 +181,21 @@ bool MegaTransferDelegate2::editorEvent(QEvent *event, QAbstractItemModel *, con
 
 bool MegaTransferDelegate2::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-
-        if (event->type() == QEvent::ToolTip)
+    if (event->type() == QEvent::ToolTip && index.isValid())
+    {
+        // Get TransferManagerItem2 widget under cursor
+        const QString widgetName (QLatin1Literal("r")+QString::number(index.row()%20));
+        auto currentRow (view->findChild<TransferManagerItem2 *>(widgetName));
+        if (currentRow)
         {
-            auto w (view->childAt(event->pos())->parent());
-
-
-            if (w)
+            // Get widget inside TransferManagerItem2 under cursor, and display its tooltip
+            auto widget (currentRow->childAt(event->pos() - currentRow->pos()));
+            if (widget)
             {
-                auto toolTip (w->findChild<QToolButton *>(QLatin1Literal("lTransferName"))->toolTip());
-                QToolTip::showText(event->globalPos(), toolTip);
+                QToolTip::showText(event->globalPos(), widget->toolTip());
             }
-
         }
-//    if (event->type() == QEvent::ToolTip)
-//    {
-//        int tag = index.internalId();
-//        TransferItem *item = model->transferItems[tag];
-//        if (item)
-//        {
-//            if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
-//            {
-//                int modelType = model->getModelType();
-
-//                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-//                {
-//                    const auto &ti = model->transferItems[tag];
-
-//                    if (!ti->getIsLinkAvailable() && !ti->getTransferError())
-//                    {
-//                        QToolTip::showText(event->globalPos(), tr("Show in folder"));
-//                    }
-//                    else if (MegaTransfer *transfer = model->getTransferByTag(tag) )
-//                    {
-//                        if (!transfer->getLastError().getErrorCode())
-//                        {
-//                            QToolTip::showText(event->globalPos(), tr("Get link"));
-//                        }
-//                        else
-//                        {
-//                            QToolTip::showText(event->globalPos(), tr("Retry"));
-//                        }
-//                        delete transfer;
-//                        return true;
-//                    }
-//                }
-//            }
-//            else if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
-//            {
-//                int modelType = model->getModelType();
-//                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-//                {
-//                    QToolTip::showText(event->globalPos(), tr("Show in folder"));
-//                    return true;
-//                }
-//            }
-
-//            QString fileName = item->getFileName();
-//            if (fileName != item->getTransferName())
-//            {
-//                QToolTip::showText(event->globalPos(), fileName);
-//                return true;
-//            }
-//        }
-//    }
+    }
     return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
@@ -332,138 +279,3 @@ void MegaTransferDelegate2::on_tPauseTransfer_clicked()
 //    }
 //}
 
-void MegaTransferDelegate2::setupUi(Ui::TransferManagerItem& ui, const TransferItem2& transferItem, QWidget* w) const
-{
-    const auto d (transferItem.getTransferData());
-    ui.setupUi(w);
-
-}
-
-void MegaTransferDelegate2::updateUi(Ui::TransferManagerItem& ui, const TransferItem2& transferItem) const
-{
-    const auto d (transferItem.getTransferData());
-    QString statusString;
-
-    // Set fixed stuff
-    QIcon icon (Utilities::getCachedPixmap(
-                     Utilities::getExtensionPixmapName(d->mFilename, QLatin1Literal(":/images/small_"))));
-
-    ui.tFileType->setIcon(icon);
-    ui.lTransferName->setToolTip(d->mFilename);
-    ui.lTotal->setText(Utilities::getSizeString(d->mTotalSize));
-
-    switch (d->mType)
-    {
-        case MegaTransfer::TYPE_DOWNLOAD:
-        case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
-        {
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
-            break;
-        }
-        case MegaTransfer::TYPE_UPLOAD:
-        {
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
-            break;
-        }
-    }
-
-    ui.bSpeed->setIcon(icon);
-
-    switch (d->mType)
-    {
-        case MegaTransfer::TYPE_DOWNLOAD:
-        case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
-        {
-            statusString = QObject::tr("Downloading");
-            break;
-        }
-        case MegaTransfer::TYPE_UPLOAD:
-        {
-            statusString = QObject::tr("Uploading");
-            break;
-        }
-    }
-
-    // Display changing values
-
-    // File name
-    ui.lTransferName->setText(ui.lTransferName->fontMetrics()
-                                .elidedText(d->mFilename, Qt::ElideMiddle,
-                                            ui.lTransferName->width()));
-
-    // Amount transfered
-    ui.lDone->setText(Utilities::getSizeString(d->mTransferredBytes));
-
-    QString remTimeString;
-    QString speedString;
-    bool isQueued (false);
-    QIcon pauseResumeIcon;
-
-    switch (d->mState)
-    {
-        case MegaTransfer::STATE_ACTIVE:
-        {
-            remTimeString = Utilities::getTimeString(d->mRemainingTime);
-            speedString = Utilities::getSizeString(d->mSpeed) + QLatin1Literal("/s");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
-            break;
-        }
-        case MegaTransfer::STATE_PAUSED:
-        {
-            statusString = QObject::tr("Paused");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_resume_transfers_state.png"));
-            break;
-        }
-        case MegaTransfer::STATE_QUEUED:
-        {
-            isQueued = true;
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
-            break;
-        }
-        case MegaTransfer::STATE_CANCELLED:
-        {
-            statusString = QObject::tr("Canceled");
-            break;
-        }
-        case MegaTransfer::STATE_COMPLETING:
-        {
-            statusString = QObject::tr("Completing");
-            break;
-        }
-        case MegaTransfer::STATE_FAILED:
-        {
-            statusString = QObject::tr("Failed");
-            break;
-        }
-        case MegaTransfer::STATE_RETRYING:
-        {
-            statusString = QObject::tr("Retrying");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
-            break;
-        }
-        case MegaTransfer::STATE_COMPLETED:
-        {
-            statusString = QObject::tr("Completed");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
-            break;
-        }
-    }
-
-    // Queued state
-    ui.lQueued->setVisible(isQueued);
-
-    // Status
-    ui.lStatus->setText(statusString);
-
-    // Progress bar
-    int permil = (d->mTotalSize > 0) ?
-                   ((1000 *d->mTransferredBytes) / d->mTotalSize)
-                   : 0;
-    ui.pbTransfer->setValue(permil);
-
-    // Remaining time
-    ui.lRemainingTime->setText(remTimeString);
-
-    // Speed
-    ui.bSpeed->setText(speedString);
-}

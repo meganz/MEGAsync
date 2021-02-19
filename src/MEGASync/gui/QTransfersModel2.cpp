@@ -284,9 +284,9 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
                                     0,
                                     0,
                                     transfer->getMeanSpeed(),
-                                    transfer->getState(),
-                                    transfer->getPriority(),
                                     transfer->getSpeed(),
+                                    transfer->getPriority(),
+                                    transfer->getState(),
                                     transfer->getTransferredBytes());
 
     emit dataChanged(index(row, 0), index(row, 0));
@@ -314,9 +314,9 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
                                     transfer->getLastError().getErrorCode(),
                                     transfer->getLastErrorExtended()->getValue(),
                                     transfer->getMeanSpeed(),
-                                    transfer->getState(),
-                                    transfer->getPriority(),
                                     transfer->getSpeed(),
+                                    transfer->getPriority(),
+                                    transfer->getState(),
                                     transfer->getTransferredBytes());
 
     emit dataChanged(index(row, 0), index(row, 0));

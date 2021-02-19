@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>756</width>
-    <height>64</height>
+    <height>48</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>756</width>
-    <height>64</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>756</width>
-    <height>64</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
   font-family: &quot;Lato&quot;;
 }
 
-#TransferManagerItem
+TransferManagerItem2, TransferManagerItem
 {
 	width: 756px; 
     height: 64px;
