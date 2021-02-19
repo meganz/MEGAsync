@@ -107,7 +107,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     syncsChanged = false;
     excludedNamesChanged = false;
-    sizeLimitsChanged = false;
     cleanerLimitsChanged = false;
     fileVersioningChanged = false;
 
@@ -121,12 +120,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
 
     reloadUIpage = false;
-    hasUpperLimit = false;
-    hasLowerLimit = false;
-    upperLimit = 0;
-    lowerLimit = 0;
-    upperLimitUnit = Preferences::MEGA_BYTE_UNIT;
-    lowerLimitUnit = Preferences::MEGA_BYTE_UNIT;
     debugCounter = 0;
     hasDaysLimit = false;
     daysLimit = 0;
@@ -1440,21 +1433,6 @@ int SettingsDialog::saveSettings()
         }
 #endif
 
-        if (sizeLimitsChanged)
-        {
-            preferences->setUpperSizeLimit(hasUpperLimit);
-            preferences->setLowerSizeLimit(hasLowerLimit);
-            preferences->setUpperSizeLimitValue(upperLimit);
-            preferences->setLowerSizeLimitValue(lowerLimit);
-            preferences->setUpperSizeLimitUnit(upperLimitUnit);
-            preferences->setLowerSizeLimitUnit(lowerLimitUnit);
-            preferences->setCrashed(true);
-            QMegaMessageBox::information(this, tr("Warning"),
-                                         tr("The new excluded file sizes will be taken into account when the application starts again."),
-                                         QMessageBox::Ok);
-            sizeLimitsChanged = false;
-        }
-
         if (cleanerLimitsChanged)
         {
             preferences->setCleanerDaysLimit(hasDaysLimit);
@@ -1743,12 +1721,6 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
 
 void SettingsDialog::loadSizeLimits()
 {
-    hasUpperLimit = preferences->upperSizeLimit();
-    hasLowerLimit = preferences->lowerSizeLimit();
-    upperLimit = preferences->upperSizeLimitValue();
-    lowerLimit = preferences->lowerSizeLimitValue();
-    upperLimitUnit = preferences->upperSizeLimitUnit();
-    lowerLimitUnit = preferences->lowerSizeLimitUnit();
     ui->lLimitsInfo->setText(getFormatString());
     hasDaysLimit = preferences->cleanerDaysLimit();
     daysLimit = preferences->cleanerDaysLimitValue();
@@ -2095,40 +2067,31 @@ void SettingsDialog::on_bDeleteName_clicked()
 
 void SettingsDialog::on_bExcludeSize_clicked()
 {
-    QPointer<SizeLimitDialog> dialog = new SizeLimitDialog(this);
-    dialog->setUpperSizeLimit(hasUpperLimit);
-    dialog->setLowerSizeLimit(hasLowerLimit);
-    dialog->setUpperSizeLimitValue(upperLimit);
-    dialog->setLowerSizeLimitValue(lowerLimit);
-    dialog->setUpperSizeLimitUnit(upperLimitUnit);
-    dialog->setLowerSizeLimitUnit(lowerLimitUnit);
+    SizeLimitDialog *dialog = new SizeLimitDialog(this);
+    dialog->setUpperSizeLimit(preferences->upperSizeLimit());
+    dialog->setLowerSizeLimit(preferences->lowerSizeLimit());
+    dialog->setUpperSizeLimitValue(preferences->upperSizeLimitValue());
+    dialog->setLowerSizeLimitValue(preferences->lowerSizeLimitValue());
+    dialog->setUpperSizeLimitUnit(preferences->upperSizeLimitUnit());
+    dialog->setLowerSizeLimitUnit(preferences->lowerSizeLimitUnit());
 
     int result = dialog->exec();
-    if (!dialog || result != QDialog::Accepted)
+    if (result == QDialog::Accepted)
     {
-        delete dialog;
-        return;
+        preferences->setUpperSizeLimit(dialog->upperSizeLimit());
+        preferences->setLowerSizeLimit(dialog->lowerSizeLimit());
+        preferences->setUpperSizeLimitValue(dialog->upperSizeLimitValue());
+        preferences->setLowerSizeLimitValue(dialog->lowerSizeLimitValue());
+        preferences->setUpperSizeLimitUnit(dialog->upperSizeLimitUnit());
+        preferences->setLowerSizeLimitUnit(dialog->lowerSizeLimitUnit());
+        preferences->setCrashed(true); // TODO: Why?
+        QMegaMessageBox::information(this, tr("Warning"),
+                                     tr("The new excluded file sizes will be taken into account when the application starts again."),
+                                     QMessageBox::Ok);
+        ui->lLimitsInfo->setText(getFormatString());
     }
 
-    hasUpperLimit = dialog->upperSizeLimit();
-    hasLowerLimit = dialog->lowerSizeLimit();
-    upperLimit = dialog->upperSizeLimitValue();
-    lowerLimit = dialog->lowerSizeLimitValue();
-    upperLimitUnit = dialog->upperSizeLimitUnit();
-    lowerLimitUnit = dialog->lowerSizeLimitUnit();
     delete dialog;
-
-    ui->lLimitsInfo->setText(getFormatString());
-    if (hasUpperLimit != preferences->upperSizeLimit() ||
-       hasLowerLimit != preferences->lowerSizeLimit() ||
-       upperLimit != preferences->upperSizeLimitValue() ||
-       lowerLimit != preferences->lowerSizeLimitValue() ||
-       upperLimitUnit != preferences->upperSizeLimitUnit() ||
-       lowerLimitUnit != preferences->lowerSizeLimitUnit())
-    {
-        sizeLimitsChanged = true;
-        stateChanged();
-    }
 }
 
 void SettingsDialog::on_bLocalCleaner_clicked()
@@ -2183,6 +2146,14 @@ void SettingsDialog::changeEvent(QEvent *event)
 QString SettingsDialog::getFormatString()
 {
     QString format;
+
+    bool hasUpperLimit = preferences->upperSizeLimit();
+    bool hasLowerLimit = preferences->lowerSizeLimit();
+    long long upperLimit = preferences->upperSizeLimitValue();
+    long long lowerLimit = preferences->lowerSizeLimitValue();
+    int upperLimitUnit = preferences->upperSizeLimitUnit();
+    int lowerLimitUnit = preferences->lowerSizeLimitUnit();
+
     if (hasLowerLimit || hasUpperLimit)
     {
         format += QString::fromUtf8("(");
