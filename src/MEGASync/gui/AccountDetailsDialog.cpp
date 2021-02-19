@@ -68,7 +68,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
         long double usedS(preferences->usedStorage());
         long double totalS(preferences->totalStorage());
         // We can safely cast to int, as the percentage should be well in range of an int.
-        int percentage = static_cast<int>(100. * (usedS/totalS));
+        int percentage = static_cast<int>(100. * usedS / totalS);
 
         ui->pUsageStorage->setValue(percentage > ui->pUsageStorage->maximum() ? ui->pUsageStorage->maximum() : percentage);
         if (percentage > 100)
