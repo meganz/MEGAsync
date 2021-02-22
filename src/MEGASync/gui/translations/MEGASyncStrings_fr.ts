@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation type="unfinished">Libre</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
@@ -2306,7 +2306,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Choisir $(^NameDA) doit être installé pour vous seul ou pour tous les utilisateurs de cet ordinateur. $(^ClickNext)</translation>
+        <translation>Choisissez si vous voulez installer $(^NameDA) pour vous seul ou pour tous les utilisateurs de cet ordinateur. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Le dossier de synchronisation distant est invalide</translation>
+        <translation type="unfinished">Le chemin de synchronisation distant est invalide</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Ne sélectionner qu’un seul fichier.</translation>
+        <translation type="unfinished">Ne sélectionner qu&apos;un fichier</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4077,7 +4077,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Saisissez un ou plusieurs liens de fichier MEGA</translation>
+        <translation>Saisissez un ou plusieurs liens MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4404,10 +4404,10 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
+        <translation type="unfinished">- New improvements for the management of syncs.
 - Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
 - Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
 - Fixed detected crashes on Windows and Linux.
 - Other performance improvements and adjustments.
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Certaines synchronisations ont été désactivées. Pour plus de précisions, survolez avec votre curseur l’icône d’avertissement située à côté de chaque synchronisation désactivée.</translation>
+        <translation type="unfinished">Certaines synchronisations ont été désactivées. Pour plus de précisions, survolez l’icône d’avertissement située à côté de chaque synchronisation désactivée.</translation>
     </message>
 </context>
 <context>
@@ -6814,7 +6814,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation type="unfinished">Libre</translation>
     </message>
 </context>
 <context>

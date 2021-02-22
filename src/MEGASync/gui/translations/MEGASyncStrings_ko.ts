@@ -3263,12 +3263,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync는 계속해서 작동하지만, OS X Yosemite 이전 버전은 업데이트를 지원하지 않을 예정입니다.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">하나 이상의 동기화가 해제되었습니다. 다시 활성화하려면 설정으로 가세요.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3515,7 +3515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">원격 동기화 폴더가 유효하지 않습니다</translation>
+        <translation type="unfinished">원격 동기화 경로가 유효하지 않습니다</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3894,7 +3894,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">하나의 파일만 선택하세요</translation>
+        <translation type="unfinished">파일 하나만 선택하세요</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4207,7 +4207,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">설정</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4405,14 +4405,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- 동기화 관리 향상.
+- 동기화가 해제되었을 때의 이용자 경험 향상.
+- 여러 계정의 이벤트 발생을 이용자에게 알리는 시스템 알림 향상.
+- 많은 수의 전송과 동기화를 처리할 때의 이용자 경험 향상.
+- Ubuntu에서 사용할 때 gnome-shell의 CPU 이용량이 높은 문제 수정.
+- Windows와 Linux에서 감지된 충돌 수정.
+- 기타 성능 향상과 조정.
+- 기타 UI 수정과 조정.</translation>
     </message>
 </context>
 <context>

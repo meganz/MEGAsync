@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The remote sync folder is not valid</translation>
+        <translation type="unfinished">The remote sync path is not valid</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Select just one file.</translation>
+        <translation type="unfinished">Select just one file</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4077,7 +4077,7 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Enter one or more MEGA file links</translation>
+        <translation>Enter one or more MEGA links</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4404,10 +4404,10 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
+        <translation type="unfinished">- New improvements for the management of syncs.
 - Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
 - Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
 - Fixed detected crashes on Windows and Linux.
 - Other performance improvements and adjustments.
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Some of the syncs have been disabled. For more information, hover over the warning icon next to each disabled sync.</translation>
     </message>
 </context>
 <context>

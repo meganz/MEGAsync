@@ -3267,7 +3267,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">一個或多個同步已停用。請至偏好設定裡再次啟用它們。</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">無效的遠端同步資料夾</translation>
+        <translation type="unfinished">無效的遠端同步路徑</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">儘可選擇一個檔案。</translation>
+        <translation type="unfinished">僅選擇一個檔案</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4077,7 +4077,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>輸入一個或多個MEGA檔案連結</translation>
+        <translation>輸入一個或多個MEGA連結</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4206,7 +4206,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">偏好設定</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- 同步管理新改進。
+- 改善當同步停用時的使用者體驗。
+- 增強的系統通知功能，可提供用戶各種帳戶事件的通知。
+- 改善處理大量傳輸和同步時的使用者體驗。
+- 修復在Ubuntu上運行時，gnome-shell的CPU使用率過高的問題。
+- 修復在Windows和Linux上偵測到的崩潰問題。
+- 其它性能改進和調整。
+- 其它用戶界面修復和調整。</translation>
     </message>
 </context>
 <context>
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">某些同步已被停用。有關更多訊息，請將滑鼠游標移至每個被停用同步旁的警告標示上。</translation>
+        <translation type="unfinished">某些同步已被停用。有關更多信息，請將游標移至每個已停用的同步旁邊的警告標示上。</translation>
     </message>
 </context>
 <context>

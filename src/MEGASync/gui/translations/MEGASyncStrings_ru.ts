@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Выбрать только один файл.</translation>
+        <translation type="unfinished">Выбрать только один файл</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4077,7 +4077,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Введите одну или несколько MEGA-ссылок на файлы</translation>
+        <translation>Введите одну или несколько MEGA-ссылок</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4404,10 +4404,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
+        <translation type="unfinished">- New improvements for the management of syncs.
 - Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
 - Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
 - Fixed detected crashes on Windows and Linux.
 - Other performance improvements and adjustments.

@@ -2330,7 +2330,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remove files older than</source>
         <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
-        <translation type="unfinished">Eliminar archivos anteriores a</translation>
+        <translation type="unfinished">Eliminar archivos con más de</translation>
     </message>
     <message>
         <source>days</source>
@@ -3263,7 +3263,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync seguirá funcionando aunque muy pronto sus actualizaciones ya no serán compatibles con versiones anteriores a OS X Yosemite.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
@@ -3894,7 +3894,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Selecciona sólo un archivo.</translation>
+        <translation type="unfinished">Selecciona sólo un archivo</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4405,10 +4405,10 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
+        <translation type="unfinished">- New improvements for the management of syncs.
 - Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
 - Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
 - Fixed detected crashes on Windows and Linux.
 - Other performance improvements and adjustments.
@@ -5550,12 +5550,12 @@ when the application starts again</source>
     <message>
         <source>Remove files older than %1 days</source>
         <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
-        <translation type="unfinished">Eliminar archivos anteriores a %1 días</translation>
+        <translation type="unfinished">Eliminar archivos con más de %1 días</translation>
     </message>
     <message>
         <source>Remove files older than 1 day</source>
         <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
-        <translation type="unfinished">Eliminar archivos anteriores a 1 día</translation>
+        <translation type="unfinished">Eliminar archivos con más de 1 día</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>

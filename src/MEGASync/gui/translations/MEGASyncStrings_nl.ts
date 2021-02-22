@@ -3263,7 +3263,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync zal blijven werken, maar updates worden binnenkort niet langer ondersteund voor versies vóór OS X Yosemite.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
@@ -3894,7 +3894,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Selecteer slechts één bestand.</translation>
+        <translation type="unfinished">Selecteer alleen één bestand</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4405,10 +4405,10 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
+        <translation type="unfinished">- New improvements for the management of syncs.
 - Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
 - Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
 - Fixed detected crashes on Windows and Linux.
 - Other performance improvements and adjustments.

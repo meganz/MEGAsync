@@ -2160,7 +2160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation type="unfinished">Abrir Configurações</translation>
+        <translation type="unfinished">Acessar as preferências</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -3267,12 +3267,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Uma ou mais sincronizações foram desativadas. Você pode reativá-las nas Preferências.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
-        <translation type="unfinished">Abrir Configurações</translation>
+        <translation type="unfinished">Acessar as preferências</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">A pasta de sincronização remota não é válida</translation>
+        <translation type="unfinished">O caminho de sincronização remoto não é válido</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Selecione apenas um arquivo.</translation>
+        <translation type="unfinished">Selecione somente um arquivo</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4077,7 +4077,7 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Digite um ou mais links MEGA</translation>
+        <translation>Digite um ou vários links do MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4206,7 +4206,7 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Preferências</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,10 +4404,10 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
+        <translation type="unfinished">- New improvements for the management of syncs.
 - Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
 - Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
 - Fixed detected crashes on Windows and Linux.
 - Other performance improvements and adjustments.

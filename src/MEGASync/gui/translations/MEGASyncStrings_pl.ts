@@ -3267,7 +3267,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Jedna lub więcej synchronizacji zostało wyłączonych. Przejdź do preferencji, aby ponownie je włączyć.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">35 / 5000Zdalny folder synchronizacji jest nieprawidłowy</translation>
+        <translation type="unfinished">Zdalna ścieżka synchronizacji jest nieprawidłowa</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Wybierz tylko jeden plik.</translation>
+        <translation type="unfinished">Wybierz tylko jeden plik</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4206,7 +4206,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Preferencje</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Nowe usprawnienia w zarządzaniu synchronizacją.
+- Poprawione doświadczenie użytkownika, gdy synchronizacje są wyłączone.
+- Ulepszone powiadomienia systemowe, aby powiadamiać użytkowników o różnych zdarzeniach na koncie.
+- Poprawiono doświadczenie użytkownika podczas pracy z ogromną liczbą transferów i synchronizacji.
+- Naprawiono problemy związane z wysokim zużyciem procesora przez gnome-shell podczas pracy na Ubuntu.
+- Poprawiono wykryte awarie w systemach Windows i Linux.
+- Inne poprawki i usprawnienia wydajności.
+- Inne poprawki i dostosowania UI.</translation>
     </message>
 </context>
 <context>
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Niektóre synchronizacje zostały wyłączone. Aby uzyskać więcej informacji, przesuń kursor myszy nad ikonę ostrzeżenia obok każdej wyłączonej synchronizacji.</translation>
+        <translation type="unfinished">Niektóre synchronizacje zostały wyłączone. Aby uzyskać więcej informacji, najedź kursorem na ikonę ostrzeżenia obok każdej wyłączonej synchronizacji.</translation>
     </message>
 </context>
 <context>

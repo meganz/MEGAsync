@@ -3267,7 +3267,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การกำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">โฟลเดอร์ซิงค์ระยะไกลไม่ถูกต้อง</translation>
+        <translation type="unfinished">เส้นทางการซิงค์ระยะไกลไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">เลือกเพียงหนึ่งไฟล์</translation>
+        <translation type="unfinished">เลือกไฟล์เพียงไฟล์เดียว</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4077,7 +4077,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>กรอกลิงก์ไฟล์ MEGA อย่างน้อยหนึ่งลิงก์</translation>
+        <translation>กรอกลิงก์ MEGA อย่างน้อยหนึ่งลิงก์</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4206,7 +4206,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">การกำหนดลักษณะ</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- ปรับปรุงการจัดการซิงค์ใหม่
+- ปรับปรุงประสบการณ์การใช้งานของผู้ใช้เมื่อปิดใช้งานการซิงค์
+- ปรับปรุงการแจ้งเตือนระบบขั้นสูง เพื่อแจ้งเตือนผู้ใช้เกี่ยวกับเหตุการณ์ต่าง ๆ ในบัญชี
+- ปรับปรุงประสบการณ์การใช้งานของผู้ใช้ในขณะที่ทำงานกับการถ่ายโอนและการซิงค์จำนวนมาก
+- แก้ไขปัญหาการใช้งาน CPU ของ gnome-shell สูงเมื่อทำงานบน Ubuntu
+- แก้ไขข้อขัดข้องที่ตรวจพบใน Windows และ Linux
+- ปรับปรุงและปรับแต่งประสิทธิภาพอื่น ๆ
+- แก้ไขและปรับแต่ง UI อื่น ๆ</translation>
     </message>
 </context>
 <context>
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">การซิงค์บางรายการถูกปิดใช้งาน สำหรับข้อมูลเพิ่มเติมให้เลื่อนเมาส์ไปที่ไอคอนคำเตือนถัดจากการซิงค์ที่ปิดใช้งานแต่ละรายการ</translation>
+        <translation type="unfinished">การซิงค์บางรายการถูกปิดใช้งาน สำหรับข้อมูลเพิ่มเติม ให้วางเมาส์เหนือไอคอนคำเตือนถัดจากการซิงค์ที่ปิดใช้งานแต่ละรายการ</translation>
     </message>
 </context>
 <context>

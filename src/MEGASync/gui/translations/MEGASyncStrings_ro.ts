@@ -836,7 +836,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">Ești pe cale de a permite o setare care să permită interceptarea comunicațiilor tale. Datele tale ar fi în continuare inaccesibile atacatorilor datorită criptării noastre capăt-la-capăt, însă aceștia ar putea să mute orbește fișierele și folderele tale în MEGA, să le șteargă sau să îți refuze accesul la contul tău.</translation>
+        <translation type="unfinished">Ești pe cale de a permite o setare care să permită interceptarea comunicărilor tale. Datele tale ar fi în continuare inaccesibile atacatorilor datorită criptării noastre capăt-la-capăt, însă aceștia ar putea să mute orbește fișierele și folderele tale în MEGA, să le șteargă sau să îți refuze accesul la contul tău.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Cheia noastră SSL nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle sau software-ul antivirus ar putea intercepta comunicațiile și să cauzeze problema. Te rugăm să dezactivezi software-ul antivirus și să încerci din nou.</translation>
+        <translation type="unfinished">Cheia noastră SSL nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle sau software-ul antivirus ar putea intercepta comunicările și să cauzeze problema. Te rugăm să dezactivezi software-ul antivirus și să încerci din nou.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Folderul de sincronizare la distanță nu este valid</translation>
+        <translation type="unfinished">Calea de sincronizare la distanță nu este validă</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3893,7 +3893,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Selectează un singur fișier.</translation>
+        <translation type="unfinished">Selectează un singur fișier</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4077,7 +4077,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Introdu unul sau mai multe linkuri ale fișierelor MEGA</translation>
+        <translation>Introdu unul sau mai multe linkuri MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4404,10 +4404,10 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of the syncs.
+        <translation type="unfinished">- New improvements for the management of syncs.
 - Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
 - Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
 - Fixed detected crashes on Windows and Linux.
 - Other performance improvements and adjustments.
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Some of the syncs have been disabled. For more information, hover over the warning icon next to each disabled sync.</translation>
     </message>
 </context>
 <context>
