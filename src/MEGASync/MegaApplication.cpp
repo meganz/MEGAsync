@@ -8279,7 +8279,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
 
             break;
         }
-        case MegaSync::Error::REMOTE_PATH_DELETED:
+        case MegaSync::Error::REMOTE_NODE_NOT_FOUND:
         {
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                             .arg(syncSetting->name()));
