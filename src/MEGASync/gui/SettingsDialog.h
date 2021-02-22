@@ -61,7 +61,6 @@ signals:
 
 public slots:
     void stateChanged();
-    void fileVersioningStateChanged();
     void storageStateChanged(int state);
     void syncStateChanged(int state);
     void proxyStateChanged();
@@ -149,6 +148,7 @@ private slots:
     void on_eMaxDownloadConnections_valueChanged(int value);
     void on_eMaxUploadConnections_valueChanged(int value);
     void on_cbUseHttps_toggled(bool checked);
+    void on_cDisableFileVersioning_toggled(bool checked);
 
 protected:
     void changeEvent(QEvent * event) override;
@@ -187,7 +187,6 @@ private:
     long long fileVersionsSize;
     bool hasDefaultUploadOption;
     bool hasDefaultDownloadOption;
-    bool fileVersioningChanged;
     bool reloadUIpage;
     ThreadPool* mThreadPool;
     bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error

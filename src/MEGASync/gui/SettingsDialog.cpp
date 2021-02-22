@@ -1,4 +1,4 @@
-﻿#include <QApplication>
+#include <QApplication>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QRect>
@@ -107,7 +107,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     syncsChanged = false;
     excludedNamesChanged = false;
-    fileVersioningChanged = false;
 
     this->proxyOnly = proxyOnly;
     this->proxyTestProgressDialog = NULL;
@@ -157,7 +156,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->cProxyRequiresPassword, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
 
     connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
-    connect(ui->cDisableFileVersioning, SIGNAL(clicked(bool)), this, SLOT(fileVersioningStateChanged()));
 
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 
@@ -424,26 +422,6 @@ void SettingsDialog::stateChanged()
     //TODO: SAVE SETTINGS APPLY BUTTON -> LOGOUT
     saveSettings();
 #endif
-}
-
-void SettingsDialog::fileVersioningStateChanged()
-{
-    QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
-    if (ui->cDisableFileVersioning->isChecked() && (QMegaMessageBox::warning(nullptr,
-                             QString::fromUtf8("MEGAsync"),
-                             tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
-            || !dialog))
-    {
-        if (dialog)
-        {
-            ui->cDisableFileVersioning->setChecked(false);
-        }
-        return;
-    }
-
-    fileVersioningChanged = true;
-    stateChanged();
 }
 
 void SettingsDialog::syncStateChanged(int state)
@@ -1431,12 +1409,6 @@ int SettingsDialog::saveSettings()
         }
 #endif
 
-        if (fileVersioningChanged && ui->cDisableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
-        {
-            megaApi->setFileVersionsOption(ui->cDisableFileVersioning->isChecked());
-            fileVersioningChanged = false;
-        }
-
         if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
         {
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
@@ -1452,8 +1424,8 @@ int SettingsDialog::saveSettings()
         }
     }
 
-    int proxyChanged = 0;
     //Proxies
+    int proxyChanged = 0;
     if (!proxyTestProgressDialog && ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
         (ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))    ||
         (ui->rProxyManual->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_CUSTOM))||
@@ -1811,6 +1783,7 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 
     delete dialog;
 
+    // FIXME: am I necessary?
     syncsChanged = true;
     stateChanged();
 }
@@ -2882,4 +2855,26 @@ void SettingsDialog::on_cbUseHttps_toggled(bool checked)
     if (modifyingSettings) return;
     preferences->setUseHttpsOnly(checked);
     app->setUseHttpsOnly(preferences->usingHttpsOnly());
+}
+
+void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
+{
+    if (modifyingSettings) return;
+    if (checked)
+    {
+        auto answer = QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
+                                               tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
+                                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+        if (answer == QMessageBox::No)
+        {
+            ui->cDisableFileVersioning->blockSignals(true);
+            ui->cDisableFileVersioning->setChecked(false);
+            ui->cDisableFileVersioning->blockSignals(false);
+            return;
+        }
+    }
+    megaApi->setFileVersionsOption(checked);
+    // TODO: investigate why this setting was not saved in batched mode impl.; is this because this option is set by MegaApplication.cpp?
+    preferences->disableFileVersioning(checked);
 }
