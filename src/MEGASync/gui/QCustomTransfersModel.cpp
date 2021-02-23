@@ -189,7 +189,18 @@ void QCustomTransfersModel::updateTransferInfo(MegaTransfer *transfer)
             item->setTotalSize(transfer->getTotalBytes());
         }
 
-        item->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
+        // Get http speed, which reports speed changes faster than the transfer.
+        long long httpSpeed;
+        if (item->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentDownloadSpeed();
+        }
+        else
+        {
+            httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentUploadSpeed();
+        }
+
+        item->setSpeed(std::min(transfer->getSpeed(), httpSpeed), transfer->getMeanSpeed());
         item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
         item->setTransferState(transfer->getState());
         item->setPriority(newPriority);

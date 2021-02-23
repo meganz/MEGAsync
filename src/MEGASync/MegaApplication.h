@@ -36,6 +36,7 @@
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
 #include "control/MegaController.h"
+#include "control/Utilities.h"
 #include "model/Model.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
@@ -61,7 +62,7 @@ public:
                     : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
                       localPath(path), totalFiles(0), totalFolders(0),
                       transfersFileOK(0), transfersFolderOK(0),
-                      transfersFailed(0), transfersCancelled(0) {}
+                      transfersFailed(0), transfersCancelled(0){}
 
     int totalTransfers;
     int pendingTransfers;
@@ -272,7 +273,7 @@ public slots:
     void shellViewOnMega(QByteArray localPath, bool versions);
     void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
-    void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
+    void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
@@ -449,7 +450,7 @@ protected:
     QPointer<StreamingFromMegaDialog> streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
-    QQueue<mega::MegaNode *> downloadQueue;
+    QQueue<WrappedNode *> downloadQueue;
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mInboxNode;
