@@ -404,7 +404,7 @@ text-decoration:none;
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Resources_linux.qrc">:/images/cloud_item_ico.png</pixmap>
+             <pixmap resource="../Resources_win.qrc">:/images/cloud_item_ico.png</pixmap>
             </property>
            </widget>
           </item>
@@ -445,7 +445,7 @@ text-decoration:none;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -756,7 +756,7 @@ text-decoration:none;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -777,7 +777,7 @@ text-decoration:none;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

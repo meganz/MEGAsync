@@ -16,28 +16,36 @@ MegaDownloader::~MegaDownloader()
 
 }
 
-void MegaDownloader::download(MegaNode *parent, QString path, QString appData)
+void MegaDownloader::download(WrappedNode *parent, QString path, QString appData)
 {
     return download(parent, QFileInfo(path), appData);
 }
 
-bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, unsigned long long appDataId)
+bool MegaDownloader::processDownloadQueue(QQueue<WrappedNode *> *downloadQueue, QString path, unsigned long long appDataId)
 {
+    // If the destination path doesn't exist and we can't create it,
+    // empty queue and abort transfer.
     QDir dir(path);
-    if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
+    if (!dir.exists() && !dir.mkpath(QString::fromUtf8(".")))
     {
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
         return false;
     }
 
+    // Get transfer's metadata
     TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
 
-    QString currentPath;
+    // Process all nodes in the download queue
     while (!downloadQueue->isEmpty())
     {
+        static QString currentPath;
+
         QString appData = QString::number(appDataId);
-        MegaNode *node = downloadQueue->dequeue();
+        WrappedNode *wNode = downloadQueue->dequeue();
+        MegaNode *node = wNode->getMegaNode();
+
+        // Get path from pathMap or build it if necessary
         if (node->isForeign() && pathMap.contains(node->getParentHandle()))
         {
             currentPath = pathMap[node->getParentHandle()];
@@ -46,6 +54,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
         {
             if (data)
             {
+                // Update transfer metadata according to node type.
                 if (node->isFolder())
                 {
                     data->totalFolders++;
@@ -54,17 +63,27 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
                 {
                     data->totalFiles++;
                 }
+
+                // Report that there is still a "root folder" to download/create
                 appData.append(QString::fromUtf8("*"));
 
+                // Set the metadata local path to destination path
                 if (data->localPath.isEmpty())
                 {
                     data->localPath = QDir::toNativeSeparators(path);
+
+                    // If there is only 1 transfer, set localPath to full path
                     if (data->totalTransfers == 1)
                     {
-                        char *escapedName = megaApi->escapeFsIncompatible(node->getName(), path.toStdString().c_str());
+                        char *escapedName = megaApi->escapeFsIncompatible(node->getName(),
+                                                                          path.toStdString().c_str());
                         QString nodeName = QString::fromUtf8(escapedName);
                         delete [] escapedName;
-                        data->localPath += QDir::separator() + nodeName;
+                        if (!data->localPath.endsWith(QDir::separator()))
+                        {
+                            data->localPath += QDir::separator();
+                        }
+                        data->localPath += nodeName;
                     }
                 }
             }
@@ -72,74 +91,112 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
             currentPath = path;
         }
 
-        download(node, currentPath, appData);
-        delete node;
+        // We now have all the necessary info to effectively download.
+        download(wNode, currentPath, appData);
+
+        // Delete the node object once the transfer has been passed over to the SDK.
+        delete wNode;
     }
     pathMap.clear();
     return true;
 }
 
-void MegaDownloader::download(MegaNode *parent, QFileInfo info, QString appData)
+void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appData)
 {
     QPointer<MegaDownloader> safePointer = this;
+
     QApplication::processEvents();
     if (!safePointer)
     {
         return;
     }
 
-    QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
-
-    if (parent->getType() == MegaNode::TYPE_FILE)
+    QString currentPathWithSep = QDir::toNativeSeparators(info.absoluteFilePath());
+    if (!currentPathWithSep.endsWith(QDir::separator()))
     {
-        megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(),appData.toUtf8().constData());
+        currentPathWithSep += QDir::separator();
     }
+
+    // Extract MEGA node from wrapped node for more readable code
+    // Both parent and node should be not null at this point.
+    mega::MegaNode *node {parent->getMegaNode()};
+
+    // If the node is a file (foreign or not), or a not foreign dir:
+    if (node->getType() == MegaNode::TYPE_FILE || !node->isForeign())
+    {
+        // Download with priority depending on the transfer's origin
+        switch (parent->getTransferOrigin()) {
+            case WrappedNode::TransferOrigin::FROM_WEBSERVER :
+            {
+                // Downloads initiated through http server get top priority
+                megaApi->startDownloadWithTopPriority(node,
+                                                      currentPathWithSep.toUtf8().constData(),
+                                                      appData.toUtf8().constData());
+                break;
+            }
+            case WrappedNode::TransferOrigin::FROM_APP :
+            case WrappedNode::TransferOrigin::FROM_UNKNOWN :
+            default:
+            {
+                // For other downloads, use normal priority call
+                megaApi->startDownloadWithData(node,
+                                               currentPathWithSep.toUtf8().constData(),
+                                               appData.toUtf8().constData());
+            }
+        }
+    }
+    // Else, the node is a foreign dir (neither a file nor a not foreign node).
+    // Downloading amounts to creating the dir if it doesn't exist.
     else
     {
-        if (!parent->isForeign())
-        {
-            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), appData.toUtf8().constData());
-        }
-        else
-        {
-            char *escapedName = megaApi->escapeFsIncompatible(parent->getName(), currentPath.toStdString().c_str());
-            QString nodeName = QString::fromUtf8(escapedName);
-            delete [] escapedName;
+        // Get a c-string with the escaped name. This string will have to be deleted because
+        // megaApi->escapeFsIncompatible allocates it.
+        char *escapedName = megaApi->escapeFsIncompatible(node->getName(),
+                                                          currentPathWithSep.toStdString().c_str());
+        QString nodeName = QString::fromUtf8(escapedName);
+        delete [] escapedName;
 
-            QString destPath = currentPath + QDir::separator() + nodeName;
-            QDir dir(destPath);
-            if (!dir.exists())
+        // Build destination path and create it if it does not exist. If the creation fails, exit.
+        QString destPath = currentPathWithSep + nodeName;
+        QDir dir(destPath);
+        if (!dir.exists())
+        {
+#ifndef WIN32
+            if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
+#else
+            if (!dir.mkpath(QString::fromAscii(".")))
+#endif
             {
-    #ifndef WIN32
-                if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
-    #else
-                if (!dir.mkpath(QString::fromAscii(".")))
-    #endif
-                {
-                    return;
-                }
+                return;
+            }
+        }
+
+        // Once the folder has been checked for existence/created with success:
+        // - check if this was A "root folder" for the transfer (if yes, update
+        //     transfer metadata)
+        // - check if this was the last pending transfer. If yes, emit notification.
+        QByteArray appDataArray = appData.toUtf8();
+        char *endptr;
+        unsigned long long notificationId = strtoull(appDataArray.constData(), &endptr, 10);
+        TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
+        if (data)
+        {
+            // Thus, if there is a '*', this was a "root folder", and we successfully transfered it.
+            if (*endptr == '*')
+            {
+                data->transfersFolderOK++;
             }
 
-            QByteArray appDataArray = appData.toUtf8();
-            char *endptr;
-            unsigned long long notificationId = strtoll(appDataArray.constData(), &endptr, 10);
-            TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
-            if (data)
+            // Update pending transfers in metadata, and notify if this was the last.
+            data->pendingTransfers--;
+            if (data->pendingTransfers == 0)
             {
-                if ((endptr - appDataArray.constData()) != appData.size())
-                {
-                    data->transfersFolderOK++;
-                }
-
-                data->pendingTransfers--;
-                if (data->pendingTransfers == 0)
-                {
-                    //Transfers finished, show notification
-                    emit finishedTransfers(notificationId);
-                }
+                //Transfers finished, show notification
+                emit finishedTransfers(notificationId);
             }
-
-            pathMap[parent->getHandle()] = destPath;
         }
+
+        // Add path to pathMap
+        pathMap[node->getHandle()] = destPath;
     }
 }

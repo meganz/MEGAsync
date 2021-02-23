@@ -20,6 +20,8 @@
 #include <cryptopp/hmac.h>
 #include <cryptopp/pwdbased.h>
 
+namespace
+{
 #if CRYPTOPP_VERSION >= 600 && ((__cplusplus >= 201103L) || (__RPCNDR_H_VERSION__ == 500))
 using byte = CryptoPP::byte;
 #elif __RPCNDR_H_VERSION__ != 500
@@ -52,6 +54,7 @@ protected:
     CryptoPP::Integer key[2];
     CryptoPP::SHA512 hash;
 };
+} // end of namespace
 
 class UpdateTask
 {

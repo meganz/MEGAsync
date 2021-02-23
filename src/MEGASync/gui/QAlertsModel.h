@@ -25,8 +25,6 @@ public:
     explicit QAlertsModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject *parent = 0);
     virtual ~QAlertsModel();
 
-    void refreshAlerts();
-
     QModelIndex index(int row, int column,
                       const QModelIndex &parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &index) const override;
@@ -38,6 +36,7 @@ public:
 
     QCache<int, AlertItem> alertItems;
 
+    void refreshAlerts();
     void insertAlerts(mega::MegaUserAlertList *alerts, bool copy = false);
 
     long long getUnseenNotifications(int type) const;
@@ -52,6 +51,8 @@ private:
     std::array<int, ALERT_ALL> unSeenNotifications;
     std::array<bool, ALERT_ALL> hasNotificationsOfType;
 
+private slots:
+    void refreshAlertItem(unsigned item);
 };
 
 #endif // QALERTSMODEL_H

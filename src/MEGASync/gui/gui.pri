@@ -54,6 +54,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/Login2FA.cpp \
+    $$PWD/QSyncItemWidget.cpp \
     $$PWD/TransfersStatusWidget.cpp \
     $$PWD/TransfersSummaryWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
@@ -66,7 +67,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AlertFilterType.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
-    $$PWD/MegaInfoMessage.cpp
+    $$PWD/MegaInfoMessage.cpp \
+    $$PWD/WaitingSpinnerWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -122,6 +124,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UpgradeOverStorage.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
+    $$PWD/QSyncItemWidget.h \
     $$PWD/TransfersStatusWidget.h \
     $$PWD/TransfersSummaryWidget.h \
     $$PWD/CircularUsageProgressBar.h \
@@ -134,7 +137,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertFilterType.h \
     $$PWD/BugReportDialog.h \
     $$PWD/VerifyLockMessage.h \
-    $$PWD/MegaInfoMessage.h
+    $$PWD/MegaInfoMessage.h \
+    $$PWD/WaitingSpinnerWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -182,6 +186,7 @@ win32 {
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
+                $$PWD/win/QSyncItemWidget.ui \
                 $$PWD/win/TransfersStatusWidget.ui \
                 $$PWD/win/AlertItem.ui \
                 $$PWD/win/TransfersSummaryWidget.ui \
@@ -237,6 +242,7 @@ macx {
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
+                $$PWD/macx/QSyncItemWidget.ui \
                 $$PWD/macx/TransfersStatusWidget.ui \
                 $$PWD/macx/AlertItem.ui \
                 $$PWD/macx/TransfersSummaryWidget.ui \
@@ -250,11 +256,15 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
 
     QT += macextras
-    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
-    HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
+    OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm \
+                            $$PWD/MegaSystemTrayIcon.mm \
+                            $$PWD/QMacSpinningProgressIndicator.mm
+
+    HEADERS += $$PWD/CocoaHelpButton.h $$PWD/MegaSystemTrayIcon.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
-               $$PWD/PermissionsWidget.h
+               $$PWD/PermissionsWidget.h \
+               $$PWD/QMacSpinningProgressIndicator.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
@@ -307,6 +317,7 @@ unix:!macx {
                 $$PWD/linux/UpgradeOverStorage.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
+                $$PWD/linux/QSyncItemWidget.ui \
                 $$PWD/linux/TransfersStatusWidget.ui \
                 $$PWD/linux/AlertItem.ui \
                 $$PWD/linux/TransfersSummaryWidget.ui \

@@ -458,6 +458,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 bool failed = false;
                 bool linkAvailable = true;
                 bool showInMega = true;
+                bool showInFolder = true;
 
                 MegaTransfer *transfer = NULL;
                 QTransfersModel *model = (QTransfersModel*)this->model();
@@ -484,9 +485,17 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                             linkAvailable = false;
                         }
 
-                        if (!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
+                        const bool transferIsDownloadType{transfer->getType() == MegaTransfer::TYPE_DOWNLOAD};
+                        const bool unkownAccess{!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
+                        if (unkownAccess || transferIsDownloadType)
                         {
                             showInMega = false;
+                        }
+
+                        const bool transferIsUploadType{transfer->getType() == MegaTransfer::TYPE_UPLOAD};
+                        if(transferIsUploadType)
+                        {
+                            showInFolder = false;
                         }
 
                         delete transfer;
@@ -499,7 +508,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 }
                 else
                 {
-                    customizeCompletedContextMenu(linkAvailable, true, true, showInMega);
+                    customizeCompletedContextMenu(linkAvailable, true, showInFolder, showInMega);
                 }
                 contextCompleted->exec(mapToGlobal(point));
             }

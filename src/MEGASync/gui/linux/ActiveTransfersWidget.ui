@@ -682,7 +682,7 @@ background-color: rgba(0, 0, 0, 10%);
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -768,7 +768,7 @@ background-color: rgba(0, 0, 0, 10%);
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>64</width>
+                        <width>16777215</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -1385,7 +1385,7 @@ background-color: rgba(0, 0, 0, 10%);
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>

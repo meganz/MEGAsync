@@ -24,33 +24,33 @@
     switch (notification.activationType)
     {
         case NSUserNotificationActivationTypeContentsClicked:
-            emit n->activated(MegaNotification::ActivationContentClicked);
+            emit n->activated(MegaNotification::Action::content);
             break;
 
         case NSUserNotificationActivationTypeActionButtonClicked:
             if (n->getActions().size() > 0)
             {
-                emit n->activated(MegaNotification::ActivationActionButtonClicked);
+                emit n->activated(MegaNotification::Action::firstButton);
             }
             else
             {
-                emit n->closed(MegaNotification::ActivationActionButtonClicked);
+                emit n->closed(MegaNotification::CloseReason::Unknown);
             }
             break;
 
         case NSUserNotificationActivationTypeAdditionalActionClicked:
             if (n->getActions().size() > 1)
             {
-                emit n->activated(MegaNotification::ActivationAdditionalButtonClicked);
+                emit n->activated(MegaNotification::Action::secondButton);
             }
             else
             {
-                emit n->closed(MegaNotification::ActivationActionButtonClicked);
+                emit n->closed(MegaNotification::CloseReason::Unknown);
             }
             break;
 
        default:
-            emit n->closed(MegaNotification::ActivationActionButtonClicked);
+            emit n->closed(MegaNotification::CloseReason::Unknown);
             break;
     }
 
@@ -76,7 +76,7 @@
     MegaNotification *n = it.value();
     Notificator::notifications.erase(it);
 
-    emit n->closed(0);
+    emit n->closed(MegaNotification::CloseReason::Unknown);
     NSUserNotificationCenter *notificationCenterInstance = [NSUserNotificationCenter defaultUserNotificationCenter];
     [notificationCenterInstance removeDeliveredNotification:notification];
 }

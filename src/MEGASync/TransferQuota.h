@@ -1,22 +1,19 @@
 #pragma once
 
 #include "Preferences.h"
-#include "notificator.h"
+#include "DesktopNotifications.h"
 #include <memory>
 #include "UpgradeDialog.h"
 #include <QObject>
 
-// Events
-constexpr int EVENT_ID_TRANSFER_OVER_QUOTA_DIALOG{98526};
+// Events messages strings
 constexpr char EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG[]{"Transfer over quota dialog shown"};
-constexpr int EVENT_ID_TRANSFER_OVER_QUOTA_OS_NOTIFICATION{98527};
 constexpr char EVENT_MESSAGE_TRANSFER_OVER_QUOTA_OS_NOTIFICATION[]{"Transfer over quota os notification shown"};
-constexpr int EVENT_ID_TRANSFER_OVER_QUOTA_UI_ALERT{98528};
 constexpr char EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT[]{"Transfer over quota ui message shown"};
-constexpr int EVENT_ID_TRANSFER_ALMOST_QUOTA_UI_ALERT{98529};
 constexpr char EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT[]{"Transfer almost over quota ui message shown"};
-constexpr int EVENT_ID_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION{98531};
 constexpr char EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION[]{"Transfer almost over quota os notification shown"};
+
+// % for almost over quota
 constexpr int ALMOST_OVER_QUOTA_PER_CENT{90};
 
 enum class QuotaState
@@ -30,7 +27,7 @@ class TransferQuota: public QObject
 {
     Q_OBJECT
 public:
-    TransferQuota(mega::MegaApi* mMegaApi, Preferences *mPreferences, Notificator *mNotificator);
+    TransferQuota(mega::MegaApi* megaApi, Preferences *preferences, std::shared_ptr<DesktopNotifications> desktopNotifications);
     void setOverQuota(std::chrono::milliseconds waitTime);
     void setQuotaOk();
     bool isOverQuota();
@@ -49,12 +46,11 @@ private:
     mega::MegaApi* mMegaApi;
     mega::MegaPricing* mPricing;
     Preferences* mPreferences;
-    Notificator *mNotificator;
+    std::shared_ptr<DesktopNotifications> mOsNotifications;
     UpgradeDialog* mUpgradeDialog;
     QuotaState mQuotaState;
     std::chrono::system_clock::time_point mWaitTimeUntil;
 
-    void sendNotification(const QString& title);
     void sendQuotaWarningOsNotification();
     void sendOverQuotaOsNotification();
     void checkExecuteDialog();

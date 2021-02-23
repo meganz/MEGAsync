@@ -6,14 +6,19 @@
 #include <QLocale>
 #include <QStringList>
 #include <QMutex>
+#include <QDataStream>
 
 #include "control/EncryptedSettings.h"
+#include "model/Model.h"
 #include <assert.h>
+#include <memory>
 #include "megaapi.h"
 #include <chrono>
 
 Q_DECLARE_METATYPE(QList<long long>)
 
+class SyncSetting;
+struct SyncData;
 class Preferences : public QObject
 {
     Q_OBJECT
@@ -24,6 +29,7 @@ signals:
 
 private:
     static Preferences *preferences;
+
     Preferences();
 
     std::map<QString, QVariant> cache;
@@ -251,36 +257,26 @@ public:
     long long importFolder();
     void setImportFolder(long long value);
 
-    int getNumSyncedFolders();
-    QString getSyncName(int num);
-    QString getSyncID(int num);
-    QString getLocalFolder(int num);
-    QString getMegaFolder(int num);
-    long long getLocalFingerprint(int num);
-    void setLocalFingerprint(int num, long long fingerprint);
-    mega::MegaHandle getMegaFolderHandle(int num);
-    bool isFolderActive(int num);
-    bool isTemporaryInactiveFolder(int num);
-    void setSyncState(int num, bool enabled, bool temporaryDisabled = false);
-
-    bool isOneTimeActionDone(int action);
-    void setOneTimeActionDone(int action, bool done);
-
-    QStringList getSyncNames();
-    QStringList getSyncIDs();
-    QStringList getMegaFolders();
-    QStringList getLocalFolders();
-    QList<long long> getMegaFolderHandles();
-
-    void addSyncedFolder(QString localFolder, QString megaFolder, mega::MegaHandle megaFolderHandle, QString syncName = QString(), bool active = true);
-    void setMegaFolderHandle(int num, mega::MegaHandle handle);
-    void removeSyncedFolder(int num);
-    void removeAllFolders();
+    // sync related
+    void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
+    void removeAllSyncSettings(); //remove all sync from cache
+    void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
+    void removeAllFolders(); //remove all syncs from cache
+    // old cache transition related:
+    void removeOldCachedSync(int position, QString email = {});
+    //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
+    QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
+                                       int *cachedStorageState = nullptr, QString email = {});
+    void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
     QStringList getExcludedSyncPaths();
     void setExcludedSyncPaths(QStringList paths);
+
+    bool isOneTimeActionDone(int action);
+    void setOneTimeActionDone(int action, bool done);
 
     QStringList getPreviousCrashes();
     void setPreviousCrashes(QStringList crashes);
@@ -288,6 +284,10 @@ public:
     void setLastReboot(long long value);
     long long getLastExit();
     void setLastExit(long long value);
+    QSet<mega::MegaHandle> getDisabledSyncTags();
+    void setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs);
+    bool getNotifyDisabledSyncsOnLogin();
+    void setNotifyDisabledSyncsOnLogin(bool notify);
 
     QString getHttpsKey();
     void setHttpsKey(QString key);
@@ -302,7 +302,12 @@ public:
     void setLastPublicHandle(mega::MegaHandle handle, int type);
 
     int getNumUsers();
+
+    // enter user preferences and load syncs into loadedSyncsMap
     void enterUser(int i);
+    bool enterUser(QString account);
+
+    // leave user
     void leaveUser();
 
     int accountStateInGeneral();
@@ -433,6 +438,10 @@ public:
     static unsigned int MAX_IDLE_TIME_MS;
     static unsigned int MAX_COMPLETED_ITEMS;
 
+    static unsigned int MUTEX_STEALER_MS; //to create a task that steals the sdk mutex for a while (how long)
+    static unsigned int MUTEX_STEALER_PERIOD_MS; //periodicity (how often)
+    static unsigned int MUTEX_STEALER_PERIOD_ONLY_ONCE; //if only done once
+
     static const QString UPDATE_CHECK_URL;
     static const QString CRASH_REPORT_URL;
     static const QString UPDATE_FOLDER_NAME;
@@ -471,8 +480,9 @@ protected:
     void logout();
 
     void loadExcludedSyncNames();
-    void readFolders();
-    void writeFolders();
+
+    // sync related:
+    void readFolders(); //read sync stored configuration
 
     void storeSessionInGeneral(QString session);
     QString getSessionInGeneral();
@@ -495,14 +505,15 @@ protected:
     void removeFromCache(const QString &key);
 
     EncryptedSettings *settings;
-    QStringList syncNames;
-    QStringList syncIDs;
-    QStringList megaFolders;
-    QStringList localFolders;
-    QList<long long> megaFolderHandles;
-    QList<long long> localFingerprints;
-    QList<bool> activeFolders;
-    QList<bool> temporaryInactiveFolders;
+
+    // sync configuration from old syncs
+    QList<SyncData> oldSyncs;
+
+    // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
+    // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
+    // These are only used for retrieving values or removing at uninstall
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;
     bool errorFlag;
@@ -528,6 +539,7 @@ protected:
     static const QString currentAccountStatusKey;
     static const QString needsFetchNodesKey;
     static const QString syncsGroupKey;
+    static const QString syncsGroupByTagKey;
     static const QString emailKey;
     static const QString firstNameKey;
     static const QString lastNameKey;
@@ -548,7 +560,7 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
-    static const QString usedBandwidthIntervalKey;    
+    static const QString usedBandwidthIntervalKey;
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
@@ -572,7 +584,6 @@ protected:
     static const QString blockedStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
-    static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
     static const QString startOnStartupKey;
     static const QString languageKey;
@@ -598,6 +609,7 @@ protected:
     static const QString proxyRequiresAuthKey;
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
+    static const QString configuredSyncsKey;
     static const QString syncNameKey;
     static const QString syncIdKey;
     static const QString localFolderKey;
@@ -611,11 +623,7 @@ protected:
     static const QString hasDefaultDownloadFolderKey;
     static const QString hasDefaultImportFolderKey;
     static const QString importFolderKey;
-    static const QString fileNameKey;
-    static const QString fileHandleKey;
-    static const QString localPathKey;
     static const QString localFingerprintKey;
-    static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
     static const QString excludedSyncPathsKey;
@@ -658,6 +666,8 @@ protected:
     static const QString lastPublicHandleKey;
     static const QString lastPublicHandleTimestampKey;
     static const QString lastPublicHandleTypeKey;
+    static const QString disabledSyncsKey;
+    static const QString notifyDisabledSyncsKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

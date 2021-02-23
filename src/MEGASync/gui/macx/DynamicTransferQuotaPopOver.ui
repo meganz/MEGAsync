@@ -111,7 +111,7 @@ border: 1px solid rgba(0,0,0,0.05);
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/dynamic_transfer_icon.png</normaloff>:/images/dynamic_transfer_icon.png</iconset>
         </property>
         <property name="iconSize">
@@ -251,7 +251,7 @@ border: 1px solid rgba(0,0,0,0.05);
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

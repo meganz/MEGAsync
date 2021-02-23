@@ -388,7 +388,7 @@ void Notificator::onMessageClicked()
 {
     if (currentNotification)
     {
-        currentNotification->emitlLegacyNotificationActivated();
+        currentNotification->emitLegacyNotificationActivated();
         currentNotification = NULL;
     }
 }
@@ -537,9 +537,9 @@ void MegaNotification::setData(const QString &value)
     data = value;
 }
 
-void MegaNotification::emitlLegacyNotificationActivated()
+void MegaNotification::emitLegacyNotificationActivated()
 {
-    emit activated(ActivationLegacyNotificationClicked);
+    emit activated(Action::legacy);
 }
 
 #ifdef USE_DBUS
@@ -577,11 +577,27 @@ void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
 
     if (dbusMssage.member() == QString::fromUtf8("ActionInvoked"))
     {
-        emit activated(ActivationActionButtonClicked); // we might want to parse dbusMssage.arguments().at(1) to emit an alternative action if several added
+        if(dbusMssage.arguments().size() > 1)
+        {
+            const QString actionText{dbusMssage.arguments().at(1).toString()};
+            const auto actionIndex = getActions().indexOf(actionText);
+            if(actionIndex == 0)
+            {
+                emit activated(Action::firstButton);
+            }
+            else if(actionIndex == 1)
+            {
+                emit activated(Action::secondButton);
+            }
+        }
+        else
+        {
+            emit activated(Action::firstButton);
+        }
     }
     else if (dbusMssage.member() == QString::fromUtf8("NotificationClosed"))
     {
-        emit closed(ActivationActionButtonClicked);
+        emit closed(CloseReason::Unknown);
     }
 }
 #endif
@@ -598,8 +614,8 @@ MegaNotification::MegaNotification()
     dbusId = -1;
 #endif
 
-    connect(this, SIGNAL(activated(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
-    connect(this, SIGNAL(closed(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
+    connect(this, &MegaNotification::activated, this, &MegaNotification::deleteLater, Qt::QueuedConnection);
+    connect(this, &MegaNotification::closed, this, &MegaNotification::deleteLater, Qt::QueuedConnection);
 }
 
 MegaNotification::~MegaNotification()
@@ -681,7 +697,7 @@ void WinToastNotification::toastActivated()
     mutex.lock();
     if (notification)
     {
-        emit notification->activated(-1);
+        emit notification->activated(MegaNotification::Action::content);
         notification = NULL;
     }
     mutex.unlock();
@@ -692,7 +708,7 @@ void WinToastNotification::toastActivated(int actionIndex)
     mutex.lock();
     if (notification)
     {
-        emit notification->activated(actionIndex);
+        emit notification->activated(static_cast<MegaNotification::Action>(actionIndex));
         notification = NULL;
     }
     mutex.unlock();
@@ -703,7 +719,7 @@ void WinToastNotification::toastDismissed(WinToastDismissalReason state)
     mutex.lock();
     if (notification)
     {
-        int reason = MegaNotification::CloseReason::Unknown;
+        auto reason = MegaNotification::CloseReason::Unknown;
         switch (state)
         {
         case WinToastDismissalReason::UserCanceled:

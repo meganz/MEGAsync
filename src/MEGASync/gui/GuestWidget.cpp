@@ -14,14 +14,17 @@
 using namespace mega;
 
 GuestWidget::GuestWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::GuestWidget),
-    incorrectCredentialsMessageReceived{false}
+    GuestWidget(((MegaApplication *)qApp)->getMegaApi(), parent)
+{
+}
+
+GuestWidget::GuestWidget(MegaApi *megaApi, QWidget *parent)
+    :QWidget(parent), ui(new Ui::GuestWidget)
 {
     ui->setupUi(this);
 
 #ifdef _WIN32
-    if(getenv("QT_SCREEN_SCALE_FACTORS"))
+    if(getenv("QT_SCREEN_SCALE_FACTORS") || getenv("QT_SCALE_FACTOR"))
     {
         //do not use WA_TranslucentBackground when using custom scale factors in windows
         setStyleSheet(styleSheet().append(QString::fromUtf8("#wGuestWidgetIn{border-radius: 0px;}" ) ));
@@ -38,7 +41,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     reset_UI_props();
 
     app = (MegaApplication *)qApp;
-    megaApi = app->getMegaApi();
+    this->megaApi = megaApi;
     preferences = Preferences::instance();
     closing = false;
     loggingStarted = false;
@@ -70,7 +73,7 @@ GuestWidget::~GuestWidget()
 
 void GuestWidget::setTexts(const QString& s1, const QString& s2)
 {
-    ui->lEmail->setText(s1); 
+    ui->lEmail->setText(s1);
     ui->lPassword->setText(s2);
 }
 
@@ -137,7 +140,8 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 if (loggingStarted)
                 {
                     preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-                    static_cast<MegaApplication*>(qApp)->fetchNodes();
+                    auto email = request->getEmail();
+                    static_cast<MegaApplication*>(qApp)->fetchNodes(QString::fromUtf8(email ? email : ""));
                     if (!preferences->hasLoggedIn())
                     {
                         preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -485,7 +489,7 @@ void GuestWidget::on_bCancel_clicked()
     if (megaApi->isLoggedIn())
     {
         closing = true;
-        megaApi->logout();
+        megaApi->logout(true, nullptr);
         page_logout();
     }
     else
@@ -609,7 +613,7 @@ void GuestWidget::page_login()
 }
 
 void GuestWidget::page_progress()
-{  
+{
     if (ui->sPages->currentWidget() == ui->pProgress)
     {
         return;
