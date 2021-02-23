@@ -42,6 +42,7 @@ class TransferData : public QSharedData
     bool      mPublicNode;
     bool      mIsSyncTransfer;
     FileTypes mFileType;
+    mega::MegaApi* mMegaApi;
     QString   mFilename;
 
     TransferData(){}
@@ -52,19 +53,19 @@ class TransferData : public QSharedData
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed), mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes), mUpdateTime(dr->mUpdateTime),
         mPublicNode(dr->mPublicNode), mIsSyncTransfer(dr->mIsSyncTransfer), mFileType(dr->mFileType),
-        mFilename(dr->mFilename){}
+        mMegaApi(dr->mMegaApi), mFilename(dr->mFilename){}
 
     TransferData(int type, int errorCode, int state, int unpausedState,int tag, int errorValue,
                     int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long priority,
                     long long speed, long long meanSpeed, long long transferredBytes,
                     int64_t updateTime, bool publicNode, bool isSyncTransfer, FileTypes fileType,
-                    QString fileName) :
+                    mega::MegaApi* megaApi, QString fileName) :
          mType(type), mErrorCode(errorCode),  mState(state), mUnpausedState(unpausedState), mTag(tag),
          mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
          mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
          mTransferredBytes(transferredBytes), mUpdateTime(updateTime),
          mPublicNode(publicNode), mIsSyncTransfer(isSyncTransfer), mFileType(fileType),
-         mFilename(fileName){}
+         mMegaApi(megaApi), mFilename(fileName){}
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
 
@@ -82,6 +83,7 @@ class TransferItem2
                                           int state, long long transferedBytes);
 
         void updateValuesTransferUpdated(uint64_t updateTime,
+                                         uint64_t remainingTime,
                                          int errorCode, long long errorValue,
                                          long long meanSpeed,
                                          long long speed,
@@ -93,6 +95,11 @@ class TransferItem2
         int getState() const
         {
             return d->mState;
+        }
+
+        int getUnpausedState() const
+        {
+            return d->mUnpausedState;
         }
 
         int getType() const

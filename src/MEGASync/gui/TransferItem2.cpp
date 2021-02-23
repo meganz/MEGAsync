@@ -1,7 +1,6 @@
 #include "TransferItem2.h"
 #include "megaapi.h"
 #include "Utilities.h"
-#include "TransferRemainingTime.h"
 
 using namespace mega;
 
@@ -22,21 +21,18 @@ void TransferItem2::updateValuesTransferFinished(uint64_t updateTime,
 }
 
 void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
+                                                uint64_t remainingTime,
                                  int errorCode, long long errorValue,
                                  long long meanSpeed,
                                  long long speed,
                                  unsigned long long priority,
                                  int state, long long transferedBytes)
 {
-    //Compute remaining time
-    static TransferRemainingTime remTime;
-
-    auto rem (remTime.calculateRemainingTimeSeconds(speed, d->mTotalSize-transferedBytes));
-
+    d->mRemainingTime = remainingTime;
     d->mErrorCode = errorCode;
     d->mState = state;
     d->mErrorValue = errorValue;
-    d->mRemainingTime = rem.count();
+    d->mRemainingTime = remainingTime;
     d->mSpeed = speed;
     d->mMeanSpeed = meanSpeed;
     d->mTransferredBytes = transferedBytes;
@@ -55,5 +51,6 @@ void TransferItem2::setPaused(bool isPaused)
     else
     {
         d->mState = d->mUnpausedState;
+        d->mUnpausedState = MegaTransfer::STATE_NONE;
     }
 }

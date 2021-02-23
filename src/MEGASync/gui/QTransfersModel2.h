@@ -3,6 +3,7 @@
 
 #include "QTMegaTransferListener.h"
 #include "TransferItem2.h"
+#include "TransferRemainingTime.h"
 
 #include <megaapi.h>
 
@@ -39,6 +40,7 @@ private:
     Preferences* mPreferences;
 
     QMap<TransferTag, QVariant> mTransfers;
+    QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
     QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;
     QHash<QString, FileTypes> mFileTypes;

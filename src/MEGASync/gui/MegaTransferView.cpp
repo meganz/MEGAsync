@@ -354,27 +354,27 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
 
     if (!disableMenus)
     {
-        emit showContextMenu(QPoint(event->x(), event->y()));
+        //emit showContextMenu(QPoint(event->x(), event->y()));
     }
     QTreeView::mouseReleaseEvent(event);
 }
 
 void MegaTransferView::leaveEvent(QEvent *event)
 {
-    QTransfersModel *model = (QTransfersModel*)this->model();
-    if (model)
-    {
-        if (lastItemHoveredTag)
-        {
-            TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-            if (lastItemHovered)
-            {
-                lastItemHovered->mouseHoverTransfer(false, QPoint(-1,-1));
-                update();
-            }
-            lastItemHoveredTag = 0;
-        }
-    }
+//    QTransfersModel *model = (QTransfersModel*)this->model();
+//    if (model)
+//    {
+//        if (lastItemHoveredTag)
+//        {
+//            TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+//            if (lastItemHovered)
+//            {
+//                lastItemHovered->mouseHoverTransfer(false, QPoint(-1,-1));
+//                update();
+//            }
+//            lastItemHoveredTag = 0;
+//        }
+//    }
     QTreeView::leaveEvent(event);
 }
 
@@ -398,129 +398,129 @@ void MegaTransferView::paintEvent(QPaintEvent * e)
 
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
-    QTransfersModel *model = (QTransfersModel*)this->model();
-    if (model)
-    {
-        bool enablePause = false;
-        bool enableResume = false;
-        bool enableCancel = false;
-        int firstIndex = 0;
-        int lastIndex = 0;
-        QModelIndexList indexes = selectedIndexes();
-        transferTagSelected.clear();
-        for (int i = 0; i< indexes.size(); i++)
-        {
-            if (i == 0)
-            {
-                firstIndex = indexes[i].row();
-            }
-            if (i == indexes.size() - 1)
-            {
-                lastIndex = indexes[i].row();
-            }
+//    QTransfersModel *model = (QTransfersModel*)this->model();
+//    if (model)
+//    {
+//        bool enablePause = false;
+//        bool enableResume = false;
+//        bool enableCancel = false;
+//        int firstIndex = 0;
+//        int lastIndex = 0;
+//        QModelIndexList indexes = selectedIndexes();
+//        transferTagSelected.clear();
+//        for (int i = 0; i< indexes.size(); i++)
+//        {
+//            if (i == 0)
+//            {
+//                firstIndex = indexes[i].row();
+//            }
+//            if (i == indexes.size() - 1)
+//            {
+//                lastIndex = indexes[i].row();
+//            }
 
-            transferTagSelected.append(indexes[i].internalId());
-            if (!enablePause || !enableResume || !enableCancel)
-            {
-                TransferItem *item = model->transferItems[indexes[i].internalId()];
-                if (!item)
-                {
-                    enableResume = true;
-                    enablePause = true;
-                    enableCancel = true;
-                }
-                else
-                {
-                    if (item->getRegular())
-                    {
-                        enableCancel = true;
-                    }
+//            transferTagSelected.append(indexes[i].internalId());
+//            if (!enablePause || !enableResume || !enableCancel)
+//            {
+//                TransferItem *item = model->transferItems[indexes[i].internalId()];
+//                if (!item)
+//                {
+//                    enableResume = true;
+//                    enablePause = true;
+//                    enableCancel = true;
+//                }
+//                else
+//                {
+//                    if (item->getRegular())
+//                    {
+//                        enableCancel = true;
+//                    }
 
-                    if (item->getTransferState() == mega::MegaTransfer::STATE_PAUSED)
-                    {
-                        enableResume = true;
-                    }
-                    else
-                    {
-                        enablePause = true;
-                    }
-                }
-            }
-        }
+//                    if (item->getTransferState() == mega::MegaTransfer::STATE_PAUSED)
+//                    {
+//                        enableResume = true;
+//                    }
+//                    else
+//                    {
+//                        enablePause = true;
+//                    }
+//                }
+//            }
+//        }
 
-        if (transferTagSelected.size())
-        {
-            int modelType = model->getModelType();
-            if (modelType == QTransfersModel::TYPE_FINISHED)
-            {
-                bool failed = false;
-                bool linkAvailable = true;
-                bool showInMega = true;
-                bool showInFolder = true;
+//        if (transferTagSelected.size())
+//        {
+//            int modelType = model->getModelType();
+//            if (modelType == QTransfersModel::TYPE_FINISHED)
+//            {
+//                bool failed = false;
+//                bool linkAvailable = true;
+//                bool showInMega = true;
+//                bool showInFolder = true;
 
-                MegaTransfer *transfer = NULL;
-                QTransfersModel *model = (QTransfersModel*)this->model();
-                if (model)
-                {
-                    for (int i = 0; i < transferTagSelected.size(); i++)
-                    {
-                        transfer = model->getTransferByTag(transferTagSelected[i]);
-                        if (!transfer)
-                        {
-                            transferTagSelected.clear();
-                            return;
-                        }
+//                MegaTransfer *transfer = NULL;
+//                QTransfersModel *model = (QTransfersModel*)this->model();
+//                if (model)
+//                {
+//                    for (int i = 0; i < transferTagSelected.size(); i++)
+//                    {
+//                        transfer = model->getTransferByTag(transferTagSelected[i]);
+//                        if (!transfer)
+//                        {
+//                            transferTagSelected.clear();
+//                            return;
+//                        }
 
-                        if (transfer->getState() == MegaTransfer::STATE_FAILED)
-                        {
-                            failed = true;
-                        }
+//                        if (transfer->getState() == MegaTransfer::STATE_FAILED)
+//                        {
+//                            failed = true;
+//                        }
 
-                        TransferItem *item = model->transferItems[transferTagSelected[i]];
+//                        TransferItem *item = model->transferItems[transferTagSelected[i]];
 
-                        if (!item || !item->getIsLinkAvailable())
-                        {
-                            linkAvailable = false;
-                        }
+//                        if (!item || !item->getIsLinkAvailable())
+//                        {
+//                            linkAvailable = false;
+//                        }
 
-                        const bool transferIsDownloadType{transfer->getType() == MegaTransfer::TYPE_DOWNLOAD};
-                        const bool unkownAccess{!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
-                        if (unkownAccess || transferIsDownloadType)
-                        {
-                            showInMega = false;
-                        }
+//                        const bool transferIsDownloadType{transfer->getType() == MegaTransfer::TYPE_DOWNLOAD};
+//                        const bool unkownAccess{!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN};
+//                        if (unkownAccess || transferIsDownloadType)
+//                        {
+//                            showInMega = false;
+//                        }
 
-                        const bool transferIsUploadType{transfer->getType() == MegaTransfer::TYPE_UPLOAD};
-                        if(transferIsUploadType)
-                        {
-                            showInFolder = false;
-                        }
+//                        const bool transferIsUploadType{transfer->getType() == MegaTransfer::TYPE_UPLOAD};
+//                        if(transferIsUploadType)
+//                        {
+//                            showInFolder = false;
+//                        }
 
-                        delete transfer;
-                    }
-                }
+//                        delete transfer;
+//                    }
+//                }
 
-                if (failed)
-                {
-                    customizeCompletedContextMenu(false, false, false, false);
-                }
-                else
-                {
-                    customizeCompletedContextMenu(linkAvailable, true, showInFolder, showInMega);
-                }
-                contextCompleted->exec(mapToGlobal(point));
-            }
-            else
-            {
-                customizeContextInProgressMenu(enablePause,
-                                               enableResume,
-                                               firstIndex > 0,
-                                               (model->rowCount(QModelIndex()) - 1) > lastIndex,
-                                               enableCancel);
-                contextInProgressMenu->exec(mapToGlobal(point));
-            }
-        }
-    }
+//                if (failed)
+//                {
+//                    customizeCompletedContextMenu(false, false, false, false);
+//                }
+//                else
+//                {
+//                    customizeCompletedContextMenu(linkAvailable, true, showInFolder, showInMega);
+//                }
+//                contextCompleted->exec(mapToGlobal(point));
+//            }
+//            else
+//            {
+//                customizeContextInProgressMenu(enablePause,
+//                                               enableResume,
+//                                               firstIndex > 0,
+//                                               (model->rowCount(QModelIndex()) - 1) > lastIndex,
+//                                               enableCancel);
+//                contextInProgressMenu->exec(mapToGlobal(point));
+//            }
+//        }
+//    }
 }
 
 void MegaTransferView::pauseTransferClicked()

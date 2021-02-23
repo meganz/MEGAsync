@@ -90,9 +90,41 @@ void MegaTransferDelegate2::processCancel(int tag)
 //    }
 }
 
-bool MegaTransferDelegate2::editorEvent(QEvent *event, QAbstractItemModel *, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool MegaTransferDelegate2::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-//    if (QEvent::MouseButtonPress ==  event->type())
+    if (index.isValid())
+    {
+        switch (event->type())
+        {
+            case QEvent::MouseButtonPress:
+            {
+                QMouseEvent* me = static_cast<QMouseEvent*>(event);
+                if( me->button() == Qt::LeftButton )
+                {
+                    // Get TransferManagerItem2 widget under cursor
+                    const QString widgetName (QLatin1Literal("r")+QString::number(index.row()%20));
+                    auto currentRow (option.widget->findChild<TransferManagerItem2 *>(widgetName));
+                    if (currentRow)
+                    {
+                        currentRow->forwardMouseEvent(me);
+
+//                        // Get widget inside TransferManagerItem2 under cursor, and click it
+//                        auto widget (currentRow->childAt(me->pos() - currentRow->pos()));
+//                        if (widget)
+//                        {
+//                            widget->underMouse();
+//                        }
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+
+    //    if (QEvent::MouseButtonPress ==  event->type())
 //    {
 //        int tag = index.internalId();
 //        TransferItem *item = model->transferItems[tag];
@@ -218,15 +250,15 @@ void MegaTransferDelegate2::processShowInFolder(int tag)
 //    delete transfer;
 }
 
-void MegaTransferDelegate2::on_tCancelTransfer_clicked()
-{
-   // emit transferCanceled(mTransferData.mTag);
-}
+//void MegaTransferDelegate2::on_tCancelTransfer_clicked()
+//{
+//   // emit transferCanceled(mTransferData.mTag);
+//}
 
-void MegaTransferDelegate2::on_tPauseTransfer_clicked()
-{
-   // emit transferPaused(mTransferData.mTag);
-}
+//void MegaTransferDelegate2::on_tPauseTransfer_clicked()
+//{
+//   // emit transferPaused(mTransferData.mTag);
+//}
 
 //void MegaTransferDelegate2::updateUisDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 //{

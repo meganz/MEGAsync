@@ -10,7 +10,10 @@ using namespace mega;
 
 TransferManagerItem2::TransferManagerItem2(QWidget *parent) :
     QWidget(parent),
-    mUi(new Ui::TransferManagerItem)
+    mUi(new Ui::TransferManagerItem),
+    mMegaApi(nullptr),
+    mTransferTag(0),
+    mIsPaused(false)
 { 
     mUi->setupUi(this);
 }
@@ -19,6 +22,10 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
 {
     auto d (transferItem.getTransferData());
     QString statusString;
+
+    mMegaApi = d->mMegaApi;
+    mTransferTag = d->mTag;
+    mIsPaused = false;
 
     // Set fixed stuff
     QIcon icon (Utilities::getCachedPixmap(
@@ -72,6 +79,7 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
     QString speedString;
     bool isQueued (false);
     QIcon pauseResumeIcon;
+    QString pauseResumeTooltip;
 
     switch (d->mState)
     {
@@ -80,18 +88,22 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
             remTimeString = Utilities::getTimeString(d->mRemainingTime);
             speedString = Utilities::getSizeString(d->mSpeed) + QLatin1Literal("/s");
             pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+            pauseResumeTooltip = QObject::tr("Pause transfer");
             break;
         }
         case MegaTransfer::STATE_PAUSED:
         {
             statusString = QObject::tr("Paused");
             pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_resume_transfers_state.png"));
+            pauseResumeTooltip = QObject::tr("Resume transfer");
+            mIsPaused = true;
             break;
         }
         case MegaTransfer::STATE_QUEUED:
         {
             isQueued = true;
             pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+            pauseResumeTooltip = QObject::tr("Pause transfer");
             break;
         }
         case MegaTransfer::STATE_CANCELLED:
@@ -113,12 +125,12 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
         {
             statusString = QObject::tr("Retrying");
             pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+            pauseResumeTooltip = QObject::tr("Pause transfer");
             break;
         }
         case MegaTransfer::STATE_COMPLETED:
         {
             statusString = QObject::tr("Completed");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
             break;
         }
     }
@@ -141,5 +153,39 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
     // Speed
     mUi->bSpeed->setText(speedString);
 
+    // Pause/resume button
+    mUi->tPauseTransfer->setIcon(pauseResumeIcon);
+    mUi->tPauseTransfer->setToolTip(pauseResumeTooltip);
+
+    // Cancel Button
+    mUi->tCancelTransfer->setToolTip(tr("Cancel transfer"));
+
     update();
+}
+
+void TransferManagerItem2::on_tPauseTransfer_clicked()
+{
+    mMegaApi->pauseTransferByTag(mTransferTag, !mIsPaused);
+}
+
+void TransferManagerItem2::on_tCancelTransfer_clicked()
+{
+    mMegaApi->cancelTransferByTag(mTransferTag);
+}
+
+void TransferManagerItem2::forwardMouseEvent(QMouseEvent *me)
+{
+    auto w (childAt(me->pos() - pos()));
+
+    if (w)
+    {/*
+        if (w->staticMetaObject.className() == "QToolButton")
+        {
+            static_cast<QToolButton*>(w)->click();
+        }*/
+        if (qobject_cast<QToolButton*>(w))
+        {
+            static_cast<QToolButton*>(w)->click();
+        }
+    }
 }
