@@ -1,6 +1,7 @@
 #include "TransferItem2.h"
 #include "megaapi.h"
 #include "Utilities.h"
+#include "TransferRemainingTime.h"
 
 using namespace mega;
 
@@ -27,10 +28,15 @@ void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
                                  unsigned long long priority,
                                  int state, long long transferedBytes)
 {
+    //Compute remaining time
+    static TransferRemainingTime remTime;
+
+    auto rem (remTime.calculateRemainingTimeSeconds(speed, d->mTotalSize-transferedBytes));
+
     d->mErrorCode = errorCode;
     d->mState = state;
     d->mErrorValue = errorValue;
-    d->mRemainingTime = 50; // Use real value
+    d->mRemainingTime = rem.count();
     d->mSpeed = speed;
     d->mMeanSpeed = meanSpeed;
     d->mTransferredBytes = transferedBytes;

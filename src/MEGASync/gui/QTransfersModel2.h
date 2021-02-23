@@ -2,9 +2,8 @@
 #define QTRANSFERSMODEL2_H
 
 #include "QTMegaTransferListener.h"
-#include "Utilities.h"
-#include "TransferRemainingTime.h"
 #include "TransferItem2.h"
+
 #include <megaapi.h>
 
 #include <QAbstractItemModel>
@@ -39,7 +38,6 @@ private:
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
 
-//    QMap<TransferTag, TransferItem2*> mTransfers;
     QMap<TransferTag, QVariant> mTransfers;
     QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;

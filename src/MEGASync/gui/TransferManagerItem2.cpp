@@ -143,31 +143,3 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
 
     update();
 }
-
-//void TransferManagerItem2::setupUi(const TransferItem2 transferItem) const
-//{
-//    transferItem->setupUi(view);
-//    // Set fixed stuff
-//    transferItem->tFileType->setIcon(QIcon());
-//    transferItem->lTransferName->setToolTip(d->mFilename);
-//    transferItem->lTotal->setText(Utilities::getSizeString(d->mTotalSize));
-
-//    QIcon icon;
-
-//    switch (d->mType)
-//    {
-//        case MegaTransfer::TYPE_DOWNLOAD:
-//        case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
-//        {
-//            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
-//            break;
-//        }
-//        case MegaTransfer::TYPE_UPLOAD:
-//        {
-//            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
-//            break;
-//        }
-//    }
-
-//    transferItem->bSpeed->setIcon(icon);
-//}
