@@ -15,9 +15,9 @@ TransferManagerItem2::TransferManagerItem2(QWidget *parent) :
     mUi->setupUi(this);
 }
 
-void TransferManagerItem2::updateUi(const TransferItem2 transferItem)
+void TransferManagerItem2::updateUi(TransferItem2& transferItem)
 {
-    const auto d (transferItem.getTransferData());
+    auto d (transferItem.getTransferData());
     QString statusString;
 
     // Set fixed stuff

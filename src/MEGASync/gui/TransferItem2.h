@@ -22,12 +22,13 @@ enum FileTypes
     TYPE_TEXT     = 6,
 };
 
-class TransferDataRow : public QSharedData
+class TransferData : public QSharedData
 {
     public:
     int       mType;
     int       mErrorCode;
     int       mState;
+    int       mUnpausedState;
     int       mTag;
     long long mErrorValue;
     int64_t   mFinishedTime;
@@ -43,40 +44,37 @@ class TransferDataRow : public QSharedData
     FileTypes mFileType;
     QString   mFilename;
 
-    TransferDataRow(){}
+    TransferData(){}
 
-    TransferDataRow(TransferDataRow const* dr) :
-        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
+    TransferData(TransferData const* dr) :
+        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mUnpausedState(dr->mUnpausedState),mTag(dr->mTag),
         mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime), mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed), mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes), mUpdateTime(dr->mUpdateTime),
         mPublicNode(dr->mPublicNode), mIsSyncTransfer(dr->mIsSyncTransfer), mFileType(dr->mFileType),
         mFilename(dr->mFilename){}
 
-    TransferDataRow(int type, int errorCode, int state, int tag, int errorValue,
+    TransferData(int type, int errorCode, int state, int unpausedState,int tag, int errorValue,
                     int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long priority,
                     long long speed, long long meanSpeed, long long transferredBytes,
                     int64_t updateTime, bool publicNode, bool isSyncTransfer, FileTypes fileType,
                     QString fileName) :
-         mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
+         mType(type), mErrorCode(errorCode),  mState(state), mUnpausedState(unpausedState), mTag(tag),
          mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
          mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
          mTransferredBytes(transferredBytes), mUpdateTime(updateTime),
          mPublicNode(publicNode), mIsSyncTransfer(isSyncTransfer), mFileType(fileType),
          mFilename(fileName){}
 };
-Q_DECLARE_TYPEINFO(TransferDataRow, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
+
 
 class TransferItem2
 {
-public:
-        TransferItem2();
-        TransferItem2(const TransferItem2& ti);
-        TransferItem2(const TransferDataRow& dataRow);
-
-        ~TransferItem2() {}
-
-        QSharedDataPointer<TransferDataRow> getTransferData() const;
+    public:
+        TransferItem2() : d(new TransferData){}
+        TransferItem2(const TransferItem2& tdr) : d(new TransferData(tdr.d.constData())) {}
+        TransferItem2(const TransferData& dataRow) : d(new TransferData(dataRow)) {}
 
         void updateValuesTransferFinished(uint64_t updateTime,
                                           int errorCode, long long errorValue,
@@ -90,12 +88,29 @@ public:
                                          unsigned long long priority,
                                          int state, long long transferedBytes);
 
-protected:
-        QSharedDataPointer<TransferDataRow> d;
+        void setPaused(bool isPaused);
+
+        int getState() const
+        {
+            return d->mState;
+        }
+
+        int getType() const
+        {
+            return d->mType;
+        }
+
+        QExplicitlySharedDataPointer<TransferData> getTransferData()
+        {
+            return d;
+        }
+
+    protected:
+            QExplicitlySharedDataPointer<TransferData> d;
 };
 
+Q_DECLARE_METATYPE(TransferData)
+Q_DECLARE_METATYPE(TransferData*)
 Q_DECLARE_METATYPE(TransferItem2)
-Q_DECLARE_METATYPE(TransferDataRow)
-
 
 #endif // TRANSFERITEM2_H

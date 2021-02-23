@@ -16,7 +16,7 @@ class TransferManagerItem2 : public QWidget
 public:
     explicit TransferManagerItem2(QWidget *parent = 0);
 
-    void updateUi(const TransferItem2 transferItem);
+    void updateUi(TransferItem2& transferItem);
 //    void setupUi(const TransferItem2 transferItem);
 
     private:

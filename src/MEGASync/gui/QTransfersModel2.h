@@ -9,7 +9,7 @@
 
 #include <QAbstractItemModel>
 
-class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener
+class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener , public mega::MegaRequestListener
 {
     Q_OBJECT
 
@@ -31,21 +31,27 @@ public:
     void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     void onTransferTemporaryError(mega::MegaApi *api,mega::MegaTransfer *transfer, mega::MegaError* error);
 
-signals:
-
 private slots:
+    void onPauseStateChanged();
 
 
-
-protected:
+private:
     mega::MegaApi* mMegaApi;
-    QMap<TransferTag, TransferItem2*> mTransfers;
+    Preferences* mPreferences;
+
+//    QMap<TransferTag, TransferItem2*> mTransfers;
+    QMap<TransferTag, QVariant> mTransfers;
     QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;
     QHash<QString, FileTypes> mFileTypes;
 
     long long mNotificationNumber;
 
+    bool mAreDlPaused;
+    bool mAreUlPaused;
+    bool mIsGlobalPaused;
+
+    void insertTransfer(mega::MegaTransfer *transfer);
 };
 
 #endif // QTRANSFERSMODEL2_H

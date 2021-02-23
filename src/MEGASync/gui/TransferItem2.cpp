@@ -4,10 +4,6 @@
 
 using namespace mega;
 
-TransferItem2::TransferItem2() : d(new TransferDataRow()) {}
-TransferItem2::TransferItem2(const TransferItem2& ti)  : d(new TransferDataRow(ti.d.constData())) {}
-TransferItem2::TransferItem2(const TransferDataRow& dataRow) : d(new TransferDataRow(dataRow)) {}
-
 void TransferItem2::updateValuesTransferFinished(uint64_t updateTime,
                                   int errorCode, long long errorValue,
                                   long long meanSpeed,
@@ -42,7 +38,16 @@ void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
     d->mPriority = priority;
 }
 
-QSharedDataPointer<TransferDataRow> TransferItem2::getTransferData() const
+void TransferItem2::setPaused(bool isPaused)
 {
-    return d;
+    if (isPaused)
+    {
+        d->mUnpausedState = d->mState;
+        d->mState = MegaTransfer::STATE_PAUSED;
+        d->mSpeed = 0;
+    }
+    else
+    {
+        d->mState = d->mUnpausedState;
+    }
 }
