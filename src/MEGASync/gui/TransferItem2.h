@@ -100,7 +100,7 @@ class TransferItem2
             return d->mType;
         }
 
-        QExplicitlySharedDataPointer<TransferData> getTransferData()
+        QExplicitlySharedDataPointer<TransferData> getTransferData() const
         {
             return d;
         }

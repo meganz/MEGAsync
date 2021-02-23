@@ -27,7 +27,7 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
 {
     if (index.isValid() && index.data().canConvert<TransferItem2>())
     {
-        auto transferItem (qvariant_cast<TransferItem2>(index.data()));
+        const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
         const auto nbRowsMaxInView (mView->height()/option.rect.height() + 1);
         const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
 
