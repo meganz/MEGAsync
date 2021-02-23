@@ -155,8 +155,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->cProxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyStateChanged()));
     connect(ui->cProxyRequiresPassword, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
 
-    connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
-
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 
 #ifdef Q_OS_LINUX
@@ -1409,19 +1407,6 @@ int SettingsDialog::saveSettings()
         }
 #endif
 
-        if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
-        {
-            preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
-            #ifdef __APPLE__
-            Platform::notifyRestartSyncFolders();
-            #else
-            for (int i = 0; i < model->getNumSyncedFolders(); i++)
-            {
-                auto syncSetting = model->getSyncSetting(i);
-                app->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
-            }
-            #endif
-        }
     }
 
     //Proxies
@@ -2877,4 +2862,19 @@ void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
     megaApi->setFileVersionsOption(checked);
     // TODO: investigate why this setting was not saved in batched mode impl.; is this because this option is set by MegaApplication.cpp?
     preferences->disableFileVersioning(checked);
+}
+
+void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
+{
+    if (modifyingSettings) return;
+    preferences->disableOverlayIcons(checked);
+#ifdef __APPLE__
+    Platform::notifyRestartSyncFolders();
+#else
+    for (int i = 0; i < model->getNumSyncedFolders(); i++)
+    {
+        auto syncSetting = model->getSyncSetting(i);
+        app->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
+    }
+#endif
 }

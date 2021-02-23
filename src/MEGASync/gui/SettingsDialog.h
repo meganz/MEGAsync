@@ -149,6 +149,7 @@ private slots:
     void on_eMaxUploadConnections_valueChanged(int value);
     void on_cbUseHttps_toggled(bool checked);
     void on_cDisableFileVersioning_toggled(bool checked);
+    void on_cOverlayIcons_toggled(bool checked);
 
 protected:
     void changeEvent(QEvent * event) override;
