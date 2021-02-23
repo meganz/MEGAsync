@@ -106,7 +106,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     mThreadPool = ThreadPoolSingleton::getInstance();
 
     syncsChanged = false;
-    excludedNamesChanged = false;
 
     this->proxyOnly = proxyOnly;
     this->proxyTestProgressDialog = NULL;
@@ -163,6 +162,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
 #endif
+// TODO: This looks like Windows code
 #ifdef __APPLE__
     connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
     ui->cDisableIcons->hide();
@@ -1101,7 +1101,7 @@ void SettingsDialog::loadSettings()
     modifyingSettings--;
 }
 
-void SettingsDialog::refreshAccountDetails() //TODO; separate storage from bandwidth
+void SettingsDialog::refreshAccountDetails() //TODO: separate storage from bandwidth
 {
     int accountType = preferences->accountType();
     if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
@@ -1487,56 +1487,6 @@ int SettingsDialog::saveSettings()
 
         connectivityChecker->startCheck();
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");
-    }
-
-    //Advanced
-    if (excludedNamesChanged)
-    {
-        QStringList excludedNames;
-        QStringList excludedPaths;
-        for (int i = 0; i < ui->lExcludedNames->count(); i++)
-        {
-            if (ui->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
-            {
-                excludedPaths.append(ui->lExcludedNames->item(i)->text());
-            }
-            else
-            {
-                excludedNames.append(ui->lExcludedNames->item(i)->text()); // File name exclusion
-            }
-        }
-
-        preferences->setExcludedSyncNames(excludedNames);
-        preferences->setExcludedSyncPaths(excludedPaths);
-        preferences->setCrashed(true);
-        excludedNamesChanged = false;
-
-        QMessageBox* info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
-                                            tr("The new excluded file names will be taken into account\n"
-                                               "when the application starts again"));
-        info->setStandardButtons(QMessageBox::Ok | QMessageBox::Yes);
-        info->setButtonText(QMessageBox::Yes, tr("Restart"));
-        info->setDefaultButton(QMessageBox::Ok);
-
-        QPointer<SettingsDialog> currentDialog = this;
-        info->exec();
-        int result = info->result();
-        delete info;
-        if (!currentDialog)
-        {
-            return 2;
-        }
-
-        if (result == QMessageBox::Yes)
-        {
-            // Restart MEGAsync
-#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
-            ((MegaApplication*)qApp)->rebootApplication(false);
-#else
-            QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
-#endif
-            return 2;
-        }
     }
 
     ui->bApply->setEnabled(false);
@@ -1977,15 +1927,13 @@ void SettingsDialog::on_bAddName_clicked()
         else if (ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
         {
             ui->lExcludedNames->insertItem(i, text);
-            excludedNamesChanged = true;
-            stateChanged();
+            saveExcludeSyncNames();
             return;
         }
     }
 
     ui->lExcludedNames->addItem(text);
-    excludedNamesChanged = true;
-    stateChanged();
+    saveExcludeSyncNames();
 }
 
 void SettingsDialog::on_bDeleteName_clicked()
@@ -2001,8 +1949,7 @@ void SettingsDialog::on_bDeleteName_clicked()
         delete selected[i];
     }
 
-    excludedNamesChanged = true;
-    stateChanged();
+    saveExcludeSyncNames();
 }
 
 void SettingsDialog::on_bExcludeSize_clicked()
@@ -2135,6 +2082,41 @@ QString SettingsDialog::cacheDaysLimitInfo()
         format = tr("Disabled");
     }
     return format;
+}
+
+void SettingsDialog::saveExcludeSyncNames()
+{
+    QStringList excludedNames;
+    QStringList excludedPaths;
+    for (int i = 0; i < ui->lExcludedNames->count(); i++)
+    {
+        if (ui->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
+            excludedPaths.append(ui->lExcludedNames->item(i)->text());
+        else
+            excludedNames.append(ui->lExcludedNames->item(i)->text()); // File name exclusion
+    }
+
+    preferences->setExcludedSyncNames(excludedNames);
+    preferences->setExcludedSyncPaths(excludedPaths);
+    preferences->setCrashed(true);
+
+    QMessageBox *info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
+                                        tr("The new excluded file names will be taken into account\n"
+                                           "when the application starts again"));
+    info->setStandardButtons(QMessageBox::Ok | QMessageBox::Yes);
+    info->setButtonText(QMessageBox::Yes, tr("Restart"));
+    info->setDefaultButton(QMessageBox::Ok);
+    int result = info->exec();
+    delete info;
+    if (result == QMessageBox::Yes)
+    {
+        // Restart MEGAsync
+#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
+        ((MegaApplication*)qApp)->rebootApplication(false);
+#else
+        QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
+#endif
+    }
 }
 
 void SettingsDialog::on_bClearCache_clicked()

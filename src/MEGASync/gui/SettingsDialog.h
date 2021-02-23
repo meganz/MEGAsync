@@ -163,6 +163,7 @@ private:
     void syncsStateInformation(int state);
     QString excludeBySizeInfo();
     QString cacheDaysLimitInfo();
+    void saveExcludeSyncNames();
 
     Ui::SettingsDialog *ui;
     MegaApplication *app;
@@ -172,7 +173,6 @@ private:
     mega::MegaApi *megaApi;
     HighDpiResize highDpiResize;
     bool syncsChanged;
-    bool excludedNamesChanged;
     QStringList syncNames;
     QStringList languageCodes;
     bool proxyOnly;
