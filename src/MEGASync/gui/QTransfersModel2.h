@@ -9,7 +9,7 @@
 
 #include <QAbstractItemModel>
 
-class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener , public mega::MegaRequestListener
+class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener
 {
     Q_OBJECT
 

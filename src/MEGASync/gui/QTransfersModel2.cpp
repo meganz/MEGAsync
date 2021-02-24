@@ -147,7 +147,6 @@ QTransfersModel2::~QTransfersModel2()
 
 void QTransfersModel2::initModel()
 {
-
     QTransfersModel2* transferModel = this;
 
     mThreadPool->push([this, transferModel]()
@@ -199,11 +198,13 @@ void QTransfersModel2::initModel()
                     for (auto chunk(0); chunk < nbChunks; ++chunk)
                     {
                         auto first (nbRows - remainingRows);
-                        auto last (first - 1 + std::min(remainingRows, rowsPerChunk));
+                        auto last (first + std::min(remainingRows, rowsPerChunk));
 
-                        beginInsertRows(QModelIndex(), first, last);
+                        auto nbRowsInModel (mOrder.size());
+                        beginInsertRows(QModelIndex(), nbRowsInModel,
+                                        nbRowsInModel -1 + std::min(remainingRows, rowsPerChunk));
 
-                        for (auto row (first); row <= last; ++row)
+                        for (auto row (first); row < last; ++row)
                         {
                             insertTransfer(transfers->get(transfersToAdd[row]));
                         }
@@ -351,15 +352,24 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
         TransferRemainingTime* rem (mRemainingTimes[transfer->getTag()]);
         auto remSecs (rem->calculateRemainingTimeSeconds(speed, totalBytes-transferredBytes));
 
+        int errorCode(MegaError::API_OK);
+        auto errorValue(0LL);
+        auto megaError (transfer->getLastErrorExtended());
+        if (megaError != nullptr)
+        {
+            errorCode = megaError->getErrorCode();
+            errorValue = megaError->getValue();
+        }
+
         transferItem->updateValuesTransferUpdated(transfer->getUpdateTime(),
                                                   remSecs.count(),
-                                        transfer->getLastError().getErrorCode(),
-                                        transfer->getLastErrorExtended()->getValue(),
-                                        transfer->getMeanSpeed(),
-                                        speed,
-                                        transfer->getPriority(),
-                                        transfer->getState(),
-                                        transferredBytes);
+                                                  errorCode,
+                                                  errorValue,
+                                                  transfer->getMeanSpeed(),
+                                                  speed,
+                                                  transfer->getPriority(),
+                                                  transfer->getState(),
+                                                  transferredBytes);
 
         emit dataChanged(index(row, 0), index(row, 0));
     }
@@ -381,7 +391,6 @@ void QTransfersModel2::insertTransfer(mega::MegaTransfer *transfer)
     int type (transfer->getType());
     QString fileName (QString::fromUtf8(transfer->getFileName()));
     TransferData::FileTypes fileType = mFileTypes[Utilities::getExtensionPixmapName(fileName, QString())];
-
     auto speed (transfer->getSpeed());
 
     auto totalBytes (transfer->getTotalBytes());
@@ -389,13 +398,24 @@ void QTransfersModel2::insertTransfer(mega::MegaTransfer *transfer)
     TransferRemainingTime* rem (new TransferRemainingTime());
     auto remSecs (rem->calculateRemainingTimeSeconds(speed, totalBytes-transferredBytes));
 
+    int errorCode(MegaError::API_OK);
+    auto errorValue(0LL);
+    auto megaError (transfer->getLastErrorExtended());
+    if (megaError != nullptr)
+    {
+        errorCode = megaError->getErrorCode();
+        errorValue = megaError->getValue();
+    }
+
+    bool isPublic (transfer->getPublicMegaNode());
+
     TransferData dataRow(
                 type,
-                0,
+                errorCode,
                 state,
                 MegaTransfer::STATE_NONE,
                 tag,
-                0,
+                errorValue,
                 0,
                 remSecs.count(),
                 totalBytes,
@@ -404,12 +424,11 @@ void QTransfersModel2::insertTransfer(mega::MegaTransfer *transfer)
                 transfer->getMeanSpeed(),
                 transferredBytes,
                 transfer->getUpdateTime(),
-                false,
+                isPublic,
                 transfer->isSyncTransfer(),
                 fileType,
                 mMegaApi,
                 fileName);
-
 
      mTransfers[tag] = QVariant::fromValue(TransferItem2(dataRow));
      mRemainingTimes[tag] = rem;

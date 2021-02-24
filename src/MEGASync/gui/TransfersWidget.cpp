@@ -41,10 +41,7 @@ void TransfersWidget::setupTransfers()
     model2 = new QTransfersModel2(this);
     mProxyModel = new TransfersSortFilterProxyModel(this);
     mProxyModel->setSourceModel(model2);
-//    connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
-//    connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 
-  // noTransfers();
     configureTransferView();
     onTransferAdded();
 }
@@ -85,6 +82,7 @@ TransfersWidget::~TransfersWidget()
     if (tDelegate2) delete tDelegate2;
     if (model) delete model;
     if (model2) delete model2;
+    if (mProxyModel) delete mProxyModel;
 }
 
 bool TransfersWidget::areTransfersActive()
