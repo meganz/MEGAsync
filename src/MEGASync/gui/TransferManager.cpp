@@ -18,7 +18,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mMegaApi(megaApi),
     mPreferences(Preferences::instance()),
     mRefreshTransferTime(new QTimer(this)),
-    mThreadPool(ThreadPoolSingleton::getInstance())
+    mThreadPool(ThreadPoolSingleton::getInstance()),
+    mCurrentTab(COMPLETED_TAB)
 {
     mUi->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -36,28 +37,28 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     QPointer<TransferManager> transferManager = this;
 
-    mThreadPool->push([this, transferManager]()
-    {//thread pool function
+//    mThreadPool->push([this, transferManager]()
+//    {//thread pool function
 
-        if (!transferManager)
-        {
-            return;
-        }
+//        if (!transferManager)
+//        {
+//            return;
+//        }
 
-        Utilities::queueFunctionInAppThread([this, transferManager]()
-        {//queued function
+//        Utilities::queueFunctionInAppThread([this, transferManager]()
+//        {//queued function
 
-            if (transferManager) //Check if this is not deleted
-            {
-                mUi->wActiveTransfers->setupTransfers();
+//            if (transferManager) //Check if this is not deleted
+//            {
+                mUi->wTransfers->setupTransfers();
 //                mUi->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
 //                mUi->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
-            }
+//            }
 
 
-        });//end of queued function
+//        });//end of queued function
 
-    });// end of thread pool function
+//    });// end of thread pool function
 
     if (((MegaApplication *)qApp)->getFinishedTransfers().size() > 0)
     {
@@ -68,7 +69,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
         mUi->fCompleted->setVisible(false);
     }
 
-    mUi->wCompleted->setupFinishedTransfers(((MegaApplication *)qApp)->getFinishedTransfers());
+//    mUi->wCompleted->setupFinishedTransfers(((MegaApplication *)qApp)->getFinishedTransfers());
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
 
 //    connect(mUi->wCompleted->getModel(), SIGNAL(noTransfers()), this, SLOT(updateState()));
@@ -90,6 +91,16 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabFramesToggleGroup[DOWNLOADS_TAB]     = mUi->fDownloads;
     mTabFramesToggleGroup[UPLOADS_TAB]       = mUi->fUploads;
     mTabFramesToggleGroup[COMPLETED_TAB]     = mUi->fCompleted;
+
+    QSet<TransferData::FileTypes> fileTypes;
+    fileTypes.insert(TransferData::TYPE_ARCHIVE);
+    fileTypes.insert(TransferData::TYPE_AUDIO);
+    fileTypes.insert(TransferData::TYPE_DOCUMENT);
+    fileTypes.insert(TransferData::TYPE_IMAGE);
+    fileTypes.insert(TransferData::TYPE_OTHER);
+    fileTypes.insert(TransferData::TYPE_TEXT);
+    fileTypes.insert(TransferData::TYPE_VIDEO);
+    mUi->wTransfers->fileTypeFilterChanged(fileTypes);
 
     on_tAllTransfers_clicked();
 }
@@ -137,9 +148,16 @@ void TransferManager::on_tCompleted_clicked()
     mUi->tPauseResumeAll->setVisible(false);
     mUi->tCancelAll->setVisible(false);
 
-    mUi->wTransfers->setCurrentWidget(mUi->wCompleted);
-    mUi->wCompleted->refreshTransferItems();
     mUi->fCompleted->setVisible(true);
+
+    QSet<int> transferStates;
+    transferStates.insert(MegaTransfer::STATE_COMPLETED);
+    mUi->wTransfers->transferStateFilterChanged(transferStates);
+
+    QSet<int> transferTypes;
+    transferTypes.insert(MegaTransfer::TYPE_DOWNLOAD);
+    transferTypes.insert(MegaTransfer::TYPE_UPLOAD);
+    mUi->wTransfers->transferTypeFilterChanged(transferTypes);
 
     mUi->lCurrentContent->setText(tr("Finished"));
 
@@ -164,9 +182,21 @@ void TransferManager::on_tDownloads_clicked()
     mUi->tPauseResumeAll->setVisible(true);
     mUi->tCancelAll->setVisible(true);
 
+    QSet<int> transferStates;
+    transferStates.insert(MegaTransfer::STATE_ACTIVE);
+    transferStates.insert(MegaTransfer::STATE_PAUSED);
+    transferStates.insert(MegaTransfer::STATE_COMPLETING);
+    transferStates.insert(MegaTransfer::STATE_FAILED);
+    transferStates.insert(MegaTransfer::STATE_QUEUED);
+    transferStates.insert(MegaTransfer::STATE_RETRYING);
+    mUi->wTransfers->transferStateFilterChanged(transferStates);
+
+    QSet<int> transferTypes;
+    transferTypes.insert(MegaTransfer::TYPE_DOWNLOAD);
+    mUi->wTransfers->transferTypeFilterChanged(transferTypes);
+
     mUi->lCurrentContent->setText(tr("Downloads"));
 
-    mUi->wTransfers->setCurrentWidget(mUi->wDownloads);
     updateState();
 }
 
@@ -188,7 +218,18 @@ void TransferManager::on_tUploads_clicked()
     mUi->tPauseResumeAll->setVisible(true);
     mUi->tCancelAll->setVisible(true);
 
-    mUi->wTransfers->setCurrentWidget(mUi->wUploads);
+    QSet<int> transferStates;
+    transferStates.insert(MegaTransfer::STATE_ACTIVE);
+    transferStates.insert(MegaTransfer::STATE_PAUSED);
+    transferStates.insert(MegaTransfer::STATE_COMPLETING);
+    transferStates.insert(MegaTransfer::STATE_FAILED);
+    transferStates.insert(MegaTransfer::STATE_QUEUED);
+    transferStates.insert(MegaTransfer::STATE_RETRYING);
+    mUi->wTransfers->transferStateFilterChanged(transferStates);
+
+    QSet<int> transferTypes;
+    transferTypes.insert(MegaTransfer::TYPE_UPLOAD);
+    mUi->wTransfers->transferTypeFilterChanged(transferTypes);
 
     mUi->lCurrentContent->setText(tr("Uploads"));
 
@@ -213,7 +254,19 @@ void TransferManager::on_tAllTransfers_clicked()
     mUi->tPauseResumeAll->setVisible(true);
     mUi->tCancelAll->setVisible(true);
 
-    mUi->wTransfers->setCurrentWidget(mUi->wActiveTransfers);
+    QSet<int> transferStates;
+    transferStates.insert(MegaTransfer::STATE_ACTIVE);
+    transferStates.insert(MegaTransfer::STATE_PAUSED);
+    transferStates.insert(MegaTransfer::STATE_COMPLETING);
+    transferStates.insert(MegaTransfer::STATE_FAILED);
+    transferStates.insert(MegaTransfer::STATE_QUEUED);
+    transferStates.insert(MegaTransfer::STATE_RETRYING);
+    mUi->wTransfers->transferStateFilterChanged(transferStates);
+
+    QSet<int> transferTypes;
+    transferTypes.insert(MegaTransfer::TYPE_DOWNLOAD);
+    transferTypes.insert(MegaTransfer::TYPE_UPLOAD);
+    mUi->wTransfers->transferTypeFilterChanged(transferTypes);
 
     mUi->lCurrentContent->setText(tr("All Transfers"));
 
@@ -247,40 +300,42 @@ void TransferManager::updatePauseState(bool isPaused, QString toolTipText)
 
 void TransferManager::updateState()
 {
-    QWidget *w = mUi->wTransfers->currentWidget();
     bool isPaused (false);
     QString bPauseTooltip;
+    bool areTransfersActive(mUi->wTransfers->areTransfersActive());
 
-    if (w == mUi->wActiveTransfers)
+    switch (mCurrentTab)
     {
-        onTransfersActive(mUi->wActiveTransfers->areTransfersActive());
-        isPaused = mPreferences->getGlobalPaused();
-        mUi->wActiveTransfers->pausedTransfers(isPaused);
-        mUi->wActiveTransfers->refreshTransferItems();
-        bPauseTooltip = QLatin1String("All");
-    }
-    else if (w == mUi->wDownloads)
-    {
-        onTransfersActive(mUi->wDownloads->areTransfersActive());
-        isPaused = mPreferences->getDownloadsPaused();
-        mUi->wDownloads->pausedTransfers(isPaused);
-        mUi->wDownloads->refreshTransferItems();
-        bPauseTooltip = QLatin1String("Downloads");
-    }
-    else if (w == mUi->wUploads)
-    {
-        onTransfersActive(mUi->wUploads->areTransfersActive());
-        isPaused = mPreferences->getUploadsPaused();
-        mUi->wUploads->pausedTransfers(isPaused);
-        mUi->wUploads->refreshTransferItems();
-        bPauseTooltip = QLatin1String("Uploads");
-    }
-    else if (w == mUi->wCompleted)
-    {
-        onTransfersActive(mUi->wCompleted->areTransfersActive());
+        case ALL_TRANSFERS_TAB:
+        {
+            isPaused = mPreferences->getGlobalPaused();
+            bPauseTooltip = QLatin1String("All");
+            break;
+        }
+        case DOWNLOADS_TAB:
+        {
+            onTransfersActive(areTransfersActive);
+            isPaused = mPreferences->getDownloadsPaused();
+            bPauseTooltip = QLatin1String("Downloads");
+            break;
+        }
+        case UPLOADS_TAB:
+        {
+            onTransfersActive(areTransfersActive);
+            isPaused = mPreferences->getUploadsPaused();
+            bPauseTooltip = QLatin1String("Uploads");
+            break;
+        }
+        case COMPLETED_TAB:
+        {
+            onTransfersActive(areTransfersActive);
+            break;
+        }
+        default:
+            break;
     }
 
-    if (mUi->wActiveTransfers->areTransfersActive())
+    if (areTransfersActive)
     {
         mUi->wStatus->setCurrentWidget(mUi->wSpeedAndClear);
     }
@@ -295,62 +350,62 @@ void TransferManager::updateState()
 
 void TransferManager::disableGetLink(bool disable)
 {
-    mUi->wCompleted->disableGetLink(disable);
+    mUi->wTransfers->disableGetLink(disable);
 }
 
 void TransferManager::on_bPause_clicked()
 {
-    emit userActivity();
+//    emit userActivity();
 
-    QWidget *w = mUi->wTransfers->currentWidget();
-    if (w == mUi->wActiveTransfers)
-    {
-        mMegaApi->pauseTransfers(!mPreferences->getGlobalPaused());
-    }
-    else if(w == mUi->wDownloads)
-    {
-        mMegaApi->pauseTransfers(!mPreferences->getDownloadsPaused(), MegaTransfer::TYPE_DOWNLOAD);
-    }
-    else if(w == mUi->wUploads)
-    {
-        mMegaApi->pauseTransfers(!mPreferences->getUploadsPaused(), MegaTransfer::TYPE_UPLOAD);
-    }
+//    QWidget *w = mUi->wTransfers->currentWidget();
+//    if (w == mUi->wActiveTransfers)
+//    {
+//        mMegaApi->pauseTransfers(!mPreferences->getGlobalPaused());
+//    }
+//    else if(w == mUi->wDownloads)
+//    {
+//        mMegaApi->pauseTransfers(!mPreferences->getDownloadsPaused(), MegaTransfer::TYPE_DOWNLOAD);
+//    }
+//    else if(w == mUi->wUploads)
+//    {
+//        mMegaApi->pauseTransfers(!mPreferences->getUploadsPaused(), MegaTransfer::TYPE_UPLOAD);
+//    }
 }
 
 void TransferManager::on_bClearAll_clicked()
 {
-    QWidget *w = mUi->wTransfers->currentWidget();
-    QPointer<TransferManager> dialog = QPointer<TransferManager>(this);
+//    QWidget *w = mUi->wTransfers->currentWidget();
+//    QPointer<TransferManager> dialog = QPointer<TransferManager>(this);
 
-    if (w != mUi->wCompleted)
-    {
-        if (QMegaMessageBox::warning(nullptr,
-                                 QString::fromUtf8("MEGAsync"),
-                                 tr("Are you sure you want to cancel all transfers?"),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
-                || !dialog)
-        {
-            return;
-        }
-    }
+//    if (w != mUi->wCompleted)
+//    {
+//        if (QMegaMessageBox::warning(nullptr,
+//                                 QString::fromUtf8("MEGAsync"),
+//                                 tr("Are you sure you want to cancel all transfers?"),
+//                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+//                || !dialog)
+//        {
+//            return;
+//        }
+//    }
 
-    if (w == mUi->wActiveTransfers)
-    {
-        mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-        mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
-    }
-    else if(w == mUi->wDownloads)
-    {
-        mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
-    }
-    else if(w == mUi->wUploads)
-    {
-        mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-    }
-    else if(w == mUi->wCompleted)
-    {
-        mUi->wCompleted->clearTransfers();
-    }
+//    if (w == mUi->wActiveTransfers)
+//    {
+//        mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+//        mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+//    }
+//    else if(w == mUi->wDownloads)
+//    {
+//        mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+//    }
+//    else if(w == mUi->wUploads)
+//    {
+//        mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+//    }
+//    else if(w == mUi->wCompleted)
+//    {
+//        mUi->wCompleted->clearTransfers();
+//    }
 }
 
 void TransferManager::on_bSearch_clicked()
@@ -365,6 +420,7 @@ void TransferManager::on_tSearchIcon_clicked()
     mUi->bSearchString->setText(mUi->leSearchField->text());
     // Todo: use a stacked panel instead with search + number of results
     mUi->lCurrentContent->setText(tr("Search: ") + mUi->leSearchField->text());
+    mUi->wTransfers->textFilterChanged(QRegExp(mUi->leSearchField->text()));
     // Add number of found results
     setStyleSheet(styleSheet());
     mUi->wSearch->show();
@@ -397,22 +453,20 @@ void TransferManager::on_tCancelAll_clicked()
 
 void TransferManager::refreshFinishedTime()
 {
-    QWidget *w = mUi->wTransfers->currentWidget();
-    if (w == mUi->wCompleted)
-    {
-        mUi->wCompleted->getModel()->refreshTransfers();
-    }
+//    QWidget *w = mUi->wTransfers->currentWidget();
+//    if (w == mUi->wCompleted)
+//    {
+//        mUi->wCompleted->getModel()->refreshTransfers();
+//    }
 }
 
 void TransferManager::toggleTab(TM_TABS tab)
 {
-    static TM_TABS prevTab = COMPLETED_TAB;
-
-    if (prevTab != tab)
+    if (mCurrentTab != tab)
     {
-        mTabFramesToggleGroup[prevTab]->setProperty("itsOn", false);
+        mTabFramesToggleGroup[mCurrentTab]->setProperty("itsOn", false);
         mTabFramesToggleGroup[tab]->setProperty("itsOn", true);
-        prevTab = tab;
+        mCurrentTab = tab;
     }
 }
 
@@ -447,23 +501,30 @@ void TransferManager::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
-        mUi->retranslateUi(this);
-        QWidget *w = mUi->wTransfers->currentWidget();
-        if (w == mUi->wActiveTransfers)
+        switch (mCurrentTab)
         {
-            on_tAllTransfers_clicked();
-        }
-        else if (w == mUi->wUploads)
-        {
-            on_tUploads_clicked();
-        }
-        else if (w == mUi->wDownloads)
-        {
-            on_tDownloads_clicked();
-        }
-        else if (w == mUi->wCompleted)
-        {
-            on_tCompleted_clicked();
+            case ALL_TRANSFERS_TAB:
+            {
+                on_tAllTransfers_clicked();
+                break;
+            }
+            case DOWNLOADS_TAB:
+            {
+                on_tDownloads_clicked();
+                break;
+            }
+            case UPLOADS_TAB:
+            {
+                on_tUploads_clicked();
+                break;
+            }
+            case COMPLETED_TAB:
+            {
+                on_tCompleted_clicked();
+                break;
+            }
+            default:
+                break;
         }
     }
     QDialog::changeEvent(event);

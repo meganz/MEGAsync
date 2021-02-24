@@ -15,7 +15,7 @@
 
 using namespace mega;
 
-MegaTransferDelegate2::MegaTransferDelegate2(QTransfersModel2 *model, QWidget* view, QObject *parent)
+MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget* view, QObject *parent)
     : QStyledItemDelegate(parent),
       mModel(model),
       mView(view)

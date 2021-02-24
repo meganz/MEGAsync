@@ -18,12 +18,12 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
 {
 
     // Init File Types
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())] = TYPE_TEXT;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.wav"), QString())] = TYPE_AUDIO;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())] = TYPE_VIDEO;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.tar"), QString())] = TYPE_ARCHIVE;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.odt"), QString())] = TYPE_DOCUMENT;
-    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.png"), QString())] = TYPE_IMAGE;
+    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())] = TransferData::TYPE_TEXT;
+    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.wav"), QString())] = TransferData::TYPE_AUDIO;
+    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())] = TransferData::TYPE_VIDEO;
+    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.tar"), QString())] = TransferData::TYPE_ARCHIVE;
+    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.odt"), QString())] = TransferData::TYPE_DOCUMENT;
+    mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.png"), QString())] = TransferData::TYPE_IMAGE;
 
     // Connect to transfer changes signals
     mMegaApi->addTransferListener(this);
@@ -186,8 +186,6 @@ void QTransfersModel2::initModel()
                 if (nbRows > 0)
                 {
                     // Load in chunks for responsiveness
-
-                    beginInsertRows(QModelIndex(), 0, nbRows-1);
                     constexpr int rowsPerChunk (50);
                     auto nbChunks (nbRows / rowsPerChunk);
 
@@ -201,11 +199,11 @@ void QTransfersModel2::initModel()
                     for (auto chunk(0); chunk < nbChunks; ++chunk)
                     {
                         auto first (nbRows - remainingRows);
-                        auto last (first + std::min(remainingRows, rowsPerChunk));
+                        auto last (first - 1 + std::min(remainingRows, rowsPerChunk));
 
                         beginInsertRows(QModelIndex(), first, last);
 
-                        for (auto row (first); row < last; ++row)
+                        for (auto row (first); row <= last; ++row)
                         {
                             insertTransfer(transfers->get(transfersToAdd[row]));
                         }
@@ -278,6 +276,12 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
                                          transfer->getTransferredBytes());
 
         emit dataChanged(index(row, 0), index(row, 0));
+
+        auto rem (mRemainingTimes.take(tag));
+        if (rem != nullptr)
+        {
+            delete rem;
+        }
     }
 }
 
@@ -376,7 +380,7 @@ void QTransfersModel2::insertTransfer(mega::MegaTransfer *transfer)
     int state (transfer->getState());
     int type (transfer->getType());
     QString fileName (QString::fromUtf8(transfer->getFileName()));
-    FileTypes fileType = mFileTypes[Utilities::getExtensionPixmapName(fileName, QString())];
+    TransferData::FileTypes fileType = mFileTypes[Utilities::getExtensionPixmapName(fileName, QString())];
 
     auto speed (transfer->getSpeed());
 

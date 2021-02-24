@@ -57,6 +57,14 @@
     max-width: 768px;
 }
 
+#wRightPaneHeader
+{
+    background-color: white;
+    height: 66px;
+    min-height: 66px;
+    max-height: 66px;
+}
+
 #lTransfers, #lCurrentContent
 {
     color: #333333;
@@ -1483,15 +1491,7 @@ border: none;
        </widget>
       </item>
       <item>
-       <widget class="QStackedWidget" name="wTransfers">
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="TransfersWidget" name="wActiveTransfers"/>
-        <widget class="TransfersWidget" name="wDownloads"/>
-        <widget class="TransfersWidget" name="wUploads"/>
-        <widget class="TransfersWidget" name="wCompleted"/>
-       </widget>
+       <widget class="TransfersWidget" name="wTransfers" native="true"/>
       </item>
      </layout>
     </widget>

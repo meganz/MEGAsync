@@ -39,7 +39,8 @@ void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferD
 void TransfersWidget::setupTransfers()
 {
     model2 = new QTransfersModel2(this);
-
+    mProxyModel = new TransfersSortFilterProxyModel(this);
+    mProxyModel->setSourceModel(model2);
 //    connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
 //    connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 
@@ -93,7 +94,7 @@ bool TransfersWidget::areTransfersActive()
 
 void TransfersWidget::configureTransferView()
 {
-    if (!model && ! model2)
+    if (!model && !model2)
     {
         return;
     }
@@ -108,11 +109,12 @@ void TransfersWidget::configureTransferView()
     }
     else
     {
-        tDelegate2 = new MegaTransferDelegate2(model2, ui->tvTransfers);
+        tDelegate2 = new MegaTransferDelegate2(mProxyModel, ui->tvTransfers);
         ui->tvTransfers->setup();
         ui->tvTransfers->setItemDelegate(tDelegate2);
-        ui->tvTransfers->setModel(model2);
+        ui->tvTransfers->setModel(mProxyModel);
         model2->initModel();
+        mProxyModel->setDynamicSortFilter(true);
     }
 
     ui->tvTransfers->header()->close();
@@ -192,6 +194,26 @@ void TransfersWidget::onTransferAdded()
     ui->sWidget->setCurrentWidget(ui->pTransfers);
 }
 
+void TransfersWidget::textFilterChanged(QRegExp regExp)
+{
+    mProxyModel->setFilterRegExp(regExp);
+}
+
+void TransfersWidget::fileTypeFilterChanged(QSet<TransferData::FileTypes> fileTypes)
+{
+    mProxyModel->setFileType(fileTypes);
+}
+
+void TransfersWidget::transferStateFilterChanged(QSet<int> transferStates)
+{
+    mProxyModel->setTransferState(transferStates);
+}
+
+void TransfersWidget::transferTypeFilterChanged(QSet<int> transferTypes)
+{
+    mProxyModel->setTransferType(transferTypes);
+}
+
 void TransfersWidget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -200,3 +222,4 @@ void TransfersWidget::changeEvent(QEvent *event)
     }
     QWidget::changeEvent(event);
 }
+

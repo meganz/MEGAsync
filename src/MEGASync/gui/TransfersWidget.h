@@ -9,6 +9,8 @@
 #include "MegaTransferDelegate.h"
 #include "MegaTransferDelegate2.h"
 #include "TransfersStateInfoWidget.h"
+#include "TransfersSortFilterProxyModel.h"
+
 #include <QToolButton>
 
 namespace Ui {
@@ -29,6 +31,13 @@ public:
     void clearTransfers();
     void pausedTransfers(bool paused);
     void disableGetLink(bool disable);
+
+
+    void textFilterChanged(QRegExp regExp);
+    void fileTypeFilterChanged(QSet<TransferData::FileTypes> fileType);
+    void transferStateFilterChanged(QSet<int> transferStates);
+    void transferTypeFilterChanged(QSet<int> transferTypes);
+
     QTransfersModel *getModel();
     ~TransfersWidget();
 
@@ -38,6 +47,7 @@ private:
     Ui::TransfersWidget *ui;
     QTransfersModel *model;
     QTransfersModel2 *model2;
+    TransfersSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     MegaTransferDelegate2 *tDelegate2;
     QTransfersModel::ModelType mType;
@@ -50,6 +60,7 @@ private:
 private slots:
     void noTransfers();
     void onTransferAdded();
+
 
 protected:
     void changeEvent(QEvent *event);

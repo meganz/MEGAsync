@@ -43,7 +43,7 @@ private:
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
     QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;
-    QHash<QString, FileTypes> mFileTypes;
+    QHash<QString, TransferData::FileTypes> mFileTypes;
 
     long long mNotificationNumber;
 

@@ -11,20 +11,22 @@
 typedef int TransferTag;
 
 
-enum FileTypes
-{
-    TYPE_OTHER    = 0,
-    TYPE_AUDIO    = 1,
-    TYPE_VIDEO    = 2,
-    TYPE_ARCHIVE  = 3,
-    TYPE_DOCUMENT = 4,
-    TYPE_IMAGE    = 5,
-    TYPE_TEXT     = 6,
-};
-
 class TransferData : public QSharedData
 {
     public:
+
+    enum FileTypes
+    {
+        TYPE_OTHER    = 0,
+        TYPE_AUDIO    = 1,
+        TYPE_VIDEO    = 2,
+        TYPE_ARCHIVE  = 3,
+        TYPE_DOCUMENT = 4,
+        TYPE_IMAGE    = 5,
+        TYPE_TEXT     = 6,
+    };
+
+
     int       mType;
     int       mErrorCode;
     int       mState;
@@ -92,6 +94,11 @@ class TransferItem2
 
         void setPaused(bool isPaused);
 
+        int getTag() const
+        {
+            return d->mTag;
+        }
+
         int getState() const
         {
             return d->mState;
@@ -105,6 +112,11 @@ class TransferItem2
         int getType() const
         {
             return d->mType;
+        }
+
+        TransferData::FileTypes getFileType() const
+        {
+            return d->mFileType;
         }
 
         QExplicitlySharedDataPointer<TransferData> getTransferData() const

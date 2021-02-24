@@ -58,6 +58,7 @@ private:
     QTimer* mRefreshTransferTime;
     ThreadPool* mThreadPool;
     std::array<QFrame*, TAB_NB> mTabFramesToggleGroup;
+    TM_TABS mCurrentTab;
 
     void onTransfersActive(bool exists);
     void toggleTab(TM_TABS tab);
