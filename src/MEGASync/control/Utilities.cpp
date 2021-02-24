@@ -218,7 +218,6 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("nl")] = QString::fromUtf8("Nederlands");
         languageNames[QString::fromAscii("pl")] = QString::fromUtf8("Polski");
         languageNames[QString::fromAscii("pt_BR")] = QString::fromUtf8("Português Brasil");
-        languageNames[QString::fromAscii("pt")] = QString::fromUtf8("Português");
         languageNames[QString::fromAscii("ro")] = QString::fromUtf8("Română");
         languageNames[QString::fromAscii("ru")] = QString::fromUtf8("Pусский");
         languageNames[QString::fromAscii("th")] = QString::fromUtf8("ภาษาไทย"); // thai
@@ -258,6 +257,8 @@ QString Utilities::languageCodeToString(QString code)
         // languageNames[QString::fromAscii("tr")] = QString::fromUtf8("Türkçe");
         // languageNames[QString::fromAscii("tl")] = QString::fromUtf8("Tagalog");
         // languageNames[QString::fromAscii("uk")] = QString::fromUtf8("Українська");
+        // languageNames[QString::fromAscii("pt")] = QString::fromUtf8("Português");
+
 
     }
     return languageNames.value(code);
