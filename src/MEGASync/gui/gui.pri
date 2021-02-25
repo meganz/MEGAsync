@@ -42,7 +42,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QMegaMessageBox.cpp \
     $$PWD/TransfersStateInfoWidget.cpp \
     $$PWD/MegaSpeedGraph.cpp \
-    $$PWD/ActiveTransfersWidget.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
     $$PWD/AddExclusionDialog.cpp \
@@ -116,7 +115,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QMegaMessageBox.h \
     $$PWD/TransfersStateInfoWidget.h \
     $$PWD/MegaSpeedGraph.h \
-    $$PWD/ActiveTransfersWidget.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
     $$PWD/AddExclusionDialog.h \
