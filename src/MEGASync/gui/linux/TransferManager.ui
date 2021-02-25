@@ -50,7 +50,7 @@
 /*    max-width: 768px; */
 }
 
-#wRightPaneHeader
+#wRightPaneHeader, #sCurrentContent
 {
     background-color: white;
     height: 66px;
@@ -58,7 +58,7 @@
     max-height: 66px;
 }
 
-#lTransfers, #lCurrentContent
+#lTransfers, #lCurrentContent, #lSearch, #lTextSearch
 {
     color: #333333;
     font-size: 20px;
@@ -111,7 +111,7 @@ QFrame
     height: 36px;
 }
 
-#lTransferring, #lMediaType, #lSearch
+#lTransferring, #lMediaType
 {
     color: #666666;
     font-size: 12px;
@@ -272,8 +272,12 @@ border: none;
     qProperty-iconSize: 22px;
 }
 
+#lSearch
+{
 
-#lPaused
+}
+
+#lPaused, #lNbResults
 {
   height: 20px;
   width: 39px;
@@ -1224,7 +1228,7 @@ border: none;
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QGridLayout" name="wStatusHeaderLayout">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -1237,21 +1241,114 @@ border: none;
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <property name="horizontalSpacing">
-             <number>24</number>
-            </property>
-            <property name="verticalSpacing">
-             <number>0</number>
-            </property>
-            <item row="0" column="7">
-             <widget class="QToolButton" name="tCogWheel">
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
+            <item>
+             <widget class="QStackedWidget" name="sCurrentContent">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
+              <property name="currentIndex">
+               <number>1</number>
+              </property>
+              <widget class="QWidget" name="pSearchHeader">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <widget class="QWidget" name="">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>431</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="searchHeaderLayout">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <layout class="QHBoxLayout" name="searchTextHeaderLayout">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lSearch">
+                     <property name="text">
+                      <string>Search:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lTextSearch">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lNbResults">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+              <widget class="QWidget" name="pStatusHeader">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <widget class="QWidget" name="">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>431</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="currentContentLayout">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lCurrentContent">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lPaused">
+                   <property name="text">
+                    <string>Paused</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
              </widget>
             </item>
-            <item row="0" column="2">
+            <item alignment="Qt::AlignTop">
              <widget class="QPushButton" name="bImportLinks">
               <property name="text">
                <string>Import links</string>
@@ -1262,25 +1359,7 @@ border: none;
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lCurrentContent">
-              <property name="text">
-               <string>All Transfers</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="6">
-             <widget class="QPushButton" name="bDownload">
-              <property name="text">
-               <string>Download</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
+            <item alignment="Qt::AlignTop">
              <widget class="QPushButton" name="bUpload">
               <property name="text">
                <string>Upload</string>
@@ -1291,25 +1370,24 @@ border: none;
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lPaused">
+            <item alignment="Qt::AlignTop">
+             <widget class="QPushButton" name="bDownload">
               <property name="text">
-               <string>Paused</string>
+               <string>Download</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+            <item alignment="Qt::AlignTop">
+             <widget class="QToolButton" name="tCogWheel">
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
+             </widget>
             </item>
            </layout>
           </widget>

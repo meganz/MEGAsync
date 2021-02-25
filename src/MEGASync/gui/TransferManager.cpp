@@ -417,10 +417,15 @@ void TransferManager::on_bSearch_clicked()
 void TransferManager::on_tSearchIcon_clicked()
 {
     mUi->fSearchString->setProperty("itsOn", true);
-    mUi->bSearchString->setText(mUi->leSearchField->text());
-    // Todo: use a stacked panel instead with search + number of results
-    mUi->lCurrentContent->setText(tr("Search: ") + mUi->leSearchField->text());
-    mUi->wTransfers->textFilterChanged(QRegExp(mUi->leSearchField->text()));
+    mUi->bSearchString->setText(mUi->bSearchString->fontMetrics().elidedText(mUi->leSearchField->text(),
+                                                                           Qt::ElideMiddle,
+                                                                           mUi->bSearchString->width()-24));
+    mUi->wTransfers->textFilterChanged(QRegExp(mUi->leSearchField->text(), Qt::CaseInsensitive));
+
+    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics().elidedText(mUi->leSearchField->text(),
+                                                                         Qt::ElideMiddle,
+                                                                         mUi->lTextSearch->width()-24));
+    mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
     // Add number of found results
     setStyleSheet(styleSheet());
     mUi->wSearch->show();
@@ -437,6 +442,8 @@ void TransferManager::on_tClearSearchResult_clicked()
     mUi->wSearch->hide();
     mUi->bSearchString->setText(QString());
     mUi->fSearchString->setProperty("itsOn", false);
+    mUi->wTransfers->textFilterChanged(QRegExp());
+    mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
 }
 
 void TransferManager::on_tPauseResumeAll_clicked()

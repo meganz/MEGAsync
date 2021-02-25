@@ -53,8 +53,8 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
     return mTransferState.contains(transferItem.getState())
             && mTransferType.contains(transferItem.getType())
-            && mFileType.contains(transferItem.getFileType());
-//            || transferItem.getTransferData()->mFilename.contains(filterRegExp());
+            && mFileType.contains(transferItem.getFileType())
+            && transferItem.getTransferData()->mFilename.contains(filterRegExp());
 }
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const

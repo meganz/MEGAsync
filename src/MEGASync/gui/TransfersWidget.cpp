@@ -190,26 +190,31 @@ void TransfersWidget::noTransfers()
 void TransfersWidget::onTransferAdded()
 {
     ui->sWidget->setCurrentWidget(ui->pTransfers);
+    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::textFilterChanged(QRegExp regExp)
 {
     mProxyModel->setFilterRegExp(regExp);
+    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::fileTypeFilterChanged(QSet<TransferData::FileTypes> fileTypes)
 {
     mProxyModel->setFileType(fileTypes);
+    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::transferStateFilterChanged(QSet<int> transferStates)
 {
     mProxyModel->setTransferState(transferStates);
+    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::transferTypeFilterChanged(QSet<int> transferTypes)
 {
     mProxyModel->setTransferType(transferTypes);
+    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::changeEvent(QEvent *event)
