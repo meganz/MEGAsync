@@ -76,8 +76,7 @@ private slots:
     void on_tSearchIcon_clicked();
     void on_tSearchCancel_clicked();
     void on_tClearSearchResult_clicked();
-    void on_tPauseResumeAll_clicked();
-    void on_tCancelAll_clicked();
+
     void on_bArchives_clicked();
     void on_bDocuments_clicked();
     void on_bImages_clicked();

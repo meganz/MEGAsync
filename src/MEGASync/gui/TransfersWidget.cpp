@@ -187,6 +187,45 @@ void TransfersWidget::noTransfers()
     ui->sWidget->setCurrentWidget(ui->pNoTransfers);
 }
 
+void TransfersWidget::on_tPauseResumeAll_clicked()
+{
+    QModelIndexList selection = ui->tvTransfers->selectionModel()->selectedRows();
+
+    for (auto index : selection)
+    {
+        if (index.isValid() && index.data().canConvert<TransferItem2>())
+        {
+            const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
+            auto d (transferItem.getTransferData());
+
+            MegaApi * api(d->mMegaApi);
+
+            bool isPaused (d->mState == MegaTransfer::STATE_PAUSED
+                           && d->mUnpausedState == MegaTransfer::STATE_NONE);
+
+            api->pauseTransferByTag(d->mTag, !isPaused);
+        }
+    }
+}
+
+void TransfersWidget::on_tCancelAll_clicked()
+{
+    QModelIndexList selection = ui->tvTransfers->selectionModel()->selectedRows();
+
+    for (auto index : selection)
+    {
+        if (index.isValid() && index.data().canConvert<TransferItem2>())
+        {
+            const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
+            auto d (transferItem.getTransferData());
+
+            MegaApi * api(d->mMegaApi);
+
+            api->cancelTransferByTag(d->mTag);
+        }
+    }
+}
+
 void TransfersWidget::onTransferAdded()
 {
     ui->sWidget->setCurrentWidget(ui->pTransfers);

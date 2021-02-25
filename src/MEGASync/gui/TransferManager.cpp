@@ -402,18 +402,6 @@ void TransferManager::on_tClearSearchResult_clicked()
     mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
 }
 
-void TransferManager::on_tPauseResumeAll_clicked()
-{
-    // TODO: only selected ?
-    on_bPause_clicked();
-}
-
-void TransferManager::on_tCancelAll_clicked()
-{
-    // TODO: only selected ?
-    on_bClearAll_clicked();
-}
-
 void TransferManager::on_bArchives_clicked()
 {
     if (mFileTypesFilter.contains(TransferData::TYPE_ARCHIVE))

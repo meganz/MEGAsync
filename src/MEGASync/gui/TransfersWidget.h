@@ -60,6 +60,8 @@ private:
 private slots:
     void noTransfers();
     void onTransferAdded();
+    void on_tPauseResumeAll_clicked();
+    void on_tCancelAll_clicked();
 
 
 protected:
