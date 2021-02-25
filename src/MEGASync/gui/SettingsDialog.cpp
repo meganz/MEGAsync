@@ -162,8 +162,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
 #endif
-// TODO: This looks like Windows code
-#ifdef __APPLE__
+
+#ifdef Q_OS_WINDOWS
     connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
     ui->cDisableIcons->hide();
 
