@@ -115,12 +115,12 @@ void TransfersWidget::configureTransferView()
         mProxyModel->setDynamicSortFilter(true);
     }
 
-    ui->tvTransfers->header()->close();
-    ui->tvTransfers->setSelectionMode(QAbstractItemView::ContiguousSelection);
-    ui->tvTransfers->setDragEnabled(true);
-    ui->tvTransfers->viewport()->setAcceptDrops(true);
-    ui->tvTransfers->setDropIndicatorShown(true);
-    ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
+//    ui->tvTransfers->header()->close();
+//    ui->tvTransfers->setSelectionMode(QAbstractItemView::ContiguousSelection);
+//    ui->tvTransfers->setDragEnabled(true);
+//    ui->tvTransfers->viewport()->setAcceptDrops(true);
+//    ui->tvTransfers->setDropIndicatorShown(true);
+//    ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 
     // Test
 

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>756</width>
-    <height>48</height>
+    <width>800</width>
+    <height>64</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
@@ -36,22 +42,18 @@
 
 TransferManagerItem2, TransferManagerItem
 {
-	width: 756px; 
+
     height: 64px;
-	min-width: 756px; 
     min-height: 64px;
-	max-width: 756px; 
     max-height: 64px;
 	background-color: transparent;
 }
 
 #line
 {
-	width: 756px; 
     height: 1px;
-	min-width: 756px; 
+	min-width: ; 
     min-height: 1px;
-	max-width: 756px; 
     max-height: 1px;
     border: none;
     background: #EEEEEE;
@@ -59,11 +61,8 @@ TransferManagerItem2, TransferManagerItem
 
 #sTransferState, #stateActive, #stateCompleted
 {
-	width: 756px; 
     height: 63px;
-	min-width: 756px; 
     min-height: 63px;
-	max-width: 756px; 
     max-height: 63px;
 }
 
@@ -92,29 +91,27 @@ QPushButton
 
 #wName
 {
-	width: 208px; 
+	width: 200px; 
     height: 48px;
-	min-width: 208px; 
+	min-width: 150px; 
     min-height: 48px;
-	max-width: 208px; 
     max-height: 48px;
 }
 
 #lTransferName
 {
-	width: 208px; 
-	min-width: 208px; 
-	max-width: 208px; 
+	width: 200px; 
+	min-width: 150px; 
   height: 20px;
   color: #333333;
   font-size: 14px;
+ qProperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 QProgressBar
 {
-	width: 104px; 
-	min-width: 104px; 
-	max-width: 104px; 
+/*	width: 104px; 
+	min-width: 104px;*/ 
     height: 4px;
     min-height: 4px;
     max-height: 4px;
@@ -122,6 +119,9 @@ QProgressBar
     border-radius: 2px;
     background-color: #EEEEEE;
     margin-bottom: 4px;
+/*	margin-left: 8px;
+	margin-right: 8px;
+*/
 }
 
 QProgressBar::chunk
@@ -129,6 +129,9 @@ QProgressBar::chunk
   background-color: #6FD7FF;
   border-radius: 2px;
   border:0px;
+/*	margin-left: 8px;
+	margin-right: 8px;
+*/
 }
 
 #lDone, #lTotal
@@ -136,7 +139,6 @@ QProgressBar::chunk
   font-size: 12px;
   font-weight: bold;
  qProperty-alignment: 'AlignLeft | AlignVCenter';
-
 }
 
 #lDone
@@ -171,19 +173,29 @@ QProgressBar::chunk
     max-width: 120px;
 }
 
+#wStatus QLabel
+{
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+  font-size: 12px;
+  font-weight: bold;
+ qProperty-alignment: 'AlignLeft | AlignVCenter';
+}
+
 #lStatus
 {
   color: #00D26D;
-  font-size: 12px;
-  font-weight: bold;
 }
 
 #lQueued
 {
-  width: 43px;
   color: #666666;
-  font-size: 12px;
-  font-weight: bold;
+}
+
+#lPaused
+{
+  color: #FFA053;
 }
 
 #lRemainingTime
@@ -228,6 +240,12 @@ QProgressBar::chunk
    </property>
    <item>
     <widget class="Line" name="line">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -235,10 +253,22 @@ QProgressBar::chunk
    </item>
    <item>
     <widget class="QStackedWidget" name="sTransferState">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
      <widget class="QWidget" name="stateActive">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <layout class="QHBoxLayout" name="stateActiveLayout">
        <property name="spacing">
         <number>0</number>
@@ -260,7 +290,13 @@ QProgressBar::chunk
        </item>
        <item>
         <widget class="QWidget" name="wName" native="true">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="wNameLayout">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -277,7 +313,14 @@ QProgressBar::chunk
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="lTransferName"/>
+           <widget class="QLabel" name="lTransferName">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QProgressBar" name="pbTransfer">
@@ -285,7 +328,10 @@ QProgressBar::chunk
              <number>1000</number>
             </property>
             <property name="value">
-             <number>0</number>
+             <number>1000</number>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
             </property>
             <property name="invertedAppearance">
              <bool>false</bool>
@@ -300,6 +346,12 @@ QProgressBar::chunk
        </item>
        <item>
         <widget class="QWidget" name="wSize" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <property name="spacing">
            <number>0</number>
@@ -327,6 +379,12 @@ QProgressBar::chunk
        </item>
        <item>
         <widget class="QPushButton" name="bSpeed">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -334,6 +392,12 @@ QProgressBar::chunk
        </item>
        <item>
         <widget class="QWidget" name="wStatus" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
            <number>0</number>
@@ -351,6 +415,13 @@ QProgressBar::chunk
            <number>0</number>
           </property>
           <item>
+           <widget class="QLabel" name="lPaused">
+            <property name="text">
+             <string>Paused</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="lStatus"/>
           </item>
           <item>
@@ -364,7 +435,14 @@ QProgressBar::chunk
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="lRemainingTime"/>
+        <widget class="QLabel" name="lRemainingTime">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QToolButton" name="tPauseTransfer">
@@ -382,22 +460,15 @@ QProgressBar::chunk
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="stateCompleted">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
         <number>0</number>

@@ -34,42 +34,29 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
     mUi->tFileType->setIcon(icon);
     mUi->lTotal->setText(Utilities::getSizeString(d->mTotalSize));
 
+
     switch (d->mType)
     {
         case MegaTransfer::TYPE_DOWNLOAD:
         case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
         {
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
-            break;
-        }
-        case MegaTransfer::TYPE_UPLOAD:
-        {
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
-            break;
-        }
-    }
-
-    mUi->bSpeed->setIcon(icon);
-
-    switch (d->mType)
-    {
-        case MegaTransfer::TYPE_DOWNLOAD:
-        case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
-        {
             statusString = QObject::tr("Downloading");
             break;
         }
         case MegaTransfer::TYPE_UPLOAD:
         {
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
             statusString = QObject::tr("Uploading");
             break;
         }
     }
+    mUi->bSpeed->setIcon(icon);
 
     // File name
     mUi->lTransferName->setText(mUi->lTransferName->fontMetrics()
                                 .elidedText(d->mFilename, Qt::ElideMiddle,
-                                            mUi->lTransferName->width()));
+                                            mUi->wName->width()-24));
     mUi->lTransferName->setToolTip(d->mFilename);
 
     // Amount transfered
@@ -87,14 +74,13 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
         {
             remTimeString = Utilities::getTimeString(d->mRemainingTime);
             speedString = Utilities::getSizeString(d->mSpeed) + QLatin1Literal("/s");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":images/ico_pause_transfers_state.png"));
             pauseResumeTooltip = QObject::tr("Pause transfer");
             break;
         }
         case MegaTransfer::STATE_PAUSED:
         {
-            statusString = QObject::tr("Paused");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_resume_transfers_state.png"));
+            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":images/ico_resume_transfers_state.png"));
             pauseResumeTooltip = QObject::tr("Resume transfer");
             mIsPaused = true;
             break;
@@ -102,7 +88,7 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
         case MegaTransfer::STATE_QUEUED:
         {
             isQueued = true;
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":images/ico_pause_transfers_state.png"));
             pauseResumeTooltip = QObject::tr("Pause transfer");
             break;
         }
@@ -124,7 +110,7 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
         case MegaTransfer::STATE_RETRYING:
         {
             statusString = QObject::tr("Retrying");
-            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/ico_pause_transfers_state.png"));
+            pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":images/ico_pause_transfers_state.png"));
             pauseResumeTooltip = QObject::tr("Pause transfer");
             break;
         }
@@ -135,10 +121,14 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem)
         }
     }
 
-    // Queued state
+    // Queued string
     mUi->lQueued->setVisible(isQueued);
 
+    // Paused string
+    mUi->lPaused->setVisible(mIsPaused);
+
     // Status
+    mUi->lStatus->setVisible(!(isQueued || mIsPaused));
     mUi->lStatus->setText(statusString);
 
     // Progress bar
@@ -178,11 +168,7 @@ void TransferManagerItem2::forwardMouseEvent(QMouseEvent *me)
     auto w (childAt(me->pos() - pos()));
 
     if (w)
-    {/*
-        if (w->staticMetaObject.className() == "QToolButton")
-        {
-            static_cast<QToolButton*>(w)->click();
-        }*/
+    {
         if (qobject_cast<QToolButton*>(w))
         {
             static_cast<QToolButton*>(w)->click();

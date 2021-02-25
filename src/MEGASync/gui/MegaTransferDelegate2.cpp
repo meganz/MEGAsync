@@ -62,7 +62,7 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
 
 QSize MegaTransferDelegate2::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    return QSize(756, 64);
+    return QSize(720, 64);
 }
 
 void MegaTransferDelegate2::processCancel(int tag)
@@ -216,7 +216,8 @@ bool MegaTransferDelegate2::helpEvent(QHelpEvent *event, QAbstractItemView *view
     if (event->type() == QEvent::ToolTip && index.isValid())
     {
         // Get TransferManagerItem2 widget under cursor
-        const QString widgetName (QLatin1Literal("r")+QString::number(index.row()%20));
+        const auto nbRowsMaxInView (mView->height()/option.rect.height() + 1);
+        const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
         auto currentRow (view->findChild<TransferManagerItem2 *>(widgetName));
         if (currentRow)
         {

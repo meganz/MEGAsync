@@ -13,18 +13,6 @@
     <height>720</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>1024</width>
-    <height>720</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1024</width>
-    <height>1488</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Transfer Manager</string>
   </property>
@@ -47,14 +35,19 @@
 #wLeftPane
 {
     background-color: #FAFAFA;
+    width: 256px;
+    min-width: 256px;
+    max-width: 256px;
+    height: 720px;
+    min-height: 600px;
 }
 
-#wRightPane
+#wRightPane, #wTransfers
 {
     background-color: white;
     width: 768px;
     min-width: 768px;
-    max-width: 768px;
+/*    max-width: 768px; */
 }
 
 #wRightPaneHeader
@@ -279,39 +272,6 @@ border: none;
     qProperty-iconSize: 22px;
 }
 
-#wTableHeader
-{
-	height: 28px;
-	min-height: 28px;
-	max-height: 28px;
-}
-
-#wTableHeader QLabel
-{
-	height: 20px;
-	color: #666666;
-	font-size: 12px;
-	qproperty-alignment: 'AlignLeft';
-}
-
-#wTableHeader QToolButton
-{
-	height: 16px;
-    width: 16px;
-	border-radius: 4px;
-	margin-right: 12px;
-    qProperty-iconSize: 16px;
-}
-
-#tCancelAll
-{
-     background-color: #F88183;
-}
-
-#tPauseResumeAll
-{
-    background-color: #ECECEC;
-}
 
 #lPaused
 {
@@ -324,49 +284,10 @@ border: none;
   padding-left: 14px;
 }
 
-#wTableHeader &gt; *
+#wTransfers
 {
-	margin: 0;
-	padding: 0;
-	border: 0;
-}
-
-#wEmpty
-{
-    width: 48px;
-    min-width: 48px;
-    max-width: 48px;
-}
-
-#lName
-{
-    width: 208px;
-    min-width: 208px;
-    max-width: 208px;
-}
-
-#lSize, #lSpeed
-{
-    width: 100px;
-    min-width: 100px;
-    max-width: 100px;
-}
-
-#lStatus
-{
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
-}
-
-#lTime
-{
-    width: 92px;
-    min-width: 92px;
-    max-width: 92px;
-}
-
-</string>
+    min-height: 594px;
+}</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
@@ -386,18 +307,6 @@ border: none;
    </property>
    <item>
     <widget class="QWidget" name="wLeftPane" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>256</width>
-       <height>720</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>256</width>
-       <height>720</height>
-      </size>
-     </property>
      <layout class="QVBoxLayout" name="wLeftPaneLayout">
       <property name="spacing">
        <number>14</number>
@@ -1261,6 +1170,12 @@ border: none;
    </item>
    <item>
     <widget class="QWidget" name="wRightPane" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <layout class="QVBoxLayout" name="wRightPaneLayout">
       <property name="spacing">
        <number>0</number>
@@ -1272,13 +1187,19 @@ border: none;
        <number>12</number>
       </property>
       <property name="rightMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="wRightPaneHeader" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QVBoxLayout" name="wRightPaneHeaderLayout">
          <property name="spacing">
           <number>0</number>
@@ -1290,13 +1211,19 @@ border: none;
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>12</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
           <widget class="QWidget" name="wStatusHeader" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <layout class="QGridLayout" name="wStatusHeaderLayout">
             <property name="leftMargin">
              <number>0</number>
@@ -1387,111 +1314,51 @@ border: none;
            </layout>
           </widget>
          </item>
-         <item>
-          <widget class="QWidget" name="wTableHeader" native="true">
-           <layout class="QHBoxLayout" name="wTableHeaderLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QWidget" name="wEmpty" native="true"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="lName">
-              <property name="minimumSize">
-               <size>
-                <width>208</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>208</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Name</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lSize">
-              <property name="text">
-               <string>Size</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lSpeed">
-              <property name="text">
-               <string>Speed</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lStatus">
-              <property name="text">
-               <string>Status</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lTime">
-              <property name="text">
-               <string>Time left</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tPauseResumeAll">
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tCancelAll">
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
       <item>
-       <widget class="TransfersWidget" name="wTransfers" native="true"/>
+       <widget class="QWidget" name="widget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>768</width>
+          <height>594</height>
+         </size>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="TransfersWidget" name="wTransfers" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>

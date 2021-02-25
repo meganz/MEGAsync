@@ -145,8 +145,8 @@ void TransferManager::on_tCompleted_clicked()
     toggleTab(COMPLETED_TAB);
 
     mUi->bPause->setVisible(false);
-    mUi->tPauseResumeAll->setVisible(false);
-    mUi->tCancelAll->setVisible(false);
+//    mUi->tPauseResumeAll->setVisible(false);
+//    mUi->tCancelAll->setVisible(false);
 
     mUi->fCompleted->setVisible(true);
 
@@ -179,8 +179,8 @@ void TransferManager::on_tDownloads_clicked()
     toggleTab(DOWNLOADS_TAB);
 
     mUi->bPause->setVisible(true);
-    mUi->tPauseResumeAll->setVisible(true);
-    mUi->tCancelAll->setVisible(true);
+//    mUi->tPauseResumeAll->setVisible(true);
+//    mUi->tCancelAll->setVisible(true);
 
     QSet<int> transferStates;
     transferStates.insert(MegaTransfer::STATE_ACTIVE);
@@ -215,8 +215,8 @@ void TransferManager::on_tUploads_clicked()
     toggleTab(UPLOADS_TAB);
 
     mUi->bPause->setVisible(true);
-    mUi->tPauseResumeAll->setVisible(true);
-    mUi->tCancelAll->setVisible(true);
+//    mUi->tPauseResumeAll->setVisible(true);
+//    mUi->tCancelAll->setVisible(true);
 
     QSet<int> transferStates;
     transferStates.insert(MegaTransfer::STATE_ACTIVE);
@@ -251,8 +251,8 @@ void TransferManager::on_tAllTransfers_clicked()
     toggleTab(ALL_TRANSFERS_TAB);
 
     mUi->bPause->setVisible(true);
-    mUi->tPauseResumeAll->setVisible(true);
-    mUi->tCancelAll->setVisible(true);
+//    mUi->tPauseResumeAll->setVisible(true);
+//    mUi->tCancelAll->setVisible(true);
 
     QSet<int> transferStates;
     transferStates.insert(MegaTransfer::STATE_ACTIVE);

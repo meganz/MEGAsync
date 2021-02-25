@@ -32,29 +32,6 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     disableLink = false;
     disableMenus = false;
     type = 0;
-
-    verticalScrollBar()->setStyleSheet(
-                QString::fromUtf8("QScrollBar:vertical {"
-                           " background: #f6f6f6;"
-                           " width: 15px;"
-                           " border-left: 1px solid #E4E4E4;"
-                          "}"
-                          "QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical {"
-                           " border: none;"
-                           " background: none;"
-                          "}"
-                          "QScrollBar::handle:vertical {"
-                           " background: #c0c0c0;"
-                           " min-height: 20px;"
-                           " border-radius: 4px;"
-#ifdef Q_OS_MACX
-                           " margin: 3px 3px 3px 3px;"
-#else
-                           " margin: 3px 4px 3px 2px;"
-#endif
-                          "}"
-                 ""));
-    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 }
 
 void MegaTransferView::setup(int type)
@@ -101,16 +78,6 @@ void MegaTransferView::createContextMenu()
     if (!contextInProgressMenu)
     {
         contextInProgressMenu = new QMenu(this);
-        contextInProgressMenu->setStyleSheet(QString::fromAscii(
-#ifdef __APPLE__
-                                   "QMenu {background: #ffffff;}"
-#else
-                                   "QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"
-#endif
-                                   "QMenu::item {font-family: Lato; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 7px;}"
-                                   "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"
-                                   "QMenu::item:disabled {background-color: #ffffff; color: rgba(119,119,119,0.3); border: none; margin: 5px 9px 5px 9px;}"));
     }
     else
     {
