@@ -158,7 +158,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
 #ifdef Q_OS_LINUX
     ui->rProxyAuto->hide();
-    ui->cDisableIcons->hide();
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
 #endif
@@ -1012,6 +1011,7 @@ void SettingsDialog::loadSettings()
 
         //Syncs
         loadSyncSettings();
+
 #ifdef Q_OS_WINDOWS
         ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
 #endif
@@ -1383,30 +1383,6 @@ int SettingsDialog::saveSettings()
 
             syncsChanged = false;
         }
-
-        // FIXME: What is this?
-#ifdef Q_OS_WINDOWS
-        bool iconsDisabled = ui->cDisableIcons->isChecked();
-        if (preferences->leftPaneIconsDisabled() != iconsDisabled)
-        {
-            if (iconsDisabled)
-            {
-                Platform::removeAllSyncsFromLeftPane();
-            }
-            else
-            {
-                for (int i = 0; i < model->getNumSyncedFolders(); i++)
-                {
-                    auto syncSetting = model->getSyncSetting(i);
-                    Platform::addSyncToLeftPane(syncSetting->getLocalFolder(),
-                                                syncSetting->name(),
-                                                syncSetting->getSyncID());
-                }
-            }
-            preferences->disableLeftPaneIcons(iconsDisabled);
-        }
-#endif
-
     }
 
     //Proxies
@@ -2860,3 +2836,25 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
     }
 #endif
 }
+
+#ifdef Q_OS_WINDOWS
+void SettingsDialog::on_cDisableIcons_toggled(bool checked)
+{
+    if (modifyingSettings) return;
+    if (checked)
+    {
+        Platform::removeAllSyncsFromLeftPane();
+    }
+    else
+    {
+        for (int i = 0; i < model->getNumSyncedFolders(); i++)
+        {
+            auto syncSetting = model->getSyncSetting(i);
+            Platform::addSyncToLeftPane(syncSetting->getLocalFolder(),
+                                        syncSetting->name(),
+                                        syncSetting->getSyncID());
+        }
+    }
+    preferences->disableLeftPaneIcons(checked);
+}
+#endif

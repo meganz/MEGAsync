@@ -1,4 +1,4 @@
-#ifndef SETTINGSDIALOG_H
+﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
@@ -127,10 +127,6 @@ private slots:
 
     void setAvatar();
 
-#ifdef Q_OS_MACOS
-    void onAnimationFinished();
-#endif
-
     void on_cShowNotifications_toggled(bool checked);
     void on_cAutoUpdate_toggled(bool checked);
     void on_cStartOnStartup_toggled(bool checked);
@@ -150,6 +146,15 @@ private slots:
     void on_cbUseHttps_toggled(bool checked);
     void on_cDisableFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
+
+#ifdef Q_OS_WINDOWS
+    void on_cDisableIcons_toggled(bool checked);
+#endif
+
+#ifdef Q_OS_MACOS
+    void onAnimationFinished();
+#endif
+
 
 protected:
     void changeEvent(QEvent * event) override;
