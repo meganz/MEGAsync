@@ -110,8 +110,8 @@ QPushButton
 
 QProgressBar
 {
-/*	width: 104px; 
-	min-width: 104px;*/ 
+	width: 120px; 
+	min-width: 120px;
     height: 4px;
     min-height: 4px;
     max-height: 4px;
@@ -166,21 +166,21 @@ QProgressBar::chunk
   text-align: left;
 }
 
-#wStatus
+#sStatus
 {
     width: 120px;
     min-width: 120px;
     max-width: 120px;
+    height: 63px;
+    min-height: 63px;
+    max-height: 63px;
 }
 
-#wStatus QLabel
+#sStatus QLabel
 {
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
-  font-size: 12px;
-  font-weight: bold;
- qProperty-alignment: 'AlignLeft | AlignVCenter';
+	font-size: 12px;
+	font-weight: bold;
+	qProperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
 #lStatus
@@ -198,17 +198,33 @@ QProgressBar::chunk
   color: #FFA053;
 }
 
-#lRemainingTime
+#lFailed
 {
-    width: 92px;
-    min-width: 92px;
-    max-width: 92px;
- color: #333333;
-  font-size: 12px;
-  font-weight: bold;
+  color: #F88183;
 }
 
-#tPauseTransfer, #tCancelTransfer
+#lTime
+{
+	width: 92px;
+	min-width: 92px;
+	max-width: 92px;
+	color: #333333;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#bRetry
+{
+  height: 24px;
+  width: 48px;
+  border-radius: 10px;
+  background-color: #FFEDCC;
+  color: #333333;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#tPauseResumeTransfer, #tCancelClearTransfer
 {
 	width: 16px; 
     height: 16px;
@@ -291,7 +307,7 @@ QProgressBar::chunk
        <item>
         <widget class="QWidget" name="wName" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -315,7 +331,7 @@ QProgressBar::chunk
           <item>
            <widget class="QLabel" name="lTransferName">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -324,6 +340,12 @@ QProgressBar::chunk
           </item>
           <item>
            <widget class="QProgressBar" name="pbTransfer">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximum">
              <number>1000</number>
             </property>
@@ -391,51 +413,93 @@ QProgressBar::chunk
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="wStatus" native="true">
+        <widget class="QStackedWidget" name="sStatus">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="lPaused">
-            <property name="text">
-             <string>Paused</string>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="pActive" native="true">
+          <widget class="QLabel" name="lStatus">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>121</width>
+             <height>61</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="pQueued">
+          <widget class="QLabel" name="lQueued">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>131</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Queued</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="pPaused">
+          <widget class="QLabel" name="lPaused">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>121</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Paused</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="pFailed">
+          <widget class="QWidget" name="">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>121</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lStatus"/>
-          </item>
-          <item>
-           <widget class="QLabel" name="lQueued">
-            <property name="text">
-             <string>Queued</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+            <item>
+             <widget class="QLabel" name="lFailed">
+              <property name="text">
+               <string>Failed</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="bRetry">
+              <property name="text">
+               <string>Retry</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="lRemainingTime">
+        <widget class="QLabel" name="lTime">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -445,7 +509,7 @@ QProgressBar::chunk
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="tPauseTransfer">
+        <widget class="QToolButton" name="tPauseResumeTransfer">
          <property name="icon">
           <iconset resource="../Resources_linux.qrc">
            <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
@@ -453,7 +517,7 @@ QProgressBar::chunk
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="tCancelTransfer">
+        <widget class="QToolButton" name="tCancelClearTransfer">
          <property name="icon">
           <iconset resource="../Resources_linux.qrc">
            <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>

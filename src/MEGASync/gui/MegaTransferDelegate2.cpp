@@ -6,12 +6,14 @@
 #include "QTransfersModel2.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
+#include "TransfersWidget.h"
 
 #include <QPainter>
 #include <QEvent>
 #include <QMouseEvent>
 #include <QMessageBox>
 #include <QToolTip>
+#include <QSortFilterProxyModel>
 
 using namespace mega;
 
@@ -20,7 +22,8 @@ MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget*
       mModel(model),
       mView(view)
 {
-
+    connect(static_cast<TransfersWidget*>(parent), &TransfersWidget::clearTransfer,
+            this, &MegaTransferDelegate2::onClearTransfer);
 }
 
 void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -28,7 +31,7 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
     if (index.isValid() && index.data().canConvert<TransferItem2>())
     {
         const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
-        const auto nbRowsMaxInView (mView->height()/option.rect.height() + 1);
+        const auto nbRowsMaxInView (mView->height() / option.rect.height() + 1);
         const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
 
         auto w (mView->findChild<TransferManagerItem2 *>(widgetName));
@@ -37,11 +40,13 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
         {
             w = new TransferManagerItem2(mView);
             w->setObjectName(widgetName);
+            connect(w, &TransferManagerItem2::clearTransfer,
+                    this, &MegaTransferDelegate2::onClearTransfer);
         }
         w->resize(option.rect.size());
         w->move(option.rect.topLeft());
 
-        w->updateUi(transferItem);
+        w->updateUi(transferItem, index.row());
 
         if (option.state & QStyle::State_Selected)
         {
@@ -63,6 +68,11 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
 QSize MegaTransferDelegate2::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     return QSize(720, 64);
+}
+
+void MegaTransferDelegate2::onClearTransfer(int row)
+{
+    mModel->removeRows(row, 1, QModelIndex());
 }
 
 void MegaTransferDelegate2::processCancel(int tag)
@@ -102,18 +112,12 @@ bool MegaTransferDelegate2::editorEvent(QEvent *event, QAbstractItemModel *model
                 if( me->button() == Qt::LeftButton )
                 {
                     // Get TransferManagerItem2 widget under cursor
-                    const QString widgetName (QLatin1Literal("r")+QString::number(index.row()%20));
+                    const auto nbRowsMaxInView (mView->height() / option.rect.height() + 1);
+                    const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
                     auto currentRow (option.widget->findChild<TransferManagerItem2 *>(widgetName));
                     if (currentRow)
                     {
                         currentRow->forwardMouseEvent(me);
-
-//                        // Get widget inside TransferManagerItem2 under cursor, and click it
-//                        auto widget (currentRow->childAt(me->pos() - currentRow->pos()));
-//                        if (widget)
-//                        {
-//                            widget->underMouse();
-//                        }
                     }
                 }
                 break;
@@ -251,64 +255,4 @@ void MegaTransferDelegate2::processShowInFolder(int tag)
 //    delete transfer;
 }
 
-//void MegaTransferDelegate2::on_tCancelTransfer_clicked()
-//{
-//   // emit transferCanceled(mTransferData.mTag);
-//}
-
-//void MegaTransferDelegate2::on_tPauseTransfer_clicked()
-//{
-//   // emit transferPaused(mTransferData.mTag);
-//}
-
-//void MegaTransferDelegate2::updateUisDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
-//{
-//    if (topLeft.isValid() && bottomRight.isValid())
-//    {
-//        for (auto row(topLeft.row()); row <= bottomRight.row(); ++row)
-//        {
-//            auto ui = mUis[row];
-
-//            // Get new item data
-//            auto index (mModel->index(row, 0));
-//            const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
-
-//            // Init UI
-//            updateUi(ui, transferItem);
-//        }
-//    }
-//}
-
-//void MegaTransferDelegate2::updateUisRowsInserted(const QModelIndex &parent, int first, int last)
-//{
-//    for (auto row(first); row <= last; ++row)
-//    {
-//        auto w = new QWidget();
-//        auto ui = new Ui::TransferManagerItem();
-
-//        // Get new item data
-//        auto index (mModel->index(row, 0, parent));
-//        const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
-//        // Init UI
-//        setupUi(ui, transferItem, w);
-//        updateUi(ui, transferItem);
-
-//        QObject::connect(ui->tCancelTransfer, &QToolButton::clicked,
-//                         this, &MegaTransferDelegate2::on_tCancelTransfer_clicked);
-//        QObject::connect(ui->tPauseTransfer, &QToolButton::clicked,
-//                         this, &MegaTransferDelegate2::on_tPauseTransfer_clicked);
-
-//        mUis.insert(row, ui);
-//    }
-//}
-
-//void MegaTransferDelegate2::updateUisRowsRemoved(const QModelIndex &parent, int first, int last)
-//{
-//    for (auto row(first); row <= last; ++row)
-//    {
-//        auto ui = mUis[row];
-//        mUis.remove(row);
-//        ui->TransferManagerIemLayout->parentWidget()->deleteLater();
-//    }
-//}
 

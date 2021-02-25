@@ -129,6 +129,7 @@ void TransferManager::on_tCompleted_clicked()
 
     mTransferStatesFilter.clear();
     mTransferStatesFilter.insert(MegaTransfer::STATE_COMPLETED);
+    mTransferStatesFilter.insert(MegaTransfer::STATE_CANCELLED);
     mUi->wTransfers->transferStateFilterChanged(mTransferStatesFilter);
 
     mTransferTypesFilter.insert(MegaTransfer::TYPE_DOWNLOAD);

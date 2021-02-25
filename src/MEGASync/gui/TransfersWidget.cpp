@@ -107,7 +107,7 @@ void TransfersWidget::configureTransferView()
     }
     else
     {
-        tDelegate2 = new MegaTransferDelegate2(mProxyModel, ui->tvTransfers);
+        tDelegate2 = new MegaTransferDelegate2(mProxyModel, ui->tvTransfers, this);
         ui->tvTransfers->setup();
         ui->tvTransfers->setItemDelegate(tDelegate2);
         ui->tvTransfers->setModel(mProxyModel);
@@ -212,17 +212,51 @@ void TransfersWidget::on_tCancelAll_clicked()
 {
     QModelIndexList selection = ui->tvTransfers->selectionModel()->selectedRows();
 
-    for (auto index : selection)
+    // If row selected, process only these rows
+    if (selection.size() > 0)
     {
-        if (index.isValid() && index.data().canConvert<TransferItem2>())
+        // Reverse sort to keep indexes valid after deletion
+        qSort(selection.begin(), selection.end(), qGreater<QModelIndex>());
+
+        for (auto index : selection)
         {
-            const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
-            auto d (transferItem.getTransferData());
-
-            MegaApi * api(d->mMegaApi);
-
-            api->cancelTransferByTag(d->mTag);
+            if (index.isValid() && index.data().canConvert<TransferItem2>())
+            {
+                const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
+                clearOrCancel(transferItem, index.row());
+            }
         }
+    }
+    // else process all available rows
+    else
+    {
+        for (auto row(mProxyModel->rowCount(QModelIndex())-1); row >= 0; --row)
+        {
+            const TransferItem2 transferItem (
+                        qvariant_cast<TransferItem2>(
+                            mProxyModel->data(mProxyModel->index(row, 0, QModelIndex()),
+                                                                    Qt::DisplayRole)));
+            clearOrCancel(transferItem, row);
+        }
+    }
+}
+
+void TransfersWidget::clearOrCancel(const TransferItem2& transferItem, const int row)
+{
+    // Clear if finished, cancel if not.
+    auto state (transferItem.getState());
+    if (state == MegaTransfer::STATE_COMPLETED
+            || state == MegaTransfer::STATE_CANCELLED)
+    {
+        emit clearTransfer(row);
+    }
+    else
+    {
+        auto d (transferItem.getTransferData());
+
+        MegaApi * api(d->mMegaApi);
+
+        api->cancelTransferByTag(d->mTag);
     }
 }
 

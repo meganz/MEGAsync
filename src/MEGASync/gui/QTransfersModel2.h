@@ -21,6 +21,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QModelIndex parent(const QModelIndex & index) const;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
     ~QTransfersModel2();
 
@@ -51,7 +52,11 @@ private:
     bool mAreUlPaused;
     bool mIsGlobalPaused;
 
-    void insertTransfer(mega::MegaTransfer *transfer);
+    QMap<int, long long> mNbTransfersPerFileType;
+    QMap<int, long long> mNbTransfersPerType;
+    QMap<int, long long> mNbTransfersPerState;
+
+    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer *transfer);
 };
 
 #endif // QTRANSFERSMODEL2_H

@@ -12,9 +12,6 @@ TransferManagerItem::TransferManagerItem(QWidget *parent) :
     mUi(new Ui::TransferManagerItem)
 {
     mUi->setupUi(this);
-
-    mUi->tCancelTransfer->installEventFilter(this);
-    mUi->lCancelTransferCompleted->installEventFilter(this);
     update();
 }
 
@@ -43,7 +40,7 @@ void TransferManagerItem::setFileName(QString fileName)
 void TransferManagerItem::setStateLabel(QString labelState)
 {
     mUi->lStatus->setText(labelState);
-    mUi->lRemainingTime->setText(QString());
+    mUi->lTime->setText(QString());
 }
 
 QString TransferManagerItem::getTransferName()
@@ -162,7 +159,7 @@ void TransferManagerItem::updateTransfer()
             {
                 remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
             }
-            mUi->lRemainingTime->setText(remainingTime);
+            mUi->lTime->setText(remainingTime);
 
             // Update current transfer speed
             QString downloadString;
@@ -186,12 +183,12 @@ void TransferManagerItem::updateTransfer()
         {
             mUi->lStatus->setText(tr("Paused"));
             mUi->bSpeed->setText(QString());
-            mUi->lRemainingTime->setText(QString());
+            mUi->lTime->setText(QString());
             break;
         }
         case MegaTransfer::STATE_QUEUED:
         {
-            mUi->lRemainingTime->setText(QString());
+            mUi->lTime->setText(QString());
             mUi->lQueued->show();
             break;
         }
@@ -213,19 +210,19 @@ void TransferManagerItem::updateTransfer()
                 mUi->bSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
             }
 
-            mUi->lRemainingTime->setText(QString());
+            mUi->lTime->setText(QString());
             break;
         }
         case MegaTransfer::STATE_COMPLETING:
         {
             mUi->lStatus->setText(tr("completing"));
-            mUi->lRemainingTime->setText(QString());
+            mUi->lTime->setText(QString());
             break;
         }
         default:
         {
             mUi->bSpeed->setText(QString());
-            mUi->lRemainingTime->setText(QString());
+            mUi->lTime->setText(QString());
             break;
         }
     }
@@ -280,7 +277,7 @@ bool TransferManagerItem::cancelButtonClicked(QPoint pos)
             break;
         default:
         {
-            if (mUi->tCancelTransfer->rect().contains(mUi->tCancelTransfer->mapFrom(this, pos)))
+            if (mUi->tCancelClearTransfer->rect().contains(mUi->tCancelClearTransfer->mapFrom(this, pos)))
             {
                 return true;
             }
@@ -314,24 +311,24 @@ void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
         if (mIsSyncTransfer && !(mTransferState == MegaTransfer::STATE_COMPLETED
                                  || mTransferSpeed == MegaTransfer::STATE_FAILED))
         {
-            mUi->tCancelTransfer->installEventFilter(this);
-            mUi->tCancelTransfer->update();
+            mUi->tCancelClearTransfer->installEventFilter(this);
+            mUi->tCancelClearTransfer->update();
             return;
         }
 
         mCancelButtonEnabled = true;
-        mUi->tCancelTransfer->removeEventFilter(this);
-        mUi->tCancelTransfer->update();
-        mUi->lCancelTransferCompleted->removeEventFilter(this);
-        mUi->lCancelTransferCompleted->update();
+        mUi->tCancelClearTransfer->removeEventFilter(this);
+        mUi->tCancelClearTransfer->update();
+        mUi->tCancelClearTransfer->removeEventFilter(this);
+        mUi->tCancelClearTransfer->update();
     }
     else
     {
         mCancelButtonEnabled = false;
-        mUi->tCancelTransfer->installEventFilter(this);
-        mUi->tCancelTransfer->update();
-        mUi->lCancelTransferCompleted->installEventFilter(this);
-        mUi->lCancelTransferCompleted->update();
+        mUi->tCancelClearTransfer->installEventFilter(this);
+        mUi->tCancelClearTransfer->update();
+        mUi->tCancelClearTransfer->installEventFilter(this);
+        mUi->tCancelClearTransfer->update();
     }
 
     emit refreshTransfer(this->getTransferTag());

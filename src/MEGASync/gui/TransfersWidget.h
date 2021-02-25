@@ -43,6 +43,10 @@ public:
 
     bool areTransfersActive();
 
+signals:
+    void clearTransfer(int row);
+//    void clearTransfers(int row, int number);
+
 private:
     Ui::TransfersWidget *ui;
     QTransfersModel *model;
@@ -54,8 +58,8 @@ private:
     int isPaused;
     MegaApplication *app;
 
-private:
     void configureTransferView();
+    void clearOrCancel(const TransferItem2& transferItem, const int row);
 
 private slots:
     void noTransfers();

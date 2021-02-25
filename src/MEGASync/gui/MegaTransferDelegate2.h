@@ -32,14 +32,8 @@ protected:
         void transferPaused(const TransferTag tag);
         void transferCanceled(const TransferTag tag);
 
-
     private slots:
-//        void on_tCancelTransfer_clicked();
-//        void on_tPauseTransfer_clicked();
-
-//        void updateUisDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
-//        void updateUisRowsInserted(const QModelIndex &parent, int first, int last);
-//        void updateUisRowsRemoved(const QModelIndex &parent, int first, int last);
+        void onClearTransfer(int row);
 
     private:
         void setupUi(Ui::TransferManagerItem& ui, const TransferItem2& transferItem, QWidget* w) const;

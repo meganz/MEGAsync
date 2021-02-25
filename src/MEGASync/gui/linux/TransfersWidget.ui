@@ -364,12 +364,15 @@
               </size>
              </property>
              <property name="text">
-              <string>Time left</string>
+              <string>Time</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QToolButton" name="tPauseResumeAll">
+             <property name="toolTip">
+              <string>Pause or resume all selected transfers</string>
+             </property>
              <property name="icon">
               <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
@@ -378,6 +381,9 @@
            </item>
            <item>
             <widget class="QToolButton" name="tCancelAll">
+             <property name="toolTip">
+              <string>Cancel all selected transfers</string>
+             </property>
              <property name="icon">
               <iconset resource="../Resources_linux.qrc">
                <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
