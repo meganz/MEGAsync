@@ -8,7 +8,7 @@
 #include <QNetworkProxy>
 #include <ConnectivityChecker.h>
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
 #include <QMacToolBar>
 #endif
 
@@ -127,7 +127,7 @@ private slots:
 
     void setAvatar();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     void onAnimationFinished();
 #endif
 
@@ -194,7 +194,7 @@ private:
     bool isSavingSyncsOnGoing;
     int debugCounter; // Easter Egg
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     QPropertyAnimation *minHeightAnimation;
     QPropertyAnimation *maxHeightAnimation;
     QParallelAnimationGroup *animationGroup;

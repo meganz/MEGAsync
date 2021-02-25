@@ -24,11 +24,11 @@
 
 #include <assert.h>
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     #include "gui/CocoaHelpButton.h"
 #endif
 
-#ifdef WIN32
+#ifdef Q_OS_WINDOWS
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #else
 #include "gui/PermissionsDialog.h"
@@ -37,7 +37,7 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 using namespace mega;
 using namespace std;
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
@@ -195,7 +195,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #endif
     ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->cStartOnStartup->setText(tr("Open at login"));
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //FinderSync API support from 10.10+
@@ -219,7 +219,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         remoteCacheSizeWatcher.setFuture(futureRemoteCacheSize);
     }
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     ui->bOk->hide();
     ui->bCancel->hide();
 #else
@@ -242,7 +242,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
     animationGroup = new QParallelAnimationGroup();
@@ -288,7 +288,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
     storageStateChanged(app->getAppliedStorageState());
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     // Set native NSToolBar for settings.
     toolBar = ::mega::make_unique<QMacToolBar>(this);
 
@@ -377,7 +377,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->wStack->setCurrentWidget(ui->pProxies);
         ui->pProxies->show();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         setMinimumHeight(435);
         setMaximumHeight(435);
         ui->bApply->show();
@@ -570,12 +570,12 @@ void SettingsDialog::onCacheSizeAvailable()
             ui->bClearFileVersions->hide();
         }
 
-    #ifdef __APPLE__
+#ifdef Q_OS_MACOS
         if (ui->wStack->currentWidget() == ui->pAdvanced)
         {
             animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE, SETTING_ANIMATION_PAGE_TIMEOUT);
         }
-    #endif
+#endif
     }
 }
 
@@ -587,7 +587,7 @@ void SettingsDialog::on_bAccount_clicked()
 
     if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         checkNSToolBarItem(toolBar.get(), bAccount.get());
 #endif
         return;
@@ -598,7 +598,7 @@ void SettingsDialog::on_bAccount_clicked()
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bAccount.get());
 
     ui->bApply->setText(tr("Logout"));
@@ -629,7 +629,7 @@ void SettingsDialog::on_bSyncs_clicked()
 
     if (ui->wStack->currentWidget() == ui->pSyncs)
     {
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         checkNSToolBarItem(toolBar.get(), bSyncs.get());
 #endif
         return;
@@ -639,7 +639,7 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->tSyncs->horizontalHeader()->setVisible(true);
     ui->bOk->setFocus();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bSyncs.get());
 
     ui->bApply->hide();
@@ -657,7 +657,7 @@ void SettingsDialog::on_bBandwidth_clicked()
 
     if (ui->wStack->currentWidget() == ui->pBandwidth)
     {
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
        checkNSToolBarItem(toolBar.get(), bBandwidth.get());
 #endif
         return;
@@ -666,7 +666,7 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bBandwidth.get());
 
     ui->bApply->hide();
@@ -698,7 +698,7 @@ void SettingsDialog::on_bSecurity_clicked()
 
     if (ui->wStack->currentWidget() == ui->pSecurity)
     {
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         checkNSToolBarItem(toolBar.get(), bSecurity.get());
 #endif
         return;
@@ -707,7 +707,7 @@ void SettingsDialog::on_bSecurity_clicked()
     ui->wStack->setCurrentWidget(ui->pSecurity);
     ui->bOk->setFocus();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bSecurity.get());
 
     ui->bApply->hide();
@@ -725,7 +725,7 @@ void SettingsDialog::on_bAdvanced_clicked()
 
     if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         checkNSToolBarItem(toolBar.get(), bAdvanced.get());
 #endif
         return;
@@ -734,7 +734,7 @@ void SettingsDialog::on_bAdvanced_clicked()
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bAdvanced.get());
 
     ui->bApply->hide();
@@ -761,7 +761,7 @@ void SettingsDialog::on_bProxies_clicked()
 
     if (ui->wStack->currentWidget() == ui->pProxies)
     {
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         checkNSToolBarItem(toolBar.get(), bProxies.get());
 #endif
         return;
@@ -770,7 +770,7 @@ void SettingsDialog::on_bProxies_clicked()
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bProxies.get());
 
     ui->bApply->setText(tr("Apply"));
@@ -1012,7 +1012,7 @@ void SettingsDialog::loadSettings()
 
         //Syncs
         loadSyncSettings();
-#ifdef _WIN32
+#ifdef Q_OS_WINDOWS
         ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
 #endif
 
@@ -1385,7 +1385,7 @@ int SettingsDialog::saveSettings()
         }
 
         // FIXME: What is this?
-#ifdef _WIN32
+#ifdef Q_OS_WINDOWS
         bool iconsDisabled = ui->cDisableIcons->isChecked();
         if (preferences->leftPaneIconsDisabled() != iconsDisabled)
         {
@@ -1539,7 +1539,7 @@ void SettingsDialog::loadSyncSettings()
 
         QSyncItemWidget *localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER);
         QString localFolderQString = syncSetting->getLocalFolder();
-#ifdef WIN32
+#ifdef Q_OS_WINDOWS
 if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
 {
     localFolderQString = localFolderQString.mid(4);
@@ -2007,7 +2007,7 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         bAccount.get()->setText(tr("Account"));
         //review and check
         ui->cStartOnStartup->setText(tr("Open at login"));
@@ -2249,12 +2249,12 @@ void SettingsDialog::onClearCache()
     {
         ui->gCache->setVisible(false);
 
-    #ifdef __APPLE__
+#ifdef Q_OS_MACOS
         if (!cacheSize && !remoteCacheSize)
         {
             animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE, SETTING_ANIMATION_PAGE_TIMEOUT);
         }
-    #endif
+#endif
     }
 }
 
@@ -2597,7 +2597,7 @@ void SettingsDialog::on_bHelpIco_clicked()
 }
 #endif
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
 void SettingsDialog::onAnimationFinished()
 {
     if (ui->wStack->currentWidget() == ui->pAccount)
@@ -2850,7 +2850,7 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (modifyingSettings) return;
     preferences->disableOverlayIcons(checked);
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();
 #else
     for (int i = 0; i < model->getNumSyncedFolders(); i++)
