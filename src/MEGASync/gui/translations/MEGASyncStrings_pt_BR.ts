@@ -4404,14 +4404,14 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Melhor gerenciamento das sincronizações.
+- Aprimoramento da experiência do usuário quando as sincronizações são desativadas.
+- Melhoria nas notificações do sistema.
+- Experiência do usuário aprimorada ao trabalhar com um grande número de transferências e sincronizações.
+- Resolução de problemas relacionados ao alto uso de CPU do gnome-shell durante a execução no Ubuntu.
+- Correção de crashes em Windows e Linux.
+- Outras melhorias e ajustes de desempenho.
+- Correções variadas e ajustes na interface de usuário.</translation>
     </message>
 </context>
 <context>

@@ -5988,7 +5988,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Medium</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation type="unfinished">中等</translation>
+        <translation type="unfinished">普通</translation>
     </message>
     <message>
         <source>Good</source>

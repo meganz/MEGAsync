@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">La cartella remota di sincronizzazione non è valida</translation>
+        <translation type="unfinished">Il percorso remoto di sincronizzazione non è valido</translation>
     </message>
     <message>
         <source>Local path is not valid</source>

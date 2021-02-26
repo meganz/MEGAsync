@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Thư mục cho việc đồng bộ từ xa không hợp lệ</translation>
+        <translation type="unfinished">Đường dẫn cho việc đồng bộ từ xa không hợp lệ</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -4077,7 +4077,7 @@ Xin chắc rằng tên thư mục không có chứa các ký tự như ‘\’ �
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Nhập một hay thêm một số liên kết MEGA nữa</translation>
+        <translation>Nhập một hay nhiều đường liên kết MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>

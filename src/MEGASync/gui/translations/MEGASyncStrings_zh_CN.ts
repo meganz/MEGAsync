@@ -3267,7 +3267,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">一个或多个同步已被禁用。请转到偏好设置以再次启用。</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">远程同步文件夹无效</translation>
+        <translation type="unfinished">远程同步路径无效</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -4077,7 +4077,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>输入一个或多个MEGA文件链接</translation>
+        <translation>输入一个或多个MEGA链接</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4206,7 +4206,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">偏好</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- 对同步管理进行了改进。
+- 改善了禁用同步后的用户体验。
+- 增强了系统通知功能，可通知用户各种帐户活动。
+- 改善了在处理大量传输和同步时用户体验。
+- 修复了在Ubuntu上运行时gnome-shell的CPU使用率过高的问题。
+- 修复了在Windows和Linux上检测到的崩溃问题。
+- 其他性能改进和调整。
+- 其他用户界面修复和调整。</translation>
     </message>
 </context>
 <context>
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">某些同步已被禁用。更多信息，请将鼠标移动至每个禁用同步旁边的警告图标上。</translation>
+        <translation type="unfinished">某些同步已被禁用。获取更多信息，请将鼠标悬停在已禁用同步旁边的警告图标上。</translation>
     </message>
 </context>
 <context>

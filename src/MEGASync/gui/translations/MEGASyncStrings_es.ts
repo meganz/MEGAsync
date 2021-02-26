@@ -3268,7 +3268,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Se han desactivado una o más sincronizaciones. Ve a Preferencias para activarlas de nuevo.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3515,7 +3515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">La carpeta sincronizada remota no es válida</translation>
+        <translation type="unfinished">La ruta de sincronización remota no es válida</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -4207,7 +4207,7 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Preferencias</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4405,14 +4405,14 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Nuevas mejoras para la gestión de las sincronizaciones.
+- Mejor experiencia de usuario al desactivarse las sincronizaciones.
+- Mejores notificaciones del sistemas para notificar a los usuarios sobre eventos de la cuenta.
+- Mejor experiencia de usuario al trabajar con una gran cantidad de transferencias y sincronizaciones.
+- Corrección de problemas de CPU de gnome-shell en Ubuntu.
+- Corrección de errores detectados en Windows y Linux.
+- Otras mejoras de rendimiento.
+- Otras correcciones de la interfaz de usuario.</translation>
     </message>
 </context>
 <context>

@@ -3267,7 +3267,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Une ou plusieurs synchronisations ont été désactivées. Allez dans les préférences pour les réactiver.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -4206,7 +4206,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Préférence</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">– Améliorations de la gestion des synchronisations.
+– Expérience utilisateur améliorée quand les synchronisations sont désactivées.
+– Amélioration des notifications système pour signaler les différents événements du compte aux utilisateurs.
+– Expérience utilisateur améliorée lors de très nombreux transferts et synchronisations.
+– Correctif de problèmes entraînant une utilisation élevée de l’UCT sous gnome–shell et Ubuntu.
+– Correctif de plantages détectés sous Windows et Linux.
+– Autres améliorations des performances et mises au point.
+– Autres correctifs de l’IU et mises au point.</translation>
     </message>
 </context>
 <context>

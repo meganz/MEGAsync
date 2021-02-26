@@ -3267,7 +3267,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Одна или несколько синхронизаций отключены. Перейдите в настройки, чтобы включить их снова.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Удалённая синхронизируемая папка недействителена</translation>
+        <translation type="unfinished">Удалённый путь синхронизации недействителен</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -4206,7 +4206,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Настройки</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Новые улучшения для управления синхронизацией.
+- Улучшено взаимодействие с пользователем при отключенной синхронизации.
+- Улучшенные системные уведомления о различных событиях в аккаунте.
+- Улучшен пользовательский интерфейс при работе с огромным количеством передач и синхронизаций.
+- Исправлена высокая загрузка ЦП в GNOME Shell при работе в Ubuntu.
+- Исправлены обнаруженные сбои в Windows и Linux.
+- Прочие улучшения и корректировки производительности.
+- Прочие исправления и корректировки пользовательского интерфейса.</translation>
     </message>
 </context>
 <context>

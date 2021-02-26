@@ -3268,7 +3268,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Een of meer synchronisaties zijn uitgeschakeld. Ga naar voorkeuren om ze weer in te schakelen.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3515,7 +3515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">De map voor externe synchronisatie is niet geldig</translation>
+        <translation type="unfinished">Het pad voor externe synchronisatie is niet geldig</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -4078,7 +4078,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Vul één of meer MEGA bestandskoppelingen in</translation>
+        <translation>Voer een of meer MEGA links in</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4207,7 +4207,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Voorkeuren</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4405,14 +4405,14 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Nieuwe verbeteringen voor het beheer van synchronisaties.
+- Verbeterde gebruikerservaring wanneer synchronisaties zijn uitgeschakeld.
+- Verbeterde systeemmeldingen om gebruikers te informeren over verschillende accountgebeurtenissen.
+- Verbeterde gebruikerservaring tijdens het werken met een groot aantal overdrachten en synchronisaties.
+- Problemen opgelost met een hoog CPU-gebruik van de gnome-shell bij het draaien op Ubuntu.
+- Opgeloste crashes op Windows en Linux opgelost.
+- Andere prestatieverbeteringen en aanpassingen.
+- Andere UI-fixes en aanpassingen.</translation>
     </message>
 </context>
 <context>
@@ -5639,7 +5639,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Sommige synchronisaties zijn uitgeschakeld. Beweeg voor meer informatie uw muis over het waarschuwingspictogram naast elke uitgeschakelde synchronisatie.</translation>
+        <translation type="unfinished">Sommige synchronisaties zijn uitgeschakeld. Beweeg voor meer informatie de muisaanwijzer over het waarschuwingspictogram naast elke uitgeschakelde synchronisatie.</translation>
     </message>
 </context>
 <context>
