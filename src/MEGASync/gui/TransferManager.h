@@ -35,7 +35,6 @@ public:
     void setActiveTab(int t);
     void updatePauseState(bool isPaused, QString toolTipText);
     void disableGetLink(bool disable);
-    void updateNumberOfCompletedTransfers(int num);
     ~TransferManager();
 
 signals:
@@ -50,17 +49,17 @@ private:
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
     QPoint mDragPosition;
-    QTimer* mRefreshTransferTime;
     ThreadPool* mThreadPool;
-    std::array<QFrame*, 4> mTabFramesToggleGroup;
+    QMap<int, QFrame*> mTabFramesToggleGroup;
+    QMap<TransferData::FileTypes, QLabel*> mMediaNumberLabelsGroup;
+    QMap<int, long long> mStatesStatistics;
+    QSet<int> mActiveStates;
+    QSet<int> mFinishedStates;
     TM_TABS mCurrentTab;
     QSet<TransferData::FileTypes> mFileTypesFilter;
-    QSet<int> mTransferStatesFilter;
-    QSet<int> mTransferTypesFilter;
 
-
-    void onTransfersActive(bool exists);
     void toggleTab(TM_TABS tab);
+    void updateFileTypeFilter(TransferData::FileTypes fileType);
 
 public slots:
     void updateState();
@@ -83,8 +82,11 @@ private slots:
     void on_bMusic_clicked();
     void on_bVideos_clicked();
     void on_bOther_clicked();
+    void on_bText_clicked();
 
-    void refreshFinishedTime();
+    void onNbOfTransfersPerStateChanged(int state, long long number);
+    void onNbOfTransfersPerTypeChanged(int type, long long number);
+    void onNbOfTransfersPerFileTypeChanged(TransferData::FileTypes fileType, long long number);
 
 protected:
     void changeEvent(QEvent *event);

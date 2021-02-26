@@ -228,13 +228,12 @@ QGroupBox::title
     max-height: 24px;
     min-width: 100px;
     max-width: 100px;
-border: none;
-
-  color: #333333;
-  font-size: 14px;
+	border: none;
+	color: #333333;
+	font-size: 14px;
 }
 
-#wSpeedAndClear QPushButton
+#pSpeedAndClear QPushButton
 {
     height: 24px;
     width: 74px;
@@ -274,12 +273,9 @@ border: none;
 
 #lPaused, #lNbResults
 {
-  height: 20px;
-  width: 39px;
   color: #FF9E4F;
   font-size: 12px;
   font-weight: bold;
-  line-height: 20px;
   padding-left: 14px;
 }
 
@@ -527,7 +523,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lAllTransfers">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -572,7 +568,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lDownloads">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -617,7 +613,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lUploads">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -665,14 +661,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lCompleted">
               <property name="text">
-               <string>XXXX</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lCompletedNb">
-              <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -703,6 +692,54 @@ border: none;
          <property name="bottomMargin">
           <number>0</number>
          </property>
+         <item>
+          <widget class="QFrame" name="fText">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bText">
+              <property name="text">
+               <string>Text</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lTextNb">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item>
           <widget class="QFrame" name="fArchives">
            <property name="minimumSize">
@@ -744,7 +781,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lArchivesNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -792,7 +829,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lDocumentsNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -840,7 +877,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lImagesNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -888,7 +925,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lVideosNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -936,7 +973,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lMusicNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -984,7 +1021,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lOtherNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -1088,7 +1125,7 @@ border: none;
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="wSpeedAndClear">
+        <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
            <number>0</number>
@@ -1245,7 +1282,7 @@ border: none;
                </sizepolicy>
               </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="pSearchHeader">
                <property name="sizePolicy">

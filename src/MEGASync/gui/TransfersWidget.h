@@ -38,7 +38,10 @@ public:
     void transferStateFilterChanged(QSet<int> transferStates);
     void transferTypeFilterChanged(QSet<int> transferTypes);
 
+    int rowCount();
+
     QTransfersModel *getModel();
+    QTransfersModel2* getModel2();
     ~TransfersWidget();
 
     bool areTransfersActive();

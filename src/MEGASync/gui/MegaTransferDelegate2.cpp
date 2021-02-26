@@ -28,7 +28,7 @@ MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget*
 
 void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.isValid() && index.data().canConvert<TransferItem2>())
+    if (index.isValid())
     {
         const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
         const auto nbRowsMaxInView (mView->height() / option.rect.height() + 1);

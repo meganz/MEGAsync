@@ -162,6 +162,12 @@ QTransfersModel *TransfersWidget::getModel()
     return model;
 }
 
+QTransfersModel2* TransfersWidget::getModel2()
+{
+    return model2;
+}
+
+
 void TransfersWidget::noTransfers()
 {
     if (isPaused)
@@ -289,6 +295,12 @@ void TransfersWidget::transferTypeFilterChanged(QSet<int> transferTypes)
     mProxyModel->setTransferType(transferTypes);
     ui->tvTransfers->scrollToTop();
 }
+
+int TransfersWidget::rowCount()
+{
+    return ui->tvTransfers->model()->rowCount(QModelIndex());
+}
+
 
 void TransfersWidget::changeEvent(QEvent *event)
 {

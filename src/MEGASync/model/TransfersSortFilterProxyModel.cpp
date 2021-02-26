@@ -51,9 +51,9 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
     const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
 
-    return mTransferState.contains(transferItem.getState())
-            && mTransferType.contains(transferItem.getType())
-            && mFileType.contains(transferItem.getFileType())
+    return (mTransferState.isEmpty() || mTransferState.contains(transferItem.getState()))
+            && (mTransferType.isEmpty() || mTransferType.contains(transferItem.getType()))
+            && (mFileType.isEmpty() || mFileType.contains(transferItem.getFileType()))
             && transferItem.getTransferData()->mFilename.contains(filterRegExp());
 }
 

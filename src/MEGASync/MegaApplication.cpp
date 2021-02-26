@@ -3585,7 +3585,7 @@ void MegaApplication::clearViewedTransfers()
     nUnviewedTransfers = 0;
     if (transferManager)
     {
-        transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+//        transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
     }
 }
 
@@ -7682,7 +7682,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
         if (transferManager)
         {
-            transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+//            transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
         }
     }
 

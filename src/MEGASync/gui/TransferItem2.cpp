@@ -28,9 +28,17 @@ void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
                                  unsigned long long priority,
                                  int state, long long transferedBytes)
 {
+    if (d->mUnpausedState == MegaTransfer::STATE_NONE)
+    {
+        d->mState = state;
+    }
+    else
+    {
+        d->mUnpausedState = state;
+    }
+
     d->mRemainingTime = remainingTime;
     d->mErrorCode = errorCode;
-    d->mState = state;
     d->mErrorValue = errorValue;
     d->mRemainingTime = remainingTime;
     d->mSpeed = speed;

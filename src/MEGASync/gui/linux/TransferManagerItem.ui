@@ -224,6 +224,15 @@ QProgressBar::chunk
 	font-weight: bold;
 }
 
+#wPauseResume, #wClearCancel
+{
+  width: 28px; 
+    height: 63px;
+	min-width: 28px; 
+    min-height: 63px;
+	max-width: 28px; 
+    max-height: 63px;
+}
 #tPauseResumeTransfer, #tCancelClearTransfer
 {
 	width: 16px; 
@@ -508,20 +517,32 @@ QProgressBar::chunk
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QToolButton" name="tPauseResumeTransfer">
-         <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
-           <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
-         </property>
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+        <widget class="QWidget" name="wPauseResume" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QToolButton" name="tPauseResumeTransfer">
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item>
-        <widget class="QToolButton" name="tCancelClearTransfer">
-         <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
-           <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
-         </property>
+       <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+        <widget class="QWidget" name="wClearCancel" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QToolButton" name="tCancelClearTransfer">
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

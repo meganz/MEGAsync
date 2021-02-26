@@ -50,14 +50,14 @@ class TransferData : public QSharedData
     TransferData(){}
 
     TransferData(TransferData const* dr) :
-        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mUnpausedState(dr->mUnpausedState),mTag(dr->mTag),
+        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mUnpausedState(dr->mUnpausedState), mTag(dr->mTag),
         mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime), mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed), mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes), mUpdateTime(dr->mUpdateTime),
         mPublicNode(dr->mPublicNode), mIsSyncTransfer(dr->mIsSyncTransfer), mFileType(dr->mFileType),
         mMegaApi(dr->mMegaApi), mFilename(dr->mFilename){}
 
-    TransferData(int type, int errorCode, int state, int unpausedState,int tag, int errorValue,
+    TransferData(int type, int errorCode, int state, int unpausedState, int tag, long long errorValue,
                     int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long priority,
                     long long speed, long long meanSpeed, long long transferredBytes,
                     int64_t updateTime, bool publicNode, bool isSyncTransfer, FileTypes fileType,
@@ -127,7 +127,7 @@ class TransferItem2
     protected:
             QExplicitlySharedDataPointer<TransferData> d;
 };
-
+Q_DECLARE_METATYPE(TransferData::FileTypes)
 Q_DECLARE_METATYPE(TransferData)
 Q_DECLARE_METATYPE(TransferData*)
 Q_DECLARE_METATYPE(TransferItem2)

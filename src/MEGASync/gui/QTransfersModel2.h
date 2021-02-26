@@ -32,17 +32,21 @@ public:
     void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     void onTransferTemporaryError(mega::MegaApi *api,mega::MegaTransfer *transfer, mega::MegaError* error);
 
+signals:
+    void nbOfTransfersPerStateChanged(int type, long long number);
+    void nbOfTransfersPerTypeChanged(int type, long long number);
+    void nbOfTransfersPerFileTypeChanged(TransferData::FileTypes fileType, long long number);
+
 private slots:
     void onPauseStateChanged();
-
 
 private:
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
 
-    QMap<TransferTag, QVariant> mTransfers;
-    QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
-    QList<TransferTag> mOrder;
+    QMap<TransferTag, QVariant>* mTransfers;
+    QMap<TransferTag, TransferRemainingTime*>* mRemainingTimes;
+    QList<TransferTag>* mOrder;
     ThreadPool*    mThreadPool;
     QHash<QString, TransferData::FileTypes> mFileTypes;
 
@@ -52,11 +56,12 @@ private:
     bool mAreUlPaused;
     bool mIsGlobalPaused;
 
-    QMap<int, long long> mNbTransfersPerFileType;
+    QMap<TransferData::FileTypes, long long> mNbTransfersPerFileType;
     QMap<int, long long> mNbTransfersPerType;
     QMap<int, long long> mNbTransfersPerState;
 
     void insertTransfer(mega::MegaApi* api, mega::MegaTransfer *transfer);
+    void emitStatistics();
 };
 
 #endif // QTRANSFERSMODEL2_H

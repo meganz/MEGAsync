@@ -87,7 +87,6 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem, const int
             pauseResumeTooltip = QObject::tr("Pause transfer");
             cancelClearTooltip = QObject::tr("Cancel transfer");
             mUi->sStatus->setCurrentWidget(mUi->pActive);
-            mUi->tPauseResumeTransfer->show();
             break;
         }
         case MegaTransfer::STATE_PAUSED:
@@ -96,7 +95,6 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem, const int
             pauseResumeTooltip = QObject::tr("Resume transfer");
             cancelClearTooltip = QObject::tr("Cancel transfer");
             mUi->sStatus->setCurrentWidget(mUi->pPaused);
-            mUi->tPauseResumeTransfer->show();
             mIsPaused = true;
             break;
         }
@@ -105,7 +103,6 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem, const int
             pauseResumeIcon = Utilities::getCachedPixmap(QLatin1Literal(":images/ico_pause_transfers_state.png"));
             pauseResumeTooltip = QObject::tr("Pause transfer");
             cancelClearTooltip = QObject::tr("Cancel transfer");
-            mUi->tPauseResumeTransfer->show();
             mUi->sStatus->setCurrentWidget(mUi->pQueued);
             break;
         }
@@ -113,7 +110,7 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem, const int
         {
             statusString = QObject::tr("Canceled");
             cancelClearTooltip = QObject::tr("Clear transfer");
-            mUi->tPauseResumeTransfer->hide();
+            showTPauseResume = false;
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             mIsFinished = true;
             break;
@@ -121,8 +118,8 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem, const int
         case MegaTransfer::STATE_COMPLETING:
         {
             statusString = QObject::tr("Completing");
-            mUi->tPauseResumeTransfer->hide();
-            mUi->tCancelClearTransfer->hide();
+            showTPauseResume = false;
+            showTCancelClear = false;
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             break;
         }
@@ -145,11 +142,16 @@ void TransferManagerItem2::updateUi(const TransferItem2& transferItem, const int
         {
             statusString = QObject::tr("Completed");
             cancelClearTooltip = QObject::tr("Clear transfer");
-            mUi->tPauseResumeTransfer->hide();
+            showTPauseResume = false;
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             mIsFinished = true;
             break;
         }
+    }
+
+    if (d->mUnpausedState != MegaTransfer::STATE_NONE)
+    {
+        showTPauseResume = false;
     }
 
     // Status string
