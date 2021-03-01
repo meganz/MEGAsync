@@ -70,11 +70,6 @@ void TransfersWidget::refreshTransferItems()
     if (model) model->refreshTransfers();
 }
 
-void TransfersWidget::clearTransfers()
-{
-    if (model) model->removeAllTransfers();
-}
-
 TransfersWidget::~TransfersWidget()
 {
     delete ui;
@@ -199,17 +194,10 @@ void TransfersWidget::on_tPauseResumeAll_clicked()
 
     for (auto index : selection)
     {
-        if (index.isValid() && index.data().canConvert<TransferItem2>())
+        if (index.isValid())
         {
-            const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
-            auto d (transferItem.getTransferData());
-
-            MegaApi * api(d->mMegaApi);
-
-            bool isPaused (d->mState == MegaTransfer::STATE_PAUSED
-                           && d->mUnpausedState == MegaTransfer::STATE_NONE);
-
-            api->pauseTransferByTag(d->mTag, !isPaused);
+            auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
+            d->mMegaApi->pauseTransferByTag(d->mTag, (d->mState != MegaTransfer::STATE_PAUSED));
         }
     }
 }
@@ -218,51 +206,109 @@ void TransfersWidget::on_tCancelAll_clicked()
 {
     QModelIndexList selection = ui->tvTransfers->selectionModel()->selectedRows();
 
+    QList<QExplicitlySharedDataPointer<TransferData>> pool;
+    int poolState;
+    int row;
+
     // If row selected, process only these rows
     if (selection.size() > 0)
     {
         // Reverse sort to keep indexes valid after deletion
-        qSort(selection.begin(), selection.end(), qGreater<QModelIndex>());
+        std::sort(selection.rbegin(), selection.rend());
 
         for (auto index : selection)
         {
-            if (index.isValid() && index.data().canConvert<TransferItem2>())
+            if (index.isValid())
             {
-                const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
-                clearOrCancel(transferItem, index.row());
+                const TransferItem2 transferItem (
+                            qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+
+                auto state (transferItem.getState());
+
+                if (pool.isEmpty())
+                {
+                    poolState = state;
+                    row = index.row() + 1;
+                }
+
+                if (state != poolState || (index.row() != (row-1)))
+                {
+                    clearOrCancel(pool, poolState, row);
+                    poolState = state;
+                    pool.clear();
+                }
+                pool += transferItem.getTransferData();
+                row = index.row();
             }
         }
     }
     // else process all available rows
     else
     {
-        for (auto row(mProxyModel->rowCount(QModelIndex())-1); row >= 0; --row)
+        for (row = mProxyModel->rowCount(QModelIndex())-1; row >= 0; --row)
         {
             const TransferItem2 transferItem (
-                        qvariant_cast<TransferItem2>(
-                            mProxyModel->data(mProxyModel->index(row, 0, QModelIndex()),
-                                                                    Qt::DisplayRole)));
-            clearOrCancel(transferItem, row);
+                        qvariant_cast<TransferItem2>(mProxyModel->data(mProxyModel->index(
+                                                                           row, 0, QModelIndex()),
+                                                                       Qt::DisplayRole)));
+            auto state (transferItem.getState());
+
+            if (pool.isEmpty())
+            {
+                poolState = state;
+            }
+
+            if (state != poolState)
+            {
+                clearOrCancel(pool, poolState, row);
+                poolState = state;
+                pool.clear();
+            }
+            pool += transferItem.getTransferData();
         }
+    }
+
+    // Flush pool if not empty
+    if (!pool.isEmpty())
+    {
+        clearOrCancel(pool, poolState, std::max(row, 0));
     }
 }
 
-void TransfersWidget::clearOrCancel(const TransferItem2& transferItem, const int row)
+//void TransfersWidget::clearOrCancel(const TransferItem2& transferItem, int row)
+//{
+//    // Clear if finished, cancel if not.
+//    auto state (transferItem.getState());
+//    if (state == MegaTransfer::STATE_COMPLETED
+//            || state == MegaTransfer::STATE_CANCELLED)
+//    {
+//        emit clearTransfer(row);
+//    }
+//    else
+//    {
+//        auto d (transferItem.getTransferData());
+
+//        MegaApi * api(d->mMegaApi);
+
+//        api->cancelTransferByTag(d->mTag);
+//    }
+//}
+
+void TransfersWidget::clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow)
 {
+
     // Clear if finished, cancel if not.
-    auto state (transferItem.getState());
     if (state == MegaTransfer::STATE_COMPLETED
             || state == MegaTransfer::STATE_CANCELLED)
     {
-        emit clearTransfer(row);
+        emit clearTransfers(firstRow, pool.size());
     }
-    else
+    else if (state != MegaTransfer::STATE_COMPLETING)
     {
-        auto d (transferItem.getTransferData());
-
-        MegaApi * api(d->mMegaApi);
-
-        api->cancelTransferByTag(d->mTag);
+        for (auto transfer : pool)
+        {
+            transfer->mMegaApi->cancelTransferByTag(transfer->mTag);
+        }
     }
 }
 
@@ -300,7 +346,6 @@ int TransfersWidget::rowCount()
 {
     return ui->tvTransfers->model()->rowCount(QModelIndex());
 }
-
 
 void TransfersWidget::changeEvent(QEvent *event)
 {

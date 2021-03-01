@@ -23,6 +23,9 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
+    bool areDlPaused();
+    bool areUlPaused();
+
     ~QTransfersModel2();
 
     void initModel();
@@ -44,17 +47,17 @@ private:
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
 
-    QMap<TransferTag, QVariant>* mTransfers;
-    QMap<TransferTag, TransferRemainingTime*>* mRemainingTimes;
-    QList<TransferTag>* mOrder;
+    QMap<TransferTag, QVariant> mTransfers;
+    QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
+    QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;
     QHash<QString, TransferData::FileTypes> mFileTypes;
+    QMutex mModelMutex;
 
     long long mNotificationNumber;
 
     bool mAreDlPaused;
     bool mAreUlPaused;
-    bool mIsGlobalPaused;
 
     QMap<TransferData::FileTypes, long long> mNbTransfersPerFileType;
     QMap<int, long long> mNbTransfersPerType;

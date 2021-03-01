@@ -28,15 +28,7 @@ void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
                                  unsigned long long priority,
                                  int state, long long transferedBytes)
 {
-    if (d->mUnpausedState == MegaTransfer::STATE_NONE)
-    {
-        d->mState = state;
-    }
-    else
-    {
-        d->mUnpausedState = state;
-    }
-
+    d->mState = state;
     d->mRemainingTime = remainingTime;
     d->mErrorCode = errorCode;
     d->mErrorValue = errorValue;
@@ -46,19 +38,4 @@ void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
     d->mTransferredBytes = transferedBytes;
     d->mUpdateTime = updateTime;
     d->mPriority = priority;
-}
-
-void TransferItem2::setPaused(bool isPaused)
-{
-    if (isPaused)
-    {
-        d->mUnpausedState = d->mState;
-        d->mState = MegaTransfer::STATE_PAUSED;
-        d->mSpeed = 0;
-    }
-    else
-    {
-        d->mState = d->mUnpausedState;
-        d->mUnpausedState = MegaTransfer::STATE_NONE;
-    }
 }

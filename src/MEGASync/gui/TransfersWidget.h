@@ -28,7 +28,6 @@ public:
     void setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, QTransfersModel::ModelType type);
     void setupTransfers();
     void refreshTransferItems();
-    void clearTransfers();
     void pausedTransfers(bool paused);
     void disableGetLink(bool disable);
 
@@ -47,8 +46,7 @@ public:
     bool areTransfersActive();
 
 signals:
-    void clearTransfer(int row);
-//    void clearTransfers(int row, int number);
+    void clearTransfers(int firstRow, int amount);
 
 private:
     Ui::TransfersWidget *ui;
@@ -62,7 +60,7 @@ private:
     MegaApplication *app;
 
     void configureTransferView();
-    void clearOrCancel(const TransferItem2& transferItem, const int row);
+    void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
 
 private slots:
     void noTransfers();

@@ -16,23 +16,27 @@ class TransferManagerItem2 : public QWidget
     public:
         explicit TransferManagerItem2(QWidget *parent = 0);
 
-        void updateUi(const TransferItem2& transferItem, const int row);
+        void updateUi(QExplicitlySharedDataPointer<TransferData> data, const int row);
 
         void forwardMouseEvent(QMouseEvent *me);
 
     signals:
-        void clearTransfer(int row);
+        void clearTransfers(int firstRow, int amount);
 
     private slots:
         void on_tPauseResumeTransfer_clicked();
         void on_tCancelClearTransfer_clicked();
+        void onPauseStateChanged();
 
     private:
         Ui::TransferManagerItem *mUi;
+        Preferences* mPreferences;
         mega::MegaApi* mMegaApi;
         TransferTag mTransferTag;
         bool mIsPaused;
         bool mIsFinished;
+        bool mAreDlPaused;
+        bool mAreUlPaused;
         int mRow;
 };
 

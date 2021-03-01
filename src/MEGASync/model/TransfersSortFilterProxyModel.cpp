@@ -49,12 +49,13 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
+    //const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
+    auto transferItem (static_cast<const TransferItem2*>(index.internalPointer()));
 
-    return (mTransferState.isEmpty() || mTransferState.contains(transferItem.getState()))
-            && (mTransferType.isEmpty() || mTransferType.contains(transferItem.getType()))
-            && (mFileType.isEmpty() || mFileType.contains(transferItem.getFileType()))
-            && transferItem.getTransferData()->mFilename.contains(filterRegExp());
+    return (mTransferState.isEmpty() || mTransferState.contains(transferItem->getState()))
+            && (mTransferType.isEmpty() || mTransferType.contains(transferItem->getType()))
+            && (mFileType.isEmpty() || mFileType.contains(transferItem->getFileType()))
+            && transferItem->getTransferData()->mFilename.contains(filterRegExp());
 }
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const

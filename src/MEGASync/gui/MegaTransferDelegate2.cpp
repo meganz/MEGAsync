@@ -22,15 +22,16 @@ MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget*
       mModel(model),
       mView(view)
 {
-    connect(static_cast<TransfersWidget*>(parent), &TransfersWidget::clearTransfer,
-            this, &MegaTransferDelegate2::onClearTransfer);
+    QObject::connect(static_cast<TransfersWidget*>(parent), &TransfersWidget::clearTransfers,
+            this, &MegaTransferDelegate2::onClearTransfers);
 }
 
 void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.isValid())
     {
-        const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
+        auto transferItem (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+
         const auto nbRowsMaxInView (mView->height() / option.rect.height() + 1);
         const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
 
@@ -40,13 +41,13 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
         {
             w = new TransferManagerItem2(mView);
             w->setObjectName(widgetName);
-            connect(w, &TransferManagerItem2::clearTransfer,
-                    this, &MegaTransferDelegate2::onClearTransfer);
+            connect(w, &TransferManagerItem2::clearTransfers,
+                    this, &MegaTransferDelegate2::onClearTransfers);
         }
         w->resize(option.rect.size());
         w->move(option.rect.topLeft());
 
-        w->updateUi(transferItem, index.row());
+        w->updateUi(transferItem.getTransferData(), index.row());
 
         if (option.state & QStyle::State_Selected)
         {
@@ -70,9 +71,9 @@ QSize MegaTransferDelegate2::sizeHint(const QStyleOptionViewItem &option, const 
     return QSize(720, 64);
 }
 
-void MegaTransferDelegate2::onClearTransfer(int row)
+void MegaTransferDelegate2::onClearTransfers(int firstRow, int amount)
 {
-    mModel->removeRows(row, 1, QModelIndex());
+    mModel->removeRows(firstRow, amount, QModelIndex());
 }
 
 void MegaTransferDelegate2::processCancel(int tag)

@@ -30,7 +30,6 @@ class TransferData : public QSharedData
     int       mType;
     int       mErrorCode;
     int       mState;
-    int       mUnpausedState;
     int       mTag;
     long long mErrorValue;
     int64_t   mFinishedTime;
@@ -50,19 +49,19 @@ class TransferData : public QSharedData
     TransferData(){}
 
     TransferData(TransferData const* dr) :
-        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mUnpausedState(dr->mUnpausedState), mTag(dr->mTag),
+        mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
         mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime), mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed), mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes), mUpdateTime(dr->mUpdateTime),
         mPublicNode(dr->mPublicNode), mIsSyncTransfer(dr->mIsSyncTransfer), mFileType(dr->mFileType),
         mMegaApi(dr->mMegaApi), mFilename(dr->mFilename){}
 
-    TransferData(int type, int errorCode, int state, int unpausedState, int tag, long long errorValue,
+    TransferData(int type, int errorCode, int state, int tag, long long errorValue,
                     int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long priority,
                     long long speed, long long meanSpeed, long long transferredBytes,
                     int64_t updateTime, bool publicNode, bool isSyncTransfer, FileTypes fileType,
                     mega::MegaApi* megaApi, QString fileName) :
-         mType(type), mErrorCode(errorCode),  mState(state), mUnpausedState(unpausedState), mTag(tag),
+         mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
          mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
          mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
          mTransferredBytes(transferredBytes), mUpdateTime(updateTime),
@@ -92,8 +91,6 @@ class TransferItem2
                                          unsigned long long priority,
                                          int state, long long transferedBytes);
 
-        void setPaused(bool isPaused);
-
         int getTag() const
         {
             return d->mTag;
@@ -102,11 +99,6 @@ class TransferItem2
         int getState() const
         {
             return d->mState;
-        }
-
-        int getUnpausedState() const
-        {
-            return d->mUnpausedState;
         }
 
         int getType() const
