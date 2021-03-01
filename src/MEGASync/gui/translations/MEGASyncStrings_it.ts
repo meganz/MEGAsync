@@ -3262,12 +3262,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync continuerà a lavorare, però presto gli aggiornamenti non saranno più supportati dalle versioni precedenti a OS X Yosemite.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Una o più sincronizzazioni sono state disabilitate. Vai nelle preferenze per attivarle nuovamente.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -4206,7 +4206,7 @@ Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:�
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Preferenze</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:�
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Nuovi miglioramenti per la gestione delle sincronizzazioni.
+- Migliorata l’esperienza utente quando le sincronizzazioni sono disabilitate.
+- Migliorato il sistema di notifica per notificare gli utenti riguardo i vari eventi dell’account.
+- Migliorata l’esperienza utente durante la lavorazione di un gran numero di trasferimenti e sincronizzazioni.
+- Fixato il problema dell’alto utilizzo della CPU su gnome-shell durante l’utilizzo su Ubuntu.
+- Fixati certi crash su Windows e Linux.
+- Altri miglioramenti della performance e aggiustamenti.
+- Altri fix all’interfaccia utente e miglioramenti.</translation>
     </message>
 </context>
 <context>

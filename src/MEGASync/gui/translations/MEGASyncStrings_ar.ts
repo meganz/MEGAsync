@@ -3263,12 +3263,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">سيستمر ميغا MEGAsync في العمل، ولكن لن يتم دعم التحديثات بعد الآن للإصدارات السابقة على OS X Yosemite قريبًا.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">تم تعطيل مزامنة واحدة أو أكثر. انتقل إلى التفضيلات لتمكينها مرة أخرى.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3515,7 +3515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">مجلد المزامنة المتحكم به عن بُعد غير صالح</translation>
+        <translation type="unfinished">مسار المزامنة عن بعد غير صالح</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -4078,7 +4078,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>أدخل واحد أو أكثر روابط ملف ميجا</translation>
+        <translation>أدخل رابط ميغا MEGA واحدًا أو أكثر</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4207,7 +4207,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">التفضيلات</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4405,14 +4405,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- تحسينات جديدة لإدارة عمليات المزامنة.
+- تحسين تجربة المستخدم عند تعطيل المزامنة.
+- إخطارات النظام المحسنة لإعلام المستخدمين بأحداث الحساب المختلفة.
+- تحسين تجربة المستخدم أثناء العمل مع عدد كبير من عمليات التراسل والمزامنة.
+- تم إصلاح مشكلات الاستخدام العالي لوحدة المعالجة المركزية لصدفة جنوم gnome-shell عند التشغيل على Ubuntu.
+- إصلاح الأعطال المكتشفة على Windows ويندوز و Linux لينوكس. 
+- تحسينات وتعديلات أخرى في الأداء.
+- إصلاحات وتعديلات أخرى في واجهة المستخدم.</translation>
     </message>
 </context>
 <context>
@@ -5639,7 +5639,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">تم تعطيل بعض عمليات المزامنة. لمزيد من المعلومات، حرك الماوس فوق رمز التحذير الموجود بجوار كل مزامنة معطلة.</translation>
+        <translation type="unfinished">تم تعطيل بعض عمليات المزامنة. لمزيد من المعلومات، مرر مؤشر الماوس فوق رمز التحذير بجوار كل مزامنة معطلة.</translation>
     </message>
 </context>
 <context>

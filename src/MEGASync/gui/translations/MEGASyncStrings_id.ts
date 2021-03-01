@@ -3262,12 +3262,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync akan terus berfungsi, namun pembaruan tidak akan lagi didukung untuk versi sebelum OS X Yosemite segera.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Satu atau lebih sinkronisasi telah dinonaktifkan. Buka preferensi untuk mengaktifkannya lagi.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3514,7 +3514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Folder sinkronisasi jarak jauh tidak valid</translation>
+        <translation type="unfinished">Jalur sinkronisasi jarak jauh tidak valid</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -4077,7 +4077,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Masukkan satu atau beberapa link file MEGA</translation>
+        <translation>Masukkan satu atau lebih link MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4206,7 +4206,7 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Preferensi</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Perbaikan baru untuk manajemen sinkronisasi.
+- Pengalaman pengguna yang lebih baik saat sinkronisasi dinonaktifkan.
+- Pemberitahuan sistem yang ditingkatkan untuk memberi tahu pengguna tentang berbagai aktivitas akun.
+- Pengalaman pengguna yang lebih baik saat bekerja dengan sejumlah besar transfer dan sinkronisasi.
+- Memperbaiki masalah penggunaan CPU yang tinggi dari gnome-shell saat menjalankan Ubuntu.
+- Memperbaiki kerusakan yang terdeteksi pada Windows dan Linux.
+- Peningkatan dan penyesuaian kinerja lainnya.
+- Perbaikan dan penyesuaian UI lainnya.</translation>
     </message>
 </context>
 <context>
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Beberapa sinkronisasi telah dinonaktifkan. Untuk informasi lebih lanjut, gerakkan mouse anda ke ikon peringatan di sebelah setiap sinkronisasi yang dinonaktifkan.</translation>
+        <translation type="unfinished">Beberapa sinkronisasi telah dinonaktifkan. Untuk informasi lebih lanjut, arahkan kursor ke ikon peringatan di samping setiap sinkronisasi yang dinonaktifkan.</translation>
     </message>
 </context>
 <context>
