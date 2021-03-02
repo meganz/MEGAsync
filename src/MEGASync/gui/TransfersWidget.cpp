@@ -112,10 +112,10 @@ void TransfersWidget::configureTransferView()
 
 //    ui->tvTransfers->header()->close();
 //    ui->tvTransfers->setSelectionMode(QAbstractItemView::ContiguousSelection);
-//    ui->tvTransfers->setDragEnabled(true);
-//    ui->tvTransfers->viewport()->setAcceptDrops(true);
-//    ui->tvTransfers->setDropIndicatorShown(true);
-//    ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->tvTransfers->setDragEnabled(true);
+    ui->tvTransfers->viewport()->setAcceptDrops(true);
+    ui->tvTransfers->setDropIndicatorShown(true);
+    ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 
     // Test
 
@@ -266,12 +266,13 @@ void TransfersWidget::on_tCancelAll_clicked()
             }
             pool += transferItem.getTransferData();
         }
+        row = 0;
     }
 
     // Flush pool if not empty
     if (!pool.isEmpty())
     {
-        clearOrCancel(pool, poolState, std::max(row, 0));
+        clearOrCancel(pool, poolState, row);
     }
 }
 
@@ -299,7 +300,8 @@ void TransfersWidget::clearOrCancel(const QList<QExplicitlySharedDataPointer<Tra
 
     // Clear if finished, cancel if not.
     if (state == MegaTransfer::STATE_COMPLETED
-            || state == MegaTransfer::STATE_CANCELLED)
+            || state == MegaTransfer::STATE_CANCELLED
+            || state == MegaTransfer::STATE_FAILED)
     {
         emit clearTransfers(firstRow, pool.size());
     }
@@ -355,4 +357,3 @@ void TransfersWidget::changeEvent(QEvent *event)
     }
     QWidget::changeEvent(event);
 }
-

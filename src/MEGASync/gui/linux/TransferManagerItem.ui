@@ -213,7 +213,7 @@ QProgressBar::chunk
 	font-weight: bold;
 }
 
-#bRetry
+#tRetry
 {
   height: 24px;
   width: 48px;
@@ -430,9 +430,9 @@ QProgressBar::chunk
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
-         <widget class="QWidget" name="pActive" native="true">
+         <widget class="QWidget" name="pActive">
           <widget class="QLabel" name="lStatus">
            <property name="geometry">
             <rect>
@@ -475,7 +475,7 @@ QProgressBar::chunk
           </widget>
          </widget>
          <widget class="QWidget" name="pFailed">
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -496,7 +496,7 @@ QProgressBar::chunk
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="bRetry">
+             <widget class="QToolButton" name="tRetry">
               <property name="text">
                <string>Retry</string>
               </property>

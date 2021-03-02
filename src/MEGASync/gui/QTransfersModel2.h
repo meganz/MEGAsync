@@ -40,6 +40,9 @@ signals:
     void nbOfTransfersPerTypeChanged(int type, long long number);
     void nbOfTransfersPerFileTypeChanged(TransferData::FileTypes fileType, long long number);
 
+public slots:
+    void onRetryTransfer(TransferTag tag);
+
 private slots:
     void onPauseStateChanged();
 
@@ -48,6 +51,7 @@ private:
     Preferences* mPreferences;
 
     QMap<TransferTag, QVariant> mTransfers;
+    QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
     QList<TransferTag> mOrder;
     ThreadPool*    mThreadPool;

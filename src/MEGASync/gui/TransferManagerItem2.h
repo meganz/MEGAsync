@@ -15,17 +15,17 @@ class TransferManagerItem2 : public QWidget
 
     public:
         explicit TransferManagerItem2(QWidget *parent = 0);
-
         void updateUi(QExplicitlySharedDataPointer<TransferData> data, const int row);
-
         void forwardMouseEvent(QMouseEvent *me);
 
     signals:
         void clearTransfers(int firstRow, int amount);
+        void retryTransfer(TransferTag tag);
 
     private slots:
         void on_tPauseResumeTransfer_clicked();
         void on_tCancelClearTransfer_clicked();
+        void on_tRetry_clicked();
         void onPauseStateChanged();
 
     private:

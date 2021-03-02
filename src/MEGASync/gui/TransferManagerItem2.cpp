@@ -137,7 +137,10 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
         case MegaTransfer::STATE_FAILED:
         {
             mUi->sStatus->setCurrentWidget(mUi->pFailed);
-            cancelClearTooltip = QObject::tr("Cancel transfer");
+            cancelClearTooltip = QObject::tr("Clear transfer");
+            showTPauseResume = false;
+            mIsFinished = true;
+            mUi->tRetry->setToolTip(tr(MegaError::getErrorString(data->mErrorCode)));
             break;
         }
         case MegaTransfer::STATE_RETRYING:
@@ -229,14 +232,19 @@ void TransferManagerItem2::on_tCancelClearTransfer_clicked()
 void TransferManagerItem2::forwardMouseEvent(QMouseEvent *me)
 {
     auto w (childAt(me->pos() - pos()));
-
     if (w)
     {
-        if (qobject_cast<QToolButton*>(w))
+        auto t (qobject_cast<QToolButton*>(w));
+        if (t)
         {
-            static_cast<QToolButton*>(w)->click();
+            t->click();
         }
     }
+}
+
+void TransferManagerItem2::on_tRetry_clicked()
+{
+    emit retryTransfer(mTransferTag);
 }
 
 void TransferManagerItem2::onPauseStateChanged()

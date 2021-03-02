@@ -178,8 +178,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi *api, mega::MegaTransfer *t
 {
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber()
-            || !transfer->getPriority())
+            || mNotificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -200,8 +199,7 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
 {
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber()
-            || !transfer->getPriority())
+            || mNotificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -234,6 +232,11 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
 
         emit dataChanged(index(row, 0), index(row, 0));
 
+        if (state == MegaTransfer::STATE_FAILED)
+        {
+            mFailedTransfers[tag] = transfer->copy();
+        }
+
         // Keep statistics up to date
         if (prevState != state)
         {
@@ -263,8 +266,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
 {
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber()
-            || !transfer->getPriority())
+            || mNotificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -275,11 +277,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
     if (row >= 0)
     {
         auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
-
-//        while (!transferItem->getTransferData())
-//        {
-//             transferItem = static_cast<TransferItem2*>(mTransfers[tag].data());
-//        }
 
         auto speed (transfer->getSpeed());
         auto totalBytes (transfer->getTotalBytes());
@@ -417,6 +414,18 @@ void QTransfersModel2::onPauseStateChanged()
     emit dataChanged(index(0, 0), index(mOrder.size()-1, 0), {Qt::DisplayRole});
 }
 
+void QTransfersModel2::onRetryTransfer(TransferTag tag)
+{
+    auto transfer(mFailedTransfers[tag]);
+    if (transfer)
+    {
+        TransferItem2 transferItem (qvariant_cast<TransferItem2>(mTransfers[tag]));
+        transferItem.getTransferData()->mMegaApi->retryTransfer(transfer);
+
+        removeRows(mOrder.indexOf(tag), 1, QModelIndex());
+    }
+}
+
 bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
 {
     if (parent == QModelIndex() && count > 0 && row >= 0)
@@ -429,8 +438,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
         for (auto i(0); i < count; ++i)
         {
             TransferTag tag (mOrder.takeAt(row));
-            TransferItem2 transferItem (qvariant_cast<TransferItem2>(mTransfers[tag]));
-            mTransfers.remove(tag);
+            TransferItem2 transferItem (qvariant_cast<TransferItem2>(mTransfers.take(tag)));
 
             // Keep statistics updated
             auto state(transferItem.getState());
@@ -449,6 +457,15 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
                 auto type(transferItem.getType());
                 mNbTransfersPerType[type]--;
                 emit nbOfTransfersPerTypeChanged(type, mNbTransfersPerType[type]);
+            }
+
+            if (state == MegaTransfer::STATE_FAILED)
+            {
+                auto transfer(mFailedTransfers.take(tag));
+                if (transfer)
+                {
+                    delete transfer;
+                }
             }
 
             auto rem (mRemainingTimes.take(tag));
@@ -512,16 +529,7 @@ void QTransfersModel2::insertTransfer(mega::MegaApi *api, mega::MegaTransfer *tr
                 api,
                 fileName);
 
-//   // TransferItem2* transferItem;
-//    do
-//    {
-//        mTransfers.remove(tag);
         mTransfers[tag] = QVariant::fromValue(TransferItem2(dataRow));
-
-//        // Check d
-//        transferItem = static_cast<TransferItem2 *>(mTransfers[tag].data());
-//    }
-//    while (!transferItem->getTransferData());
 
      mRemainingTimes[tag] = rem;
      mOrder.append(tag);

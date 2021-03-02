@@ -49,19 +49,19 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    //const TransferItem2 transferItem (qvariant_cast<TransferItem2>(index.data()));
-    auto transferItem (static_cast<const TransferItem2*>(index.internalPointer()));
+    const auto transferItem (qvariant_cast<TransferItem2>(index.data()));
 
-    return (mTransferState.isEmpty() || mTransferState.contains(transferItem->getState()))
-            && (mTransferType.isEmpty() || mTransferType.contains(transferItem->getType()))
-            && (mFileType.isEmpty() || mFileType.contains(transferItem->getFileType()))
-            && transferItem->getTransferData()->mFilename.contains(filterRegExp());
+    return (mTransferState.isEmpty() || mTransferState.contains(transferItem.getState()))
+            && (mTransferType.isEmpty() || mTransferType.contains(transferItem.getType()))
+            && (mFileType.isEmpty() || mFileType.contains(transferItem.getFileType()))
+            && transferItem.getTransferData()->mFilename.contains(filterRegExp());
 }
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    const TransferItem2 leftItem (qvariant_cast<TransferItem2>(left.data()));
-    const TransferItem2 rightItem (qvariant_cast<TransferItem2>(right.data()));
+    const auto leftItem (qvariant_cast<TransferItem2>(left.data()));
+    const auto rightItem (qvariant_cast<TransferItem2>(right.data()));
 
     return leftItem.getTag() < rightItem.getTag();
 }
+

@@ -20,10 +20,30 @@ using namespace mega;
 MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget* view, QObject *parent)
     : QStyledItemDelegate(parent),
       mModel(model),
+      mSourceModel(qobject_cast<QTransfersModel2*>(qobject_cast<TransfersSortFilterProxyModel*>(mModel)->sourceModel())),
       mView(view)
 {
     QObject::connect(static_cast<TransfersWidget*>(parent), &TransfersWidget::clearTransfers,
             this, &MegaTransferDelegate2::onClearTransfers);
+}
+
+TransferManagerItem2 * MegaTransferDelegate2::getTransferItemWidget(int row, int itemHeight) const
+{
+    const auto nbRowsMaxInView (mView->height() / itemHeight + 1);
+    const QString widgetName (QLatin1Literal("r")+QString::number(row % nbRowsMaxInView));
+
+    auto w (mView->findChild<TransferManagerItem2 *>(widgetName));
+
+    if (!w)
+    {
+        w = new TransferManagerItem2(mView);
+        w->setObjectName(widgetName);
+        connect(w, &TransferManagerItem2::clearTransfers,
+                this, &MegaTransferDelegate2::onClearTransfers);
+        connect(w, &TransferManagerItem2::retryTransfer,
+                mSourceModel, &QTransfersModel2::onRetryTransfer);
+    }
+    return w;
 }
 
 void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -32,18 +52,7 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
     {
         auto transferItem (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
 
-        const auto nbRowsMaxInView (mView->height() / option.rect.height() + 1);
-        const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
-
-        auto w (mView->findChild<TransferManagerItem2 *>(widgetName));
-
-        if (!w)
-        {
-            w = new TransferManagerItem2(mView);
-            w->setObjectName(widgetName);
-            connect(w, &TransferManagerItem2::clearTransfers,
-                    this, &MegaTransferDelegate2::onClearTransfers);
-        }
+        auto w (getTransferItemWidget(index.row(), option.rect.height()));
         w->resize(option.rect.size());
         w->move(option.rect.topLeft());
 
@@ -112,14 +121,8 @@ bool MegaTransferDelegate2::editorEvent(QEvent *event, QAbstractItemModel *model
                 QMouseEvent* me = static_cast<QMouseEvent*>(event);
                 if( me->button() == Qt::LeftButton )
                 {
-                    // Get TransferManagerItem2 widget under cursor
-                    const auto nbRowsMaxInView (mView->height() / option.rect.height() + 1);
-                    const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
-                    auto currentRow (option.widget->findChild<TransferManagerItem2 *>(widgetName));
-                    if (currentRow)
-                    {
-                        currentRow->forwardMouseEvent(me);
-                    }
+                    auto currentRow (getTransferItemWidget(index.row(), option.rect.height()));
+                    currentRow->forwardMouseEvent(me);
                 }
                 break;
             }
