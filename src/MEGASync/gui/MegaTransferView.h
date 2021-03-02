@@ -1,11 +1,13 @@
 #ifndef MEGATRANSFERVIEW_H
 #define MEGATRANSFERVIEW_H
 
+#include "TransferItem.h"
+#include "QTransfersModel.h"
+#include "TransfersWidget.h"
+
 #include <QTreeView>
 #include <QMenu>
 #include <QMouseEvent>
-#include "TransferItem.h"
-#include "QTransfersModel.h"
 
 class MegaTransferView : public QTreeView
 {
@@ -14,7 +16,7 @@ class MegaTransferView : public QTreeView
 public:
     MegaTransferView(QWidget *parent = 0);
     void setup(int type);
-    void setup();
+    void setup(TransfersWidget* tw);
     void disableGetLink(bool disable);
     void disableContextMenus(bool option);
     int getType() const;
@@ -26,26 +28,25 @@ private:
     int type;
     bool disableMenus;
 
-    QMenu *contextInProgressMenu;
-    QAction *pauseTransfer;
-    QAction *resumeTransfer;
-    QAction *moveToTop;
-    QAction *moveUp;
-    QAction *moveDown;
-    QAction *moveToBottom;
-    QAction *cancelTransfer;
-    QMenu *contextCompleted;
-    QAction *getLink;
-    QAction *openItem;
-    QAction *showInFolder;
-    QAction *showInMEGA;
-    QAction *clearCompleted;
-    QAction *clearAllCompleted;
+    TransfersWidget* mParentTransferWidget;
+
+    QMenu *mContextMenu;
+    QAction *mPauseAction;
+    QAction *mResumeAction;
+    QAction *mMoveToTopAction;
+    QAction *mMoveUpAction;
+    QAction *mMoveDownAction;
+    QAction *mMoveToBottomAction;
+    QAction *mCancelAction;
+    QAction *mGetLinkAction;
+    QAction *mOpenItemAction;
+    QAction *mShowInFolderAction;
+    QAction *mShowInMegaAction;
+    QAction *mClearAction;
 
     void createContextMenu();
-    void createCompletedContextMenu();
-    void customizeContextInProgressMenu(bool enablePause, bool enableResume, bool enableUpMoves, bool enableDownMoves, bool isCancellable);
-    void customizeCompletedContextMenu(bool enableGetLink = true, bool enableOpen = true, bool enableShow = true, bool enableShowInMEGA = true);
+    void updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear,
+                           bool enableCancel);
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
@@ -56,19 +57,14 @@ protected:
 
 private slots:
     void onCustomContextMenu(const QPoint &point);
-    void pauseTransferClicked();
-    void resumeTransferClicked();
     void moveToTopClicked();
     void moveUpClicked();
     void moveDownClicked();
     void moveToBottomClicked();
-    void cancelTransferClicked();
     void getLinkClicked();
     void openItemClicked();
     void showInFolderClicked();
-    void showInMEGAClicked();
-    void clearTransferClicked();
-    void clearAllTransferClicked();
+    void showInMegaClicked();
 
 signals:
     void showContextMenu(QPoint pos);

@@ -62,7 +62,7 @@ private:
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
 
-private slots:
+public slots:
     void noTransfers();
     void onTransferAdded();
     void on_tPauseResumeAll_clicked();

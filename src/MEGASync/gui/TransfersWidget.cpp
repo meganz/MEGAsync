@@ -103,7 +103,7 @@ void TransfersWidget::configureTransferView()
     else
     {
         tDelegate2 = new MegaTransferDelegate2(mProxyModel, ui->tvTransfers, this);
-        ui->tvTransfers->setup();
+        ui->tvTransfers->setup(this);
         ui->tvTransfers->setItemDelegate(tDelegate2);
         ui->tvTransfers->setModel(mProxyModel);
         model2->initModel();
@@ -297,25 +297,6 @@ void TransfersWidget::on_tCancelAll_clicked()
         clearOrCancel(pool, poolState, row);
     }
 }
-
-//void TransfersWidget::clearOrCancel(const TransferItem2& transferItem, int row)
-//{
-//    // Clear if finished, cancel if not.
-//    auto state (transferItem.getState());
-//    if (state == MegaTransfer::STATE_COMPLETED
-//            || state == MegaTransfer::STATE_CANCELLED)
-//    {
-//        emit clearTransfer(row);
-//    }
-//    else
-//    {
-//        auto d (transferItem.getTransferData());
-
-//        MegaApi * api(d->mMegaApi);
-
-//        api->cancelTransferByTag(d->mTag);
-//    }
-//}
 
 void TransfersWidget::clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow)
 {
