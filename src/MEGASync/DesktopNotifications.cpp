@@ -249,7 +249,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const QString title{tr("Shared Folder Received")};
                     const QString message{tr("New shared folder from [X]")
                                 .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
                     const bool isNewShare{true};
@@ -261,7 +260,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const QString title{tr("Shared Folder Removed")};
                     notifySharedUpdate(alert, createDeletedShareMessage(alert), DELETE_SHARE);
                 }
                 break;
@@ -270,7 +268,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const QString title{tr("Shared Folder Updated")};
                     notifySharedUpdate(alert, getItemsAddedText(alert), NEW_SHARED_NODES);
                 }
                 break;
