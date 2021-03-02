@@ -110,28 +110,10 @@ void TransfersWidget::configureTransferView()
         mProxyModel->setDynamicSortFilter(true);
     }
 
-//    ui->tvTransfers->header()->close();
-//    ui->tvTransfers->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
-
-    // Test
-
-
-//    switch (mType)
-//    {
-//        case QTransfersModel::TYPE_DOWNLOAD:
-//            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
-//            break;
-//        case QTransfersModel::TYPE_UPLOAD:
-//            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
-//            break;
-//        default:
-//            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
-//            break;
-//    }
 }
 
 void TransfersWidget::pausedTransfers(bool paused)
@@ -192,12 +174,52 @@ void TransfersWidget::on_tPauseResumeAll_clicked()
 {
     QModelIndexList selection = ui->tvTransfers->selectionModel()->selectedRows();
 
-    for (auto index : selection)
+    static bool isPaused(true);
+
+    isPaused = !isPaused;
+
+    ui->tPauseResumeAll->setIcon(isPaused ?
+                                     QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png"))
+                                   : QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
+    ui->tPauseResumeAll->setToolTip(isPaused ?
+                                        tr("Resume transfers")
+                                      : tr("Pause transfers"));
+
+    if (selection.size() > 0)
     {
-        if (index.isValid())
+        for (auto index : selection)
         {
-            auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
-            d->mMegaApi->pauseTransferByTag(d->mTag, (d->mState != MegaTransfer::STATE_PAUSED));
+            if (index.isValid())
+            {
+                auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
+                if ((d->mState == MegaTransfer::STATE_PAUSED
+                     || d->mState == MegaTransfer::STATE_ACTIVE
+                     || d->mState == MegaTransfer::STATE_QUEUED
+                     || d->mState == MegaTransfer::STATE_RETRYING)
+                        && ((d->mState == MegaTransfer::STATE_PAUSED) != isPaused))                {
+                    d->mMegaApi->pauseTransferByTag(d->mTag, isPaused);
+                }
+            }
+        }
+        ui->tvTransfers->clearSelection();
+    }
+    else
+    {
+        for (auto row (0); row <= mProxyModel->rowCount()-1; ++row)
+        {
+            const TransferItem2 transferItem (
+                        qvariant_cast<TransferItem2>(mProxyModel->data(mProxyModel->index(
+                                                                           row, 0, QModelIndex()),
+                                                                       Qt::DisplayRole)));
+            auto d(transferItem.getTransferData());
+            if ((d->mState == MegaTransfer::STATE_PAUSED
+                 || d->mState == MegaTransfer::STATE_ACTIVE
+                 || d->mState == MegaTransfer::STATE_QUEUED
+                 || d->mState == MegaTransfer::STATE_RETRYING)
+                    && ((d->mState == MegaTransfer::STATE_PAUSED) != isPaused))
+            {
+                d->mMegaApi->pauseTransferByTag(d->mTag, isPaused);
+            }
         }
     }
 }

@@ -26,7 +26,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mFinishedStates {MegaTransfer::STATE_COMPLETED,
                      MegaTransfer::STATE_FAILED,
                      MegaTransfer::STATE_CANCELLED},
-    mCurrentTab(COMPLETED_TAB)
+    mCurrentTab(COMPLETED_TAB),
+    mSpeedRefreshTimer(new QTimer(this))
 {
     mUi->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -41,8 +42,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     mUi->wTransfers->setupTransfers();
     mUi->sStatus->setCurrentWidget(mUi->pUpToDate);
-
-
 
     Platform::enableDialogBlur(this);
 
@@ -84,6 +83,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             this, &TransferManager::onNbOfTransfersPerTypeChanged);
 
     QObject::connect(qApp, SIGNAL(pauseStateChanged()), this, SLOT(updateState()));
+
+    mSpeedRefreshTimer->setSingleShot(false);
+    connect(mSpeedRefreshTimer, &QTimer::timeout, this, &TransferManager::refreshSpeed);
 
     on_tAllTransfers_clicked();
 }
@@ -223,10 +225,12 @@ void TransferManager::onNbOfTransfersPerStateChanged(int state, long long number
         if (processedNumber)
         {
             leftFooterWidget = mUi->pSpeedAndClear;
+            mSpeedRefreshTimer->start(std::chrono::milliseconds(500));
         }
         else
         {
             leftFooterWidget = mUi->pUpToDate;
+            mSpeedRefreshTimer->stop();
         }
     }
 
@@ -277,6 +281,12 @@ void TransferManager::onNbOfTransfersPerFileTypeChanged(TransferData::FileTypes 
     }
 
     mUi->wMediaType->setVisible(showMediaBox);
+}
+
+void TransferManager::refreshSpeed()
+{
+    mUi->bUpSpeed->setText(Utilities::getSizeString(mMegaApi->getCurrentUploadSpeed()) + QLatin1Literal("/s"));
+    mUi->bDownSpeed->setText(Utilities::getSizeString(mMegaApi->getCurrentDownloadSpeed()) + QLatin1Literal("/s"));
 }
 
 void TransferManager::updateState()
@@ -408,6 +418,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     mUi->fSearchString->setProperty("itsOn", false);
     mUi->wTransfers->textFilterChanged(QRegExp());
     mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
+    on_tSearchCancel_clicked();
 }
 
 void TransferManager::on_bArchives_clicked()

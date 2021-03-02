@@ -77,8 +77,7 @@ QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex &pare
         return QModelIndex();
     }
 
-    int tag(mOrder.at(row));
-    return createIndex(row, column, (void*) mTransfers[tag].data());
+    return createIndex(row, column, mOrder.at(row));
 }
 
 QTransfersModel2::~QTransfersModel2()
@@ -109,7 +108,6 @@ void QTransfersModel2::initModel()
                 auto transfers (mMegaApi->getTransfers());
                 auto transferData(mMegaApi->getTransferData());
                 mNotificationNumber = transferData->getNotificationNumber();
-
 
                 // First, list all the transfers to add
                 QList<TransferTag> transfersToAdd;
@@ -170,7 +168,6 @@ void QTransfersModel2::initModel()
                 delete transfers;
             }
         });//end of queued function
-
     });// end of thread pool function
 }
 
@@ -193,6 +190,8 @@ void QTransfersModel2::onTransferStart(mega::MegaApi *api, mega::MegaTransfer *t
 
     mModelMutex.unlock();
     emitStatistics();
+
+    mNotificationNumber = transfer->getNotificationNumber();
 }
 
 void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error)
@@ -260,6 +259,7 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
             delete rem;
         }
     }
+    mNotificationNumber = transfer->getNotificationNumber();
 }
 
 void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer)
@@ -323,6 +323,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
             }
         }
     }
+    mNotificationNumber = transfer->getNotificationNumber();
 }
 
 void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTransfer *transfer, mega::MegaError* error)
@@ -394,6 +395,7 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
             }
         }
     }
+    mNotificationNumber = transfer->getNotificationNumber();
 }
 
 bool QTransfersModel2::areDlPaused()
@@ -493,10 +495,10 @@ void QTransfersModel2::insertTransfer(mega::MegaApi *api, mega::MegaTransfer *tr
     int type (transfer->getType());
     QString fileName (QString::fromUtf8(transfer->getFileName()));
     TransferData::FileTypes fileType = mFileTypes[Utilities::getExtensionPixmapName(fileName, QString())];
-    auto speed (transfer->getSpeed());
+    auto speed (api->getCurrentSpeed(type));
     auto totalBytes (transfer->getTotalBytes());
     auto transferredBytes(transfer->getTransferredBytes());
-    TransferRemainingTime* rem (new TransferRemainingTime());
+    TransferRemainingTime* rem (new TransferRemainingTime(speed, totalBytes-transferredBytes));
     auto remSecs (rem->calculateRemainingTimeSeconds(speed, totalBytes-transferredBytes));
     int errorCode(MegaError::API_OK);
     auto errorValue(0LL);

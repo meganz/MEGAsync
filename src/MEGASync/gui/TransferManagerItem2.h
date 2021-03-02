@@ -33,6 +33,8 @@ class TransferManagerItem2 : public QWidget
         Preferences* mPreferences;
         mega::MegaApi* mMegaApi;
         TransferTag mTransferTag;
+//        QMap<int, QWidget*> mStatusWidgetsByState;
+//        QMap<int, QWidget*> mStatusWidgetsByType;
         bool mIsPaused;
         bool mIsFinished;
         bool mAreDlPaused;

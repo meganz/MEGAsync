@@ -9,6 +9,17 @@ TransferRemainingTime::TransferRemainingTime()
 {
 }
 
+TransferRemainingTime::TransferRemainingTime(long long speedBytesSecond, long long remainingBytes)
+    :mRemainingSeconds{0}, mUpdateRemainingTimeCounter{0},
+        mRemainingTimesBuffer{}
+{
+    // Seed the object with given values
+    for (auto i(0); i < REMAINING_SECONDS_BUFFER_SIZE; ++i)
+    {
+        calculateRemainingTimeSeconds(speedBytesSecond, remainingBytes);
+    }
+}
+
 void TransferRemainingTime::calculateMedian()
 {
     // Avoid calls 2 size() and divisions

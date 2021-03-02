@@ -57,6 +57,7 @@ private:
     QSet<int> mFinishedStates;
     TM_TABS mCurrentTab;
     QSet<TransferData::FileTypes> mFileTypesFilter;
+    QTimer* mSpeedRefreshTimer;
 
     void toggleTab(TM_TABS tab);
     void updateFileTypeFilter(TransferData::FileTypes fileType);
@@ -87,6 +88,8 @@ private slots:
     void onNbOfTransfersPerStateChanged(int state, long long number);
     void onNbOfTransfersPerTypeChanged(int type, long long number);
     void onNbOfTransfersPerFileTypeChanged(TransferData::FileTypes fileType, long long number);
+
+    void refreshSpeed();
 
 protected:
     void changeEvent(QEvent *event);
