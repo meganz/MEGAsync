@@ -16,13 +16,17 @@ class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferLis
 public:
     explicit QTransfersModel2(QObject *parent = 0);
 
+    virtual Qt::ItemFlags flags(const QModelIndex&index) const;
+    virtual Qt::DropActions supportedDropActions() const;
+
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     QModelIndex parent(const QModelIndex & index) const;
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
-
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                  const QModelIndex &destinationParent, int destinationChild);
     bool areDlPaused();
     bool areUlPaused();
 
@@ -67,7 +71,7 @@ private:
     QMap<int, long long> mNbTransfersPerType;
     QMap<int, long long> mNbTransfersPerState;
 
-    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer *transfer);
+    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer *transfer, int row);
     void emitStatistics();
 };
 

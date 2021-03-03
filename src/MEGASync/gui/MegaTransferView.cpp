@@ -410,6 +410,7 @@ void MegaTransferView::moveToTopClicked()
             }
         }
     }
+    clearSelection();
 }
 
 void MegaTransferView::moveUpClicked()
@@ -433,6 +434,7 @@ void MegaTransferView::moveUpClicked()
             }
         }
     }
+    clearSelection();
 }
 
 void MegaTransferView::moveDownClicked()
@@ -459,6 +461,7 @@ void MegaTransferView::moveDownClicked()
             }
         }
     }
+    clearSelection();
 }
 
 void MegaTransferView::moveToBottomClicked()
@@ -482,6 +485,7 @@ void MegaTransferView::moveToBottomClicked()
             }
         }
     }
+    clearSelection();
 }
 
 void MegaTransferView::getLinkClicked()
