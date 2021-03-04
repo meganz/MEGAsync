@@ -390,7 +390,7 @@ void MegaTransferView::moveToTopClicked()
 {
     QModelIndexList selection = selectedIndexes();
 
-    // Reverse sort to keep indexes valid after deletion
+    // Reverse sort to keep items in the same order
     std::sort(selection.rbegin(), selection.rend());
 
     for (auto index : selection)
@@ -417,6 +417,9 @@ void MegaTransferView::moveUpClicked()
 {
     QModelIndexList selection = selectedIndexes();
 
+    // Sort to keep items in the same order
+    std::sort(selection.begin(), selection.end());
+
     for (auto index : selection)
     {
         if (index.isValid())
@@ -441,7 +444,7 @@ void MegaTransferView::moveDownClicked()
 {
     QModelIndexList selection = selectedIndexes();
 
-    // Reverse sort to keep indexes valid after deletion
+    // Reverse sort to keep items in the same order
     std::sort(selection.rbegin(), selection.rend());
 
     for (auto index : selection)
@@ -467,6 +470,9 @@ void MegaTransferView::moveDownClicked()
 void MegaTransferView::moveToBottomClicked()
 {
     QModelIndexList selection = selectedIndexes();
+
+    // Sort to keep items in the same order
+    std::sort(selection.begin(), selection.end());
 
     for (auto index : selection)
     {
