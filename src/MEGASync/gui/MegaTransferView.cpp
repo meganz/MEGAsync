@@ -69,6 +69,74 @@ int MegaTransferView::getType() const
     return type;
 }
 
+void MegaTransferView::pauseResumeSelection(bool pauseState)
+{
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+
+    auto selection = selectionModel()->selection();
+    QModelIndexList indexes;
+
+    if (selection.size() > 0)
+    {
+        if (proxy)
+        {
+            selection = proxy->mapSelectionToSource(selection);
+        }
+        indexes = selection.indexes();
+
+        clearSelection();
+    }
+    else
+    {
+        auto rowCount (model()->rowCount());
+        for (auto row (0); row < rowCount; ++row)
+        {
+            auto index (model()->index(row, 0, QModelIndex()));
+            if (proxy)
+            {
+                index = proxy->mapToSource(index);
+            }
+            indexes.push_back(index);
+        }
+    }
+    mParentTransferWidget->getModel2()->pauseTransfers(indexes, pauseState);
+}
+
+void MegaTransferView::cancelClearSelection()
+{
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+
+    auto selection = selectionModel()->selection();
+    QModelIndexList indexes;
+
+    if (selection.size() > 0)
+    {
+        if (proxy)
+        {
+            selection = proxy->mapSelectionToSource(selection);
+        }
+        indexes = selection.indexes();
+
+        clearSelection();
+    }
+    else
+    {
+        auto rowCount (model()->rowCount());
+        for (auto row (0); row < rowCount; ++row)
+        {
+            auto index (model()->index(row, 0, QModelIndex()));
+            if (proxy)
+            {
+                index = proxy->mapToSource(index);
+            }
+            indexes.push_back(index);
+        }
+    }
+
+    mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
+}
+
+
 void MegaTransferView::disableContextMenus(bool option)
 {
     disableMenus = option;
@@ -330,14 +398,6 @@ void MegaTransferView::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void MegaTransferView::paintEvent(QPaintEvent * e)
-{
-    auto app = static_cast<MegaApplication*>(qApp);
-    app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
-    QTreeView::paintEvent(e);
-    app->megaApiLock.reset();
-}
-
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
     bool enablePause = false;
@@ -388,108 +448,56 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
 void MegaTransferView::moveToTopClicked()
 {
-    QModelIndexList selection = selectedIndexes();
-
+    auto indexes = selectionModel()->selectedRows();
     // Reverse sort to keep items in the same order
-    std::sort(selection.rbegin(), selection.rend());
+    std::sort(indexes.rbegin(), indexes.rend());
 
-    for (auto index : selection)
+    for (auto index : indexes)
     {
-        if (index.isValid())
-        {
-            const auto transferItem (
-                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-            auto d (transferItem.getTransferData());
-
-            if (d->mState == MegaTransfer::STATE_PAUSED
-               || d->mState == MegaTransfer::STATE_ACTIVE
-               || d->mState == MegaTransfer::STATE_QUEUED
-               || d->mState == MegaTransfer::STATE_RETRYING)
-            {
-                d->mMegaApi->moveTransferToFirstByTag(d->mTag);
-            }
-        }
+        model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), 0);
     }
     clearSelection();
 }
 
 void MegaTransferView::moveUpClicked()
 {
-    QModelIndexList selection = selectedIndexes();
-
+    auto indexes = selectionModel()->selectedRows();
     // Sort to keep items in the same order
-    std::sort(selection.begin(), selection.end());
+    std::sort(indexes.begin(), indexes.end());
 
-    for (auto index : selection)
+    for (auto index : indexes)
     {
-        if (index.isValid())
-        {
-            const auto transferItem (
-                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-            auto d (transferItem.getTransferData());
-
-            if (d->mState == MegaTransfer::STATE_PAUSED
-               || d->mState == MegaTransfer::STATE_ACTIVE
-               || d->mState == MegaTransfer::STATE_QUEUED
-               || d->mState == MegaTransfer::STATE_RETRYING)
-            {
-                d->mMegaApi->moveTransferUpByTag(d->mTag);
-            }
-        }
+        int row(index.row());
+        model()->moveRows(QModelIndex(), row, 1, QModelIndex(), row - 1);
     }
     clearSelection();
 }
 
 void MegaTransferView::moveDownClicked()
 {
-    QModelIndexList selection = selectedIndexes();
+    auto indexes = selectionModel()->selectedRows();
 
     // Reverse sort to keep items in the same order
-    std::sort(selection.rbegin(), selection.rend());
+    std::sort(indexes.rbegin(), indexes.rend());
 
-    for (auto index : selection)
+    for (auto index : indexes)
     {
-        if (index.isValid())
-        {
-            const auto transferItem (
-                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-            auto d (transferItem.getTransferData());
-
-            if (d->mState == MegaTransfer::STATE_PAUSED
-               || d->mState == MegaTransfer::STATE_ACTIVE
-               || d->mState == MegaTransfer::STATE_QUEUED
-               || d->mState == MegaTransfer::STATE_RETRYING)
-            {
-                d->mMegaApi->moveTransferDownByTag(d->mTag);
-            }
-        }
+            int row(index.row());
+            model()->moveRows(QModelIndex(), row, 1, QModelIndex(), row + 1);
     }
     clearSelection();
 }
 
 void MegaTransferView::moveToBottomClicked()
 {
-    QModelIndexList selection = selectedIndexes();
+    auto indexes = selectionModel()->selectedRows();
 
     // Sort to keep items in the same order
-    std::sort(selection.begin(), selection.end());
+    std::sort(indexes.begin(), indexes.end());
 
-    for (auto index : selection)
+    for (auto index : indexes)
     {
-        if (index.isValid())
-        {
-            const auto transferItem (
-                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-            auto d (transferItem.getTransferData());
-
-            if (d->mState == MegaTransfer::STATE_PAUSED
-               || d->mState == MegaTransfer::STATE_ACTIVE
-               || d->mState == MegaTransfer::STATE_QUEUED
-               || d->mState == MegaTransfer::STATE_RETRYING)
-            {
-                d->mMegaApi->moveTransferToLastByTag(d->mTag);
-            }
-        }
+            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), model()->rowCount());
     }
     clearSelection();
 }

@@ -170,9 +170,10 @@ void TransfersWidget::noTransfers()
     ui->sWidget->setCurrentWidget(ui->pNoTransfers);
 }
 
+
+
 void TransfersWidget::on_tPauseResumeAll_clicked()
 {
-    QModelIndexList selection = ui->tvTransfers->selectionModel()->selectedRows();
 
     static bool isPaused(true);
 
@@ -185,138 +186,12 @@ void TransfersWidget::on_tPauseResumeAll_clicked()
                                         tr("Resume transfers")
                                       : tr("Pause transfers"));
 
-    if (selection.size() > 0)
-    {
-        for (auto index : selection)
-        {
-            if (index.isValid())
-            {
-                auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
-                if ((d->mState == MegaTransfer::STATE_PAUSED
-                     || d->mState == MegaTransfer::STATE_ACTIVE
-                     || d->mState == MegaTransfer::STATE_QUEUED
-                     || d->mState == MegaTransfer::STATE_RETRYING)
-                        && ((d->mState == MegaTransfer::STATE_PAUSED) != isPaused))                {
-                    d->mMegaApi->pauseTransferByTag(d->mTag, isPaused);
-                }
-            }
-        }
-        ui->tvTransfers->clearSelection();
-    }
-    else
-    {
-        for (auto row (0); row <= mProxyModel->rowCount()-1; ++row)
-        {
-            const TransferItem2 transferItem (
-                        qvariant_cast<TransferItem2>(mProxyModel->data(mProxyModel->index(
-                                                                           row, 0, QModelIndex()),
-                                                                       Qt::DisplayRole)));
-            auto d(transferItem.getTransferData());
-            if ((d->mState == MegaTransfer::STATE_PAUSED
-                 || d->mState == MegaTransfer::STATE_ACTIVE
-                 || d->mState == MegaTransfer::STATE_QUEUED
-                 || d->mState == MegaTransfer::STATE_RETRYING)
-                    && ((d->mState == MegaTransfer::STATE_PAUSED) != isPaused))
-            {
-                d->mMegaApi->pauseTransferByTag(d->mTag, isPaused);
-            }
-        }
-    }
+    ui->tvTransfers->pauseResumeSelection(isPaused);
 }
 
 void TransfersWidget::on_tCancelAll_clicked()
 {
-    QModelIndexList selection = ui->tvTransfers->selectionModel()->selectedRows();
-
-    QList<QExplicitlySharedDataPointer<TransferData>> pool;
-    int poolState;
-    int row;
-
-    // If row selected, process only these rows
-    if (selection.size() > 0)
-    {
-        // Reverse sort to keep indexes valid after deletion
-        std::sort(selection.rbegin(), selection.rend());
-
-        for (auto index : selection)
-        {
-            if (index.isValid())
-            {
-                const auto transferItem (
-                            qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-                auto d(transferItem.getTransferData());
-                auto state (d->mState);
-
-                if (pool.isEmpty())
-                {
-                    poolState = state;
-                    row = index.row() + 1;
-                }
-
-                if (state != poolState || (index.row() != (row-1)))
-                {
-                    clearOrCancel(pool, poolState, row);
-                    poolState = state;
-                    pool.clear();
-                }
-                pool += transferItem.getTransferData();
-                row = index.row();
-            }
-        }
-    }
-    // else process all available rows
-    else
-    {
-        for (row = mProxyModel->rowCount(QModelIndex())-1; row >= 0; --row)
-        {
-            const TransferItem2 transferItem (
-                        qvariant_cast<TransferItem2>(mProxyModel->data(mProxyModel->index(
-                                                                           row, 0, QModelIndex()),
-                                                                       Qt::DisplayRole)));
-            auto d(transferItem.getTransferData());
-
-            auto state (d->mState);
-
-            if (pool.isEmpty())
-            {
-                poolState = state;
-            }
-
-            if (state != poolState)
-            {
-                clearOrCancel(pool, poolState, row);
-                poolState = state;
-                pool.clear();
-            }
-            pool += transferItem.getTransferData();
-        }
-        row = 0;
-    }
-
-    // Flush pool if not empty
-    if (!pool.isEmpty())
-    {
-        clearOrCancel(pool, poolState, row);
-    }
-}
-
-void TransfersWidget::clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow)
-{
-
-    // Clear if finished, cancel if not.
-    if (state == MegaTransfer::STATE_COMPLETED
-            || state == MegaTransfer::STATE_CANCELLED
-            || state == MegaTransfer::STATE_FAILED)
-    {
-        emit clearTransfers(firstRow, pool.size());
-    }
-    else if (state != MegaTransfer::STATE_COMPLETING)
-    {
-        for (auto transfer : pool)
-        {
-            transfer->mMegaApi->cancelTransferByTag(transfer->mTag);
-        }
-    }
+    ui->tvTransfers->cancelClearSelection();
 }
 
 void TransfersWidget::onTransferAdded()

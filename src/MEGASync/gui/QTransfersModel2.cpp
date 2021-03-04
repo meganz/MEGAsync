@@ -609,7 +609,7 @@ bool QTransfersModel2::areUlPaused()
     return mAreUlPaused;
 }
 
-void QTransfersModel2::getLinks(QList<int> rows)
+void QTransfersModel2::getLinks(QList<int>& rows)
 {
     if (!rows.isEmpty())
     {
@@ -662,6 +662,85 @@ void QTransfersModel2::getLinks(QList<int> rows)
         if (exportList.size() || linkList.size())
         {
             qobject_cast<MegaApplication*>(qApp)->exportNodes(exportList, linkList);
+        }
+    }
+}
+
+void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
+{
+    // Reverse sort to keep indexes valid after deletion
+    std::sort(indexes.rbegin(), indexes.rend());
+
+    QList<TransferTag> tags;
+
+    mModelMutex.lock();
+    for (auto index : indexes)
+    {
+        tags.push_back(mOrder.at(index.row()));
+    }
+
+    // First remove rows, then cancel transfers.
+    // This way, there is no risk of messing up the row order with cancel requests.
+    int count(0);
+    int row(0);
+    for (auto tag : tags)
+    {
+        auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
+        auto d(transferItem->getTransferData());
+
+        if (d->mState == MegaTransfer::STATE_COMPLETED
+                || d->mState == MegaTransfer::STATE_CANCELLED
+                || d->mState == MegaTransfer::STATE_FAILED)
+        {
+            if (count == 0)
+            {
+                row = mOrder.lastIndexOf(tag, row);
+            }
+
+            if (row == 0 || mOrder.at(row) != tag)
+            {
+                removeRows(row, count+1, QModelIndex());
+                count = 0;
+            }
+            count++;
+            row--;
+            tags.removeOne(tag);
+        }
+        if (d->mState == MegaTransfer::STATE_COMPLETING)
+        {
+            tags.removeOne(tag);
+        }
+    }
+    mModelMutex.unlock();
+
+    for (auto tag : tags)
+    {
+        mMegaApi->cancelTransferByTag(tag);
+    }
+}
+
+void QTransfersModel2::pauseTransfers(QModelIndexList& indexes, bool pauseState)
+{
+    QList<TransferTag> tags;
+
+    mModelMutex.lock();
+    for (auto index : indexes)
+    {
+        tags.push_back(mOrder.at(index.row()));
+    }
+    mModelMutex.unlock();
+
+    for (auto tag : tags)
+    {
+        auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
+        auto d(transferItem->getTransferData());
+
+        if ((!pauseState && (d->mState == MegaTransfer::STATE_PAUSED))
+                || (pauseState && (d->mState == MegaTransfer::STATE_ACTIVE
+                                   || d->mState == MegaTransfer::STATE_QUEUED
+                                   || d->mState == MegaTransfer::STATE_RETRYING)))
+        {
+            d->mMegaApi->pauseTransferByTag(d->mTag, pauseState);
         }
     }
 }
@@ -747,68 +826,69 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
     }
 }
 
-//bool QTransfersModel2::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
-//                                const QModelIndex &destinationParent, int destinationChild)
-//{
-//    int lastRow = sourceRow + count - 1;
-//    const int rowCount = mOrder.size();
+bool QTransfersModel2::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                                const QModelIndex &destinationParent, int destinationChild)
+{
+    int lastRow = sourceRow + count - 1;
+    const int rowCount = mOrder.size();
 
-//    if (sourceParent == destinationParent
-//            && (destinationChild < sourceRow
-//                || destinationChild > lastRow))
-//    {
+    if (sourceParent == destinationParent
+            && (destinationChild < sourceRow
+                || destinationChild > lastRow))
+    {
+
+        // To keep order, do from first to last if destination is before first,
+        // and from last to first if destination is after last.
+        bool ascending (destinationChild < sourceRow ?
+                    false
+                  : true);
+//        int rowToMove = (ascending ? sourceRow : lastRow);
+
+        QList<TransferTag> tagsToMove;
+
+        mModelMutex.lock();
 //        beginMoveRows(sourceParent, sourceRow, lastRow,
 //                      destinationParent, destinationChild);
 
-//        mModelMutex.lock();
-//        // To keep order, do from first to last if destination is before first,
-//        // and from last to first if destination is after last.
-//        bool ascending (destinationChild < sourceRow ?
-//                    false
-//                  : true);
-//        int rowToMove = (ascending ? sourceRow : lastRow);
+        for (auto row(sourceRow); row <= lastRow; ++row)
+        {
+            if (ascending)
+            {
+                tagsToMove.push_back(mOrder.at(row));
+            }
+            else
+            {
+                tagsToMove.push_front(mOrder.at(row));
+            }
+        }
 
-//        QList<TransferTag> tagsToMove;
-
-//        for (auto row(sourceRow); row <= lastRow; ++row)
-//        {
-//            if (ascending)
-//            {
-//                tagsToMove.push_back(mOrder.at(row));
-//            }
-//            else
-//            {
-//                tagsToMove.push_front(mOrder.at(row));
-//            }
-//        }
-
-//        for (auto tag : tagsToMove)
-//        {
-//            auto d (qvariant_cast<TransferItem2>(mTransfers[tag]).getTransferData());
-//            if (destinationChild == 0)
-//            {
-//                d->mMegaApi->moveTransferToFirstByTag(d->mTag);
-//            }
-//            else if (destinationChild == rowCount)
-//            {
-//                d->mMegaApi->moveTransferToLastByTag(d->mTag);
-//            }
-//            else if (destinationChild == lastRow+1)
-//            {
-//                d->mMegaApi->moveTransferUpByTag(d->mTag);
-//            }
-//            else if (destinationChild == sourceRow-1)
-//            {
-//                d->mMegaApi->moveTransferDownByTag(d->mTag);
-//            }
-//            mOrder.move(rowToMove, destinationChild);
-//        }
-//        mModelMutex.unlock();
-//        endMoveRows();
-//        return true;
-//    }
-//    return false;
-//}
+        for (auto tag : tagsToMove)
+        {
+            auto d (qvariant_cast<TransferItem2>(mTransfers[tag]).getTransferData());
+            if (destinationChild == 0)
+            {
+                d->mMegaApi->moveTransferToFirstByTag(d->mTag);
+            }
+            else if (destinationChild == rowCount)
+            {
+                d->mMegaApi->moveTransferToLastByTag(d->mTag);
+            }
+            else if (destinationChild < lastRow)
+            {
+                d->mMegaApi->moveTransferUpByTag(d->mTag);
+            }
+            else if (destinationChild > sourceRow)
+            {
+                d->mMegaApi->moveTransferDownByTag(d->mTag);
+            }
+            //mOrder.move(rowToMove, destinationChild);
+        }
+        mModelMutex.unlock();
+       // endMoveRows();
+        return true;
+    }
+    return false;
+}
 
 Qt::ItemFlags QTransfersModel2::flags(const QModelIndex &index) const
 {

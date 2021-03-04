@@ -12,6 +12,9 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
     public:
         TransfersSortFilterProxyModel(QObject *parent = 0);
 
+        bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                      const QModelIndex &destinationParent, int destinationChild);
+
         void setTransferType(const QSet<int> transferTypes);
         void addTransferType(const QSet<int> transferTypes);
         void setTransferState(const QSet<int> transferStates);
@@ -22,6 +25,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
         bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+
 
     private:
         QSet<int> mTransferType;

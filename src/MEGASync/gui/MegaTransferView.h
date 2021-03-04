@@ -21,6 +21,9 @@ public:
     void disableContextMenus(bool option);
     int getType() const;
 
+    void pauseResumeSelection(bool pauseState);
+    void cancelClearSelection();
+
 private:
     int lastItemHoveredTag;
     QList<int> transferTagSelected;
@@ -53,7 +56,6 @@ protected:
     virtual void mouseReleaseEvent ( QMouseEvent * event );
     virtual void leaveEvent(QEvent* event);
     void changeEvent(QEvent *event);
-    void paintEvent(QPaintEvent * e);
 
 private slots:
     void onCustomContextMenu(const QPoint &point);

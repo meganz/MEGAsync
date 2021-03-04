@@ -65,3 +65,26 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
     return leftItem->mPriority > rightItem->mPriority;
 }
 
+bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+              const QModelIndex &destinationParent, int destinationChild)
+{
+    bool moveOk(true);
+    int row(sourceRow);
+    while (moveOk && row < (sourceRow+count))
+    {
+        auto sourceIndex(mapToSource(index(sourceRow, 0, sourceParent)));
+        int destRow;
+        if (destinationChild == rowCount())
+        {
+            destRow = sourceModel()->rowCount();
+        }
+        else
+        {
+            destRow = mapToSource(index(destinationChild, 0, destinationParent)).row();
+        }
+        moveOk = sourceModel()->moveRows(sourceIndex.parent(), sourceIndex.row(), 1,
+                                         sourceIndex.parent(), destRow);
+        row++;
+    }
+    return moveOk;
+}

@@ -23,8 +23,8 @@ MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget*
       mSourceModel(qobject_cast<QTransfersModel2*>(qobject_cast<TransfersSortFilterProxyModel*>(mModel)->sourceModel())),
       mView(view)
 {
-    QObject::connect(static_cast<TransfersWidget*>(parent), &TransfersWidget::clearTransfers,
-            this, &MegaTransferDelegate2::onClearTransfers);
+//    QObject::connect(static_cast<TransfersWidget*>(parent), &TransfersWidget::clearTransfers,
+//            this, &MegaTransferDelegate2::onClearTransfers);
 }
 
 TransferManagerItem2 * MegaTransferDelegate2::getTransferItemWidget(int row, int itemHeight) const
@@ -82,7 +82,15 @@ QSize MegaTransferDelegate2::sizeHint(const QStyleOptionViewItem &option, const 
 
 void MegaTransferDelegate2::onClearTransfers(int firstRow, int amount)
 {
-    mModel->removeRows(firstRow, amount, QModelIndex());
+    QModelIndexList indexes;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(mModel));
+    auto index (mModel->index(firstRow, 0, QModelIndex()));
+    if (proxy)
+    {
+        index = proxy->mapToSource(index);
+    }
+    indexes.push_back(index);
+    mSourceModel->cancelClearTransfers(indexes);
 }
 
 void MegaTransferDelegate2::processCancel(int tag)

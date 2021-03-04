@@ -255,11 +255,6 @@ void TransferManagerItem2::on_tCancelClearTransfer_clicked()
         // Clear
         emit clearTransfers(mRow, 1);
     }
-    else
-    {
-        // Cancel
-        mMegaApi->cancelTransferByTag(mTransferTag);
-    }
 }
 
 void TransferManagerItem2::forwardMouseEvent(QMouseEvent *me)
