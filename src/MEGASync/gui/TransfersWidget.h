@@ -41,6 +41,7 @@ public:
 
     QTransfersModel *getModel();
     QTransfersModel2* getModel2();
+    TransfersSortFilterProxyModel* getProxyModel() {return mProxyModel;}
     ~TransfersWidget();
 
     bool areTransfersActive();

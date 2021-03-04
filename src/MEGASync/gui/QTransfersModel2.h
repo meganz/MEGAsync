@@ -29,7 +29,7 @@ public:
 //                  const QModelIndex &destinationParent, int destinationChild);
     bool areDlPaused();
     bool areUlPaused();
-
+    void getLinks(QList<int> rows);
     ~QTransfersModel2();
 
     void initModel();

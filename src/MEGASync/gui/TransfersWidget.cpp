@@ -242,10 +242,10 @@ void TransfersWidget::on_tCancelAll_clicked()
         {
             if (index.isValid())
             {
-                const TransferItem2 transferItem (
+                const auto transferItem (
                             qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-
-                auto state (transferItem.getState());
+                auto d(transferItem.getTransferData());
+                auto state (d->mState);
 
                 if (pool.isEmpty())
                 {
@@ -273,7 +273,9 @@ void TransfersWidget::on_tCancelAll_clicked()
                         qvariant_cast<TransferItem2>(mProxyModel->data(mProxyModel->index(
                                                                            row, 0, QModelIndex()),
                                                                        Qt::DisplayRole)));
-            auto state (transferItem.getState());
+            auto d(transferItem.getTransferData());
+
+            auto state (d->mState);
 
             if (pool.isEmpty())
             {

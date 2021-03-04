@@ -7,7 +7,10 @@ using namespace mega;
 void TransferItem2::updateValuesTransferFinished(uint64_t updateTime,
                                   int errorCode, long long errorValue,
                                   long long meanSpeed,
-                                  int state, long long transferedBytes)
+                                  int state, long long transferedBytes,
+                                                 MegaHandle parentHandle,
+                                                 MegaHandle nodeHandle,
+                                                 MegaNode* publicNode)
 {
    d->mErrorCode = errorCode;
    d->mState = state;
@@ -18,6 +21,9 @@ void TransferItem2::updateValuesTransferFinished(uint64_t updateTime,
    d->mMeanSpeed = meanSpeed;
    d->mTransferredBytes = transferedBytes;
    d->mUpdateTime = updateTime;
+   d->mParentHandle = parentHandle;
+   d->mNodeHandle = nodeHandle;
+   d->mPublicNode = publicNode;
 }
 
 void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
@@ -26,7 +32,8 @@ void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
                                  long long meanSpeed,
                                  long long speed,
                                  unsigned long long priority,
-                                 int state, long long transferedBytes)
+                                 int state, long long transferedBytes,
+                                 MegaNode* publicNode)
 {
     d->mState = state;
     d->mRemainingTime = remainingTime;
@@ -38,4 +45,5 @@ void TransferItem2::updateValuesTransferUpdated(uint64_t updateTime,
     d->mTransferredBytes = transferedBytes;
     d->mUpdateTime = updateTime;
     d->mPriority = priority;
+    d->mPublicNode = publicNode;
 }

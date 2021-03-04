@@ -496,115 +496,89 @@ void MegaTransferView::moveToBottomClicked()
 
 void MegaTransferView::getLinkClicked()
 {
-//    if (disableLink)
-//    {
-//        return;
-//    }
+    if (disableLink)
+    {
+        return;
+    }
+    auto  selection = selectionModel()->selection();
 
-//    MegaTransfer *transfer = NULL;
-//    QTransfersModel *model = (QTransfersModel*)this->model();
-//    if (model)
-//    {
-//        QList<MegaHandle> exportList;
-//        QStringList linkList;
-//        for (int i = 0; i < transferTagSelected.size(); i++)
-//        {
-//            transfer = model->getTransferByTag(transferTagSelected[i]);
-//            if (transfer)
-//            {
-//                MegaNode *node = transfer->getPublicMegaNode();
-//                if (!node || !node->isPublic())
-//                {
-//                    exportList.push_back(transfer->getNodeHandle());
-//                }
-//                else
-//                {
-//                    char *handle = node->getBase64Handle();
-//                    char *key = node->getBase64Key();
-//                    if (handle && key)
-//                    {
-//                        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
-//                                .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
-//                        linkList.append(link);
-//                    }
-//                    delete [] handle;
-//                    delete [] key;
-//                }
-//                delete node;
-//                delete transfer;
-//            }
-//        }
+    QList<int> rows;
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
 
-//        if (exportList.size() || linkList.size())
-//        {
-//            ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
-//        }
-//    }
+    if (proxy)
+    {
+        selection = proxy->mapSelectionToSource(selection);
+    }
+
+    for (auto index : selection.indexes())
+    {
+        if (index.isValid())
+        {
+            rows.push_back(index.row());
+        }
+    }
+
+    if (!rows.isEmpty())
+    {
+        mParentTransferWidget->getModel2()->getLinks(rows);
+    }
+
+    clearSelection();
 }
 
 void MegaTransferView::openItemClicked()
 {
-//    MegaTransfer *transfer = NULL;
-//    QTransfersModel *model = (QTransfersModel*)this->model();
-//    if (model)
-//    {
-//        for (int i = 0; i < transferTagSelected.size(); i++)
-//        {
-//            transfer = model->getTransferByTag(transferTagSelected[i]);
-//            if (transfer && transfer->getPath())
-//            {
-//                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QString::fromUtf8(transfer->getPath())));
-//            }
-//            delete transfer;
-//        }
-//    }
+    QModelIndexList selection = selectedIndexes();
+    for (auto index : selection)
+    {
+        if (index.isValid())
+        {
+            const auto transferItem (
+                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+            auto d (transferItem.getTransferData());
+            if (!d->mPath.isEmpty())
+            {
+                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(d->mPath));
+            }
+        }
+    }
+    clearSelection();
 }
 
 void MegaTransferView::showInFolderClicked()
 {
-//    MegaTransfer *transfer = NULL;
-//    QTransfersModel *model = (QTransfersModel*)this->model();
-//    if (model)
-//    {
-//        for (int i = 0; i < transferTagSelected.size(); i++)
-//        {
-//            transfer = model->getTransferByTag(transferTagSelected[i]);
-//            if (transfer && transfer->getPath())
-//            {
-//                QString localPath = QString::fromUtf8(transfer->getPath());
-//                #ifdef WIN32
-//                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-//                {
-//                    localPath = localPath.mid(4);
-//                }
-//                #endif
-//                Platform::showInFolder(localPath);
-//            }
-//            delete transfer;
-//        }
-//    }
+    QModelIndexList selection = selectedIndexes();
+    for (auto index : selection)
+    {
+        if (index.isValid())
+        {
+            const auto transferItem (
+                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+            auto d (transferItem.getTransferData());
+            if (!d->mPath.isEmpty())
+            {
+                Platform::showInFolder(d->mPath);
+            }
+        }
+    }
+    clearSelection();
 }
 
 void MegaTransferView::showInMegaClicked()
 {
-//    MegaTransfer *transfer = NULL;
-//    QTransfersModel *model = (QTransfersModel*)this->model();
-//    if (model)
-//    {
-//        for (int i = 0; i < transferTagSelected.size(); i++)
-//        {
-//            transfer = model->getTransferByTag(transferTagSelected[i]);
-//            if (transfer)
-//            {
-//                MegaHandle handle = transfer->getParentHandle();
-//                if (handle != INVALID_HANDLE)
-//                {
-//                    MegaApplication* app{((MegaApplication *)qApp)};
-//                    constexpr bool versions{false};
-//                    app->shellViewOnMega(handle, versions);
-//                }
-//                delete transfer;
-//            }
-//        }
-//    }
+    QModelIndexList selection = selectedIndexes();
+    for (auto index : selection)
+    {
+        if (index.isValid())
+        {
+            const auto transferItem (
+                        qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
+            auto d (transferItem.getTransferData());
+            if (d->mParentHandle != mega::INVALID_HANDLE)
+            {
+                qobject_cast<MegaApplication*>(qApp)->shellViewOnMega(d->mParentHandle, false);
+            }
+        }
+    }
+    clearSelection();
 }

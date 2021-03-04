@@ -24,9 +24,6 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.png"), QString())] = TransferData::TYPE_IMAGE;
     mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.bin"), QString())] = TransferData::TYPE_OTHER;
 
-    // Connect to transfer changes signals
-    mMegaApi->addTransferListener(this);
-
     // Connect to pause state change signal
     QObject::connect((MegaApplication *)qApp, &MegaApplication::pauseStateChanged,
                       this, &QTransfersModel2::onPauseStateChanged);
@@ -83,7 +80,22 @@ QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex &pare
 QTransfersModel2::~QTransfersModel2()
 {
     mMegaApi->removeTransferListener(this);
+
+    mModelMutex.lock();
+    for (auto transfer : mTransfers)
+    {
+        auto transferItem (static_cast<TransferItem2*>(transfer.data()));
+        auto d (transferItem->getTransferData());
+
+        if (d->mPublicNode)
+        {
+            delete d->mPublicNode;
+        }
+    }
+
+    qDeleteAll(mFailedTransfers);
     qDeleteAll(mRemainingTimes);
+    mModelMutex.unlock();
 }
 
 void QTransfersModel2::initModel()
@@ -201,6 +213,8 @@ void QTransfersModel2::initModel()
                 }
                 delete transfers;
             }
+            // Connect to transfer changes signals
+            mMegaApi->addTransferListener(this);
         });//end of queued function
     });// end of thread pool function
 }
@@ -259,16 +273,16 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
         return;
     }
 
-
     TransferTag tag (transfer->getTag());
     auto row (mOrder.indexOf(tag));
 
     if (row >= 0)
     {
         auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
+        auto d (transferItem->getTransferData());
 
         auto state (transfer->getState());
-        auto prevState (transferItem->getState());
+        auto prevState (d->mState);
         int  errorCode (MegaError::API_OK);
         auto errorValue (0LL);
 
@@ -278,12 +292,15 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
             errorValue = error->getValue();
         }
 
-        transferItem->updateValuesTransferFinished(transfer->getUpdateTime(),
-                                         errorCode,
-                                         errorValue,
-                                         transfer->getMeanSpeed(),
-                                         state,
-                                         transfer->getTransferredBytes());
+        transferItem->updateValuesTransferFinished( transfer->getUpdateTime(),
+                                                    errorCode,
+                                                    errorValue,
+                                                    transfer->getMeanSpeed(),
+                                                    state,
+                                                    transfer->getTransferredBytes(),
+                                                    transfer->getParentHandle(),
+                                                    transfer->getNodeHandle(),
+                                                    transfer->getPublicMegaNode());
 
         emit dataChanged(index(row, 0), index(row, 0));
 
@@ -301,12 +318,9 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
             emit nbOfTransfersPerStateChanged(prevState, mNbTransfersPerState[prevState]);
             emit nbOfTransfersPerStateChanged(state, mNbTransfersPerState[state]);
 
-            if (transfer->isFinished())
-            {
-                auto type (transferItem->getType());
-                mNbTransfersPerType[type]--;
-                emit nbOfTransfersPerTypeChanged(type, mNbTransfersPerType[type]);
-            }
+            auto type (d->mType);
+            mNbTransfersPerType[type]--;
+            emit nbOfTransfersPerTypeChanged(type, mNbTransfersPerType[type]);
         }
 
         auto rem (mRemainingTimes.take(tag));
@@ -314,6 +328,10 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *
         {
             delete rem;
         }
+    }
+    else
+    {
+        onTransferStart(api, transfer);
     }
     mNotificationNumber = transfer->getNotificationNumber();
 }
@@ -342,7 +360,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
         auto remSecs (rem->calculateRemainingTimeSeconds(speed, totalBytes-transferredBytes));
 
         auto state (transfer->getState());
-        auto prevState = transferItem->getState();
+        auto prevState = d->mState;
 
         auto priority (transfer->getPriority());
         auto prevPriority (d->mPriority);
@@ -355,7 +373,8 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
                                         speed,
                                         priority,
                                         state,
-                                        transferredBytes);
+                                        transferredBytes,
+                                        transfer->getPublicMegaNode());
 
         bool sameRow(true);
         if (priority != prevPriority)
@@ -485,8 +504,8 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
 
             if (transfer->isFinished())
             {
-                auto type (transferItem->getType());
-                auto fileType (transferItem->getFileType());
+                auto type (d->mType);
+                auto fileType (d->mFileType);
 
                 mNbTransfersPerType[type]--;
                 mNbTransfersPerFileType[fileType]--;
@@ -496,6 +515,10 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
             }
         }
     }
+    else
+    {
+        onTransferStart(api, transfer);
+    }
     mNotificationNumber = transfer->getNotificationNumber();
 }
 
@@ -503,8 +526,7 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
 {
     if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer()
-            || mNotificationNumber >= transfer->getNotificationNumber()
-            || !transfer->getPriority())
+            || mNotificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -515,6 +537,7 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
     if (row >= 0)
     {
         auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
+        auto d (transferItem->getTransferData());
 
         auto speed (transfer->getSpeed());
         auto totalBytes (transfer->getTotalBytes());
@@ -532,7 +555,7 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
         }
 
         auto state (transfer->getState());
-        auto prevState = transferItem->getState();
+        auto prevState (d->mState);
 
         transferItem->updateValuesTransferUpdated(transfer->getUpdateTime(),
                                                   remSecs.count(),
@@ -542,7 +565,8 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
                                                   speed,
                                                   transfer->getPriority(),
                                                   state,
-                                                  transferredBytes);
+                                                  transferredBytes,
+                                                  transfer->getPublicMegaNode());
 
         emit dataChanged(index(row, 0), index(row, 0));
 
@@ -557,8 +581,8 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
 
             if (transfer->isFinished())
             {
-                auto type (transferItem->getType());
-                auto fileType (transferItem->getFileType());
+                auto type (d->mType);
+                auto fileType (d->mFileType);
 
                 mNbTransfersPerType[type]--;
                 mNbTransfersPerFileType[fileType]--;
@@ -567,6 +591,10 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
                 emit nbOfTransfersPerFileTypeChanged(fileType, mNbTransfersPerFileType[fileType]);
             }
         }
+    }
+    else
+    {
+        onTransferStart(api, transfer);
     }
     mNotificationNumber = transfer->getNotificationNumber();
 }
@@ -579,6 +607,63 @@ bool QTransfersModel2::areDlPaused()
 bool QTransfersModel2::areUlPaused()
 {
     return mAreUlPaused;
+}
+
+void QTransfersModel2::getLinks(QList<int> rows)
+{
+    if (!rows.isEmpty())
+    {
+        QList<MegaHandle> exportList;
+        QStringList linkList;
+        QList<TransferTag> tags;
+
+        mModelMutex.lock();
+        for (auto row : rows)
+        {
+            tags.push_back(mOrder.at(row));
+        }
+        mModelMutex.unlock();
+
+        for (auto tag : tags)
+        {
+            auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
+            auto d(transferItem->getTransferData());
+
+            MegaNode *node (nullptr);
+
+            if (d->mState == MegaTransfer::STATE_FAILED)
+            {
+                node = mFailedTransfers[tag]->getPublicMegaNode();
+            }
+            else
+            {
+                node = d->mPublicNode;
+            }
+
+            if (!node || !node->isPublic())
+            {
+                exportList.push_back(d->mNodeHandle);
+            }
+            else if (node)
+            {
+                char *handle = node->getBase64Handle();
+                char *key = node->getBase64Key();
+                if (handle && key)
+                {
+                    QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
+                            .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
+                    linkList.push_back(link);
+                }
+                delete [] key;
+                delete [] handle;
+                delete node;
+            }
+        }
+        if (exportList.size() || linkList.size())
+        {
+            qobject_cast<MegaApplication*>(qApp)->exportNodes(exportList, linkList);
+        }
+    }
 }
 
 void QTransfersModel2::onPauseStateChanged()
@@ -612,11 +697,12 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
         for (auto i(0); i < count; ++i)
         {
             TransferTag tag (mOrder.takeAt(row));
-            TransferItem2 transferItem (qvariant_cast<TransferItem2>(mTransfers.take(tag)));
+            auto transferItem (qvariant_cast<TransferItem2>(mTransfers.take(tag)));
+            auto d (transferItem.getTransferData());
 
             // Keep statistics updated
-            auto state(transferItem.getState());
-            auto fileType(transferItem.getFileType());
+            auto state(d->mState);
+            auto fileType(d->mFileType);
 
             mNbTransfersPerState[state]--;
             mNbTransfersPerFileType[fileType]--;
@@ -628,7 +714,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
                     || state == MegaTransfer::STATE_CANCELLED
                     || state == MegaTransfer::STATE_FAILED))
             {
-                auto type(transferItem.getType());
+                auto type(d->mType);
                 mNbTransfersPerType[type]--;
                 emit nbOfTransfersPerTypeChanged(type, mNbTransfersPerType[type]);
             }
@@ -641,16 +727,17 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
                     delete transfer;
                 }
             }
-
             auto rem (mRemainingTimes.take(tag));
-            if (rem != nullptr)
+            if (rem)
             {
                 delete rem;
             }
+            if (d->mPublicNode)
+            {
+                delete d->mPublicNode;
+            }
         }
-
         endRemoveRows();
-
         mModelMutex.unlock();
         return true;
     }
@@ -744,6 +831,7 @@ void QTransfersModel2::insertTransfer(mega::MegaApi *api, mega::MegaTransfer *tr
     int state (transfer->getState());
     int type (transfer->getType());
     QString fileName (QString::fromUtf8(transfer->getFileName()));
+    QString path (QString::fromUtf8(transfer->getPath()));
     TransferData::FileTypes fileType = mFileTypes[Utilities::getExtensionPixmapName(fileName, QString())];
     auto speed (api->getCurrentSpeed(type));
     auto totalBytes (transfer->getTotalBytes());
@@ -759,7 +847,6 @@ void QTransfersModel2::insertTransfer(mega::MegaApi *api, mega::MegaTransfer *tr
         errorCode = megaError->getErrorCode();
         errorValue = megaError->getValue();
     }
-    bool isPublic (transfer->getPublicMegaNode());
 
     TransferData dataRow(
                 type,
@@ -775,29 +862,18 @@ void QTransfersModel2::insertTransfer(mega::MegaApi *api, mega::MegaTransfer *tr
                 transfer->getMeanSpeed(),
                 transferredBytes,
                 transfer->getUpdateTime(),
-                isPublic,
-                transfer->isSyncTransfer(),
+                transfer->getPublicMegaNode(),
                 fileType,
+                transfer->getParentHandle(),
+                transfer->getNodeHandle(),
                 api,
-                fileName);
+                fileName,
+                path);
 
      mTransfers[tag] = QVariant::fromValue(TransferItem2(dataRow));
      mRemainingTimes[tag] = rem;
 
-//     // Find place in order
-//     if (priority < qvariant_cast<TransferItem2>(mTransfers[mOrder.first()]).getTransferData()->mPriority)
-//     {
-//        mOrder.push_front(tag);
-//     }
-//     else if (priority < qvariant_cast<TransferItem2>(mTransfers[mOrder.last()]).getTransferData()->mPriority)
-//     {
-        mOrder.insert(row, tag);
-//     }
-//     else
-//     {
-
-//     }
-
+     mOrder.insert(row, tag);
 
      // Update statistics
      mNbTransfersPerState[state]++;

@@ -40,11 +40,13 @@ class TransferData : public QSharedData
     long long mMeanSpeed;
     long long mTransferredBytes;
     int64_t   mUpdateTime;
-    bool      mPublicNode;
-    bool      mIsSyncTransfer;
+    mega::MegaNode* mPublicNode;
     FileTypes mFileType;
+    mega::MegaHandle mParentHandle;
+    mega::MegaHandle mNodeHandle;
     mega::MegaApi* mMegaApi;
     QString   mFilename;
+    QString   mPath;
 
     TransferData(){}
 
@@ -53,20 +55,22 @@ class TransferData : public QSharedData
         mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime), mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed), mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes), mUpdateTime(dr->mUpdateTime),
-        mPublicNode(dr->mPublicNode), mIsSyncTransfer(dr->mIsSyncTransfer), mFileType(dr->mFileType),
-        mMegaApi(dr->mMegaApi), mFilename(dr->mFilename){}
+        mPublicNode(dr->mPublicNode), mFileType(dr->mFileType),
+        mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mMegaApi(dr->mMegaApi),
+        mFilename(dr->mFilename), mPath(dr->mPath){}
 
     TransferData(int type, int errorCode, int state, int tag, long long errorValue,
                     int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long priority,
                     long long speed, long long meanSpeed, long long transferredBytes,
-                    int64_t updateTime, bool publicNode, bool isSyncTransfer, FileTypes fileType,
-                    mega::MegaApi* megaApi, QString fileName) :
+                    int64_t updateTime, mega::MegaNode* publicNode, FileTypes fileType,
+                    mega::MegaHandle parentHandle, mega::MegaHandle nodeHandle,
+                 mega::MegaApi* megaApi, QString fileName, QString path) :
          mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
          mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
          mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
          mTransferredBytes(transferredBytes), mUpdateTime(updateTime),
-         mPublicNode(publicNode), mIsSyncTransfer(isSyncTransfer), mFileType(fileType),
-         mMegaApi(megaApi), mFilename(fileName){}
+         mPublicNode(publicNode), mFileType(fileType),
+         mParentHandle(parentHandle), mNodeHandle(nodeHandle),mMegaApi(megaApi), mFilename(fileName), mPath(path){}
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
 
@@ -81,7 +85,10 @@ class TransferItem2
         void updateValuesTransferFinished(uint64_t updateTime,
                                           int errorCode, long long errorValue,
                                           long long meanSpeed,
-                                          int state, long long transferedBytes);
+                                          int state, long long transferedBytes,
+                                          mega::MegaHandle parentHandle,
+                                          mega::MegaHandle nodeHandle,
+                                          mega::MegaNode* publicNode);
 
         void updateValuesTransferUpdated(uint64_t updateTime,
                                          uint64_t remainingTime,
@@ -89,27 +96,8 @@ class TransferItem2
                                          long long meanSpeed,
                                          long long speed,
                                          unsigned long long priority,
-                                         int state, long long transferedBytes);
-
-        int getTag() const
-        {
-            return d->mTag;
-        }
-
-        int getState() const
-        {
-            return d->mState;
-        }
-
-        int getType() const
-        {
-            return d->mType;
-        }
-
-        TransferData::FileTypes getFileType() const
-        {
-            return d->mFileType;
-        }
+                                         int state, long long transferedBytes,
+                                         mega::MegaNode* publicNode);
 
         QExplicitlySharedDataPointer<TransferData> getTransferData() const
         {
