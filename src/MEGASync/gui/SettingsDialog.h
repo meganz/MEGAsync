@@ -5,8 +5,6 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtCore>
-#include <QNetworkProxy>
-#include <ConnectivityChecker.h>
 
 #ifdef Q_OS_MACOS
 #include <QMacToolBar>
@@ -17,7 +15,6 @@
 #include "SizeLimitDialog.h"
 #include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
-#include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "MegaController.h"
@@ -63,7 +60,6 @@ public slots:
     void stateChanged();
     void storageStateChanged(int state);
     void syncStateChanged(int state);
-    void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
     void onSyncStateChanged(std::shared_ptr<SyncSetting>);
@@ -87,14 +83,10 @@ private slots:
 #ifndef __APPLE__
     void on_bHelpIco_clicked();
 #endif
-    void on_rProxyManual_clicked();
-    void on_rProxyAuto_clicked();
-    void on_rNoProxy_clicked();
 
     void on_bUpgrade_clicked();
     void on_bUpgradeBandwidth_clicked();
 
-    void on_cProxyRequiresPassword_clicked();
 #ifndef WIN32
     void on_bPermissions_clicked();
 #endif
@@ -116,8 +108,6 @@ private slots:
     void on_bClearCache_clicked();
     void on_bClearRemoteCache_clicked();
     void on_bClearFileVersions_clicked();
-    void onProxyTestError();
-    void onProxyTestSuccess();
     void on_bUpdate_clicked();
     void on_bFullCheck_clicked();
     void on_bStorageDetails_clicked();
@@ -146,6 +136,8 @@ private slots:
     void on_cbUseHttps_toggled(bool checked);
     void on_cDisableFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
+
+    void on_openProxySettingsButton_clicked();
 
 #ifdef Q_OS_WINDOWS
     void on_cDisableIcons_toggled(bool checked);
@@ -183,7 +175,6 @@ private:
     bool proxyOnly;
     QFutureWatcher<long long> cacheSizeWatcher;
     QFutureWatcher<long long> remoteCacheSizeWatcher;
-    MegaProgressCustomDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
     bool shouldClose;
     std::unique_ptr<ProgressHelper> saveSettingsProgress;

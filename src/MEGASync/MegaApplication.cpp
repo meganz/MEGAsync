@@ -10,6 +10,7 @@
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
+#include "ConnectivityChecker.h"
 
 #include <QTranslator>
 #include <QClipboard>

@@ -11,6 +11,7 @@
 #include <QtConcurrent/QtConcurrent>
 #endif
 
+#include "mega/types.h"
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
 #include "QMegaMessageBox.h"
@@ -20,7 +21,7 @@
 #include "gui/AddExclusionDialog.h"
 #include "gui/BugReportDialog.h"
 #include "gui/QSyncItemWidget.h"
-#include "mega/types.h"
+#include "gui/ProxySettings.h"
 
 #include <assert.h>
 
@@ -97,6 +98,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    // TODO: get rid of this->, user unique member names
     this->app = app;
     this->megaApi = app->getMegaApi();
     this->preferences = Preferences::instance();
@@ -108,7 +110,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     syncsChanged = false;
 
     this->proxyOnly = proxyOnly;
-    this->proxyTestProgressDialog = NULL;
     shouldClose = false;
     modifyingSettings = 0;
     accountDetailsDialog = NULL;
@@ -121,7 +122,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     areSyncsDisabled = false;
     isSavingSyncsOnGoing = false;
 
-    ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     ui->eMaxDownloadConnections->setRange(1, 6);
@@ -144,20 +144,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
 
-    connect(ui->rNoProxy, SIGNAL(clicked()), this, SLOT(stateChanged()));
-    connect(ui->rProxyAuto, SIGNAL(clicked()), this, SLOT(stateChanged()));
-    connect(ui->rProxyManual, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
-    connect(ui->eProxyUsername, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
-    connect(ui->eProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
-    connect(ui->eProxyServer, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
-    connect(ui->eProxyPort, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
-    connect(ui->cProxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyStateChanged()));
-    connect(ui->cProxyRequiresPassword, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
-
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 
 #ifdef Q_OS_LINUX
-    ui->rProxyAuto->hide();
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
 #endif
@@ -192,7 +181,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         }
     }
 #endif
-    ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Preferences - MEGAsync"));
@@ -457,16 +445,6 @@ void SettingsDialog::onEnableSyncFailed(int errorCode, std::shared_ptr<SyncSetti
     }
 
     loadSyncSettings();
-}
-
-void SettingsDialog::proxyStateChanged()
-{
-    if (modifyingSettings)
-    {
-        return;
-    }
-
-    ui->bApply->setEnabled(true);
 }
 
 void SettingsDialog::onLocalCacheSizeAvailable()
@@ -810,44 +788,6 @@ void SettingsDialog::on_bHelp_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
-void SettingsDialog::on_rProxyManual_clicked()
-{
-    ui->cProxyType->setEnabled(true);
-    ui->eProxyServer->setEnabled(true);
-    ui->eProxyPort->setEnabled(true);
-    ui->cProxyRequiresPassword->setEnabled(true);
-    if (ui->cProxyRequiresPassword->isChecked())
-    {
-        ui->eProxyUsername->setEnabled(true);
-        ui->eProxyPassword->setEnabled(true);
-    }
-    else
-    {
-        ui->eProxyUsername->setEnabled(false);
-        ui->eProxyPassword->setEnabled(false);
-    }
-}
-
-void SettingsDialog::on_rProxyAuto_clicked()
-{
-    ui->cProxyType->setEnabled(false);
-    ui->eProxyServer->setEnabled(false);
-    ui->eProxyPort->setEnabled(false);
-    ui->eProxyUsername->setEnabled(false);
-    ui->eProxyPassword->setEnabled(false);
-    ui->cProxyRequiresPassword->setEnabled(false);
-}
-
-void SettingsDialog::on_rNoProxy_clicked()
-{
-    ui->cProxyType->setEnabled(false);
-    ui->eProxyServer->setEnabled(false);
-    ui->eProxyPort->setEnabled(false);
-    ui->eProxyUsername->setEnabled(false);
-    ui->eProxyPassword->setEnabled(false);
-    ui->cProxyRequiresPassword->setEnabled(false);
-}
-
 void SettingsDialog::on_bUpgrade_clicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
@@ -858,20 +798,6 @@ void SettingsDialog::on_bUpgrade_clicked()
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
     on_bUpgrade_clicked();
-}
-
-void SettingsDialog::on_cProxyRequiresPassword_clicked()
-{
-    if (ui->cProxyRequiresPassword->isChecked())
-    {
-        ui->eProxyUsername->setEnabled(true);
-        ui->eProxyPassword->setEnabled(true);
-    }
-    else
-    {
-        ui->eProxyUsername->setEnabled(false);
-        ui->eProxyPassword->setEnabled(false);
-    }
 }
 
 void SettingsDialog::updateUploadFolder()
@@ -1055,47 +981,6 @@ void SettingsDialog::loadSettings()
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
-    if (!proxyTestProgressDialog)
-    {
-        //Proxies
-        ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);
-        ui->rProxyAuto->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_AUTO);
-        ui->rProxyManual->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_CUSTOM);
-        ui->cProxyType->setCurrentIndex(preferences->proxyProtocol());
-        ui->eProxyServer->setText(preferences->proxyServer());
-        ui->eProxyPort->setText(QString::number(preferences->proxyPort()));
-
-        ui->cProxyRequiresPassword->setChecked(preferences->proxyRequiresAuth());
-        ui->eProxyUsername->setText(preferences->getProxyUsername());
-        ui->eProxyPassword->setText(preferences->getProxyPassword());
-
-        if (ui->rProxyManual->isChecked())
-        {
-            ui->cProxyType->setEnabled(true);
-            ui->eProxyServer->setEnabled(true);
-            ui->eProxyPort->setEnabled(true);
-            ui->cProxyRequiresPassword->setEnabled(true);
-        }
-        else
-        {
-            ui->cProxyType->setEnabled(false);
-            ui->eProxyServer->setEnabled(false);
-            ui->eProxyPort->setEnabled(false);
-            ui->cProxyRequiresPassword->setEnabled(false);
-        }
-
-        if (ui->cProxyRequiresPassword->isChecked())
-        {
-            ui->eProxyUsername->setEnabled(true);
-            ui->eProxyPassword->setEnabled(true);
-        }
-        else
-        {
-            ui->eProxyUsername->setEnabled(false);
-            ui->eProxyPassword->setEnabled(false);
-        }
-    }
-
     ui->bApply->setEnabled(false);
     this->update(); //TODO: is this necessary?
     modifyingSettings--;
@@ -1190,10 +1075,9 @@ void SettingsDialog::refreshAccountDetails() //TODO: separate storage from bandw
     }
 }
 
-    //FIXME: Remove
+    //FIXME: Rename me to saveSyncs()
 int SettingsDialog::saveSettings()
 {
-    //FIXME: Remove ProgressHelper, unless saving syncs needs it still?
     saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
@@ -1385,86 +1269,8 @@ int SettingsDialog::saveSettings()
         }
     }
 
-    //Proxies
+    //TODO: Remove me
     int proxyChanged = 0;
-    if (!proxyTestProgressDialog && ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
-        (ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))    ||
-        (ui->rProxyManual->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_CUSTOM))||
-        (preferences->proxyProtocol() != ui->cProxyType->currentIndex())                                ||
-        (preferences->proxyServer() != ui->eProxyServer->text().trimmed())                              ||
-        (preferences->proxyPort() != ui->eProxyPort->text().toInt())                                    ||
-        (preferences->proxyRequiresAuth() != ui->cProxyRequiresPassword->isChecked())                   ||
-        (preferences->getProxyUsername() != ui->eProxyUsername->text())                                 ||
-        (preferences->getProxyPassword() != ui->eProxyPassword->text())))
-    {
-        proxyChanged = 1;
-        QNetworkProxy proxy;
-        proxy.setType(QNetworkProxy::NoProxy);
-        if (ui->rProxyManual->isChecked())
-        {
-            switch(ui->cProxyType->currentIndex())
-            {
-            case Preferences::PROXY_PROTOCOL_SOCKS5H:
-                proxy.setType(QNetworkProxy::Socks5Proxy);
-                break;
-            default:
-                proxy.setType(QNetworkProxy::HttpProxy);
-                break;
-            }
-
-            proxy.setHostName(ui->eProxyServer->text().trimmed());
-            proxy.setPort(ui->eProxyPort->text().trimmed().toUShort());
-            if (ui->cProxyRequiresPassword->isChecked())
-            {
-                proxy.setUser(ui->eProxyUsername->text());
-                proxy.setPassword(ui->eProxyPassword->text());
-            }
-        }
-        else if (ui->rProxyAuto->isChecked())
-        {
-            MegaProxy *proxySettings = megaApi->getAutoProxySettings();
-            if (proxySettings->getProxyType()==MegaProxy::PROXY_CUSTOM)
-            {
-                string sProxyURL = proxySettings->getProxyURL();
-                QString proxyURL = QString::fromUtf8(sProxyURL.data());
-
-                QStringList parts = proxyURL.split(QString::fromAscii("://"));
-                if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
-                {
-                    proxy.setType(QNetworkProxy::Socks5Proxy);
-                }
-                else
-                {
-                    proxy.setType(QNetworkProxy::HttpProxy);
-                }
-
-                QStringList arguments = parts[parts.size()-1].split(QString::fromAscii(":"));
-                if (arguments.size() == 2)
-                {
-                    proxy.setHostName(arguments[0]);
-                    proxy.setPort(arguments[1].toUShort());
-                }
-            }
-            delete proxySettings;
-        }
-
-        proxyTestProgressDialog = new MegaProgressCustomDialog(this, 0, 0);
-        proxyTestProgressDialog->setWindowModality(Qt::WindowModal);
-        proxyTestProgressDialog->show();
-
-        ConnectivityChecker *connectivityChecker = new ConnectivityChecker(Preferences::PROXY_TEST_URL);
-        connectivityChecker->setProxy(proxy);
-        connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
-        connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
-
-        connect(connectivityChecker, SIGNAL(testError()), this, SLOT(onProxyTestError()));
-        connect(connectivityChecker, SIGNAL(testSuccess()), this, SLOT(onProxyTestSuccess()));
-        connect(connectivityChecker, SIGNAL(testFinished()), connectivityChecker, SLOT(deleteLater()));
-
-        connectivityChecker->startCheck();
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");
-    }
-
     ui->bApply->setEnabled(false);
     modifyingSettings--;
     return !proxyChanged;
@@ -1988,8 +1794,6 @@ void SettingsDialog::changeEvent(QEvent *event)
         //review and check
         ui->cStartOnStartup->setText(tr("Open at login"));
 #endif
-        ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
-
         onCacheSizeAvailable();
     }
     QDialog::changeEvent(event);
@@ -2353,60 +2157,6 @@ void SettingsDialog::updateAccountElements()
 
     ui->lAccountImage->setIcon(icon);
     ui->lAccountImage->setIconSize(QSize(11, 11));
-}
-
-void SettingsDialog::onProxyTestError()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
-    if (proxyTestProgressDialog)
-    {
-        proxyTestProgressDialog->hide();
-        delete proxyTestProgressDialog;
-        proxyTestProgressDialog = NULL;
-        ui->bApply->setEnabled(true);
-        QMegaMessageBox::critical(nullptr, tr("Error"), tr("Your proxy settings are invalid or the proxy doesn't respond"));
-    }
-
-    shouldClose = false;
-}
-
-void SettingsDialog::onProxyTestSuccess()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
-    if (ui->rNoProxy->isChecked())
-    {
-        preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
-    }
-    else if (ui->rProxyAuto->isChecked())
-    {
-        preferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
-    }
-    else if (ui->rProxyManual->isChecked())
-    {
-        preferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
-    }
-
-    preferences->setProxyProtocol(ui->cProxyType->currentIndex());
-    preferences->setProxyServer(ui->eProxyServer->text().trimmed());
-    preferences->setProxyPort(ui->eProxyPort->text().toInt());
-    preferences->setProxyRequiresAuth(ui->cProxyRequiresPassword->isChecked());
-    preferences->setProxyUsername(ui->eProxyUsername->text());
-    preferences->setProxyPassword(ui->eProxyPassword->text());
-
-    app->applyProxySettings();
-
-    if (proxyTestProgressDialog)
-    {
-        proxyTestProgressDialog->hide();
-        delete proxyTestProgressDialog;
-        proxyTestProgressDialog = NULL;
-    }
-
-    if (shouldClose)
-    {
-        shouldClose = false;
-        this->close();
-    }
 }
 
 void SettingsDialog::on_bUpdate_clicked()
@@ -2835,6 +2585,13 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
         app->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
     }
 #endif
+}
+
+void SettingsDialog::on_openProxySettingsButton_clicked()
+{
+    ProxySettings proxySettingsDialog(app, this);
+    if (proxySettingsDialog.exec() == QDialog::Accepted)
+        app->applyProxySettings();
 }
 
 #ifdef Q_OS_WINDOWS

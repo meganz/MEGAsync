@@ -69,7 +69,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BugReportDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
-    $$PWD/WaitingSpinnerWidget.cpp
+    $$PWD/WaitingSpinnerWidget.cpp \
+    $$PWD/ProxySettings.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -140,7 +141,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BugReportDialog.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/MegaInfoMessage.h \
-    $$PWD/WaitingSpinnerWidget.h
+    $$PWD/WaitingSpinnerWidget.h \
+    $$PWD/ProxySettings.h
 
 INCLUDEPATH += $$PWD
 
@@ -199,7 +201,8 @@ win32 {
                 $$PWD/win/VerifyLockMessage.ui \
                 $$PWD/win/MegaInfoMessage.ui \
                 $$PWD/win/DynamicTransferQuotaPopOver.ui \
-                $$PWD/win/OverQuotaDialog.ui
+                $$PWD/win/OverQuotaDialog.ui \
+                $$PWD/win/ProxySettings.ui
 }
 
 macx {
@@ -256,6 +259,7 @@ macx {
                 $$PWD/macx/MegaInfoMessage.ui \
                 $$PWD/macx/DynamicTransferQuotaPopOver.ui \
                 $$PWD/macx/OverQuotaDialog.ui \
+                $$PWD/macx/ProxySettings.ui
 
     QT += macextras
 
@@ -333,6 +337,7 @@ unix:!macx {
                 $$PWD/linux/MegaInfoMessage.ui \
                 $$PWD/linux/DynamicTransferQuotaPopOver.ui \
                 $$PWD/linux/OverQuotaDialog.ui \
+                $$PWD/linux/ProxySettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
