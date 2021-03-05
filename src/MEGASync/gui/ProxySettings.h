@@ -1,4 +1,4 @@
-#ifndef PROXYSETTINGS_H
+﻿#ifndef PROXYSETTINGS_H
 #define PROXYSETTINGS_H
 
 #include <QDialog>
@@ -6,6 +6,7 @@
 #include "Preferences.h"
 #include "MegaProgressCustomDialog.h"
 #include "MegaApplication.h"
+#include "ConnectivityChecker.h"
 
 namespace Ui {
 class ProxySettings;
@@ -23,20 +24,17 @@ private slots:
     void onProxyTestError();
     void onProxyTestSuccess();
 
-    void on_rProxyManual_clicked();
-    void on_rProxyAuto_clicked();
-    void on_rNoProxy_clicked();
-    void on_cProxyRequiresPassword_clicked();
-
     void on_applyButton_clicked();
 
 private:
     void initialize();
-    Ui::ProxySettings *ui;
+    void setManualMode(bool enabled);
 
-    MegaApplication *mApp;
-    Preferences *preferences;
-    MegaProgressCustomDialog *proxyTestProgressDialog;
+    Ui::ProxySettings *mUi;
+    MegaApplication   *mApp;
+    Preferences       *mPreferences;
+    ConnectivityChecker      *mConnectivityChecker;
+    MegaProgressCustomDialog *mProgressDialog;
 };
 
 #endif // PROXYSETTINGS_H

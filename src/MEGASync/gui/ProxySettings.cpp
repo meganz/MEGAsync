@@ -1,281 +1,180 @@
-#include "ProxySettings.h"
+﻿#include "ProxySettings.h"
 #include "ui_ProxySettings.h"
 
 #include <QNetworkProxy>
 
 #include "megaapi.h"
 #include "QMegaMessageBox.h"
-#include "ConnectivityChecker.h"
 
 using namespace mega;
 
 ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ProxySettings),
-    mApp(app)
+    mUi(new Ui::ProxySettings),
+    mApp(app),
+    mPreferences(Preferences::instance()),
+    mConnectivityChecker(new ConnectivityChecker(Preferences::PROXY_TEST_URL)),
+    mProgressDialog(new MegaProgressCustomDialog(this))
 {
-    ui->setupUi(this);
-
-    proxyTestProgressDialog = NULL;
-    preferences = Preferences::instance();
-
-    ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
-
+    mUi->setupUi(this);
+    mUi->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
 #ifdef Q_OS_LINUX
-    ui->rProxyAuto->hide();
+    mUi->rProxyAuto->hide(); // Auto Proxy mode not available on Linux flavors
 #endif
+    mProgressDialog->setWindowModality(Qt::WindowModal);
 
     initialize();
 
-//    connect(ui->rNoProxy, SIGNAL(clicked()), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->rProxyAuto, SIGNAL(clicked()), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->rProxyManual, SIGNAL(clicked()), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->eProxyUsername, SIGNAL(textChanged(QString)), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->eProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->eProxyServer, SIGNAL(textChanged(QString)), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->eProxyPort, SIGNAL(textChanged(QString)), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->cProxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(onProxySettingsChanged()));
-//    connect(ui->cProxyRequiresPassword, SIGNAL(clicked()), this, SLOT(onProxySettingsChanged()));
+    connect(mConnectivityChecker, SIGNAL(testError()), this, SLOT(onProxyTestError()));
+    connect(mConnectivityChecker, SIGNAL(testSuccess()), this, SLOT(onProxyTestSuccess()));
+
+    connect(mUi->rProxyManual, &QRadioButton::clicked, this, [this]{setManualMode(true);});
+    connect(mUi->cProxyRequiresPassword, &QCheckBox::toggled, this, [this]{setManualMode(true);});
+    connect(mUi->rNoProxy, &QRadioButton::clicked, this, [this]{setManualMode(false);});
+    connect(mUi->rProxyAuto, &QRadioButton::clicked, this, [this]{setManualMode(false);});
 }
 
 ProxySettings::~ProxySettings()
 {
-    delete ui;
-}
-
-void ProxySettings::on_rProxyManual_clicked()
-{
-    ui->cProxyType->setEnabled(true);
-    ui->eProxyServer->setEnabled(true);
-    ui->eProxyPort->setEnabled(true);
-    ui->cProxyRequiresPassword->setEnabled(true);
-    if (ui->cProxyRequiresPassword->isChecked())
-    {
-        ui->eProxyUsername->setEnabled(true);
-        ui->eProxyPassword->setEnabled(true);
-    }
-    else
-    {
-        ui->eProxyUsername->setEnabled(false);
-        ui->eProxyPassword->setEnabled(false);
-    }
-}
-
-void ProxySettings::on_rProxyAuto_clicked()
-{
-    ui->cProxyType->setEnabled(false);
-    ui->eProxyServer->setEnabled(false);
-    ui->eProxyPort->setEnabled(false);
-    ui->eProxyUsername->setEnabled(false);
-    ui->eProxyPassword->setEnabled(false);
-    ui->cProxyRequiresPassword->setEnabled(false);
-}
-
-void ProxySettings::on_rNoProxy_clicked()
-{
-    ui->cProxyType->setEnabled(false);
-    ui->eProxyServer->setEnabled(false);
-    ui->eProxyPort->setEnabled(false);
-    ui->eProxyUsername->setEnabled(false);
-    ui->eProxyPassword->setEnabled(false);
-    ui->cProxyRequiresPassword->setEnabled(false);
-}
-
-void ProxySettings::on_cProxyRequiresPassword_clicked()
-{
-    if (ui->cProxyRequiresPassword->isChecked())
-    {
-        ui->eProxyUsername->setEnabled(true);
-        ui->eProxyPassword->setEnabled(true);
-    }
-    else
-    {
-        ui->eProxyUsername->setEnabled(false);
-        ui->eProxyPassword->setEnabled(false);
-    }
+    delete mConnectivityChecker;
+    delete mProgressDialog;
+    delete mUi;
 }
 
 void ProxySettings::initialize()
 {
-    //Proxies
-    ui->rNoProxy->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_NONE);
-    ui->rProxyAuto->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_AUTO);
-    ui->rProxyManual->setChecked(preferences->proxyType()==Preferences::PROXY_TYPE_CUSTOM);
-    ui->cProxyType->setCurrentIndex(preferences->proxyProtocol());
-    ui->eProxyServer->setText(preferences->proxyServer());
-    ui->eProxyPort->setText(QString::number(preferences->proxyPort()));
+    mUi->rNoProxy->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_NONE);
+    mUi->rProxyAuto->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_AUTO);
+    mUi->rProxyManual->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM);
+    mUi->cProxyType->setCurrentIndex(mPreferences->proxyProtocol());
+    mUi->eProxyServer->setText(mPreferences->proxyServer());
+    mUi->eProxyPort->setText(QString::number(mPreferences->proxyPort()));
 
-    ui->cProxyRequiresPassword->setChecked(preferences->proxyRequiresAuth());
-    ui->eProxyUsername->setText(preferences->getProxyUsername());
-    ui->eProxyPassword->setText(preferences->getProxyPassword());
+    mUi->cProxyRequiresPassword->setChecked(mPreferences->proxyRequiresAuth());
+    mUi->eProxyUsername->setText(mPreferences->getProxyUsername());
+    mUi->eProxyPassword->setText(mPreferences->getProxyPassword());
 
-    if (ui->rProxyManual->isChecked())
+    setManualMode(mUi->rProxyManual->isChecked());
+}
+
+void ProxySettings::setManualMode(bool enabled)
+{
+    mUi->cProxyType->setEnabled(enabled);
+    mUi->eProxyServer->setEnabled(enabled);
+    mUi->eProxyPort->setEnabled(enabled);
+    mUi->cProxyRequiresPassword->setEnabled(enabled);
+
+    if (mUi->cProxyRequiresPassword->isEnabled())
     {
-        ui->cProxyType->setEnabled(true);
-        ui->eProxyServer->setEnabled(true);
-        ui->eProxyPort->setEnabled(true);
-        ui->cProxyRequiresPassword->setEnabled(true);
+        mUi->eProxyUsername->setEnabled(mUi->cProxyRequiresPassword->isChecked());
+        mUi->eProxyPassword->setEnabled(mUi->cProxyRequiresPassword->isChecked());
     }
     else
     {
-        ui->cProxyType->setEnabled(false);
-        ui->eProxyServer->setEnabled(false);
-        ui->eProxyPort->setEnabled(false);
-        ui->cProxyRequiresPassword->setEnabled(false);
-    }
-
-    if (ui->cProxyRequiresPassword->isChecked())
-    {
-        ui->eProxyUsername->setEnabled(true);
-        ui->eProxyPassword->setEnabled(true);
-    }
-    else
-    {
-        ui->eProxyUsername->setEnabled(false);
-        ui->eProxyPassword->setEnabled(false);
+        mUi->eProxyUsername->setEnabled(false);
+        mUi->eProxyPassword->setEnabled(false);
     }
 }
 
 void ProxySettings::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
-    if (proxyTestProgressDialog)
-    {
-        proxyTestProgressDialog->hide();
-        delete proxyTestProgressDialog;
-        proxyTestProgressDialog = NULL;
-        QMegaMessageBox::critical(nullptr, tr("Error"), tr("Your proxy settings are invalid or the proxy doesn't respond"));
-    }
+    if (mProgressDialog->isVisible())
+        mProgressDialog->hide();
+    QMegaMessageBox::critical(this, tr("Error"),
+                              tr("Your proxy settings are invalid or the proxy doesn't respond"));
 
-//    shouldClose = false;
-
-//    reject();
+//    reject(); reconsider in Guest mode
 }
 
 void ProxySettings::onProxyTestSuccess()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Proxy test OK");
 
-    if (ui->rNoProxy->isChecked())
+    if (mUi->rNoProxy->isChecked())
     {
-        preferences->setProxyType(Preferences::PROXY_TYPE_NONE);
+        mPreferences->setProxyType(Preferences::PROXY_TYPE_NONE);
     }
-    else if (ui->rProxyAuto->isChecked())
+    else if (mUi->rProxyAuto->isChecked())
     {
-        preferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
+        mPreferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
     }
-    else if (ui->rProxyManual->isChecked())
+    else if (mUi->rProxyManual->isChecked())
     {
-        preferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
+        mPreferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
     }
 
-    preferences->setProxyProtocol(ui->cProxyType->currentIndex());
-    preferences->setProxyServer(ui->eProxyServer->text().trimmed());
-    preferences->setProxyPort(ui->eProxyPort->text().toInt());
-    preferences->setProxyRequiresAuth(ui->cProxyRequiresPassword->isChecked());
-    preferences->setProxyUsername(ui->eProxyUsername->text());
-    preferences->setProxyPassword(ui->eProxyPassword->text());
+    mPreferences->setProxyProtocol(mUi->cProxyType->currentIndex());
+    mPreferences->setProxyServer(mUi->eProxyServer->text().trimmed());
+    mPreferences->setProxyPort(mUi->eProxyPort->text().toInt());
+    mPreferences->setProxyRequiresAuth(mUi->cProxyRequiresPassword->isChecked());
+    mPreferences->setProxyUsername(mUi->eProxyUsername->text());
+    mPreferences->setProxyPassword(mUi->eProxyPassword->text());
 
 
-    if (proxyTestProgressDialog)
-    {
-        proxyTestProgressDialog->hide();
-        delete proxyTestProgressDialog;
-        proxyTestProgressDialog = NULL;
-    }
+    if (mProgressDialog->isVisible())
+        mProgressDialog->hide();
 
     accept();
-//    if (shouldClose)
-//    {
-//        shouldClose = false;
-//        this->close();
-    //    }
 }
 
 void ProxySettings::on_applyButton_clicked()
 {
-//    if (modifyingSettings)
-//    {
-//        return;
-//    }
-    if (!proxyTestProgressDialog && ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
-                                     (ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))    ||
-                                     (ui->rProxyManual->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_CUSTOM))||
-                                     (preferences->proxyProtocol() != ui->cProxyType->currentIndex())                                ||
-                                     (preferences->proxyServer() != ui->eProxyServer->text().trimmed())                              ||
-                                     (preferences->proxyPort() != ui->eProxyPort->text().toInt())                                    ||
-                                     (preferences->proxyRequiresAuth() != ui->cProxyRequiresPassword->isChecked())                   ||
-                                     (preferences->getProxyUsername() != ui->eProxyUsername->text())                                 ||
-                                     (preferences->getProxyPassword() != ui->eProxyPassword->text())))
+    QNetworkProxy proxy;
+    proxy.setType(QNetworkProxy::NoProxy);
+    if (mUi->rProxyManual->isChecked())
     {
-        QNetworkProxy proxy;
-        proxy.setType(QNetworkProxy::NoProxy);
-        if (ui->rProxyManual->isChecked())
+        switch(mUi->cProxyType->currentIndex())
         {
-            switch(ui->cProxyType->currentIndex())
+        case Preferences::PROXY_PROTOCOL_SOCKS5H:
+            proxy.setType(QNetworkProxy::Socks5Proxy);
+            break;
+        default:
+            proxy.setType(QNetworkProxy::HttpProxy);
+            break;
+        }
+
+        proxy.setHostName(mUi->eProxyServer->text().trimmed());
+        proxy.setPort(mUi->eProxyPort->text().trimmed().toUShort());
+        if (mUi->cProxyRequiresPassword->isChecked())
+        {
+            proxy.setUser(mUi->eProxyUsername->text());
+            proxy.setPassword(mUi->eProxyPassword->text());
+        }
+    }
+    else if (mUi->rProxyAuto->isChecked())
+    {
+        MegaProxy *proxySettings = mApp->getMegaApi()->getAutoProxySettings();
+        if (proxySettings->getProxyType() == MegaProxy::PROXY_CUSTOM)
+        {
+            std::string sProxyURL = proxySettings->getProxyURL();
+            QString proxyURL = QString::fromUtf8(sProxyURL.data());
+
+            QStringList parts = proxyURL.split(QString::fromAscii("://"));
+            if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
             {
-            case Preferences::PROXY_PROTOCOL_SOCKS5H:
                 proxy.setType(QNetworkProxy::Socks5Proxy);
-                break;
-            default:
+            }
+            else
+            {
                 proxy.setType(QNetworkProxy::HttpProxy);
-                break;
             }
 
-            proxy.setHostName(ui->eProxyServer->text().trimmed());
-            proxy.setPort(ui->eProxyPort->text().trimmed().toUShort());
-            if (ui->cProxyRequiresPassword->isChecked())
+            QStringList arguments = parts[parts.size()-1].split(QString::fromAscii(":"));
+            if (arguments.size() == 2)
             {
-                proxy.setUser(ui->eProxyUsername->text());
-                proxy.setPassword(ui->eProxyPassword->text());
+                proxy.setHostName(arguments[0]);
+                proxy.setPort(arguments[1].toUShort());
             }
         }
-        else if (ui->rProxyAuto->isChecked())
-        {
-            MegaProxy *proxySettings = mApp->getMegaApi()->getAutoProxySettings();
-            if (proxySettings->getProxyType()==MegaProxy::PROXY_CUSTOM)
-            {
-                std::string sProxyURL = proxySettings->getProxyURL();
-                QString proxyURL = QString::fromUtf8(sProxyURL.data());
-
-                QStringList parts = proxyURL.split(QString::fromAscii("://"));
-                if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
-                {
-                    proxy.setType(QNetworkProxy::Socks5Proxy);
-                }
-                else
-                {
-                    proxy.setType(QNetworkProxy::HttpProxy);
-                }
-
-                QStringList arguments = parts[parts.size()-1].split(QString::fromAscii(":"));
-                if (arguments.size() == 2)
-                {
-                    proxy.setHostName(arguments[0]);
-                    proxy.setPort(arguments[1].toUShort());
-                }
-            }
-            delete proxySettings;
-        }
-
-        proxyTestProgressDialog = new MegaProgressCustomDialog(this, 0, 0);
-        proxyTestProgressDialog->setWindowModality(Qt::WindowModal);
-        proxyTestProgressDialog->show();
-
-        ConnectivityChecker *connectivityChecker = new ConnectivityChecker(Preferences::PROXY_TEST_URL);
-        connectivityChecker->setProxy(proxy);
-        connectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
-        connectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
-
-        connect(connectivityChecker, SIGNAL(testError()), this, SLOT(onProxyTestError()));
-        connect(connectivityChecker, SIGNAL(testSuccess()), this, SLOT(onProxyTestSuccess()));
-        connect(connectivityChecker, SIGNAL(testFinished()), connectivityChecker, SLOT(deleteLater()));
-
-        connectivityChecker->startCheck();
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");
+        delete proxySettings;
     }
-    else
-    {
-        reject();
-    }
+
+    mProgressDialog->show();
+
+    mConnectivityChecker->setProxy(proxy);
+    mConnectivityChecker->setTestString(Preferences::PROXY_TEST_SUBSTRING);
+    mConnectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
+    mConnectivityChecker->startCheck();
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");
 }
