@@ -13,18 +13,6 @@
     <height>720</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>1024</width>
-    <height>720</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1024</width>
-    <height>1488</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Transfer Manager</string>
   </property>
@@ -47,17 +35,30 @@
 #wLeftPane
 {
     background-color: #FAFAFA;
+    width: 256px;
+    min-width: 256px;
+    max-width: 256px;
+    height: 720px;
+    min-height: 600px;
 }
 
-#wRightPane
+#wRightPane, #wTransfers
 {
     background-color: white;
     width: 768px;
     min-width: 768px;
-    max-width: 768px;
+/*    max-width: 768px; */
 }
 
-#lTransfers, #lCurrentContent
+#wRightPaneHeader, #sCurrentContent
+{
+    background-color: white;
+    height: 66px;
+    min-height: 66px;
+    max-height: 66px;
+}
+
+#lTransfers, #lCurrentContent, #lSearch, #lTextSearch
 {
     color: #333333;
     font-size: 20px;
@@ -110,7 +111,7 @@ QFrame
     height: 36px;
 }
 
-#lTransferring, #lMediaType, #lSearch
+#lTransferring, #lMediaType
 {
     color: #666666;
     font-size: 12px;
@@ -212,7 +213,7 @@ QGroupBox::title
     margin-right: 4px;
 }
 
-#wStatus
+#sStatus
 {
     height: 28px;
     min-height: 24px;
@@ -227,13 +228,12 @@ QGroupBox::title
     max-height: 24px;
     min-width: 100px;
     max-width: 100px;
-border: none;
-
-  color: #333333;
-  font-size: 14px;
+    border: none;
+    color: #333333;
+    font-size: 14px;
 }
 
-#wSpeedAndClear QPushButton
+#pSpeedAndClear QPushButton
 {
     height: 24px;
     width: 74px;
@@ -271,94 +271,18 @@ border: none;
     qProperty-iconSize: 22px;
 }
 
-#wTableHeader
+#lPaused, #lNbResults
 {
-    height: 28px;
-    min-height: 28px;
-    max-height: 28px;
-}
-
-#wTableHeader QLabel
-{
-    height: 20px;
-    color: #666666;
-    font-size: 12px;
-    qproperty-alignment: 'AlignLeft';
-}
-
-#wTableHeader QToolButton
-{
-    height: 16px;
-    width: 16px;
-    border-radius: 4px;
-    margin-right: 12px;
-    qProperty-iconSize: 16px;
-}
-
-#tCancelAll
-{
-     background-color: #F88183;
-}
-
-#tPauseResumeAll
-{
-    background-color: #ECECEC;
-}
-
-#lPaused
-{
-  height: 20px;
-  width: 39px;
   color: #FF9E4F;
   font-size: 12px;
   font-weight: bold;
-  line-height: 20px;
   padding-left: 14px;
 }
 
-#wTableHeader &gt; *
+#wTransfers
 {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-
-#wEmpty
-{
-    width: 48px;
-    min-width: 48px;
-    max-width: 48px;
-}
-
-#lName
-{
-    width: 208px;
-    min-width: 208px;
-    max-width: 208px;
-}
-
-#lSize, #lSpeed
-{
-    width: 100px;
-    min-width: 100px;
-    max-width: 100px;
-}
-
-#lStatus
-{
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
-}
-
-#lTime
-{
-    width: 92px;
-    min-width: 92px;
-    max-width: 92px;
-}
-
-</string>
+    min-height: 594px;
+}</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
@@ -378,18 +302,6 @@ border: none;
    </property>
    <item>
     <widget class="QWidget" name="wLeftPane" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>256</width>
-       <height>720</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>256</width>
-       <height>720</height>
-      </size>
-     </property>
      <layout class="QVBoxLayout" name="wLeftPaneLayout">
       <property name="spacing">
        <number>14</number>
@@ -611,7 +523,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lAllTransfers">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -656,7 +568,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lDownloads">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -701,7 +613,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lUploads">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -749,14 +661,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lCompleted">
               <property name="text">
-               <string>XXXX</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lCompletedNb">
-              <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -787,6 +692,54 @@ border: none;
          <property name="bottomMargin">
           <number>0</number>
          </property>
+         <item>
+          <widget class="QFrame" name="fText">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bText">
+              <property name="text">
+               <string>Text</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lTextNb">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item>
           <widget class="QFrame" name="fArchives">
            <property name="minimumSize">
@@ -828,7 +781,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lArchivesNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -876,7 +829,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lDocumentsNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -924,7 +877,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lImagesNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -972,7 +925,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lVideosNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -1020,7 +973,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lMusicNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -1068,7 +1021,7 @@ border: none;
             <item>
              <widget class="QLabel" name="lOtherNb">
               <property name="text">
-               <string>XXXX</string>
+               <string/>
               </property>
              </widget>
             </item>
@@ -1168,11 +1121,11 @@ border: none;
        </spacer>
       </item>
       <item>
-       <widget class="QStackedWidget" name="wStatus">
+       <widget class="QStackedWidget" name="sStatus">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="wSpeedAndClear">
+        <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
            <number>0</number>
@@ -1214,7 +1167,7 @@ border: none;
           <item>
            <widget class="QToolButton" name="bClearAll">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
@@ -1253,6 +1206,12 @@ border: none;
    </item>
    <item>
     <widget class="QWidget" name="wRightPane" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <layout class="QVBoxLayout" name="wRightPaneLayout">
       <property name="spacing">
        <number>0</number>
@@ -1264,17 +1223,225 @@ border: none;
        <number>12</number>
       </property>
       <property name="rightMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="wRightPaneHeader" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QVBoxLayout" name="wRightPaneHeaderLayout">
          <property name="spacing">
           <number>0</number>
          </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="wStatusHeader" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QStackedWidget" name="sCurrentContent">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="pSearchHeader">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <widget class="QWidget" name="">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>431</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="searchHeaderLayout">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <layout class="QHBoxLayout" name="searchTextHeaderLayout">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lSearch">
+                     <property name="text">
+                      <string>Search:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lTextSearch">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lNbResults">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+              <widget class="QWidget" name="pStatusHeader">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <widget class="QWidget" name="">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>431</width>
+                  <height>61</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="currentContentLayout">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lCurrentContent">
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lPaused">
+                   <property name="text">
+                    <string>Paused</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QPushButton" name="bImportLinks">
+              <property name="text">
+               <string>Import links</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QPushButton" name="bUpload">
+              <property name="text">
+               <string>Upload</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QPushButton" name="bDownload">
+              <property name="text">
+               <string>Download</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignTop">
+             <widget class="QToolButton" name="tCogWheel">
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>768</width>
+          <height>594</height>
+         </size>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -1287,210 +1454,20 @@ border: none;
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QWidget" name="wStatusHeader" native="true">
-           <layout class="QGridLayout" name="wStatusHeaderLayout">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <property name="horizontalSpacing">
-             <number>24</number>
-            </property>
-            <property name="verticalSpacing">
-             <number>0</number>
-            </property>
-            <item row="0" column="7">
-             <widget class="QToolButton" name="tCogWheel">
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QPushButton" name="bImportLinks">
-              <property name="text">
-               <string>Import links</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lCurrentContent">
-              <property name="text">
-               <string>All Transfers</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="6">
-             <widget class="QPushButton" name="bDownload">
-              <property name="text">
-               <string>Download</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <widget class="QPushButton" name="bUpload">
-              <property name="text">
-               <string>Upload</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lPaused">
-              <property name="text">
-               <string>Paused</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" name="wTableHeader" native="true">
-           <layout class="QHBoxLayout" name="wTableHeaderLayout">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QWidget" name="wEmpty" native="true"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="lName">
-              <property name="minimumSize">
-               <size>
-                <width>208</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>208</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Name</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lSize">
-              <property name="text">
-               <string>Size</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lSpeed">
-              <property name="text">
-               <string>Speed</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lStatus">
-              <property name="text">
-               <string>Status</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="lTime">
-              <property name="text">
-               <string>Time left</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tPauseResumeAll">
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="tCancelAll">
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="TransfersWidget" name="wTransfers" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
           </widget>
          </item>
         </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QStackedWidget" name="wTransfers">
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="TransfersWidget" name="wActiveTransfers"/>
-        <widget class="TransfersWidget" name="wDownloads"/>
-        <widget class="TransfersWidget" name="wUploads"/>
-        <widget class="TransfersWidget" name="wCompleted"/>
        </widget>
       </item>
      </layout>
