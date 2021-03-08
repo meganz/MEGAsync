@@ -110,7 +110,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     syncsChanged = false;
 
     this->proxyOnly = proxyOnly;
-    shouldClose = false;
     modifyingSettings = 0;
     accountDetailsDialog = NULL;
     cacheSize = -1;
@@ -206,12 +205,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         remoteCacheSizeWatcher.setFuture(futureRemoteCacheSize);
     }
 
-#ifdef Q_OS_MACOS
-    ui->bOk->hide();
-    ui->bCancel->hide();
-#else
+#ifndef Q_OS_MACOS
     ui->bAccount->setChecked(true);
-
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -227,7 +222,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->lFileVersionsSize->setVisible(false);
     ui->bClearFileVersions->setVisible(false);
     setProxyOnly(proxyOnly);
-    ui->bOk->setDefault(true);
 
 #ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
@@ -257,11 +251,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         }
 
         ui->pProxies->hide();
-
-        QSizePolicy sp_retain = ui->bApply->sizePolicy();
-        sp_retain.setRetainSizeWhenHidden(true);
-        ui->bApply->setSizePolicy(sp_retain);
-        ui->bApply->hide();
     }
 #endif
 
@@ -345,6 +334,7 @@ SettingsDialog::~SettingsDialog()
     delete ui;
 }
 
+// TODO: Re-evaluate me
 void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     this->proxyOnly = proxyOnly;
@@ -367,7 +357,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 #ifdef Q_OS_MACOS
         setMinimumHeight(435);
         setMaximumHeight(435);
-        ui->bApply->show();
 #endif
     }
 }
@@ -392,23 +381,6 @@ void SettingsDialog::setOverQuotaMode(bool mode)
     return;
 }
 
-//FIXME: Remove
-void SettingsDialog::stateChanged()
-{
-    if (modifyingSettings)
-    {
-        return;
-    }
-
-    //TODO: CHECK APPLY WORKFLOW USED BY SETTINGS
-#ifndef __APPLE__
-    ui->bApply->setEnabled(true);
-#else
-    //TODO: SAVE SETTINGS APPLY BUTTON -> LOGOUT
-    saveSettings();
-#endif
-}
-
 void SettingsDialog::syncStateChanged(int state)
 {
     if (state)
@@ -417,7 +389,7 @@ void SettingsDialog::syncStateChanged(int state)
     }
 
     syncsChanged = true;
-    stateChanged();
+    saveSettings();
 }
 
 void SettingsDialog::onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting)
@@ -573,17 +545,11 @@ void SettingsDialog::on_bAccount_clicked()
     reloadUIpage = false;
 
     ui->wStack->setCurrentWidget(ui->pAccount);
-    ui->bOk->setFocus();
 
 #ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bAccount.get());
 
-    ui->bApply->setText(tr("Logout"));
-    ui->bApply->setEnabled(true);
-    ui->bApply->show();
-
     ui->pAccount->hide();
-
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->gStorageSpace->setMinimumHeight(83);
@@ -614,14 +580,11 @@ void SettingsDialog::on_bSyncs_clicked()
 
     ui->wStack->setCurrentWidget(ui->pSyncs);
     ui->tSyncs->horizontalHeader()->setVisible(true);
-    ui->bOk->setFocus();
 
 #ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bSyncs.get());
 
-    ui->bApply->hide();
     ui->pSyncs->hide();
-
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
@@ -641,12 +604,10 @@ void SettingsDialog::on_bBandwidth_clicked()
     }
 
     ui->wStack->setCurrentWidget(ui->pBandwidth);
-    ui->bOk->setFocus();
 
 #ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bBandwidth.get());
 
-    ui->bApply->hide();
     ui->pBandwidth->hide();
 
     int bwHeight;
@@ -682,12 +643,10 @@ void SettingsDialog::on_bSecurity_clicked()
     }
 
     ui->wStack->setCurrentWidget(ui->pSecurity);
-    ui->bOk->setFocus();
 
 #ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bSecurity.get());
 
-    ui->bApply->hide();
     ui->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -709,12 +668,10 @@ void SettingsDialog::on_bAdvanced_clicked()
     }
 
     ui->wStack->setCurrentWidget(ui->pAdvanced);
-    ui->bOk->setFocus();
 
 #ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bAdvanced.get());
 
-    ui->bApply->hide();
     ui->pAdvanced->hide();
 
     onCacheSizeAvailable();
@@ -745,41 +702,13 @@ void SettingsDialog::on_bProxies_clicked()
     }
 
     ui->wStack->setCurrentWidget(ui->pProxies);
-    ui->bOk->setFocus();
 
 #ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bProxies.get());
 
-    ui->bApply->setText(tr("Apply"));
-    ui->bApply->show();
     ui->pProxies->hide();
     animateSettingPage(SETTING_ANIMATION_PROXY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
-}
-
-//FIXME: Remove
-void SettingsDialog::on_bCancel_clicked()
-{
-    this->close();
-}
-
-//FIXME: Remove
-void SettingsDialog::on_bOk_clicked()
-{
-    bool saved = 1;
-    if (ui->bApply->isEnabled())
-    {
-        saved = saveSettings();
-    }
-
-    if (saved == 1)
-    {
-        this->close();
-    }
-    else if (!saved)
-    {
-        shouldClose = true;
-    }
 }
 
 void SettingsDialog::on_bHelp_clicked()
@@ -842,6 +771,7 @@ void SettingsDialog::loadSettings()
 {
     modifyingSettings++;
 
+    //FIXME: this bool check leads to settings not being loaded for guest mode
     if (!proxyOnly)
     {
         //General
@@ -981,7 +911,6 @@ void SettingsDialog::loadSettings()
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
-    ui->bApply->setEnabled(false);
     this->update(); //TODO: is this necessary?
     modifyingSettings--;
 }
@@ -1087,6 +1016,7 @@ int SettingsDialog::saveSettings()
 
     ProgressHelperCompletionGuard g(saveSettingsProgress.get());
 
+    // FIXME: rename me to loadingSettings
     modifyingSettings++;
     if (!proxyOnly)
     {
@@ -1271,7 +1201,6 @@ int SettingsDialog::saveSettings()
 
     //TODO: Remove me
     int proxyChanged = 0;
-    ui->bApply->setEnabled(false);
     modifyingSettings--;
     return !proxyChanged;
 }
@@ -1289,7 +1218,7 @@ void SettingsDialog::on_bDelete_clicked()
     syncNames.removeAt(index);
 
     syncsChanged = true;
-    stateChanged();
+    saveSettings();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -1502,7 +1431,7 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 
     // FIXME: am I necessary?
     syncsChanged = true;
-    stateChanged();
+    saveSettings();
 }
 
 void SettingsDialog::on_bAdd_clicked()
@@ -1511,20 +1440,7 @@ void SettingsDialog::on_bAdd_clicked()
     addSyncFolder(invalidMegaFolderHandle);
 }
 
-//FIXME: Remove
-void SettingsDialog::on_bApply_clicked()
-{
-    // If we are at account tab, button performs logout, other pages performs saveSettings()
-    if (ui->wStack->currentWidget() == ui->pAccount)
-    {
-        on_bUnlink_clicked();
-    }
-    else
-    {
-        saveSettings();
-    }
-}
-
+// FIXME: connect me to a new button Logout in the footer of Account page
 void SettingsDialog::on_bUnlink_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
@@ -1781,7 +1697,7 @@ void SettingsDialog::on_bLocalCleaner_clicked()
 
 void SettingsDialog::changeEvent(QEvent *event)
 {
-    modifyingSettings++;
+    modifyingSettings++; //TODO: Am I necessary?
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);

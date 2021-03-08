@@ -224,60 +224,6 @@ background-color: rgba(0,0,0,0.1);
           </property>
          </spacer>
         </item>
-        <item>
-         <widget class="QPushButton" name="bOk">
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="text">
-           <string>OK</string>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bCancel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Cancel</string>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="bApply">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Apply</string>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>
@@ -5003,7 +4949,6 @@ background:transparent;</string>
   <tabstop>bUpdate</tabstop>
   <tabstop>cLanguage</tabstop>
   <tabstop>tSyncs</tabstop>
-  <tabstop>bApply</tabstop>
   <tabstop>lExcludedFiles</tabstop>
   <tabstop>lExcludedNames</tabstop>
   <tabstop>bExcludeSize</tabstop>
@@ -5014,8 +4959,6 @@ background:transparent;</string>
   <tabstop>bClearRemoteCache</tabstop>
   <tabstop>cOverlayIcons</tabstop>
   <tabstop>bFullCheck</tabstop>
-  <tabstop>bOk</tabstop>
-  <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources_macx.qrc"/>

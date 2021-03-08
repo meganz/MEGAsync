@@ -57,7 +57,6 @@ signals:
     void userActivity();
 
 public slots:
-    void stateChanged();
     void storageStateChanged(int state);
     void syncStateChanged(int state);
     void onLocalCacheSizeAvailable();
@@ -77,8 +76,6 @@ private slots:
     void on_bAdvanced_clicked();
     void on_bProxies_clicked();
 
-    void on_bCancel_clicked();
-    void on_bOk_clicked();
     void on_bHelp_clicked();
 #ifndef __APPLE__
     void on_bHelpIco_clicked();
@@ -91,7 +88,6 @@ private slots:
     void on_bPermissions_clicked();
 #endif
     void on_bAdd_clicked();
-    void on_bApply_clicked();
     void on_bDelete_clicked();
     void on_bExcludeSize_clicked();
     void on_bLocalCleaner_clicked();
@@ -176,7 +172,6 @@ private:
     QFutureWatcher<long long> cacheSizeWatcher;
     QFutureWatcher<long long> remoteCacheSizeWatcher;
     AccountDetailsDialog *accountDetailsDialog;
-    bool shouldClose;
     std::unique_ptr<ProgressHelper> saveSettingsProgress;
     int modifyingSettings;
     long long cacheSize;
