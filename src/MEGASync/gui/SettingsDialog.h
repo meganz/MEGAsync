@@ -149,7 +149,7 @@ protected:
 
 private:
     void loadSettings();
-    int saveSettings();
+    void saveSyncSettings();
     void onCacheSizeAvailable();
     void onClearCache();
     void savingSyncs(bool completed, QObject *item);
@@ -165,7 +165,6 @@ private:
     Model *model;
     mega::MegaApi *megaApi;
     HighDpiResize highDpiResize;
-    bool syncsChanged;
     QStringList syncNames;
     QStringList languageCodes;
     bool proxyOnly;

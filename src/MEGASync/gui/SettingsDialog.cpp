@@ -107,8 +107,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     mThreadPool = ThreadPoolSingleton::getInstance();
 
-    syncsChanged = false;
-
     this->proxyOnly = proxyOnly;
     modifyingSettings = 0;
     accountDetailsDialog = NULL;
@@ -388,8 +386,7 @@ void SettingsDialog::syncStateChanged(int state)
         Platform::prepareForSync();
     }
 
-    syncsChanged = true;
-    saveSettings();
+    saveSyncSettings();
 }
 
 void SettingsDialog::onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting)
@@ -1004,138 +1001,135 @@ void SettingsDialog::refreshAccountDetails() //TODO: separate storage from bandw
     }
 }
 
-    //FIXME: Rename me to saveSyncs()
-int SettingsDialog::saveSettings()
+void SettingsDialog::saveSyncSettings()
 {
-    saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving settings")));
+    saveSettingsProgress.reset(new ProgressHelper(false, tr("Saving Sync settings")));
     connect(saveSettingsProgress.get(), SIGNAL(progress(double)), this, SLOT(onSavingSettingsProgress(double)));
     connect(saveSettingsProgress.get(), SIGNAL(completed()), this, SLOT(onSavingSettingsCompleted()));
 
-    // Uncomment the following to see a progress bar when saving settings (which being modal will prevent from modifying while changing)
+    // Uncomment the following to see a progress bar when saving
+    // (which being modal will prevent from modifying while changing)
     //Utilities::showProgressDialog(saveSettingsProgress.get(), this);
 
     ProgressHelperCompletionGuard g(saveSettingsProgress.get());
 
     // FIXME: rename me to loadingSettings
-    modifyingSettings++;
+    modifyingSettings++; //TODO: Am I necessary?
     if (!proxyOnly)
     {
-        //Syncs
-        if (syncsChanged)
+        onSavingSettingsProgress(0);
+
+        // 1 - loop through the syncs in the model to remove or update
+        for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
-            onSavingSettingsProgress(0);
-
-            // 1 - loop through the syncs in the model to remove or update
-            for (int i = 0; i < model->getNumSyncedFolders(); i++)
+            auto syncSetting = model->getSyncSetting(i);
+            if (!syncSetting)
             {
-                auto syncSetting = model->getSyncSetting(i);
-                if (!syncSetting)
-                {
-                    assert("missing setting when looping for saving");
-                    continue;
-                }
-
-                // 1.1 - remove no longer present:
-                bool found = false;
-                for (int j = 0; j < ui->tSyncs->rowCount(); j++)
-                {
-                    auto tagItem = ui->tSyncs->cellWidget(j,3);
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) //sync no longer found in settings: needs removing
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(syncSetting->name()).toUtf8().constData());
-                    ActionProgress *removeSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
-                                                                        .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
-                    saveSettingsProgress->addStep(removeSyncStep);
-                    controller->removeSync(syncSetting, removeSyncStep);
-                }
-
-                // 1.2 - enable/disable changed syncs
-                QString localPath = syncSetting->getLocalFolder();
-                QString megaPath = syncSetting->getMegaFolder();
-                for (int j = 0; j < ui->tSyncs->rowCount(); j++)
-                {
-                    QString newLocalPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 0))->fullPath();
-                    QString newMegaPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 1))->fullPath();
-                    bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
-                    bool disabled = !enabled;
-#ifdef SYNC_ADVANCED_TEST_MODE
-                    enabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Checked;
-                    disabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Unchecked;
-#endif
-
-                    auto tagItem = ui->tSyncs->cellWidget(j,3);
-
-                    if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
-                    {
-#ifdef SYNC_ADVANCED_TEST_MODE
-                        if (disabled && syncSetting->isEnabled()) //sync disabled
-#else
-                        if (disabled && syncSetting->isActive()) //sync disabled
-#endif
-                        {
-                            ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Disabling sync: %1 - %2")
-                                                                                .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
-                            saveSettingsProgress->addStep(disableSyncStep);
-
-                            connect(disableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
-                            {
-                                Q_UNUSED(request)
-                                if (error->getErrorCode())
-                                {
-                                    QObject temporary;
-                                    QObject::connect(&temporary, &QObject::destroyed, this, [this, syncSetting](){
-                                        onDisableSyncFailed(syncSetting); //Note: this might get executed before onSyncStateChanged!
-                                        loadSyncSettings(); //to no longer show the failed line
-                                    }, Qt::QueuedConnection);
-                                }
-                            }, Qt::DirectConnection); //Note, we need direct connection to use request & error
-
-                            controller->disableSync(syncSetting, disableSyncStep);
-                        }
-#ifdef SYNC_ADVANCED_TEST_MODE
-                        else if (enabled && !syncSetting->isActive()) //sync re-enabled!
-#else
-                        else if (enabled && !syncSetting->isActive()) //sync re-enabled!
-#endif
-                        {
-                            ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Enabling sync: %1 - %2")
-                                                                                .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
-                            saveSettingsProgress->addStep(enableSyncStep);
-                            connect(enableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
-                            {
-                                if (error->getErrorCode())
-                                {
-                                    auto syncError = request->getNumDetails();
-                                    QObject temporary;
-                                    QObject::connect(&temporary, &QObject::destroyed, this, [this, syncError, syncSetting](){
-                                        onEnableSyncFailed(syncError, syncSetting); //Note: this might get executed before onSyncStateChanged!
-                                        //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
-
-                                        loadSyncSettings(); //to no longer show the failed line
-
-                                    }, Qt::QueuedConnection);
-                                }
-                            }, Qt::DirectConnection); //Note, we need direct connection to use request & error
-
-                            controller->enableSync(syncSetting, enableSyncStep);
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        assert("paths changed for an already configured sync");
-                    }
-                }
+                assert("missing setting when looping for saving");
+                continue;
             }
 
-            // 2 - look for new syncs
+            // 1.1 - remove no longer present:
+            bool found = false;
             for (int j = 0; j < ui->tSyncs->rowCount(); j++)
+            {
+                auto tagItem = ui->tSyncs->cellWidget(j,3);
+                if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) //sync no longer found in settings: needs removing
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(syncSetting->name()).toUtf8().constData());
+                ActionProgress *removeSyncStep = new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2")
+                                                                    .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
+                saveSettingsProgress->addStep(removeSyncStep);
+                controller->removeSync(syncSetting, removeSyncStep);
+            }
+
+            // 1.2 - enable/disable changed syncs
+            QString localPath = syncSetting->getLocalFolder();
+            QString megaPath = syncSetting->getMegaFolder();
+            for (int j = 0; j < ui->tSyncs->rowCount(); j++)
+            {
+                QString newLocalPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 0))->fullPath();
+                QString newMegaPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 1))->fullPath();
+                bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
+                bool disabled = !enabled;
+#ifdef SYNC_ADVANCED_TEST_MODE
+                enabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Checked;
+                disabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Unchecked;
+#endif
+
+                auto tagItem = ui->tSyncs->cellWidget(j,3);
+
+                if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
+                {
+#ifdef SYNC_ADVANCED_TEST_MODE
+                    if (disabled && syncSetting->isEnabled()) //sync disabled
+#else
+                    if (disabled && syncSetting->isActive()) //sync disabled
+#endif
+                    {
+                        ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Disabling sync: %1 - %2")
+                                                                             .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
+                        saveSettingsProgress->addStep(disableSyncStep);
+
+                        connect(disableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
+                        {
+                            Q_UNUSED(request)
+                            if (error->getErrorCode())
+                            {
+                                QObject temporary;
+                                QObject::connect(&temporary, &QObject::destroyed, this, [this, syncSetting](){
+                                    onDisableSyncFailed(syncSetting); //Note: this might get executed before onSyncStateChanged!
+                                    loadSyncSettings(); //to no longer show the failed line
+                                }, Qt::QueuedConnection);
+                            }
+                        }, Qt::DirectConnection); //Note, we need direct connection to use request & error
+
+                        controller->disableSync(syncSetting, disableSyncStep);
+                    }
+#ifdef SYNC_ADVANCED_TEST_MODE
+                    else if (enabled && !syncSetting->isActive()) //sync re-enabled!
+#else
+                    else if (enabled && !syncSetting->isActive()) //sync re-enabled!
+#endif
+                    {
+                        ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Enabling sync: %1 - %2")
+                                                                            .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
+                        saveSettingsProgress->addStep(enableSyncStep);
+                        connect(enableSyncStep, &ActionProgress::failedRequest, this, [this, syncSetting](MegaRequest *request, MegaError *error)
+                        {
+                            if (error->getErrorCode())
+                            {
+                                auto syncError = request->getNumDetails();
+                                QObject temporary;
+                                QObject::connect(&temporary, &QObject::destroyed, this, [this, syncError, syncSetting](){
+                                    onEnableSyncFailed(syncError, syncSetting); //Note: this might get executed before onSyncStateChanged!
+                                    //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
+
+                                    loadSyncSettings(); //to no longer show the failed line
+
+                                }, Qt::QueuedConnection);
+                            }
+                        }, Qt::DirectConnection); //Note, we need direct connection to use request & error
+
+                        controller->enableSync(syncSetting, enableSyncStep);
+                    }
+                    break;
+                }
+                else
+                {
+                    assert("paths changed for an already configured sync");
+                }
+            }
+        }
+
+        // 2 - look for new syncs
+        for (int j = 0; j < ui->tSyncs->rowCount(); j++)
             {
                 auto tagItem = ui->tSyncs->cellWidget(j, 3);
                 if (!tagItem) //not found: new sync
@@ -1194,15 +1188,8 @@ int SettingsDialog::saveSettings()
                     continue;
                 }
             }
-
-            syncsChanged = false;
-        }
     }
-
-    //TODO: Remove me
-    int proxyChanged = 0;
     modifyingSettings--;
-    return !proxyChanged;
 }
 
 void SettingsDialog::on_bDelete_clicked()
@@ -1217,8 +1204,7 @@ void SettingsDialog::on_bDelete_clicked()
     ui->tSyncs->removeRow(index);
     syncNames.removeAt(index);
 
-    syncsChanged = true;
-    saveSettings();
+    saveSyncSettings();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -1429,14 +1415,12 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 
     delete dialog;
 
-    // FIXME: am I necessary?
-    syncsChanged = true;
-    saveSettings();
+    saveSyncSettings();
 }
 
 void SettingsDialog::on_bAdd_clicked()
 {
-    const auto invalidMegaFolderHandle = 0;
+    const MegaHandle invalidMegaFolderHandle = 0;
     addSyncFolder(invalidMegaFolderHandle);
 }
 
@@ -1954,6 +1938,7 @@ void SettingsDialog::onClearCache()
     }
 }
 
+// TODO: Is it really necessary to disable everything when saving syncs?
 void SettingsDialog::savingSyncs(bool completed, QObject *item)
 {
     if (!item)
