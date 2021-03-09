@@ -108,7 +108,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     mThreadPool = ThreadPoolSingleton::getInstance();
 
     this->proxyOnly = proxyOnly;
-    modifyingSettings = 0;
+    loadingSettings = 0;
     accountDetailsDialog = NULL;
     cacheSize = -1;
     remoteCacheSize = -1;
@@ -332,7 +332,7 @@ SettingsDialog::~SettingsDialog()
     delete ui;
 }
 
-// TODO: Re-evaluate me
+// TODO: Re-evaluate me when removing Guest mode
 void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     this->proxyOnly = proxyOnly;
@@ -766,7 +766,7 @@ void SettingsDialog::updateDownloadFolder()
 
 void SettingsDialog::loadSettings()
 {
-    modifyingSettings++;
+    loadingSettings++;
 
     //FIXME: this bool check leads to settings not being loaded for guest mode
     if (!proxyOnly)
@@ -909,11 +909,11 @@ void SettingsDialog::loadSettings()
     }
 
     this->update(); //TODO: is this necessary?
-    modifyingSettings--;
+    loadingSettings--;
 }
 
-void SettingsDialog::refreshAccountDetails() //TODO: separate storage from bandwidth
-{
+// TODO: separate storage from bandwidth (clarify me with V.)
+void SettingsDialog::refreshAccountDetails() {
     int accountType = preferences->accountType();
     if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -1013,8 +1013,7 @@ void SettingsDialog::saveSyncSettings()
 
     ProgressHelperCompletionGuard g(saveSettingsProgress.get());
 
-    // FIXME: rename me to loadingSettings
-    modifyingSettings++; //TODO: Am I necessary?
+    loadingSettings++; //TODO: Am I necessary?
     if (!proxyOnly)
     {
         onSavingSettingsProgress(0);
@@ -1189,7 +1188,7 @@ void SettingsDialog::saveSyncSettings()
                 }
             }
     }
-    modifyingSettings--;
+    loadingSettings--;
 }
 
 void SettingsDialog::on_bDelete_clicked()
@@ -1652,7 +1651,7 @@ void SettingsDialog::on_bExcludeSize_clicked()
         preferences->setLowerSizeLimitValue(dialog->lowerSizeLimitValue());
         preferences->setUpperSizeLimitUnit(dialog->upperSizeLimitUnit());
         preferences->setLowerSizeLimitUnit(dialog->lowerSizeLimitUnit());
-        preferences->setCrashed(true); // TODO: Why?
+        preferences->setCrashed(true); // removes cached application state
         ui->lLimitsInfo->setText(excludeBySizeInfo());
         QMegaMessageBox::information(this, tr("Warning"),
                                      tr("The new excluded file sizes will be taken into account when the application starts again."),
@@ -1681,7 +1680,7 @@ void SettingsDialog::on_bLocalCleaner_clicked()
 
 void SettingsDialog::changeEvent(QEvent *event)
 {
-    modifyingSettings++; //TODO: Am I necessary?
+    loadingSettings++; //TODO: Am I necessary?
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
@@ -1697,7 +1696,7 @@ void SettingsDialog::changeEvent(QEvent *event)
         onCacheSizeAvailable();
     }
     QDialog::changeEvent(event);
-    modifyingSettings--;
+    loadingSettings--;
 }
 
 QString SettingsDialog::excludeBySizeInfo()
@@ -2271,13 +2270,13 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
 
 void SettingsDialog::on_cShowNotifications_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     preferences->setShowNotifications(checked);
 }
 
 void SettingsDialog::on_cAutoUpdate_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     if (ui->cAutoUpdate->isEnabled() && (checked != preferences->updateAutomatically()))
     {
         preferences->setUpdateAutomatically(checked);
@@ -2290,7 +2289,7 @@ void SettingsDialog::on_cAutoUpdate_toggled(bool checked)
 
 void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     if (!Platform::startOnStartup(checked))
     {
         // in case of failure - make sure configuration keeps the right value
@@ -2305,7 +2304,7 @@ void SettingsDialog::on_cStartOnStartup_toggled(bool checked)
 
 void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     if (index < 0) return; // QComboBox can emit with index -1; do nothing in that case
     QString selectedLanguage = languageCodes[index];
     if (preferences->language() != selectedLanguage)
@@ -2323,7 +2322,7 @@ void SettingsDialog::on_cLanguage_currentIndexChanged(int index)
 
 void SettingsDialog::on_eUploadFolder_textChanged(const QString &text)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData());
     if (node)
     {
@@ -2340,7 +2339,7 @@ void SettingsDialog::on_eUploadFolder_textChanged(const QString &text)
 
 void SettingsDialog::on_eDownloadFolder_textChanged(const QString &text)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     QString defaultDownloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
     if (text.compare(QDir::toNativeSeparators(defaultDownloadPath))
         || preferences->downloadFolder().size())
@@ -2353,7 +2352,7 @@ void SettingsDialog::on_eDownloadFolder_textChanged(const QString &text)
 
 void SettingsDialog::on_rUploadAutoLimit_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     ui->eUploadLimit->setEnabled(!checked);
     if (checked)
     {
@@ -2365,7 +2364,7 @@ void SettingsDialog::on_rUploadAutoLimit_toggled(bool checked)
 
 void SettingsDialog::on_rUploadNoLimit_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     ui->eUploadLimit->setEnabled(!checked);
     if (checked)
     {
@@ -2377,7 +2376,7 @@ void SettingsDialog::on_rUploadNoLimit_toggled(bool checked)
 
 void SettingsDialog::on_rUploadLimit_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     ui->eUploadLimit->setEnabled(checked);
     if (checked)
     {
@@ -2389,7 +2388,7 @@ void SettingsDialog::on_rUploadLimit_toggled(bool checked)
 
 void SettingsDialog::on_rDownloadNoLimit_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     ui->eDownloadLimit->setEnabled(!checked);
     if (checked)
     {
@@ -2400,7 +2399,7 @@ void SettingsDialog::on_rDownloadNoLimit_toggled(bool checked)
 
 void SettingsDialog::on_rDownloadLimit_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     ui->eDownloadLimit->setEnabled(checked);
     if (checked)
     {
@@ -2411,7 +2410,7 @@ void SettingsDialog::on_rDownloadLimit_toggled(bool checked)
 
 void SettingsDialog::on_eUploadLimit_editingFinished()
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     preferences->setUploadLimitKB(ui->eUploadLimit->text().toInt());
     app->setUploadLimit(0); // TODO: Verify if I'm correct with V.
     app->setMaxUploadSpeed(preferences->uploadLimitKB());
@@ -2419,14 +2418,14 @@ void SettingsDialog::on_eUploadLimit_editingFinished()
 
 void SettingsDialog::on_eDownloadLimit_editingFinished()
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     preferences->setDownloadLimitKB(ui->eDownloadLimit->text().toInt());
     app->setMaxDownloadSpeed(preferences->downloadLimitKB());
 }
 
 void SettingsDialog::on_eMaxDownloadConnections_valueChanged(int value)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     if (value != preferences->parallelDownloadConnections())
     {
         preferences->setParallelDownloadConnections(value);
@@ -2436,7 +2435,7 @@ void SettingsDialog::on_eMaxDownloadConnections_valueChanged(int value)
 
 void SettingsDialog::on_eMaxUploadConnections_valueChanged(int value)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     if (value != preferences->parallelUploadConnections())
     {
         preferences->setParallelUploadConnections(value);
@@ -2446,14 +2445,14 @@ void SettingsDialog::on_eMaxUploadConnections_valueChanged(int value)
 
 void SettingsDialog::on_cbUseHttps_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     preferences->setUseHttpsOnly(checked);
     app->setUseHttpsOnly(preferences->usingHttpsOnly());
 }
 
 void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     if (checked)
     {
         auto answer = QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
@@ -2469,13 +2468,14 @@ void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
         }
     }
     megaApi->setFileVersionsOption(checked);
-    // TODO: investigate why this setting was not saved in batched mode impl.; is this because this option is set by MegaApplication.cpp?
+    // TODO: investigate why this setting was not saved in batched mode impl.;
+    // is this because this option is set by MegaApplication.cpp?
     preferences->disableFileVersioning(checked);
 }
 
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     preferences->disableOverlayIcons(checked);
 #ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();

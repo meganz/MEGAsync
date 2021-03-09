@@ -172,7 +172,7 @@ private:
     QFutureWatcher<long long> remoteCacheSizeWatcher;
     AccountDetailsDialog *accountDetailsDialog;
     std::unique_ptr<ProgressHelper> saveSettingsProgress;
-    int modifyingSettings;
+    int loadingSettings;
     long long cacheSize;
     long long remoteCacheSize;
     long long fileVersionsSize;
