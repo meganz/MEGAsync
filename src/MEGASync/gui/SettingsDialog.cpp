@@ -1433,8 +1433,6 @@ int SettingsDialog::saveSettings()
                 }
 
                 // 1.2 - enable/disable changed syncs
-                QString localPath = syncSetting->getLocalFolder();
-                QString megaPath = syncSetting->getMegaFolder();
                 for (int j = 0; j < ui->tSyncs->rowCount(); j++)
                 {
                     QString newLocalPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 0))->fullPath();
