@@ -908,57 +908,61 @@ Qt::DropActions QTransfersModel2::supportedDropActions() const
 void QTransfersModel2::insertTransfer(mega::MegaApi *api, mega::MegaTransfer *transfer, int row)
 {
     TransferTag tag (transfer->getTag());
-    int state (transfer->getState());
-    int type (transfer->getType());
-    QString fileName (QString::fromUtf8(transfer->getFileName()));
-    QString path (QString::fromUtf8(transfer->getPath()));
-    TransferData::FileTypes fileType = mFileTypes[Utilities::getExtensionPixmapName(fileName, QString())];
-    auto speed (api->getCurrentSpeed(type));
-    auto totalBytes (transfer->getTotalBytes());
-    auto transferredBytes(transfer->getTransferredBytes());
-    TransferRemainingTime* rem (new TransferRemainingTime(speed, totalBytes-transferredBytes));
-    auto remSecs (rem->calculateRemainingTimeSeconds(speed, totalBytes-transferredBytes));
-    auto priority = transfer->getPriority();
-    int errorCode(MegaError::API_OK);
-    auto errorValue(0LL);
-    auto megaError (transfer->getLastErrorExtended());
-    if (megaError != nullptr)
+
+    if (mTransfers.find(tag) == mTransfers.end())
     {
-        errorCode = megaError->getErrorCode();
-        errorValue = megaError->getValue();
+        int state (transfer->getState());
+        int type (transfer->getType());
+        QString fileName (QString::fromUtf8(transfer->getFileName()));
+        QString path (QString::fromUtf8(transfer->getPath()));
+        TransferData::FileTypes fileType = mFileTypes[Utilities::getExtensionPixmapName(fileName, QString())];
+        auto speed (api->getCurrentSpeed(type));
+        auto totalBytes (transfer->getTotalBytes());
+        auto transferredBytes(transfer->getTransferredBytes());
+        TransferRemainingTime* rem (new TransferRemainingTime(speed, totalBytes-transferredBytes));
+        auto remSecs (rem->calculateRemainingTimeSeconds(speed, totalBytes-transferredBytes));
+        auto priority = transfer->getPriority();
+        int errorCode(MegaError::API_OK);
+        auto errorValue(0LL);
+        auto megaError (transfer->getLastErrorExtended());
+        if (megaError != nullptr)
+        {
+            errorCode = megaError->getErrorCode();
+            errorValue = megaError->getValue();
+        }
+
+        TransferData dataRow(
+                    type,
+                    errorCode,
+                    state,
+                    tag,
+                    errorValue,
+                    0,
+                    remSecs.count(),
+                    totalBytes,
+                    priority,
+                    speed,
+                    transfer->getMeanSpeed(),
+                    transferredBytes,
+                    transfer->getUpdateTime(),
+                    transfer->getPublicMegaNode(),
+                    fileType,
+                    transfer->getParentHandle(),
+                    transfer->getNodeHandle(),
+                    api,
+                    fileName,
+                    path);
+
+         mTransfers[tag] = QVariant::fromValue(TransferItem2(dataRow));
+         mRemainingTimes[tag] = rem;
+
+         mOrder.insert(row, tag);
+
+         // Update statistics
+         mNbTransfersPerState[state]++;
+         mNbTransfersPerFileType[fileType]++;
+         mNbTransfersPerType[type]++;
     }
-
-    TransferData dataRow(
-                type,
-                errorCode,
-                state,
-                tag,
-                errorValue,
-                0,
-                remSecs.count(),
-                totalBytes,
-                priority,
-                speed,
-                transfer->getMeanSpeed(),
-                transferredBytes,
-                transfer->getUpdateTime(),
-                transfer->getPublicMegaNode(),
-                fileType,
-                transfer->getParentHandle(),
-                transfer->getNodeHandle(),
-                api,
-                fileName,
-                path);
-
-     mTransfers[tag] = QVariant::fromValue(TransferItem2(dataRow));
-     mRemainingTimes[tag] = rem;
-
-     mOrder.insert(row, tag);
-
-     // Update statistics
-     mNbTransfersPerState[state]++;
-     mNbTransfersPerFileType[fileType]++;
-     mNbTransfersPerType[type]++;
 }
 
 void QTransfersModel2::emitStatistics()
