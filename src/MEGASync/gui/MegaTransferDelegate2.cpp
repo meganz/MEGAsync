@@ -38,8 +38,8 @@ TransferManagerItem2 * MegaTransferDelegate2::getTransferItemWidget(int row, int
     {
         w = new TransferManagerItem2(mView);
         w->setObjectName(widgetName);
-        connect(w, &TransferManagerItem2::clearTransfers,
-                this, &MegaTransferDelegate2::onClearTransfers);
+        connect(w, &TransferManagerItem2::cancelClearTransfers,
+                this, &MegaTransferDelegate2::onCancelClearTransfers);
         connect(w, &TransferManagerItem2::retryTransfer,
                 mSourceModel, &QTransfersModel2::onRetryTransfer);
     }
@@ -80,7 +80,7 @@ QSize MegaTransferDelegate2::sizeHint(const QStyleOptionViewItem &option, const 
     return QSize(720, 64);
 }
 
-void MegaTransferDelegate2::onClearTransfers(int firstRow, int count)
+void MegaTransferDelegate2::onCancelClearTransfers(int firstRow, int count)
 {
     QModelIndexList indexes;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(mModel));

@@ -351,7 +351,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
     if (row >= 0)
     {
         auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
-        auto d(transferItem->getTransferData());
+        auto d (transferItem->getTransferData());
 
         auto speed (transfer->getSpeed());
         auto totalBytes (transfer->getTotalBytes());
@@ -376,6 +376,8 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
                                         transferredBytes,
                                         transfer->getPublicMegaNode());
 
+
+        // Re-order if priority changed
         bool sameRow(true);
         if (priority != prevPriority)
         {
@@ -387,7 +389,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
             mModelMutex.lock();
             int lastRow(mOrder.size()-1);
 
-            // Search after
+            // Search after if priority is higher
             if (priority > prevPriority && row < lastRow)
             {
                 bool found (false);
@@ -431,7 +433,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
                     }
                 }
             }
-            // Search before
+            // Search before if priority is lower
             else if (priority < prevPriority && row > 0)
             {
                 bool found (false);
@@ -460,7 +462,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *
                     newRow = row;
                 }
 
-                // If not, search from next row
+                // If not, search from previous row
                 while (!found && newRow > 0)
                 {
                     newRow--;
@@ -674,13 +676,15 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
     QList<TransferTag> tags;
 
     mModelMutex.lock();
+
+    // Get transfer tags from the indexes.
     for (auto index : indexes)
     {
         tags.push_back(mOrder.at(index.row()));
     }
 
-    // First remove rows, then cancel transfers.
-    // This way, there is no risk of messing up the row order with cancel requests.
+    // First clear finished transfers (remove rows), then cancel the others.
+    // This way, there is no risk of messing up the rows order with cancel requests.
     int count (0);
     int row (mOrder.size());
     for (auto tag : tags)
@@ -688,15 +692,18 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
         auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
         auto d (transferItem->getTransferData());
 
+        // Clear (remove rows of) finished transfers
         if (d->mState == MegaTransfer::STATE_COMPLETED
                 || d->mState == MegaTransfer::STATE_CANCELLED
                 || d->mState == MegaTransfer::STATE_FAILED)
         {
+            // Init row with row of first tag
             if (count == 0)
             {
                 row = mOrder.lastIndexOf(tag, row);
             }
 
+            // Flush pooled rows (start at row+1), init row with tag's
             if (mOrder.at(row) != tag)
             {
                 removeRows(row + 1, count, QModelIndex());
@@ -704,7 +711,8 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
                 row = mOrder.lastIndexOf(tag, row);
             }
 
-            if (row == 0 || tags.size() == 1)
+            // Only one tag left. Flush pooled rows (start at row).
+            if (tags.size() == 1)
             {
                 removeRows(row, count + 1, QModelIndex());
             }
@@ -713,13 +721,15 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
             row--;
             tags.removeOne(tag);
         }
-        if (d->mState == MegaTransfer::STATE_COMPLETING)
+        // Do not cancel/clear completing transfers
+        else if (d->mState == MegaTransfer::STATE_COMPLETING)
         {
             tags.removeOne(tag);
         }
     }
     mModelMutex.unlock();
 
+    // All remaining tags, if any, are cancelable transfers. Cancel them.
     for (auto tag : tags)
     {
         mMegaApi->cancelTransferByTag(tag);
@@ -767,7 +777,6 @@ void QTransfersModel2::onRetryTransfer(TransferTag tag)
     {
         TransferItem2 transferItem (qvariant_cast<TransferItem2>(mTransfers[tag]));
         transferItem.getTransferData()->mMegaApi->retryTransfer(transfer);
-
         removeRows(mOrder.indexOf(tag), 1, QModelIndex());
     }
 }
@@ -777,7 +786,6 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex &parent)
     if (parent == QModelIndex() && count > 0 && row >= 0)
     {
         mModelMutex.lock();
-
         beginRemoveRows(QModelIndex(), row, row + count - 1);
 
         for (auto i(0); i < count; ++i)

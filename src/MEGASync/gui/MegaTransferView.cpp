@@ -132,7 +132,6 @@ void MegaTransferView::cancelClearSelection()
             indexes.push_back(index);
         }
     }
-
     mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
 }
 

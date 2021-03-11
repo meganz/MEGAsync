@@ -19,7 +19,7 @@ class TransferManagerItem2 : public QWidget
         void forwardMouseEvent(QMouseEvent *me);
 
     signals:
-        void clearTransfers(int firstRow, int amount);
+        void cancelClearTransfers(int firstRow, int amount);
         void retryTransfer(TransferTag tag);
 
     private slots:

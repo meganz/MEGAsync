@@ -34,7 +34,7 @@ signals:
     void transferCanceled(const TransferTag tag);
 
 private slots:
-    void onClearTransfers(int firstRow, int count);
+    void onCancelClearTransfers(int firstRow, int count);
 
 private:
     void setupUi(Ui::TransferManagerItem& ui, const TransferItem2& transferItem, QWidget* w) const;
