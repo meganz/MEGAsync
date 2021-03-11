@@ -347,8 +347,10 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 #endif
     if (proxyOnly)
     {
+#ifndef Q_OS_MACOS
         ui->bProxies->setEnabled(true);
         ui->bProxies->setChecked(true);
+#endif
         ui->wStack->setCurrentWidget(ui->pProxies);
         ui->pProxies->show();
 
