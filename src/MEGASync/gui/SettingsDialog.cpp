@@ -337,7 +337,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     this->proxyOnly = proxyOnly;
 
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
     ui->bAccount->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
     ui->bSyncs->setEnabled(!proxyOnly);
@@ -486,7 +486,7 @@ void SettingsDialog::onCacheSizeAvailable()
             // Move remote SyncDebris widget to left side
             ui->gCache->layout()->removeWidget(ui->wLocalCache);
             ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
             ui->lRemoteCacheSize->setMargin(2);
 #endif
             ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
@@ -1847,7 +1847,7 @@ void SettingsDialog::on_bClearCache_clicked()
     // Move remote SyncDebris widget to left side
     ui->gCache->layout()->removeWidget(ui->wLocalCache);
     ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
     ui->lRemoteCacheSize->setMargin(2);
 #endif
     ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
@@ -1952,7 +1952,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
         widget->setEnabled(completed);
     }
 
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
     ui->bAccount->setEnabled(completed);
     ui->bSyncs->setEnabled(completed);
     ui->bAdvanced->setEnabled(completed);
@@ -2130,7 +2130,7 @@ void SettingsDialog::openSettingsTab(int tab)
     {
     case ACCOUNT_TAB:
         reloadUIpage = true;
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
         ui->bAccount->setChecked(true);
 #else
         emit bAccount.get()->activated();
@@ -2138,7 +2138,7 @@ void SettingsDialog::openSettingsTab(int tab)
         break;
 
     case SYNCS_TAB:
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
         ui->bSyncs->setChecked(true);
 #else
         emit bSyncs.get()->activated();
@@ -2146,7 +2146,7 @@ void SettingsDialog::openSettingsTab(int tab)
         break;
 
     case BANDWIDTH_TAB:
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
         ui->bBandwidth->setChecked(true);
 #else
         emit bBandwidth.get()->activated();
@@ -2154,7 +2154,7 @@ void SettingsDialog::openSettingsTab(int tab)
         break;
 
     case SECURITY_TAB:
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
         ui->bSecurity->setChecked(true);
 #else
         emit bSecurity.get()->activated();
@@ -2162,7 +2162,7 @@ void SettingsDialog::openSettingsTab(int tab)
         break;
 
     case PROXY_TAB:
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
         ui->bProxies->setChecked(true);
 #else
         emit bProxies.get()->activated();
@@ -2170,7 +2170,7 @@ void SettingsDialog::openSettingsTab(int tab)
         break;
 
     case ADVANCED_TAB:
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
         ui->bAdvanced->setChecked(true);
 #else
         emit bAdvanced.get()->activated();
@@ -2218,7 +2218,7 @@ void SettingsDialog::on_bSendBug_clicked()
     delete dialog;
 }
 
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
 void SettingsDialog::on_bHelpIco_clicked()
 {
     on_bHelp_clicked();
