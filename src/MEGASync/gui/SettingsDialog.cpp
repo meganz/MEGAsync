@@ -1014,7 +1014,6 @@ void SettingsDialog::saveSyncSettings()
 
     ProgressHelperCompletionGuard g(saveSettingsProgress.get());
 
-    loadingSettings++; //TODO: Am I necessary?
     if (!proxyOnly)
     {
         onSavingSettingsProgress(0);
@@ -1189,7 +1188,6 @@ void SettingsDialog::saveSyncSettings()
                 }
             }
     }
-    loadingSettings--;
 }
 
 void SettingsDialog::on_bDelete_clicked()
@@ -1681,7 +1679,6 @@ void SettingsDialog::on_bLocalCleaner_clicked()
 
 void SettingsDialog::changeEvent(QEvent *event)
 {
-    loadingSettings++; //TODO: Am I necessary?
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
@@ -1697,7 +1694,6 @@ void SettingsDialog::changeEvent(QEvent *event)
         onCacheSizeAvailable();
     }
     QDialog::changeEvent(event);
-    loadingSettings--;
 }
 
 QString SettingsDialog::excludeBySizeInfo()
