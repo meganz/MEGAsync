@@ -8,6 +8,7 @@
 #include <QQueue>
 #include <QMap>
 #include "megaapi.h"
+#include "control/Utilities.h"
 
 class MegaDownloader : public QObject
 {
@@ -18,11 +19,11 @@ public:
     // provide megaApiGuest
     MegaDownloader(mega::MegaApi *megaApi);
     virtual ~MegaDownloader();
-    bool processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path, unsigned long long appDataId);
-    void download(mega::MegaNode *parent, QString path, QString appData);
+    bool processDownloadQueue(QQueue<WrappedNode *> *downloadQueue, QString path, unsigned long long appDataId);
+    void download(WrappedNode *parent, QString path, QString appData);
 
 protected:
-    void download(mega::MegaNode *parent, QFileInfo info, QString appData);
+    void download(WrappedNode *parent, QFileInfo info, QString appData);
 
     mega::MegaApi *megaApi;
     QMap<mega::MegaHandle, QString> pathMap;

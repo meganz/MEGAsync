@@ -3,20 +3,21 @@
 #include <chrono>
 
 /// Responsability: calculates remaining time in seconds after adding the speed in bytes seconds and the remaining
-/// bytes left. In order to filter the results it uses a buffer that is filled with a few samples (10 samples buffer size)
+/// bytes left. In order to filter the results it uses a buffer that is filled with a few samples (9 samples buffer size)
 /// and when the buffer is filled calculates the median of the values on the buffer. First time until the buffer is filled
 /// returns zero. After calculating the median and until the buffer is filled again it returns the last calculated value.
-
 class TransferRemainingTime
 {
 public:
     TransferRemainingTime();
     std::chrono::seconds calculateRemainingTimeSeconds(long long speedBytesSecond, long long remainingBytes);
-    static const int REMAINING_SECONDS_BUFFER_SIZE{10};
+    // The median computation code is simpler using an odd buffer size
+    static constexpr unsigned int REMAINING_SECONDS_BUFFER_SIZE{9};
     void reset();
 
 private:
-    int mRemainingSeconds;
+    std::chrono::seconds mRemainingSeconds;
     int mUpdateRemainingTimeCounter;
-    std::array<int, REMAINING_SECONDS_BUFFER_SIZE> mRemainingTimesBuffer;
+    std::array<long long, REMAINING_SECONDS_BUFFER_SIZE> mRemainingTimesBuffer;
+    void calculateMedian();
 };

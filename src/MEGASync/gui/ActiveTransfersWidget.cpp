@@ -150,11 +150,15 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             setTotalSize(&activeDownload, transfer->getTotalBytes());
         }
 
+        // Get http speed
+        long long httpSpeed {static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentDownloadSpeed()};
+
         activeDownload.transferState = transfer->getState();
         activeDownload.priority = priority;
         activeDownload.meanTransferSpeed = transfer->getMeanSpeed();
-        setSpeed(&activeDownload, transfer->getSpeed());
+        setSpeed(&activeDownload, std::min(transfer->getSpeed(), httpSpeed));
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
+        // Update remaining time
         activeDownload.updateRemainingTimeSeconds();
         updateTransferState(&activeDownload);
     }
@@ -183,11 +187,15 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             setTotalSize(&activeUpload, transfer->getTotalBytes());
         }
 
+        // Get http speed
+        long long httpSpeed {static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentUploadSpeed()};
+
         activeUpload.transferState = transfer->getState();
         activeUpload.priority = priority;
         activeUpload.meanTransferSpeed = transfer->getMeanSpeed();
-        setSpeed(&activeUpload, transfer->getSpeed());
+        setSpeed(&activeUpload, std::min(transfer->getSpeed(), httpSpeed));
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());
+        // Update remaining time
         activeUpload.updateRemainingTimeSeconds();
         updateTransferState(&activeUpload);
     }
@@ -473,15 +481,8 @@ void ActiveTransfersWidget::setTotalSize(TransferData *td, long long size)
 }
 
 void ActiveTransfersWidget::setSpeed(TransferData *td, long long transferSpeed)
-{   
-    if (transferSpeed < 0)
-    {
-        td->transferSpeed = 0;
-    }
-    else
-    {
-        td->transferSpeed = transferSpeed;
-    }
+{
+    td->transferSpeed = std::max(0LL, transferSpeed);
 }
 
 void ActiveTransfersWidget::setTransferredBytes(TransferData *td, long long totalTransferredBytes)
@@ -501,21 +502,33 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
 {
     updateAnimation(td);
     QString remainingTimeString;
-    const QString undeterminedRemainingTimeString{QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>")};
 
+    // "- m - s"
+    static const auto undeterminedRemainingTimeString{QString::fromUtf8(
+                    "- <span style=\"color:#777777; text-decoration:none;\">m</span>"
+                    " - <span style=\"color:#777777; text-decoration:none;\">s</span>"
+                    )};
     switch (td->transferState)
     {
     case MegaTransfer::STATE_ACTIVE:
     {
-        const bool infiniteRemainingTime{td->remainingTimeSeconds.count() && td->remainingTimeSeconds == std::chrono::seconds::max()};
-        const bool lowerThanMinute{td->remainingTimeSeconds.count() && td->remainingTimeSeconds < std::chrono::minutes{1}};
+        // The remaining time is considered infinite if remaining time value is the max possible.
+        const auto infiniteRemainingTime{td->remainingTimeSeconds.count()
+                    && td->remainingTimeSeconds == td->remainingTimeSeconds.max()};
+        // Test if the transfer will complete in less than 1 minute
+        const auto lowerThanMinute{td->remainingTimeSeconds.count()
+                    && td->remainingTimeSeconds < std::chrono::minutes{1}};
+
+        // Adapt time display according to remainig time
         if (infiniteRemainingTime)
         {
+            // If inifinite display undetermined string
             remainingTimeString = undeterminedRemainingTimeString;
         }
         else if(lowerThanMinute)
         {
-            const QString lowerThanMinuteTimeString{QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"))};
+            // If less than a minute, "1m"
+            static const auto lowerThanMinuteTimeString{QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"))};
             remainingTimeString = lowerThanMinuteTimeString;
         }
         else if (td->remainingTimeSeconds.count())
