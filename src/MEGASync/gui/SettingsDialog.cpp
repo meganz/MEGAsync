@@ -910,7 +910,6 @@ void SettingsDialog::loadSettings()
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
-    this->update(); //TODO: is this necessary?
     loadingSettings--;
 }
 
