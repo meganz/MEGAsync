@@ -80,7 +80,7 @@ QSize MegaTransferDelegate2::sizeHint(const QStyleOptionViewItem &option, const 
     return QSize(720, 64);
 }
 
-void MegaTransferDelegate2::onClearTransfers(int firstRow, int amount)
+void MegaTransferDelegate2::onClearTransfers(int firstRow, int count)
 {
     QModelIndexList indexes;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(mModel));

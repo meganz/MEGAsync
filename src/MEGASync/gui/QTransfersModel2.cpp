@@ -12,7 +12,7 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     mRemainingTimes(QMap<TransferTag, TransferRemainingTime*>()),
     mOrder(QList<TransferTag>()),
     mThreadPool(ThreadPoolSingleton::getInstance()),
-    mModelMutex(QMutex::NonRecursive),
+    mModelMutex(QMutex::Recursive),
     mNotificationNumber(0)
 {
     // Init File Types
@@ -681,12 +681,12 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
 
     // First remove rows, then cancel transfers.
     // This way, there is no risk of messing up the row order with cancel requests.
-    int count(0);
-    int row(0);
+    int count (0);
+    int row (mOrder.size());
     for (auto tag : tags)
     {
         auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
-        auto d(transferItem->getTransferData());
+        auto d (transferItem->getTransferData());
 
         if (d->mState == MegaTransfer::STATE_COMPLETED
                 || d->mState == MegaTransfer::STATE_CANCELLED
@@ -697,11 +697,18 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
                 row = mOrder.lastIndexOf(tag, row);
             }
 
-            if (row == 0 || mOrder.at(row) != tag)
+            if (mOrder.at(row) != tag)
             {
-                removeRows(row, count+1, QModelIndex());
+                removeRows(row + 1, count, QModelIndex());
                 count = 0;
+                row = mOrder.lastIndexOf(tag, row);
             }
+
+            if (row == 0 || tags.size() == 1)
+            {
+                removeRows(row, count + 1, QModelIndex());
+            }
+
             count++;
             row--;
             tags.removeOne(tag);

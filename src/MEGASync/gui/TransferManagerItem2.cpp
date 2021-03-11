@@ -250,11 +250,8 @@ void TransferManagerItem2::on_tPauseResumeTransfer_clicked()
 
 void TransferManagerItem2::on_tCancelClearTransfer_clicked()
 {
-    if (mIsFinished)
-    {
-        // Clear
-        emit clearTransfers(mRow, 1);
-    }
+    // Clear
+    emit clearTransfers(mRow, 1);
 }
 
 void TransferManagerItem2::forwardMouseEvent(QMouseEvent *me)
