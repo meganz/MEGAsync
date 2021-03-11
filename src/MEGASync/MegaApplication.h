@@ -10,7 +10,6 @@
 #include <QLocalSocket>
 #include <QDataStream>
 #include <QQueue>
-#include <QNetworkConfigurationManager>
 #include <QNetworkInterface>
 #include <memory>
 
@@ -505,7 +504,6 @@ protected:
     QThread *updateThread;
     UpdateTask *updateTask;
     long long lastActiveTime;
-    QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
