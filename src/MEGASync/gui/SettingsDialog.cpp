@@ -2464,10 +2464,7 @@ void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
             return;
         }
     }
-    megaApi->setFileVersionsOption(checked);
-    // TODO: investigate why this setting was not saved in batched mode impl.;
-    // is this because this option is set by MegaApplication.cpp?
-    preferences->disableFileVersioning(checked);
+    megaApi->setFileVersionsOption(checked); // This is actually saved to Preferences after the megaApi call succeeds
 }
 
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
