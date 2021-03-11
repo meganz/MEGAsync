@@ -98,7 +98,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    // TODO: get rid of this->, user unique member names
+    // TODO: get rid of this->, use unique member names when updating with m prefix
     this->app = app;
     this->megaApi = app->getMegaApi();
     this->preferences = Preferences::instance();
@@ -913,7 +913,8 @@ void SettingsDialog::loadSettings()
     loadingSettings--;
 }
 
-// TODO: separate storage from bandwidth (clarify me with V.)
+// TODO: separate storage refresh from bandwidth
+// split into separate methods
 void SettingsDialog::refreshAccountDetails() {
     int accountType = preferences->accountType();
     if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
@@ -1934,7 +1935,6 @@ void SettingsDialog::onClearCache()
     }
 }
 
-// TODO: Is it really necessary to disable everything when saving syncs?
 void SettingsDialog::savingSyncs(bool completed, QObject *item)
 {
     if (!item)
@@ -2378,7 +2378,7 @@ void SettingsDialog::on_rUploadLimit_toggled(bool checked)
     if (checked)
     {
         preferences->setUploadLimitKB(ui->eUploadLimit->text().toInt());
-        app->setUploadLimit(0); // TODO: Verify if I'm correct with V.
+        app->setUploadLimit(0); // TODO: Verify if I'm correct
         app->setMaxUploadSpeed(preferences->uploadLimitKB());
     }
 }
@@ -2409,7 +2409,7 @@ void SettingsDialog::on_eUploadLimit_editingFinished()
 {
     if (loadingSettings) return;
     preferences->setUploadLimitKB(ui->eUploadLimit->text().toInt());
-    app->setUploadLimit(0); // TODO: Verify if I'm correct with V.
+    app->setUploadLimit(0); // TODO: Verify if I'm correct
     app->setMaxUploadSpeed(preferences->uploadLimitKB());
 }
 
