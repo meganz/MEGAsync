@@ -1050,12 +1050,8 @@ void SettingsDialog::saveSyncSettings()
             }
 
             // 1.2 - enable/disable changed syncs
-            QString localPath = syncSetting->getLocalFolder();
-            QString megaPath = syncSetting->getMegaFolder();
             for (int j = 0; j < ui->tSyncs->rowCount(); j++)
             {
-                QString newLocalPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 0))->fullPath();
-                QString newMegaPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 1))->fullPath();
                 bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
                 bool disabled = !enabled;
 #ifdef SYNC_ADVANCED_TEST_MODE
