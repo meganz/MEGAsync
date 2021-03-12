@@ -3,10 +3,13 @@
 
 #include <QWidget>
 #include <QMenu>
+#include <megaapi.h>
 
 namespace Ui {
 class QSyncItemWidget;
 }
+
+class MegaApplication;
 
 class QSyncItemWidget : public QWidget
 {
@@ -23,17 +26,24 @@ public:
     QString fullPath();
 
     ~QSyncItemWidget();
+
+    mega::MegaHandle mSyncRootHandle = mega::INVALID_HANDLE;
+    MegaApplication* app;
+
 private:
     void elidePathLabel();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
+    bool event(QEvent* event) override;
+
 private:
     Ui::QSyncItemWidget *ui;
     QString mFullPath;
     QString mSyncName;
     int error;
+    QString mOriginalPath;
 };
 
 #endif // QSYNCITEMWIDGET_H

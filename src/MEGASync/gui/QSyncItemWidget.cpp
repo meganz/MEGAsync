@@ -1,4 +1,5 @@
 #include "QSyncItemWidget.h"
+#include "QToolTip.h"
 #include "ui_QSyncItemWidget.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
@@ -42,7 +43,14 @@ void QSyncItemWidget::setPathAndGuessName(const QString &path)
 
 void QSyncItemWidget::setToolTip(const QString &tooltip)
 {
-    ui->lSyncName->setToolTip(tooltip);
+    if (mSyncRootHandle == mega::INVALID_HANDLE)
+    {
+        ui->lSyncName->setToolTip(tooltip);
+    }
+    else
+    {
+        mOriginalPath = tooltip;
+    }
 }
 
 void QSyncItemWidget::setError(int error)
@@ -78,4 +86,27 @@ void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
 {
     elidePathLabel();
     QWidget::resizeEvent(event);
+}
+
+bool QSyncItemWidget::event(QEvent* event)
+{
+    //qt doco: QWidget::event() is the main event handlerand receives all the widget's events. Normally, we recommend reimplementing one of the specialized event handlers instead of this function. But here we want to catch the QEvent::ToolTip events, and since these are rather rare, there exists no specific event handler. For that reason we reimplement the main event handler, and the first thing we need to do is to determine the event's type :
+
+    if (event->type() == QEvent::ToolTip && mSyncRootHandle != mega::INVALID_HANDLE && app)
+    {
+        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+
+        std::unique_ptr<char[]> np(app->getMegaApi()->getNodePathByNodeHandle(mSyncRootHandle));
+        if (np)
+        {
+            QToolTip::showText(helpEvent->globalPos(), QString::fromUtf8(np.get()));
+            return true;
+        }
+        else
+        {
+            QToolTip::showText(helpEvent->globalPos(), QString::fromUtf8("Deleted: ") + mOriginalPath);
+            return true;
+        }
+    }
+    return QWidget::event(event);
 }
