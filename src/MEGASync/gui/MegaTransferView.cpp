@@ -455,13 +455,24 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
 void MegaTransferView::moveToTopClicked()
 {
-    auto indexes = selectionModel()->selectedRows();
+
+    auto selection = selectionModel()->selection();
+    auto m (model());
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(m));
+    if (proxy)
+    {
+        selection = proxy->mapSelectionToSource(selection);
+        m = proxy->sourceModel();
+    }
+
+    auto indexes = selection.indexes();
+
     // Reverse sort to keep items in the same order
     std::sort(indexes.rbegin(), indexes.rend());
 
     for (auto index : indexes)
     {
-        model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), 0);
+        m->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), 0);
     }
     clearSelection();
 }
@@ -483,7 +494,6 @@ void MegaTransferView::moveUpClicked()
 void MegaTransferView::moveDownClicked()
 {
     auto indexes = selectionModel()->selectedRows();
-
     // Reverse sort to keep items in the same order
     std::sort(indexes.rbegin(), indexes.rend());
 
@@ -497,14 +507,22 @@ void MegaTransferView::moveDownClicked()
 
 void MegaTransferView::moveToBottomClicked()
 {
-    auto indexes = selectionModel()->selectedRows();
+    auto selection = selectionModel()->selection();
+    auto m (model());
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(m));
+    if (proxy)
+    {
+        selection = proxy->mapSelectionToSource(selection);
+        m = proxy->sourceModel();
+    }
 
+    auto indexes = selection.indexes();
     // Sort to keep items in the same order
     std::sort(indexes.begin(), indexes.end());
 
     for (auto index : indexes)
     {
-            model()->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), model()->rowCount());
+            m->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), m->rowCount());
     }
     clearSelection();
 }

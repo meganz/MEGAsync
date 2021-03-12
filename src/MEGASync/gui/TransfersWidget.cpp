@@ -98,7 +98,6 @@ void TransfersWidget::configureTransferView()
         ui->tvTransfers->setup(mType);
         ui->tvTransfers->setItemDelegate(tDelegate);
         ui->tvTransfers->setModel(model);
-
     }
     else
     {
@@ -106,7 +105,6 @@ void TransfersWidget::configureTransferView()
         ui->tvTransfers->setup(this);
         ui->tvTransfers->setItemDelegate(tDelegate2);
         ui->tvTransfers->setModel(mProxyModel);
-        model2->initModel();
         mProxyModel->setDynamicSortFilter(true);
     }
 

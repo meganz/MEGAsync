@@ -178,6 +178,9 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
         {
             statusString = QObject::tr("Canceled");
             cancelClearTooltip = QObject::tr("Clear transfer");
+            timeString = QDateTime::fromSecsSinceEpoch(data->mFinishedTime)
+                         .toString(QLatin1String("hh:mm"));
+            speedString = Utilities::getSizeString(data->mMeanSpeed) + QLatin1Literal("/s");
             showTPauseResume = false;
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             mIsFinished = true;
@@ -186,9 +189,7 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
         case MegaTransfer::STATE_COMPLETING:
         {
             statusString = QObject::tr("Completing");
-            speedString = Utilities::getSizeString(data->mMeanSpeed ? data->mMeanSpeed
-                                                                    : data->mTotalSize)
-                          + QLatin1Literal("/s");
+            speedString = Utilities::getSizeString(data->mMeanSpeed) + QLatin1Literal("/s");
             showTPauseResume = false;
             showTCancelClear = false;
             mUi->sStatus->setCurrentWidget(mUi->pActive);
@@ -198,6 +199,9 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
         {
             mUi->sStatus->setCurrentWidget(mUi->pFailed);
             cancelClearTooltip = QObject::tr("Clear transfer");
+            timeString = QDateTime::fromSecsSinceEpoch(data->mFinishedTime)
+                         .toString(QLatin1String("hh:mm"));
+            speedString = Utilities::getSizeString(data->mMeanSpeed) + QLatin1Literal("/s");
             showTPauseResume = false;
             mIsFinished = true;
             mUi->tRetry->setToolTip(tr(MegaError::getErrorString(data->mErrorCode)));
@@ -217,9 +221,10 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
             statusString = QObject::tr("Completed");
             cancelClearTooltip = QObject::tr("Clear transfer");
             showTPauseResume = false;
-            speedString = Utilities::getSizeString(data->mMeanSpeed ? data->mMeanSpeed
-                                                                    : data->mTotalSize)
-                          + QLatin1Literal("/s");
+            speedString = Utilities::getSizeString(data->mMeanSpeed) + QLatin1Literal("/s");
+            timeString = QDateTime::fromSecsSinceEpoch(data->mFinishedTime)
+                         .toString(QLatin1String("hh:mm"));
+//            .toString("dddd d MMMM yyyy hh:mm");
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             mIsFinished = true;
             break;

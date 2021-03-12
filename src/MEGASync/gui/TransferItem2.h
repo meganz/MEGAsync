@@ -39,7 +39,6 @@ class TransferData : public QSharedData
     long long mSpeed;
     long long mMeanSpeed;
     long long mTransferredBytes;
-    int64_t   mUpdateTime;
     mega::MegaNode* mPublicNode;
     FileTypes mFileType;
     mega::MegaHandle mParentHandle;
@@ -54,7 +53,7 @@ class TransferData : public QSharedData
         mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
         mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime), mRemainingTime(dr->mRemainingTime),
         mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed), mMeanSpeed(dr->mMeanSpeed),
-        mTransferredBytes(dr->mTransferredBytes), mUpdateTime(dr->mUpdateTime),
+        mTransferredBytes(dr->mTransferredBytes),
         mPublicNode(dr->mPublicNode), mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mMegaApi(dr->mMegaApi),
         mFilename(dr->mFilename), mPath(dr->mPath){}
@@ -62,13 +61,13 @@ class TransferData : public QSharedData
     TransferData(int type, int errorCode, int state, int tag, long long errorValue,
                     int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long priority,
                     long long speed, long long meanSpeed, long long transferredBytes,
-                    int64_t updateTime, mega::MegaNode* publicNode, FileTypes fileType,
+                    mega::MegaNode* publicNode, FileTypes fileType,
                     mega::MegaHandle parentHandle, mega::MegaHandle nodeHandle,
                  mega::MegaApi* megaApi, QString fileName, QString path) :
          mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
          mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
          mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
-         mTransferredBytes(transferredBytes), mUpdateTime(updateTime),
+         mTransferredBytes(transferredBytes),
          mPublicNode(publicNode), mFileType(fileType),
          mParentHandle(parentHandle), mNodeHandle(nodeHandle),mMegaApi(megaApi), mFilename(fileName), mPath(path){}
 };
@@ -82,7 +81,7 @@ class TransferItem2
         TransferItem2(const TransferItem2& tdr) : d(new TransferData(tdr.d.constData())) {}
         TransferItem2(const TransferData& dataRow) : d(new TransferData(dataRow)) {}
 
-        void updateValuesTransferFinished(uint64_t updateTime,
+        void updateValuesTransferFinished(int64_t finishTime,
                                           int errorCode, long long errorValue,
                                           long long meanSpeed,
                                           int state, long long transferedBytes,
@@ -90,8 +89,7 @@ class TransferItem2
                                           mega::MegaHandle nodeHandle,
                                           mega::MegaNode* publicNode);
 
-        void updateValuesTransferUpdated(uint64_t updateTime,
-                                         uint64_t remainingTime,
+        void updateValuesTransferUpdated(int64_t remainingTime,
                                          int errorCode, long long errorValue,
                                          long long meanSpeed,
                                          long long speed,

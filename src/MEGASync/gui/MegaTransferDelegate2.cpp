@@ -29,10 +29,10 @@ MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget*
 
 TransferManagerItem2 * MegaTransferDelegate2::getTransferItemWidget(int row, int itemHeight) const
 {
-    const auto nbRowsMaxInView (mView->height() / itemHeight + 1);
+    const auto nbRowsMaxInView (mView->height() / itemHeight);
     const QString widgetName (QLatin1Literal("r")+QString::number(row % nbRowsMaxInView));
 
-    auto w (mView->findChild<TransferManagerItem2 *>(widgetName));
+    auto w (mView->findChild<TransferManagerItem2*>(widgetName));
 
     if (!w)
     {
@@ -48,7 +48,7 @@ TransferManagerItem2 * MegaTransferDelegate2::getTransferItemWidget(int row, int
 
 void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.isValid())
+    if (index.isValid() && (index.data(Qt::DisplayRole).canConvert<TransferItem2>()))
     {
         auto transferItem (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
 
