@@ -5,6 +5,8 @@
 #include <QMenu>
 #include <megaapi.h>
 
+#include "Model.h"
+
 namespace Ui {
 class QSyncItemWidget;
 }
@@ -30,8 +32,14 @@ public:
     mega::MegaHandle mSyncRootHandle = mega::INVALID_HANDLE;
     MegaApplication* app;
 
+    void setSyncSetting(const std::shared_ptr<SyncSetting> &value);
+
 private:
     void elidePathLabel();
+
+
+private slots:
+    void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -44,6 +52,9 @@ private:
     QString mSyncName;
     int error;
     QString mOriginalPath;
+
+    int64_t mLastRemotePathCheck = 0;
+    std::shared_ptr<SyncSetting> mSyncSetting;
 };
 
 #endif // QSYNCITEMWIDGET_H

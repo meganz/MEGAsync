@@ -167,6 +167,20 @@ void Model::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
     MegaSyncApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
 }
 
+void Model::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting> cs)
+{
+    QMutexLocker qm(&syncMutex);
+    auto oldMegaFolder = cs->getMegaFolder();
+    cs->setMegaFolder( newRemotePath);
+    if (oldMegaFolder != newRemotePath)
+    {
+        Utilities::queueFunctionInAppThread([=]() //we need this for emit to work!
+        {//queued function
+            emit syncStateChanged(cs);
+        });//end of queued function
+    }
+}
+
 std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState)
 {
     if (!sync)
@@ -224,6 +238,15 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
         configuredSyncs.append(sync->getBackupId());
     }
+
+    //queue an update of the sync remote node
+    ThreadPoolSingleton::getInstance()->push([this, cs]()
+    {//thread pool function
+
+        std::unique_ptr<char[]> np(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(cs->getMegaHandle()));
+        updateMegaFolder(np ? QString::fromUtf8(np.get()) : QString(), cs);
+
+    });// end of thread pool function
 
 
     if (addingState) //new or resumed

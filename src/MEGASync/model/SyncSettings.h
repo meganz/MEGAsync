@@ -18,6 +18,8 @@ private:
     bool mEnabled = false;
     bool mActive = false;
 
+    QString mMegaFolder; //cached (in memory) value of the remote path
+
     static constexpr int CACHE_VERSION = 1;
 public:
     SyncSetting();
@@ -53,6 +55,7 @@ public:
 
     QString getSyncID() const;
     void setSyncID(const QString &syncID);
+    void setMegaFolder(const QString &megaFolder);
 };
 
 Q_DECLARE_METATYPE(SyncSetting);

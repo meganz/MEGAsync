@@ -1899,6 +1899,7 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
         assert(syncSetting->getMegaFolder().size() && "remote folder lacks path");
         megaFolder->setPathAndGuessName(syncSetting->getMegaFolder().size()?syncSetting->getMegaFolder():QString::fromUtf8("---"));
         megaFolder->setToolTip(syncSetting->getMegaFolder());
+        megaFolder->setSyncSetting(syncSetting);
         megaFolder->app = app;
         megaFolder->mSyncRootHandle = syncSetting->getMegaHandle();
         ui->tSyncs->setCellWidget(i, 1, megaFolder);

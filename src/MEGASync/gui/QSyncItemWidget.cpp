@@ -1,5 +1,4 @@
 #include "QSyncItemWidget.h"
-#include "QToolTip.h"
 #include "ui_QSyncItemWidget.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
@@ -14,6 +13,10 @@ QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::QSyncItemWidget)
 {
+
+    connect(Model::instance(), SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+
     ui->setupUi(this);
     ui->bWarning->hide();
     error = 0;
@@ -90,23 +93,32 @@ void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
 
 bool QSyncItemWidget::event(QEvent* event)
 {
-    //qt doco: QWidget::event() is the main event handlerand receives all the widget's events. Normally, we recommend reimplementing one of the specialized event handlers instead of this function. But here we want to catch the QEvent::ToolTip events, and since these are rather rare, there exists no specific event handler. For that reason we reimplement the main event handler, and the first thing we need to do is to determine the event's type :
-
-    if (event->type() == QEvent::ToolTip && mSyncRootHandle != mega::INVALID_HANDLE && app)
+    // when entering the item we trigger an update of the remote node path, to ensure we have an updated value
+    if (event->type() == QEvent::Enter && mSyncRootHandle != mega::INVALID_HANDLE && mSyncSetting
+            && mLastRemotePathCheck + 5000 < QDateTime::currentMSecsSinceEpoch() ) //only one path update every 5 secs
     {
-        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+        //queue an update of the sync remote node
+        ThreadPoolSingleton::getInstance()->push([this]()
+        {//thread pool function
 
-        std::unique_ptr<char[]> np(app->getMegaApi()->getNodePathByNodeHandle(mSyncRootHandle));
-        if (np)
-        {
-            QToolTip::showText(helpEvent->globalPos(), QString::fromUtf8(np.get()));
-            return true;
-        }
-        else
-        {
-            QToolTip::showText(helpEvent->globalPos(), QString::fromUtf8("Deleted: ") + mOriginalPath);
-            return true;
-        }
+            std::unique_ptr<char[]> np(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mSyncSetting->getMegaHandle()));
+            Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get()) : QString(), mSyncSetting);
+
+        });// end of thread pool function
+        mLastRemotePathCheck = QDateTime::currentMSecsSinceEpoch();
     }
     return QWidget::event(event);
+}
+
+void QSyncItemWidget::onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings)
+{
+    if (mSyncSetting && syncSettings->getSyncID() == mSyncSetting->getSyncID())
+    {
+        ui->lSyncName->setToolTip(mSyncSetting->getMegaFolder());
+    }
+}
+
+void QSyncItemWidget::setSyncSetting(const std::shared_ptr<SyncSetting> &value)
+{
+    mSyncSetting = value;
 }

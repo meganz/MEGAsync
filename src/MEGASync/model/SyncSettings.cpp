@@ -42,6 +42,11 @@ void SyncSetting::setSyncID(const QString &syncID)
     mSyncID = syncID;
 }
 
+void SyncSetting::setMegaFolder(const QString &megaFolder)
+{
+    mMegaFolder = megaFolder;
+}
+
 SyncSetting::SyncSetting()
 {
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
@@ -148,8 +153,13 @@ long long SyncSetting::getLocalFingerprint()  const
 
 QString SyncSetting::getMegaFolder()  const
 {
-    auto folder = mSync->getLastKnownMegaFolder();
-    return folder ? QString::fromUtf8(folder) : QString();
+    if (mMegaFolder.isEmpty())
+    {
+        auto folder = mSync->getLastKnownMegaFolder();
+        return folder ? QString::fromUtf8(folder) : QString();
+    }
+
+    return mMegaFolder;
 }
 
 MegaHandle SyncSetting::getMegaHandle()  const
