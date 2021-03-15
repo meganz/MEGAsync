@@ -171,7 +171,7 @@ void Model::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting>
 {
     QMutexLocker qm(&syncMutex);
     auto oldMegaFolder = cs->getMegaFolder();
-    cs->setMegaFolder( newRemotePath);
+    cs->setMegaFolder(newRemotePath);
     if (oldMegaFolder != newRemotePath)
     {
         Utilities::queueFunctionInAppThread([=]() //we need this for emit to work!

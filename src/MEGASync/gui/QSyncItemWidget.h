@@ -5,7 +5,7 @@
 #include <QMenu>
 #include <megaapi.h>
 
-#include "Model.h"
+#include "model/Model.h"
 
 namespace Ui {
 class QSyncItemWidget;
@@ -30,7 +30,6 @@ public:
     ~QSyncItemWidget();
 
     mega::MegaHandle mSyncRootHandle = mega::INVALID_HANDLE;
-    MegaApplication* app;
 
     void setSyncSetting(const std::shared_ptr<SyncSetting> &value);
 

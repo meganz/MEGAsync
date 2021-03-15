@@ -18,7 +18,7 @@ SyncSetting::~SyncSetting()
 SyncSetting::SyncSetting(const SyncSetting& a) :
     mSync(a.getSync()->copy()), mBackupId(a.backupId()),
     mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
-    mActive(a.isActive())
+    mActive(a.isActive()), mMegaFolder(a.mMegaFolder)
 {
 }
 
@@ -29,6 +29,7 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mSyncID = a.getSyncID();
     mEnabled = a.isEnabled();
     mActive = a.isActive();
+    mMegaFolder = a.mMegaFolder;
     return *this;
 }
 
