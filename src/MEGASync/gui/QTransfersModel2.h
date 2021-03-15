@@ -32,6 +32,11 @@ public:
     void getLinks(QList<int>& rows);
     void cancelClearTransfers(QModelIndexList& indexes);
     void pauseTransfers(QModelIndexList& indexes, bool pauseState);
+    void cancelAllTransfers();
+
+    long long  getNumberOfTransfersForState(int state);
+    long long  getNumberOfTransfersForType(int type);
+    long long  getNumberOfTransfersForFileType(TransferData::FileTypes fileType);
 
     ~QTransfersModel2();
 
@@ -43,9 +48,7 @@ public:
     void onTransferTemporaryError(mega::MegaApi *api,mega::MegaTransfer *transfer, mega::MegaError* error);
 
 signals:
-    void nbOfTransfersPerStateChanged(int type, long long number);
-    void nbOfTransfersPerTypeChanged(int type, long long number);
-    void nbOfTransfersPerFileTypeChanged(TransferData::FileTypes fileType, long long number);
+    void transfersInModelChanged(bool weHaveTransfers);
 
 public slots:
     void onRetryTransfer(TransferTag tag);

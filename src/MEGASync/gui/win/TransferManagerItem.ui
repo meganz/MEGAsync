@@ -359,7 +359,7 @@ QProgressBar::chunk
              <number>1000</number>
             </property>
             <property name="value">
-             <number>1000</number>
+             <number>0</number>
             </property>
             <property name="textVisible">
              <bool>false</bool>

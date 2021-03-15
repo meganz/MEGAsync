@@ -673,6 +673,9 @@ QGroupBox::title
       </item>
       <item>
        <widget class="QGroupBox" name="wMediaType">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="title">
          <string>MEDIA TYPE</string>
         </property>
@@ -1291,7 +1294,7 @@ QGroupBox::title
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <widget class="QWidget" name="">
+               <widget class="QWidget" name="layoutWidget">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
@@ -1348,7 +1351,7 @@ QGroupBox::title
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <widget class="QWidget" name="">
+               <widget class="QWidget" name="layoutWidget">
                 <property name="geometry">
                  <rect>
                   <x>0</x>

@@ -1,18 +1,17 @@
 #ifndef TRANSFERMANAGER_H
 #define TRANSFERMANAGER_H
 
-
 #include "megaapi.h"
 #include "Preferences.h"
 #include "MenuItemAction.h"
 #include "Utilities.h"
 #include "TransferItem2.h"
+#include "QTransfersModel2.h"
 
 #include <QGraphicsEffect>
 #include <QTimer>
 #include <QDialog>
 #include <QMenu>
-
 
 namespace Ui {
 class TransferManager;
@@ -43,7 +42,8 @@ signals:
     void userActivity();
 
 private:
-    static constexpr int COMPLETED_ITEMS_LIMIT = 999;
+    static const QSet<int> ACTIVE_STATES;
+    static const QSet<int> FINISHED_STATES;
 
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
@@ -52,15 +52,19 @@ private:
     ThreadPool* mThreadPool;
     QMap<int, QFrame*> mTabFramesToggleGroup;
     QMap<TransferData::FileTypes, QLabel*> mMediaNumberLabelsGroup;
-    QMap<int, long long> mStatesStatistics;
-    QSet<int> mActiveStates;
-    QSet<int> mFinishedStates;
+
+    QTransfersModel2* mModel;
+
     TM_TABS mCurrentTab;
     QSet<TransferData::FileTypes> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
+    QTimer* mStatsRefreshTimer;
 
     void toggleTab(TM_TABS tab);
     void updateFileTypeFilter(TransferData::FileTypes fileType);
+    bool refreshStateStats();
+    void refreshTypeStats();
+    void refreshFileTypesStats();
 
 public slots:
     void updateState();
@@ -85,11 +89,10 @@ private slots:
     void on_bOther_clicked();
     void on_bText_clicked();
 
-    void onNbOfTransfersPerStateChanged(int state, long long number);
-    void onNbOfTransfersPerTypeChanged(int type, long long number);
-    void onNbOfTransfersPerFileTypeChanged(TransferData::FileTypes fileType, long long number);
+    void onTransfersInModelChanged(bool weHaveTransfers);
 
     void refreshSpeed();
+    void refreshStats();
 
 protected:
     void changeEvent(QEvent *event);
