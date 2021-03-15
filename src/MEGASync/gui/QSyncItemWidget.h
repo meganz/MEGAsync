@@ -40,6 +40,7 @@ private:
 
 private slots:
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
+    void nodeChanged(mega::MegaHandle handle);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -54,6 +55,7 @@ private:
     QString mOriginalPath;
 
     int64_t mLastRemotePathCheck = 0;
+    bool mNodesUpToDate = true;
     std::shared_ptr<SyncSetting> mSyncSetting;
 };
 
