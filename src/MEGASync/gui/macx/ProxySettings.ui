@@ -6,33 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>475</width>
-    <height>488</height>
+    <width>497</width>
+    <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Proxy</string>
+   <string>Bandwidth</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="groupTitleLabel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::StrongFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">padding-left: 13px;</string>
-     </property>
-     <property name="text">
-      <string>Proxy Settings</string>
-     </property>
-    </widget>
-   </item>
    <item>
     <widget class="QGroupBox" name="gProxy">
      <property name="sizePolicy">
@@ -42,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string/>
+      <string>Proxy</string>
      </property>
      <property name="flat">
       <bool>true</bool>
@@ -64,7 +45,7 @@
        <number>1</number>
       </property>
       <property name="horizontalSpacing">
-       <number>6</number>
+       <number>12</number>
       </property>
       <property name="verticalSpacing">
        <number>18</number>
@@ -216,6 +197,9 @@
            <property name="text">
             <string notr="true">:</string>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
           </widget>
          </item>
          <item>
@@ -264,6 +248,9 @@
         <property name="text">
          <string>Username:</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
       <item row="13" column="0">
@@ -279,6 +266,9 @@
         </property>
         <property name="text">
          <string>Password:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -314,6 +304,9 @@
         </property>
         <property name="text">
          <string>Proxy type:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -398,6 +391,28 @@
         <property name="text">
          <string>Server:</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="lProxySettings">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Proxy Settings:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
      </layout>
@@ -417,10 +432,39 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="applyButton">
-     <property name="text">
-      <string>Apply</string>
-     </property>
+    <widget class="QWidget" name="buttonBox" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bCancel">
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bUpdate">
+        <property name="text">
+         <string>Update</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

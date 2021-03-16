@@ -24,7 +24,8 @@ private slots:
     void onProxyTestError();
     void onProxyTestSuccess();
 
-    void on_applyButton_clicked();
+    void on_bUpdate_clicked();
+    void on_bCancel_clicked();
 
 private:
     void initialize();

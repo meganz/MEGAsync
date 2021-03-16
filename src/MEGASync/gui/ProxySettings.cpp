@@ -118,7 +118,7 @@ void ProxySettings::onProxyTestSuccess()
     accept();
 }
 
-void ProxySettings::on_applyButton_clicked()
+void ProxySettings::on_bUpdate_clicked()
 {
     QNetworkProxy proxy;
     proxy.setType(QNetworkProxy::NoProxy);
@@ -177,4 +177,9 @@ void ProxySettings::on_applyButton_clicked()
     mConnectivityChecker->setTimeout(Preferences::PROXY_TEST_TIMEOUT_MS);
     mConnectivityChecker->startCheck();
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");
+}
+
+void ProxySettings::on_bCancel_clicked()
+{
+    reject();
 }
