@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>1025</width>
     <height>720</height>
    </rect>
   </property>
@@ -48,7 +48,6 @@
     background-color: white;
     width: 768px;
     min-width: 768px;
-/*    max-width: 768px; */
 }
 
 #wRightPaneHeader, #sCurrentContent
@@ -148,9 +147,9 @@ QGroupBox::title
 
 #wTitleAndSearch
 {
-        height: 34px;
-        min-height: 34px;
-        max-height: 34px;
+     height: 34px;
+     min-height: 34px;
+     max-height: 34px;
 }
 
 #wSearchField
@@ -217,17 +216,17 @@ QGroupBox::title
 
 #sStatus
 {
-    height: 28px;
-    min-height: 24px;
-    max-height: 24px;
+    height: 36px;
+    min-height: 36px;
+    max-height: 36px;
 }
 
 #bUpToDate
 {
-    height: 24px;
+    height: 36px;
     width: 100px;
-    min-height: 24px;
-    max-height: 24px;
+    min-height: 36px;
+    max-height: 36px;
     min-width: 100px;
     max-width: 100px;
 	border: none;
@@ -259,18 +258,18 @@ QGroupBox::title
 {
 	height: 24px;
 	width: 24px;
-     background-color: #F88183;
-     border-radius: 13px;
+    background-color: #F88183;
+    border-radius: 13px;
 	margin-left: 12px;
 }
 
 #wRightPaneHeader QPushButton, QToolButton
 {
-	border: none;
+  border: none;
   color: #333333;
   font-size: 14px;
   font-weight: 600;
-    qProperty-iconSize: 22px;
+  qProperty-iconSize: 22px;
 }
 
 #lPaused, #lNbResults
@@ -280,11 +279,7 @@ QGroupBox::title
   font-weight: bold;
   padding-left: 14px;
 }
-
-#wTransfers
-{
-    min-height: 594px;
-}</string>
+</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
@@ -1189,7 +1184,7 @@ QGroupBox::title
             <x>0</x>
             <y>0</y>
             <width>100</width>
-            <height>24</height>
+            <height>36</height>
            </rect>
           </property>
           <property name="text">
@@ -1214,7 +1209,7 @@ QGroupBox::title
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QVBoxLayout" name="wRightPaneLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -1228,7 +1223,7 @@ QGroupBox::title
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <item>
        <widget class="QWidget" name="wRightPaneHeader" native="true">
@@ -1238,9 +1233,9 @@ QGroupBox::title
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <layout class="QVBoxLayout" name="wRightPaneHeaderLayout">
+        <layout class="QHBoxLayout" name="wRightPaneHeaderLayout">
          <property name="spacing">
-          <number>0</number>
+          <number>24</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -1249,227 +1244,222 @@ QGroupBox::title
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>12</number>
+          <number>20</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="wStatusHeader" native="true">
+          <widget class="QStackedWidget" name="sCurrentContent">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <property name="leftMargin">
-             <number>0</number>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <widget class="QWidget" name="pSearchHeader">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="topMargin">
-             <number>0</number>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>66</height>
+             </size>
             </property>
-            <property name="rightMargin">
-             <number>0</number>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>66</height>
+             </size>
             </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QStackedWidget" name="sCurrentContent">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="currentIndex">
-               <number>0</number>
-              </property>
-              <widget class="QWidget" name="pSearchHeader">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+            <layout class="QVBoxLayout" name="searchHeaderLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="searchTextHeaderLayout">
+               <property name="spacing">
+                <number>0</number>
                </property>
-               <widget class="QWidget" name="layoutWidget">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>431</width>
-                  <height>61</height>
-                 </rect>
-                </property>
-                <layout class="QVBoxLayout" name="searchHeaderLayout">
-                 <property name="spacing">
-                  <number>0</number>
+               <item>
+                <widget class="QLabel" name="lSearch">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>33</height>
+                  </size>
                  </property>
-                 <item>
-                  <layout class="QHBoxLayout" name="searchTextHeaderLayout">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QLabel" name="lSearch">
-                     <property name="text">
-                      <string>Search:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="lTextSearch">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="lNbResults">
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </widget>
-              <widget class="QWidget" name="pStatusHeader">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>33</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Search:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="lTextSearch">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>33</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>33</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="lNbResults">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>33</height>
+                </size>
                </property>
-               <widget class="QWidget" name="layoutWidget">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>431</width>
-                  <height>61</height>
-                 </rect>
-                </property>
-                <layout class="QVBoxLayout" name="currentContentLayout">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QLabel" name="lCurrentContent">
-                   <property name="text">
-                    <string/>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="lPaused">
-                   <property name="text">
-                    <string>Paused</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
               </widget>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QPushButton" name="bImportLinks">
-              <property name="text">
-               <string>Import links</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QPushButton" name="bUpload">
-              <property name="text">
-               <string>Upload</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QPushButton" name="bDownload">
-              <property name="text">
-               <string>Download</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item alignment="Qt::AlignTop">
-             <widget class="QToolButton" name="tCogWheel">
-              <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pStatusHeader">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>66</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>66</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="currentContentLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lCurrentContent">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lPaused">
+               <property name="text">
+                <string>Paused</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignTop">
+          <widget class="QPushButton" name="bImportLinks">
+           <property name="text">
+            <string>Import links</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignTop">
+          <widget class="QPushButton" name="bUpload">
+           <property name="text">
+            <string>Upload</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignTop">
+          <widget class="QPushButton" name="bDownload">
+           <property name="text">
+            <string>Download</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignTop">
+          <widget class="QToolButton" name="tCogWheel">
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
+           </property>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget" native="true">
+       <widget class="TransfersWidget" name="wTransfers" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>768</width>
-          <height>594</height>
-         </size>
-        </property>
-        <layout class="QGridLayout" name="gridLayout">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item row="0" column="0">
-          <widget class="TransfersWidget" name="wTransfers" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
      </layout>

@@ -40,6 +40,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mUi->setupUi(this);
     mUi->wTransfers->setupTransfers();
 
+    mUi->lTextSearch->installEventFilter(this);
+
     mModel = mUi->wTransfers->getModel2();
 
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -414,12 +416,14 @@ void TransferManager::on_tSearchIcon_clicked()
     mUi->wTransfers->transferStateFilterChanged({});
     mUi->wTransfers->textFilterChanged(QRegExp(mUi->leSearchField->text(), Qt::CaseInsensitive));
 
+    mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
+
     mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
                               .elidedText(mUi->leSearchField->text(),
                                           Qt::ElideMiddle,
                                           mUi->lTextSearch->width() - 24));
+
     mUi->lNbResults->setText(QString(tr("%1 results")).arg(mUi->wTransfers->rowCount()));
-    mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
 
     // Unselect type view
     mTabFramesToggleGroup[mCurrentTab]->setProperty("itsOn", false);
@@ -532,6 +536,21 @@ void TransferManager::updateFileTypeFilter(TransferData::FileTypes fileType)
     mUi->wTransfers->fileTypeFilterChanged(mFileTypesFilter);
     mMediaNumberLabelsGroup[fileType]->parentWidget()->setProperty("itsOn", showFrame);
     setStyleSheet(styleSheet());
+}
+
+bool TransferManager::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == mUi->lTextSearch
+            && event->type() == QEvent::Resize
+            && mUi->sCurrentContent->currentWidget() == mUi->pSearchHeader)
+    {
+        auto newWidth (static_cast<QResizeEvent*>(event)->size().width());
+        mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
+                                  .elidedText(mUi->leSearchField->text(),
+                                              Qt::ElideMiddle,
+                                              newWidth - 24));
+    }
+    return false;
 }
 
 void TransferManager::changeEvent(QEvent *event)
