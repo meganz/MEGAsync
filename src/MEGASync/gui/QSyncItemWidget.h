@@ -49,7 +49,7 @@ protected:
 private:
     Ui::QSyncItemWidget *ui;
     QString mFullPath;
-    QString mSyncName;
+    QString mDisplayName;
     int error;
     QString mOriginalPath;
 
