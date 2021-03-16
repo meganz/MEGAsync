@@ -37,6 +37,7 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
 
     mAreDlPaused = mPreferences->getDownloadsPaused();
     mAreUlPaused = mPreferences->getUploadsPaused();
+    mAreAllPaused = mPreferences->getGlobalPaused();
 
     qRegisterMetaType<TransferData::FileTypes>("TransferData::FileTypes");
 
@@ -81,12 +82,19 @@ QModelIndex QTransfersModel2::parent(const QModelIndex &) const
 
 QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex &parent) const
 {
-    if (!hasIndex(row, column, parent))//Check out
+    QModelIndex index;
+
+    if (!hasIndex(row, column, parent))
     {
-        return QModelIndex();
+        index = QModelIndex();
+    }
+    else
+    {
+        auto tag (mOrder.at(row));
+        index = createIndex(row, column, tag);
     }
 
-    return createIndex(row, column, mOrder.at(row));
+    return index;
 }
 
 QTransfersModel2::~QTransfersModel2()
@@ -732,23 +740,28 @@ void QTransfersModel2::pauseTransfers(QModelIndexList& indexes, bool pauseState)
     }
 }
 
+void QTransfersModel2::pauseResumeAllTransfers()
+{
+    mMegaApi->pauseTransfers(!mAreAllPaused);
+}
+
+void QTransfersModel2::pauseResumeDownloads()
+{
+    auto pauseState (!mAreDlPaused);
+    mMegaApi->pauseTransfers(pauseState, MegaTransfer::TYPE_DOWNLOAD);
+    mMegaApi->pauseTransfers(pauseState, MegaTransfer::TYPE_LOCAL_HTTP_DOWNLOAD);
+    mMegaApi->pauseTransfers(pauseState, MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD);
+}
+
+void QTransfersModel2::pauseResumeUploads()
+{
+    mMegaApi->pauseTransfers(!mAreUlPaused, MegaTransfer::TYPE_UPLOAD);
+}
+
 void QTransfersModel2::cancelAllTransfers()
 {
-    QTransfersModel2* transferModel = this;
-    mThreadPool->push([this, transferModel]()
-    {//thread pool function
-        if (transferModel)
-        {
-            Utilities::queueFunctionInAppThread([this, transferModel]()
-            {//queued function
-                if (transferModel) //Check if this is not deleted
-                {
-                    mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-                    mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
-                }
-            });
-        }
-    });
+    mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+    mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
 }
 
 long long QTransfersModel2::getNumberOfTransfersForState(int state)
@@ -770,6 +783,7 @@ void QTransfersModel2::onPauseStateChanged()
 {
     mAreDlPaused = mPreferences->getDownloadsPaused();
     mAreUlPaused = mPreferences->getUploadsPaused();
+    mAreAllPaused = mPreferences->getGlobalPaused();
 
     emit dataChanged(index(0, 0), index(mOrder.size()-1, 0), {Qt::DisplayRole});
 }

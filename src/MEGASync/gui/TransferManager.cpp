@@ -267,6 +267,11 @@ void TransferManager::refreshFileTypesStats()
         number = mModel->getNumberOfTransfersForFileType(fileType);
         mMediaNumberLabelsGroup[fileType]->setText(QString::number(number));
         mMediaNumberLabelsGroup[fileType]->parentWidget()->setVisible(number);
+        if (number == 0
+                && mMediaNumberLabelsGroup[fileType]->parentWidget()->property("itsOn").toBool())
+        {
+            updateFileTypeFilter(fileType);
+        }
     }
 }
 
@@ -361,17 +366,17 @@ void TransferManager::on_bPause_clicked()
         case COMPLETED_TAB:
         case ALL_TRANSFERS_TAB:
         {
-            mMegaApi->pauseTransfers(!mPreferences->getGlobalPaused());
+            mModel->pauseResumeAllTransfers();
             break;
         }
         case DOWNLOADS_TAB:
         {
-            mMegaApi->pauseTransfers(!mPreferences->getDownloadsPaused(), MegaTransfer::TYPE_DOWNLOAD);
+            mModel->pauseResumeDownloads();
             break;
         }
         case UPLOADS_TAB:
         {
-            mMegaApi->pauseTransfers(!mPreferences->getUploadsPaused(), MegaTransfer::TYPE_UPLOAD);
+            mModel->pauseResumeUploads();
             break;
         }
     }

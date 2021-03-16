@@ -32,6 +32,9 @@ public:
     void getLinks(QList<int>& rows);
     void cancelClearTransfers(QModelIndexList& indexes);
     void pauseTransfers(QModelIndexList& indexes, bool pauseState);
+    void pauseResumeAllTransfers();
+    void pauseResumeDownloads();
+    void pauseResumeUploads();
     void cancelAllTransfers();
 
     long long  getNumberOfTransfersForState(int state);
@@ -72,6 +75,7 @@ private:
 
     bool mAreDlPaused;
     bool mAreUlPaused;
+    bool mAreAllPaused;
 
     QMap<TransferData::FileTypes, long long> mNbTransfersPerFileType;
     QMap<int, long long> mNbTransfersPerType;
