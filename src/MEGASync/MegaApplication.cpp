@@ -819,7 +819,7 @@ void MegaApplication::updateTrayIcon()
     #endif
         }
     }
-    else if (!getRootNode())
+    else if (!getRootNode() || !nodescurrent)
     {
         tooltipState = tr("Fetching file list...");
         icon = icons["synching"];
