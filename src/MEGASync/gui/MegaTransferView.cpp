@@ -55,7 +55,8 @@ void MegaTransferView::setup(TransfersWidget *tw)
 
     // Disable and find out alternative way to position context menu,
     // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
-    connect(this, &MegaTransferView::showContextMenu, this, &MegaTransferView::onCustomContextMenu);
+    connect(this, &MegaTransferView::showContextMenu,
+            this, &MegaTransferView::onCustomContextMenu);
     createContextMenu();
 }
 
@@ -462,7 +463,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         }
     }
     updateContextMenu(enablePause, enableResume, enableMove,
-                                enableClear, enableCancel);
+                      enableClear, enableCancel);
     mContextMenu->exec(mapToGlobal(point));
 }
 

@@ -35,6 +35,7 @@
 #wLeftPane
 {
     background-color: #FAFAFA;
+    border-right: 1px solid #EEEEEE;
     width: 256px;
     min-width: 256px;
     max-width: 256px;
@@ -75,15 +76,16 @@
     color: #777777;
     font-size: 10px;
     font-weight: bold;
-    qproperty-alignment: 'AlignRight | AlignVCenter';
+    qproperty-alignment: 'AlignHCenter | AlignVCenter';
 	border: none;
 }
 
 QFrame[itsOn=true]
 {
-   	qproperty-frameShape: 'Box';
-   	qproperty-frameShadow: 'Raised';
-    border: 1px solid rgba(0,0,0,0.2);
+ /*  	qproperty-frameShape: 'Box';
+   	qproperty-frameShadow: 'Raised'; */
+	border-radius: 8px;
+    border: 1px solid #ededed;
     background-color: white;
 }
 
@@ -474,7 +476,7 @@ QGroupBox::title
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>14</number>
+          <number>24</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -684,7 +686,7 @@ QGroupBox::title
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>14</number>
+          <number>24</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -1044,7 +1046,7 @@ QGroupBox::title
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>14</number>
+          <number>24</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -1291,7 +1293,7 @@ QGroupBox::title
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <widget class="QWidget" name="">
+               <widget class="QWidget" name="layoutWidget">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
@@ -1348,7 +1350,7 @@ QGroupBox::title
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <widget class="QWidget" name="">
+               <widget class="QWidget" name="layoutWidget">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
