@@ -32,7 +32,7 @@ QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
 void QSyncItemWidget::setPathAndName(const QString &path, const QString &syncName)
 {
     mFullPath = path;
-    mSyncName = syncName;
+    mDisplayName = syncName;
     elidePathLabel();
 }
 
@@ -45,9 +45,16 @@ void QSyncItemWidget::setPathAndGuessName(const QString &path)
     {
         syncName = QDir::toNativeSeparators(mFullPath);
     }
+
     syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
 
-    mSyncName = syncName;
+    //If full sync mode ("/"), avoid empty display name
+    if (syncName.isEmpty())
+    {
+        syncName.append(QChar::fromAscii('/'));
+    }
+
+    mDisplayName = syncName;
     elidePathLabel();
 }
 
@@ -89,7 +96,7 @@ QSyncItemWidget::~QSyncItemWidget()
 void QSyncItemWidget::elidePathLabel()
 {
     QFontMetrics metrics(ui->lSyncName->fontMetrics());
-    ui->lSyncName->setText(metrics.elidedText(mSyncName, Qt::ElideMiddle, ui->lSyncName->width()));
+    ui->lSyncName->setText(metrics.elidedText(mDisplayName, Qt::ElideMiddle, ui->lSyncName->width()));
 }
 
 void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
