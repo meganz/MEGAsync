@@ -18,7 +18,7 @@ SyncSetting::~SyncSetting()
 SyncSetting::SyncSetting(const SyncSetting& a) :
     mSync(a.getSync()->copy()), mBackupId(a.backupId()),
     mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
-    mActive(a.isActive())
+    mActive(a.isActive()), mMegaFolder(a.mMegaFolder)
 {
 }
 
@@ -29,6 +29,7 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mSyncID = a.getSyncID();
     mEnabled = a.isEnabled();
     mActive = a.isActive();
+    mMegaFolder = a.mMegaFolder;
     return *this;
 }
 
@@ -40,6 +41,11 @@ QString SyncSetting::getSyncID() const
 void SyncSetting::setSyncID(const QString &syncID)
 {
     mSyncID = syncID;
+}
+
+void SyncSetting::setMegaFolder(const QString &megaFolder)
+{
+    mMegaFolder = megaFolder;
 }
 
 SyncSetting::SyncSetting()
@@ -148,8 +154,13 @@ long long SyncSetting::getLocalFingerprint()  const
 
 QString SyncSetting::getMegaFolder()  const
 {
-    auto folder = mSync->getLastKnownMegaFolder();
-    return folder ? QString::fromUtf8(folder) : QString();
+    if (mMegaFolder.isEmpty())
+    {
+        auto folder = mSync->getLastKnownMegaFolder();
+        return folder ? QString::fromUtf8(folder) : QString();
+    }
+
+    return mMegaFolder;
 }
 
 MegaHandle SyncSetting::getMegaHandle()  const
