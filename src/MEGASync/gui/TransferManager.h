@@ -81,6 +81,12 @@ private slots:
     void on_tSearchCancel_clicked();
     void on_tClearSearchResult_clicked();
 
+    void on_bImportLinks_clicked();
+    void on_tCogWheel_clicked();
+    void on_bDownload_clicked();
+    void on_bUpload_clicked();
+    void on_leSearchField_returnPressed();
+
     void on_bArchives_clicked();
     void on_bDocuments_clicked();
     void on_bImages_clicked();

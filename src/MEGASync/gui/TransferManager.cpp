@@ -32,34 +32,35 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mMegaApi(megaApi),
     mPreferences(Preferences::instance()),
     mThreadPool(ThreadPoolSingleton::getInstance()),
-    mCurrentTab(COMPLETED_TAB),
     mModel(nullptr),
+    mCurrentTab(COMPLETED_TAB),
     mSpeedRefreshTimer(new QTimer(this)),
     mStatsRefreshTimer(new QTimer(this))
 {
     mUi->setupUi(this);
+    mUi->wTransfers->setupTransfers();
+
+    mModel = mUi->wTransfers->getModel2();
+
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
-
-    mUi->wSearch->hide();
+    Platform::enableDialogBlur(this);
 
 #ifndef __APPLE__
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
 #endif
-    mUi->wMediaType->setVisible(false);
-    mUi->fCompleted->setVisible(false);
 
-    mUi->wTransfers->setupTransfers();
+    mUi->wSearch->hide();
+    mUi->wMediaType->hide();
+    mUi->fCompleted->hide();
+
     mUi->sStatus->setCurrentWidget(mUi->pUpToDate);
-
-    Platform::enableDialogBlur(this);
 
     mTabFramesToggleGroup[ALL_TRANSFERS_TAB] = mUi->fAllTransfers;
     mTabFramesToggleGroup[DOWNLOADS_TAB]     = mUi->fDownloads;
     mTabFramesToggleGroup[UPLOADS_TAB]       = mUi->fUploads;
     mTabFramesToggleGroup[COMPLETED_TAB]     = mUi->fCompleted;
-
 
     mMediaNumberLabelsGroup[TransferData::TYPE_OTHER]    = mUi->lOtherNb;
     mMediaNumberLabelsGroup[TransferData::TYPE_AUDIO]    = mUi->lMusicNb;
@@ -71,28 +72,22 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     for (auto mediaLabel : qAsConst(mMediaNumberLabelsGroup))
     {
-        mediaLabel->parentWidget()->setVisible(false);
+        mediaLabel->parentWidget()->hide();
     }
 
-    QObject::connect(mUi->bImportLinks, SIGNAL(clicked()), qApp, SLOT(importLinks()));
-    QObject::connect(mUi->tCogWheel, SIGNAL(clicked()), qApp, SLOT(openSettings()));
-    QObject::connect(mUi->bDownload, SIGNAL(clicked()), qApp, SLOT(downloadActionClicked()));
-    QObject::connect(mUi->bUpload, SIGNAL(clicked()), qApp, SLOT(uploadActionClicked()));
+    connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::pauseStateChanged,
+            this, &TransferManager::updateState);
 
-    QObject::connect(mUi->leSearchField, SIGNAL(returnPressed()),
-                     mUi->tSearchIcon, SIGNAL(clicked()));
-
-    mModel = mUi->wTransfers->getModel2();
     connect(mModel, &QTransfersModel2::transfersInModelChanged,
             this, &TransferManager::onTransfersInModelChanged);
 
-    QObject::connect(qApp, SIGNAL(pauseStateChanged()), this, SLOT(updateState()));
-
     mSpeedRefreshTimer->setSingleShot(false);
-    connect(mSpeedRefreshTimer, &QTimer::timeout, this, &TransferManager::refreshSpeed);
+    connect(mSpeedRefreshTimer, &QTimer::timeout,
+            this, &TransferManager::refreshSpeed);
 
     mStatsRefreshTimer->setSingleShot(false);
-    connect(mStatsRefreshTimer, &QTimer::timeout, this, &TransferManager::refreshStats);
+    connect(mStatsRefreshTimer, &QTimer::timeout,
+            this, &TransferManager::refreshStats);
 
     onTransfersInModelChanged(true);
 
@@ -279,7 +274,7 @@ void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
 {
     if (weHaveTransfers)
     {
-        mStatsRefreshTimer->start(std::chrono::milliseconds(2000));
+        mStatsRefreshTimer->start(std::chrono::milliseconds(1000));
     }
     else
     {
@@ -386,10 +381,10 @@ void TransferManager::on_bClearAll_clicked()
 {
     QPointer<TransferManager> dialog = QPointer<TransferManager>(this);
 
-    if (QMegaMessageBox::warning(nullptr,
-                             QString::fromUtf8("MEGAsync"),
+    if (QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to cancel all transfers?"),
-                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+            != QMessageBox::Yes
             || !dialog)
     {
         return;
@@ -407,15 +402,17 @@ void TransferManager::on_bSearch_clicked()
 void TransferManager::on_tSearchIcon_clicked()
 {
     mUi->fSearchString->setProperty("itsOn", true);
-    mUi->bSearchString->setText(mUi->bSearchString->fontMetrics().elidedText(mUi->leSearchField->text(),
-                                                                           Qt::ElideMiddle,
-                                                                           mUi->bSearchString->width()-24));
+    mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
+                                .elidedText(mUi->leSearchField->text(),
+                                            Qt::ElideMiddle,
+                                            mUi->bSearchString->width() - 24));
     mUi->wTransfers->transferStateFilterChanged({});
     mUi->wTransfers->textFilterChanged(QRegExp(mUi->leSearchField->text(), Qt::CaseInsensitive));
 
-    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics().elidedText(mUi->leSearchField->text(),
-                                                                         Qt::ElideMiddle,
-                                                                         mUi->lTextSearch->width()-24));
+    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
+                              .elidedText(mUi->leSearchField->text(),
+                                          Qt::ElideMiddle,
+                                          mUi->lTextSearch->width() - 24));
     mUi->lNbResults->setText(QString(tr("%1 results")).arg(mUi->wTransfers->rowCount()));
     mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
 
@@ -476,6 +473,31 @@ void TransferManager::on_bOther_clicked()
 void TransferManager::on_bText_clicked()
 {
     updateFileTypeFilter(TransferData::TYPE_TEXT);
+}
+
+void TransferManager::on_bImportLinks_clicked()
+{
+    qobject_cast<MegaApplication*>(qApp)->importLinks();
+}
+
+void TransferManager::on_tCogWheel_clicked()
+{
+    qobject_cast<MegaApplication*>(qApp)->openSettings();
+}
+
+void TransferManager::on_bDownload_clicked()
+{
+    qobject_cast<MegaApplication*>(qApp)->downloadActionClicked();
+}
+
+void TransferManager::on_bUpload_clicked()
+{
+    qobject_cast<MegaApplication*>(qApp)->uploadActionClicked();
+}
+
+void TransferManager::on_leSearchField_returnPressed()
+{
+    emit mUi->tSearchIcon->clicked();
 }
 
 void TransferManager::toggleTab(TM_TABS tab)
