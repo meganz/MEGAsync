@@ -28,14 +28,6 @@ else()
     set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg Qt5::X11Extras xcb)
 endif()
 
-IF(NOT DEFINED CMAKE_PREFIX_PATH)
-    IF(WIN32)
-        set(CMAKE_PREFIX_PATH "C:/Qt/5.12.10/msvc2017_64/lib/cmake/Qt5 ${CMAKE_PREFIX_PATH}" )
-    ELSE()
-        set(CMAKE_PREFIX_PATH /Users/Shared/Qt/5.12.10/clang_64/lib/cmake/Qt5 ${CMAKE_PREFIX_PATH} )
-    ENDIF()
-ENDIF()
-
 set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM})
 set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
 
