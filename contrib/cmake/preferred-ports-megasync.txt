@@ -41,6 +41,7 @@ bzip2/c303dd024e2dc03a0665ddffbb12a1077933e649
 
 # for the tests, just to get the build through
 gtest/c303dd024e2dc03a0665ddffbb12a1077933e649
+readline/8.0 osx
 
 # cryptopp with static CRT, for fully-static updater
-cryptopp-staticcrt/8.2.0
+cryptopp-staticcrt/8.2.0 win

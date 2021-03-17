@@ -28,8 +28,12 @@ else()
     set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg Qt5::X11Extras xcb)
 endif()
 
-IF(NOT DEFINED Qt5_DIR)
-    set(Qt5_DIR "C:/Qt/5.12.10/msvc2017_64/lib/cmake/Qt5")
+IF(NOT DEFINED CMAKE_PREFIX_PATH)
+    IF(WIN32)
+        set(CMAKE_PREFIX_PATH "C:/Qt/5.12.10/msvc2017_64/lib/cmake/Qt5 ${CMAKE_PREFIX_PATH} )
+    ELSE()
+        set(CMAKE_PREFIX_PATH /Users/Shared/Qt/5.12.10/clang_64/lib/cmake/Qt5 ${CMAKE_PREFIX_PATH} )
+    ENDIF()
 ENDIF()
 
 set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM})
@@ -47,6 +51,7 @@ set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
+set (NO_READLINE 0 CACHE STRING "")
 
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
@@ -166,7 +171,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
     ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
+# added per platform    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
@@ -279,7 +284,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
-    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
+#    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
@@ -332,7 +337,9 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
+        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
         )
 endif()
 
@@ -417,7 +424,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
-    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
+#    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
@@ -453,9 +460,10 @@ set (SRCS
 
 
 if (NOT CMAKE_HOST_APPLE)
-    set (SRCS ${SRCS}
+   set (SRCS ${SRCS}
         ${MEGAsyncDir}/gui/LockedPopOver.cpp
-        )
+        ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
+       )
 endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
@@ -511,6 +519,9 @@ else()
 
         ${MEGAsyncDir}/gui/PermissionsDialog.cpp
         ${MEGAsyncDir}/gui/PermissionsWidget.cpp
+        
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
+        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.mm
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
@@ -552,7 +563,9 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
+        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm

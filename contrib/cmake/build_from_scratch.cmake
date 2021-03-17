@@ -170,7 +170,7 @@ if(WIN32)
     endforeach()
 else()
     foreach(_config "Debug" "Release")
-        set(_build_dir "${_sdk_dir}/build-${_triplet}-${_config}")
+        set(_build_dir "${_app_dir}/build-${_triplet}-${_config}")
         file(MAKE_DIRECTORY ${_build_dir})
 
         execute_checked_command(
