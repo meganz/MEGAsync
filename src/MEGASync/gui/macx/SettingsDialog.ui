@@ -677,6 +677,13 @@ margin-right: 32px;</string>
                     </spacer>
                    </item>
                    <item>
+                    <widget class="QPushButton" name="bUnlink">
+                     <property name="text">
+                      <string>Logout</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <widget class="QPushButton" name="bUpgrade">
                      <property name="minimumSize">
                       <size>
