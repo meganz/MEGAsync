@@ -190,6 +190,64 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
     ui->layoutBottom->insertWidget(0, helpButton);
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
+
+    // Set native NSToolBar for settings.
+    toolBar = ::mega::make_unique<QMacToolBar>(this);
+
+    QIcon account(QString::fromUtf8("://images/settings-general.png"));
+    QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
+    QIcon bandwidth(QString::fromUtf8("://images/settings-transfers.png"));
+    QIcon security(QString::fromUtf8("://images/settings-security.png"));
+    QIcon proxy(QString::fromUtf8("://images/settings-network.png"));
+    QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
+
+    // add Items
+    bAccount.reset(toolBar->addItem(account, tr("Account")));
+    bAccount.get()->setIcon(account);
+    connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
+
+    bSyncs.reset(toolBar->addItem(syncs, tr("Syncs")));
+    bSyncs.get()->setIcon(syncs);
+    connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
+
+    bBandwidth.reset(toolBar->addItem(bandwidth, tr("Bandwidth")));
+    bBandwidth.get()->setIcon(bandwidth);
+    connect(bBandwidth.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bBandwidth_clicked);
+
+    bSecurity.reset(toolBar->addItem(bandwidth, tr("Security")));
+    bSecurity.get()->setIcon(security);
+    connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
+
+    bProxies.reset(toolBar->addItem(proxy, tr("Proxy")));
+    bProxies.get()->setIcon(proxy);
+    connect(bProxies.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bProxies_clicked);
+
+    bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
+    bAdvanced.get()->setIcon(advanced);
+    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
+
+    bAccount.get()->setSelectable(true);
+    bSyncs.get()->setSelectable(true);
+    bBandwidth.get()->setSelectable(true);
+    bSecurity.get()->setSelectable(true);
+    bProxies.get()->setSelectable(true);
+    bAdvanced.get()->setSelectable(true);
+
+    //Disable context menu and set default option to account tab
+    customizeNSToolbar(toolBar.get());
+    checkNSToolBarItem(toolBar.get(), bAccount.get());
+
+    // Attach to the window
+    this->window()->winId(); // create window->windowhandle()
+    toolBar->attachToWindow(this->window()->windowHandle());
+
+
+    //Configure segmented control for +/- syncs
+    ui->wSegmentedControl->configureTableSegment();
+    connect(ui->wSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
+    connect(ui->wSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+
+    ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 #endif
 
     if (!proxyOnly && preferences->logged())
@@ -261,66 +319,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setAvatar();
     connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
     storageStateChanged(app->getAppliedStorageState());
-
-#ifdef Q_OS_MACOS
-    // Set native NSToolBar for settings.
-    toolBar = ::mega::make_unique<QMacToolBar>(this);
-
-    QIcon account(QString::fromUtf8("://images/settings-general.png"));
-    QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
-    QIcon bandwidth(QString::fromUtf8("://images/settings-transfers.png"));
-    QIcon security(QString::fromUtf8("://images/settings-security.png"));
-    QIcon proxy(QString::fromUtf8("://images/settings-network.png"));
-    QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
-
-    // add Items
-    bAccount.reset(toolBar->addItem(account, tr("Account")));
-    bAccount.get()->setIcon(account);
-    connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
-
-    bSyncs.reset(toolBar->addItem(syncs, tr("Syncs")));
-    bSyncs.get()->setIcon(syncs);
-    connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
-
-    bBandwidth.reset(toolBar->addItem(bandwidth, tr("Bandwidth")));
-    bBandwidth.get()->setIcon(bandwidth);
-    connect(bBandwidth.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bBandwidth_clicked);
-
-    bSecurity.reset(toolBar->addItem(bandwidth, tr("Security")));
-    bSecurity.get()->setIcon(security);
-    connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
-
-    bProxies.reset(toolBar->addItem(proxy, tr("Proxy")));
-    bProxies.get()->setIcon(proxy);
-    connect(bProxies.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bProxies_clicked);
-
-    bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
-    bAdvanced.get()->setIcon(advanced);
-    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
-
-    bAccount.get()->setSelectable(true);
-    bSyncs.get()->setSelectable(true);
-    bBandwidth.get()->setSelectable(true);
-    bSecurity.get()->setSelectable(true);
-    bProxies.get()->setSelectable(true);
-    bAdvanced.get()->setSelectable(true);
-
-    //Disable context menu and set default option to account tab
-    customizeNSToolbar(toolBar.get());
-    checkNSToolBarItem(toolBar.get(), bAccount.get());
-
-    // Attach to the window
-    this->window()->winId(); // create window->windowhandle()
-    toolBar->attachToWindow(this->window()->windowHandle());
-
-
-    //Configure segmented control for +/- syncs
-    ui->wSegmentedControl->configureTableSegment();
-    connect(ui->wSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
-    connect(ui->wSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
-
-    ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
-#endif
 }
 
 SettingsDialog::~SettingsDialog()
@@ -344,13 +342,24 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     ui->bBandwidth->setEnabled(!proxyOnly);
     ui->bAdvanced->setEnabled(!proxyOnly);
     ui->bBandwidth->setEnabled(!proxyOnly);
+#else
+    // TODO: enableNSToolBarItem does not disable items. Review cocoa code
+    enableNSToolBarItem(bAccount.get(), !proxyOnly);
+    enableNSToolBarItem(bSecurity.get(), !proxyOnly);
+    enableNSToolBarItem(bSyncs.get(), !proxyOnly);
+    enableNSToolBarItem(bBandwidth.get(), !proxyOnly);
+    enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
+    enableNSToolBarItem(bBandwidth.get(), !proxyOnly);
 #endif
     if (proxyOnly)
     {
 #ifndef Q_OS_MACOS
         ui->bProxies->setEnabled(true);
         ui->bProxies->setChecked(true);
+#else
+        checkNSToolBarItem(toolBar.get(), bProxies.get());
 #endif
+
         ui->wStack->setCurrentWidget(ui->pProxies);
         ui->pProxies->show();
 
