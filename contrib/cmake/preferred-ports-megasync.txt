@@ -44,4 +44,4 @@ gtest/c303dd024e2dc03a0665ddffbb12a1077933e649
 readline/8.0 osx
 
 # cryptopp with static CRT, for fully-static updater
-cryptopp-staticcrt/8.2.0 win
+cryptopp-staticcrt/8.2.0 windows

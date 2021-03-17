@@ -30,7 +30,7 @@ endif()
 
 IF(NOT DEFINED CMAKE_PREFIX_PATH)
     IF(WIN32)
-        set(CMAKE_PREFIX_PATH "C:/Qt/5.12.10/msvc2017_64/lib/cmake/Qt5 ${CMAKE_PREFIX_PATH} )
+        set(CMAKE_PREFIX_PATH "C:/Qt/5.12.10/msvc2017_64/lib/cmake/Qt5 ${CMAKE_PREFIX_PATH}" )
     ELSE()
         set(CMAKE_PREFIX_PATH /Users/Shared/Qt/5.12.10/clang_64/lib/cmake/Qt5 ${CMAKE_PREFIX_PATH} )
     ENDIF()
@@ -51,7 +51,6 @@ set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
-set (NO_READLINE 0 CACHE STRING "")
 
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
