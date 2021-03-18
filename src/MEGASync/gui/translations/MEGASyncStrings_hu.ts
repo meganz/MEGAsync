@@ -657,7 +657,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">A hibajelentése nem tölthető fel hiba miatt. Kérjük, próbálkozzon újra, vagy lépjen kapcsolatba ügyfélszolgálatunkkal a [A]support@mega.nz[/A] címen, ha a probléma továbbra is fennáll.</translation>
+        <translation type="unfinished">A hibajelentése nem tölthető fel hiba miatt. Kérjük, próbálkozzon újra, vagy lépjen kapcsolatba ügyfélszolgálatunkkal a [A]support@mega.co.nz[/A] címen, ha a probléma továbbra is fennáll.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1226,14 +1226,14 @@ kérjük, hogy kezdjen egy kisebb mappával, és adjon hozzá több adatot, amí
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
-        <translation type="unfinished">A fiókja zárolásra került. Vegye fel velünk a kapcsolatot a support@mega.nz email-címen</translation>
+        <translation type="unfinished">A fiókja zárolásra került. Vegye fel velünk a kapcsolatot a support@mega.co.nz email-címen</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
         <translation type="obsolete">Nem sikerült beolvasni a fájlrendszert. 
-Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot a bug@mega.nz email-címen</translation>
+Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot a bug@mega.co.nz email-címen</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -2369,7 +2369,7 @@ Mindenképpen kilép?</translation>
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
         <translation type="unfinished">Nem sikerült beolvasni a fájlrendszert. 
-Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot ezen az email-címen: bug@mega.nz</translation>
+Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot ezen az email-címen: bug@mega.co.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -5302,7 +5302,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, kérjük, lépjen velünk kapcsolatba a bug@mega.nz címen</translation>
+        <translation>Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, kérjük, lépjen velünk kapcsolatba a bug@mega.co.nz címen</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -5347,7 +5347,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Fiókja blokkolva. Kérjük, lépjen kapcsolatba velünk a support@mega.nz címen</translation>
+        <translation type="unfinished">Fiókja blokkolva. Kérjük, lépjen kapcsolatba velünk a support@mega.co.nz címen</translation>
     </message>
     <message>
         <source>MEGAsync</source>
