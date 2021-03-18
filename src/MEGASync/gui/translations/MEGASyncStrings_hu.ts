@@ -256,17 +256,17 @@
     <message>
         <source>New Contact Request</source>
         <translatorcomment>Notification label that indicates the user has a new contact request </translatorcomment>
-        <translation type="unfinished">Új kapcsolatfelvételi kérelem</translation>
+        <translation type="unfinished">Új partnerfelvételi kérelem</translation>
     </message>
     <message>
         <source>Contact Deleted</source>
         <translatorcomment>Notification label that indicates the user has removed a contact</translatorcomment>
-        <translation type="unfinished">Névjegy törölve</translation>
+        <translation type="unfinished">Partner törölve</translation>
     </message>
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Kapcsolatfelvétel létrejött</translation>
+        <translation type="unfinished">Partnerfelvétel létrejött</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -276,17 +276,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Kapcsolatfelvételi kérelem kezelve</translation>
+        <translation type="unfinished">Partnerfelvételi kérelem kezelve</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Kapcsolatfelvételi kérelem elfogadva</translation>
+        <translation type="unfinished">Partnerfelvételi kérelem elfogadva</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Kapcsolatfelvételi kérelem elutasítva</translation>
+        <translation type="unfinished">Partnerfelvételi kérelem elutasítva</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -306,22 +306,22 @@
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation type="unfinished">[A] kapcsolatfelvételi kérelmet küldött önnek</translation>
+        <translation type="unfinished">[A] partnerfelvételi kérelmet küldött önnek</translation>
     </message>
     <message>
         <source>[A] cancelled their contact request</source>
         <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
-        <translation type="unfinished">[A] visszavonta kapcsolatfelvételi kérelmét</translation>
+        <translation type="unfinished">[A] visszavonta partnerfelvételi kérelmét</translation>
     </message>
     <message>
         <source>You have a contact request</source>
         <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation type="unfinished">Kapcsolatfelvételi kérelme van</translation>
+        <translation type="unfinished">Partnerfelvételi kérelme van</translation>
     </message>
     <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
-        <translation type="unfinished">[A] törölt a kapcsolatai közül</translation>
+        <translation type="unfinished">[A] törölt a partnerei közül</translation>
     </message>
     <message>
         <source>[A] has been deleted/deactivated</source>
@@ -331,7 +331,7 @@
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] felvett a kapcsolatai közé</translation>
+        <translation type="unfinished">[A] felvett a partnerei közé</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -341,27 +341,27 @@
     <message>
         <source>You ignored a contact request</source>
         <translatorcomment>Label to indicate that the user has ignored a contact request.</translatorcomment>
-        <translation type="unfinished">Elvetett egy kapcsolatfelvételi kérést</translation>
+        <translation type="unfinished">Elvetett egy partnerfelvételi kérést</translation>
     </message>
     <message>
         <source>You accepted a contact request</source>
         <translatorcomment>Label to indicate that the user has accepted a contact request.</translatorcomment>
-        <translation type="unfinished">Elfogadott egy kapcsolatfelvételikérést</translation>
+        <translation type="unfinished">Elfogadott egy partnerfelvételi kérést</translation>
     </message>
     <message>
         <source>You denied a contact request</source>
         <translatorcomment>Label to indicate that the user has denied a contact request.</translatorcomment>
-        <translation type="unfinished">Elutasított egy kapcsolatfelvételi kérést</translation>
+        <translation type="unfinished">Elutasított egy partnerfelvételi kérést</translation>
     </message>
     <message>
         <source>[A] accepted your contact request</source>
         <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
-        <translation type="unfinished">[A] elfodta a kapcsolatfelvételi kérését</translation>
+        <translation type="unfinished">[A] elfodta a partnerfelvételi kérését</translation>
     </message>
     <message>
         <source>[A] denied your contact request</source>
         <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
-        <translation type="unfinished">[A] elutasította a kapcsolatfelvételi kérését</translation>
+        <translation type="unfinished">[A] elutasította a partnerfelvételi kérését</translation>
     </message>
     <message>
         <source>New Shared folder from [A]</source>
@@ -451,17 +451,17 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">A nyilvánosan megosztása eltávolításra került.</translation>
+        <translation type="unfinished">A nyilvános megosztása eltávolításra került.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="obsolete">Az Ön által nyilvánosan megosztott %1 (%2) visszaállításra került.</translation>
+        <translation type="obsolete">Az Ön által nyilvánosan megosztott [A] ([B]) visszaállításra került.</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">A nyilvánosan megosztása visszaállításra került.</translation>
+        <translation type="unfinished">A nyilvános megosztása visszaállításra került.</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -563,7 +563,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>A(z) „%1” már használatban van egy másik szinkronizáláshoz. Kérjük, adjon meg egy másik nevet a szinkronizált mappa azonosításához:</translation>
+        <translation>A(z) &quot;%1&quot; már használatban van egy másik szinkronizáláshoz. Kérjük, adjon meg egy másik nevet a szinkronizált mappa azonosításához:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -642,12 +642,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished">Problémája sikeresen bejelentve.</translation>
+        <translation type="unfinished">A hibajelentés sikeresen elküldve.</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation type="unfinished">Problémája elküldve, megerősítő e-mailt küldünk Önnek.</translation>
+        <translation type="unfinished">A hibajelentés elküldve, megerősítő e-mailt küldünk Önnek.</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
@@ -657,7 +657,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Problémája nem tölthető fel hiba miatt. Kérjük, próbálkozzon újra, vagy lépjen kapcsolatba ügyfélszolgálatunkkal a [A]support@mega.nz[/A] címen, ha a probléma továbbra is fennáll.</translation>
+        <translation type="unfinished">A hibajelentése nem tölthető fel hiba miatt. Kérjük, próbálkozzon újra, vagy lépjen kapcsolatba ügyfélszolgálatunkkal a [A]support@mega.nz[/A] címen, ha a probléma továbbra is fennáll.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -667,12 +667,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation type="unfinished">Biztosan megszakítja a bejelentett probléma feltöltését?</translation>
+        <translation type="unfinished">Biztosan megszakítja a feltöltést?</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation type="unfinished">A probléma nem lesz bejelentve, ha leállítja a feltöltést.</translation>
+        <translation type="unfinished">A hibajelentés nem lesz elküldve, ha leállítja a feltöltést.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -687,7 +687,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation type="unfinished">Jelenleg egy másik bejelentett probléma töltődik fel.</translation>
+        <translation type="unfinished">Jelenleg egy másik hibajelentés töltődik fel.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -869,8 +869,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished">Diagnosztikai naplófájlok is kerüljenek csatolásra a hibakereséshez
-(egyes esetekben részleteket tartalmazhat bizonyos adatairól, például fájl- vagy mappanevekről)</translation>
+        <translation type="unfinished">Diagnosztikai naplófájlok is kerüljenek csatolásra a hibakereséshez[Br](egyes esetekben részleteket tartalmazhat bizonyos adatairól, például fájl- vagy mappanevekről)</translation>
     </message>
 </context>
 <context>
@@ -989,7 +988,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
         <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation type="unfinished">[A]Az Ön által használt IP-cím %1 adatátviteli keretet használt fel az elmúlt 6 órában, ami túllépte a jelenlegi korlátot. A korlát  megszüntetéhez frissíthet a PRO verzióra, amely saját átviteli kvóta csomagot és bőséges extra tárhelyet biztosít.[/A]</translation>
+        <translation type="unfinished">[A]Az Ön által használt IP-cím %1 adatátviteli keretet használt fel az elmúlt 6 órában, ami túllépte a jelenlegi korlátot. A korlát  megszüntetéhez frissíthet a PRO verzióra, amely saját átviteli kvóta csomagot és bőséges extra tárhelyet is biztosít.[/A]</translation>
     </message>
 </context>
 <context>
@@ -997,7 +996,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all types of notifications will be shown.</translatorcomment>
-        <translation type="unfinished">Minden értesítés</translation>
+        <translation type="unfinished">Összes értesítés</translation>
         </message>
     <message>
         <source>Contacts</source>
@@ -1113,7 +1112,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>Egy rendkívül nagy mappát próbál szinkronizálni. A teljes indító kötetek szinkronizálásának megakadályozása érdekében, amely nem hatékony és veszélyes, kérjük, hogy kezdjen egy kisebb mappával, és adjon hozzá több adatot, amíg a MEGAsync fut.</translation>
+        <translation>Egy rendkívül nagy mappát próbál szinkronizálni. 
+A teljes indító kötetek szinkronizálásának megakadályozása érdekében, amely nem hatékony és veszélyes, 
+kérjük, hogy kezdjen egy kisebb mappával, és adjon hozzá több adatot, amíg a MEGAsync fut.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1122,7 +1123,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation type="unfinished">Megosztott mappát teljes hozzáférés engedély nélkül nem szinkronizálhat</translation>
+        <translation type="unfinished">Megosztott mappát teljes hozzáférési engedély nélkül nem szinkronizálhat</translation>
     </message>
 </context>
 <context>
@@ -1231,7 +1232,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
-        <translation type="obsolete">Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot a bug@mega.nz email-címen</translation>
+        <translation type="obsolete">Nem sikerült beolvasni a fájlrendszert. 
+Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot a bug@mega.nz email-címen</translation>
     </message>
     <message>
         <source>Please, enter your e-mail address</source>
@@ -1522,7 +1524,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation type="obsolete">%1 of %2 fájl (szüneteltetve)</translation>
+        <translation type="obsolete">%1 / %2 fájl (szüneteltetve)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
@@ -1546,7 +1548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
-        <translation type="vanished">MEGAsync indulás</translation>
+        <translation type="vanished">MEGAsync indítása</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -1766,7 +1768,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all notifications will be shown.</translatorcomment>
-        <translation type="obsolete">Minden értesítés</translation>
+        <translation type="obsolete">Összes értesítés</translation>
     </message>
     <message>
         <source>Open notification settings</source>
@@ -1821,7 +1823,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation type="unfinished">%1 használva</translation>
+        <translation type="unfinished">%1 felhasználva</translation>
     </message>
     <message>
         <source>Your data is at risk!</source>
@@ -1831,7 +1833,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished">E-mailben felvettük önnel a kapcsolatot [A] címen [B]-kor, de a MEGA-fiókodban még mindig van [C] fájl, amely [D] helyet foglal, amihez [E]-ra van szükség.</translation>
+        <translation type="unfinished">E-mailben felvettük önnel a kapcsolatot [A] címen [B]-kor, de a MEGA-fiókjában még mindig van [C] fájl, amely [D] helyet foglal, amihez [E]-ra van szükség.</translation>
     </message>
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1856,7 +1858,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All downloads are currently disabled.</source>
         <translatorcomment>Informative label to indicate that all downloads are currently disabled because a situation of over transfer quota.</translatorcomment>
-        <translation type="unfinished">Az összes letöltés jelenleg le van tiltva.</translation>
+        <translation type="unfinished">Az összes letöltés le van tiltva jelenleg.</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -1933,7 +1935,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="obsolete">[S]Rugalmas:[/S] Szinkronizálja bármelyik mappát a számítógépéről a felhő bármelyik mappájába. Tetszőleges számú mappa párhuzamosan szinkronizálható</translation>
+        <translation type="obsolete">[S]Rugalmas:[/S] Szinkronizálja bármelyik mappát a számítógépéről a felhő bármelyik mappájába. Tetszőleges számú mappa párhuzamosan szinkronizálható.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
