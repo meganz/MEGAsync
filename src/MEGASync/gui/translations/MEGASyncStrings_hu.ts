@@ -4002,7 +4002,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Are you sure you want to delete &amp;apos;%1&amp;apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder</translatorcomment>
-        <translation type="obsolete">Biztosan törli ezt: “%1”?</translation>
+        <translation type="obsolete">Biztosan törli ezt: &amp;apos;%1&amp;apos;?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
@@ -4072,7 +4072,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>&amp;apos;%1&amp;apos; is write protected. Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
-        <translation type="obsolete">”%1” írásvédett. mindenképpen törli?</translation>
+        <translation type="obsolete">&amp;apos;%1&amp;apos; írásvédett. Mindenképpen törli?</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -4112,7 +4112,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translatorcomment>Warning message shown before deleting a file or a folder.</translatorcomment>
-        <translation type="unfinished">Biztosan törli ezt: “%1”?</translation>
+        <translation type="unfinished">Biztosan törli ezt: &apos;%1&apos;?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -4227,7 +4227,7 @@ Mindenképpen törli?</translation>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation type="unfinished">&lt;b&gt;A “%1” név nem használható.&lt;/b&gt;&lt;p&gt;Próbáljon meg másik nevet használni, kevesebb karakterrel vagy írásjelek nélkül.</translation>
+        <translation type="unfinished">&lt;b&gt;A &quot;%1&quot; név nem használható.&lt;/b&gt;&lt;p&gt;Próbáljon meg másik nevet használni, kevesebb karakterrel vagy írásjelek nélkül.</translation>
     </message>
 </context>
 <context>
@@ -4411,7 +4411,7 @@ Mindenképpen törli?</translation>
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Ingyenes</translation>
+        <translation>INGYENES</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -4493,7 +4493,7 @@ Mindenképpen törli?</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Mappa a feltöltésekhez a Windows Intézőből</translation>
+        <translation type="obsolete">Mappa a Windows Intézőből történő feltöltésekhez</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -4602,7 +4602,7 @@ Mindenképpen törli?</translation>
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation type="vanished">Kizárt fájneveke</translation>
+        <translation type="vanished">Kizárt fájnevek</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4671,11 +4671,11 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">A teljes fiókszinkronizálás leállítása lehetővé teszi a szelektív mappaszinkronizálás beállítását</translation>
+        <translation type="obsolete">A teljes fiókszinkronizálás letiltása lehetővé teszi a szelektív mappaszinkronizálás beállítását</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
-        <translation type="obsolete">A teljes fiókszinkronizálás leállítása</translation>
+        <translation type="obsolete">A teljes fiókszinkronizálás letiltása</translation>
     </message>
     <message>
         <source>Other</source>
@@ -4732,7 +4732,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>A MEGAsync az indításkor teljes körűen beolvassa a szinkronizált mappákat. Újra indítja most a MEGAsync alkalmazást?</translation>
+        <translation>A MEGAsync az indításkor teljes körűen beolvassa a szinkronizált mappákat. Újraindítja most a MEGAsync alkalmazást?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4877,7 +4877,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Törli most a helyi biztonsági mentést?</translation>
+        <translation type="unfinished">Törli most a helyi biztonsági mentését?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -4885,7 +4885,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
-        <translation type="unfinished">Törli most a távoli biztonsági mentést?</translation>
+        <translation type="unfinished">Törli most a távoli biztonsági mentését?</translation>
     </message>
     <message>
         <source>Download rate limit</source>
