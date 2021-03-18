@@ -775,147 +775,146 @@ void SettingsDialog::updateDownloadFolder()
 
 void SettingsDialog::loadSettings()
 {
+    if(proxyOnly) // do not load settings in Proxy Only Guest mode
+        return;
+
     loadingSettings++;
 
-    //FIXME: this bool check leads to settings not being loaded for guest mode
-    if (!proxyOnly)
+    //General
+    ui->cShowNotifications->setChecked(preferences->showNotifications());
+
+    if (!preferences->canUpdate(MegaApplication::applicationFilePath()))
     {
-        //General
-        ui->cShowNotifications->setChecked(preferences->showNotifications());
+        ui->bUpdate->setEnabled(false);
+        ui->cAutoUpdate->setEnabled(false);
+        ui->cAutoUpdate->setChecked(false);
+    }
+    else
+    {
+        ui->bUpdate->setEnabled(true);
+        ui->cAutoUpdate->setEnabled(true);
+        ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
+    }
 
-        if (!preferences->canUpdate(MegaApplication::applicationFilePath()))
-        {
-            ui->bUpdate->setEnabled(false);
-            ui->cAutoUpdate->setEnabled(false);
-            ui->cAutoUpdate->setChecked(false);
-        }
-        else
-        {
-            ui->bUpdate->setEnabled(true);
-            ui->cAutoUpdate->setEnabled(true);
-            ui->cAutoUpdate->setChecked(preferences->updateAutomatically());
-        }
+    // if checked: make sure both sources are true
+    ui->cStartOnStartup->setChecked(preferences->startOnStartup() && Platform::isStartOnStartupActive());
 
-        // if checked: make sure both sources are true
-        ui->cStartOnStartup->setChecked(preferences->startOnStartup() && Platform::isStartOnStartupActive());
-
-        //Language
-        ui->cLanguage->clear();
-        languageCodes.clear();
-        QString fullPrefix = Preferences::TRANSLATION_FOLDER+Preferences::TRANSLATION_PREFIX;
-        QDirIterator it(Preferences::TRANSLATION_FOLDER);
-        QStringList languages;
-        int currentIndex = -1;
-        QString currentLanguage = preferences->language();
-        while (it.hasNext())
+    //Language
+    ui->cLanguage->clear();
+    languageCodes.clear();
+    QString fullPrefix = Preferences::TRANSLATION_FOLDER+Preferences::TRANSLATION_PREFIX;
+    QDirIterator it(Preferences::TRANSLATION_FOLDER);
+    QStringList languages;
+    int currentIndex = -1;
+    QString currentLanguage = preferences->language();
+    while (it.hasNext())
+    {
+        QString file = it.next();
+        if (file.startsWith(fullPrefix))
         {
-            QString file = it.next();
-            if (file.startsWith(fullPrefix))
+            int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
+            if ((extensionIndex - fullPrefix.size()) <= 0)
             {
-                int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
-                if ((extensionIndex - fullPrefix.size()) <= 0)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                QString languageCode = file.mid(fullPrefix.size(), extensionIndex-fullPrefix.size());
-                QString languageString = Utilities::languageCodeToString(languageCode);
-                if (!languageString.isEmpty())
+            QString languageCode = file.mid(fullPrefix.size(), extensionIndex-fullPrefix.size());
+            QString languageString = Utilities::languageCodeToString(languageCode);
+            if (!languageString.isEmpty())
+            {
+                int i = 0;
+                while (i < languages.size() && (languageString > languages[i]))
                 {
-                    int i = 0;
-                    while (i < languages.size() && (languageString > languages[i]))
-                    {
-                        i++;
-                    }
-                    languages.insert(i, languageString);
-                    languageCodes.insert(i, languageCode);
+                    i++;
                 }
+                languages.insert(i, languageString);
+                languageCodes.insert(i, languageCode);
             }
         }
+    }
 
-        for (int i = languageCodes.size() - 1; i >= 0; i--)
+    for (int i = languageCodes.size() - 1; i >= 0; i--)
+    {
+        if (currentLanguage.startsWith(languageCodes[i]))
         {
-            if (currentLanguage.startsWith(languageCodes[i]))
-            {
-                currentIndex = i;
-                break;
-            }
+            currentIndex = i;
+            break;
         }
+    }
 
-        if (currentIndex == -1)
-        {
-            currentIndex = languageCodes.indexOf(QString::fromAscii("en"));
-        }
+    if (currentIndex == -1)
+    {
+        currentIndex = languageCodes.indexOf(QString::fromAscii("en"));
+    }
 
-        ui->cLanguage->addItems(languages);
-        ui->cLanguage->setCurrentIndex(currentIndex);
+    ui->cLanguage->addItems(languages);
+    ui->cLanguage->setCurrentIndex(currentIndex);
 
-        if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
-        {
-            ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
-        }
+    if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+    {
+        ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
+    }
 
-        //Account
-        ui->lEmail->setText(preferences->email());
-        auto fullName {(preferences->firstName() + QStringLiteral(" ")+ preferences->lastName()).trimmed()};
-        ui->lName->setText(fullName);
+    //Account
+    ui->lEmail->setText(preferences->email());
+    auto fullName {(preferences->firstName() + QStringLiteral(" ")+ preferences->lastName()).trimmed()};
+    ui->lName->setText(fullName);
 
-        // account type and details
-        updateAccountElements();
+    // account type and details
+    updateAccountElements();
 
-        if (accountDetailsDialog)
-        {
-            accountDetailsDialog->refresh(preferences);
-        }
+    if (accountDetailsDialog)
+    {
+        accountDetailsDialog->refresh(preferences);
+    }
 
-        updateUploadFolder();
-        updateDownloadFolder();
+    updateUploadFolder();
+    updateDownloadFolder();
 
-        //Syncs
-        loadSyncSettings();
+    //Syncs
+    loadSyncSettings();
 
 #ifdef Q_OS_WINDOWS
-        ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
+    ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
 #endif
 
-        //Bandwidth
-        int uploadLimitKB = preferences->uploadLimitKB();
-        ui->rUploadAutoLimit->setChecked(uploadLimitKB<0);
-        ui->rUploadLimit->setChecked(uploadLimitKB>0);
-        ui->rUploadNoLimit->setChecked(uploadLimitKB==0);
-        ui->eUploadLimit->setText((uploadLimitKB<=0)? QString::fromAscii("0") : QString::number(uploadLimitKB));
-        ui->eUploadLimit->setEnabled(ui->rUploadLimit->isChecked());
+    //Bandwidth
+    int uploadLimitKB = preferences->uploadLimitKB();
+    ui->rUploadAutoLimit->setChecked(uploadLimitKB<0);
+    ui->rUploadLimit->setChecked(uploadLimitKB>0);
+    ui->rUploadNoLimit->setChecked(uploadLimitKB==0);
+    ui->eUploadLimit->setText((uploadLimitKB<=0)? QString::fromAscii("0") : QString::number(uploadLimitKB));
+    ui->eUploadLimit->setEnabled(ui->rUploadLimit->isChecked());
 
-        int downloadLimitKB = preferences->downloadLimitKB();
-        ui->rDownloadLimit->setChecked(downloadLimitKB>0);
-        ui->rDownloadNoLimit->setChecked(downloadLimitKB==0);
-        ui->eDownloadLimit->setText((downloadLimitKB<=0)? QString::fromAscii("0") : QString::number(downloadLimitKB));
-        ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
+    int downloadLimitKB = preferences->downloadLimitKB();
+    ui->rDownloadLimit->setChecked(downloadLimitKB>0);
+    ui->rDownloadNoLimit->setChecked(downloadLimitKB==0);
+    ui->eDownloadLimit->setText((downloadLimitKB<=0)? QString::fromAscii("0") : QString::number(downloadLimitKB));
+    ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
 
-        ui->eMaxDownloadConnections->setValue(preferences->parallelDownloadConnections());
-        ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
+    ui->eMaxDownloadConnections->setValue(preferences->parallelDownloadConnections());
+    ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
 
-        ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
+    ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
-        //Advanced
-        ui->lExcludedNames->clear();
-        QStringList excludedNames = preferences->getExcludedSyncNames();
-        for (int i = 0; i < excludedNames.size(); i++)
-        {
-            ui->lExcludedNames->addItem(excludedNames[i]);
-        }
-
-        QStringList excludedPaths = preferences->getExcludedSyncPaths();
-        for (int i = 0; i < excludedPaths.size(); i++)
-        {
-            ui->lExcludedNames->addItem(excludedPaths[i]);
-        }
-
-        ui->lLimitsInfo->setText(excludeBySizeInfo());
-        ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
-        ui->cDisableFileVersioning->setChecked(preferences->fileVersioningDisabled());
-        ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
+    //Advanced
+    ui->lExcludedNames->clear();
+    QStringList excludedNames = preferences->getExcludedSyncNames();
+    for (int i = 0; i < excludedNames.size(); i++)
+    {
+        ui->lExcludedNames->addItem(excludedNames[i]);
     }
+
+    QStringList excludedPaths = preferences->getExcludedSyncPaths();
+    for (int i = 0; i < excludedPaths.size(); i++)
+    {
+        ui->lExcludedNames->addItem(excludedPaths[i]);
+    }
+
+    ui->lLimitsInfo->setText(excludeBySizeInfo());
+    ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
+    ui->cDisableFileVersioning->setChecked(preferences->fileVersioningDisabled());
+    ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
 
     loadingSettings--;
 }
