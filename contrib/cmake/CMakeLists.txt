@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.15)
-cmake_policy(SET CMP0091 NEW) 
+cmake_policy(SET CMP0091 NEW)
 
 set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will declare and append 32/64")
 set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
@@ -48,7 +48,7 @@ set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
-set(MEGAupdaterDir "${RepoDir}/src/MEGAUpdater") 
+set(MEGAupdaterDir "${RepoDir}/src/MEGAUpdater")
 set(MEGAShellExtDir "${RepoDir}/src/MEGAShellExt")
 
 get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
@@ -67,6 +67,8 @@ set(Mega3rdPartyDir "${prebuilt_dir}"  CACHE STRING "")
 
 # this line points to the MEGA SDK repo that you want to build MEGAsync against
 include(${MEGAsyncDir}/mega/contrib/cmake/CMakeLists.txt)
+
+set(3RDPARTY_RUNTIME_PATH "PATH=%PATH%" "${Mega3rdPartyDir}/vcpkg/installed/${VCPKG_TRIPLET}/debug/bin;${QT_DIR}/bin")
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -160,7 +162,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ChangePassword.ui
     ${MEGAsyncDir}/gui/${UiDir}/Login2FA.ui
     ${MEGAsyncDir}/gui/${UiDir}/TransfersStatusWidget.ui
-    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
+# added per platform    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
@@ -273,7 +275,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
-    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
+#    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
@@ -326,7 +328,9 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
+        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
         )
 endif()
 
@@ -411,7 +415,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
-    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
+#    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
@@ -447,9 +451,10 @@ set (SRCS
 
 
 if (NOT CMAKE_HOST_APPLE)
-    set (SRCS ${SRCS}
+   set (SRCS ${SRCS}
         ${MEGAsyncDir}/gui/LockedPopOver.cpp
-        )
+        ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
+       )
 endif (NOT CMAKE_HOST_APPLE)
 
 if (CMAKE_HOST_WIN32)
@@ -505,6 +510,9 @@ else()
 
         ${MEGAsyncDir}/gui/PermissionsDialog.cpp
         ${MEGAsyncDir}/gui/PermissionsWidget.cpp
+        
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
+        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.mm
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
@@ -546,7 +554,9 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
+        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
@@ -595,6 +605,7 @@ if(CMAKE_HOST_APPLE)
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAsync WIN32 ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
     set_property(TARGET MEGAsync PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+    set_target_properties(MEGAsync PROPERTIES VS_DEBUGGER_ENVIRONMENT "${3RDPARTY_RUNTIME_PATH}")
 else()
     add_executable(MEGAsync ${MEGAsyncDir}/main.cpp ${SRCS} ${QM_FILES})
 endif()
@@ -700,7 +711,7 @@ set (UPDATER_FILES
 ImportStdVcpkgLibrary(cryptopp-staticcrt        cryptopp-staticcrt cryptopp-staticcrt libcryptopp libcryptopp)
 
 if(CMAKE_HOST_APPLE)
-#    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATER_FILES} ) 
+#    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATER_FILES} )
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAupdater WIN32 ${UPDATER_FILES} )
     #add_executable(MEGAupdater ${UPDATER_FILES} )
