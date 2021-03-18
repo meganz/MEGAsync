@@ -4971,8 +4971,4 @@ background:transparent;</string>
   <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
- <slots>
-  <slot>stateChanged()</slot>
-  <slot>proxyStateChanged()</slot>
- </slots>
 </ui>

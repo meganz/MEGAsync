@@ -4807,8 +4807,4 @@ background:transparent;</string>
   <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
- <slots>
-  <slot>stateChanged()</slot>
-  <slot>proxyStateChanged()</slot>
- </slots>
 </ui>
