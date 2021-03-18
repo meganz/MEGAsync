@@ -15,6 +15,7 @@ class TransferManagerItem2 : public QWidget
 
     public:
         explicit TransferManagerItem2(QWidget *parent = 0);
+        ~TransferManagerItem2();
         void updateUi(QExplicitlySharedDataPointer<TransferData> data, const int row);
         void forwardMouseEvent(QMouseEvent *me);
 
@@ -38,7 +39,7 @@ class TransferManagerItem2 : public QWidget
         bool mIsFinished;
         bool mAreDlPaused;
         bool mAreUlPaused;
-        int mRow;
+        int  mRow;
 };
 
 #endif // TRANSFERMANAGERITEM2_H

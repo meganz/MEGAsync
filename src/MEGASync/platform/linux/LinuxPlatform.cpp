@@ -460,6 +460,7 @@ std::string getProperty(xcb_connection_t * const connection,
     static const size_t buffer_length = 255;
 
     char buffer[buffer_length + 1];
+    buffer[0] = '\0';
 
     if (!atom_type)
     {

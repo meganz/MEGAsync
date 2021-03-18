@@ -130,7 +130,7 @@ void QTransfersModel2::initModel()
                 if (transferModel) //Check if this is not deleted
                 {
                     auto transfers (mMegaApi->getTransfers());
-                    auto transferData(mMegaApi->getTransferData());
+                    auto transferData (mMegaApi->getTransferData());
                     mNotificationNumber = transferData->getNotificationNumber();
 
                     // First, list all the transfers to add
@@ -221,6 +221,7 @@ void QTransfersModel2::initModel()
                             remainingRows -= rowsPerChunk;
                         }
                     }
+                    delete transferData;
                     delete transfers;
                 }
             });//end of queued function

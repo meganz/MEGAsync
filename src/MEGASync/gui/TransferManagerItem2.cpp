@@ -24,21 +24,13 @@ TransferManagerItem2::TransferManagerItem2(QWidget *parent) :
     mAreUlPaused = mPreferences->getUploadsPaused();
 
     // Connect to pause state change signal
-    QObject::connect((MegaApplication *)qApp, &MegaApplication::pauseStateChanged,
-                      this, &TransferManagerItem2::onPauseStateChanged);
+    connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::pauseStateChanged,
+            this, &TransferManagerItem2::onPauseStateChanged);
+}
 
-//    mStatusWidgetsByType[MegaTransfer::TYPE_DOWNLOAD] = mUi->pActive;
-//    mStatusWidgetsByType[MegaTransfer::TYPE_UPLOAD] = mUi->pActive;
-//    mStatusWidgetsByType[MegaTransfer::TYPE_LOCAL_HTTP_DOWNLOAD] = mUi->pActive;
-//    mStatusWidgetsByType[MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD] = mUi->pActive;
-
-//    mStatusWidgetsByState[MegaTransfer::STATE_ACTIVE] = mUi->pActive;
-//    mStatusWidgetsByState[MegaTransfer::STATE_QUEUED] = mUi->pQueued;
-//    mStatusWidgetsByState[MegaTransfer::STATE_FAILED] = mUi->pFailed;
-//    mStatusWidgetsByState[MegaTransfer::STATE_CANCELLED] = mUi->pCanceled;
-//    mStatusWidgetsByState[MegaTransfer::STATE_COMPLETED] = mUi->pCompleted;
-//    mStatusWidgetsByState[MegaTransfer::STATE_COMPLETING] = mUi->pCompleting;
-
+TransferManagerItem2::~TransferManagerItem2()
+{
+    delete mUi;
 }
 
 void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> data, const int row)
