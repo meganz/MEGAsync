@@ -39,8 +39,8 @@ void TransferManagerItem::setFileName(QString fileName)
 
 void TransferManagerItem::setStateLabel(QString labelState)
 {
-    mUi->lStatus->setText(labelState);
-    mUi->lTime->setText(QString());
+    mUi->lItemStatus->setText(labelState);
+    mUi->lItemTime->setText(QString());
 }
 
 QString TransferManagerItem::getTransferName()
@@ -96,7 +96,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
             break;
     }
 
-    mUi->bSpeed->setIcon(icon);
+    mUi->bItemSpeed->setIcon(icon);
     mUi->lTransferTypeCompleted->setIcon(icon);
     mUi->lTransferTypeCompleted->setIconSize(QSize(12, 12));
 }
@@ -159,7 +159,7 @@ void TransferManagerItem::updateTransfer()
             {
                 remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());
             }
-            mUi->lTime->setText(remainingTime);
+            mUi->lItemTime->setText(remainingTime);
 
             // Update current transfer speed
             QString downloadString;
@@ -174,22 +174,22 @@ void TransferManagerItem::updateTransfer()
                 downloadString = pattern.arg(Utilities::getSizeString(mTransferSpeed));
             }
 
-            mUi->bSpeed->setText(downloadString);
-            mUi->lQueued->hide();
+            mUi->bItemSpeed->setText(downloadString);
+            mUi->lItemQueued->hide();
 
             break;
         }
         case MegaTransfer::STATE_PAUSED:
         {
-            mUi->lStatus->setText(tr("Paused"));
-            mUi->bSpeed->setText(QString());
-            mUi->lTime->setText(QString());
+            mUi->lItemStatus->setText(tr("Paused"));
+            mUi->bItemSpeed->setText(QString());
+            mUi->lItemTime->setText(QString());
             break;
         }
         case MegaTransfer::STATE_QUEUED:
         {
-            mUi->lTime->setText(QString());
-            mUi->lQueued->show();
+            mUi->lItemTime->setText(QString());
+            mUi->lItemQueued->show();
             break;
         }
         case MegaTransfer::STATE_RETRYING:
@@ -198,31 +198,31 @@ void TransferManagerItem::updateTransfer()
             {
                 if (mTransferErrorValue)
                 {
-                    mUi->bSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Transfer quota exceeded")));
+                    mUi->bItemSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Transfer quota exceeded")));
                 }
                 else
                 {
-                    mUi->bSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+                    mUi->bItemSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
                 }
             }
             else
             {
-                mUi->bSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
+                mUi->bItemSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
             }
 
-            mUi->lTime->setText(QString());
+            mUi->lItemTime->setText(QString());
             break;
         }
         case MegaTransfer::STATE_COMPLETING:
         {
-            mUi->lStatus->setText(tr("completing"));
-            mUi->lTime->setText(QString());
+            mUi->lItemStatus->setText(tr("completing"));
+            mUi->lItemTime->setText(QString());
             break;
         }
         default:
         {
-            mUi->bSpeed->setText(QString());
-            mUi->lTime->setText(QString());
+            mUi->bItemSpeed->setText(QString());
+            mUi->lItemTime->setText(QString());
             break;
         }
     }
@@ -293,7 +293,7 @@ bool TransferManagerItem::mouseHoverRetryingLabel(QPoint pos)
     switch (mTransferState)
     {
         case MegaTransfer::STATE_RETRYING:
-            if (mUi->bSpeed->rect().contains(mUi->bSpeed->mapFrom(this, pos)))
+            if (mUi->bItemSpeed->rect().contains(mUi->bItemSpeed->mapFrom(this, pos)))
             {
                 return true;
             }

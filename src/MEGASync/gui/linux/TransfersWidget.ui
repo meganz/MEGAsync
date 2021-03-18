@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>768</width>
+    <width>718</width>
     <height>400</height>
    </size>
   </property>
@@ -41,9 +41,8 @@
 #sWidget, #wTableHeader
 {
     background-color: white;
-    width: 764px;
-    min-width: 764px;
-/*    max-width: 768px; */
+    width: 788px;
+    min-width: 788px;
 }
 
 #wTableHeader
@@ -58,7 +57,7 @@
 	height: 20px;
 	color: #666666;
 	font-size: 12px;
-	qproperty-alignment: 'AlignLeft';
+	qproperty-alignment: 'AlignLeft | AlignBottom';
 }
 
 #wTableHeader QToolButton
@@ -80,41 +79,35 @@
     background-color: #ECECEC;
 }
 
-#wTableHeader &gt; *
+#wTableHeader QLabel
 {
-	margin: 0;
-	padding: 0;
+/*	margin: 0;
 	border: 0;
+*/
+	padding: 0;
 }
 
-#wEmpty
+#lHeaderName
 {
-    width: 48px;
-    min-width: 48px;
-    max-width: 48px;
+    width: 160px;
+    min-width: 160px;
 }
 
-#lName
-{
-    width: 208px;
-    min-width: 208px;
-}
-
-#lSize, #lSpeed
+#lHeaderSize, #lHeaderSpeed
 {
     width: 100px;
     min-width: 100px;
     max-width: 100px;
 }
 
-#lStatus
+#lHeaderStatus
 {
     width: 120px;
     min-width: 120px;
     max-width: 120px;
 }
 
-#lTime
+#lHeaderTime
 {
     width: 92px;
     min-width: 92px;
@@ -122,7 +115,7 @@
 }
 </string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="TransfersWidgetLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
@@ -151,7 +144,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>764</width>
+       <width>788</width>
        <height>400</height>
       </size>
      </property>
@@ -220,204 +213,161 @@
         <height>16777215</height>
        </size>
       </property>
-      <widget class="QWidget" name="">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>774</width>
-         <height>650</height>
-        </rect>
+      <layout class="QVBoxLayout" name="pTransfersLayout">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QWidget" name="wTableHeader" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="wTableHeader" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QHBoxLayout" name="wTableHeaderLayout">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <layout class="QHBoxLayout" name="wTableHeaderLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>40</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QWidget" name="wEmpty" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>48</width>
-               <height>28</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lName">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>208</width>
-               <height>28</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lSize">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>28</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Size</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lSpeed">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>28</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Speed</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lStatus">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>120</width>
-               <height>28</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Status</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="lTime">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>92</width>
-               <height>28</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Time</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="tPauseResumeAll">
-             <property name="toolTip">
-              <string>Pause or resume all selected transfers</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="tCancelAll">
-             <property name="toolTip">
-              <string>Cancel all selected transfers</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="MegaTransferView" name="tvTransfers">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+          <property name="leftMargin">
+           <number>81</number>
           </property>
-          <property name="minimumSize">
-           <size>
-            <width>768</width>
-            <height>400</height>
-           </size>
+          <property name="topMargin">
+           <number>0</number>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
+          <property name="rightMargin">
+           <number>33</number>
           </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
-          <property name="styleSheet">
-           <string notr="true">QScrollBar:vertical 
+          <item>
+           <widget class="QLabel" name="lHeaderName">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lHeaderSize">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Size</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lHeaderSpeed">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Speed</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lHeaderStatus">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Status</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lHeaderTime">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Time</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tPauseResumeAll">
+            <property name="toolTip">
+             <string>Pause or resume all selected transfers</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tCancelAll">
+            <property name="toolTip">
+             <string>Cancel all selected transfers</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="MegaTransferView" name="tvTransfers">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>768</width>
+           <height>400</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QScrollBar:vertical 
 {
 	background: #f6f6f6;
 	width: 15px;
@@ -480,50 +430,58 @@ QMenu::item:disabled
 	border: none;
 	margin: 5px 9px 5px 9px;
 }</string>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustToContents</enum>
-          </property>
-          <property name="autoScrollMargin">
-           <number>8</number>
-          </property>
-          <property name="showDropIndicator" stdset="0">
-           <bool>true</bool>
-          </property>
-          <property name="dragEnabled">
-           <bool>true</bool>
-          </property>
-          <property name="dragDropMode">
-           <enum>QAbstractItemView::InternalMove</enum>
-          </property>
-          <property name="alternatingRowColors">
-           <bool>false</bool>
-          </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::MultiSelection</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectItems</enum>
-          </property>
-          <property name="verticalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-          <property name="indentation">
-           <number>0</number>
-          </property>
-          <property name="rootIsDecorated">
-           <bool>false</bool>
-          </property>
-          <property name="uniformRowHeights">
-           <bool>true</bool>
-          </property>
-          <attribute name="headerVisible">
-           <bool>false</bool>
-          </attribute>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="autoScrollMargin">
+          <number>16</number>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>true</bool>
+         </property>
+         <property name="dragEnabled">
+          <bool>true</bool>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::InternalMove</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>false</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::MultiSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectItems</enum>
+         </property>
+         <property name="verticalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+         <property name="indentation">
+          <number>0</number>
+         </property>
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
+         <property name="uniformRowHeights">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerVisible">
+          <bool>false</bool>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>

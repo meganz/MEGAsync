@@ -25,7 +25,7 @@ class TransferManagerItem2 : public QWidget
     private slots:
         void on_tPauseResumeTransfer_clicked();
         void on_tCancelClearTransfer_clicked();
-        void on_tRetry_clicked();
+        void on_tItemRetry_clicked();
         void onPauseStateChanged();
 
     private:
@@ -33,8 +33,7 @@ class TransferManagerItem2 : public QWidget
         Preferences* mPreferences;
         mega::MegaApi* mMegaApi;
         TransferTag mTransferTag;
-//        QMap<int, QWidget*> mStatusWidgetsByState;
-//        QMap<int, QWidget*> mStatusWidgetsByType;
+
         bool mIsPaused;
         bool mIsFinished;
         bool mAreDlPaused;

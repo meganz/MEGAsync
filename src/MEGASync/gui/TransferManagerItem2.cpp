@@ -80,7 +80,7 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
                 break;
             }
         }
-        mUi->bSpeed->setIcon(icon);
+        mUi->bItemSpeed->setIcon(icon);
     }
 
     QString statusString;
@@ -204,7 +204,7 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
             speedString = Utilities::getSizeString(data->mMeanSpeed) + QLatin1Literal("/s");
             showTPauseResume = false;
             mIsFinished = true;
-            mUi->tRetry->setToolTip(tr(MegaError::getErrorString(data->mErrorCode)));
+            mUi->tItemRetry->setToolTip(tr(MegaError::getErrorString(data->mErrorCode)));
             break;
         }
         case MegaTransfer::STATE_RETRYING:
@@ -253,11 +253,11 @@ void TransferManagerItem2::updateUi(QExplicitlySharedDataPointer<TransferData> d
     }
 
     // Status string
-    mUi->lStatus->setText(statusString);
+    mUi->lItemStatus->setText(statusString);
     // Speed
-    mUi->bSpeed->setText(speedString);
+    mUi->bItemSpeed->setText(speedString);
     // Remaining time
-    mUi->lTime->setText(timeString);
+    mUi->lItemTime->setText(timeString);
     // Pause/Resume button
     if (showTPauseResume)
     {
@@ -299,7 +299,7 @@ void TransferManagerItem2::forwardMouseEvent(QMouseEvent *me)
     }
 }
 
-void TransferManagerItem2::on_tRetry_clicked()
+void TransferManagerItem2::on_tItemRetry_clicked()
 {
     emit retryTransfer(mTransferTag);
 }

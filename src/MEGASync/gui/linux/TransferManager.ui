@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1025</width>
+    <width>1045</width>
     <height>720</height>
    </rect>
   </property>
@@ -46,7 +46,7 @@
 #wRightPane, #wTransfers
 {
     background-color: white;
-    width: 768px;
+    width: 788px;
     min-width: 768px;
 }
 
@@ -1223,7 +1223,7 @@ QGroupBox::title
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>6</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="wRightPaneHeader" native="true">
