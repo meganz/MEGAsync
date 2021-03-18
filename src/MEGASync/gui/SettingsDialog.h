@@ -42,7 +42,7 @@ public:
     void setOverQuotaMode(bool mode);
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
-    void openSettingsTab(int tab);
+    void openSettingsTab(int tab = -1);
     void storageChanged();
     void addSyncFolder(mega::MegaHandle megaFolderHandle);
     void loadSyncSettings();

@@ -107,12 +107,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     mThreadPool = ThreadPoolSingleton::getInstance();
 
-    this->proxyOnly = proxyOnly;
     loadingSettings = 0;
     accountDetailsDialog = NULL;
     cacheSize = -1;
     remoteCacheSize = -1;
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
+    ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
+    ui->bAccount->setChecked(true); // override whatever might be set in .ui
+    setProxyOnly(proxyOnly);
 
     reloadUIpage = false;
     debugCounter = 0;
@@ -131,10 +133,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     uploadButtonGroup->addButton(ui->rUploadLimit);
     uploadButtonGroup->addButton(ui->rUploadNoLimit);
     uploadButtonGroup->addButton(ui->rUploadAutoLimit);
-
-    ui->wStack->setCurrentWidget(ui->pAccount);
-
-    loadSettings();
 
     connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
@@ -250,6 +248,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 #endif
 
+    // TODO: Move me to loadSettings()
     if (!proxyOnly && preferences->logged())
     {
         connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onLocalCacheSizeAvailable()));
@@ -262,7 +261,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     }
 
 #ifndef Q_OS_MACOS
-    ui->bAccount->setChecked(true);
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -277,7 +275,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->gCache->setVisible(false);
     ui->lFileVersionsSize->setVisible(false);
     ui->bClearFileVersions->setVisible(false);
-    setProxyOnly(proxyOnly);
 
 #ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
@@ -351,22 +348,23 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
     enableNSToolBarItem(bBandwidth.get(), !proxyOnly);
 #endif
+
     if (proxyOnly)
     {
-#ifndef Q_OS_MACOS
-        ui->bProxies->setEnabled(true);
-        ui->bProxies->setChecked(true);
-#else
-        checkNSToolBarItem(toolBar.get(), bProxies.get());
-#endif
-
-        ui->wStack->setCurrentWidget(ui->pProxies);
-        ui->pProxies->show();
-
 #ifdef Q_OS_MACOS
+        checkNSToolBarItem(toolBar.get(), bProxies.get());
         setMinimumHeight(435);
         setMaximumHeight(435);
+#else
+        ui->bProxies->setEnabled(true);
+        ui->bProxies->setChecked(true);
 #endif
+        ui->wStack->setCurrentWidget(ui->pProxies);
+        ui->pProxies->show();
+    }
+    else
+    {
+        loadSettings();
     }
 }
 
