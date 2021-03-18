@@ -2080,7 +2080,7 @@ Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel vel�
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
         <translatorcomment>Description label to inform the user about possible data breach in other systems.</translatorcomment>
-        <translation type="unfinished">[A]Lehetséges, hogy ugyanazt a jelszót használja a MEGA-fiókjához, mint más szolgáltatásokhoz, és hogy ezen szolgáltatások közül legalább az egyiket adatvesztés érheti.[/A]</translation>
+        <translation type="unfinished">[A]Lehetséges, hogy ugyanazt a jelszót használja a MEGA-fiókjához, mint más szolgáltatásokhoz, és hogy ezen szolgáltatások közül legalább az egyiket adatvesztés érte.[/A]</translation>
     </message>
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
@@ -2128,7 +2128,7 @@ Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel vel�
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Elveszítette a hitelesítő eszközt?[/A]</translation>
+        <translation type="unfinished">[A]Elveszítette a hitelesítő eszközét?[/A]</translation>
     </message>
 </context>
 <context>
@@ -2139,7 +2139,7 @@ Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel vel�
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Köszönjük, hogy tesztelte a MEGAsync programot.&lt;br&gt;Ez a bétaverzió már elavult, és lejárt.&lt;br&gt;Kövesse a &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; a Twitteren a frissítésekért.</translation>
+        <translation type="obsolete">Köszönjük, hogy teszteli a MEGAsync programot.&lt;br&gt;Ez a bétaverzió már elavult, és lejárt.&lt;br&gt;Kövesse a &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; a Twitteren a frissítésekért.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2154,17 +2154,20 @@ Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel vel�
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">A(z) "%1" szinkronizálását letiltottuk, mert a távoli mappa nem létezik</translation>
+        <translation type="obsolete">A(z) &quot;%1&quot; szinkronizálását letiltottuk, 
+mert a távoli mappa nem létezik</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">A(z) "%1" szinkronizálását letiltottuk, mert a távoli mappa a Lomtárban van</translation>
+        <translation type="obsolete">A(z) &quot;%1&quot; szinkronizálását letiltottuk, 
+mert a távoli mappa a Lomtárban van</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">A(z) "%1" szinkronizálását letiltottuk, mert a helyi mappa nem létezik</translation>
+        <translation type="obsolete">A(z) &quot;%1&quot; szinkronizálását letiltottuk, 
+mert a helyi mappa nem létezik</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -2173,7 +2176,7 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">Hiba: Érvénytelen célmappa. A feltöltést megszakítottuk</translation>
+        <translation type="obsolete">A(z) %1 mappa nem lett feltöltve, mert túl nagy (ez a béta verzió %2 mappára illetve or %3 fájlra van korlátozva.)</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
@@ -2184,7 +2187,10 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">A szinkronizálás leáll. A helyi törlések nem kerülnek érvényesítésre. Mindenképpen kilép?</translation>
+        <translation type="obsolete">A szinkronizálás leáll. 
+A helyi törlések nem kerülnek érvényesítésre. 
+            
+Mindenképpen kilép?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -2194,7 +2200,7 @@ Exit anyway?</source>
     <message>
         <source>MEGAsync version code %1</source>
         <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
-        <translation type="obsolete">MEGAsync verziókód %1</translation>
+        <translation type="obsolete">MEGAsync verziókód: %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2281,11 +2287,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">A (%1) mappa nem lett feltöltve, mert a mappa túl nagy. Ezt az ellenőrzést azért hajtjuk végre, hogy megakadályozzuk teljes rendszerindító kötetek feltöltését, ami nem hatékony és veszélyes.</translation>
+        <translation type="obsolete">A (%1) mappa nem lett feltöltve, mert a mappa rendkívül nagy. Ezt az ellenőrzést azért hajtjuk végre, hogy megakadályozzuk teljes rendszerindító kötetek feltöltését, ami nem hatékony és veszélyes.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 mappa nem lett feltöltve, mert a mappák túl nagyok.Ezt az ellenőrzést azért hajtjuk végre, hogy megakadályozzuk teljes rendszerindító kötetek feltöltését, ami nem hatékony és veszélyes.</translation>
+        <translation type="obsolete">%1 mappa nem lett feltöltve, mert a mappák rendkívül nagyok.Ezt az ellenőrzést azért hajtjuk végre, hogy megakadályozzuk teljes rendszerindító kötetek feltöltését, ami nem hatékony és veszélyes.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -2321,7 +2327,8 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Hiba történt a frissítés telepítésekor. Kérjük, próbálja újra később, vagy töltse le a legújabb verziót a következő címen: https://mega.nz/sync</translation>
+        <translation>Hiba történt a frissítés telepítésekor. Kérjük, próbálja újra később, vagy töltse le a legújabb verziót a következő címen: 
+https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -2348,7 +2355,9 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">A szinkronizálás leáll. Mindenképpen kilép?</translation>
+        <translation type="obsolete">A szinkronizálás leáll. 
+            
+Mindenképpen kilép?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -2359,7 +2368,8 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="unfinished">Nem sikerült beolvasni a fájlrendszert. Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot ezen az email-címen: bug@mega.nz</translation>
+        <translation type="unfinished">Nem sikerült beolvasni a fájlrendszert. 
+Kérjük, próbálja újra. Ha a probléma továbbra is fennáll, vegye fel velünk a kapcsolatot ezen az email-címen: bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2373,7 +2383,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>A MEGAsync új verziója elérhető!</translation>
+        <translation>A MEGAsync új verziója érhető el!</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2393,7 +2403,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Feltöltve a MEGA-ra</translation>
+        <translation type="obsolete">Feltöltés a MEGA-ra</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -2408,12 +2418,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Letöltve a MEGA-ról</translation>
+        <translation type="obsolete">Letöltés a MEGA-ról</translation>
     </message>
     <message>
         <source>Error getting link: </source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>Hiba a link lekérésekor:</translation>
+        <translation>Hiba a link lekérésekor: </translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
@@ -2423,17 +2433,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">A(z) "%1" szinkronizálása letiltva, mert a távoli mappa nem létezik</translation>
+        <translation type="unfinished">A(z) &quot;%1&quot; szinkronizálása letiltva, mert a távoli mappa nem létezik</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">A(z) "%1" szinkronizálása letiltva, mert a helyi mappa nem létezik</translation>
+        <translation type="unfinished">A(z) &quot;%1&quot; szinkronizálása letiltva, mert a helyi mappa nem létezik</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">A fiókja zárolva. Vegye fel a kapcsolatot velünk: support@mega.nz</translation>
+        <translation type="unfinished">A fiókja zárolva. Vegye fel a kapcsolatot velünk: support@mega.co.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2443,7 +2453,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Message displayed when the current account has been logged out from other computer/website.</translatorcomment>
-        <translation type="unfinished">Máshonnan kijelentkeztek ebből a fiókból</translation>
+        <translation type="unfinished">Máshonnan kijelentkezett ebből a fiókból</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -2453,17 +2463,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva, mert a távoli mappa a lomtárban van</translation>
+        <translation type="unfinished">A(z) &quot;%1&quot; szinkronizálás letiltva, mert a távoli mappa a lomtárban van</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva, mert a helyi mappa megváltozott</translation>
+        <translation type="unfinished">A(z) &quot;%1&quot; szinkronizálás letiltva, mert a helyi mappa megváltozott</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva. A távoli mappához (vagy annak egy részéhez) nincs teljes hozzáférése</translation>
+        <translation type="unfinished">A(z) &quot;%1&quot; szinkronizálás letiltva. A távoli mappához (vagy annak egy részéhez) nincs teljes hozzáférése</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2473,7 +2483,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">A(z) „%1” szinkronizálás letiltva, mert a megosztott VirtualBox mappák szinkronizálása az adott fájlrendszer hiányosságai miatt nem támogatott.</translation>
+        <translation type="unfinished">A(z) &quot;%1&quot; szinkronizálás letiltva, mert a megosztott VirtualBox mappák szinkronizálása az adott fájlrendszer hiányosságai miatt nem támogatott.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2508,12 +2518,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Az SSL kulcsunk nem ellenőrizhető. OK lehet egy közbeékelődéses támadás vagy a víruskereső szoftver blokkolhatja a kommunikációt és okozhatja ezt a problémát. Kérjük, tiltsa le, és próbálja újra.</translation>
+        <translation type="unfinished">Az SSL kulcsunk nem ellenőrizhető. Oka lehet egy közbeékelődéses támadás vagy a víruskereső szoftver blokkolhatja a kommunikációt és okozhatja ezt a problémát. Kérjük, tiltsa le, és próbálja újra.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
         <translatorcomment>Tooltip shown when there is not an active Internet connection.</translatorcomment>
-        <translation type="unfinished">Nincs internet kapcsolat</translation>
+        <translation type="unfinished">Nincs internetkapcsolat</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
@@ -2775,7 +2785,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
         <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation type="unfinished">A MEGA nem tud biztonságosan csatlakozni az SSL-en keresztül. Lehet, hogy nyilvános Wi-Fi-n van, ami további követelményekkel rendelkezik.</translation>
+        <translation type="unfinished">A MEGA nem tud biztonságosan csatlakozni az SSL-en keresztül. Lehet, hogy nyilvános Wi-Fi-n kapcsolódik, ami további követelményekkel rendelkezik.</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -2785,7 +2795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error transferring folder: </source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation type="unfinished">Hiba a mappa átvitele során:</translation>
+        <translation type="unfinished">Hiba a mappa átvitele során: </translation>
     </message>
     <message>
         <source>Your syncs have been temporarily disabled</source>
@@ -2865,7 +2875,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished">Az e havi fizetés sikertelen volt. Kérjük, oldja meg a fizetési problémát amint csak lehet, hogy elkerülje üzleti fiókjának felfüggesztését.</translation>
+        <translation type="unfinished">Az e havi fizetés sikertelen volt. Kérjük, oldja meg a fizetési problémát amint lehetséges, hogy elkerülje üzleti fiókjának felfüggesztését.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -2885,7 +2895,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>contact</source>
         <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
-        <translation type="unfinished">kapcsolat</translation>
+        <translation type="unfinished">partner</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -2958,7 +2968,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Rate limit exceeded</source>
         <translatorcomment>Label to show that the rate limit has been reached during a SDK operation.</translatorcomment>
-        <translation>Mértékhatár túllépve</translation>
+        <translation>Értékhatár túllépve</translation>
     </message>
     <message>
         <source>Failed permanently</source>
@@ -2988,7 +2998,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Circular linkage detected</source>
         <translatorcomment>Label to show that an error related with a circular linkage occurs during a SDK operation.</translatorcomment>
-        <translation>Körkörös hivatkozás</translation>
+        <translation>Körkörös hivatkozás észlelve</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3215,7 +3225,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
-        <translation type="unfinished">MEGA link kérése</translation>
+        <translation type="unfinished">MEGA link generálása</translation>
     </message>
     <message>
         <source>Open</source>
@@ -3264,7 +3274,10 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">A célmappa szinkronizálva van és már van benne egy fájl ugyanezzel a névvel (%1). Ha folytatja a feltöltést, a fájl felülírásra kerül. Folytatja?</translation>
+        <translation type="obsolete">A célmappa szinkronizálva van 
+és már van benne egy fájl ugyanezzel a névvel (%1). 
+Ha folytatja a feltöltést, a fájl felülírásra kerül. 
+Folytatja?</translation>
     </message>
     <message>
         <source>Upload failed</source>
@@ -3323,7 +3336,8 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">A gyökérmappa nem szinkronizálható. Válasszon egy almappát.</translation>
+        <translation type="obsolete">A gyökérmappa nem szinkronizálható. 
+Válasszon egy almappát.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3333,13 +3347,15 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">%1 van ebben a mappában. Biztosan szinkronizálni szeretné?</translation>
+        <translation type="obsolete">%1 van ebben a mappában. 
+Biztosan szinkronizálni szeretné?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Érvénytelen mappa a szinkronizáláshoz. Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/” vagy “:” a mappa nevekben.</translation>
+        <translation type="unfinished">Érvénytelen mappa a szinkronizáláshoz. 
+Győződjön meg róla, hogy nem használ olyan karaktereket, mint &apos;\&apos; &apos;/&apos; vagy &apos;:&apos; a mappanevekben.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -3354,7 +3370,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">A kiválasztott mappába történő feltöltéshez teljes hozzáférési jogra van szükség.</translation>
+        <translation type="unfinished">A kiválasztott mappába történő feltöltéshez teljes hozzáférési jogra van szüksége.</translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
@@ -3363,7 +3379,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Biztosan törli ezt: “%1”?</translation>
+        <translation type="unfinished">Biztosan törli ezt: &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3384,14 +3400,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation type="unfinished">MEGA link kérése</translation>
+        <translation type="unfinished">MEGA link generálása</translation>
     </message>
     <message>
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
         <translation type="unfinished">Érvénytelen mappanév.
-Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/” vagy “:” a mappa nevekben.</translation>
+Győződjön meg róla, hogy nem használ olyan karaktereket, mint &apos;\&apos; &apos;/&apos; vagy &apos;:&apos; a mappanevekben.</translation>
     </message>
 </context>
 <context>
@@ -3536,7 +3552,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>Submit</source>
         <translatorcomment>Label for submit button. Keep capital letter.</translatorcomment>
-        <translation>Küldés</translation>
+        <translation>Beküldés</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3647,7 +3663,7 @@ Győződjön meg róla, hogy nem használ olyan karaktereket, mint “\”, “/
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="obsolete">Népszerű!</translation>
+        <translation type="obsolete">népszerű!</translation>
     </message>
     <message>
         <source>UNLIMITED</source>
