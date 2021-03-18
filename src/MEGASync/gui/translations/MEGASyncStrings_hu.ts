@@ -2162,7 +2162,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">A(z) "%1" szinkronizálását letiltva, mert a helyi mappa nem létezik</translation>
+        <translation type="obsolete">A(z) "%1" szinkronizálását letiltottuk, mert a helyi mappa nem létezik</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -4924,7 +4924,7 @@ when the application starts again</source>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
         <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
-        <translation type="unfinished">Elhasznált kvóta az utolsó %1 órában: %2</translation>
+        <translation type="unfinished">Felhasznált kvóta az utolsó %1 órában: %2</translation>
     </message>
     <message>
         <source>Restart</source>
@@ -4954,7 +4954,7 @@ when the application starts again</source>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
-        <translation type="unfinished">A fájlverziók letiltásával megakadályozható az új fájlverziók létrehozása és tárolása. Folytatja?</translation>
+        <translation type="unfinished">A fájlverziók letiltása megakadályozza új fájlverziók létrehozását és tárolását. Folytatja?</translation>
     </message>
     <message>
         <source>Remove files older than %1 days</source>
@@ -5003,7 +5003,7 @@ when the application starts again</source>
     <message>
         <source>Please let us know if you find a bug</source>
         <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
-        <translation type="unfinished">Kérjük, tudassa velünk, ha problémát talál.</translation>
+        <translation type="unfinished">Kérjük, tudassa velünk, ha problémát talál</translation>
     </message>
     <message>
         <source>Bug report</source>
@@ -5138,7 +5138,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation type="obsolete">és a MEGA mappa:</translation>
+        <translation type="obsolete">és a MEGA mappája:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
@@ -5207,7 +5207,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Kérjük, írja be a jelszavát</translation>
+        <translation>Kérjük, adja meg a jelszavát</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
@@ -5246,7 +5246,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation type="obsolete">és a MEGA Felhő meghajtót</translation>
+        <translation type="obsolete">és a MEGA Felhő meghajtóját</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -5382,11 +5382,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Kérjük, ellenőrizze e-mailjeit, és kattintson a megküldött linkre a fiók megerősítéséhez.</translation>
+        <translation type="unfinished">Kérjük, ellenőrizze e-mailjeit és kattintson a megküldött linkre a fiók megerősítéséhez.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">Túl sok bejelentkezési próbálkozás.[BR]VÁrjon %1-ig, majd próbálja újra.</translation>
+        <translation type="unfinished">Túl sok bejelentkezési próbálkozás.[BR]Várjon %1-ig, majd próbálja újra.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
@@ -5529,7 +5529,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remove from left pane</source>
         <translatorcomment>Context menu option to remove MEGA item from explorer left pane</translatorcomment>
-        <translation type="unfinished">Eltávolításl a bal oldali panelről</translation>
+        <translation type="unfinished">Eltávolítás a bal oldali panelről</translation>
     </message>
     <message>
         <source>View on MEGA</source>
@@ -5713,7 +5713,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Biztosan leállíja az adatfolyamot?</translation>
+        <translation type="unfinished">Biztosan leállítja az adatfolyamot?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -5781,7 +5781,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">befejezve</translation>
+        <translation type="obsolete">befejeződik</translation>
     </message>
     <message>
         <source>just now</source>
@@ -5961,7 +5961,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
-        <translation type="unfinished">befejezve</translation>
+        <translation type="unfinished">befejeződik</translation>
     </message>
     <message>
         <source>Out of storage space</source>
