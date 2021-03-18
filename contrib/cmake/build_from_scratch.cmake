@@ -1,31 +1,36 @@
 #[[
-    Run this file from its current folder in script mode, with triplet as a parameter:
-        cmake -P build_from_scratch.cmake <triplet>
+    Run this file from its current folder in script mode, with triplet as a defined parameter:
+        cmake -DTRIPLET=<triplet> [-DTARGET=<target>[;<targets>...] ] -P build_from_scratch.cmake
     It will set up and build 3rdparty in a folder next to the SDK repo, and also
     build the SDK against those 3rd party libraries.
     pdfium must be supplied manually, or it can be commented out in preferred-ports-megasync.txt
+    After 3rd party dependencies are downloaded, the build of the project itself may be controlled with
+    an optional TARGET parameter. It accepts one target, or multiple targets separated by semicolons:
+        -DTARGET=target1
+        "-DTARGET=target1;target2"
+    If provided, the script will build only the targets specified. If not, the script will build the 
+    whole project in a manner equivalent to calling `make all`.
 ]]
 
 function(usage_exit err_msg)
     message(FATAL_ERROR
 "${err_msg}
 Build from scratch helper script usage:
-    cmake -P build_from_scratch.cmake <triplet>
+    cmake -DTRIPLET=<triplet> [-DTARGET=<target>[;<targets>...] ] -P build_from_scratch.cmake
 Script must be run from its current folder")
 endfunction()
 
-get_filename_component(_prog_name ${CMAKE_ARGV2} NAME)
 set(_script_cwd ${CMAKE_CURRENT_SOURCE_DIR})
 
-if(NOT EXISTS "${_script_cwd}/${_prog_name}")
+if(NOT EXISTS "${_script_cwd}/build_from_scratch.cmake")
     usage_exit("Script was not run from its containing directory")
 endif()
 
-if(NOT CMAKE_ARGV3)
+if(NOT TRIPLET)
     usage_exit("Triplet was not provided")
 endif()
 
-set(_triplet ${CMAKE_ARGV3})
+set(_triplet ${TRIPLET})
 set(_app_dir "${_script_cwd}/../..")
 set(_sdk_dir "${_app_dir}/src/MEGASync/mega")
 
@@ -134,6 +139,10 @@ set(_common_cmake_args
     -S ${_script_cwd}
 )
 
+if(TARGET)
+    set(_cmake_target_args "--target" ${TARGET})
+endif()
+
 if(WIN32)
     if(_triplet MATCHES "staticdev$")
         set(_extra_cmake_args -DMEGA_LINK_DYNAMIC_CRT=0 -DUNCHECKED_ITERATORS=1)
@@ -164,6 +173,7 @@ if(WIN32)
         execute_checked_command(
             COMMAND ${_cmake}
                 --build ${_build_dir}
+                ${_cmake_target_args}
                 --config ${_config}
                 --parallel 4
         )
@@ -183,6 +193,7 @@ else()
         execute_checked_command(
             COMMAND ${_cmake}
                 --build ${_build_dir}
+                ${_cmake_target_args}
                 --parallel 4
         )
     endforeach()
