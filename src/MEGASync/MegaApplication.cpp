@@ -1243,6 +1243,12 @@ void MegaApplication::loggedIn(bool fromWizard)
         crashReportFilePath.clear();
     }
 
+    //Check business status in case we need to alert the user
+    if (megaApi->isBusinessAccount())
+    {
+        manageBusinessStatus(megaApi->getBusinessStatus());
+    }
+
     registerUserActivity();
     pauseTransfers(paused);
 
@@ -6432,6 +6438,111 @@ void MegaApplication::refreshStorageUIs()
     }
 }
 
+void MegaApplication::manageBusinessStatus(int64_t event)
+{
+    switch (event)
+    {
+        case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
+        {
+            if (megaApi->isMasterBusinessAccount())
+            {
+                QMessageBox msgBox;
+                HighDpiResize hDpiResizer(&msgBox);
+                msgBox.setIcon(QMessageBox::Warning);
+                // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
+                #ifdef __APPLE__
+                    msgBox.setWindowModality(Qt::WindowModal);
+                #endif
+                msgBox.setText(tr("Payment Failed"));
+                msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
+                msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
+                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                msgBox.setDefaultButton(QMessageBox::Yes);
+                int ret = msgBox.exec();
+                if (ret == QMessageBox::AcceptRole)
+                {
+                    QString url = QString::fromUtf8("mega://#repay");
+                    Utilities::getPROurlWithParameters(url);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                }
+            }
+
+            if (preferences->logged() &&
+                    ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
+                      || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
+                    ))
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
+            }
+            break;
+        }
+        case MegaApi::BUSINESS_STATUS_EXPIRED:
+        {
+            QMessageBox msgBox;
+            HighDpiResize hDpiResizer(&msgBox);
+            msgBox.setIcon(QMessageBox::Warning);
+            // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
+            #ifdef __APPLE__
+                msgBox.setWindowModality(Qt::WindowModal);
+            #endif
+
+            if (megaApi->isMasterBusinessAccount())
+            {
+                msgBox.setText(tr("Your Business account is expired"));
+                msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
+                msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
+                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                msgBox.setDefaultButton(QMessageBox::Yes);
+                int ret = msgBox.exec();
+                if (ret == QMessageBox::AcceptRole)
+                {
+                    QString url = QString::fromUtf8("mega://#repay");
+                    Utilities::getPROurlWithParameters(url);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                }
+            }
+            else
+            {
+                msgBox.setText(tr("Account Suspended"));
+                msgBox.setTextFormat(Qt::RichText);
+                msgBox.setInformativeText(
+                            tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
+                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                            + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
+                            tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
+                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
+                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromAscii("\n"));
+
+                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                msgBox.exec();
+            }
+
+            break;
+        }
+        case MegaApi::BUSINESS_STATUS_ACTIVE:
+        case MegaApi::BUSINESS_STATUS_INACTIVE:
+        {
+        if (preferences->logged() &&
+                ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
+                  || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
+                ))
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    businessStatus = event;
+    if (preferences->logged())
+    {
+        preferences->setBusinessState(businessStatus);
+    }
+}
+
 void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 {
     DeferPreferencesSyncForScope deferrer(this);
@@ -6536,107 +6647,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
-        switch (event->getNumber())
-        {
-            case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
-            {
-                if (megaApi->isMasterBusinessAccount())
-                {
-                    QMessageBox msgBox;
-                    HighDpiResize hDpiResizer(&msgBox);
-                    msgBox.setIcon(QMessageBox::Warning);
-                    // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
-                    #ifdef __APPLE__
-                        msgBox.setWindowModality(Qt::WindowModal);
-                    #endif
-                    msgBox.setText(tr("Payment Failed"));
-                    msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
-                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
-                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                    msgBox.setDefaultButton(QMessageBox::Yes);
-                    int ret = msgBox.exec();
-                    if (ret == QMessageBox::AcceptRole)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                    }
-                }
-
-                if (preferences->logged() &&
-                        ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
-                          || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
-                        ))
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
-                }
-                break;
-            }
-            case MegaApi::BUSINESS_STATUS_EXPIRED:
-            {
-                QMessageBox msgBox;
-                HighDpiResize hDpiResizer(&msgBox);
-                msgBox.setIcon(QMessageBox::Warning);
-                // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
-                #ifdef __APPLE__
-                    msgBox.setWindowModality(Qt::WindowModal);
-                #endif
-
-                if (megaApi->isMasterBusinessAccount())
-                {
-                    msgBox.setText(tr("Your Business account is expired"));
-                    msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
-                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
-                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                    msgBox.setDefaultButton(QMessageBox::Yes);
-                    int ret = msgBox.exec();
-                    if (ret == QMessageBox::AcceptRole)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                    }
-                }
-                else
-                {
-                    msgBox.setText(tr("Account Suspended"));
-                    msgBox.setTextFormat(Qt::RichText);
-                    msgBox.setInformativeText(
-                                tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
-                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                                + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
-                                tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
-                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
-                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromAscii("\n"));
-
-                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                    msgBox.exec();
-                }
-
-                break;
-            }
-            case MegaApi::BUSINESS_STATUS_ACTIVE:
-            case MegaApi::BUSINESS_STATUS_INACTIVE:
-            {
-            if (preferences->logged() &&
-                    ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
-                      || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
-                    ))
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
-                }
-                break;
-            }
-            default:
-                break;
-        }
-
-        businessStatus = event->getNumber();
-        if (preferences->logged())
-        {
-            preferences->setBusinessState(businessStatus);
-        }
+        manageBusinessStatus(event->getNumber());
     }
 }
 
@@ -7087,17 +7098,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     //If we have got the filesystem, start the app
                     loggedIn(false);
 
-
-                    // onEvent with EVENT_BUSINESS_STATUS might have been received before logged, hence not written to cache yet.
-                    // we fix that here:
-                    auto cachedBusinessState = preferences->getBusinessState();
-                    if (businessStatus != -2 && cachedBusinessState != businessStatus)
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached business states %1 differs from applied businessStatus %2. Overriding cache")
-                                     .arg(cachedBusinessState).arg(businessStatus).toUtf8().constData());
-                        preferences->setBusinessState(businessStatus);
-                    }
-
                     auto cachedBlockedState = preferences->getBlockedState();
                     if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
                     {
@@ -7111,19 +7111,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                      .arg(cachedBlockedState).toUtf8().constData());
 
                         whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
-                    }
-
-                    auto businessState = preferences->getBusinessState();
-                    bool businessExpired = businessState == MegaApi::BUSINESS_STATUS_EXPIRED;
-                    auto blockedState = preferences->getBlockedState();
-                    bool accountBlocked = blockedState != -2 && blockedState;
-
-                    //Restore temporarily disabled syncs for cases that don't have a transition that triggers restoreSyncs
-                    if (!isAppliedStorageOverquota()
-                            && !accountBlocked
-                            && !businessExpired)
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no blocking situation after loggedIn").toUtf8().constData());
                     }
                 }
                 else
