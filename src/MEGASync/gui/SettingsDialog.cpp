@@ -248,18 +248,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 #endif
 
-    // TODO: Move me to loadSettings()
-    if (!proxyOnly && preferences->logged())
-    {
-        connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onLocalCacheSizeAvailable()));
-        QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
-        cacheSizeWatcher.setFuture(futureCacheSize);
-
-        connect(&remoteCacheSizeWatcher, SIGNAL(finished()), this, SLOT(onRemoteCacheSizeAvailable()));
-        QFuture<long long> futureRemoteCacheSize = QtConcurrent::run(calculateRemoteCacheSize,megaApi);
-        remoteCacheSizeWatcher.setFuture(futureRemoteCacheSize);
-    }
-
 #ifndef Q_OS_MACOS
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -795,6 +783,17 @@ void SettingsDialog::updateDownloadFolder()
 void SettingsDialog::loadSettings()
 {
     loadingSettings++;
+
+    if (preferences->logged())
+    {
+        connect(&cacheSizeWatcher, SIGNAL(finished()), this, SLOT(onLocalCacheSizeAvailable()));
+        QFuture<long long> futureCacheSize = QtConcurrent::run(calculateCacheSize);
+        cacheSizeWatcher.setFuture(futureCacheSize);
+
+        connect(&remoteCacheSizeWatcher, SIGNAL(finished()), this, SLOT(onRemoteCacheSizeAvailable()));
+        QFuture<long long> futureRemoteCacheSize = QtConcurrent::run(calculateRemoteCacheSize,megaApi);
+        remoteCacheSizeWatcher.setFuture(futureRemoteCacheSize);
+    }
 
     //General
     ui->cShowNotifications->setChecked(preferences->showNotifications());
