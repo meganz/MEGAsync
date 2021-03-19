@@ -327,7 +327,6 @@ SettingsDialog::~SettingsDialog()
     delete ui;
 }
 
-// TODO: Re-evaluate me when removing Guest mode
 void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     this->proxyOnly = proxyOnly;
@@ -359,8 +358,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->bProxies->setEnabled(true);
         ui->bProxies->setChecked(true);
 #endif
-        ui->wStack->setCurrentWidget(ui->pProxies);
-        ui->pProxies->show();
     }
     else
     {
@@ -401,6 +398,28 @@ void SettingsDialog::syncStateChanged(int state)
 void SettingsDialog::onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting)
 {
     QMegaMessageBox::critical(nullptr, tr("Error"), tr("Unexpected error disabling sync %1").arg(syncSetting->name()));
+}
+
+void SettingsDialog::showGuestMode()
+{
+    ui->wStack->setCurrentWidget(ui->pProxies);
+    ui->pProxies->show();
+    ProxySettings *proxySettingsDialog = new ProxySettings(app, this);
+    proxySettingsDialog->setAttribute(Qt::WA_DeleteOnClose);
+    proxySettingsDialog->setWindowModality(Qt::WindowModal);
+    proxySettingsDialog->open();
+    connect(proxySettingsDialog, &ProxySettings::finished, this, [this](int result)
+    {
+        if(result == QDialog::Accepted)
+        {
+            app->applyProxySettings();
+            if(proxyOnly) accept(); // close Settings in guest mode
+        }
+        else
+        {
+            if(proxyOnly) reject(); // close Settings in guest mode
+        }
+    });
 }
 
 // errorCode referrs to the requestErrorCode.
@@ -775,9 +794,6 @@ void SettingsDialog::updateDownloadFolder()
 
 void SettingsDialog::loadSettings()
 {
-    if(proxyOnly) // do not load settings in Proxy Only Guest mode
-        return;
-
     loadingSettings++;
 
     //General

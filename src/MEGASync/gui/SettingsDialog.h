@@ -64,6 +64,7 @@ public slots:
     void onSyncStateChanged(std::shared_ptr<SyncSetting>);
     void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
     void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
+    void showGuestMode();
 
 private slots:
     void onSavingSettingsProgress(double progress);

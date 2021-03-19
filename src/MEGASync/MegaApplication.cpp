@@ -5875,7 +5875,11 @@ void MegaApplication::openSettings(int tab)
         //If the dialog is active
         if (settingsDialog->isVisible())
         {
-            if (!proxyOnly)
+            if (proxyOnly)
+            {
+                settingsDialog->showGuestMode();
+            }
+            else
             {
                 settingsDialog->openSettingsTab(tab);
             }
@@ -5893,16 +5897,20 @@ void MegaApplication::openSettings(int tab)
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this, proxyOnly);
+    settingsDialog->setUpdateAvailable(updateAvailable);
+    settingsDialog->setModal(false);
     connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
 
-    if (!proxyOnly)
+    settingsDialog->show();
+    if (proxyOnly)
+    {
+        settingsDialog->showGuestMode();
+    }
+    else
     {
         settingsDialog->openSettingsTab(tab);
     }
 
-    settingsDialog->setUpdateAvailable(updateAvailable);
-    settingsDialog->setModal(false);
-    settingsDialog->show();
 }
 
 void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
