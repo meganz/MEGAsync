@@ -23,14 +23,13 @@ MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget*
       mSourceModel(qobject_cast<QTransfersModel2*>(qobject_cast<TransfersSortFilterProxyModel*>(mModel)->sourceModel())),
       mView(view)
 {
-//    QObject::connect(static_cast<TransfersWidget*>(parent), &TransfersWidget::clearTransfers,
-//            this, &MegaTransferDelegate2::onClearTransfers);
+
 }
 
-TransferManagerItem2 * MegaTransferDelegate2::getTransferItemWidget(int row, int itemHeight) const
+TransferManagerItem2* MegaTransferDelegate2::getTransferItemWidget(int row, int itemHeight) const
 {
-    const auto nbRowsMaxInView (mView->height() / itemHeight);
-    const QString widgetName (QLatin1Literal("r")+QString::number(row % nbRowsMaxInView));
+    const auto nbRowsMaxInView (mView->height() / itemHeight + 1);
+    const QString widgetName (QLatin1Literal("r") + QString::number(row % nbRowsMaxInView));
 
     auto w (mView->findChild<TransferManagerItem2*>(widgetName));
 
@@ -46,7 +45,8 @@ TransferManagerItem2 * MegaTransferDelegate2::getTransferItemWidget(int row, int
     return w;
 }
 
-void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem& option,
+                                  const QModelIndex &index) const
 {
     if (index.isValid() && (index.data(Qt::DisplayRole).canConvert<TransferItem2>()))
     {
@@ -60,7 +60,16 @@ void MegaTransferDelegate2::paint(QPainter *painter, const QStyleOptionViewItem 
 
         if (option.state & QStyle::State_Selected)
         {
-            painter->fillRect(option.rect, QColor(247, 247, 247));
+            QPainterPath path;
+            path.addRoundedRect(QRectF(option.rect.x() + 16.,
+                                       option.rect.y() + 4.,
+                                       option.rect.width() - 17.,
+                                       option.rect.height() - 7.),
+                                10, 10);
+            QPen pen(QColor::fromRgbF(0.84, 0.84, 0.84, 1), 1);
+            painter->setPen(pen);
+            painter->fillPath(path, Qt::white);
+            painter->drawPath(path);
         }
         painter->save();
 

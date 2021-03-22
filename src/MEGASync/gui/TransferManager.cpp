@@ -11,6 +11,9 @@
 
 using namespace mega;
 
+const int TransferManager::SPEED_REFRESH_PERIOD_MS;
+const int TransferManager::STATS_REFRESH_PERIOD_MS;
+
 const QSet<int> TransferManager::ACTIVE_STATES =
 {
     MegaTransfer::STATE_ACTIVE,
@@ -235,7 +238,7 @@ bool TransferManager::refreshStateStats()
     if (processedNumber)
     {
         leftFooterWidget = mUi->pSpeedAndClear;
-        mSpeedRefreshTimer->start(std::chrono::milliseconds(500));
+        mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
     }
     else
     {
@@ -281,7 +284,7 @@ void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
 {
     if (weHaveTransfers)
     {
-        mStatsRefreshTimer->start(std::chrono::milliseconds(1000));
+        mStatsRefreshTimer->start(std::chrono::milliseconds(STATS_REFRESH_PERIOD_MS));
     }
     else
     {

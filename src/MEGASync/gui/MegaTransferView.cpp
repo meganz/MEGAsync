@@ -411,6 +411,12 @@ void MegaTransferView::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
+void MegaTransferView::dropEvent(QDropEvent *event)
+{
+    QAbstractItemView::dropEvent(event);
+    clearSelection();
+}
+
 //void MegaTransferView::paintEvent(QPaintEvent * e)
 //{
 //    auto app = static_cast<MegaApplication*>(qApp);
@@ -429,7 +435,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
     QModelIndexList indexes = selectedIndexes();
 
-    for (auto index : indexes)
+    for (auto index : qAsConst(indexes))
     {
         auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
 
@@ -484,7 +490,7 @@ void MegaTransferView::moveToTopClicked()
     // Reverse sort to keep items in the same order
     std::sort(indexes.rbegin(), indexes.rend());
 
-    for (auto index : indexes)
+    for (auto index : qAsConst(indexes))
     {
         m->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), 0);
     }
@@ -497,7 +503,7 @@ void MegaTransferView::moveUpClicked()
     // Sort to keep items in the same order
     std::sort(indexes.begin(), indexes.end());
 
-    for (auto index : indexes)
+    for (auto index : qAsConst(indexes))
     {
         int row(index.row());
         model()->moveRows(QModelIndex(), row, 1, QModelIndex(), row - 1);
@@ -511,10 +517,11 @@ void MegaTransferView::moveDownClicked()
     // Reverse sort to keep items in the same order
     std::sort(indexes.rbegin(), indexes.rend());
 
-    for (auto index : indexes)
+    for (auto index : qAsConst(indexes))
     {
             int row(index.row());
-            model()->moveRows(QModelIndex(), row, 1, QModelIndex(), row + 1);
+            model()->moveRows(QModelIndex(), row, 1, QModelIndex(),
+                              std::min(row + 2, model()->rowCount()));
     }
     clearSelection();
 }
@@ -534,7 +541,7 @@ void MegaTransferView::moveToBottomClicked()
     // Sort to keep items in the same order
     std::sort(indexes.begin(), indexes.end());
 
-    for (auto index : indexes)
+    for (auto index : qAsConst(indexes))
     {
             m->moveRows(QModelIndex(), index.row(), 1, QModelIndex(), m->rowCount());
     }
@@ -547,15 +554,13 @@ void MegaTransferView::getLinkClicked()
     {
         return;
     }
-    auto  selection = selectionModel()->selection();
 
     QList<int> rows;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
 
-    if (proxy)
-    {
-        selection = proxy->mapSelectionToSource(selection);
-    }
+    const auto  selection (proxy ? proxy->mapSelectionToSource(selectionModel()->selection())
+                                 : selectionModel()->selection());
+
 
     for (auto index : selection.indexes())
     {
@@ -575,7 +580,7 @@ void MegaTransferView::getLinkClicked()
 
 void MegaTransferView::openItemClicked()
 {
-    QModelIndexList selection = selectedIndexes();
+    const QModelIndexList selection (selectedIndexes());
     for (auto index : selection)
     {
         if (index.isValid())
@@ -594,7 +599,7 @@ void MegaTransferView::openItemClicked()
 
 void MegaTransferView::showInFolderClicked()
 {
-    QModelIndexList selection = selectedIndexes();
+    const QModelIndexList selection (selectedIndexes());
     for (auto index : selection)
     {
         if (index.isValid())
@@ -613,7 +618,7 @@ void MegaTransferView::showInFolderClicked()
 
 void MegaTransferView::showInMegaClicked()
 {
-    QModelIndexList selection = selectedIndexes();
+    const QModelIndexList selection (selectedIndexes());
     for (auto index : selection)
     {
         if (index.isValid())

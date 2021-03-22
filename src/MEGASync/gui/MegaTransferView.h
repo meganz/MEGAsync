@@ -56,6 +56,7 @@ protected:
     virtual void mouseReleaseEvent ( QMouseEvent * event );
     virtual void leaveEvent(QEvent* event);
     void changeEvent(QEvent *event);
+    void dropEvent(QDropEvent *event);
 //    void paintEvent(QPaintEvent * e);
 
 private slots:

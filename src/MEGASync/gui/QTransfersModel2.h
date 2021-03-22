@@ -18,6 +18,9 @@ public:
 
     virtual Qt::ItemFlags flags(const QModelIndex&index) const;
     virtual Qt::DropActions supportedDropActions() const;
+    virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
+    virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
+                                                int column, const QModelIndex& parent);
 
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex & parent = QModelIndex()) const;
@@ -60,6 +63,8 @@ private slots:
     void onPauseStateChanged();
 
 private:
+    static constexpr int INIT_ROWS_PER_CHUNK = 50;
+
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
 

@@ -42,6 +42,8 @@ signals:
     void userActivity();
 
 private:
+    static constexpr int SPEED_REFRESH_PERIOD_MS = 500;
+    static constexpr int STATS_REFRESH_PERIOD_MS = 1000;
     static const QSet<int> ACTIVE_STATES;
     static const QSet<int> FINISHED_STATES;
 
