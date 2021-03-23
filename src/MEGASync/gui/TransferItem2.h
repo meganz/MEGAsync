@@ -106,8 +106,8 @@ class TransferItem2
             QExplicitlySharedDataPointer<TransferData> d;
 };
 Q_DECLARE_METATYPE(TransferData::FileTypes)
-Q_DECLARE_METATYPE(TransferData)
-Q_DECLARE_METATYPE(TransferData*)
+//Q_DECLARE_METATYPE(TransferData)
+//Q_DECLARE_METATYPE(TransferData*)
 Q_DECLARE_METATYPE(TransferItem2)
 
 #endif // TRANSFERITEM2_H

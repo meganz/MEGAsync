@@ -14,22 +14,22 @@ class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferLis
     Q_OBJECT
 
 public:
-    explicit QTransfersModel2(QObject *parent = 0);
+    explicit QTransfersModel2(QObject* parent = 0);
 
-    virtual Qt::ItemFlags flags(const QModelIndex&index) const;
+    virtual Qt::ItemFlags flags(const QModelIndex& index) const;
     virtual Qt::DropActions supportedDropActions() const;
-    virtual QMimeData* mimeData(const QModelIndexList &indexes) const;
+    virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
     virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
                                                 int column, const QModelIndex& parent);
 
-    int rowCount(const QModelIndex &parent) const;
-    int columnCount(const QModelIndex & parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QModelIndex parent(const QModelIndex & index) const;
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
-    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
-    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
-                  const QModelIndex &destinationParent, int destinationChild);
+    int rowCount(const QModelIndex& parent) const;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const;
+    QVariant data(const QModelIndex& index, int role) const;
+    QModelIndex parent(const QModelIndex& index) const;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+    bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
+    bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
+                  const QModelIndex& destinationParent, int destinationChild);
     bool areDlPaused();
     bool areUlPaused();
     void getLinks(QList<int>& rows);
@@ -48,10 +48,10 @@ public:
 
     void initModel();
 
-    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error);
-    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    void onTransferTemporaryError(mega::MegaApi *api,mega::MegaTransfer *transfer, mega::MegaError* error);
+    void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error);
+    void onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* transfer);
+    void onTransferTemporaryError(mega::MegaApi* api,mega::MegaTransfer* transfer, mega::MegaError* error);
 
 signals:
     void transfersInModelChanged(bool weHaveTransfers);
@@ -63,7 +63,7 @@ private slots:
     void onPauseStateChanged();
 
 private:
-    static constexpr int INIT_ROWS_PER_CHUNK = 50;
+    static constexpr int INIT_ROWS_PER_CHUNK = 500;
 
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
@@ -72,7 +72,7 @@ private:
     QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
     QList<TransferTag> mOrder;
-    ThreadPool*    mThreadPool;
+    ThreadPool* mThreadPool;
     QHash<QString, TransferData::FileTypes> mFileTypes;
     QMutex mModelMutex;
 
@@ -86,8 +86,7 @@ private:
     QMap<int, long long> mNbTransfersPerType;
     QMap<int, long long> mNbTransfersPerState;
 
-    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer *transfer, int row);
-    void emitStatistics();
+    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row);
 };
 
 #endif // QTRANSFERSMODEL2_H

@@ -37,7 +37,6 @@ void TransferItem2::updateValuesTransferUpdated(int64_t remainingTime,
     d->mRemainingTime = remainingTime;
     d->mErrorCode = errorCode;
     d->mErrorValue = errorValue;
-    d->mRemainingTime = remainingTime;
     d->mSpeed = speed;
     d->mMeanSpeed = meanSpeed;
     d->mTransferredBytes = transferedBytes;
