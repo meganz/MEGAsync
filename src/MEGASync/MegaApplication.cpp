@@ -49,6 +49,8 @@ QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 QString MegaApplication::lastNotificationError = QString();
 
+constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(3);
+
 void MegaApplication::loadDataPath()
 {
 #if QT_VERSION < 0x050000
@@ -3538,6 +3540,33 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
     if (appfinished)
     {
         return;
+    }
+
+    {
+        QMutexLocker locker(&mMutexOpenUrls);
+
+        //Remove outdated url refs
+        QMutableMapIterator<QString, std::chrono::system_clock::time_point> it(mOpenUrlsClusterTs);
+        while (it.hasNext())
+        {
+            it.next();
+
+            const auto elapsedTime = std::chrono::system_clock::now() - it.value();
+            if(elapsedTime > openUrlClusterMaxElapsedTime)
+            {
+                it.remove();
+            }
+        }
+
+        //Check if URl was notified within last openUrlClusterMaxElapsedTime
+        const auto megaUrlIterator = mOpenUrlsClusterTs.find(url.fragment());
+        const auto itemFound(megaUrlIterator != mOpenUrlsClusterTs.end());
+        if(itemFound)
+        {
+            return;
+        }
+
+        mOpenUrlsClusterTs.insert(url.fragment(), std::chrono::system_clock::now());
     }
 
     megaApi->getSessionTransferURL(url.fragment().toUtf8().constData());
