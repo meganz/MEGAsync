@@ -3563,6 +3563,7 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
         const auto itemFound(megaUrlIterator != mOpenUrlsClusterTs.end());
         if(itemFound)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Session transfer to URL already managed");
             return;
         }
 
