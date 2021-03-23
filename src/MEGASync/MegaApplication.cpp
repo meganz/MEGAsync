@@ -49,7 +49,7 @@ QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 QString MegaApplication::lastNotificationError = QString();
 
-constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(3);
+constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
 
 void MegaApplication::loadDataPath()
 {
