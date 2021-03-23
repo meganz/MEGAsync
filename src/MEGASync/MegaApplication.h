@@ -365,6 +365,7 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+    void manageBusinessStatus(int64_t event);
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
