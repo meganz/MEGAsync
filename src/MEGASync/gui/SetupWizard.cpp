@@ -715,6 +715,8 @@ void SetupWizard::on_bLocalFolder_clicked()
     delete dialog;
 #else
     QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
+    path = QDir::toNativeSeparators(path);
+
 #endif
 
     if (path.length())
