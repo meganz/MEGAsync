@@ -2557,7 +2557,7 @@ void SettingsDialog::on_bClearFileVersions_clicked()
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            Utilities::queueFunctionInAppThread([=]()
+            Utilities::queueFunctionInAppThread([]()
             {//queued function
                 MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
                 megaApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
