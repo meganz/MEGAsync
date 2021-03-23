@@ -3262,12 +3262,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync va continua să funcționeze, cu toate acestea, actualizările nu vor mai fi suportate în curând pentru versiunile anterioare versiunii OS X Yosemite.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Una sau mai multe sincronizări au fost dezactivate. Du-te la preferințe pentru a le activa din nou.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -4206,7 +4206,7 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Preferințe</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4404,14 +4404,14 @@ Te rugăm să te asiguri că nu folosești caractere precum ‘\’ ‘/’ sau 
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Noi îmbunătățiri pentru gestionarea sincronizărilor.
+- A fost îmbunătățită experiența utilizatorului când sincronizările sunt dezactivate.
+- Au fost îmbunătățite notificările de sistem pentru a notifica utilizatorii despre diferite evenimente privind contul.
+- A fost îmbunătățită experiența utilizatorului în timp ce se lucrează cu un număr mare de transferuri și sincronizări.
+- Au fost remediate probleme privind utilizarea CPU-ului ridicată a gnome-shell atunci când rulează pe Ubuntu.
+- Au fost remediate defecțiuni detectate pe Windows și Linux.
+- Alte îmbunătățiri și ajustări ale performanței.
+- Alte remedieri și ajustări ale interfeței utilizatorului.</translation>
     </message>
 </context>
 <context>
@@ -5638,7 +5638,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some of the syncs have been disabled. For more information, hover over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Unele dintre sincronizări au fost dezactivate. Pentru mai multe informații, plasează cursorul peste pictograma de avertisment de lângă fiecare sincronizare dezactivată.</translation>
     </message>
 </context>
 <context>

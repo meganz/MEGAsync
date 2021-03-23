@@ -1519,7 +1519,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation type="unfinished">Déconnexion…</translation>
+        <translation type="unfinished">Déconnexion en cours…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -2705,7 +2705,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation type="unfinished">MEGAsync ne peut pas se connecter. Veuillez vérifier votre connexion à Internet et la configuration de votre pare-feu local. Notez qu’un pare-feu est inclus à la plupart des logiciels antivirus.</translation>
+        <translation type="unfinished">MEGAsync ne peut pas se connecter. Veuillez vérifier votre connexion à Internet et la configuration de votre pare-feu local. Notez que la plupart des logiciels antivirus comprennent un pare-feu.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -5973,7 +5973,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Déconnexion…</translation>
+        <translation type="unfinished">Déconnexion en cours…</translation>
     </message>
     <message>
         <source>Very Weak</source>

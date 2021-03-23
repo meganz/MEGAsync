@@ -1176,7 +1176,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Uw zakelijke account is verlopen</translation>
+        <translation type="unfinished">Uw Zakelijke account is verlopen</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1725,7 +1725,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation type="vanished">Gebruik: %1</translation>
+        <translation type="vanished">Verbruik: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -2307,7 +2307,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Selecteer of u $ (^ NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $ (^ ClickNext)</translation>
+        <translation>Selecteer of u $(^NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $ (^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -3098,7 +3098,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Uw zakelijke account is verlopen</translation>
+        <translation type="unfinished">Uw Zakelijke account is verlopen</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3409,7 +3409,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Uw account is geschorst door meerdere misbruiken van MEGA&apos;s Algemene Voorwaarden. Controleer uw Email Postbak.</translation>
+        <translation type="unfinished">Uw account is geschorst door meerdere misbruiken van MEGA’s Algemene Voorwaarden. Controleer uw email postbak.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -6661,7 +6661,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
-        <translation type="unfinished">Het IP-adres dat u gebruikt, heeft in de afgelopen 6 uur %1 van gegevensoverdracht gebruikt, waardoor u onze huidige limiet heeft overschreden. Om deze limiet te verwijderen, kunt u [A] uw account upgraden [/A], waarmee u uw eigen overdracht tegoed pakket krijgt en ook voldoende extra opslagruimte.</translation>
+        <translation type="unfinished">Het IP-adres dat u gebruikt, heeft in de afgelopen 6 uur %1 van gegevensoverdracht gebruikt, waardoor u onze huidige limiet heeft overschreden. Om deze limiet te verwijderen, kunt u [A]uw account upgraden [/A], waarmee u uw eigen overdracht tegoed pakket krijgt en ook voldoende extra opslagruimte.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>

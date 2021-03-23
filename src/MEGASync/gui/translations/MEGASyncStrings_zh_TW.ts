@@ -1589,7 +1589,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button to go for next step in 2FA verification.</translatorcomment>
-        <translation type="unfinished">次一</translation>
+        <translation type="unfinished">下一步</translation>
     </message>
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
@@ -2405,7 +2405,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">次一</translation>
+        <translation type="unfinished">下一步</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -5772,7 +5772,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>次一</translation>
+        <translation>下一步</translation>
     </message>
     <message>
         <source>Cancel</source>
