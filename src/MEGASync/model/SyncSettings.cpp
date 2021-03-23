@@ -144,7 +144,14 @@ void SyncSetting::setSync(MegaSync *sync)
 
 QString SyncSetting::getLocalFolder() const
 {
-    return QString::fromUtf8(mSync->getLocalFolder());
+    auto toret = QString::fromUtf8(mSync->getLocalFolder());
+#ifdef WIN32
+    if (toret.startsWith(QString::fromAscii("\\\\?\\")))
+    {
+        toret = toret.mid(4);
+    }
+#endif
+    return toret;
 }
 
 long long SyncSetting::getLocalFingerprint()  const
