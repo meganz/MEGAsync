@@ -93,6 +93,7 @@ enum GetUserStatsReason {
     USERSTATS_OPENSETTINGSDIALOG,
     USERSTATS_STORAGECACHEUNKNOWN,
     USERSTATS_SHOWMAINDIALOG,
+    USERSTATS_REMOVEVERSIONS,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved

@@ -479,6 +479,12 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
+void SettingsDialog::storageChanged()
+{
+    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
+    onCacheSizeAvailable();
+}
+
 void SettingsDialog::onSyncStateChanged(std::shared_ptr<SyncSetting>)
 {
     loadSyncSettings();
@@ -506,10 +512,7 @@ void SettingsDialog::onSavingSettingsCompleted()
     });
 }
 
-void SettingsDialog::storageChanged()
-{
-    onCacheSizeAvailable();
-}
+
 
 void SettingsDialog::storageStateChanged(int newStorageState)
 {
@@ -2550,9 +2553,17 @@ void SettingsDialog::on_bClearFileVersions_clicked()
         return;
     }
 
-    megaApi->removeVersions();
-    // Reset file version size to adjust UI
-    fileVersionsSize = 0;
+    megaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,  MegaRequest *request, MegaError *e)
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            Utilities::queueFunctionInAppThread([]()
+            {//queued function
+                MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
+                megaApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+            });//end of queued function
+        }
+    }));
 
     ui->lFileVersionsSize->hide();
     ui->bClearFileVersions->hide();
