@@ -17,13 +17,14 @@
 
 using namespace mega;
 
-MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget* view, QObject *parent)
+MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget* view,
+                                             QObject *parent)
     : QStyledItemDelegate(parent),
-      mModel(model),
-      mSourceModel(qobject_cast<QTransfersModel2*>(qobject_cast<TransfersSortFilterProxyModel*>(mModel)->sourceModel())),
-      mView(view)
+      mModel (model),
+      mSourceModel (qobject_cast<QTransfersModel2*>(
+                        qobject_cast<TransfersSortFilterProxyModel*>(mModel)->sourceModel())),
+      mView (view)
 {
-
 }
 
 TransferManagerItem2* MegaTransferDelegate2::getTransferItemWidget(int row, int itemHeight) const
@@ -51,11 +52,9 @@ void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem&
     if (index.isValid() && (index.data(Qt::DisplayRole).canConvert<TransferItem2>()))
     {
         auto transferItem (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-
         auto w (getTransferItemWidget(index.row(), option.rect.height()));
         w->resize(option.rect.size());
         w->move(option.rect.topLeft());
-
         w->updateUi(transferItem.getTransferData(), index.row());
 
         if (option.state & QStyle::State_Selected)
@@ -66,7 +65,7 @@ void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem&
                                        option.rect.width() - 17.,
                                        option.rect.height() - 7.),
                                 10, 10);
-            QPen pen(QColor::fromRgbF(0.84, 0.84, 0.84, 1), 1);
+            QPen pen (QColor::fromRgbF(0.84, 0.84, 0.84, 1), 1);
             painter->setPen(pen);
             painter->fillPath(path, Qt::white);
             painter->drawPath(path);
@@ -100,31 +99,6 @@ void MegaTransferDelegate2::onCancelClearTransfers(int firstRow, int count)
     }
     indexes.push_back(index);
     mSourceModel->cancelClearTransfers(indexes);
-}
-
-void MegaTransferDelegate2::processCancel(int tag)
-{
-//    if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
-//    {
-//        model->removeTransferByTag(tag);
-//    }
-//    else
-//    {
-//        QPointer<QTransfersModel> modelPointer = model;
-
-//        QMessageBox warning;
-//        HighDpiResize hDpiResizer(&warning);
-//        warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
-//        warning.setText(tr("Are you sure you want to cancel this transfer?"));
-//        warning.setIcon(QMessageBox::Warning);
-//        warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-//        warning.setDefaultButton(QMessageBox::No);
-//        int result = warning.exec();
-//        if (modelPointer && result == QMessageBox::Yes)
-//        {
-//            model->megaApi->cancelTransferByTag(tag);
-//        }
-//    }
 }
 
 bool MegaTransferDelegate2::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
@@ -233,7 +207,7 @@ bool MegaTransferDelegate2::editorEvent(QEvent *event, QAbstractItemModel *model
 //        return true; // double-click consumed
 //    }
 
-    return QAbstractItemDelegate::editorEvent(event, mModel, option, index);
+    return QStyledItemDelegate::editorEvent(event, mModel, option, index);
 }
 
 bool MegaTransferDelegate2::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
@@ -243,7 +217,7 @@ bool MegaTransferDelegate2::helpEvent(QHelpEvent *event, QAbstractItemView *view
         // Get TransferManagerItem2 widget under cursor
         const auto nbRowsMaxInView (mView->height()/option.rect.height() + 1);
         const QString widgetName (QLatin1Literal("r")+QString::number(index.row() % nbRowsMaxInView));
-        auto currentRow (view->findChild<TransferManagerItem2 *>(widgetName));
+        auto currentRow (view->findChild<TransferManagerItem2*>(widgetName));
         if (currentRow)
         {
             // Get widget inside TransferManagerItem2 under cursor, and display its tooltip
@@ -257,23 +231,5 @@ bool MegaTransferDelegate2::helpEvent(QHelpEvent *event, QAbstractItemView *view
     return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
-void MegaTransferDelegate2::processShowInFolder(int tag)
-{
-//    MegaTransfer *transfer = NULL;
-//    transfer = model->getTransferByTag(tag);
-//    if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
-//                 && transfer->getPath())
-//    {
-//        QString localPath = QString::fromUtf8(transfer->getPath());
-//        #ifdef WIN32
-//        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-//        {
-//            localPath = localPath.mid(4);
-//        }
-//        #endif
-//        Platform::showInFolder(localPath);
-//    }
-//    delete transfer;
-}
 
 
