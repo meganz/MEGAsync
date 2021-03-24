@@ -7143,8 +7143,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
                     model->rewriteSyncSettings(); //write sync settings into user's preferences
                     setupWizardFinished(QDialog::Accepted);
-                    //This trigger again setupwizardfinished because of slot done
-                    // Closes the dialog and sets its result code to r. The finished() signal will emit r;
+
                     emit closeSetupWizard();
                 }
             }
