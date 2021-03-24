@@ -33,10 +33,11 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *t)
         }
 
         bool isPublicNode = false;
+        int access = MegaShare::ACCESS_UNKNOWN;
         MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
         if (ownNode)
         {
-           int access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
+           access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
            if (access == MegaShare::ACCESS_OWNER)
            {
                isPublicNode = true;
@@ -44,12 +45,13 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *t)
            delete ownNode;
         }
 
-        Utilities::queueFunctionInAppThread([this, model, isPublicNode, transfer]()
+        Utilities::queueFunctionInAppThread([this, model, isPublicNode, access, transfer]()
         {//queued function
             if (model)
             {
                 TransferItemData *item = new TransferItemData(transfer);
                 item->data.publicNode = isPublicNode;
+                item->data.nodeAccess = access;
 
                 if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
                 {
