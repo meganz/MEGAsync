@@ -1397,6 +1397,21 @@ if (!preferences->lastExecutionTime())
     {
         applyStorageState(cachedStorageState, true);
     }
+
+    auto cachedBlockedState = preferences->getBlockedState();
+    if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 differs from applied blockedStatus %2. Overriding cache")
+                     .arg(cachedBlockedState).arg(blockState).toUtf8().constData());
+        preferences->setBlockedState(blockState);
+    }
+    else if (!blockStateSet && cachedBlockedState != -2 && cachedBlockedState) //block state not received in this execution, and cached says we were blocked last time
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
+                     .arg(cachedBlockedState).toUtf8().constData());
+
+        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
+    }
 }
 
 void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
@@ -7102,64 +7117,40 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
+            if (!mRootNode)
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                       "Please, try again. If the problem persists "
+                                                       "please contact bug@mega.co.nz"), QMessageBox::Ok);
+
+                setupWizardFinished(QDialog::Rejected);
+                preferences->setCrashed(true);
+                rebootApplication(false);
+                break;
+            }
+
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
             bool logged = preferences->logged();
             bool firstTime = !logged && email && !preferences->hasEmail(QString::fromUtf8(email.get()));
-            bool setupWizardContinues = false;
             if (!logged) //session resumed from general storage (or logged in via user/pass)
             {
                 if (firstTime)
                 {
                     showSetupWizard(SetupWizard::PAGE_MODE);
-                    setupWizardContinues = true;
                 }
                 else
                 {
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
                     model->rewriteSyncSettings(); //write sync settings into user's preferences
                     setupWizardFinished(QDialog::Accepted);
+                    //This trigger again setupwizardfinished because of slot done
+                    // Closes the dialog and sets its result code to r. The finished() signal will emit r;
+                    emit closeSetupWizard();
                 }
             }
-
-            if (!firstTime)
+            else
             {
-                if (mRootNode)
-                {
-                    //If we have got the filesystem, start the app
-                    loggedIn(false);
-
-                    auto cachedBlockedState = preferences->getBlockedState();
-                    if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 differs from applied blockedStatus %2. Overriding cache")
-                                     .arg(cachedBlockedState).arg(blockState).toUtf8().constData());
-                        preferences->setBlockedState(blockState);
-                    }
-                    else if (!blockStateSet && cachedBlockedState != -2 && cachedBlockedState) //block state not received in this execution, and cached says we were blocked last time
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
-                                     .arg(cachedBlockedState).toUtf8().constData());
-
-                        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
-                    }
-                }
-                else
-                {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
-
-                    setupWizardFinished(QDialog::Rejected);
-
-                    preferences->setCrashed(true);
-
-                    rebootApplication(false);
-                }
-            }
-
-            if (!setupWizardContinues) //otherwise it needs to close
-            {
-                  emit closeSetupWizard(QDialog::Accepted);
+                loggedIn(false);
             }
         }
         else

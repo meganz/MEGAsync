@@ -236,7 +236,7 @@ signals:
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
-    void closeSetupWizard(int);
+    void closeSetupWizard();
     void setupWizardCreated();
     void unblocked();
     void nodeMoved(mega::MegaHandle handle);
