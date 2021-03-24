@@ -865,11 +865,6 @@ void SettingsDialog::loadSettings()
     ui->cLanguage->addItems(languages);
     ui->cLanguage->setCurrentIndex(currentIndex);
 
-    if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
-    {
-        ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
-    }
-
     //Account
     ui->lEmail->setText(preferences->email());
     auto fullName {(preferences->firstName() + QStringLiteral(" ")+ preferences->lastName()).trimmed()};
