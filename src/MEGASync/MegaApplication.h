@@ -550,6 +550,8 @@ protected:
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
+    QMutex mMutexOpenUrls;
+    QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
 private:
 #ifdef _WIN32
