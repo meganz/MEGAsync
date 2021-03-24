@@ -15,6 +15,7 @@ class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferLis
 
 public:
     explicit QTransfersModel2(QObject* parent = 0);
+    ~QTransfersModel2();
 
     virtual Qt::ItemFlags flags(const QModelIndex& index) const;
     virtual Qt::DropActions supportedDropActions() const;
@@ -44,14 +45,13 @@ public:
     long long  getNumberOfTransfersForType(int type);
     long long  getNumberOfTransfersForFileType(TransferData::FileTypes fileType);
 
-    ~QTransfersModel2();
-
     void initModel();
 
     void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error);
     void onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* transfer);
-    void onTransferTemporaryError(mega::MegaApi* api,mega::MegaTransfer* transfer, mega::MegaError* error);
+    void onTransferTemporaryError(mega::MegaApi* api,mega::MegaTransfer* transfer,
+                                  mega::MegaError* error);
 
 signals:
     void transfersInModelChanged(bool weHaveTransfers);

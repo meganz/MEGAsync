@@ -34,7 +34,7 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
             = TransferData::TYPE_OTHER;
 
     // Connect to pause state change signal
-    QObject::connect((MegaApplication *)qApp, &MegaApplication::pauseStateChanged,
+    QObject::connect((MegaApplication*)qApp, &MegaApplication::pauseStateChanged,
                       this, &QTransfersModel2::onPauseStateChanged);
 
     mAreDlPaused = mPreferences->getDownloadsPaused();
@@ -95,7 +95,6 @@ QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex& pare
     {
         index = QModelIndex();
     }
-
     return index;
 }
 
