@@ -7131,7 +7131,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     emit closeSetupWizard();
                 }
             }
-            else
+            else // session resumed regularly
             {
                 loggedIn(false);
             }
