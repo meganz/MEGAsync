@@ -70,7 +70,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/VerifyLockMessage.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
-    $$PWD/ProxySettings.cpp
+    $$PWD/ProxySettings.cpp \
+    $$PWD/BandwidthSettings.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -142,7 +143,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/VerifyLockMessage.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
-    $$PWD/ProxySettings.h
+    $$PWD/ProxySettings.h \
+    $$PWD/BandwidthSettings.h
 
 INCLUDEPATH += $$PWD
 
@@ -337,7 +339,8 @@ unix:!macx {
                 $$PWD/linux/MegaInfoMessage.ui \
                 $$PWD/linux/DynamicTransferQuotaPopOver.ui \
                 $$PWD/linux/OverQuotaDialog.ui \
-                $$PWD/linux/ProxySettings.ui
+                $$PWD/linux/ProxySettings.ui \
+                $$PWD/linux/BandwidthSettings.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

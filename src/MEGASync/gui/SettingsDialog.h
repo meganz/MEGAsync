@@ -121,20 +121,11 @@ private slots:
     void on_eUploadFolder_textChanged(const QString &text);
     void on_eDownloadFolder_textChanged(const QString &text);
 
-    void on_rUploadAutoLimit_toggled(bool checked);
-    void on_rUploadNoLimit_toggled(bool checked);
-    void on_rUploadLimit_toggled(bool checked);
-    void on_rDownloadNoLimit_toggled(bool checked);
-    void on_rDownloadLimit_toggled(bool checked);
-    void on_eUploadLimit_editingFinished();
-    void on_eDownloadLimit_editingFinished();
-    void on_eMaxDownloadConnections_valueChanged(int value);
-    void on_eMaxUploadConnections_valueChanged(int value);
-    void on_cbUseHttps_toggled(bool checked);
     void on_cDisableFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 
     void on_openProxySettingsButton_clicked();
+    void on_bBandwidthSettings_clicked();
 
 #ifdef Q_OS_WINDOWS
     void on_cDisableIcons_toggled(bool checked);

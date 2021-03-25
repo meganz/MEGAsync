@@ -22,6 +22,7 @@
 #include "gui/BugReportDialog.h"
 #include "gui/QSyncItemWidget.h"
 #include "gui/ProxySettings.h"
+#include "gui/BandwidthSettings.h"
 
 #include <assert.h>
 
@@ -120,19 +121,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     debugCounter = 0;
     areSyncsDisabled = false;
     isSavingSyncsOnGoing = false;
-
-    ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
-    ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
-    ui->eMaxDownloadConnections->setRange(1, 6);
-    ui->eMaxUploadConnections->setRange(1, 6);
-
-    QButtonGroup *downloadButtonGroup = new QButtonGroup(this);
-    downloadButtonGroup->addButton(ui->rDownloadLimit);
-    downloadButtonGroup->addButton(ui->rDownloadNoLimit);
-    QButtonGroup *uploadButtonGroup = new QButtonGroup(this);
-    uploadButtonGroup->addButton(ui->rUploadLimit);
-    uploadButtonGroup->addButton(ui->rUploadNoLimit);
-    uploadButtonGroup->addButton(ui->rUploadAutoLimit);
 
     connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
@@ -887,25 +875,6 @@ void SettingsDialog::loadSettings()
 #ifdef Q_OS_WINDOWS
     ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
 #endif
-
-    //Bandwidth
-    int uploadLimitKB = preferences->uploadLimitKB();
-    ui->rUploadAutoLimit->setChecked(uploadLimitKB<0);
-    ui->rUploadLimit->setChecked(uploadLimitKB>0);
-    ui->rUploadNoLimit->setChecked(uploadLimitKB==0);
-    ui->eUploadLimit->setText((uploadLimitKB<=0)? QString::fromAscii("0") : QString::number(uploadLimitKB));
-    ui->eUploadLimit->setEnabled(ui->rUploadLimit->isChecked());
-
-    int downloadLimitKB = preferences->downloadLimitKB();
-    ui->rDownloadLimit->setChecked(downloadLimitKB>0);
-    ui->rDownloadNoLimit->setChecked(downloadLimitKB==0);
-    ui->eDownloadLimit->setText((downloadLimitKB<=0)? QString::fromAscii("0") : QString::number(downloadLimitKB));
-    ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
-
-    ui->eMaxDownloadConnections->setValue(preferences->parallelDownloadConnections());
-    ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
-
-    ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
     //Advanced
     ui->lExcludedNames->clear();
@@ -2359,106 +2328,6 @@ void SettingsDialog::on_eDownloadFolder_textChanged(const QString &text)
     preferences->setHasDefaultDownloadFolder(hasDefaultDownloadOption);
 }
 
-void SettingsDialog::on_rUploadAutoLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eUploadLimit->setEnabled(!checked);
-    if (checked)
-    {
-        preferences->setUploadLimitKB(-1);
-        app->setUploadLimit(preferences->uploadLimitKB());
-        app->setMaxUploadSpeed(preferences->uploadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rUploadNoLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eUploadLimit->setEnabled(!checked);
-    if (checked)
-    {
-        preferences->setUploadLimitKB(0);
-        app->setUploadLimit(preferences->uploadLimitKB());
-        app->setMaxUploadSpeed(preferences->uploadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rUploadLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eUploadLimit->setEnabled(checked);
-    if (checked)
-    {
-        preferences->setUploadLimitKB(ui->eUploadLimit->text().toInt());
-        app->setUploadLimit(0); // TODO: Verify if I'm correct
-        app->setMaxUploadSpeed(preferences->uploadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rDownloadNoLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eDownloadLimit->setEnabled(!checked);
-    if (checked)
-    {
-        preferences->setDownloadLimitKB(0);
-        app->setMaxDownloadSpeed(preferences->downloadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rDownloadLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eDownloadLimit->setEnabled(checked);
-    if (checked)
-    {
-        preferences->setDownloadLimitKB(ui->eDownloadLimit->text().toInt());
-        app->setMaxDownloadSpeed(preferences->downloadLimitKB());
-    }
-}
-
-void SettingsDialog::on_eUploadLimit_editingFinished()
-{
-    if (loadingSettings) return;
-    preferences->setUploadLimitKB(ui->eUploadLimit->text().toInt());
-    app->setUploadLimit(0); // TODO: Verify if I'm correct
-    app->setMaxUploadSpeed(preferences->uploadLimitKB());
-}
-
-void SettingsDialog::on_eDownloadLimit_editingFinished()
-{
-    if (loadingSettings) return;
-    preferences->setDownloadLimitKB(ui->eDownloadLimit->text().toInt());
-    app->setMaxDownloadSpeed(preferences->downloadLimitKB());
-}
-
-void SettingsDialog::on_eMaxDownloadConnections_valueChanged(int value)
-{
-    if (loadingSettings) return;
-    if (value != preferences->parallelDownloadConnections())
-    {
-        preferences->setParallelDownloadConnections(value);
-        app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
-    }
-}
-
-void SettingsDialog::on_eMaxUploadConnections_valueChanged(int value)
-{
-    if (loadingSettings) return;
-    if (value != preferences->parallelUploadConnections())
-    {
-        preferences->setParallelUploadConnections(value);
-        app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
-    }
-}
-
-void SettingsDialog::on_cbUseHttps_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    preferences->setUseHttpsOnly(checked);
-    app->setUseHttpsOnly(preferences->usingHttpsOnly());
-}
-
 void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
 {
     if (loadingSettings) return;
@@ -2499,6 +2368,26 @@ void SettingsDialog::on_openProxySettingsButton_clicked()
     ProxySettings proxySettingsDialog(app, this);
     if (proxySettingsDialog.exec() == QDialog::Accepted)
         app->applyProxySettings();
+}
+
+void SettingsDialog::on_bBandwidthSettings_clicked()
+{
+    BandwidthSettings bandwidthSettings(app, this);
+    if (bandwidthSettings.exec() == QDialog::Rejected)
+        return;
+
+    if(preferences->uploadLimitKB() > 0)
+        app->setUploadLimit(0);
+    else
+        app->setUploadLimit(preferences->uploadLimitKB());
+    app->setMaxUploadSpeed(preferences->uploadLimitKB());
+
+    app->setMaxDownloadSpeed(preferences->downloadLimitKB());
+
+    app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
+    app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+
+    app->setUseHttpsOnly(preferences->usingHttpsOnly());
 }
 
 #ifdef Q_OS_WINDOWS
