@@ -153,7 +153,7 @@ public:
      * @brief Migrate sync configuration to sdk cache
      * @param email of sync configuration to migrate from previous sessions
      */
-    void migrateSyncConfToSdk(QString email = {});
+    void migrateSyncConfToSdk(bool fetchNodesAfter = true, QString email = {});
 
     mega::MegaApi *getMegaApi() { return megaApi; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
@@ -546,6 +546,7 @@ protected:
     int blockState;
     bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
+    bool mNeedsMigratingSyncsAfterFetchNodes = false;
     friend class DeferPreferencesSyncForScope;
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
@@ -557,7 +558,7 @@ private:
 #ifdef _WIN32
     std::shared_ptr<ShellNotifier> mShellNotifier;
 #endif
-    void loadSyncExclusionRules();
+    void loadSyncExclusionRules(QString email = {});
 };
 
 class DeferPreferencesSyncForScope

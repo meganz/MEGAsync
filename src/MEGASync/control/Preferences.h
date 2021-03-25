@@ -307,6 +307,9 @@ public:
     void enterUser(int i);
     bool enterUser(QString account);
 
+    // preloads excluded sync names and adds missing defaults ones in previous versions
+    void loadExcludedSyncNames();
+
     // leave user
     void leaveUser();
 
@@ -476,7 +479,6 @@ protected:
     void login(QString account);
     void logout();
 
-    void loadExcludedSyncNames();
 
     // sync related:
     void readFolders(); //read sync stored configuration

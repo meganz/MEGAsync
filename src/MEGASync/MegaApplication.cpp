@@ -193,6 +193,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoDialog = NULL;
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     blockStateSet = false;
+    mNeedsMigratingSyncsAfterFetchNodes = false;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -940,6 +941,7 @@ void MegaApplication::start()
 
     blockState = MegaApi::ACCOUNT_NOT_BLOCKED;
     blockStateSet = false;
+    mNeedsMigratingSyncsAfterFetchNodes = false;
 
     indexing = false;
     paused = false;
@@ -1089,11 +1091,6 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        if (preferences->logged()) //we have per account settings to restore
-        {
-            loadSyncExclusionRules();
-        }
-
         QString theSession;
         theSession = preferences->getSession();
 
@@ -3011,8 +3008,26 @@ void MegaApplication::proExpirityTimedOut()
     updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
 }
 
-void MegaApplication::loadSyncExclusionRules()
+void MegaApplication::loadSyncExclusionRules(QString email)
 {
+    assert(preferences->logged() || !email.isEmpty());
+
+    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+    bool temporarilyLoggedPrefs = false;
+    if (!preferences->logged() && !email.isEmpty())
+    {
+        temporarilyLoggedPrefs = preferences->enterUser(email);
+        if (!temporarilyLoggedPrefs) // nothing to load
+        {
+            return;
+        }
+
+        preferences->loadExcludedSyncNames(); //to attend the corner case:
+                  // comming from old versions that didn't include some defaults
+
+    }
+    assert(preferences->logged());
+
     if (!preferences->logged())
     {
         return;
@@ -3051,6 +3066,13 @@ void MegaApplication::loadSyncExclusionRules()
     {
         megaApi->setExclusionUpperSizeLimit(0);
     }
+
+
+    if (temporarilyLoggedPrefs)
+    {
+        preferences->leaveUser();
+    }
+
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -3093,8 +3115,6 @@ void MegaApplication::setupWizardFinished(int result)
         }
         return;
     }
-
-    loadSyncExclusionRules();
 
     if (infoDialog && infoDialog->isVisible())
     {
@@ -3953,7 +3973,7 @@ void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings)
     createAppMenus();
 }
 
-void MegaApplication::migrateSyncConfToSdk(QString email)
+void MegaApplication::migrateSyncConfToSdk(bool fetchNodesAfter, QString email)
 {
     bool needsMigratingFromOldSession = !preferences->logged();
     assert(preferences->logged() || !email.isEmpty());
@@ -4033,9 +4053,30 @@ void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
     mFetchingNodes = true;
-    migrateSyncConfToSdk(email);
-    //We can restore fetchnodes once we finish the migration of syncsconfigs
-    //megaApi->fetchNodes();
+
+    // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
+    // prior fetching nodes (when the SDK will resume syncing)
+
+    // If we are login into a new session of an account previously used in MEGAsync,
+    // we will use the previous configurations stored in that user preferences
+    // However, there is a case in which we are not able to do so at this point:
+    // we don't know the user email.
+    // That should only happen when trying to resume a session (using the session id stored in general preferences)
+    // that didn't complete a fetch nodes (i.e. does not have preferences logged).
+    // that can happen for blocked accounts.
+    mNeedsMigratingSyncsAfterFetchNodes = !preferences->logged() && email.isEmpty();
+    if (!mNeedsMigratingSyncsAfterFetchNodes)
+    {
+        loadSyncExclusionRules(email);
+        migrateSyncConfToSdk(true, email);
+    }
+    else
+    {
+        megaApi->fetchNodes(); // fetch nodes completion will produce the migration & exclusion loading
+        // note, that if we were blocked, even if there were syncs configured in the sdk already,
+        // these would have been disabled: we can afford not having exclusion loaded yet.
+        // But we need to ensure we load them before allowing the user to activate them
+    }
 }
 
 void MegaApplication::whyAmIBlocked(bool periodicCall)
@@ -7127,7 +7168,17 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         infoDialog->hide();
                     }
 
-                    loadSyncExclusionRules();
+                    if (mNeedsMigratingSyncsAfterFetchNodes)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Sync migration happening after fetch nodes")
+                                     .toUtf8().constData());
+
+                        assert(preferences->logged());
+                        loadSyncExclusionRules();
+                        migrateSyncConfToSdk(false);
+                        mNeedsMigratingSyncsAfterFetchNodes = false;
+                    }
+
                     loggedIn(true);
                     emit closeSetupWizard();
                 }
