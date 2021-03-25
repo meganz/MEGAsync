@@ -7119,9 +7119,15 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 else
                 {
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-                    model->rewriteSyncSettings(); //write sync settings into user's preferences
-                    setupWizardFinished(QDialog::Accepted);
+                    model->rewriteSyncSettings(); //write sync settings into user's preferences                   
 
+                    if (infoDialog && infoDialog->isVisible())
+                    {
+                        infoDialog->hide();
+                    }
+
+                    loadSyncExclusionRules();
+                    loggedIn(true);
                     emit closeSetupWizard();
                 }
             }
