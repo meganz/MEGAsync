@@ -7118,6 +7118,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
                 else
                 {
+                    // We will proceed with a new login
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
                     model->rewriteSyncSettings(); //write sync settings into user's preferences                   
 
