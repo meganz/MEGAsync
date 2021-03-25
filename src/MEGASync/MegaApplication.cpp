@@ -1322,11 +1322,14 @@ if (!preferences->lastExecutionTime())
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
+
+#ifdef __APPLE__
         QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
                         tr("One or more syncs have been disabled. Go to preferences to enable them again."));
-#ifdef __APPLE__
         QPushButton *openPreferences = msg.addButton(tr("Open Preferences"), QMessageBox::YesRole);
 #else
+        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
+                        tr("One or more syncs have been disabled. Go to settings to enable them again."));
         QPushButton *openPreferences = msg.addButton(tr("Open Settings"), QMessageBox::YesRole);
 #endif
         msg.addButton(tr("Dismiss"), QMessageBox::NoRole);
@@ -6588,7 +6591,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
-        showErrorMessage(tr("Your syncs have been temporarily disabled").append(QString::fromUtf8(": "))
+        showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
