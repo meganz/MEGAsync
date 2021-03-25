@@ -1091,39 +1091,7 @@ void MegaApplication::start()
     {
         if (preferences->logged()) //we have per account settings to restore
         {
-            QStringList exclusions = preferences->getExcludedSyncNames();
-            vector<string> vExclusions;
-            for (int i = 0; i < exclusions.size(); i++)
-            {
-                vExclusions.push_back(exclusions[i].toUtf8().constData());
-            }
-            megaApi->setExcludedNames(&vExclusions);
-
-            QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-            vector<string> vExclusionPaths;
-            for (int i = 0; i < exclusionPaths.size(); i++)
-            {
-                vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-            }
-            megaApi->setExcludedPaths(&vExclusionPaths);
-
-            if (preferences->lowerSizeLimit())
-            {
-                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionLowerSizeLimit(0);
-            }
-
-            if (preferences->upperSizeLimit())
-            {
-                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionUpperSizeLimit(0);
-            }
+            loadSyncExclusionRules();
         }
 
         QString theSession;
@@ -3043,6 +3011,48 @@ void MegaApplication::proExpirityTimedOut()
     updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
 }
 
+void MegaApplication::loadSyncExclusionRules()
+{
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    QStringList exclusions = preferences->getExcludedSyncNames();
+    vector<string> vExclusions;
+    for (int i = 0; i < exclusions.size(); i++)
+    {
+        vExclusions.push_back(exclusions[i].toUtf8().constData());
+    }
+    megaApi->setExcludedNames(&vExclusions);
+
+    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+    vector<string> vExclusionPaths;
+    for (int i = 0; i < exclusionPaths.size(); i++)
+    {
+        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+    }
+    megaApi->setExcludedPaths(&vExclusionPaths);
+
+    if (preferences->lowerSizeLimit())
+    {
+        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionLowerSizeLimit(0);
+    }
+
+    if (preferences->upperSizeLimit())
+    {
+        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionUpperSizeLimit(0);
+    }
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -3084,39 +3094,7 @@ void MegaApplication::setupWizardFinished(int result)
         return;
     }
 
-    QStringList exclusions = preferences->getExcludedSyncNames();
-    vector<string> vExclusions;
-    for (int i = 0; i < exclusions.size(); i++)
-    {
-        vExclusions.push_back(exclusions[i].toUtf8().constData());
-    }
-    megaApi->setExcludedNames(&vExclusions);
-
-    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-    vector<string> vExclusionPaths;
-    for (int i = 0; i < exclusionPaths.size(); i++)
-    {
-        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-    }
-    megaApi->setExcludedPaths(&vExclusionPaths);
-
-    if (preferences->lowerSizeLimit())
-    {
-        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionLowerSizeLimit(0);
-    }
-
-    if (preferences->upperSizeLimit())
-    {
-        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionUpperSizeLimit(0);
-    }
+    loadSyncExclusionRules();
 
     if (infoDialog && infoDialog->isVisible())
     {

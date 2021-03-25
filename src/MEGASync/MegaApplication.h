@@ -557,6 +557,7 @@ private:
 #ifdef _WIN32
     std::shared_ptr<ShellNotifier> mShellNotifier;
 #endif
+    void loadSyncExclusionRules();
 };
 
 class DeferPreferencesSyncForScope
