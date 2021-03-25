@@ -16,7 +16,7 @@ AlertFilterType::~AlertFilterType()
     delete ui;
 }
 
-void AlertFilterType::setActualFilter(int type)
+void AlertFilterType::setActualFilter(ALERT_TYPE type)
 {
     switch (type)
     {
@@ -49,9 +49,20 @@ void AlertFilterType::setActualFilter(int type)
             }
             break;
     }
+    mType = type;
 }
 
 void AlertFilterType::mousePressEvent(QMouseEvent *event)
 {
     emit clicked();
+}
+
+void AlertFilterType::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        setActualFilter(mType);
+    }
+    QWidget::changeEvent(event);
 }

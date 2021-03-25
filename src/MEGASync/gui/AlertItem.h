@@ -32,6 +32,9 @@ public:
 signals:
     void refreshAlertItem(unsigned item);
 
+protected:
+    void changeEvent(QEvent *event);
+
 private:
     void setAvatar(mega::MegaUserAlert *alert);
     QString formatRichString(QString str);
