@@ -264,10 +264,10 @@ public:
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
     // old cache transition related:
-    void removeOldCachedSync(int position, QString email = {});
+    void removeOldCachedSync(int position, QString email = QString());
     //get a list of cached syncs (withouth loading them in memory): intended for transition to sdk caching them.
     QList<SyncData> readOldCachedSyncs(int *cachedBusinessState = nullptr, int *cachedBlockedState = nullptr,
-                                       int *cachedStorageState = nullptr, QString email = {});
+                                       int *cachedStorageState = nullptr, QString email = QString());
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
     QStringList getExcludedSyncNames();
@@ -306,6 +306,9 @@ public:
     // enter user preferences and load syncs into loadedSyncsMap
     void enterUser(int i);
     bool enterUser(QString account);
+
+    // preloads excluded sync names and adds missing defaults ones in previous versions
+    void loadExcludedSyncNames();
 
     // leave user
     void leaveUser();
@@ -476,7 +479,6 @@ protected:
     void login(QString account);
     void logout();
 
-    void loadExcludedSyncNames();
 
     // sync related:
     void readFolders(); //read sync stored configuration

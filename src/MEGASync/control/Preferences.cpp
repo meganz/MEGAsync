@@ -2917,18 +2917,31 @@ QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *c
     {
         settings->beginGroup(i);
 
+        bool enabled = settings->value(folderActiveKey, true).toBool();
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
+
+        if (temporarilyLoggedPrefs) //coming from old session
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii(" ... sync configuration rescued from old session. Set as disabled.")
+                         .toUtf8().constData());
+
+            enabled = false; // syncs coming from old sessions are now considered unsafe to continue automatically
+            // Note: in this particular case, we are not showing any error in the sync (since that information is not carried out
+            // to the SDK)
+        }
+
         oldSyncs.push_back(SyncData(settings->value(syncNameKey).toString(),
                                     settings->value(localFolderKey).toString(),
                                     settings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
                                     settings->value(megaFolderKey).toString(),
                                     settings->value(localFingerprintKey, 0).toLongLong(),
-                                    settings->value(folderActiveKey, true).toBool(),
+                                    enabled,
                                     settings->value(temporaryInactiveKey, false).toBool(),
                                      i,
                                     settings->value(syncIdKey, true).toString()
                                     ));
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
         settings->endGroup();
     }
     settings->endGroup();

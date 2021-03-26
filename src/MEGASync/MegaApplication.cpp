@@ -1089,43 +1089,6 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        if (preferences->logged()) //we have per account settings to restore
-        {
-            QStringList exclusions = preferences->getExcludedSyncNames();
-            vector<string> vExclusions;
-            for (int i = 0; i < exclusions.size(); i++)
-            {
-                vExclusions.push_back(exclusions[i].toUtf8().constData());
-            }
-            megaApi->setExcludedNames(&vExclusions);
-
-            QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-            vector<string> vExclusionPaths;
-            for (int i = 0; i < exclusionPaths.size(); i++)
-            {
-                vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-            }
-            megaApi->setExcludedPaths(&vExclusionPaths);
-
-            if (preferences->lowerSizeLimit())
-            {
-                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionLowerSizeLimit(0);
-            }
-
-            if (preferences->upperSizeLimit())
-            {
-                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionUpperSizeLimit(0);
-            }
-        }
-
         QString theSession;
         theSession = preferences->getSession();
 
@@ -1399,6 +1362,21 @@ if (!preferences->lastExecutionTime())
     if (cachedStorageState != MegaApi::STORAGE_STATE_UNKNOWN)
     {
         applyStorageState(cachedStorageState, true);
+    }
+
+    auto cachedBlockedState = preferences->getBlockedState();
+    if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 differs from applied blockedStatus %2. Overriding cache")
+                     .arg(cachedBlockedState).arg(blockState).toUtf8().constData());
+        preferences->setBlockedState(blockState);
+    }
+    else if (!blockStateSet && cachedBlockedState != -2 && cachedBlockedState) //block state not received in this execution, and cached says we were blocked last time
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
+                     .arg(cachedBlockedState).toUtf8().constData());
+
+        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
     }
 }
 
@@ -3031,6 +3009,73 @@ void MegaApplication::proExpirityTimedOut()
     updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
 }
 
+void MegaApplication::loadSyncExclusionRules(QString email)
+{
+    assert(preferences->logged() || !email.isEmpty());
+
+    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+    bool temporarilyLoggedPrefs = false;
+    if (!preferences->logged() && !email.isEmpty())
+    {
+        temporarilyLoggedPrefs = preferences->enterUser(email);
+        if (!temporarilyLoggedPrefs) // nothing to load
+        {
+            return;
+        }
+
+        preferences->loadExcludedSyncNames(); //to attend the corner case:
+                  // comming from old versions that didn't include some defaults
+
+    }
+    assert(preferences->logged()); //At this point preferences should be logged, just because you enterUser() or it was already logged
+
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    QStringList exclusions = preferences->getExcludedSyncNames();
+    vector<string> vExclusions;
+    for (int i = 0; i < exclusions.size(); i++)
+    {
+        vExclusions.push_back(exclusions[i].toUtf8().constData());
+    }
+    megaApi->setExcludedNames(&vExclusions);
+
+    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+    vector<string> vExclusionPaths;
+    for (int i = 0; i < exclusionPaths.size(); i++)
+    {
+        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+    }
+    megaApi->setExcludedPaths(&vExclusionPaths);
+
+    if (preferences->lowerSizeLimit())
+    {
+        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionLowerSizeLimit(0);
+    }
+
+    if (preferences->upperSizeLimit())
+    {
+        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionUpperSizeLimit(0);
+    }
+
+
+    if (temporarilyLoggedPrefs)
+    {
+        preferences->leaveUser();
+    }
+
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -3070,40 +3115,6 @@ void MegaApplication::setupWizardFinished(int result)
             showInfoMessage(tr("Transfer canceled"));
         }
         return;
-    }
-
-    QStringList exclusions = preferences->getExcludedSyncNames();
-    vector<string> vExclusions;
-    for (int i = 0; i < exclusions.size(); i++)
-    {
-        vExclusions.push_back(exclusions[i].toUtf8().constData());
-    }
-    megaApi->setExcludedNames(&vExclusions);
-
-    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-    vector<string> vExclusionPaths;
-    for (int i = 0; i < exclusionPaths.size(); i++)
-    {
-        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-    }
-    megaApi->setExcludedPaths(&vExclusionPaths);
-
-    if (preferences->lowerSizeLimit())
-    {
-        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionLowerSizeLimit(0);
-    }
-
-    if (preferences->upperSizeLimit())
-    {
-        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionUpperSizeLimit(0);
     }
 
     if (infoDialog && infoDialog->isVisible())
@@ -4043,9 +4054,57 @@ void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
     mFetchingNodes = true;
-    migrateSyncConfToSdk(email);
-    //We can restore fetchnodes once we finish the migration of syncsconfigs
-    //megaApi->fetchNodes();
+
+    // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
+    // prior fetching nodes (when the SDK will resume syncing)
+
+    // If we are loging into a new session of an account previously used in MEGAsync,
+    // we will use the previous configurations stored in that user preferences
+    // However, there is a case in which we are not able to do so at this point:
+    // we don't know the user email.
+    // That should only happen when trying to resume a session (using the session id stored in general preferences)
+    // that didn't complete a fetch nodes (i.e. does not have preferences logged).
+    // that can happen for blocked accounts.
+    // Fortunately, the SDK can help us get the email of the session
+    bool needFindingOutEmail = !preferences->logged() && email.isEmpty();
+
+    auto loadMigrateAndFetchNodes = [this](const QString &email)
+    {
+        if (!preferences->logged() && email.isEmpty()) // I still couldn't get the the email: won't be able to access user settings
+        {
+            megaApi->fetchNodes();
+        }
+        else
+        {
+            loadSyncExclusionRules(email);
+            migrateSyncConfToSdk(email); // this will produce the fetch nodes once done
+        }
+    };
+
+    if (!needFindingOutEmail)
+    {
+        loadMigrateAndFetchNodes(email);
+    }
+    else // we will ask the SDK the email
+    {
+        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi* api,  MegaRequest *request, MegaError *e) {
+              QString email;
+
+              if (e->getErrorCode() == API_OK)
+              {
+                  auto emailFromRequest = request->getEmail();
+                  if (emailFromRequest)
+                  {
+                      email = QString::fromUtf8(emailFromRequest);
+                  }
+              }
+
+              // in any case, proceed:
+              loadMigrateAndFetchNodes(email);
+        }));
+
+    }
+
 }
 
 void MegaApplication::whyAmIBlocked(bool periodicCall)
@@ -7105,64 +7164,45 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
+            if (!mRootNode)
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                       "Please, try again. If the problem persists "
+                                                       "please contact bug@mega.co.nz"), QMessageBox::Ok);
+
+                setupWizardFinished(QDialog::Rejected);
+                preferences->setCrashed(true);
+                rebootApplication(false);
+                break;
+            }
+
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
             bool logged = preferences->logged();
             bool firstTime = !logged && email && !preferences->hasEmail(QString::fromUtf8(email.get()));
-            bool setupWizardContinues = false;
             if (!logged) //session resumed from general storage (or logged in via user/pass)
             {
                 if (firstTime)
                 {
                     showSetupWizard(SetupWizard::PAGE_MODE);
-                    setupWizardContinues = true;
                 }
                 else
                 {
+                    // We will proceed with a new login
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-                    model->rewriteSyncSettings(); //write sync settings into user's preferences
-                    setupWizardFinished(QDialog::Accepted);
+                    model->rewriteSyncSettings(); //write sync settings into user's preferences                   
+
+                    if (infoDialog && infoDialog->isVisible())
+                    {
+                        infoDialog->hide();
+                    }
+
+                    loggedIn(true);
+                    emit closeSetupWizard();
                 }
             }
-
-            if (!firstTime)
+            else // session resumed regularly
             {
-                if (mRootNode)
-                {
-                    //If we have got the filesystem, start the app
-                    loggedIn(false);
-
-                    auto cachedBlockedState = preferences->getBlockedState();
-                    if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 differs from applied blockedStatus %2. Overriding cache")
-                                     .arg(cachedBlockedState).arg(blockState).toUtf8().constData());
-                        preferences->setBlockedState(blockState);
-                    }
-                    else if (!blockStateSet && cachedBlockedState != -2 && cachedBlockedState) //block state not received in this execution, and cached says we were blocked last time
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
-                                     .arg(cachedBlockedState).toUtf8().constData());
-
-                        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
-                    }
-                }
-                else
-                {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
-
-                    setupWizardFinished(QDialog::Rejected);
-
-                    preferences->setCrashed(true);
-
-                    rebootApplication(false);
-                }
-            }
-
-            if (!setupWizardContinues) //otherwise it needs to close
-            {
-                  emit closeSetupWizard(QDialog::Accepted);
+                loggedIn(false);
             }
         }
         else
