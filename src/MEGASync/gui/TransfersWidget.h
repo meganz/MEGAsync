@@ -36,6 +36,7 @@ public:
     void fileTypeFilterChanged(QSet<TransferData::FileTypes> fileType);
     void transferStateFilterChanged(QSet<int> transferStates);
     void transferTypeFilterChanged(QSet<int> transferTypes);
+    void transferFilterReset();
 
     int rowCount();
 

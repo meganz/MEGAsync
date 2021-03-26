@@ -28,6 +28,7 @@ public:
         DOWNLOADS_TAB     = 1,
         UPLOADS_TAB       = 2,
         COMPLETED_TAB     = 3,
+        SEARCH_TAB        = 4,
     };
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
@@ -43,7 +44,7 @@ signals:
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 500;
-    static constexpr int STATS_REFRESH_PERIOD_MS = 1000;
+    static constexpr int STATS_REFRESH_PERIOD_MS = 200;
     static const QSet<int> ACTIVE_STATES;
     static const QSet<int> FINISHED_STATES;
 
@@ -54,10 +55,13 @@ private:
     ThreadPool* mThreadPool;
     QMap<int, QFrame*> mTabFramesToggleGroup;
     QMap<TransferData::FileTypes, QLabel*> mMediaNumberLabelsGroup;
+    QMap<TM_TABS, QWidget*> mTabNoItem;
 
     QTransfersModel2* mModel;
 
     TM_TABS mCurrentTab;
+    QGraphicsDropShadowEffect* mShadowTab;
+    QGraphicsDropShadowEffect* mShadowSearch;
     QSet<TransferData::FileTypes> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;

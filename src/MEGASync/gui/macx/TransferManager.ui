@@ -67,49 +67,50 @@
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#wMediaType QWidget &gt; QLabel, #wTransferring QFrame &gt; QLabel
+#wTransferring QLabel, #wMediaType QLabel
 {
     height: 24px;
     min-height: 24px;
     max-height: 24px;
+    min-width: 30px;
+    margin-right: 6px;
     color: #777777;
     font-size: 10px;
     font-weight: bold;
     qproperty-alignment: 'AlignHCenter | AlignVCenter';
-    border: none;
 }
 
-QFrame[itsOn=true]
+#wLeftPane QFrame[itsOn=true]
 {
  /*  	qproperty-frameShape: 'Box';
     qproperty-frameShadow: 'Raised'; */
-    border-radius: 8px;
-    border: 1px solid #ededed;
+    border-radius: 4px;
+ /*   border: 1px solid #ededed; */
     background-color: white;
 }
 
-QFrame[itsOn=true]  QLabel
+#wLeftPane QFrame[itsOn=true]  QLabel
 {
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid #F5F5F5;
     background-color: #FAFAFA;
     border-radius: 12px;
 }
 
-QFrame[itsOn=true] QPushButton
+#wLeftPane QFrame[itsOn=true] QPushButton
 {
     font-weight: bold;
 }
 
-QFrame
+#wMediaType QFrame, #wTransferring QFrame, #wSearch QFrame
 {
-    border: none;
+/*	border: 1px solid #FAFAFA;*/
     padding-right: 6px;
     padding-left: 6px;
 }
 
-#wMediaType QWidget, #wTransferring QWidget , #wSearch QWidget, #wLeftPane QFrame
+#wMediaType QPushButton, #wTransferring QPushButton , #wSearch QPushButton
 {
-    height: 36px;
+    height: 34px;
 }
 
 #lTransferring, #lMediaType
@@ -279,7 +280,11 @@ QGroupBox::title
   font-weight: bold;
   padding-left: 14px;
 }
-</string>
+
+#sTransfers QToolButton
+{
+  qProperty-iconSize: 156px;
+}</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
@@ -461,23 +466,23 @@ QGroupBox::title
          <string>TRANSFERRING</string>
         </property>
         <property name="flat">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
           <number>24</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <item>
           <widget class="QFrame" name="fAllTransfers">
@@ -499,6 +504,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="tAllTransfers">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -518,7 +529,29 @@ QGroupBox::title
              </widget>
             </item>
             <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QLabel" name="lAllTransfers">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -547,6 +580,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="tDownloads">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -563,7 +602,29 @@ QGroupBox::title
              </widget>
             </item>
             <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QLabel" name="lDownloads">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -592,6 +653,12 @@ QGroupBox::title
             </property>
             <item>
              <widget class="QPushButton" name="tUploads">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -608,7 +675,29 @@ QGroupBox::title
              </widget>
             </item>
             <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QLabel" name="lUploads">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -640,6 +729,12 @@ QGroupBox::title
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
@@ -656,7 +751,29 @@ QGroupBox::title
              </widget>
             </item>
             <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QLabel" name="lCompleted">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -678,16 +795,16 @@ QGroupBox::title
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
           <number>24</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <item>
           <widget class="QFrame" name="fText">
@@ -729,6 +846,9 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lTextNb">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -777,6 +897,9 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lArchivesNb">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1038,16 +1161,16 @@ QGroupBox::title
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
           <number>24</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <item>
           <widget class="QFrame" name="fSearchString">
@@ -1141,9 +1264,6 @@ QGroupBox::title
           </property>
           <item>
            <widget class="QPushButton" name="bDownSpeed">
-            <property name="text">
-             <string notr="true">1.2 MB/s</string>
-            </property>
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/download_fail_item_ico.png</normaloff>:/images/download_fail_item_ico.png</iconset>
@@ -1152,9 +1272,6 @@ QGroupBox::title
           </item>
           <item>
            <widget class="QPushButton" name="bUpSpeed">
-            <property name="text">
-             <string notr="true">820 KB/s</string>
-            </property>
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/upload_fail_item_ico.png</normaloff>:/images/upload_fail_item_ico.png</iconset>
@@ -1305,13 +1422,13 @@ QGroupBox::title
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>33</height>
+                   <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>33</height>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="text">
@@ -1330,13 +1447,13 @@ QGroupBox::title
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>33</height>
+                   <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>33</height>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="text">
@@ -1351,13 +1468,13 @@ QGroupBox::title
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>33</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>33</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -1453,13 +1570,93 @@ QGroupBox::title
        </widget>
       </item>
       <item>
-       <widget class="TransfersWidget" name="wTransfers" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QStackedWidget" name="sTransfers">
+        <property name="currentIndex">
+         <number>3</number>
         </property>
+        <widget class="TransfersWidget" name="wTransfers">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+        <widget class="QWidget" name="wNoUploads">
+         <layout class="QGridLayout" name="wNoUploadsLayout">
+          <item row="0" column="0">
+           <widget class="QToolButton" name="tNoUploads">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="wNoDownloads">
+         <layout class="QGridLayout" name="wNoDownloadsLayout">
+          <item row="0" column="0">
+           <widget class="QToolButton" name="tNoDownloads">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="wNoTransfers">
+         <layout class="QGridLayout" name="wNoTransfersLayout">
+          <item row="0" column="0">
+           <widget class="QToolButton" name="tNoTransfers">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="wNoResults">
+         <layout class="QGridLayout" name="wNoResultsLayout">
+          <item row="0" column="0">
+           <widget class="QToolButton" name="tNoResults">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/no_results.png</normaloff>:/images/no_results.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="wNoFinished">
+         <layout class="QGridLayout" name="wNoFinishedLayout">
+          <item row="0" column="0">
+           <widget class="QToolButton" name="tNoFinished">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/completed_transfers.png</normaloff>:/images/completed_transfers.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
@@ -1476,7 +1673,7 @@ QGroupBox::title
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections>
   <connection>

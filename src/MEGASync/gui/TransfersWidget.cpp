@@ -222,6 +222,12 @@ void TransfersWidget::transferTypeFilterChanged(QSet<int> transferTypes)
     ui->tvTransfers->scrollToTop();
 }
 
+void TransfersWidget::transferFilterReset()
+{
+    mProxyModel->resetAllFilters();
+    ui->tvTransfers->scrollToTop();
+}
+
 int TransfersWidget::rowCount()
 {
     return ui->tvTransfers->model()->rowCount(QModelIndex());

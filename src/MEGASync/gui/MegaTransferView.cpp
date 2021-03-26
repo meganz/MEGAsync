@@ -417,14 +417,6 @@ void MegaTransferView::dropEvent(QDropEvent *event)
     clearSelection();
 }
 
-//void MegaTransferView::paintEvent(QPaintEvent * e)
-//{
-//    auto app = static_cast<MegaApplication*>(qApp);
-//    app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
-//    QTreeView::paintEvent(e);
-//    app->megaApiLock.reset();
-//}
-
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
     bool enablePause = false;

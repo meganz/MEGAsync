@@ -45,6 +45,14 @@ void TransfersSortFilterProxyModel::addFileType(const QSet<TransferData::FileTyp
     invalidateFilter();
 }
 
+void TransfersSortFilterProxyModel::resetAllFilters()
+{
+    mTransferType = {};
+    mFileType = {};
+    mTransferState = {};
+    invalidateFilter();
+}
+
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);

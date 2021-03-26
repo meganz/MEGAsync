@@ -305,7 +305,7 @@ QProgressBar::chunk
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>6</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -357,7 +357,7 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>8</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -889,7 +889,7 @@ QProgressBar::chunk
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">

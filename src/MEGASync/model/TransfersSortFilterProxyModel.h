@@ -21,6 +21,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void addTransferState(const QSet<int> transferStates);
         void setFileType(const QSet<TransferData::FileTypes> fileTypes);
         void addFileType(const QSet<TransferData::FileTypes> fileTypes);
+        void resetAllFilters();
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
