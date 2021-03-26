@@ -3267,7 +3267,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation type="unfinished">Se han desactivado una o más sincronizaciones. Ve a Preferencias para activarlas de nuevo.</translation>
     </message>
     <message>
@@ -3279,6 +3279,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">Abrir los ajustes</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">Se han desactivado una o varias sincronizaciones. Ve a los ajustes para activarlas nuevamente.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">Tus sincronizaciones se han desactivado.</translation>
     </message>
 </context>
 <context>
@@ -4405,9 +4420,9 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- Nuevas mejoras para la gestión de las sincronizaciones.
+        <translation type="unfinished">- Mejoras para la gestión de las sincronizaciones.
 - Mejor experiencia de usuario al desactivarse las sincronizaciones.
-- Mejores notificaciones del sistemas para notificar a los usuarios sobre eventos de la cuenta.
+- Notificaciones del sistemas para avisar a los usuarios sobre eventos de la cuenta.
 - Mejor experiencia de usuario al trabajar con una gran cantidad de transferencias y sincronizaciones.
 - Corrección de problemas de CPU de gnome-shell en Ubuntu.
 - Corrección de errores detectados en Windows y Linux.
@@ -6003,7 +6018,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Comprueba tu correo electrónico y pulsa el enlace que te hemos enviado para confirmar tu cuenta.</translation>
+        <translation type="unfinished">Ve a la bandeja de entrada de tu correo electrónico y haz clic en el enlace para confirmar tu cuenta.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>

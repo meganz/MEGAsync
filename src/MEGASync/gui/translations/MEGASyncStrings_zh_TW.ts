@@ -3266,7 +3266,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation type="unfinished">一個或多個同步已停用。請至偏好設定裡再次啟用它們。</translation>
     </message>
     <message>
@@ -3278,6 +3278,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">開啟設定</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">一個或多個同步已停用。請至設定裡再次啟用它們。</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">您的同步已停用</translation>
     </message>
 </context>
 <context>
@@ -4404,14 +4419,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- 同步管理新改進。
+        <translation type="unfinished">- 同步管理新的改進。
 - 改善當同步停用時的使用者體驗。
 - 增強的系統通知功能，可提供用戶各種帳戶事件的通知。
 - 改善處理大量傳輸和同步時的使用者體驗。
-- 修復在Ubuntu上運行時，gnome-shell的CPU使用率過高的問題。
-- 修復在Windows和Linux上偵測到的崩潰問題。
+- 修正在Ubuntu上運行時，gnome-shell的CPU使用率過高的問題。
+- 修正在Windows和Linux上偵測到的崩潰問題。
 - 其它性能改進和調整。
-- 其它用戶界面修復和調整。</translation>
+- 其它用戶界面修正和調整。</translation>
     </message>
 </context>
 <context>
@@ -6002,7 +6017,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">請檢查您的電子郵件，並點擊連結以確認啟用您的帳戶。</translation>
+        <translation type="unfinished">請查閱您的電郵，然後點擊電郵上的連結以確認您的帳戶。</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
