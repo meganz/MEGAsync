@@ -1873,7 +1873,6 @@ void MegaApplication::checkNetworkInterfaces()
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "No active network interfaces found");
         networkConnectivity = false;
-        networkConfigurationManager.updateConfigurations();
     }
     else if (!activeNetworkInterfaces.size())
     {
@@ -2210,7 +2209,6 @@ void MegaApplication::periodicTasks()
                 megaApi->sendEvent(AppStatsEvents::EVENT_UPDATE_OK, "MEGAsync updated OK");
             }
 
-            networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
             mThreadPool->push([=]()
             {//thread pool function
