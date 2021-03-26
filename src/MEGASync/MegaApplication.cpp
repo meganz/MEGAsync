@@ -1089,11 +1089,6 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        if (preferences->logged()) //we have per account settings to restore
-        {
-            loadSyncExclusionRules();
-        }
-
         QString theSession;
         theSession = preferences->getSession();
 
@@ -3011,8 +3006,26 @@ void MegaApplication::proExpirityTimedOut()
     updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
 }
 
-void MegaApplication::loadSyncExclusionRules()
+void MegaApplication::loadSyncExclusionRules(QString email)
 {
+    assert(preferences->logged() || !email.isEmpty());
+
+    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+    bool temporarilyLoggedPrefs = false;
+    if (!preferences->logged() && !email.isEmpty())
+    {
+        temporarilyLoggedPrefs = preferences->enterUser(email);
+        if (!temporarilyLoggedPrefs) // nothing to load
+        {
+            return;
+        }
+
+        preferences->loadExcludedSyncNames(); //to attend the corner case:
+                  // comming from old versions that didn't include some defaults
+
+    }
+    assert(preferences->logged()); //At this point preferences should be logged, just because you enterUser() or it was already logged
+
     if (!preferences->logged())
     {
         return;
@@ -3051,6 +3064,13 @@ void MegaApplication::loadSyncExclusionRules()
     {
         megaApi->setExclusionUpperSizeLimit(0);
     }
+
+
+    if (temporarilyLoggedPrefs)
+    {
+        preferences->leaveUser();
+    }
+
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -3093,8 +3113,6 @@ void MegaApplication::setupWizardFinished(int result)
         }
         return;
     }
-
-    loadSyncExclusionRules();
 
     if (infoDialog && infoDialog->isVisible())
     {
@@ -4033,9 +4051,57 @@ void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
     mFetchingNodes = true;
-    migrateSyncConfToSdk(email);
-    //We can restore fetchnodes once we finish the migration of syncsconfigs
-    //megaApi->fetchNodes();
+
+    // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
+    // prior fetching nodes (when the SDK will resume syncing)
+
+    // If we are loging into a new session of an account previously used in MEGAsync,
+    // we will use the previous configurations stored in that user preferences
+    // However, there is a case in which we are not able to do so at this point:
+    // we don't know the user email.
+    // That should only happen when trying to resume a session (using the session id stored in general preferences)
+    // that didn't complete a fetch nodes (i.e. does not have preferences logged).
+    // that can happen for blocked accounts.
+    // Fortunately, the SDK can help us get the email of the session
+    bool needFindingOutEmail = !preferences->logged() && email.isEmpty();
+
+    auto loadMigrateAndFetchNodes = [this](const QString &email)
+    {
+        if (!preferences->logged() && email.isEmpty()) // I still couldn't get the the email: won't be able to access user settings
+        {
+            megaApi->fetchNodes();
+        }
+        else
+        {
+            loadSyncExclusionRules(email);
+            migrateSyncConfToSdk(email); // this will produce the fetch nodes once done
+        }
+    };
+
+    if (!needFindingOutEmail)
+    {
+        loadMigrateAndFetchNodes(email);
+    }
+    else // we will ask the SDK the email
+    {
+        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi* api,  MegaRequest *request, MegaError *e) {
+              QString email;
+
+              if (e->getErrorCode() == API_OK)
+              {
+                  auto emailFromRequest = request->getEmail();
+                  if (emailFromRequest)
+                  {
+                      email = QString::fromUtf8(emailFromRequest);
+                  }
+              }
+
+              // in any case, proceed:
+              loadMigrateAndFetchNodes(email);
+        }));
+
+    }
+
 }
 
 void MegaApplication::whyAmIBlocked(bool periodicCall)
@@ -7127,7 +7193,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         infoDialog->hide();
                     }
 
-                    loadSyncExclusionRules();
                     loggedIn(true);
                     emit closeSetupWizard();
                 }
