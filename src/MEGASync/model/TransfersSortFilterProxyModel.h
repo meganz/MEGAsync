@@ -10,6 +10,14 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         Q_OBJECT
 
     public:
+
+        enum SORT_BY
+        {
+            PRIORITY   = 0,
+            TOTAL_SIZE = 1,
+            NAME       = 2,
+        };
+
         TransfersSortFilterProxyModel(QObject *parent = 0);
 
         bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
@@ -22,6 +30,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void setFileType(const QSet<TransferData::FileTypes> fileTypes);
         void addFileType(const QSet<TransferData::FileTypes> fileTypes);
         void resetAllFilters();
+        void setSortBy(SORT_BY sortCriterion);
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
@@ -32,6 +41,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         QSet<int> mTransferType;
         QSet<int> mTransferState;
         QSet<TransferData::FileTypes> mFileType;
+        SORT_BY mSortCriterion;
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

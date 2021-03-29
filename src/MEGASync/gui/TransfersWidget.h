@@ -60,16 +60,20 @@ private:
     QTransfersModel::ModelType mType;
     int isPaused;
     MegaApplication *app;
+    int mHeaderNameState;
+    int mHeaderSizeState;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
 
+    void setHeaderState(QPushButton* header, int state);
+
 public slots:
-    void noTransfers();
-    void onTransferAdded();
+    void on_pHeaderName_clicked();
+    void on_pHeaderSize_clicked();
     void on_tPauseResumeAll_clicked();
     void on_tCancelAll_clicked();
-
+    void onTransferAdded();
 
 protected:
     void changeEvent(QEvent *event);

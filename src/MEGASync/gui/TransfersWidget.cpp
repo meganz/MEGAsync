@@ -6,16 +6,19 @@
 using namespace mega;
 
 TransfersWidget::TransfersWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TransfersWidget)
+    QWidget (parent),
+    ui (new Ui::TransfersWidget),
+    model (nullptr),
+    model2 (nullptr),
+    isPaused (false),
+    tDelegate (nullptr),
+    tDelegate2 (nullptr),
+    app (qobject_cast<MegaApplication*>(qApp)),
+    mHeaderNameState (0),
+    mHeaderSizeState (0)
+
 {
     ui->setupUi(this);
-    this->model = nullptr;
-    this->model2 = nullptr;
-    tDelegate = nullptr;
-    tDelegate2 = nullptr;
-    isPaused = false;
-    app = (MegaApplication *)qApp;
 }
 
 void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferData, QTransfersModel::ModelType type)
@@ -26,7 +29,6 @@ void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferD
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 
-    noTransfers();
     configureTransferView();
 
     if ((type == MegaTransfer::TYPE_DOWNLOAD && transferData->getNumDownloads())
@@ -56,7 +58,6 @@ void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData,
     connect(app, SIGNAL(clearAllFinishedTransfers()), model, SLOT(removeAllTransfers()));
     connect(app, SIGNAL(clearFinishedTransfer(int)),  model, SLOT(removeTransferByTag(int)));
 
-    noTransfers();
     configureTransferView();
 
     if (transferData.size())
@@ -119,7 +120,6 @@ void TransfersWidget::pausedTransfers(bool paused)
     isPaused = paused;
     if (model && model->rowCount(QModelIndex()) == 0)
     {
-        noTransfers();
     }
     else
     {
@@ -142,33 +142,85 @@ QTransfersModel2* TransfersWidget::getModel2()
     return model2;
 }
 
-
-void TransfersWidget::noTransfers()
+void TransfersWidget::on_pHeaderName_clicked()
 {
-    if (isPaused)
+    Qt::SortOrder order (Qt::AscendingOrder);
+    int column (-1);
+
+    switch (mHeaderNameState)
     {
-        ui->pNoTransfers->setState(TransfersStateInfoWidget::PAUSED);
-    }
-    else
-    {
-        switch (mType)
+        case 0:
         {
-            case QTransfersModel::TYPE_DOWNLOAD:
-                ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
-                break;
-            case QTransfersModel::TYPE_UPLOAD:
-                ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
-                break;
-            default:
-                ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
-                break;
+            order = Qt::DescendingOrder;
+            column = 0;
+            break;
+        }
+        case 1:
+        {
+            order = Qt::AscendingOrder;
+            column = 0;
+            break;
+        }
+        case 2:
+        default:
+        {
+            break;
         }
     }
 
-    ui->sWidget->setCurrentWidget(ui->pNoTransfers);
+    if (mHeaderSizeState != 0)
+    {
+        setHeaderState(ui->pHeaderSize, 2);
+        mHeaderSizeState = 0;
+        mProxyModel->sort(-1, order);
+    }
+
+    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SORT_BY::NAME);
+    mProxyModel->sort(column, order);
+
+    setHeaderState(ui->pHeaderName, mHeaderNameState);
+    mHeaderNameState = (mHeaderNameState + 1) % 3;
 }
 
+void TransfersWidget::on_pHeaderSize_clicked()
+{
+    Qt::SortOrder order (Qt::AscendingOrder);
+    int column (-1);
 
+    switch (mHeaderSizeState)
+    {
+        case 0:
+        {
+            order = Qt::DescendingOrder;
+            column = 0;
+            break;
+        }
+        case 1:
+        {
+            order = Qt::AscendingOrder;
+            column = 0;
+            break;
+        }
+        case 2:
+        default:
+        {
+            break;
+        }
+    }
+
+    if (mHeaderNameState != 0)
+    {
+        setHeaderState(ui->pHeaderName, 2);
+        mHeaderNameState = 0;
+        mProxyModel->sort(-1, order);
+    }
+
+    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SORT_BY::TOTAL_SIZE);
+    mProxyModel->sort(column, order);
+
+    setHeaderState(ui->pHeaderSize, mHeaderSizeState);
+    mHeaderSizeState = (mHeaderSizeState + 1) % 3;
+}
 
 void TransfersWidget::on_tPauseResumeAll_clicked()
 {
@@ -240,4 +292,30 @@ void TransfersWidget::changeEvent(QEvent *event)
         ui->retranslateUi(this);
     }
     QWidget::changeEvent(event);
+}
+
+
+void TransfersWidget::setHeaderState(QPushButton* header, int state)
+{
+    QIcon icon;
+    switch (state)
+    {
+        case 0:
+        {
+            icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_descending.png"));
+            break;
+        }
+        case 1:
+        {
+            icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_ascending.png"));
+            break;
+        }
+        case 2:
+        default:
+        {
+            icon = QIcon();
+            break;
+        }
+    }
+    header->setIcon(icon);
 }

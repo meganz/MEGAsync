@@ -3,9 +3,10 @@
 
 TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent),
-      mTransferType(QSet<int>()),
-      mTransferState(QSet<int>()),
-      mFileType(QSet<TransferData::FileTypes>())
+      mTransferType (QSet<int>()),
+      mTransferState (QSet<int>()),
+      mFileType (QSet<TransferData::FileTypes>()),
+      mSortCriterion (SORT_BY::PRIORITY)
 {
 }
 
@@ -53,6 +54,11 @@ void TransfersSortFilterProxyModel::resetAllFilters()
     invalidateFilter();
 }
 
+void TransfersSortFilterProxyModel::setSortBy(SORT_BY sortCriterion)
+{
+    mSortCriterion = sortCriterion;
+}
+
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
@@ -67,10 +73,33 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+    bool lessThan (false);
     const auto leftItem (qvariant_cast<TransferItem2>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem2>(right.data()).getTransferData());
 
-    return leftItem->mPriority > rightItem->mPriority;
+    switch (mSortCriterion)
+    {
+        case SORT_BY::PRIORITY:
+        {
+            lessThan = leftItem->mPriority < rightItem->mPriority;
+
+            break;
+        }
+        case SORT_BY::TOTAL_SIZE:
+        {
+            lessThan = leftItem->mTotalSize < rightItem->mTotalSize;
+            break;
+        }
+        case SORT_BY::NAME:
+        {
+            lessThan = leftItem->mFilename < rightItem->mFilename;
+            break;
+        }
+        default:
+            break;
+    }
+
+    return lessThan;
 }
 
 bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,

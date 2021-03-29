@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -52,7 +52,7 @@
     max-height: 28px;
 }
 
-#wTableHeader QLabel
+#wTableHeader QLabel, #wTableHeader  QPushButton
 {
     height: 20px;
     color: #666666;
@@ -79,7 +79,7 @@
     background-color: #ECECEC;
 }
 
-#wTableHeader QLabel
+#wTableHeader QLabel, #wTableHeader  QPushButton
 {
 /*	margin: 0;
     border: 0;
@@ -87,17 +87,22 @@
     padding: 0;
 }
 
-#lHeaderName
+#pHeaderName
 {
     width: 160px;
     min-width: 160px;
 }
 
-#lHeaderSize, #lHeaderSpeed
+#pHeaderSize, #lHeaderSpeed
 {
     width: 100px;
     min-width: 100px;
     max-width: 100px;
+}
+
+#wTableHeader  QPushButton
+{
+    text-align: left;
 }
 
 #lHeaderStatus
@@ -254,28 +259,22 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="lHeaderName">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QPushButton" name="pHeaderName">
             <property name="text">
              <string>Name</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lHeaderSize">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QPushButton" name="pHeaderSize">
             <property name="text">
              <string>Size</string>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
