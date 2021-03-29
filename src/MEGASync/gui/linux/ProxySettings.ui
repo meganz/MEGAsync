@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Bandwidth</string>
+   <string>Proxy</string>
   </property>
   <property name="modal">
    <bool>true</bool>

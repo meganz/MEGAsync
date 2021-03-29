@@ -32,7 +32,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
+    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, NETWORK_TAB = 2, ADVANCED_TAB = 3, SECURITY_TAB = 4};
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
@@ -72,10 +72,9 @@ private slots:
 
     void on_bAccount_clicked();
     void on_bSyncs_clicked();
-    void on_bBandwidth_clicked();
+    void on_bNetwork_clicked();
     void on_bSecurity_clicked();
     void on_bAdvanced_clicked();
-    void on_bProxies_clicked();
 
     void on_bHelp_clicked();
 #ifndef __APPLE__
@@ -124,8 +123,8 @@ private slots:
     void on_cDisableFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 
-    void on_openProxySettingsButton_clicked();
-    void on_bBandwidthSettings_clicked();
+    void on_bOpenProxySettings_clicked();
+    void on_bOpenBandwidthSettings_clicked();
 
 #ifdef Q_OS_WINDOWS
     void on_cDisableIcons_toggled(bool checked);
@@ -184,9 +183,8 @@ private:
     std::unique_ptr<QMacToolBar> toolBar;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
-    std::unique_ptr<QMacToolBarItem> bBandwidth;
+    std::unique_ptr<QMacToolBarItem> bNetwork;
     std::unique_ptr<QMacToolBarItem> bSecurity;
-    std::unique_ptr<QMacToolBarItem> bProxies;
     std::unique_ptr<QMacToolBarItem> bAdvanced;
 
     void animateSettingPage(int endValue, int duration = 150);

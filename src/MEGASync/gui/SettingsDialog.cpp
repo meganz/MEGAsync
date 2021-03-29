@@ -45,10 +45,10 @@ constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT{464};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS{444};
+// TODO: Re-evaluate sizes for Network tab
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
-constexpr auto SETTING_ANIMATION_PROXY_TAB_HEIGHT{359};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
@@ -182,9 +182,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     QIcon account(QString::fromUtf8("://images/settings-general.png"));
     QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
-    QIcon bandwidth(QString::fromUtf8("://images/settings-transfers.png"));
+    QIcon network(QString::fromUtf8("://images/settings-network.png"));
     QIcon security(QString::fromUtf8("://images/settings-security.png"));
-    QIcon proxy(QString::fromUtf8("://images/settings-network.png"));
     QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
 
     // add Items
@@ -196,17 +195,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     bSyncs.get()->setIcon(syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
 
-    bBandwidth.reset(toolBar->addItem(bandwidth, tr("Bandwidth")));
-    bBandwidth.get()->setIcon(bandwidth);
-    connect(bBandwidth.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bBandwidth_clicked);
+    bNetwork.reset(toolBar->addItem(network, tr("Network")));
+    bNetwork.get()->setIcon(network);
+    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);
 
-    bSecurity.reset(toolBar->addItem(bandwidth, tr("Security")));
+    bSecurity.reset(toolBar->addItem(security, tr("Security")));
     bSecurity.get()->setIcon(security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
-
-    bProxies.reset(toolBar->addItem(proxy, tr("Proxy")));
-    bProxies.get()->setIcon(proxy);
-    connect(bProxies.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bProxies_clicked);
 
     bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
     bAdvanced.get()->setIcon(advanced);
@@ -214,9 +209,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     bAccount.get()->setSelectable(true);
     bSyncs.get()->setSelectable(true);
-    bBandwidth.get()->setSelectable(true);
+    bNetwork.get()->setSelectable(true);
     bSecurity.get()->setSelectable(true);
-    bProxies.get()->setSelectable(true);
     bAdvanced.get()->setSelectable(true);
 
     //Disable context menu and set default option to account tab
@@ -239,8 +233,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifndef Q_OS_MACOS
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -261,7 +254,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
     ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
     ui->pSyncs->hide();
 
     if (!proxyOnly)
@@ -279,7 +271,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
             ui->gStorageSpace->setMinimumHeight(103);//TODO: check and adjust size for animations
         }
 
-        ui->pProxies->hide();
+        ui->pNetwork->hide();
     }
 #endif
 
@@ -311,28 +303,25 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     ui->bAccount->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
     ui->bSyncs->setEnabled(!proxyOnly);
-    ui->bBandwidth->setEnabled(!proxyOnly);
     ui->bAdvanced->setEnabled(!proxyOnly);
-    ui->bBandwidth->setEnabled(!proxyOnly);
 #else
     // TODO: enableNSToolBarItem does not disable items. Review cocoa code
     enableNSToolBarItem(bAccount.get(), !proxyOnly);
     enableNSToolBarItem(bSecurity.get(), !proxyOnly);
     enableNSToolBarItem(bSyncs.get(), !proxyOnly);
-    enableNSToolBarItem(bBandwidth.get(), !proxyOnly);
     enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
-    enableNSToolBarItem(bBandwidth.get(), !proxyOnly);
 #endif
 
     if (proxyOnly)
     {
 #ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bProxies.get());
+        checkNSToolBarItem(toolBar.get(), bNetwork.get());
+        // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
 #else
-        ui->bProxies->setEnabled(true);
-        ui->bProxies->setChecked(true);
+        ui->bNetwork->setEnabled(true);
+        ui->bNetwork->setChecked(true);
 #endif
     }
     else
@@ -378,8 +367,8 @@ void SettingsDialog::onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSettin
 
 void SettingsDialog::showGuestMode()
 {
-    ui->wStack->setCurrentWidget(ui->pProxies);
-    ui->pProxies->show();
+    ui->wStack->setCurrentWidget(ui->pNetwork);
+    ui->pNetwork->show();
     ProxySettings *proxySettingsDialog = new ProxySettings(app, this);
     proxySettingsDialog->setAttribute(Qt::WA_DeleteOnClose);
     proxySettingsDialog->setWindowModality(Qt::WindowModal);
@@ -590,26 +579,26 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 }
 
-void SettingsDialog::on_bBandwidth_clicked()
+void SettingsDialog::on_bNetwork_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("Bandwidth"));
+    setWindowTitle(tr("Network"));
 
-    if (ui->wStack->currentWidget() == ui->pBandwidth)
+    if (ui->wStack->currentWidget() == ui->pNetwork)
     {
 #ifdef Q_OS_MACOS
-       checkNSToolBarItem(toolBar.get(), bBandwidth.get());
+       checkNSToolBarItem(toolBar.get(), bNetwork.get());
 #endif
         return;
     }
 
-    ui->wStack->setCurrentWidget(ui->pBandwidth);
+    ui->wStack->setCurrentWidget(ui->pNetwork);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bBandwidth.get());
+    checkNSToolBarItem(toolBar.get(), bNetwork.get());
 
-    ui->pBandwidth->hide();
+    ui->pNetwork->hide();
 
     int bwHeight;
     ui->gBandwidthQuota->show();
@@ -618,12 +607,12 @@ void SettingsDialog::on_bBandwidth_clicked()
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->gBandwidthQuota->setMinimumHeight(59);
-        animateSettingPage(SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
+        animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
     else
     {
         ui->gBandwidthQuota->setMinimumHeight(79);
-        animateSettingPage(SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+        animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
 
 #endif
@@ -685,30 +674,6 @@ void SettingsDialog::on_bAdvanced_clicked()
     {
         animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
-#endif
-}
-
-void SettingsDialog::on_bProxies_clicked()
-{
-    emit userActivity();
-
-    setWindowTitle(tr("Proxy"));
-
-    if (ui->wStack->currentWidget() == ui->pProxies)
-    {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bProxies.get());
-#endif
-        return;
-    }
-
-    ui->wStack->setCurrentWidget(ui->pProxies);
-
-#ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bProxies.get());
-
-    ui->pProxies->hide();
-    animateSettingPage(SETTING_ANIMATION_PROXY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
@@ -1932,15 +1897,13 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bAccount->setEnabled(completed);
     ui->bSyncs->setEnabled(completed);
     ui->bAdvanced->setEnabled(completed);
-    ui->bBandwidth->setEnabled(completed);
-    ui->bProxies->setEnabled(completed);
+    ui->bNetwork->setEnabled(completed);
     ui->bSecurity->setEnabled(completed);
 #else
     enableNSToolBarItem(bAccount.get(), completed);
     enableNSToolBarItem(bSyncs.get() , completed);
     enableNSToolBarItem(bAdvanced.get(), completed);
-    enableNSToolBarItem(bBandwidth.get(), completed);
-    enableNSToolBarItem(bProxies.get(), completed);
+    enableNSToolBarItem(bNetwork.get(), completed);
 #endif
 }
 
@@ -2121,11 +2084,11 @@ void SettingsDialog::openSettingsTab(int tab)
 #endif
         break;
 
-    case BANDWIDTH_TAB:
+    case NETWORK_TAB:
 #ifndef Q_OS_MACOS
-        ui->bBandwidth->setChecked(true);
+        ui->bNetwork->setChecked(true);
 #else
-        emit bBandwidth.get()->activated();
+        emit bNetwork.get()->activated();
 #endif
         break;
 
@@ -2134,14 +2097,6 @@ void SettingsDialog::openSettingsTab(int tab)
         ui->bSecurity->setChecked(true);
 #else
         emit bSecurity.get()->activated();
-#endif
-        break;
-
-    case PROXY_TAB:
-#ifndef Q_OS_MACOS
-        ui->bProxies->setChecked(true);
-#else
-        emit bProxies.get()->activated();
 #endif
         break;
 
@@ -2212,17 +2167,13 @@ void SettingsDialog::onAnimationFinished()
     {
         ui->pSyncs->show();
     }
-    else if (ui->wStack->currentWidget() == ui->pBandwidth)
+    else if (ui->wStack->currentWidget() == ui->pNetwork)
     {
-        ui->pBandwidth->show();
+        ui->pNetwork->show();
     }
     else if (ui->wStack->currentWidget() == ui->pSecurity)
     {
         ui->pSecurity->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pProxies)
-    {
-        ui->pProxies->show();
     }
     else if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
@@ -2363,14 +2314,14 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 #endif
 }
 
-void SettingsDialog::on_openProxySettingsButton_clicked()
+void SettingsDialog::on_bOpenProxySettings_clicked()
 {
     ProxySettings proxySettingsDialog(app, this);
     if (proxySettingsDialog.exec() == QDialog::Accepted)
         app->applyProxySettings();
 }
 
-void SettingsDialog::on_bBandwidthSettings_clicked()
+void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 {
     BandwidthSettings bandwidthSettings(app, this);
     if (bandwidthSettings.exec() == QDialog::Rejected)

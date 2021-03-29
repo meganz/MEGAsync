@@ -171,6 +171,94 @@ padding-bottom: 6px;
    <property name="verticalSpacing">
     <number>2</number>
    </property>
+   <item row="7" column="0">
+    <widget class="QWidget" name="wBottom" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>56</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_18">
+      <property name="leftMargin">
+       <number>29</number>
+      </property>
+      <property name="topMargin">
+       <number>11</number>
+      </property>
+      <property name="rightMargin">
+       <number>28</number>
+      </property>
+      <property name="bottomMargin">
+       <number>13</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="bHelpIco">
+        <property name="minimumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bHelp">
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Help</string>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>400</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QWidget" name="wTabHeader" native="true">
      <property name="minimumSize">
@@ -352,7 +440,7 @@ padding-bottom: 6px;
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bBandwidth">
+       <widget class="QToolButton" name="bNetwork">
         <property name="minimumSize">
          <size>
           <width>100</width>
@@ -374,53 +462,7 @@ padding-bottom: 6px;
          <enum>Qt::StrongFocus</enum>
         </property>
         <property name="text">
-         <string>Bandwidth</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>://images/bandwidth_32.png</normaloff>://images/bandwidth_32.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextUnderIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="bProxies">
-        <property name="minimumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>76</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string>Proxy</string>
+         <string>Network</string>
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
@@ -532,94 +574,6 @@ background:transparent;</string>
        <height>2</height>
       </size>
      </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QWidget" name="wBottom" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>56</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_18">
-      <property name="leftMargin">
-       <number>29</number>
-      </property>
-      <property name="topMargin">
-       <number>11</number>
-      </property>
-      <property name="rightMargin">
-       <number>28</number>
-      </property>
-      <property name="bottomMargin">
-       <number>13</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="bHelpIco">
-        <property name="minimumSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bHelp">
-        <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-          <underline>true</underline>
-         </font>
-        </property>
-        <property name="text">
-         <string>Help</string>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>400</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
     </widget>
    </item>
    <item row="2" column="0">
@@ -2774,7 +2728,7 @@ padding-left: 10px;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pBandwidth">
+     <widget class="QWidget" name="pNetwork">
       <property name="focusPolicy">
        <enum>Qt::WheelFocus</enum>
       </property>
@@ -2915,9 +2869,16 @@ padding-left: 10px;
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="bBandwidthSettings">
+        <widget class="QPushButton" name="bOpenBandwidthSettings">
          <property name="text">
           <string>Open Bandwidth Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bOpenProxySettings">
+         <property name="text">
+          <string>Open Proxy Settings</string>
          </property>
         </widget>
        </item>
@@ -4005,32 +3966,6 @@ background:transparent;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pProxies">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_11">
-       <property name="spacing">
-        <number>12</number>
-       </property>
-       <property name="leftMargin">
-        <number>14</number>
-       </property>
-       <property name="topMargin">
-        <number>14</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="openProxySettingsButton">
-         <property name="text">
-          <string>Open Proxy Settings</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
   </layout>
@@ -4053,8 +3988,7 @@ background:transparent;</string>
  <tabstops>
   <tabstop>bSyncs</tabstop>
   <tabstop>bAccount</tabstop>
-  <tabstop>bBandwidth</tabstop>
-  <tabstop>bProxies</tabstop>
+  <tabstop>bNetwork</tabstop>
   <tabstop>bAdvanced</tabstop>
   <tabstop>lStorageSpace</tabstop>
   <tabstop>pStorage</tabstop>
