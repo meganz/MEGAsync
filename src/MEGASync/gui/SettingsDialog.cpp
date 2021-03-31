@@ -841,6 +841,8 @@ void SettingsDialog::loadSettings()
     ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
 #endif
 
+    updateNetworkTab();
+
     //Advanced
     ui->lExcludedNames->clear();
     QStringList excludedNames = preferences->getExcludedSyncNames();
@@ -1639,6 +1641,8 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->cStartOnStartup->setText(tr("Open at login"));
 #endif
         onCacheSizeAvailable();
+
+        updateNetworkTab();
     }
     QDialog::changeEvent(event);
 }
@@ -1739,6 +1743,46 @@ void SettingsDialog::saveExcludeSyncNames()
 #else
         QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
 #endif
+    }
+}
+
+void SettingsDialog::updateNetworkTab()
+{
+    int uploadLimitKB = preferences->uploadLimitKB();
+    if (uploadLimitKB < 0)
+    {
+        ui->lUploadRateLimit->setText(tr("Auto"));
+    }
+    else if (uploadLimitKB > 0)
+    {
+        ui->lUploadRateLimit->setText(QStringLiteral("%1 KB/s").arg(uploadLimitKB));
+    }
+    else
+    {
+        ui->lUploadRateLimit->setText(tr("Don't limit"));
+    }
+
+    int downloadLimitKB = preferences->downloadLimitKB();
+    if (downloadLimitKB > 0)
+    {
+        ui->lDownloadRateLimit->setText(QStringLiteral("%1 KB/s").arg(downloadLimitKB));
+    }
+    else
+    {
+        ui->lDownloadRateLimit->setText(tr("Don't limit"));
+    }
+
+    switch (preferences->proxyType())
+    {
+    case Preferences::PROXY_TYPE_NONE:
+        ui->lProxySettings->setText(tr("No proxy"));
+        break;
+    case Preferences::PROXY_TYPE_AUTO:
+        ui->lProxySettings->setText(tr("Auto"));
+        break;
+    case Preferences::PROXY_TYPE_CUSTOM:
+        ui->lProxySettings->setText(tr("Manual"));
+        break;
     }
 }
 
@@ -2318,7 +2362,10 @@ void SettingsDialog::on_bOpenProxySettings_clicked()
 {
     ProxySettings proxySettingsDialog(app, this);
     if (proxySettingsDialog.exec() == QDialog::Accepted)
+    {
         app->applyProxySettings();
+        updateNetworkTab();
+    }
 }
 
 void SettingsDialog::on_bOpenBandwidthSettings_clicked()
@@ -2339,6 +2386,8 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
     app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
 
     app->setUseHttpsOnly(preferences->usingHttpsOnly());
+
+    updateNetworkTab();
 }
 
 #ifdef Q_OS_WINDOWS

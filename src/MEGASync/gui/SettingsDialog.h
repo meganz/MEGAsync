@@ -148,6 +148,7 @@ private:
     QString excludeBySizeInfo();
     QString cacheDaysLimitInfo();
     void saveExcludeSyncNames();
+    void updateNetworkTab();
 
     Ui::SettingsDialog *ui;
     MegaApplication *app;
