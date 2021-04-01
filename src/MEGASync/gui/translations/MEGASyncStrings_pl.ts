@@ -3352,7 +3352,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">Wymagane są pełne uprawnienia aby synchornizować ten katalog.</translation>
+        <translation type="unfinished">Wymagane są pełne uprawnienia aby synchronizować ten katalog.</translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
