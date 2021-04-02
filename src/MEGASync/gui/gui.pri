@@ -204,7 +204,8 @@ win32 {
                 $$PWD/win/MegaInfoMessage.ui \
                 $$PWD/win/DynamicTransferQuotaPopOver.ui \
                 $$PWD/win/OverQuotaDialog.ui \
-                $$PWD/win/ProxySettings.ui
+                $$PWD/win/ProxySettings.ui \
+                $$PWD/win/BandwidthSettings.ui
 }
 
 macx {
