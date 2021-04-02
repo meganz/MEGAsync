@@ -262,7 +262,8 @@ macx {
                 $$PWD/macx/MegaInfoMessage.ui \
                 $$PWD/macx/DynamicTransferQuotaPopOver.ui \
                 $$PWD/macx/OverQuotaDialog.ui \
-                $$PWD/macx/ProxySettings.ui
+                $$PWD/macx/ProxySettings.ui \
+                $$PWD/macx/BandwidthSettings.ui
 
     QT += macextras
 
