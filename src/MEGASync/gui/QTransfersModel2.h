@@ -8,6 +8,7 @@
 #include <megaapi.h>
 
 #include <QAbstractItemModel>
+#include <QLinkedList>
 
 class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener
 {
@@ -63,15 +64,16 @@ private slots:
     void onPauseStateChanged();
 
 private:
-    static constexpr int INIT_ROWS_PER_CHUNK = 500;
+    static constexpr int INIT_ROWS_PER_CHUNK = 100;
 
     mega::MegaApi* mMegaApi;
+    mega::MegaApiLock* mMegaApiLock;
     Preferences* mPreferences;
 
     QMap<TransferTag, QVariant> mTransfers;
     QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
-    QList<TransferTag> mOrder;
+    std::deque<TransferTag> mOrder;
     ThreadPool* mThreadPool;
     QHash<QString, TransferData::FileTypes> mFileTypes;
     QMutex mModelMutex;

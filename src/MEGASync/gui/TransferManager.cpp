@@ -130,9 +130,10 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mStatsRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshStats);
 
-    onTransfersInModelChanged(true);
-
     on_tAllTransfers_clicked();
+    mUi->sTransfers->setCurrentWidget(mUi->wTransfers);
+
+    onTransfersInModelChanged(true);
 }
 
 void TransferManager::setActiveTab(int t)
@@ -247,7 +248,7 @@ void TransferManager::updatePauseState(bool isPaused, QString toolTipText)
 
 bool TransferManager::refreshStateStats()
 {
-    QLabel *label (nullptr);
+    QLabel* label (nullptr);
     bool weHaveTransfers (true);
     long long processedNumber (0LL);
     static long long prevAcvtiveNumber (-1LL);
@@ -263,6 +264,11 @@ bool TransferManager::refreshStateStats()
 
     if (processedNumber != prevFinishedNumber)
     {
+        if (processedNumber == 0 && mCurrentTab == COMPLETED_TAB)
+        {
+            mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
+        }
+
         label->parentWidget()->setVisible(weHaveTransfers);
         label->setText(QString::number(processedNumber));
         prevFinishedNumber = processedNumber;
@@ -279,12 +285,17 @@ bool TransferManager::refreshStateStats()
 
     if (processedNumber != prevAcvtiveNumber)
     {
-        QWidget * leftFooterWidget (nullptr);
+        QWidget* leftFooterWidget (nullptr);
         if (processedNumber == 0)
         {
             leftFooterWidget = mUi->pUpToDate;
             mSpeedRefreshTimer->stop();
             label->hide();
+
+            if (mCurrentTab == ALL_TRANSFERS_TAB)
+            {
+                mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
+            }
         }
         else
         {
@@ -293,6 +304,10 @@ bool TransferManager::refreshStateStats()
                 leftFooterWidget = mUi->pSpeedAndClear;
                 mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
                 label->show();
+                if (mCurrentTab == ALL_TRANSFERS_TAB)
+                {
+                    mUi->sTransfers->setCurrentWidget(mUi->wTransfers);
+                }
             }
             label->setText(QString::number(processedNumber));
         }
@@ -346,6 +361,16 @@ void TransferManager::refreshTypeStats()
         }
         prevUlNumber = number;
     }
+
+    if (mCurrentTab == UPLOADS_TAB && prevUlNumber == 0
+            || mCurrentTab == DOWNLOADS_TAB && prevDlNumber == 0)
+    {
+        mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
+    }
+    else
+    {
+        mUi->sTransfers->setCurrentWidget(mUi->wTransfers);
+    }
 }
 
 void TransferManager::refreshFileTypesStats()
@@ -367,7 +392,6 @@ void TransferManager::refreshFileTypesStats()
 
 void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
 {
-    bool showMediaTypes(false);
     if (weHaveTransfers)
     {
         mStatsRefreshTimer->start(std::chrono::milliseconds(STATS_REFRESH_PERIOD_MS));
@@ -378,6 +402,8 @@ void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
     }
     refreshTypeStats();
     refreshFileTypesStats();
+
+    bool showMediaTypes(false);
     showMediaTypes = refreshStateStats();
     mUi->wMediaType->setVisible(showMediaTypes);
 }
@@ -394,11 +420,7 @@ void TransferManager::refreshStats()
 {
     refreshTypeStats();
     refreshFileTypesStats();
-    if (refreshStateStats())
-    {
-        onTransfersInModelChanged(true);
-    }
-    else
+    if (!refreshStateStats())
     {
         onTransfersInModelChanged(false);
     }
@@ -685,28 +707,28 @@ void TransferManager::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void TransferManager::mouseMoveEvent(QMouseEvent *event)
-{
-    if (event->buttons() & Qt::LeftButton)
-    {
-        if (mDragPosition.x() != -1)
-        {
-            move(event->globalPos() - mDragPosition);
-            event->accept();
-        }
-    }
-}
+//void TransferManager::mouseMoveEvent(QMouseEvent *event)
+//{
+//    if (event->buttons() & Qt::LeftButton)
+//    {
+//        if (mDragPosition.x() != -1)
+//        {
+//            move(event->globalPos() - mDragPosition);
+//            event->accept();
+//        }
+//    }
+//}
 
-void TransferManager::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
-    {
-        mDragPosition = event->globalPos() - frameGeometry().topLeft();
-        event->accept();
-    }
-}
+//void TransferManager::mousePressEvent(QMouseEvent *event)
+//{
+//    if (event->button() == Qt::LeftButton)
+//    {
+//        mDragPosition = event->globalPos() - frameGeometry().topLeft();
+//        event->accept();
+//    }
+//}
 
-void TransferManager::mouseReleaseEvent(QMouseEvent *event)
-{
-    mDragPosition = QPoint(-1, -1);
-}
+//void TransferManager::mouseReleaseEvent(QMouseEvent *event)
+//{
+//    mDragPosition = QPoint(-1, -1);
+//}
