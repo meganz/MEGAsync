@@ -190,14 +190,14 @@ int main(int argc, char *argv[])
                 QList<SyncData> syncData = preferences->readOldCachedSyncs();
                 foreach(SyncData osd, syncData)
                 {
-                    removeSyncData(osd.mLocalFolder, osd.mName, osd.mSyncID);
+                    removeSyncData(osd.mLocalFolder, osd.mName.remove(QChar::fromAscii(':')), osd.mSyncID);
                 }
 
                 // now for the new syncs cached configurations
                 auto loadedSyncs = preferences->getLoadedSyncsMap();
                 for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
                 {
-                    removeSyncData(it.value()->getLocalFolder(), it.value()->name(), it.value()->getSyncID());
+                    removeSyncData(it.value()->getLocalFolder(), it.value()->name(true), it.value()->getSyncID());
                 }
 
                 preferences->leaveUser();

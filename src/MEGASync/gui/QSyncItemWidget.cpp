@@ -46,7 +46,7 @@ void QSyncItemWidget::setPathAndGuessName(const QString &path)
         syncName = QDir::toNativeSeparators(mFullPath);
     }
 
-    syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+    syncName.remove(QDir::separator());
 
     //If full sync mode ("/"), avoid empty display name
     if (syncName.isEmpty())
