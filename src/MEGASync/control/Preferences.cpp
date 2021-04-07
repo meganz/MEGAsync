@@ -57,7 +57,7 @@ unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
 unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
 unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
 unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
-unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
+size_t Preferences::MAX_COMPLETED_ITEMS                       = 1000;
 
 unsigned int Preferences::MUTEX_STEALER_MS                    = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_MS             = 0;

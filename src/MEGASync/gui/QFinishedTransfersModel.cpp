@@ -54,7 +54,7 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *t)
                 if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
                 {
                     TransferItemData *t = transferOrder.back();
-                    int row = transferOrder.size() - 1;
+                    int row = int(transferOrder.size()) - 1;
                     beginRemoveRows(QModelIndex(), row, row);
                     transfers.remove(t->data.tag);
                     transferOrder.pop_back();

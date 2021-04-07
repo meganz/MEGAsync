@@ -16,7 +16,7 @@ void QCustomTransfersModel::refreshTransfers()
 {
     if (transferOrder.size())
     {
-        emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size() - 1, 0, QModelIndex()));
+        emit dataChanged(index(0, 0, QModelIndex()), index(int(transferOrder.size()) - 1, 0, QModelIndex()));
     }
 }
 
@@ -106,7 +106,7 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *t, Mega
                     if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
                     {
                         TransferItemData *itemData = transferOrder.back();
-                        int row = transferOrder.size() - 1;
+                        int row = int(transferOrder.size()) - 1;
                         beginRemoveRows(QModelIndex(), row, row);
                         transfers.remove(itemData->data.tag);
                         transferOrder.pop_back();
