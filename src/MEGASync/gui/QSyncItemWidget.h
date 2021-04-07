@@ -20,8 +20,8 @@ class QSyncItemWidget : public QWidget
 public:
     explicit QSyncItemWidget(QWidget *parent = nullptr);
 
-    void setPathAndName(const QString &path, const QString &name);
-    void setPathAndGuessName(const QString &path);
+    void setPath(const QString &path, const QString &name);
+    void setPath(const QString &path);
 
     void setToolTip(const QString &tooltip);
     void setError(int error);

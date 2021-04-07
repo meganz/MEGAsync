@@ -29,32 +29,31 @@ QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
 
 }
 
-void QSyncItemWidget::setPathAndName(const QString &path, const QString &syncName)
+void QSyncItemWidget::setPath(const QString &path, const QString &syncName)
 {
     mFullPath = path;
     mDisplayName = syncName;
     elidePathLabel();
 }
 
-void QSyncItemWidget::setPathAndGuessName(const QString &path)
+void QSyncItemWidget::setPath(const QString &path)
 {
     mFullPath = path;
 
-    QString syncName {QFileInfo(mFullPath).fileName()};
-    if (syncName.isEmpty())
+    mDisplayName = QFileInfo(mFullPath).fileName();
+    if (mDisplayName.isEmpty())
     {
-        syncName = QDir::toNativeSeparators(mFullPath);
+        mDisplayName = QDir::toNativeSeparators(mFullPath);
     }
 
-    syncName.remove(QDir::separator());
+    mDisplayName.remove(QDir::separator());
 
     //If full sync mode ("/"), avoid empty display name
-    if (syncName.isEmpty())
+    if (mDisplayName.isEmpty())
     {
-        syncName.append(QChar::fromAscii('/'));
+        mDisplayName.append(QChar::fromAscii('/'));
     }
 
-    mDisplayName = syncName;
     elidePathLabel();
 }
 
