@@ -51,14 +51,14 @@ void utf8ToUtf16(const char* utf8data, string* utf16string)
         return;
     }
 
-    int size = strlen(utf8data) + 1;
+    size_t size = strlen(utf8data) + 1;
 
     // make space for the worst case
     utf16string->resize(size * sizeof(wchar_t));
 
     // resize to actual result
-    utf16string->resize(sizeof(wchar_t) * MultiByteToWideChar(CP_UTF8, 0, utf8data, size, (wchar_t*)utf16string->data(),
-                                                              utf16string->size() / sizeof(wchar_t) + 1));
+    utf16string->resize(sizeof(wchar_t) * MultiByteToWideChar(CP_UTF8, 0, utf8data, int(size), (wchar_t*)utf16string->data(),
+                                                              int(utf16string->size()) / sizeof(wchar_t) + 1));
     if (utf16string->size())
     {
         utf16string->resize(utf16string->size() - 1);
@@ -82,7 +82,7 @@ void utf16ToUtf8(const wchar_t* utf16data, int utf16size, string* utf8string)
     utf8string->resize(WideCharToMultiByte(CP_UTF8, 0, utf16data,
         utf16size,
         (char*)utf8string->data(),
-        utf8string->size() + 1,
+        int(utf8string->size() + 1),
         NULL, NULL));
 }
 
@@ -529,7 +529,7 @@ bool UpdateTask::fileExist(const char *path)
     return (mega_access(path) != -1);
 }
 
-void UpdateTask::addToSignature(const char* bytes, int length)
+void UpdateTask::addToSignature(const char* bytes, size_t length)
 {
     signatureChecker->add(bytes, length);
 }
@@ -559,7 +559,7 @@ bool UpdateTask::performUpdate()
         if (mkdir_p(mega_base_path(file).c_str()) == -1)
         {
             LOG(LOG_LEVEL_ERROR, "Error creating backup folder for: %s",  file.c_str());
-            rollbackUpdate(i);
+            rollbackUpdate(int(i));
             return false;
         }
 
@@ -567,14 +567,14 @@ bool UpdateTask::performUpdate()
         if (mega_rename(origFile.c_str(), file.c_str()) && errno != ENOENT)
         {
             LOG(LOG_LEVEL_ERROR, "Error creating backup of file %s to %s",  origFile.c_str(), file.c_str());
-            rollbackUpdate(i);
+            rollbackUpdate(int(i));
             return false;
         }
 
         if (mkdir_p(mega_base_path(origFile).c_str()) == -1)
         {
             LOG(LOG_LEVEL_ERROR, "Error creating target folder for: %s",  origFile.c_str());
-            rollbackUpdate(i);
+            rollbackUpdate(int(i));
             return false;
         }
         setPermissions(mega_base_path(origFile).c_str());
@@ -583,7 +583,7 @@ bool UpdateTask::performUpdate()
         if (mega_rename(update.c_str(), origFile.c_str()))
         {
             LOG(LOG_LEVEL_ERROR, "Error installing file %s in %s",  update.c_str(), origFile.c_str());
-            rollbackUpdate(i);
+            rollbackUpdate(int(i));
             return false;
         }
         setPermissions(origFile.c_str());
@@ -790,9 +790,9 @@ void UpdateTask::emptydirlocal(string* name, dev_t basedev)
     dev_t currentdev;
 
     int added = 0;
-    if (name->size() > sizeof(wchar_t) && !memcmp(name->data() + name->size() - sizeof(wchar_t), (char*)L":", sizeof(wchar_t)))
+    if (name->size() > sizeof(wchar_t) && !memcmp(name->data() + name->size() - sizeof(wchar_t), (char*)(void*)L":", sizeof(wchar_t)))
     {
-        name->append((char*)L"\\", sizeof(wchar_t));
+        name->append((char*)(void*)L"\\", sizeof(wchar_t));
         added = sizeof(wchar_t);
     }
 
@@ -855,7 +855,7 @@ void UpdateTask::emptydirlocal(string* name, dev_t basedev)
     {
         // iterate over children and delete
         removed = false;
-        name->append((char*)L"\\*", 5);
+        name->append((char*)(void*)L"\\*", 5);
         WIN32_FIND_DATAW ffd;
     #ifdef WINDOWS_PHONE
         hFind = FindFirstFileExW((LPCWSTR)name->data(), FindExInfoBasic, &ffd, FindExSearchNameMatch, NULL, 0);
@@ -878,7 +878,7 @@ void UpdateTask::emptydirlocal(string* name, dev_t basedev)
                     || ffd.cFileName[2]))))
             {
                 string childname = *name;
-                childname.append((char*)L"\\", 2);
+                childname.append((char*)(void*)L"\\", 2);
                 childname.append((char*)ffd.cFileName, sizeof(wchar_t) * wcslen(ffd.cFileName));
                 if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                 {
@@ -983,13 +983,13 @@ namespace
 SignatureChecker::SignatureChecker(const char *base64Key)
 {
     string pubks;
-    int len = strlen(base64Key)/4*3+3;
+    size_t len = strlen(base64Key)/4*3+3;
     pubks.resize(len);
-    pubks.resize(Base64::atob(base64Key, (byte *)pubks.data(), len));
+    pubks.resize(Base64::atob(base64Key, (byte *)pubks.data(), int(len)));
 
 
     byte *data = (byte*)pubks.data();
-    int datalen = pubks.size();
+    int datalen = int(pubks.size());
 
     int p, i, n;
     p = 0;
@@ -1029,7 +1029,7 @@ void SignatureChecker::init()
     hash.Final((byte*)out.data());
 }
 
-void SignatureChecker::add(const char *data, unsigned size)
+void SignatureChecker::add(const char *data, size_t size)
 {
     hash.Update((const byte *)data, size);
 }
@@ -1141,9 +1141,9 @@ unsigned char Base64::from64(byte c)
 int Base64::atob(const string &in, string &out)
 {
     out.resize(in.size() * 3 / 4 + 3);
-    out.resize(Base64::atob(in.data(), (byte *) out.data(), out.size()));
+    out.resize(Base64::atob(in.data(), (byte *) out.data(), int(out.size())));
 
-    return out.size();
+    return int(out.size());
 }
 
 int Base64::atob(const char* a, byte* b, int blen)
@@ -1186,15 +1186,15 @@ int Base64::atob(const char* a, byte* b, int blen)
         b[p++] = (c[2] << 6) | c[3];
     }
 
-    return p;
+    //return p; // warning C4702: unreachable code
 }
 
 int Base64::btoa(const string &in, string &out)
 {
     out.resize(in.size() * 4 / 3 + 4);
-    out.resize(Base64::btoa((const byte*) in.data(), in.size(), (char *) out.data()));
+    out.resize(Base64::btoa((const byte*) in.data(), int(in.size()), (char *) out.data()));
 
-    return out.size();
+    return int(out.size());
 }
 
 int Base64::btoa(const byte* b, int blen, char* a)
