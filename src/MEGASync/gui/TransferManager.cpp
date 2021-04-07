@@ -375,11 +375,10 @@ void TransferManager::refreshTypeStats()
 
 void TransferManager::refreshFileTypesStats()
 {
-    long long number (0LL);
     const auto fileTypes (mMediaNumberLabelsGroup.keys());
     for (auto fileType : fileTypes)
     {
-        number = mModel->getNumberOfTransfersForFileType(fileType);
+        long long number (mModel->getNumberOfTransfersForFileType(fileType));
         mMediaNumberLabelsGroup[fileType]->parentWidget()->setVisible(number);
         mMediaNumberLabelsGroup[fileType]->setText(QString::number(number));
         if (number == 0
@@ -705,6 +704,12 @@ void TransferManager::changeEvent(QEvent *event)
         setActiveTab(mCurrentTab);
     }
     QDialog::changeEvent(event);
+}
+
+void TransferManager::paintEvent(QPaintEvent* event)
+{
+    mUi->wTransfers->update();
+    QDialog::paintEvent(event);
 }
 
 //void TransferManager::mouseMoveEvent(QMouseEvent *event)

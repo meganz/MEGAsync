@@ -1,5 +1,7 @@
 #include "TransfersSortFilterProxyModel.h"
+#include "QTransfersModel2.h"
 #include <megaapi.h>
+
 
 TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent),
@@ -61,9 +63,11 @@ void TransfersSortFilterProxyModel::setSortBy(SORT_BY sortCriterion)
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+//    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
+//    const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
+
+    const auto d (qobject_cast<QTransfersModel2*>(sourceModel())->getTransferDataByRow(sourceRow));
 
     return     (mTransferState.isEmpty() || mTransferState.contains(d->mState))
             && (mTransferType.isEmpty()  || mTransferType.contains(d->mType))
@@ -82,7 +86,6 @@ bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QMod
         case SORT_BY::PRIORITY:
         {
             lessThan = leftItem->mPriority < rightItem->mPriority;
-
             break;
         }
         case SORT_BY::TOTAL_SIZE:

@@ -9,6 +9,7 @@
 
 #include <QAbstractItemModel>
 #include <QLinkedList>
+#include <QtConcurrent/QtConcurrent>
 
 class QTransfersModel2 : public QAbstractItemModel, public mega::MegaTransferListener
 {
@@ -46,6 +47,8 @@ public:
     long long  getNumberOfTransfersForType(int type);
     long long  getNumberOfTransfersForFileType(TransferData::FileTypes fileType);
 
+    QExplicitlySharedDataPointer<TransferData> getTransferDataByRow(int row) const;
+
     void initModel();
 
     void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
@@ -67,16 +70,18 @@ private:
     static constexpr int INIT_ROWS_PER_CHUNK = 100;
 
     mega::MegaApi* mMegaApi;
-    mega::MegaApiLock* mMegaApiLock;
     Preferences* mPreferences;
 
     QMap<TransferTag, QVariant> mTransfers;
     QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
-    std::deque<TransferTag> mOrder;
+   // std::deque<TransferTag> mOrder;
+    QList<TransferTag> mOrder;
     ThreadPool* mThreadPool;
     QHash<QString, TransferData::FileTypes> mFileTypes;
-    QMutex mModelMutex;
+    QMutex* mModelMutex;
+
+    QFuture<void> mInitFuture;
 
     long long mNotificationNumber;
 

@@ -31,7 +31,7 @@ public:
     void pausedTransfers(bool paused);
     void disableGetLink(bool disable);
 
-
+    void enableProxy();
     void textFilterChanged(QRegExp regExp);
     void fileTypeFilterChanged(QSet<TransferData::FileTypes> fileType);
     void transferStateFilterChanged(QSet<int> transferStates);

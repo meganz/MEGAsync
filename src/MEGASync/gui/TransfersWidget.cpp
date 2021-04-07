@@ -105,6 +105,7 @@ void TransfersWidget::configureTransferView()
         tDelegate2 = new MegaTransferDelegate2(mProxyModel, ui->tvTransfers, this);
         ui->tvTransfers->setup(this);
         ui->tvTransfers->setItemDelegate(tDelegate2);
+//        ui->tvTransfers->setModel(model2);
         ui->tvTransfers->setModel(mProxyModel);
         mProxyModel->setDynamicSortFilter(true);
     }
@@ -250,6 +251,12 @@ void TransfersWidget::onTransferAdded()
     ui->tvTransfers->scrollToTop();
 }
 
+void TransfersWidget::enableProxy()
+{
+    mProxyModel->setDynamicSortFilter(true);
+    ui->tvTransfers->setModel(mProxyModel);
+}
+
 void TransfersWidget::textFilterChanged(QRegExp regExp)
 {
     mProxyModel->setFilterRegExp(regExp);
@@ -293,7 +300,6 @@ void TransfersWidget::changeEvent(QEvent *event)
     }
     QWidget::changeEvent(event);
 }
-
 
 void TransfersWidget::setHeaderState(QPushButton* header, int state)
 {
