@@ -51,7 +51,7 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *t)
                 TransferItemData *item = new TransferItemData(transfer);
                 item->data.publicNode = isPublicNode;
 
-                if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
+                if ((int)transfers.size() == (int)Preferences::MAX_COMPLETED_ITEMS)
                 {
                     TransferItemData *t = transferOrder.back();
                     int row = int(transferOrder.size()) - 1;

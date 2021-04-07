@@ -137,6 +137,12 @@ typedef struct {
     unsigned char *buf;     /* allocated buffer of length CHUNK */
 } bin_gz;
 
+
+#ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable: 4996)  // warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
+#endif
+
 /* close a buffered file and free allocated memory */
 local void bclose(bin_gz *in)
 {
@@ -150,7 +156,7 @@ local void bclose(bin_gz *in)
 #endif
         if (in->fd != -1)
         {
-            _close(in->fd);  // warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
+            close(in->fd);  // warning C4996: 'close': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
         }
         if (in->buf != NULL)
             free(in->buf);
@@ -176,7 +182,7 @@ local bin_gz *bopen(GZJOIN_PATH_CHAR_T *name)
         oss << "unexpected errno opening file(" << er << ")";
         bail(oss.str().c_str(), name);
     }
-    in->fd = _fileno(in->file); // warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
+    in->fd = fileno(in->file); // warning C4996: 'fileno': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
 #else
     in->fd = open(name, O_RDONLY, 0);
 #endif
@@ -202,7 +208,7 @@ local int bload(bin_gz *in)
         return 0;
     in->next = in->buf;
     do {
-        len = (long)_read(in->fd, in->buf + in->left, CHUNK - in->left); // warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
+        len = (long)read(in->fd, in->buf + in->left, CHUNK - in->left); // warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _close. See online help for details.
         if (len < 0)
             return -1;
         in->left += (unsigned)len;
@@ -253,14 +259,14 @@ local void bskip(bin_gz *in, unsigned skip)
         if (left == 0) {
             /* exact number of chunks: seek all the way minus one byte to check
                for end-of-file with a read */
-            _lseek(in->fd, skip - 1, SEEK_CUR);  //  warning C4996: 'lseek': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _lseek. See online help for details.
-            if (_read(in->fd, in->buf, 1) != 1)  //  warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _read. See online help for details.
+            lseek(in->fd, skip - 1, SEEK_CUR);  //  warning C4996: 'lseek': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _lseek. See online help for details.
+            if (read(in->fd, in->buf, 1) != 1)  //  warning C4996: 'read': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _read. See online help for details.
                 bail("unexpected end of file on ", in->name);
             return;
         }
 
         /* skip the integral chunks, update skip with remainder */
-        _lseek(in->fd, skip - left, SEEK_CUR);  //  warning C4996: 'lseek': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _lseek. See online help for details.
+        lseek(in->fd, skip - left, SEEK_CUR);  //  warning C4996: 'lseek': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _lseek. See online help for details.
         skip = left;
     }
 
@@ -271,6 +277,11 @@ local void bskip(bin_gz *in, unsigned skip)
     in->left -= skip;
     in->next += skip;
 }
+
+#ifdef WIN32
+#pragma warning(pop)
+#endif
+
 
 /* -- end of buffered input functions -- */
 
