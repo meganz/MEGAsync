@@ -74,7 +74,7 @@ void WindowsPlatform::initialize(int argc, char *argv[])
 
 void WindowsPlatform::prepareForSync()
 {
-    Preferences *preferences = Preferences::instance();
+    (void)Preferences::instance();
 
     QProcess p;
     p.start(QString::fromUtf8("net use"));
@@ -143,8 +143,8 @@ void WindowsPlatform::prepareForSync()
 bool WindowsPlatform::enableTrayIcon(QString executable)
 {
     HRESULT hr;
-    ITrayNotify *m_ITrayNotify;
-    ITrayNotifyNew *m_ITrayNotifyNew;
+    ITrayNotify *m_ITrayNotify = nullptr;
+    ITrayNotifyNew *m_ITrayNotifyNew = nullptr;
 
     hr = CoCreateInstance (
           __uuidof (TrayNotify),
@@ -286,7 +286,7 @@ bool DeleteRegKey(HKEY key, LPTSTR subkey, REGSAM samDesired)
         return (result == ERROR_FILE_NOT_FOUND);
     }
 
-    int len =  _tcslen(subkey);
+    size_t len =  _tcslen(subkey);
     if (!len || len >= (MAX_PATH - 1) || _tcscpy_s(keyPath, MAX_PATH, subkey))
     {
         RegCloseKey(hKey);
@@ -303,7 +303,7 @@ bool DeleteRegKey(HKEY key, LPTSTR subkey, REGSAM samDesired)
 
     do
     {
-        maxSize = MAX_PATH - len;
+        maxSize = DWORD(MAX_PATH - len);
     } while (RegEnumKeyEx(hKey, 0, endPos, &maxSize, NULL, NULL, NULL, NULL) == ERROR_SUCCESS
              && DeleteRegKey(key, keyPath, samDesired));
 
@@ -764,7 +764,10 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
         addSyncToLeftPane(syncPath, syncName, syncID);
     }
 
+#pragma warning(push)
+#pragma warning(disable: 4996) // declared deprecated
     DWORD dwVersion = GetVersion();
+#pragma warning(pop)
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
     int iconIndex = (dwMajorVersion<6) ? 2 : 3;
 
@@ -817,7 +820,6 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 
     //Hide debris folder
-    Preferences *preferences = Preferences::instance();
     QString debrisPath = QDir::toNativeSeparators(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
     WIN32_FILE_ATTRIBUTE_DATA fad;
     if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
@@ -1045,6 +1047,7 @@ void WindowsPlatform::enableDialogBlur(QDialog *dialog)
     // this feature doesn't work well yet
     return;
 
+#if 0
     bool win10 = false;
     HWND hWnd = (HWND)dialog->winId();
     dialog->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -1070,7 +1073,7 @@ void WindowsPlatform::enableDialogBlur(QDialog *dialog)
         const pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)GetProcAddress(hModule, "SetWindowCompositionAttribute");
         if (SetWindowCompositionAttribute)
         {
-            ACCENTPOLICY policy = { 3, 0, 0xFFFFFFFF, 0 };
+            ACCENTPOLICY policy = { 3, 0, int(0xFFFFFFFF), 0 };
             WINCOMPATTRDATA data = { 19, &policy, sizeof(ACCENTPOLICY) };
             SetWindowCompositionAttribute(hWnd, &data);
             win10 = true;
@@ -1086,12 +1089,13 @@ void WindowsPlatform::enableDialogBlur(QDialog *dialog)
         QtWin::enableBlurBehindWindow(dialog);
     }
 #endif
+#endif
 }
 
 void WindowsPlatform::activateBackgroundWindow(QDialog *window)
 {
     DWORD currentThreadId = GetCurrentThreadId();
-    DWORD foregroundThreadId;
+    DWORD foregroundThreadId = 0;
     HWND foregroundWindow;
     bool threadAttached = false;
 
@@ -1311,7 +1315,7 @@ bool WindowsPlatform::registerUpdateJob()
 void WindowsPlatform::execBackgroundWindow(QDialog *window)
 {
     DWORD currentThreadId = GetCurrentThreadId();
-    DWORD foregroundThreadId;
+    DWORD foregroundThreadId = 0;
     HWND foregroundWindow;
     bool threadAttached = false;
 

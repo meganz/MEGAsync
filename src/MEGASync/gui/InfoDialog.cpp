@@ -1691,11 +1691,11 @@ void InfoDialog::drawAvatar(QString email)
         QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
         if (fullname.isEmpty())
         {
-            char *email = megaApi->getMyEmail();
-            if (email)
+            char *myEmail = megaApi->getMyEmail();
+            if (myEmail)
             {
-                fullname = QString::fromUtf8(email);
-                delete [] email;
+                fullname = QString::fromUtf8(myEmail);
+                delete [] myEmail;
             }
             else
             {
