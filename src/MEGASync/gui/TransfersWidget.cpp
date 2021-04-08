@@ -106,8 +106,8 @@ void TransfersWidget::configureTransferView()
         ui->tvTransfers->setup(this);
         ui->tvTransfers->setItemDelegate(tDelegate2);
 //        ui->tvTransfers->setModel(model2);
+        mProxyModel->setDynamicSortFilter(false);
         ui->tvTransfers->setModel(mProxyModel);
-        mProxyModel->setDynamicSortFilter(true);
     }
 
     ui->tvTransfers->setDragEnabled(true);
@@ -231,8 +231,8 @@ void TransfersWidget::on_tPauseResumeAll_clicked()
     isPaused = !isPaused;
 
     ui->tPauseResumeAll->setIcon(isPaused ?
-                                     QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png"))
-                                   : QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
+                                     QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png"))
+                                   : QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png")));
     ui->tPauseResumeAll->setToolTip(isPaused ?
                                         tr("Resume transfers")
                                       : tr("Pause transfers"));
@@ -249,12 +249,6 @@ void TransfersWidget::onTransferAdded()
 {
     ui->sWidget->setCurrentWidget(ui->pTransfers);
     ui->tvTransfers->scrollToTop();
-}
-
-void TransfersWidget::enableProxy()
-{
-    mProxyModel->setDynamicSortFilter(true);
-    ui->tvTransfers->setModel(mProxyModel);
 }
 
 void TransfersWidget::textFilterChanged(QRegExp regExp)
@@ -285,6 +279,21 @@ void TransfersWidget::transferFilterReset()
 {
     mProxyModel->resetAllFilters();
     ui->tvTransfers->scrollToTop();
+}
+
+void TransfersWidget::transferFilterApply()
+{
+    if (!mProxyModel->dynamicSortFilter())
+    {
+        mProxyModel->setDynamicSortFilter(true);
+
+        connect(this, &TransfersWidget::applyFilter,
+                mProxyModel, &TransfersSortFilterProxyModel::invalidate);
+    }
+    else
+    {
+        emit applyFilter();
+    }
 }
 
 int TransfersWidget::rowCount()

@@ -106,9 +106,9 @@ void MegaTransferView::pauseResumeSelection(bool pauseState)
 
 void MegaTransferView::cancelClearSelection()
 {
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
 
-    auto selection = selectionModel()->selection();
+    auto selection (selectionModel()->selection());
     QModelIndexList indexes;
 
     if (selection.size() > 0)

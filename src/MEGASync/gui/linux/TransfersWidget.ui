@@ -34,8 +34,8 @@
   <property name="styleSheet">
    <string notr="true">#tvTransfers
 {
-	background-color: white;
-	paint-alternating-row-colors-for-empty-area: false;
+    background-color: white;
+    paint-alternating-row-colors-for-empty-area: false;
 }
 
 #sWidget, #wTableHeader
@@ -47,12 +47,19 @@
 
 #wTableHeader
 {
-	height: 28px;
-	min-height: 28px;
-	max-height: 28px;
+    height: 28px;
+    min-height: 28px;
+    max-height: 28px;
 }
 
-#wTableHeader QLabel, #wTableHeader  QPushButton
+#wTableHeader  QPushButton
+{
+	height: 20px;
+	color: #666666;
+	font-size: 12px;
+}
+
+#wTableHeader QLabel
 {
 	height: 20px;
 	color: #666666;
@@ -62,10 +69,10 @@
 
 #wTableHeader QToolButton
 {
-	height: 16px;
+    height: 16px;
     width: 16px;
-	border-radius: 4px;
-	margin-right: 12px;
+    border-radius: 4px;
+    margin-right: 12px;
     qProperty-iconSize: 16px;
 }
 
@@ -81,10 +88,7 @@
 
 #wTableHeader QLabel, #wTableHeader  QPushButton
 {
-/*	margin: 0;
-	border: 0;
-*/
-	padding: 0;
+    padding: 0;
 }
 
 #pHeaderName
@@ -102,7 +106,7 @@
 
 #wTableHeader  QPushButton
 {
-	text-align: left;
+    text-align: left;
 }
 
 #lHeaderStatus
@@ -260,6 +264,9 @@
           </property>
           <item>
            <widget class="QPushButton" name="pHeaderName">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
              <string>Name</string>
             </property>
@@ -270,6 +277,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pHeaderSize">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
              <string>Size</string>
             </property>
@@ -366,68 +376,68 @@
           <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">QScrollBar:vertical 
+          <string notr="true">QScrollBar:vertical
 {
-	background: #f6f6f6;
-	width: 15px;
-	border-left: 1px solid #E4E4E4;
+    background: #f6f6f6;
+    width: 15px;
+    border-left: 1px solid #E4E4E4;
 }
 
 QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
 {
-	border: none;
-	background: none;
+    border: none;
+    background: none;
 }
 
 QScrollBar::handle:vertical
 {
-	background: #c0c0c0;
-	min-height: 20px;
-	border-radius: 4px;
-	margin: 3px 4px 3px 2px;	
+    background: #c0c0c0;
+    min-height: 20px;
+    border-radius: 4px;
+    margin: 3px 4px 3px 2px;
 }
 
-QMenu 
+QMenu
 {
-	border: 1px solid #B8B8B8; 
-	border-radius: 5px;
-	background: #ffffff;
-	padding-top: 5px;
-	padding-bottom: 5px;
+    border: 1px solid #B8B8B8;
+    border-radius: 5px;
+    background: #ffffff;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 QMenu::item
 {
-	font-family: Lato;
-	margin: 5px 9px 5px 9px;
-	color: #777777;
-	padding: 5px 8px;
-} 
+    font-family: Lato;
+    margin: 5px 9px 5px 9px;
+    color: #777777;
+    padding: 5px 8px;
+}
 
 QMenu::item:selected
 {
-	background: #aaaaaa;
-	border: 1px solid #aaaaaa;
-	border-radius: 2px;
-	margin-left: 9px;
-	margin-right: 9px;
-	color: #ffffff;
-	padding: 4px 7px;
+    background: #aaaaaa;
+    border: 1px solid #aaaaaa;
+    border-radius: 2px;
+    margin-left: 9px;
+    margin-right: 9px;
+    color: #ffffff;
+    padding: 4px 7px;
 }
 
 QMenu::separator
 {
-	height: 1px;
-	margin: 6px 0px 6px 0px;
-	background-color: rgba(0, 0, 0, 0.1);
+    height: 1px;
+    margin: 6px 0px 6px 0px;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 QMenu::item:disabled
 {
-	background-color: #ffffff;
-	color: rgba(119,119,119,0.3);
-	border: none;
-	margin: 5px 9px 5px 9px;
+    background-color: #ffffff;
+    color: rgba(119,119,119,0.3);
+    border: none;
+    margin: 5px 9px 5px 9px;
 }</string>
          </property>
          <property name="frameShape">

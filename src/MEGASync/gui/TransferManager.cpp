@@ -40,7 +40,11 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
     mShadowSearch (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
-    mStatsRefreshTimer(new QTimer(this))
+    mStatsRefreshTimer(new QTimer(this)),
+    mPrevActiveNumber (-1LL),
+    mPrevFinishedNumber (-1LL),
+    mPrevDlNumber (-1LL),
+    mPrevUlNumber (-1LL)
 {
     mUi->setupUi(this);
     mUi->wTransfers->setupTransfers();
@@ -120,7 +124,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             this, &TransferManager::updateState);
 
     connect(mModel, &QTransfersModel2::transfersInModelChanged,
-            this, &TransferManager::onTransfersInModelChanged);
+            this, &TransferManager::onTransfersInModelChanged, Qt::QueuedConnection);
 
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
@@ -129,9 +133,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mStatsRefreshTimer->setSingleShot(false);
     connect(mStatsRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshStats);
-
-    on_tAllTransfers_clicked();
-    mUi->sTransfers->setCurrentWidget(mUi->wTransfers);
 
     onTransfersInModelChanged(true);
 }
@@ -174,6 +175,7 @@ void TransferManager::on_tCompleted_clicked()
 
     mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES);
     mUi->wTransfers->transferTypeFilterChanged({});
+    mUi->wTransfers->transferFilterApply();
 
     mUi->lCurrentContent->setText(tr("Finished"));
 
@@ -190,6 +192,7 @@ void TransferManager::on_tDownloads_clicked()
 
     mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES);
     mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_DOWNLOAD});
+    mUi->wTransfers->transferFilterApply();
 
     mUi->lCurrentContent->setText(tr("Downloads"));
 
@@ -206,6 +209,7 @@ void TransferManager::on_tUploads_clicked()
 
     mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES);
     mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_UPLOAD});
+    mUi->wTransfers->transferFilterApply();
 
     mUi->lCurrentContent->setText(tr("Uploads"));
 
@@ -222,6 +226,7 @@ void TransferManager::on_tAllTransfers_clicked()
 
     mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES);
     mUi->wTransfers->transferTypeFilterChanged({});
+    mUi->wTransfers->transferFilterApply();
 
     mUi->lCurrentContent->setText(tr("All Transfers"));
 
@@ -251,8 +256,6 @@ bool TransferManager::refreshStateStats()
     QLabel* label (nullptr);
     bool weHaveTransfers (true);
     long long processedNumber (0LL);
-    static long long prevAcvtiveNumber (-1LL);
-    static long long prevFinishedNumber (-1LL);
 
     // First check Finished states
     label = mUi->lCompleted;
@@ -262,7 +265,7 @@ bool TransferManager::refreshStateStats()
     }
     weHaveTransfers = processedNumber;
 
-    if (processedNumber != prevFinishedNumber)
+    if (processedNumber != mPrevFinishedNumber)
     {
         if (processedNumber == 0 && mCurrentTab == COMPLETED_TAB)
         {
@@ -271,7 +274,7 @@ bool TransferManager::refreshStateStats()
 
         label->parentWidget()->setVisible(weHaveTransfers);
         label->setText(QString::number(processedNumber));
-        prevFinishedNumber = processedNumber;
+        mPrevFinishedNumber = processedNumber;
     }
 
     // Then active states
@@ -283,7 +286,7 @@ bool TransferManager::refreshStateStats()
     }
     weHaveTransfers |= static_cast<bool>(processedNumber);
 
-    if (processedNumber != prevAcvtiveNumber)
+    if (processedNumber != mPrevActiveNumber)
     {
         QWidget* leftFooterWidget (nullptr);
         if (processedNumber == 0)
@@ -299,7 +302,7 @@ bool TransferManager::refreshStateStats()
         }
         else
         {
-            if (prevAcvtiveNumber == 0)
+            if (mPrevActiveNumber <= 0)
             {
                 leftFooterWidget = mUi->pSpeedAndClear;
                 mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
@@ -313,7 +316,7 @@ bool TransferManager::refreshStateStats()
         }
 
         mUi->sStatus->setCurrentWidget(leftFooterWidget);
-        prevAcvtiveNumber = processedNumber;
+        mPrevActiveNumber = processedNumber;
     }
 
     return weHaveTransfers;
@@ -321,11 +324,10 @@ bool TransferManager::refreshStateStats()
 
 void TransferManager::refreshTypeStats()
 {
-    static long long prevDlNumber (-1LL);
-    static long long prevUlNumber (-1LL);
+    QWidget* widgetToShow (mUi->sTransfers->currentWidget());
 
     long long number (mModel->getNumberOfTransfersForType(MegaTransfer::TYPE_DOWNLOAD));
-    if (number != prevDlNumber)
+    if (number != mPrevDlNumber)
     {
         if (number == 0)
         {
@@ -340,11 +342,11 @@ void TransferManager::refreshTypeStats()
             mUi->lDownloads->show();
             mUi->lDownloads->setText(QString::number(number));
         }
-        prevDlNumber = number;
+        mPrevDlNumber = number;
     }
 
     number = mModel->getNumberOfTransfersForType(MegaTransfer::TYPE_UPLOAD);
-    if (number != prevUlNumber)
+    if (number != mPrevUlNumber)
     {
         if (number == 0)
         {
@@ -359,17 +361,23 @@ void TransferManager::refreshTypeStats()
             mUi->lUploads->show();
             mUi->lUploads->setText(QString::number(number));
         }
-        prevUlNumber = number;
+        mPrevUlNumber = number;
     }
 
-    if (mCurrentTab == UPLOADS_TAB && prevUlNumber == 0
-            || mCurrentTab == DOWNLOADS_TAB && prevDlNumber == 0)
+    if ((mCurrentTab == UPLOADS_TAB && mPrevUlNumber == 0)
+            || (mCurrentTab == DOWNLOADS_TAB && mPrevDlNumber == 0))
     {
-        mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
+        widgetToShow = mTabNoItem[mCurrentTab];
     }
-    else
+    else if ((mCurrentTab == UPLOADS_TAB && mPrevUlNumber != 0)
+             || (mCurrentTab == DOWNLOADS_TAB && mPrevDlNumber != 0))
     {
-        mUi->sTransfers->setCurrentWidget(mUi->wTransfers);
+        widgetToShow = mUi->wTransfers;
+    }
+
+    if (mUi->sTransfers->currentWidget() != widgetToShow)
+    {
+        mUi->sTransfers->setCurrentWidget(widgetToShow);
     }
 }
 
@@ -434,6 +442,7 @@ void TransferManager::updateState()
 
     auto nbRows (mUi->wTransfers->rowCount());
 
+
     switch (mCurrentTab)
     {
         case ALL_TRANSFERS_TAB:
@@ -475,7 +484,7 @@ void TransferManager::updateState()
         mUi->sTransfers->setCurrentWidget(widgetToShow);
     }
 
-    setStyleSheet(styleSheet());
+    mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
 }
 
 void TransferManager::disableGetLink(bool disable)
@@ -675,10 +684,12 @@ void TransferManager::updateFileTypeFilter(TransferData::FileTypes fileType)
     }
 
     mUi->wTransfers->fileTypeFilterChanged(mFileTypesFilter);
+    mUi->wTransfers->transferFilterApply();
+
     QWidget* frame (mMediaNumberLabelsGroup[fileType]->parentWidget());
     frame->setProperty("itsOn", showFrame);
     frame->graphicsEffect()->setEnabled(showFrame);
-    setStyleSheet(styleSheet());
+    mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
 }
 
 bool TransferManager::eventFilter(QObject *obj, QEvent *event)

@@ -65,6 +65,11 @@ private:
     QSet<TransferData::FileTypes> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
+    long long mPrevDlNumber;
+    long long mPrevUlNumber;
+
+    long long mPrevActiveNumber;
+    long long mPrevFinishedNumber;
 
     void toggleTab(TM_TABS tab);
     void updateFileTypeFilter(TransferData::FileTypes fileType);

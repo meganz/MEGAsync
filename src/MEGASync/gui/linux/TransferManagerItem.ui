@@ -45,13 +45,12 @@ TransferManagerItem2, TransferManagerItem
     height: 64px;
     min-height: 64px;
     max-height: 64px;
-	background-color: transparent;
+    background-color: transparent;
 }
 
 #itemSepLine
 {
     height: 1px;
-	min-width: ; 
     min-height: 1px;
     max-height: 1px;
     border: none;
@@ -60,8 +59,8 @@ TransferManagerItem2, TransferManagerItem
 
 #sStatus, #sStatus QWidget
 {
-	padding: 0;
-	margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 #sTransferState, #stateActive, #stateCompleted, #bItemSpeed, #lItemTime, #sStatus, #tFileType, #wSize, #wPauseResume, #wClearCancel, #wName, #lItemStatus, #lItemQueued, #lItemPaused
@@ -73,42 +72,42 @@ TransferManagerItem2, TransferManagerItem
 
 #tFileType
 {
-	width: 38px; 
-	min-width: 38px; 
-	max-width: 38px; 
-	qProperty-iconSize: 48px;
-	background: transparent;
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+    qProperty-iconSize: 48px;
+    background: transparent;
 }
 
 QPushButton, QToolButton
 {
-	border: none;
+    border: none;
 }
 
 QPushButton
 {
-	background: transparent;
+    background: transparent;
 }
 
 #wName
 {
-	width: 165px; 
-	min-width: 165px; 
+    width: 165px;
+    min-width: 165px;
 }
 
 #lTransferName
 {
-	width: 170px; 
-	min-width: 170px; 
-	color: #333333;
-	font-size: 14px;
-	qProperty-alignment: 'AlignLeft | AlignBottom';
+    width: 170px;
+    min-width: 170px;
+    color: #333333;
+    font-size: 14px;
+    qProperty-alignment: 'AlignLeft | AlignBottom';
 }
 
 QProgressBar
 {
-	width: 160px; 
-	min-width: 50px;
+    width: 160px;
+    min-width: 50px;
     height: 4px;
     min-height: 4px;
     max-height: 4px;
@@ -128,8 +127,8 @@ QProgressBar::chunk
 {
   font-size: 12px;
   font-weight: bold;
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 #lDone
@@ -168,11 +167,11 @@ QProgressBar::chunk
 
 #sStatus QLabel
 {
-	font-size: 12px;
-	font-weight: bold;
-	qProperty-alignment: 'AlignLeft | AlignVCenter';
-	padding: 0;
-	margin: 0;
+    font-size: 12px;
+    font-weight: bold;
+    qProperty-alignment: 'AlignLeft | AlignVCenter';
+    padding: 0;
+    margin: 0;
 }
 
 #lItemStatus
@@ -206,45 +205,45 @@ QProgressBar::chunk
 
 #lItemTime
 {
-	width: 92px;
-	min-width: 92px;
-	max-width: 92px;
-	color: #333333;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 0;
-	margin: 0;
+    width: 92px;
+    min-width: 92px;
+    max-width: 92px;
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
 }
 
 #tItemRetry
 {
-	height: 24px;
-	width: 48px;
-	border-radius: 10px;
-	background-color: #FFEDCC;
-	color: #333333;
-	font-size: 12px;
-	font-weight: bold;
+    height: 24px;
+    width: 48px;
+    border-radius: 10px;
+    background-color: #FFEDCC;
+    color: #333333;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 #wPauseResume, #wClearCancel
 {
-	width: 28px; 
-	min-width: 28px; 
-	max-width: 28px; 
+    width: 28px;
+    min-width: 28px;
+    max-width: 28px;
 }
 
 #tPauseResumeTransfer, #tCancelClearTransfer
 {
-	width: 16px; 
+    width: 16px;
     height: 16px;
-	min-width: 16px; 
+    min-width: 16px;
     min-height: 16px;
-	max-width: 16px; 
+    max-width: 16px;
     max-height: 16px;
-	background-color: #EEEEEE;
-	qProperty-iconSize: 16px;
-	border-radius: 4px;
+    background-color: #EEEEEE;
+    qProperty-iconSize: 16px;
+    border-radius: 4px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">

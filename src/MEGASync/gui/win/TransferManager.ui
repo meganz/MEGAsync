@@ -304,6 +304,26 @@ QGroupBox::title
    </property>
    <item>
     <widget class="QWidget" name="wLeftPane" native="true">
+     <property name="styleSheet">
+      <string notr="true">#wLeftPane QFrame[itsOn=true] 
+{
+	border-radius: 4px;
+    background-color: white;
+}
+
+#wLeftPane QFrame[itsOn=true]  QLabel
+{
+    border: 1px solid #F5F5F5; 
+    background-color: #FAFAFA;
+    border-radius: 12px;
+}
+
+#wLeftPane QFrame[itsOn=true] QPushButton
+{
+    font-weight: bold;
+}
+</string>
+     </property>
      <layout class="QVBoxLayout" name="wLeftPaneLayout">
       <property name="spacing">
        <number>14</number>
@@ -809,10 +829,10 @@ QGroupBox::title
          <item>
           <widget class="QFrame" name="fText">
            <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+            <enum>QFrame::Plain</enum>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <property name="spacing">
@@ -1175,10 +1195,10 @@ QGroupBox::title
          <item>
           <widget class="QFrame" name="fSearchString">
            <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
+            <enum>QFrame::Plain</enum>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_14">
             <property name="spacing">

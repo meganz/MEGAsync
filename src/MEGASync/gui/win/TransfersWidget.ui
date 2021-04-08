@@ -52,12 +52,19 @@
     max-height: 28px;
 }
 
-#wTableHeader QLabel, #wTableHeader  QPushButton
+#wTableHeader  QPushButton
 {
-    height: 20px;
-    color: #666666;
-    font-size: 12px;
-    qproperty-alignment: 'AlignLeft | AlignBottom';
+	height: 20px;
+	color: #666666;
+	font-size: 12px;
+}
+
+#wTableHeader QLabel
+{
+	height: 20px;
+	color: #666666;
+	font-size: 12px;
+	qproperty-alignment: 'AlignLeft | AlignBottom';
 }
 
 #wTableHeader QToolButton
@@ -81,9 +88,6 @@
 
 #wTableHeader QLabel, #wTableHeader  QPushButton
 {
-/*	margin: 0;
-    border: 0;
-*/
     padding: 0;
 }
 
@@ -260,6 +264,9 @@
           </property>
           <item>
            <widget class="QPushButton" name="pHeaderName">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
              <string>Name</string>
             </property>
@@ -270,6 +277,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pHeaderSize">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
             <property name="text">
              <string>Size</string>
             </property>

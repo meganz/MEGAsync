@@ -5,9 +5,9 @@
 
 TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent),
-      mTransferType (QSet<int>()),
-      mTransferState (QSet<int>()),
-      mFileType (QSet<TransferData::FileTypes>()),
+      mTransferType (),
+      mTransferState (),
+      mFileType (),
       mSortCriterion (SORT_BY::PRIORITY)
 {
 }
@@ -15,45 +15,38 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
 void TransfersSortFilterProxyModel::setTransferType(const QSet<int> transferTypes)
 {
     mTransferType = transferTypes;
-    invalidateFilter();
 }
 
 void TransfersSortFilterProxyModel::addTransferType(const QSet<int> transferTypes)
 {
     mTransferType += transferTypes;
-    invalidateFilter();
 }
 
 void TransfersSortFilterProxyModel::setTransferState(const QSet<int> transferStates)
 {
     mTransferState = transferStates;
-    invalidateFilter();
 }
 
 void TransfersSortFilterProxyModel::addTransferState(const QSet<int> transferStates)
 {
     mTransferState += transferStates;
-    invalidateFilter();
 }
 
 void TransfersSortFilterProxyModel::setFileType(const QSet<TransferData::FileTypes> fileTypes)
 {
     mFileType = fileTypes;
-    invalidateFilter();
 }
 
 void TransfersSortFilterProxyModel::addFileType(const QSet<TransferData::FileTypes> fileTypes)
 {
     mFileType += fileTypes;
-    invalidateFilter();
 }
 
 void TransfersSortFilterProxyModel::resetAllFilters()
 {
-    mTransferType = {};
-    mFileType = {};
-    mTransferState = {};
-    invalidateFilter();
+    mTransferType.clear();
+    mFileType.clear();
+    mTransferState.clear();
 }
 
 void TransfersSortFilterProxyModel::setSortBy(SORT_BY sortCriterion)
@@ -63,11 +56,11 @@ void TransfersSortFilterProxyModel::setSortBy(SORT_BY sortCriterion)
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-//    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-//    const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
+    const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
 
-    const auto d (qobject_cast<QTransfersModel2*>(sourceModel())->getTransferDataByRow(sourceRow));
+//    const auto d (qobject_cast<QTransfersModel2*>(sourceModel())->getTransferDataByRow(sourceRow));
 
     return     (mTransferState.isEmpty() || mTransferState.contains(d->mState))
             && (mTransferType.isEmpty()  || mTransferType.contains(d->mType))

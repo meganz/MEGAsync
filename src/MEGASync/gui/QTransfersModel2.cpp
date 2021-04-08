@@ -17,7 +17,8 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     mOrder (),
     mThreadPool (ThreadPoolSingleton::getInstance()),
     mModelMutex (new QMutex(QMutex::Recursive)),
-    mNotificationNumber (0)
+    mNotificationNumber (0),
+    mModelHasTransfers (false)
 {
     // Init File Types
     mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
@@ -51,14 +52,24 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     mMegaApi->addTransferListener(this);
 }
 
+bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
+{
+    if (parent == QModelIndex())
+    {
+        return mModelHasTransfers;
+    }
+
+    return false;
+}
+
 int QTransfersModel2::rowCount(const QModelIndex& parent) const
 {
-    int rows;
-    mModelMutex->lock();
-    rows = mOrder.size();
-    mModelMutex->unlock();
-
-    return rows;
+    QMutexLocker lock (mModelMutex);
+    if (parent == QModelIndex())
+    {
+        return mOrder.size();
+    }
+    return 0;
 }
 
 int QTransfersModel2::columnCount(const QModelIndex& parent) const
@@ -68,22 +79,17 @@ int QTransfersModel2::columnCount(const QModelIndex& parent) const
 
 QVariant QTransfersModel2::data(const QModelIndex& index, int role) const
 {
-    QVariant data;
     int row (index.row());
     bool isIndexValid (index.isValid());
 
-    mModelMutex->lock();
+    QMutexLocker lock (mModelMutex);
+
     if (role == Qt::DisplayRole && isIndexValid && row >= 0 && row < mOrder.size())
     {
-        data = mTransfers[mOrder[row]];
+        return mTransfers[mOrder[row]];
     }
-    else
-    {
-        data = QVariant();
-    }
-    mModelMutex->unlock();
 
-    return data;
+    return QVariant();
 }
 
 QModelIndex QTransfersModel2::parent(const QModelIndex &) const
@@ -93,19 +99,14 @@ QModelIndex QTransfersModel2::parent(const QModelIndex &) const
 
 QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex& parent) const
 {
-    QModelIndex index;
-    mModelMutex->lock();
+    QMutexLocker lock (mModelMutex);
+
     if (column == 0 && row >= 0 && row < mOrder.size())
     {
-        index = createIndex(row, 0, mOrder.at(row));
+        return createIndex(row, 0, mOrder.at(row));
     }
-    else
-    {
-        index = QModelIndex();
-    }
-    mModelMutex->unlock();
 
-    return index;
+    return QModelIndex();
 }
 
 QTransfersModel2::~QTransfersModel2()
@@ -573,7 +574,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
 
             if (sameRow)
             {
-
                 emit dataChanged(index(row, 0), index(row, 0));
             }
 
@@ -769,9 +769,9 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
                 // Init row with row of first tag
                 if (count == 0)
                 {
-                    //row = mOrder.lastIndexOf(tag, row);
-                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
-                    row = rowIt - mOrder.cbegin();
+                    row = mOrder.lastIndexOf(tag, row);
+//                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
+//                    row = rowIt - mOrder.cbegin();
                 }
 
                 // Flush pooled rows (start at row+1), init row with tag's
@@ -779,9 +779,9 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
                 {
                     removeRows(row + 1, count, QModelIndex());
                     count = 0;
-                    //row = mOrder.lastIndexOf(tag, row);
-                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
-                    row = rowIt - mOrder.cbegin();
+                    row = mOrder.lastIndexOf(tag, row);
+//                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
+//                    row = rowIt - mOrder.cbegin();
                 }
                 count++;
                 row--;
@@ -943,6 +943,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex& parent)
 
         if (mOrder.empty())
         {
+            mModelHasTransfers = false;
             emit transfersInModelChanged(false);
         }
         mModelMutex->unlock();
@@ -1149,6 +1150,7 @@ void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* tr
 
          if (mOrder.size() == 1)
          {
+             mModelHasTransfers = true;
              emit transfersInModelChanged(true);
          }
     }

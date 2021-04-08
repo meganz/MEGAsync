@@ -25,6 +25,7 @@ public:
     virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
                                                 int column, const QModelIndex& parent);
 
+    bool hasChildren(const QModelIndex& parent) const;
     int rowCount(const QModelIndex& parent) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
     QVariant data(const QModelIndex& index, int role) const;
@@ -89,6 +90,7 @@ private:
     bool mAreUlPaused;
     bool mAreAllPaused;
 
+    bool mModelHasTransfers;
     QMap<TransferData::FileTypes, long long> mNbTransfersPerFileType;
     QMap<int, long long> mNbTransfersPerType;
     QMap<int, long long> mNbTransfersPerState;
