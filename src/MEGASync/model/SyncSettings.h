@@ -34,7 +34,8 @@ public:
     SyncSetting(mega::MegaSync *sync);
     mega::MegaHandle backupId() const;
     void setBackupId(mega::MegaHandle backupId);
-    QString name() const;
+    // returns sync name verbatim or removing problematic chars (if removeUnsupportedChars = true)
+    QString name(bool removeUnsupportedChars = false) const;
 
     void setEnabled(bool value);
 

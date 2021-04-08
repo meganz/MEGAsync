@@ -58,9 +58,11 @@ SyncSetting::SyncSetting(MegaSync *sync)
     setSync(sync);
 }
 
-QString SyncSetting::name() const
+QString SyncSetting::name(bool removeUnsupportedChars) const
 {
-    return QString::fromUtf8(mSync->getName());
+    //Provide name removing ':' to avoid possible issues during communications with shell extension
+    return removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromAscii(':'))
+                                  : QString::fromUtf8(mSync->getName());
 }
 
 void SyncSetting::setEnabled(bool value)

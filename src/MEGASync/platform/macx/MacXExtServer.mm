@@ -62,7 +62,7 @@ void MacXExtServer::acceptConnection()
             }
 
             QString message = QString::fromUtf8("A:") + syncPath
-                    + QChar::fromAscii(':') + syncSetting->name();
+                    + QChar::fromAscii(':') + syncSetting->name(true);
             client->writeData(message.toUtf8().constData(), message.length());
         }        
     }
@@ -410,7 +410,7 @@ void MacXExtServer::notifyAllClients(int op)
             continue;
         }
 
-        QString message = command + syncPath + QChar::fromAscii(':') + syncSetting->name();
+        QString message = command + syncPath + QChar::fromAscii(':') + syncSetting->name(true);
 
         emit sendToAll(message.toUtf8());
     }
