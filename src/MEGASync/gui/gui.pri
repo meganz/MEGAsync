@@ -197,7 +197,8 @@ win32 {
                 $$PWD/win/VerifyLockMessage.ui \
                 $$PWD/win/MegaInfoMessage.ui \
                 $$PWD/win/DynamicTransferQuotaPopOver.ui \
-                $$PWD/win/OverQuotaDialog.ui
+                $$PWD/win/OverQuotaDialog.ui \
+                $$PWD/win/NewFolderDialog.ui \
 }
 
 macx {
@@ -254,6 +255,7 @@ macx {
                 $$PWD/macx/MegaInfoMessage.ui \
                 $$PWD/macx/DynamicTransferQuotaPopOver.ui \
                 $$PWD/macx/OverQuotaDialog.ui \
+                $$PWD/macx/NewFolderDialog.ui \
 
     QT += macextras
     OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm \
@@ -329,6 +331,7 @@ unix:!macx {
                 $$PWD/linux/MegaInfoMessage.ui \
                 $$PWD/linux/DynamicTransferQuotaPopOver.ui \
                 $$PWD/linux/OverQuotaDialog.ui \
+                $$PWD/linux/NewFolderDialog.ui \
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

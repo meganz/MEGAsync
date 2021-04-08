@@ -957,6 +957,16 @@ QString Utilities::getReadablePROplanFromId(int identifier)
     return QString::fromUtf8("PRO");
 }
 
+void Utilities::animateFadein(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 0.0, 1.0);
+}
+
+void Utilities::animateFadeout(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 1.0, 0.0);
+}
+
 void Utilities::animatePartialFadein(QWidget *object, int msecs)
 {
     animateProperty(object, msecs, "opacity", 0.5, 1.0);
