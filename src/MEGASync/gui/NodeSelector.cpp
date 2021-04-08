@@ -1,23 +1,32 @@
 #include "NodeSelector.h"
 #include "ui_NodeSelector.h"
+#include "ui_NewFolderDialog.h"
+
 #include "MegaApplication.h"
+#include "control/Utilities.h"
 
 #include <QMessageBox>
 #include <QPointer>
 #include <QMenu>
-#include "control/Utilities.h"
-
 
 using namespace mega;
 
+// Human-friendly list of forbidden chars for New Remote Folder
+static const QString forbidden(QString::fromLatin1("\\ / : \" * < > \? |"));
+// Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+static const QRegularExpression forbiddenRx(QString::fromLatin1("[\\\\/:\"*<>\?|]"));
+// Time to show the new remote folder input error
+static int newFolderErrorDisplayTime = 10000; //10s in milliseconds
+
 NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::NodeSelector)
+    ui(new Ui::NodeSelector),
+    newFolderUi(new Ui::NewFolderDialog),
+    newFolder(new QDialog(this))
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     this->setWindowModality(Qt::ApplicationModal);
-
 
     this->megaApi = megaApi;
     this->model = NULL;
@@ -44,12 +53,16 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
 
     ui->tMegaFolders->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->tMegaFolders, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+
+    setupNewFolderDialog();
 }
 
 NodeSelector::~NodeSelector()
 {
     delete delegateListener;
     delete ui;
+    delete newFolder;
+    delete newFolderUi;
     delete model;
 }
 
@@ -345,6 +358,8 @@ void NodeSelector::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        newFolderUi->retranslateUi(newFolder);
+        newFolderUi->errorLabel->setText(newFolderUi->errorLabel->text().arg(forbidden));
         nodesReady();
     }
     QDialog::changeEvent(event);
@@ -374,76 +389,59 @@ void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
 
 void NodeSelector::on_bNewFolder_clicked()
 {
-    QPointer<QInputDialog> id = new QInputDialog(this);
-    id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    id->setWindowTitle(tr("New folder"));
-    id->setLabelText(tr("Enter the new folder name:"));
-    int result = id->exec();
-
-    if (!id || !result)
+    newFolderUi->errorLabel->hide();
+    newFolderUi->textLabel->show();
+    newFolderUi->lineEdit->clear();
+    newFolderUi->lineEdit->setFocus();
+    if (!newFolder->exec())
     {
-        delete id;
+        //dialog rejected, cancel New Folder operation
         return;
     }
 
-    QString text = id->textValue();
-    text = text.trimmed();
-    if (!text.isEmpty() && !text.contains(QRegExp(QString::fromUtf8("[/:\\]"), Qt::CaseInsensitive, QRegExp::Wildcard)))
+    QString newFolderName = newFolderUi->lineEdit->text().trimmed();
+    MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
+    if (!parent)
     {
-        MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
+        auto rootNode = ((MegaApplication*)qApp)->getRootNode();
+        if (rootNode)
+        {
+            parent = rootNode->copy();
+        }
         if (!parent)
-        {
-            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
-            if (rootNode)
-            {
-                parent = rootNode->copy();
-            }
-            if (!parent)
-            {
-                delete id;
-                return;
-            }
-            selectedFolder = parent->getHandle();
-            selectedItem = QModelIndex();
-        }
-
-        MegaNode *node = megaApi->getNodeByPath(text.toUtf8().constData(), parent);
-        if (!node || node->isFile())
-        {
-            ui->bNewFolder->setEnabled(false);
-            ui->bOk->setEnabled(false);
-            ui->tMegaFolders->setEnabled(false);
-            megaApi->createFolder(text.toUtf8().constData(), parent, delegateListener);
-        }
-        else
-        {
-            for (int i = 0; i < model->rowCount(selectedItem); i++)
-            {
-                QModelIndex row = model->index(i, 0, selectedItem);
-                MegaNode *node = model->getNode(row);
-
-                if (node && text.compare(QString::fromUtf8(node->getName())) == 0)
-                {
-                    setSelectedFolderHandle(node->getHandle());
-                    ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
-                    ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
-                    break;
-                }
-            }
-        }
-        delete parent;
-        delete node;
-    }
-    else
-    {
-        QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"), tr("Invalid folder name.\n"
-                                                                      "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."));
-        if (!id)
         {
             return;
         }
+        selectedFolder = parent->getHandle();
+        selectedItem = QModelIndex();
     }
-    delete id;
+
+    MegaNode *node = megaApi->getNodeByPath(newFolderName.toUtf8().constData(), parent);
+    if (!node || node->isFile())
+    {
+        ui->bNewFolder->setEnabled(false);
+        ui->bOk->setEnabled(false);
+        ui->tMegaFolders->setEnabled(false);
+        megaApi->createFolder(newFolderName.toUtf8().constData(), parent, delegateListener);
+    }
+    else
+    {
+        for (int i = 0; i < model->rowCount(selectedItem); i++)
+        {
+            QModelIndex row = model->index(i, 0, selectedItem);
+            MegaNode *node = model->getNode(row);
+
+            if (node && newFolderName.compare(QString::fromUtf8(node->getName())) == 0)
+            {
+                setSelectedFolderHandle(node->getHandle());
+                ui->tMegaFolders->selectionModel()->select(row, QItemSelectionModel::ClearAndSelect);
+                ui->tMegaFolders->selectionModel()->setCurrentIndex(row, QItemSelectionModel::ClearAndSelect);
+                break;
+            }
+        }
+    }
+    delete parent;
+    delete node;
 }
 
 void NodeSelector::on_bOk_clicked()
@@ -494,6 +492,56 @@ void NodeSelector::on_bOk_clicked()
 
     delete node;
     accept();
+}
+
+void NodeSelector::setupNewFolderDialog()
+{
+    // Initialize the NewFolder input Dialog
+    newFolderUi->setupUi(newFolder);
+    newFolder->setWindowFlags(newFolder->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    newFolderUi->errorLabel->setText(newFolderUi->errorLabel->text().arg(forbidden));
+    // The dialog doesn't get resized on error
+    newFolderUi->textLabel->setMinimumSize(newFolderUi->errorLabel->sizeHint());
+
+    connect(newFolderUi->buttonBox, &QDialogButtonBox::rejected, newFolder, &QDialog::reject);
+    QPushButton *okButton = newFolderUi->buttonBox->button(QDialogButtonBox::Ok);
+    //only enabled when there's input, guards against empty folder name
+    okButton->setEnabled(false);
+    connect(newFolderUi->lineEdit, &QLineEdit::textChanged, this, [this, okButton]()
+    {
+        bool hasText = !newFolderUi->lineEdit->text().trimmed().isEmpty();
+        okButton->setEnabled(hasText);
+    });
+    newFolderErrorTimer.setSingleShot(true);
+    connect(&newFolderErrorTimer, &QTimer::timeout, this, [this]()
+    {
+        Utilities::animateFadeout(newFolderUi->errorLabel);
+        // after animation is finished, hide the error label and show the original text
+        // 700 magic number is how long Utilities::animateFadeout takes
+        QTimer::singleShot(700, this, [this]()
+        {
+            newFolderUi->errorLabel->hide();
+            newFolderUi->textLabel->show();
+        });
+    });
+    connect(newFolderUi->buttonBox, &QDialogButtonBox::accepted, this, [this]
+    {
+        if(newFolderUi->lineEdit->text().trimmed().contains(forbiddenRx))
+        {
+            // show error label, dialog stays open
+            newFolderUi->textLabel->hide();
+            newFolderUi->errorLabel->show();
+            Utilities::animateFadein(newFolderUi->errorLabel);
+            newFolderErrorTimer.start(newFolderErrorDisplayTime); //(re)start timer
+            newFolderUi->lineEdit->setFocus();
+        }
+        else
+        {
+            //dialog accepted, execute New Folder operation
+            newFolder->accept();
+        }
+    });
 }
 
 bool NodeSelector::getDefaultUploadOption()

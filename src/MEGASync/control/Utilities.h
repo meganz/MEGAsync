@@ -277,6 +277,8 @@ public:
     static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
     static QString getReadablePROplanFromId(int identifier);
+    static void animateFadeout(QWidget *object, int msecs = 700);
+    static void animateFadein(QWidget *object, int msecs = 700);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);

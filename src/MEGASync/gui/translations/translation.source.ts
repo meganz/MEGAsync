@@ -3786,6 +3786,26 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>NewFolderDialog</name>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Window title for the New Folder input dialog (String short as possible)</translatorcomment>
+        <translation>New folder</translation>
+    </message>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Label to direct the user to type the new MEGA folder name (String short as possible).</translatorcomment>
+        <translation>Enter the new folder name:</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed:
+%1</source>
+        <translatorcomment>Multi-line warning label shown when the user tries to create a New MEGA Folder with invalid characters. Keep the new line after colon. Also keep the percent one designator, which is used to fill in the current list of forbidden characters programatically.</translatorcomment>
+        <translation>The following characters are not allowed:
+%1</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3825,7 +3845,7 @@ Are you sure?</source>
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Enter the new folder name:</translation>
+        <translation type="vanished">Enter the new folder name:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3903,7 +3923,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Invalid folder name.
+        <translation type="obsolete">Invalid folder name.
 Please ensure that you don’t use characters like “\” “/” or “:” in your folder names.</translation>
     </message>
 </context>
