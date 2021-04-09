@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Thùng rác</translation>
+        <translation type="unfinished">Thùng Rác</translation>
     </message>
     <message>
         <source>Available</source>
@@ -2025,7 +2025,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage</source>
         <translatorcomment>Label to indicate the storage section of current account</translatorcomment>
-        <translation type="unfinished">Lưu trữ</translation>
+        <translation type="unfinished">Lưu Trữ</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -2268,12 +2268,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Đăng nhập hoặc tạo một tài khoản để bắt đầu sử dụng app MEGA cho Máy Tính.</translation>
+        <translation type="unfinished">Đăng nhập hoặc tạo một tài khoản để bắt đầu sử dụng App MEGA cho Máy Tính.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">Cần phải đăng nhập vào tài khoản MEGA để sử dụng app MEGA cho Máy Tính.</translation>
+        <translation type="unfinished">Cần phải đăng nhập vào tài khoản MEGA để sử dụng App MEGA cho Máy Tính.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -2288,7 +2288,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Tìm hiểu thêm về app MEGA cho Máy Tính. [A]Đọc thêm[/A]</translation>
+        <translation type="unfinished">Tìm hiểu thêm về App MEGA cho Máy Tính. [A]Đọc thêm[/A]</translation>
     </message>
 </context>
 <context>
@@ -2539,7 +2539,7 @@ Exit anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
-        <translation>Đang kiểm tra</translation>
+        <translation>Đang quét nội dung</translation>
     </message>
     <message>
         <source>Syncing</source>
@@ -3262,12 +3262,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
+        <translation type="unfinished">MEGAsync sẽ vẫn tiếp tục hoạt động nhưng các bản cập nhật sẽ sớm không còn hỗ trợ cho các phiên bản trước hệ OS X Yosemite nữa.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+        <translation type="unfinished">Một hoặc vài phiên đồng bộ đã bị vô hiệu. Vào phần tùy chỉnh để bật lại.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3282,17 +3282,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+        <translation type="unfinished">Một hoặc vài phiên đồng bộ đã bị vô hiệu. Vào phần thiết đặt để bật lại.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation type="unfinished">Your syncs have been disabled</translation>
+        <translation type="unfinished">Một số phiên đồng bộ đã bị vô hiệu</translation>
     </message>
 </context>
 <context>
@@ -3539,7 +3534,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Initial scan failed</source>
         <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Quá trình quyét khởi động thất bại</translation>
+        <translation type="unfinished">Quá trình quét khởi động thất bại</translation>
     </message>
     <message>
         <source>Local path temporarily unavailable</source>
@@ -3700,7 +3695,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
-        <translation type="unfinished">Ưu tiên đầu tiên</translation>
+        <translation type="unfinished">Ưu tiên trước</translation>
     </message>
     <message>
         <source>Move up</source>
@@ -4221,7 +4216,7 @@ Xin chắc rằng tên thư mục không có chứa các ký tự như ‘\’ �
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Preferences</translation>
+        <translation type="unfinished">Tùy chỉnh</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4419,14 +4414,14 @@ Xin chắc rằng tên thư mục không có chứa các ký tự như ‘\’ �
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- New improvements for the management of syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify users about various account events.
-- Improved user experience while working with a huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
-- Other performance improvements and adjustments.
-- Other UI fixes and adjustments.</translation>
+        <translation type="unfinished">- Các cải tiến mới cho việc quản lý các phiên đồng bộ.
+- Cải thiện trải nghiệm sử dụng khi phiên đồng bộ bị vô hiệu.
+- Hoạt động tốt hơn với hệ thống thông báo về các vấn đề liên quan tới tài khoản.
+- Cải thiện trải nghiệm sử dụng khi làm việc với số lượng lớn phiên đồng bộ.
+- Sửa lỗi về mức sử dụng CPU cao của gnome-shell trên hệ thống Ubuntu.
+- Sửa lỗi treo máy đã báo cáo trên Windows và Linux.
+- Một số cải tiến và điều chỉnh hiệu suất khác.
+- Sửa lỗi và một số điều chỉnh giao diện người dùng khác.</translation>
     </message>
 </context>
 <context>
@@ -4567,7 +4562,7 @@ Xin chắc rằng tên thư mục không có chứa các ký tự như ‘\’ �
     <message>
         <source>Save As</source>
         <translatorcomment>Window title when saving a file</translatorcomment>
-        <translation type="unfinished">Lưu Thành</translation>
+        <translation type="unfinished">Lưu Dưới Dạng</translation>
     </message>
     <message>
         <source>Directory:</source>
@@ -5653,7 +5648,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Một số phiên đồng bộ đã bị vô hiệu. Để biết thêm thông tin, rê con trỏ chuột vào biểu tượng chú ý nằm bên cạnh từng phiên đồng bộ bị vô hiệu.</translation>
+        <translation type="unfinished">Một số phiên đồng bộ đã bị vô hiệu. Để xem thêm thông tin, rê con trỏ chuột vào biểu tượng chú ý nằm bên cạnh từng phiên đồng bộ bị vô hiệu.</translation>
     </message>
 </context>
 <context>
@@ -6003,7 +5998,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Medium</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Medium security </translatorcomment>
-        <translation type="unfinished">Trung Bình</translation>
+        <translation type="unfinished">Thường</translation>
     </message>
     <message>
         <source>Good</source>
@@ -6129,7 +6124,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Send to a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
-        <translation>Gửi cho một người dùng MEGA</translation>
+        <translation>Gửi đến một người dùng MEGA</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -6280,7 +6275,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Đang kiểm tra</translation>
+        <translation type="unfinished">Đang quét nội dung</translation>
     </message>
     <message>
         <source>Syncing</source>
@@ -6497,7 +6492,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Completed</source>
         <translatorcomment>Label of tab to access all completed transfers</translatorcomment>
-        <translation type="unfinished">Hoàn tất</translation>
+        <translation type="unfinished">Hoàn Tất</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -6551,7 +6546,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Resume</source>
-        <translation type="unfinished">Tiếp tục truyền tải</translation>
+        <translation type="unfinished">Tiếp tục truyền</translation>
     </message>
     <message>
         <source>Active Transfers</source>
@@ -6813,7 +6808,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Thùng rác</translation>
+        <translation type="unfinished">Thùng Rác</translation>
     </message>
     <message>
         <source>Incoming Shares</source>

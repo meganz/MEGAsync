@@ -3283,17 +3283,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+        <translation type="unfinished">Een of meer synchronisaties zijn uitgeschakeld. Ga naar instellingen om ze weer in te schakelen.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation type="unfinished">Your syncs have been disabled</translation>
+        <translation type="unfinished">Uw synchronisaties zijn uitgeschakeld</translation>
     </message>
 </context>
 <context>
@@ -4420,13 +4415,13 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation type="unfinished">- Nieuwe verbeteringen voor het beheer van synchronisaties.
-- Verbeterde gebruikerservaring wanneer synchronisaties zijn uitgeschakeld.
-- Verbeterde systeemmeldingen om gebruikers te informeren over verschillende accountgebeurtenissen.
-- Verbeterde gebruikerservaring tijdens het werken met een groot aantal overdrachten en synchronisaties.
-- Problemen opgelost met een hoog CPU-gebruik van de gnome-shell bij het draaien op Ubuntu.
-- Opgeloste crashes op Windows en Linux opgelost.
-- Andere prestatieverbeteringen en aanpassingen.
+        <translation type="unfinished">- Nieuwe verbeteringen voor het beheer van synchronisaties. 
+- Verbeterde gebruikerservaring wanneer synchronisaties zijn uitgeschakeld. 
+- Verbeterde systeemmeldingen om gebruikers op de hoogte te stellen van verschillende accountgebeurtenissen. 
+- Verbeterde gebruikerservaring tijdens het werken met een groot aantal overdrachten en synchronisaties. 
+- Problemen opgelost met een hoog CPU-gebruik van de gnome-shell bij het draaien op Ubuntu. 
+- Opgeloste crashes op Windows en Linux opgelost. 
+- Andere prestatieverbeteringen en aanpassingen. 
 - Andere UI-fixes en aanpassingen.</translation>
     </message>
 </context>

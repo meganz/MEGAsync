@@ -3282,17 +3282,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+        <translation type="unfinished">Une ou plusieurs synchronisations ont été désactivées. Accédez aux paramètres pour les réactiver.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation type="unfinished">Your syncs have been disabled</translation>
+        <translation type="unfinished">Vos synchronisations ont été désactivées</translation>
     </message>
 </context>
 <context>
@@ -4423,7 +4418,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
 – Expérience utilisateur améliorée quand les synchronisations sont désactivées.
 – Amélioration des notifications système pour signaler les différents événements du compte aux utilisateurs.
 – Expérience utilisateur améliorée lors de très nombreux transferts et synchronisations.
-– Correctif de problèmes entraînant une utilisation élevée de l’UCT sous gnome–shell et Ubuntu.
+– Correctif de problèmes entraînant une utilisation élevée de l’UCT sous environnement Gnome et Ubuntu.
 – Correctif de plantages détectés sous Windows et Linux.
 – Autres améliorations des performances et mises au point.
 – Autres correctifs de l’IU et mises au point.</translation>

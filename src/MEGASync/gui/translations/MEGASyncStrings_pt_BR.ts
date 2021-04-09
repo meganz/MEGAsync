@@ -3282,17 +3282,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
-    </message>
-    <message>
-        <source>Your sync &quot;%1&quot; has been disabled</source>
-        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+        <translation type="unfinished">Uma ou mais sincronizações foram desativadas. Você pode reativá-las nas Configurações.</translation>
     </message>
     <message>
         <source>Your syncs have been disabled</source>
         <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
-        <translation type="unfinished">Your syncs have been disabled</translation>
+        <translation type="unfinished">As suas sincronizações foram desativadas.</translation>
     </message>
 </context>
 <context>
@@ -4421,7 +4416,7 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
         <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
         <translation type="unfinished">- Melhor gerenciamento das sincronizações.
 - Aprimoramento da experiência do usuário quando as sincronizações são desativadas.
-- Melhoria nas notificações do sistema.
+- Melhoria nas notificações do sistema sobre diferentes acontecimentos.
 - Experiência do usuário aprimorada ao trabalhar com um grande número de transferências e sincronizações.
 - Resolução de problemas relacionados ao alto uso de CPU do gnome-shell durante a execução no Ubuntu.
 - Correção de crashes em Windows e Linux.
