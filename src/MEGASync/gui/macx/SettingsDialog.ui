@@ -2348,7 +2348,7 @@ QTableWidget::item { background-color: #F5F5F5; }
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="eUploadFolder_4">
+              <widget class="QLineEdit" name="eUploadFolder">
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -2361,7 +2361,7 @@ QTableWidget::item { background-color: #F5F5F5; }
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="bUploadFolder_4">
+              <widget class="QPushButton" name="bUploadFolder">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -2407,7 +2407,7 @@ QTableWidget::item { background-color: #F5F5F5; }
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="eDownloadFolder_4">
+              <widget class="QLineEdit" name="eDownloadFolder">
                <property name="text">
                 <string notr="true"/>
                </property>
@@ -2417,7 +2417,7 @@ QTableWidget::item { background-color: #F5F5F5; }
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="bDownloadFolder_4">
+              <widget class="QPushButton" name="bDownloadFolder">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -2442,7 +2442,7 @@ QTableWidget::item { background-color: #F5F5F5; }
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="lUploadFolder_4">
+           <widget class="QLabel" name="lUploadFolder">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -2467,7 +2467,7 @@ QTableWidget::item { background-color: #F5F5F5; }
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="lDownloadFolder_4">
+           <widget class="QLabel" name="lDownloadFolder">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -2497,7 +2497,7 @@ QTableWidget::item { background-color: #F5F5F5; }
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="lDefaultFolders_4">
+           <widget class="QLabel" name="lDefaultFolders">
             <property name="minimumSize">
              <size>
               <width>202</width>
