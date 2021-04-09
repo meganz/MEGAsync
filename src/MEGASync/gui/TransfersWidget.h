@@ -31,10 +31,10 @@ public:
     void pausedTransfers(bool paused);
     void disableGetLink(bool disable);
 
-    void textFilterChanged(QRegExp regExp);
-    void fileTypeFilterChanged(QSet<TransferData::FileTypes> fileType);
-    void transferStateFilterChanged(QSet<int> transferStates);
-    void transferTypeFilterChanged(QSet<int> transferTypes);
+    void textFilterChanged(const QString& regExp);
+    void fileTypeFilterChanged(const QSet<TransferData::FileTypes>& fileType);
+    void transferStateFilterChanged(const QSet<int>& transferStates);
+    void transferTypeFilterChanged(const QSet<int>& transferTypes);
     void transferFilterReset();
     void transferFilterApply();
 
@@ -49,6 +49,7 @@ public:
 
 signals:
     void clearTransfers(int firstRow, int amount);
+    void updateSearchFilter(const QString& regExp);
     void applyFilter();
 
 private:

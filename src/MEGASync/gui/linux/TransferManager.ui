@@ -72,7 +72,9 @@
     height: 24px;
     min-height: 24px;
     max-height: 24px;
-    min-width: 30px;
+    width: 36px;
+    min-width: 36px;
+    max-width: 50px;
     margin-right: 6px;
     color: #777777;
     font-size: 10px;
@@ -847,6 +849,12 @@ QGroupBox::title
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -898,6 +906,12 @@ QGroupBox::title
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -946,6 +960,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lDocumentsNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -994,6 +1014,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lImagesNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1042,6 +1068,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lVideosNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1090,6 +1122,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lMusicNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1138,6 +1176,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lOtherNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>

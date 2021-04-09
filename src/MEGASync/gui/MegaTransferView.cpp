@@ -324,7 +324,7 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
 
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 {
-    auto model = this->model();
+//    auto model = this->model();
 //    if (model)
 //    {
 //        QModelIndex index = indexAt(event->pos());
@@ -467,7 +467,6 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
 void MegaTransferView::moveToTopClicked()
 {
-
     auto selection = selectionModel()->selection();
     auto m (model());
     auto proxy (qobject_cast<QSortFilterProxyModel*>(m));

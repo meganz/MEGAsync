@@ -270,10 +270,13 @@ bool TransferManager::refreshStateStats()
         if (processedNumber == 0 && mCurrentTab == COMPLETED_TAB)
         {
             mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
+            on_tAllTransfers_clicked();
         }
 
         label->parentWidget()->setVisible(weHaveTransfers);
         label->setText(QString::number(processedNumber));
+        label->updateGeometry();
+
         mPrevFinishedNumber = processedNumber;
     }
 
@@ -314,11 +317,11 @@ bool TransferManager::refreshStateStats()
             }
             label->setText(QString::number(processedNumber));
         }
+        label->updateGeometry();
 
         mUi->sStatus->setCurrentWidget(leftFooterWidget);
         mPrevActiveNumber = processedNumber;
     }
-
     return weHaveTransfers;
 }
 
@@ -342,6 +345,7 @@ void TransferManager::refreshTypeStats()
             mUi->lDownloads->show();
             mUi->lDownloads->setText(QString::number(number));
         }
+        mUi->lDownloads->updateGeometry();
         mPrevDlNumber = number;
     }
 
@@ -361,6 +365,7 @@ void TransferManager::refreshTypeStats()
             mUi->lUploads->show();
             mUi->lUploads->setText(QString::number(number));
         }
+        mUi->lUploads->updateGeometry();
         mPrevUlNumber = number;
     }
 
@@ -441,7 +446,6 @@ void TransferManager::updateState()
     QWidget* widgetToShow (mUi->wTransfers);
 
     auto nbRows (mUi->wTransfers->rowCount());
-
 
     switch (mCurrentTab)
     {
@@ -553,7 +557,7 @@ void TransferManager::on_tSearchIcon_clicked()
                                             Qt::ElideMiddle,
                                             mUi->bSearchString->width() - 24));
     mUi->wTransfers->transferFilterReset();
-    mUi->wTransfers->textFilterChanged(QRegExp(mUi->leSearchField->text(), Qt::CaseInsensitive));
+    mUi->wTransfers->textFilterChanged(mUi->leSearchField->text());
 
     mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
                               .elidedText(mUi->leSearchField->text(),
@@ -576,7 +580,7 @@ void TransferManager::on_tClearSearchResult_clicked()
     mUi->wSearch->hide();
     mUi->bSearchString->setText(QString());
     mUi->fSearchString->setProperty("itsOn", false);
-    mUi->wTransfers->textFilterChanged(QRegExp());
+    mUi->wTransfers->textFilterChanged(QString());
     mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
     on_tSearchCancel_clicked();
     updateState();
@@ -717,11 +721,11 @@ void TransferManager::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void TransferManager::paintEvent(QPaintEvent* event)
-{
-    mUi->wTransfers->update();
-    QDialog::paintEvent(event);
-}
+//void TransferManager::paintEvent(QPaintEvent* event)
+//{
+//    mUi->wTransfers->update();
+//    QDialog::paintEvent(event);
+//}
 
 //void TransferManager::mouseMoveEvent(QMouseEvent *event)
 //{

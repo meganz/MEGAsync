@@ -72,7 +72,9 @@
     height: 24px;
     min-height: 24px;
     max-height: 24px;
-    min-width: 30px;
+    width: 36px;
+    min-width: 36px;
+    max-width: 50px;
     margin-right: 6px;
     color: #777777;
     font-size: 10px;
@@ -80,30 +82,8 @@
     qproperty-alignment: 'AlignHCenter | AlignVCenter';
 }
 
-#wLeftPane QFrame[itsOn=true]
-{
- /*  	qproperty-frameShape: 'Box';
-    qproperty-frameShadow: 'Raised'; */
-    border-radius: 4px;
- /*   border: 1px solid #ededed; */
-    background-color: white;
-}
-
-#wLeftPane QFrame[itsOn=true]  QLabel
-{
-    border: 1px solid #F5F5F5;
-    background-color: #FAFAFA;
-    border-radius: 12px;
-}
-
-#wLeftPane QFrame[itsOn=true] QPushButton
-{
-    font-weight: bold;
-}
-
 #wMediaType QFrame, #wTransferring QFrame, #wSearch QFrame
 {
-/*	border: 1px solid #FAFAFA;*/
     padding-right: 6px;
     padding-left: 6px;
 }
@@ -397,7 +377,7 @@ QGroupBox::title
            <item>
             <widget class="QToolButton" name="bSearch">
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
              </property>
             </widget>
@@ -440,7 +420,7 @@ QGroupBox::title
               </sizepolicy>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
              </property>
             </widget>
@@ -458,7 +438,7 @@ QGroupBox::title
            <item>
             <widget class="QToolButton" name="tSearchCancel">
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
              </property>
             </widget>
@@ -537,7 +517,7 @@ QGroupBox::title
                <string>All Transfers</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_all_transfers.png</normaloff>:/images/ico_all_transfers.png</iconset>
               </property>
               <property name="autoDefault">
@@ -613,7 +593,7 @@ QGroupBox::title
                <string>Downloads</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
               <property name="autoDefault">
@@ -686,7 +666,7 @@ QGroupBox::title
                <string>Uploads</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="autoDefault">
@@ -762,7 +742,7 @@ QGroupBox::title
                <string>Finished</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_finished.png</normaloff>:/images/ico_finished.png</iconset>
               </property>
               <property name="autoDefault">
@@ -856,7 +836,7 @@ QGroupBox::title
                <string>Text</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
               </property>
               <property name="autoDefault">
@@ -868,6 +848,12 @@ QGroupBox::title
              <widget class="QLabel" name="lTextNb">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="text">
                <string/>
@@ -907,7 +893,7 @@ QGroupBox::title
                <string>Archives</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/drag_compressed.png</normaloff>:/images/drag_compressed.png</iconset>
               </property>
               <property name="autoDefault">
@@ -919,6 +905,12 @@ QGroupBox::title
              <widget class="QLabel" name="lArchivesNb">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="text">
                <string/>
@@ -958,7 +950,7 @@ QGroupBox::title
                <string>Documents</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/drag_text.png</normaloff>:/images/drag_text.png</iconset>
               </property>
               <property name="autoDefault">
@@ -968,6 +960,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lDocumentsNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1006,7 +1004,7 @@ QGroupBox::title
                <string>Images</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/drag_image.png</normaloff>:/images/drag_image.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1016,6 +1014,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lImagesNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1054,7 +1058,7 @@ QGroupBox::title
                <string>Videos</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/drag_video.png</normaloff>:/images/drag_video.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1064,6 +1068,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lVideosNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1102,7 +1112,7 @@ QGroupBox::title
                <string>Music</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/drag_audio.png</normaloff>:/images/drag_audio.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1112,6 +1122,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lMusicNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1150,7 +1166,7 @@ QGroupBox::title
                <string>Other</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/drag_generic.png</normaloff>:/images/drag_generic.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1160,6 +1176,12 @@ QGroupBox::title
             </item>
             <item>
              <widget class="QLabel" name="lOtherNb">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="text">
                <string/>
               </property>
@@ -1222,7 +1244,7 @@ QGroupBox::title
                <string notr="true"/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
               </property>
               <property name="autoDefault">
@@ -1236,7 +1258,7 @@ QGroupBox::title
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
               </property>
              </widget>
@@ -1285,7 +1307,7 @@ QGroupBox::title
           <item>
            <widget class="QPushButton" name="bDownSpeed">
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/download_fail_item_ico.png</normaloff>:/images/download_fail_item_ico.png</iconset>
             </property>
            </widget>
@@ -1293,7 +1315,7 @@ QGroupBox::title
           <item>
            <widget class="QPushButton" name="bUpSpeed">
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/upload_fail_item_ico.png</normaloff>:/images/upload_fail_item_ico.png</iconset>
             </property>
            </widget>
@@ -1307,7 +1329,7 @@ QGroupBox::title
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
             </property>
            </widget>
@@ -1328,7 +1350,7 @@ QGroupBox::title
            <string>Up to date</string>
           </property>
           <property name="icon">
-           <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
             <normaloff>:/images/ico_menu_uptodate_state.png</normaloff>:/images/ico_menu_uptodate_state.png</iconset>
           </property>
          </widget>
@@ -1551,7 +1573,7 @@ QGroupBox::title
             <string>Import links</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
            </property>
           </widget>
@@ -1562,7 +1584,7 @@ QGroupBox::title
             <string>Upload</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
            </property>
           </widget>
@@ -1573,7 +1595,7 @@ QGroupBox::title
             <string>Download</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
            </property>
           </widget>
@@ -1581,7 +1603,7 @@ QGroupBox::title
          <item alignment="Qt::AlignTop">
           <widget class="QToolButton" name="tCogWheel">
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
            </property>
           </widget>
@@ -1610,7 +1632,7 @@ QGroupBox::title
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
             </property>
            </widget>
@@ -1625,7 +1647,7 @@ QGroupBox::title
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
             </property>
            </widget>
@@ -1640,7 +1662,7 @@ QGroupBox::title
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
             </property>
            </widget>
@@ -1655,7 +1677,7 @@ QGroupBox::title
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/no_results.png</normaloff>:/images/no_results.png</iconset>
             </property>
            </widget>
@@ -1670,7 +1692,7 @@ QGroupBox::title
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/completed_transfers.png</normaloff>:/images/completed_transfers.png</iconset>
             </property>
            </widget>

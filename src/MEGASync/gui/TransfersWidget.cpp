@@ -108,6 +108,10 @@ void TransfersWidget::configureTransferView()
 //        ui->tvTransfers->setModel(model2);
         mProxyModel->setDynamicSortFilter(false);
         ui->tvTransfers->setModel(mProxyModel);
+
+        QObject::connect(this, &TransfersWidget::updateSearchFilter,
+                mProxyModel, static_cast<void (TransfersSortFilterProxyModel::*)(const QString&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
+                Qt::QueuedConnection);
     }
 
     ui->tvTransfers->setDragEnabled(true);
@@ -225,18 +229,14 @@ void TransfersWidget::on_pHeaderSize_clicked()
 
 void TransfersWidget::on_tPauseResumeAll_clicked()
 {
-
-    static bool isPaused(true);
-
+    static bool isPaused(false);
     isPaused = !isPaused;
-
     ui->tPauseResumeAll->setIcon(isPaused ?
-                                     QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png"))
-                                   : QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png")));
+                                     QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png"))
+                                   : QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
     ui->tPauseResumeAll->setToolTip(isPaused ?
                                         tr("Resume transfers")
                                       : tr("Pause transfers"));
-
     ui->tvTransfers->pauseResumeSelection(isPaused);
 }
 
@@ -251,25 +251,26 @@ void TransfersWidget::onTransferAdded()
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::textFilterChanged(QRegExp regExp)
+void TransfersWidget::textFilterChanged(const QString& regExp)
 {
-    mProxyModel->setFilterRegExp(regExp);
+    //emit updateSearchFilter(regExp);
+    mProxyModel->setFilterRegExp(QRegExp(regExp, Qt::CaseInsensitive));
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::fileTypeFilterChanged(QSet<TransferData::FileTypes> fileTypes)
+void TransfersWidget::fileTypeFilterChanged(const QSet<TransferData::FileTypes>& fileTypes)
 {
     mProxyModel->setFileType(fileTypes);
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::transferStateFilterChanged(QSet<int> transferStates)
+void TransfersWidget::transferStateFilterChanged(const QSet<int>& transferStates)
 {
     mProxyModel->setTransferState(transferStates);
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::transferTypeFilterChanged(QSet<int> transferTypes)
+void TransfersWidget::transferTypeFilterChanged(const QSet<int>& transferTypes)
 {
     mProxyModel->setTransferType(transferTypes);
     ui->tvTransfers->scrollToTop();
@@ -286,7 +287,6 @@ void TransfersWidget::transferFilterApply()
     if (!mProxyModel->dynamicSortFilter())
     {
         mProxyModel->setDynamicSortFilter(true);
-
         connect(this, &TransfersWidget::applyFilter,
                 mProxyModel, &TransfersSortFilterProxyModel::invalidate);
     }

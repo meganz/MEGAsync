@@ -8,6 +8,9 @@ using namespace mega;
 
 const int QTransfersModel2::INIT_ROWS_PER_CHUNK;
 
+static const QVector<int> DATA_ROLE = {Qt::DisplayRole};
+static const QModelIndex DEFAULT_IDX = QModelIndex();
+
 QTransfersModel2::QTransfersModel2(QObject *parent) :
     QAbstractItemModel (parent),
     mMegaApi (((MegaApplication *)qApp)->getMegaApi()),
@@ -54,7 +57,7 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
 
 bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
 {
-    if (parent == QModelIndex())
+    if (parent == DEFAULT_IDX)
     {
         return mModelHasTransfers;
     }
@@ -65,7 +68,7 @@ bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
 int QTransfersModel2::rowCount(const QModelIndex& parent) const
 {
     QMutexLocker lock (mModelMutex);
-    if (parent == QModelIndex())
+    if (parent == DEFAULT_IDX)
     {
         return mOrder.size();
     }
@@ -74,7 +77,11 @@ int QTransfersModel2::rowCount(const QModelIndex& parent) const
 
 int QTransfersModel2::columnCount(const QModelIndex& parent) const
 {
-    return 1;
+    if (parent == DEFAULT_IDX)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 QVariant QTransfersModel2::data(const QModelIndex& index, int role) const
@@ -92,21 +99,21 @@ QVariant QTransfersModel2::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-QModelIndex QTransfersModel2::parent(const QModelIndex &) const
+QModelIndex QTransfersModel2::parent(const QModelIndex&) const
 {
-    return QModelIndex();
+    return DEFAULT_IDX;
 }
 
 QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex& parent) const
 {
     QMutexLocker lock (mModelMutex);
 
-    if (column == 0 && row >= 0 && row < mOrder.size())
+    if (parent == DEFAULT_IDX && column == 0 && row >= 0 && row < mOrder.size())
     {
         return createIndex(row, 0, mOrder.at(row));
     }
 
-    return QModelIndex();
+    return DEFAULT_IDX;
 }
 
 QTransfersModel2::~QTransfersModel2()
@@ -226,7 +233,7 @@ void QTransfersModel2::initModel()
             // Use the actual number of items to update the rows, in case
             // transfers were added/removed between chunks.
             auto nbRowsInModel (mOrder.size());
-            beginInsertRows(QModelIndex(), nbRowsInModel,
+            beginInsertRows(DEFAULT_IDX, nbRowsInModel,
                             nbRowsInModel + nbRowsInChunk - 1);
 
             // Insert transfers
@@ -316,7 +323,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
             }
         }
     }
-    beginInsertRows(QModelIndex(), insertAt, insertAt);
+    beginInsertRows(DEFAULT_IDX, insertAt, insertAt);
     insertTransfer(api, transfer, insertAt);
     endInsertRows();
 
@@ -376,9 +383,11 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
                                                     transfer->getParentHandle(),
                                                     transfer->getNodeHandle(),
                                                     transfer->getPublicMegaNode());
-
         v = QVariant::fromValue(transferItem);
-        emit dataChanged(index(row, 0), index(row, 0));
+
+        QModelIndex idx (index(row, 0, DEFAULT_IDX));
+
+        Utilities::queueFunctionInAppThread([=](){emit dataChanged(idx, idx, DATA_ROLE);});
 
         if (state == MegaTransfer::STATE_FAILED)
         {
@@ -560,8 +569,8 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
 
                 if (newRow != row)
                 {
-                    if (beginMoveRows(QModelIndex(), row, row,
-                                      QModelIndex(), destRowToPassToBeginMove))
+                    if (beginMoveRows(DEFAULT_IDX, row, row,
+                                      DEFAULT_IDX, destRowToPassToBeginMove))
                     {
                         mOrder.move(row, newRow);
 //                        mOrder.erase(rowIt);
@@ -574,7 +583,8 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
 
             if (sameRow)
             {
-                emit dataChanged(index(row, 0), index(row, 0));
+                QModelIndex idx (index(row, 0, DEFAULT_IDX));
+                Utilities::queueFunctionInAppThread([=](){emit dataChanged(idx, idx, DATA_ROLE);});
             }
 
             // Keep statistics up to date
@@ -629,11 +639,10 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
 
         int errorCode (MegaError::API_OK);
         auto errorValue (0LL);
-        auto megaError (transfer->getLastErrorExtended());
-        if (megaError)
+        if (error)
         {
-            errorCode = megaError->getErrorCode();
-            errorValue = megaError->getValue();
+            errorCode = error->getErrorCode();
+            errorValue = error->getValue();
         }
 
         auto state (transfer->getState());
@@ -643,7 +652,8 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
                                                   transfer->getMeanSpeed(), speed,
                                                   transfer->getPriority(), state, transferredBytes,
                                                   transfer->getPublicMegaNode());
-        emit dataChanged(index(row, 0), index(row, 0));
+        QModelIndex idx (index(row, 0, DEFAULT_IDX));
+        Utilities::queueFunctionInAppThread([=](){emit dataChanged(idx, idx, DATA_ROLE);});
 
         // Keep statistics up to date
         if (prevState != state)
@@ -777,7 +787,7 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
                 // Flush pooled rows (start at row+1), init row with tag's
                 if (row == -1 || mOrder.at(row) != tag)
                 {
-                    removeRows(row + 1, count, QModelIndex());
+                    removeRows(row + 1, count, DEFAULT_IDX);
                     count = 0;
                     row = mOrder.lastIndexOf(tag, row);
 //                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
@@ -798,7 +808,7 @@ void QTransfersModel2::cancelClearTransfers(QModelIndexList& indexes)
     // Flush pooled rows (start at row).
     if (count > 0)
     {
-        removeRows(row + 1, count, QModelIndex());
+        removeRows(row + 1, count, DEFAULT_IDX);
     }
 
     mModelMutex->unlock();
@@ -877,11 +887,17 @@ void QTransfersModel2::onPauseStateChanged()
     mAreUlPaused  = mPreferences->getUploadsPaused();
     mAreAllPaused = mPreferences->getGlobalPaused();
 
-    emit dataChanged(index(0, 0), index(mOrder.size() - 1, 0), {Qt::DisplayRole});
+    Utilities::queueFunctionInAppThread([=]()
+    {
+        beginResetModel();
+        endResetModel();
+    });
 }
 
 void QTransfersModel2::onRetryTransfer(TransferTag tag)
 {
+    QMutexLocker lock (mModelMutex);
+
     auto transfer (mFailedTransfers[tag]);
     if (transfer)
     {
@@ -889,16 +905,20 @@ void QTransfersModel2::onRetryTransfer(TransferTag tag)
         transferItem->getTransferData()->mMegaApi->retryTransfer(transfer);
 
         auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
-        removeRows(rowIt - mOrder.cbegin(), 1, QModelIndex());
+        auto row (rowIt - mOrder.cbegin());
+        lock.unlock();
+
+        Utilities::queueFunctionInAppThread([=](){removeRows(row, 1, DEFAULT_IDX);});
     }
 }
 
 bool QTransfersModel2::removeRows(int row, int count, const QModelIndex& parent)
 {
-    if (parent == QModelIndex() && count > 0 && row >= 0)
+    if (parent == DEFAULT_IDX && count > 0 && row >= 0)
     {
+        beginRemoveRows(DEFAULT_IDX, row, row + count - 1);
+
         mModelMutex->lock();
-        beginRemoveRows(QModelIndex(), row, row + count - 1);
 
         for (auto i (0); i < count; ++i)
         {
@@ -944,7 +964,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex& parent)
         if (mOrder.empty())
         {
             mModelHasTransfers = false;
-            emit transfersInModelChanged(false);
+            Utilities::queueFunctionInAppThread([=](){emit transfersInModelChanged(false);});
         }
         mModelMutex->unlock();
         return true;
@@ -1076,7 +1096,7 @@ bool QTransfersModel2::dropMimeData(const QMimeData* data, Qt::DropAction action
 
     mModelMutex->lock();
 
-    if (destRow >= 0 && destRow <= mOrder.size() && action == Qt::MoveAction)
+    if (destRow >= 0 && destRow <= mOrder.size() && action == Qt::MoveAction && column == 0)
     {
         QList<int> rows;
         for (auto tag : qAsConst(tags))
@@ -1109,6 +1129,7 @@ bool QTransfersModel2::dropMimeData(const QMimeData* data, Qt::DropAction action
 void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row)
 {
     auto tag (transfer->getTag());
+    QMutexLocker lock (mModelMutex);
     if (mTransfers.find(tag) == mTransfers.end())
     {
         auto state (transfer->getState());
@@ -1151,7 +1172,7 @@ void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* tr
          if (mOrder.size() == 1)
          {
              mModelHasTransfers = true;
-             emit transfersInModelChanged(true);
+             Utilities::queueFunctionInAppThread([=](){emit transfersInModelChanged(true);});
          }
     }
 }

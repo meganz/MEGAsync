@@ -60,8 +60,6 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
     const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
 
-//    const auto d (qobject_cast<QTransfersModel2*>(sourceModel())->getTransferDataByRow(sourceRow));
-
     return     (mTransferState.isEmpty() || mTransferState.contains(d->mState))
             && (mTransferType.isEmpty()  || mTransferType.contains(d->mType))
             && (mFileType.isEmpty()      || mFileType.contains(d->mFileType))
