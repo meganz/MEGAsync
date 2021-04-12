@@ -577,6 +577,33 @@
         <file>images/new_contact@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
+        <file>images/ic_sync_warning@3x.png</file>
+        <file>images/ico_uploads.png</file>
+        <file>images/ico_uploads@2x.png</file>
+        <file>images/ico_downloads.png</file>
+        <file>images/ico_downloads@2x.png</file>
+        <file>images/ico_all_transfers.png</file>
+        <file>images/ico_all_transfers@2x.png</file>
+        <file>images/ico_finished.png</file>
+        <file>images/ico_finished@2x.png</file>
+        <file>images/ico_search.png</file>
+        <file>images/ico_search@2x.png</file>
+        <file>images/ico_search_cancel.png</file>
+        <file>images/ico_search_cancel@2x.png</file>
+        <file>images/ico_move_to_top.png</file>
+        <file>images/ico_move_to_top@2x.png</file>
+        <file>images/ico_move_up.png</file>
+        <file>images/ico_move_up@2x.png</file>
+        <file>images/ico_move_down.png</file>
+        <file>images/ico_move_down@2x.png</file>
+        <file>images/ico_move_to_bottom.png</file>
+        <file>images/ico_move_to_bottom@2x.png</file>
+        <file>images/ico_open.png</file>
+        <file>images/ico_open@2x.png</file>
+        <file>images/ico_show_in_folder.png</file>
+        <file>images/ico_show_in_folder@2x.png</file>
+        <file>images/ico_clear.png</file>
+        <file>images/ico_clear@2x.png</file>
         <file>images/no_results.png</file>
         <file>images/no_results@2x.png</file>
         <file>images/sort_ascending.png</file>
