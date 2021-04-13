@@ -867,7 +867,8 @@ void SettingsDialog::loadSettings()
 
 // TODO: separate storage refresh from bandwidth
 // split into separate methods
-void SettingsDialog::refreshAccountDetails() {
+void SettingsDialog::refreshAccountDetails()
+{
     int accountType = preferences->accountType();
     if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -1583,7 +1584,7 @@ void SettingsDialog::on_bDeleteName_clicked()
 
 void SettingsDialog::on_bExcludeSize_clicked()
 {
-    SizeLimitDialog *dialog = new SizeLimitDialog(this);
+    QPointer<SizeLimitDialog> dialog = new SizeLimitDialog(this);
     dialog->setUpperSizeLimit(preferences->upperSizeLimit());
     dialog->setLowerSizeLimit(preferences->lowerSizeLimit());
     dialog->setUpperSizeLimitValue(preferences->upperSizeLimitValue());
@@ -1591,7 +1592,8 @@ void SettingsDialog::on_bExcludeSize_clicked()
     dialog->setUpperSizeLimitUnit(preferences->upperSizeLimitUnit());
     dialog->setLowerSizeLimitUnit(preferences->lowerSizeLimitUnit());
 
-    if (dialog->exec() == QDialog::Accepted)
+    int ret = dialog->exec();
+    if (dialog && (ret == QDialog::Accepted))
     {
         preferences->setUpperSizeLimit(dialog->upperSizeLimit());
         preferences->setLowerSizeLimit(dialog->lowerSizeLimit());
@@ -1611,11 +1613,12 @@ void SettingsDialog::on_bExcludeSize_clicked()
 
 void SettingsDialog::on_bLocalCleaner_clicked()
 {
-    LocalCleanScheduler *dialog = new LocalCleanScheduler(this);
+    QPointer<LocalCleanScheduler> dialog = new LocalCleanScheduler(this);
     dialog->setDaysLimit(preferences->cleanerDaysLimit());
     dialog->setDaysLimitValue(preferences->cleanerDaysLimitValue());
 
-    if (dialog->exec() == QDialog::Accepted)
+    int ret = dialog->exec();
+    if (dialog && (ret == QDialog::Accepted))
     {
         preferences->setCleanerDaysLimit(dialog->daysLimit());
         preferences->setCleanerDaysLimitValue(dialog->daysLimitValue());
@@ -2360,8 +2363,8 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 
 void SettingsDialog::on_bOpenProxySettings_clicked()
 {
-    ProxySettings proxySettingsDialog(app, this);
-    if (proxySettingsDialog.exec() == QDialog::Accepted)
+    ProxySettings *proxySettingsDialog = new ProxySettings(app, this);
+    if (proxySettingsDialog->exec() == QDialog::Accepted)
     {
         app->applyProxySettings();
         updateNetworkTab();
@@ -2370,8 +2373,8 @@ void SettingsDialog::on_bOpenProxySettings_clicked()
 
 void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 {
-    BandwidthSettings bandwidthSettings(app, this);
-    if (bandwidthSettings.exec() == QDialog::Rejected)
+    BandwidthSettings *bandwidthSettings = new BandwidthSettings(app, this);
+    if (bandwidthSettings->exec() == QDialog::Rejected)
         return;
 
     if(preferences->uploadLimitKB() > 0)
