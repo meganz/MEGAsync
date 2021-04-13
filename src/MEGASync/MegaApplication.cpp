@@ -10,6 +10,7 @@
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
+#include "ConnectivityChecker.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -5901,7 +5902,6 @@ void MegaApplication::openSettings(int tab)
 
     settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
-    settingsDialog->loadSettings();
     settingsDialog->show();
 }
 

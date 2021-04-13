@@ -1,15 +1,12 @@
-#ifndef SETTINGSDIALOG_H
+﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
 #include <QDialog>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtCore>
-#include <QNetworkProxy>
-#include <QButtonGroup>
-#include <ConnectivityChecker.h>
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
 #include <QMacToolBar>
 #endif
 
@@ -18,28 +15,12 @@
 #include "SizeLimitDialog.h"
 #include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
-#include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "MegaController.h"
 #include "../model/Model.h"
 #include "megaapi.h"
 #include "HighDpiResize.h"
-
-//Const values
-constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
-constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
-constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT{464};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS{444};
-constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
-constexpr auto SETTING_ANIMATION_PROXY_TAB_HEIGHT{359};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE{519};
-
 
 namespace Ui {
 class SettingsDialog;
@@ -49,85 +30,64 @@ class MegaApplication;
 class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
     Q_OBJECT
-    
+
 public:
     enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
-
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
     ~SettingsDialog();
+
     void setProxyOnly(bool proxyOnly);
     void setOverQuotaMode(bool mode);
-    void loadSettings();
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
     void storageChanged();
     void addSyncFolder(mega::MegaHandle megaFolderHandle);
+    void loadSyncSettings();
+    void updateUploadFolder();
+    void updateDownloadFolder();
+
+    void updateStorageElements() override;
+    void updateBandwidthElements() override;
+    void updateAccountElements() override;
+
+signals:
+    void userActivity();
 
 public slots:
-    void stateChanged();
-    void fileVersioningStateChanged();
     void storageStateChanged(int state);
     void syncStateChanged(int state);
-    void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
     void onSyncStateChanged(std::shared_ptr<SyncSetting>);
-    void onSyncDeleted(std::shared_ptr<SyncSetting>);
     void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
     void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
 
 private slots:
-
     void onSavingSettingsProgress(double progress);
     void onSavingSettingsCompleted();
 
     void on_bAccount_clicked();
-
     void on_bSyncs_clicked();
-
     void on_bBandwidth_clicked();
-
     void on_bSecurity_clicked();
-
     void on_bAdvanced_clicked();
-
     void on_bProxies_clicked();
 
-    void on_bCancel_clicked();
-
-    void on_bOk_clicked();
-
     void on_bHelp_clicked();
-
 #ifndef __APPLE__
     void on_bHelpIco_clicked();
 #endif
 
-    void on_rProxyManual_clicked();
-
-    void on_rProxyAuto_clicked();
-
-    void on_rNoProxy_clicked();
-
     void on_bUpgrade_clicked();
     void on_bUpgradeBandwidth_clicked();
 
-    void on_rUploadAutoLimit_clicked();
-    void on_rUploadNoLimit_clicked();
-    void on_rUploadLimit_clicked();
-
-    void on_rDownloadNoLimit_clicked();
-    void on_rDownloadLimit_clicked();
-
-    void on_cProxyRequiresPassword_clicked();
 #ifndef WIN32
     void on_bPermissions_clicked();
 #endif
     void on_bAdd_clicked();
-    void on_bApply_clicked();
     void on_bDelete_clicked();
     void on_bExcludeSize_clicked();
     void on_bLocalCleaner_clicked();
@@ -144,8 +104,6 @@ private slots:
     void on_bClearCache_clicked();
     void on_bClearRemoteCache_clicked();
     void on_bClearFileVersions_clicked();
-    void onProxyTestError();
-    void onProxyTestSuccess();
     void on_bUpdate_clicked();
     void on_bFullCheck_clicked();
     void on_bStorageDetails_clicked();
@@ -153,18 +111,53 @@ private slots:
     void on_bChangePassword_clicked();
     void on_bSendBug_clicked();
 
-    void onAnimationFinished();
     void setAvatar();
 
-signals:
-    void userActivity();
+    void on_cShowNotifications_toggled(bool checked);
+    void on_cAutoUpdate_toggled(bool checked);
+    void on_cStartOnStartup_toggled(bool checked);
+    void on_cLanguage_currentIndexChanged(int index);
+    void on_eUploadFolder_textChanged(const QString &text);
+    void on_eDownloadFolder_textChanged(const QString &text);
+
+    void on_rUploadAutoLimit_toggled(bool checked);
+    void on_rUploadNoLimit_toggled(bool checked);
+    void on_rUploadLimit_toggled(bool checked);
+    void on_rDownloadNoLimit_toggled(bool checked);
+    void on_rDownloadLimit_toggled(bool checked);
+    void on_eUploadLimit_editingFinished();
+    void on_eDownloadLimit_editingFinished();
+    void on_eMaxDownloadConnections_valueChanged(int value);
+    void on_eMaxUploadConnections_valueChanged(int value);
+    void on_cbUseHttps_toggled(bool checked);
+    void on_cDisableFileVersioning_toggled(bool checked);
+    void on_cOverlayIcons_toggled(bool checked);
+
+    void on_openProxySettingsButton_clicked();
+
+#ifdef Q_OS_WINDOWS
+    void on_cDisableIcons_toggled(bool checked);
+#endif
+
+#ifdef Q_OS_MACOS
+    void onAnimationFinished();
+#endif
+
 
 protected:
-    void changeEvent(QEvent * event);
-    QString getFormatString();
-    QString getFormatLimitDays();
+    void changeEvent(QEvent * event) override;
 
 private:
+    void loadSettings();
+    void saveSyncSettings();
+    void onCacheSizeAvailable();
+    void onClearCache();
+    void savingSyncs(bool completed, QObject *item);
+    void syncsStateInformation(int state);
+    QString excludeBySizeInfo();
+    QString cacheDaysLimitInfo();
+    void saveExcludeSyncNames();
+
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
@@ -172,50 +165,26 @@ private:
     Model *model;
     mega::MegaApi *megaApi;
     HighDpiResize highDpiResize;
-    bool syncsChanged;
-    bool excludedNamesChanged;
     QStringList syncNames;
     QStringList languageCodes;
     bool proxyOnly;
     QFutureWatcher<long long> cacheSizeWatcher;
     QFutureWatcher<long long> remoteCacheSizeWatcher;
-    MegaProgressCustomDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
-    bool shouldClose;
     std::unique_ptr<ProgressHelper> saveSettingsProgress;
-    int modifyingSettings;
+    int loadingSettings;
     long long cacheSize;
     long long remoteCacheSize;
     long long fileVersionsSize;
     bool hasDefaultUploadOption;
     bool hasDefaultDownloadOption;
-    bool hasUpperLimit;
-    bool hasLowerLimit;
-    long long upperLimit;
-    long long lowerLimit;
-    int upperLimitUnit;
-    int lowerLimitUnit;
-    bool sizeLimitsChanged;
-    bool hasDaysLimit;
-    int daysLimit;
-    bool cleanerLimitsChanged;
-    bool fileVersioningChanged;
-    QButtonGroup downloadButtonGroup;
-    QButtonGroup uploadButtonGroup;
     bool reloadUIpage;
     ThreadPool* mThreadPool;
     bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
     bool isSavingSyncsOnGoing;
+    int debugCounter; // Easter Egg
 
-
-#ifndef WIN32
-    int folderPermissions;
-    int filePermissions;
-    bool permissionsChanged;
-#endif
-    int debugCounter;
-
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
     QPropertyAnimation *minHeightAnimation;
     QPropertyAnimation *maxHeightAnimation;
     QParallelAnimationGroup *animationGroup;
@@ -231,20 +200,6 @@ private:
     void animateSettingPage(int endValue, int duration = 150);
 #endif
 
-    void loadSizeLimits();
-    int saveSettings();
-    void onCacheSizeAvailable();
-    void onClearCache();
-    void savingSyncs(bool completed, QObject *item);
-    void syncsStateInformation(int state);
-
-public:
-    void updateStorageElements();
-    void updateBandwidthElements();
-    void updateAccountElements();
-    void loadSyncSettings();
-    void updateUploadFolder();
-    void updateDownloadFolder();
 };
 
 #endif // SETTINGSDIALOG_H
