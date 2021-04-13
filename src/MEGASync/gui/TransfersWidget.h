@@ -31,7 +31,7 @@ public:
     void pausedTransfers(bool paused);
     void disableGetLink(bool disable);
 
-    void textFilterChanged(const QString& regExp);
+    void textFilterChanged(const QString& pattern);
     void fileTypeFilterChanged(const QSet<TransferData::FileTypes>& fileType);
     void transferStateFilterChanged(const QSet<int>& transferStates);
     void transferTypeFilterChanged(const QSet<int>& transferTypes);
@@ -49,8 +49,11 @@ public:
 
 signals:
     void clearTransfers(int firstRow, int amount);
-    void updateSearchFilter(const QString& regExp);
+    //    void updateSearchFilter(const QRegularExpression& pattern);
+    void updateSearchFilter(const QString& pattern);
     void applyFilter();
+    void pauseResumeAllRows(bool pauseState);
+    void cancelClearAllRows();
 
 private:
     Ui::TransfersWidget *ui;
@@ -60,7 +63,7 @@ private:
     MegaTransferDelegate *tDelegate;
     MegaTransferDelegate2 *tDelegate2;
     QTransfersModel::ModelType mType;
-    int isPaused;
+    bool isPaused;
     MegaApplication *app;
     int mHeaderNameState;
     int mHeaderSizeState;
@@ -76,6 +79,8 @@ public slots:
     void on_tPauseResumeAll_clicked();
     void on_tCancelAll_clicked();
     void onTransferAdded();
+    void onShowCompleted(bool showCompleted);
+    void onPauseStateChanged(bool pauseState);
 
 protected:
     void changeEvent(QEvent *event);

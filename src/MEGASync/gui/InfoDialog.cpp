@@ -37,7 +37,7 @@ void InfoDialog::pauseResumeClicked()
 
 void InfoDialog::generalAreaClicked()
 {
-    app->transferManagerActionClicked();
+    app->transferManagerActionClicked(TransferManager::ALL_TRANSFERS_TAB);
 }
 
 void InfoDialog::dlAreaClicked()

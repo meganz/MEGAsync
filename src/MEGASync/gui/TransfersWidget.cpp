@@ -45,7 +45,7 @@ void TransfersWidget::setupTransfers()
     mProxyModel->setSourceModel(model2);
 
     configureTransferView();
-    onTransferAdded();
+//    onTransferAdded();
 }
 
 void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData, QTransfersModel::ModelType modelType)
@@ -109,9 +109,10 @@ void TransfersWidget::configureTransferView()
         mProxyModel->setDynamicSortFilter(false);
         ui->tvTransfers->setModel(mProxyModel);
 
-        QObject::connect(this, &TransfersWidget::updateSearchFilter,
-                mProxyModel, static_cast<void (TransfersSortFilterProxyModel::*)(const QString&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
-                Qt::QueuedConnection);
+//        QObject::connect(this, &TransfersWidget::updateSearchFilter,
+////                         mProxyModel,static_cast<void (TransfersSortFilterProxyModel::*)(const QRegularExpression&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
+//                         mProxyModel, &TransfersSortFilterProxyModel::setFilterFixedString,
+//                Qt::QueuedConnection);
     }
 
     ui->tvTransfers->setDragEnabled(true);
@@ -229,20 +230,12 @@ void TransfersWidget::on_pHeaderSize_clicked()
 
 void TransfersWidget::on_tPauseResumeAll_clicked()
 {
-    static bool isPaused(false);
-    isPaused = !isPaused;
-    ui->tPauseResumeAll->setIcon(isPaused ?
-                                     QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png"))
-                                   : QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
-    ui->tPauseResumeAll->setToolTip(isPaused ?
-                                        tr("Resume transfers")
-                                      : tr("Pause transfers"));
-    ui->tvTransfers->pauseResumeSelection(isPaused);
+    emit pauseResumeAllRows(isPaused);
 }
 
 void TransfersWidget::on_tCancelAll_clicked()
 {
-    ui->tvTransfers->cancelClearSelection();
+    emit cancelClearAllRows();
 }
 
 void TransfersWidget::onTransferAdded()
@@ -251,10 +244,43 @@ void TransfersWidget::onTransferAdded()
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::textFilterChanged(const QString& regExp)
+void TransfersWidget::onShowCompleted(bool showCompleted)
 {
-    //emit updateSearchFilter(regExp);
-    mProxyModel->setFilterRegExp(QRegExp(regExp, Qt::CaseInsensitive));
+    if (showCompleted)
+    {
+        ui->lHeaderTime->setText(tr("Time"));
+        ui->tCancelAll->setToolTip(tr("Clear All"));
+        ui->lHeaderSpeed->setText(tr("Avg. speed"));
+    }
+    else
+    {
+        ui->lHeaderTime->setText(tr("Time left"));
+        ui->tCancelAll->setToolTip(tr("Cancel or Clear All"));
+        ui->lHeaderSpeed->setText(tr("Speed"));
+    }
+
+    ui->tPauseResumeAll->setVisible(!showCompleted);
+}
+
+void TransfersWidget::onPauseStateChanged(bool pauseState)
+{
+    ui->tPauseResumeAll->setIcon(pauseState ?
+                                     QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png"))
+                                   : QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
+    ui->tPauseResumeAll->setToolTip(pauseState ?
+                                        tr("Resume visible transfers")
+                                      : tr("Pause visible transfers"));
+    isPaused = pauseState;
+}
+
+void TransfersWidget::textFilterChanged(const QString& pattern)
+{
+//    emit updateSearchFilter(QRegularExpression(regExp, QRegularExpression::CaseInsensitiveOption
+//                                               ));
+//    mProxyModel->setFilterRegExp(QRegExp(regExp, Qt::CaseInsensitive));
+//    emit updateSearchFilter(pattern);
+    mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    mProxyModel->setFilterFixedString(pattern);
     ui->tvTransfers->scrollToTop();
 }
 

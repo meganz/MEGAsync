@@ -57,6 +57,13 @@ void MegaTransferView::setup(TransfersWidget *tw)
     // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
     connect(this, &MegaTransferView::showContextMenu,
             this, &MegaTransferView::onCustomContextMenu);
+
+    connect(tw, &TransfersWidget::pauseResumeAllRows,
+            this, &MegaTransferView::onPauseResumeAllRows, Qt::QueuedConnection);
+
+    connect(tw, &TransfersWidget::cancelClearAllRows,
+            this, &MegaTransferView::onCancelClearAllRows, Qt::QueuedConnection);
+
     createContextMenu();
 }
 
@@ -71,26 +78,13 @@ int MegaTransferView::getType() const
     return type;
 }
 
-void MegaTransferView::pauseResumeSelection(bool pauseState)
+void MegaTransferView::onPauseResumeAllRows(bool pauseState)
 {
-    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
-
-    auto selection = selectionModel()->selection();
     QModelIndexList indexes;
-
-    if (selection.size() > 0)
+    auto rowCount (model()->rowCount());
+    if (rowCount > 0)
     {
-        if (proxy)
-        {
-            selection = proxy->mapSelectionToSource(selection);
-        }
-        indexes = selection.indexes();
-
-        clearSelection();
-    }
-    else
-    {
-        auto rowCount (model()->rowCount());
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
         for (auto row (0); row < rowCount; ++row)
         {
             auto index (model()->index(row, 0, QModelIndex()));
@@ -100,19 +94,60 @@ void MegaTransferView::pauseResumeSelection(bool pauseState)
             }
             indexes.push_back(index);
         }
+        mParentTransferWidget->getModel2()->pauseTransfers(indexes, pauseState);
     }
-    mParentTransferWidget->getModel2()->pauseTransfers(indexes, pauseState);
 }
 
-void MegaTransferView::cancelClearSelection()
+void MegaTransferView::onPauseResumeSelection(bool pauseState)
+{
+    auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+    auto selection = selectionModel()->selection();
+
+    if (selection.size() > 0)
+    {
+        QModelIndexList indexes;
+
+        if (proxy)
+        {
+            selection = proxy->mapSelectionToSource(selection);
+        }
+        indexes = selection.indexes();
+
+        clearSelection();
+        mParentTransferWidget->getModel2()->pauseTransfers(indexes, pauseState);
+    }
+}
+
+void MegaTransferView::onCancelClearAllRows()
+{
+    QModelIndexList indexes;
+    auto rowCount (model()->rowCount());
+    if (rowCount > 0)
+    {
+        auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
+        for (auto row (0); row < rowCount; ++row)
+        {
+            auto index (model()->index(row, 0, QModelIndex()));
+            if (proxy)
+            {
+                index = proxy->mapToSource(index);
+            }
+            indexes.push_back(index);
+        }
+        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
+    }
+}
+
+void MegaTransferView::onCancelClearSelection()
 {
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
 
     auto selection (selectionModel()->selection());
-    QModelIndexList indexes;
 
     if (selection.size() > 0)
     {
+        QModelIndexList indexes;
+
         if (proxy)
         {
             selection = proxy->mapSelectionToSource(selection);
@@ -120,23 +155,9 @@ void MegaTransferView::cancelClearSelection()
         indexes = selection.indexes();
 
         clearSelection();
+        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
     }
-    else
-    {
-        auto rowCount (model()->rowCount());
-        for (auto row (0); row < rowCount; ++row)
-        {
-            auto index (model()->index(row, 0, QModelIndex()));
-            if (proxy)
-            {
-                index = proxy->mapToSource(index);
-            }
-            indexes.push_back(index);
-        }
-    }
-    mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
 }
-
 
 void MegaTransferView::disableContextMenus(bool option)
 {
@@ -166,7 +187,7 @@ void MegaTransferView::createContextMenu()
     mPauseAction = new QAction(QIcon(QLatin1String(":/images/pause_ico.png")),
                                      tr("Pause active transfers"), this);
     connect(mPauseAction, &QAction::triggered,
-            mParentTransferWidget, &TransfersWidget::on_tPauseResumeAll_clicked);
+            this, &MegaTransferView::onPauseResumeSelection);
 
     if (mResumeAction)
     {
@@ -177,7 +198,7 @@ void MegaTransferView::createContextMenu()
     mResumeAction = new QAction(QIcon(QLatin1String(":/images/play_ico.png")),
                                       tr("Resume paused transfers"), this);
     connect(mResumeAction, &QAction::triggered,
-            mParentTransferWidget, &TransfersWidget::on_tPauseResumeAll_clicked);
+            this, &MegaTransferView::onPauseResumeSelection);
 
     if (mMoveToTopAction)
     {
@@ -208,7 +229,6 @@ void MegaTransferView::createContextMenu()
     mMoveDownAction = new QAction(QIcon(QLatin1String(":/images/ico_move_down.png")),
                                         tr("Move down"), this);
     connect(mMoveDownAction, &QAction::triggered, this, &MegaTransferView::moveDownClicked);
-
 
     if (mMoveToBottomAction)
     {

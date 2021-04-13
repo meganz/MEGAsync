@@ -34,14 +34,15 @@ public:
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex());
     bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
                   const QModelIndex& destinationParent, int destinationChild);
-    bool areDlPaused();
-    bool areUlPaused();
+    bool areAllPaused();
+//    bool areDlPaused();
+//    bool areUlPaused();
     void getLinks(QList<int>& rows);
-    void cancelClearTransfers(QModelIndexList& indexes);
-    void pauseTransfers(QModelIndexList& indexes, bool pauseState);
-    void pauseResumeAllTransfers();
-    void pauseResumeDownloads();
-    void pauseResumeUploads();
+    void cancelClearTransfers(const QModelIndexList& indexes);
+    void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
+    void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
+//    void pauseResumeDownloads();
+//    void pauseResumeUploads();
     void cancelAllTransfers();
 
     long long  getNumberOfTransfersForState(int state);
@@ -60,9 +61,11 @@ public:
 
 signals:
     void transfersInModelChanged(bool weHaveTransfers);
+    void pauseStateChanged(bool pauseState);
 
 public slots:
     void onRetryTransfer(TransferTag tag);
+    void pauseResumeAllTransfers();
 
 private slots:
     void onPauseStateChanged();
@@ -71,6 +74,7 @@ private:
     static constexpr int INIT_ROWS_PER_CHUNK = 100;
 
     mega::MegaApi* mMegaApi;
+    mega::MegaApiLock* mApiLock;
     Preferences* mPreferences;
 
     QMap<TransferTag, QVariant> mTransfers;
@@ -86,8 +90,8 @@ private:
 
     long long mNotificationNumber;
 
-    bool mAreDlPaused;
-    bool mAreUlPaused;
+//    bool mAreDlPaused;
+//    bool mAreUlPaused;
     bool mAreAllPaused;
 
     bool mModelHasTransfers;

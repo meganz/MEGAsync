@@ -67,6 +67,16 @@
 	qproperty-alignment: 'AlignLeft | AlignBottom';
 }
 
+#wPauseResumeAll
+{
+    height: 28px;
+    max-height: 28px;
+    min-height: 28px;
+    width: 32px;
+    max-width: 32px;
+    min-width: 32px;
+}
+
 #wTableHeader QToolButton
 {
     height: 16px;
@@ -328,14 +338,35 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="tPauseResumeAll">
-            <property name="toolTip">
-             <string>Pause or resume all selected transfers</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
-            </property>
+           <widget class="QWidget" name="wPauseResumeAll" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="tPauseResumeAll">
+               <property name="toolTip">
+                <string>Pause or resume all selected transfers</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../Resources_linux.qrc">
+                 <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>

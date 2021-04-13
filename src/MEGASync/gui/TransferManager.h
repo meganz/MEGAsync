@@ -24,16 +24,24 @@ class TransferManager : public QDialog
 public:
     enum TM_TABS
     {
+        NO_TAB            = -1,
         ALL_TRANSFERS_TAB = 0,
         DOWNLOADS_TAB     = 1,
         UPLOADS_TAB       = 2,
         COMPLETED_TAB     = 3,
         SEARCH_TAB        = 4,
+        TYPES_TAB_BASE    = 5,
+        TYPE_OTHER_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_OTHER,
+        TYPE_AUDIO_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_AUDIO,
+        TYPE_VIDEO_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_VIDEO,
+        TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_ARCHIVE,
+        TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_DOCUMENT,
+        TYPE_IMAGE_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_IMAGE,
+        TYPE_TEXT_TAB     = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_TEXT,
     };
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void setActiveTab(int t);
-    void updatePauseState(bool isPaused, QString toolTipText);
     void disableGetLink(bool disable);
     ~TransferManager();
 
@@ -41,6 +49,8 @@ signals:
     void viewedCompletedTransfers();
     void completedTransfersTabActive(bool);
     void userActivity();
+    void showCompleted(bool showCompleted);
+    void pauseStateChanged(bool pauseState);
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 500;
@@ -65,14 +75,11 @@ private:
     QSet<TransferData::FileTypes> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
-    long long mPrevDlNumber;
-    long long mPrevUlNumber;
 
-    long long mPrevActiveNumber;
-    long long mPrevFinishedNumber;
+    QVector<long long> mNumberOfTransfersPerTab;
 
     void toggleTab(TM_TABS tab);
-    void updateFileTypeFilter(TransferData::FileTypes fileType);
+//    void updateFileTypeFilter(TransferData::FileTypes fileType);
     bool refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();
@@ -85,7 +92,7 @@ private slots:
     void on_tDownloads_clicked();
     void on_tUploads_clicked();
     void on_tAllTransfers_clicked();
-    void on_bPause_clicked();
+//    void on_bPause_clicked();
     void on_bClearAll_clicked();
     void on_bSearch_clicked();
     void on_tSearchIcon_clicked();
@@ -106,6 +113,7 @@ private slots:
     void on_bOther_clicked();
     void on_bText_clicked();
 
+    void onUpdatePauseState(bool isPaused);
     void onTransfersInModelChanged(bool weHaveTransfers);
 
     void refreshSpeed();
