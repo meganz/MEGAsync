@@ -58,7 +58,7 @@ protected:
 public slots:
     void onPauseResumeAllRows(bool pauseState);
     void onPauseResumeSelection(bool pauseState);
-    void onCancelClearAllRows();
+    void onCancelClearAllRows(bool cancel, bool clear);
     void onCancelClearSelection();
 
 private slots:

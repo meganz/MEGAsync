@@ -50,6 +50,7 @@ signals:
     void completedTransfersTabActive(bool);
     void userActivity();
     void showCompleted(bool showCompleted);
+    void cancelClearAllRows(bool cancel, bool clear);
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 500;
@@ -78,7 +79,6 @@ private:
     QVector<long long> mNumberOfTransfersPerTab;
 
     void toggleTab(TM_TABS tab);
-//    void updateFileTypeFilter(TransferData::FileTypes fileType);
     bool refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();
@@ -91,8 +91,8 @@ private slots:
     void on_tDownloads_clicked();
     void on_tUploads_clicked();
     void on_tAllTransfers_clicked();
-//    void on_bPause_clicked();
     void on_bClearAll_clicked();
+    void on_tClearCompleted_clicked();
     void on_bSearch_clicked();
     void on_tSearchIcon_clicked();
     void on_tSearchCancel_clicked();
@@ -121,10 +121,6 @@ private slots:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
     void changeEvent(QEvent *event);
-//    void paintEvent(QPaintEvent* event);
-//    void mouseMoveEvent(QMouseEvent *event);
-//    void mousePressEvent(QMouseEvent *event);
-//    void mouseReleaseEvent(QMouseEvent *event);
 };
 
 #endif // TRANSFERMANAGER_H

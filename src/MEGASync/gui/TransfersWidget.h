@@ -53,7 +53,7 @@ signals:
     void updateSearchFilter(const QString& pattern);
     void applyFilter();
     void pauseResumeAllRows(bool pauseState);
-    void cancelClearAllRows();
+    void cancelClearAllRows(bool cancel, bool clear);
 
 private:
     Ui::TransfersWidget *ui;

@@ -22,7 +22,11 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     mThreadPool (ThreadPoolSingleton::getInstance()),
     mModelMutex (new QMutex(QMutex::Recursive)),
     mNotificationNumber (0),
-    mModelHasTransfers (false)
+    mModelHasTransfers (false),
+    mNbTransfersPerFileType(),
+    mNbFinishedPerFileType(),
+    mNbTransfersPerType(),
+    mNbTransfersPerState()
 {
     // Init File Types
     mFileTypes[Utilities::getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
@@ -410,6 +414,7 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
             mNbTransfersPerState[prevState]--;
             mNbTransfersPerState[state]++;
             mNbTransfersPerType[d->mType]--;
+            mNbFinishedPerFileType[d->mFileType]++;
         }
 
         auto rem (mRemainingTimes.take(tag));
@@ -602,12 +607,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
             {
                 mNbTransfersPerState[prevState]--;
                 mNbTransfersPerState[state]++;
-
-                if (transfer->isFinished())
-                {
-                    mNbTransfersPerType[d->mType]--;
-                    mNbTransfersPerFileType[d->mFileType]--;
-                }
             }
         }
     }
@@ -670,12 +669,6 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
         {
             mNbTransfersPerState[prevState]--;
             mNbTransfersPerState[state]++;
-
-            if (transfer->isFinished())
-            {
-                mNbTransfersPerType[d->mType]--;
-                mNbTransfersPerFileType[d->mFileType]--;
-            }
         }
     }
     else
@@ -757,7 +750,7 @@ void QTransfersModel2::getLinks(QList<int>& rows)
     }
 }
 
-void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes)
+void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool cancel, bool clear)
 {
     QMap<int, TransferTag> tags;
     QList<int> rows;
@@ -772,66 +765,70 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes)
         tags[row] = static_cast<TransferTag>(index.internalId());
     }
 
-    // Reverse sort to keep indexes valid after deletion
-    std::sort(rows.rbegin(), rows.rend());
-
-    // First clear finished transfers (remove rows), then cancel the others.
-    // This way, there is no risk of messing up the rows order with cancel requests.
-    int count (0);
-    int row (mOrder.size() - 1);
-    for (auto item : rows)
+    if (clear)
     {
-        auto tag (tags[item]);
-        const auto d (static_cast<const TransferItem2*>(mTransfers[tag]
-                                                        .constData())->getTransferData());
-        if (d)
-        {
-            // Clear (remove rows of) finished transfers
-            if ((d->mState == MegaTransfer::STATE_COMPLETED
-                 || d->mState == MegaTransfer::STATE_CANCELLED
-                 || d->mState == MegaTransfer::STATE_FAILED))
-            {
-                // Init row with row of first tag
-                if (count == 0)
-                {
-                    row = mOrder.lastIndexOf(tag, row);
-//                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
-//                    row = rowIt - mOrder.cbegin();
-                }
+        // Reverse sort to keep indexes valid after deletion
+        std::sort(rows.rbegin(), rows.rend());
 
-                // Flush pooled rows (start at row+1), init row with tag's
-                if (row == -1 || mOrder.at(row) != tag)
-                {
-                    removeRows(row + 1, count, DEFAULT_IDX);
-                    count = 0;
-                    row = mOrder.lastIndexOf(tag, row);
-//                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
-//                    row = rowIt - mOrder.cbegin();
-                }
-                count++;
-                row--;
-                rows.removeOne(item);
-            }
-            // Do not cancel/clear completing transfers.
-            else if (d->mState == MegaTransfer::STATE_COMPLETING)
+        // First clear finished transfers (remove rows), then cancel the others.
+        // This way, there is no risk of messing up the rows order with cancel requests.
+        int count (0);
+        int row (mOrder.size() - 1);
+        for (auto item : rows)
+        {
+            auto tag (tags[item]);
+            const auto d (static_cast<const TransferItem2*>(mTransfers[tag]
+                                                            .constData())->getTransferData());
+            if (d)
             {
-                rows.removeOne(item);
+                // Clear (remove rows of) finished transfers
+                if ((d->mState == MegaTransfer::STATE_COMPLETED
+                     || d->mState == MegaTransfer::STATE_CANCELLED
+                     || d->mState == MegaTransfer::STATE_FAILED))
+                {
+                    // Init row with row of first tag
+                    if (count == 0)
+                    {
+                        row = mOrder.lastIndexOf(tag, row);
+                        //                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
+                        //                    row = rowIt - mOrder.cbegin();
+                    }
+
+                    // Flush pooled rows (start at row+1), init row with tag's
+                    if (row == -1 || mOrder.at(row) != tag)
+                    {
+                        removeRows(row + 1, count, DEFAULT_IDX);
+                        count = 0;
+                        row = mOrder.lastIndexOf(tag, row);
+                        //                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
+                        //                    row = rowIt - mOrder.cbegin();
+                    }
+                    count++;
+                    row--;
+                    rows.removeOne(item);
+                }
+                // Do not cancel/clear completing transfers.
+                else if (d->mState == MegaTransfer::STATE_COMPLETING)
+                {
+                    rows.removeOne(item);
+                }
             }
         }
+        // Flush pooled rows (start at row).
+        if (count > 0)
+        {
+            removeRows(row + 1, count, DEFAULT_IDX);
+        }
     }
-
-    // Flush pooled rows (start at row).
-    if (count > 0)
-    {
-        removeRows(row + 1, count, DEFAULT_IDX);
-    }
-
     mModelMutex->unlock();
 
-    // All remaining tags, if any, are cancelable transfers. Cancel them.
-    for (auto item : rows)
+    if (cancel)
     {
-        mMegaApi->cancelTransferByTag(tags[item]);
+        // All remaining tags, if any, are cancelable transfers. Cancel them.
+        for (auto item : rows)
+        {
+            mMegaApi->cancelTransferByTag(tags[item]);
+        }
     }
 }
 
@@ -900,53 +897,39 @@ void QTransfersModel2::pauseResumeTransferByTag(TransferTag tag, bool pauseState
     }
 }
 
-
-//void QTransfersModel2::pauseResumeDownloads()
-//{
-//    auto pauseState (!mAreDlPaused);
-//    mMegaApi->pauseTransfers(pauseState, MegaTransfer::TYPE_DOWNLOAD);
-//    mMegaApi->pauseTransfers(pauseState, MegaTransfer::TYPE_LOCAL_HTTP_DOWNLOAD);
-//    mMegaApi->pauseTransfers(pauseState, MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD);
-//}
-
-//void QTransfersModel2::pauseResumeUploads()
-//{
-//    mMegaApi->pauseTransfers(!mAreUlPaused, MegaTransfer::TYPE_UPLOAD);
-//}
-
 void QTransfersModel2::cancelAllTransfers()
 {
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
 }
 
-long long QTransfersModel2::getNumberOfTransfersForState(int state)
+long long QTransfersModel2::getNumberOfTransfersForState(int state) const
 {
     return mNbTransfersPerState[state];
 }
 
-long long QTransfersModel2::getNumberOfTransfersForType(int type)
+long long QTransfersModel2::getNumberOfTransfersForType(int type) const
 {
     return mNbTransfersPerType[type];
 }
 
-long long QTransfersModel2::getNumberOfTransfersForFileType(TransferData::FileTypes fileType)
+long long QTransfersModel2::getNumberOfTransfersForFileType(TransferData::FileTypes fileType) const
 {
     return mNbTransfersPerFileType[fileType];
 }
 
+long long QTransfersModel2::getNumberOfFinishedForFileType(TransferData::FileTypes fileType) const
+{
+    return mNbFinishedPerFileType[fileType];
+}
+
 void QTransfersModel2::onPauseStateChanged()
 {
-    //    mAreDlPaused  = mPreferences->getDownloadsPaused();
-    //    mAreUlPaused  = mPreferences->getUploadsPaused();
     bool newPauseState (mPreferences->getGlobalPaused());
     if (newPauseState != mAreAllPaused)
     {
         pauseResumeAllTransfers();
     }
-
-//    beginResetModel();
-//    endResetModel();
 }
 
 void QTransfersModel2::onRetryTransfer(TransferTag tag)
@@ -986,6 +969,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex& parent)
 
             mNbTransfersPerState[state]--;
             mNbTransfersPerFileType[d->mFileType]--;
+            mNbFinishedPerFileType[d->mFileType]--;
 
             if (!(state == MegaTransfer::STATE_COMPLETED
                     || state == MegaTransfer::STATE_CANCELLED

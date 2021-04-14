@@ -235,7 +235,7 @@ void TransfersWidget::on_tPauseResumeAll_clicked()
 
 void TransfersWidget::on_tCancelAll_clicked()
 {
-    emit cancelClearAllRows();
+    emit cancelClearAllRows(true, true);
 }
 
 void TransfersWidget::onTransferAdded()

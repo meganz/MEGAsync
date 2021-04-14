@@ -499,7 +499,7 @@ QMenu::item:disabled
           <bool>false</bool>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::MultiSelection</enum>
+          <enum>QAbstractItemView::ExtendedSelection</enum>
          </property>
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectItems</enum>
@@ -515,6 +515,9 @@ QMenu::item:disabled
          </property>
          <property name="uniformRowHeights">
           <bool>true</bool>
+         </property>
+         <property name="animated">
+          <bool>false</bool>
          </property>
          <attribute name="headerVisible">
           <bool>false</bool>

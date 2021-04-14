@@ -38,16 +38,17 @@ public:
 //    bool areDlPaused();
 //    bool areUlPaused();
     void getLinks(QList<int>& rows);
-    void cancelClearTransfers(const QModelIndexList& indexes);
+    void cancelClearTransfers(const QModelIndexList& indexes,  bool cancel = true, bool clear = true);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
 //    void pauseResumeDownloads();
 //    void pauseResumeUploads();
     void cancelAllTransfers();
 
-    long long  getNumberOfTransfersForState(int state);
-    long long  getNumberOfTransfersForType(int type);
-    long long  getNumberOfTransfersForFileType(TransferData::FileTypes fileType);
+    long long  getNumberOfTransfersForState(int state) const;
+    long long  getNumberOfTransfersForType(int type) const;
+    long long  getNumberOfTransfersForFileType(TransferData::FileTypes fileType) const;
+    long long  getNumberOfFinishedForFileType(TransferData::FileTypes fileType) const;
 
     QExplicitlySharedDataPointer<TransferData> getTransferDataByRow(int row) const;
 
@@ -96,6 +97,7 @@ private:
 
     bool mModelHasTransfers;
     QMap<TransferData::FileTypes, long long> mNbTransfersPerFileType;
+    QMap<TransferData::FileTypes, long long> mNbFinishedPerFileType;
     QMap<int, long long> mNbTransfersPerType;
     QMap<int, long long> mNbTransfersPerState;
 

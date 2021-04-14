@@ -235,6 +235,22 @@ QGroupBox::title
     margin-right: 6px;
 }
 
+
+#tClearCompleted
+{
+	 height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+  border-radius: 16px;
+	padding-left: 20px;
+	padding-right: 20px;
+  background-color: #FFA500;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: bold;
+	margin-left: 16px;
+}
+
 #bClearAll
 {
     height: 24px;
@@ -1508,7 +1524,7 @@ QGroupBox::title
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="pSearchHeader">
             <property name="sizePolicy">
@@ -1636,23 +1652,43 @@ QGroupBox::title
               <height>66</height>
              </size>
             </property>
-            <layout class="QVBoxLayout" name="currentContentLayout">
+            <layout class="QGridLayout" name="currentContentLayout">
              <property name="spacing">
               <number>0</number>
              </property>
-             <item>
+             <item row="0" column="1">
+              <widget class="QToolButton" name="tClearCompleted">
+               <property name="text">
+                <string>Clear Completed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
               <widget class="QLabel" name="lCurrentContent">
                <property name="text">
                 <string/>
                </property>
               </widget>
              </item>
-             <item>
+             <item row="1" column="0">
               <widget class="QLabel" name="lPaused">
                <property name="text">
                 <string>Paused</string>
                </property>
               </widget>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_13">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>

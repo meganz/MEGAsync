@@ -118,7 +118,7 @@ void MegaTransferView::onPauseResumeSelection(bool pauseState)
     }
 }
 
-void MegaTransferView::onCancelClearAllRows()
+void MegaTransferView::onCancelClearAllRows(bool cancel, bool clear)
 {
     QModelIndexList indexes;
     auto rowCount (model()->rowCount());
@@ -134,7 +134,7 @@ void MegaTransferView::onCancelClearAllRows()
             }
             indexes.push_back(index);
         }
-        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
+        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
     }
 }
 
