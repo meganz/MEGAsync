@@ -80,7 +80,11 @@
 #wTableHeader QToolButton
 {
     height: 16px;
+    max-height: 16px;
+    min-height: 16px;
     width: 16px;
+    max-width: 16px;
+    min-width: 16px;
     border-radius: 4px;
     margin-right: 12px;
     qProperty-iconSize: 16px;
@@ -338,14 +342,35 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="tPauseResumeAll">
-            <property name="toolTip">
-             <string>Pause or resume all selected transfers</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
-            </property>
+           <widget class="QWidget" name="wPauseResumeAll" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="tPauseResumeAll">
+               <property name="toolTip">
+                <string>Pause or resume all selected transfers</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../Resources_linux.qrc">
+                 <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -355,7 +380,7 @@
             </property>
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+              <normaloff>:/images/ico_tm_clear.png</normaloff>:/images/ico_tm_clear.png</iconset>
             </property>
            </widget>
           </item>

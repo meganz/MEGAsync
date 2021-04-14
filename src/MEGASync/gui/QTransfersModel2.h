@@ -24,7 +24,6 @@ public:
     virtual QMimeData* mimeData(const QModelIndexList& indexes) const;
     virtual bool dropMimeData(const QMimeData* data, Qt::DropAction action, int destRow,
                                                 int column, const QModelIndex& parent);
-
     bool hasChildren(const QModelIndex& parent) const;
     int rowCount(const QModelIndex& parent) const;
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -35,14 +34,11 @@ public:
     bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
                   const QModelIndex& destinationParent, int destinationChild);
     bool areAllPaused();
-//    bool areDlPaused();
-//    bool areUlPaused();
+
     void getLinks(QList<int>& rows);
     void cancelClearTransfers(const QModelIndexList& indexes,  bool cancel = true, bool clear = true);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
-//    void pauseResumeDownloads();
-//    void pauseResumeUploads();
     void cancelAllTransfers();
 
     long long  getNumberOfTransfersForState(int state) const;
@@ -91,8 +87,6 @@ private:
 
     long long mNotificationNumber;
 
-//    bool mAreDlPaused;
-//    bool mAreUlPaused;
     bool mAreAllPaused;
 
     bool mModelHasTransfers;
@@ -101,7 +95,7 @@ private:
     QMap<int, long long> mNbTransfersPerType;
     QMap<int, long long> mNbTransfersPerState;
 
-    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row);
+    void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
 };
 
 #endif // QTRANSFERSMODEL2_H

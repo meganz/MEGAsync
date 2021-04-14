@@ -156,6 +156,7 @@ QProgressBar::chunk
   font-size: 12px;
   font-weight: bold;
   text-align: left;
+    qProperty-iconSize: 12px;
 }
 
 #sStatus
@@ -345,7 +346,7 @@ QProgressBar::chunk
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Name</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -438,14 +439,14 @@ QProgressBar::chunk
           <item>
            <widget class="QLabel" name="lDone">
             <property name="text">
-             <string>AAA</string>
+             <string/>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="lTotal">
             <property name="text">
-             <string>BBB</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -585,7 +586,7 @@ QProgressBar::chunk
            <widget class="QToolButton" name="tPauseResumeTransfer">
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+              <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -614,7 +615,7 @@ QProgressBar::chunk
            <widget class="QToolButton" name="tCancelClearTransfer">
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
+              <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
             </property>
            </widget>
           </item>

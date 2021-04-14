@@ -133,32 +133,30 @@ QGroupBox::title
      max-height: 34px;
 }
 
-#wSearchField
+#pSearch
 {
     height: 34px;
     min-height: 34px;
     max-height: 34px;
-    width: 232px;
-    min-width: 232px;
-    max-width: 232px;
     border-radius: 17px;
     background-color: #E9E9E9;
 }
 
 #leSearchField
 {
-    color: #333333;
-    font-size: 14px;
-    background-color: #E9E9E9;
+    background-color: transparent;
+  color: #333333;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-#wSearchField QToolButton
+#tSearchIcon
 {
-    height: 34px;
+    height: 18px;
     width: 18px;
-    min-height: 34px;
+    min-height: 18px;
     min-width: 18px;
-    max-height: 34px;
+    max-height: 18px;
     max-width: 18px;
     qProperty-iconSize: 18px;
     border: none;
@@ -166,20 +164,34 @@ QGroupBox::title
 
 #tSearchCancel
 {
-    padding-right: 7px;
-}
-
-#tSearchIcon
-{
-    padding-left: 7px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
+    max-height: 18px;
+    max-width: 18px;
+    border-radius: 9px;
+    background-color: #666666;
+    qProperty-iconSize: 16px;
+	border: none;
+	padding: 0px;
+	margin: 0px;
 }
 
 #tClearSearchResult
 {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
+    background-color: #EEEEEE;
     qProperty-iconSize: 16px;
+    border-radius: 4px;
 }
 
-#wLogoHeader QToolButton
+#pTransfers QToolButton
 {
     height: 32px;
     width: 32px;
@@ -188,11 +200,11 @@ QGroupBox::title
     max-height: 32px;
     max-width: 32px;
     qProperty-iconSize: 18px;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid #F5F5F5;
     background-color: #E9E9E9;
     border-radius: 17px;
-    margin-left: 4px;
-    margin-right: 4px;
+	padding: 0px;
+	margin: 0px;
 }
 
 #sStatus
@@ -235,7 +247,6 @@ QGroupBox::title
     margin-right: 6px;
 }
 
-
 #tClearCompleted
 {
 	 height: 32px;
@@ -245,9 +256,6 @@ QGroupBox::title
 	padding-left: 20px;
 	padding-right: 20px;
   background-color: #FFA500;
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: bold;
 	margin-left: 16px;
 }
 
@@ -258,6 +266,7 @@ QGroupBox::title
     background-color: #F88183;
     border-radius: 13px;
     margin-left: 12px;
+    qProperty-iconSize: 24px;
 }
 
 #wRightPaneHeader QPushButton, QToolButton
@@ -342,125 +351,114 @@ QGroupBox::title
          <number>0</number>
         </property>
         <widget class="QWidget" name="pTransfers">
-         <widget class="QWidget" name="wLogoHeader" native="true">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>232</width>
-            <height>34</height>
-           </rect>
+         <layout class="QHBoxLayout" name="pTransfersLayout">
+          <property name="spacing">
+           <number>4</number>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="lTransfers">
-             <property name="text">
-              <string>Transfers</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QToolButton" name="bPause"/>
-           </item>
-           <item>
-            <widget class="QToolButton" name="bSearch">
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>8</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lTransfers">
+            <property name="text">
+             <string>Transfers</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="bPause"/>
+          </item>
+          <item>
+           <widget class="QToolButton" name="bSearch">
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
         <widget class="QWidget" name="pSearch">
-         <widget class="QWidget" name="wSearchField" native="true">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>232</width>
-            <height>34</height>
-           </rect>
+         <layout class="QHBoxLayout" name="pSearchLayout" stretch="0,0,0">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <layout class="QHBoxLayout" name="wSearchFieldLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QToolButton" name="tSearchIcon">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="leSearchField">
-             <property name="text">
-              <string>Search</string>
-             </property>
-             <property name="frame">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="tSearchCancel">
-             <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+          <property name="leftMargin">
+           <number>8</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>8</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="tSearchIcon">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="leSearchField">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="frame">
+             <bool>false</bool>
+            </property>
+            <property name="placeholderText">
+             <string>Search</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tSearchCancel">
+            <property name="icon">
+             <iconset resource="../Resources_linux.qrc">
+              <normaloff>:/images/ico_tm_clear.png</normaloff>:/images/ico_tm_clear.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
@@ -610,7 +608,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
+                <normaloff>:/images/ico_tm_downloads.png</normaloff>:/images/ico_tm_downloads.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -683,7 +681,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
+                <normaloff>:/images/ico_tm_uploads.png</normaloff>:/images/ico_tm_uploads.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -759,7 +757,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_finished.png</normaloff>:/images/ico_finished.png</iconset>
+                <normaloff>:/images/ico_tm_finished.png</normaloff>:/images/ico_tm_finished.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -1366,7 +1364,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/ico_search_cancel.png</normaloff>:/images/ico_search_cancel.png</iconset>
+                <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
               </property>
              </widget>
             </item>
@@ -1415,7 +1413,7 @@ QGroupBox::title
            <widget class="QPushButton" name="bDownSpeed">
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/download_fail_item_ico.png</normaloff>:/images/download_fail_item_ico.png</iconset>
+              <normaloff>:/images/ico_tm_download_item.png</normaloff>:/images/ico_tm_download_item.png</iconset>
             </property>
            </widget>
           </item>
@@ -1423,7 +1421,7 @@ QGroupBox::title
            <widget class="QPushButton" name="bUpSpeed">
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/upload_fail_item_ico.png</normaloff>:/images/upload_fail_item_ico.png</iconset>
+              <normaloff>:/images/ico_tm_upload_item.png</normaloff>:/images/ico_tm_upload_item.png</iconset>
             </property>
            </widget>
           </item>
@@ -1437,7 +1435,13 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+              <normaloff>:/images/ico_tm_clear.png</normaloff>:/images/ico_tm_clear.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -1701,7 +1705,7 @@ QGroupBox::title
            </property>
            <property name="icon">
             <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/ico_Import_links.png</normaloff>:/images/ico_Import_links.png</iconset>
+             <normaloff>:/images/ico_tm_Import_links.png</normaloff>:/images/ico_tm_Import_links.png</iconset>
            </property>
           </widget>
          </item>
@@ -1712,7 +1716,7 @@ QGroupBox::title
            </property>
            <property name="icon">
             <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
+             <normaloff>:/images/ico_tm_upload.png</normaloff>:/images/ico_tm_upload.png</iconset>
            </property>
           </widget>
          </item>
@@ -1723,7 +1727,7 @@ QGroupBox::title
            </property>
            <property name="icon">
             <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
+             <normaloff>:/images/ico_tm_download.png</normaloff>:/images/ico_tm_download.png</iconset>
            </property>
           </widget>
          </item>

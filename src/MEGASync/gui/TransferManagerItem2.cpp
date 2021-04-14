@@ -61,13 +61,13 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
             {
                 icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                      ":/images/download_item_ico.png"));
+                                                      ":/images/ico_tm_download_item.png"));
                 break;
             }
             case MegaTransfer::TYPE_UPLOAD:
             {
                 icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                      ":/images/upload_item_ico.png"));
+                                                      ":/images/ico_tm_upload_item.png"));
                 break;
             }
         }
@@ -224,27 +224,6 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             break;
         }
     }
-
-//    // Override if global/ul/dl transfers are paused
-//    if (isGlobalPaused)
-//    {
-//        switch (data->mState)
-//        {
-//            case MegaTransfer::STATE_ACTIVE:
-//            case MegaTransfer::STATE_QUEUED:
-//            case MegaTransfer::STATE_RETRYING:
-//            {
-//                mUi->sStatus->setCurrentWidget(mUi->pPaused);
-//                speedString = QString();
-//                timeString = QString();
-//            }
-//            default:
-//            {
-//                showTPauseResume = false;
-//                break;
-//            }
-//        }
-//    }
 
     // Status string
     mUi->lItemStatus->setText(statusString);

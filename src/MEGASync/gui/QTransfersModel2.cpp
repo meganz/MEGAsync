@@ -48,16 +48,9 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     QObject::connect((MegaApplication*)qApp, &MegaApplication::pauseStateChanged,
                       this, &QTransfersModel2::onPauseStateChanged, Qt::QueuedConnection);
 
-//    mAreDlPaused = mPreferences->getDownloadsPaused();
-//    mAreUlPaused = mPreferences->getUploadsPaused();
     mAreAllPaused = mPreferences->getGlobalPaused();
 
     qRegisterMetaType<TransferData::FileTypes>("TransferData::FileTypes");
-
-    mInitFuture = QtConcurrent::run(this, &QTransfersModel2::initModel);
-
-    // Connect to transfer changes signals
-    mMegaApi->addTransferListener(this);
 }
 
 bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
@@ -92,11 +85,10 @@ int QTransfersModel2::columnCount(const QModelIndex& parent) const
 QVariant QTransfersModel2::data(const QModelIndex& index, int role) const
 {
     int row (index.row());
-    bool isIndexValid (index.isValid());
 
     QMutexLocker lock (mModelMutex);
 
-    if (role == Qt::DisplayRole && isIndexValid && row >= 0 && row < mOrder.size())
+    if (role == Qt::DisplayRole && row >= 0 && row < mOrder.size())
     {
         return mTransfers[mOrder[row]];
     }
@@ -159,105 +151,119 @@ QExplicitlySharedDataPointer<TransferData> QTransfersModel2::getTransferDataByRo
 
 void QTransfersModel2::initModel()
 {
-    mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
-
-    const auto transfers (mMegaApi->getTransfers());
-    const auto transferData (mMegaApi->getTransferData());
-    mNotificationNumber = transferData->getNotificationNumber();
-
-    // First, list all the transfers to add
-    QList<TransferTag> transfersToAdd;
-
-    for (auto i (0); i < transfers->size(); ++i)
+    mInitFuture = QtConcurrent::run([=]
     {
-        mega::MegaTransfer* mt (transfers->get(i));
-        auto type (mt->getType());
-        auto priority (mt->getPriority());
-        if (!mt->isStreamingTransfer()
-                && !mt->isFolderTransfer()
-                && priority)
+        mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+
+        const auto transfers (mMegaApi->getTransfers());
+        const auto transferData (mMegaApi->getTransferData());
+        mNotificationNumber = transferData->getNotificationNumber();
+
+        // First, list all the transfers to add
+        QList<TransferTag> transfersToAdd;
+
+        for (auto i (0); i < transfers->size(); ++i)
         {
-            // Sort transfers
-            if (transfersToAdd.isEmpty())
+            mega::MegaTransfer* mt (transfers->get(i));
+            auto type (mt->getType());
+            auto priority (mt->getPriority());
+            if (!mt->isStreamingTransfer()
+                    && !mt->isFolderTransfer()
+                    && priority)
             {
-                transfersToAdd.push_back(i);
-            }
-            else
-            {
-                auto other(transfers->get(transfersToAdd.first()));
-                if (type == other->getType() && priority < other->getPriority())
+                // Sort transfers
+                if (transfersToAdd.isEmpty())
                 {
-                    transfersToAdd.push_front(i);
+                    transfersToAdd.push_back(i);
                 }
                 else
                 {
-                    // Start from the back
-                    auto otherTag (transfersToAdd.rbegin());
-                    bool found (false);
-                    int insertAt (transfersToAdd.size());
-                    while (!found && otherTag != transfersToAdd.rend())
+                    auto other(transfers->get(transfersToAdd.first()));
+                    if (type == other->getType() && priority < other->getPriority())
                     {
-                        other = transfers->get(*otherTag);
-                        if (type == other->getType()
-                                && priority > other->getPriority())
-                        {
-                            found = true;
-                        }
-                        else
-                        {
-                            otherTag++;
-                            insertAt--;
-                        }
+                        transfersToAdd.push_front(i);
                     }
-                    transfersToAdd.insert(insertAt, i);
+                    else
+                    {
+                        // Start from the back
+                        auto otherTag (transfersToAdd.rbegin());
+                        bool found (false);
+                        int insertAt (transfersToAdd.size());
+                        while (!found && otherTag != transfersToAdd.rend())
+                        {
+                            other = transfers->get(*otherTag);
+                            if (type == other->getType()
+                                    && priority > other->getPriority())
+                            {
+                                found = true;
+                            }
+                            else
+                            {
+                                otherTag++;
+                                insertAt--;
+                            }
+                        }
+                        transfersToAdd.insert(insertAt, i);
+                    }
                 }
             }
         }
-    }
-    // Then load them in the model by chunks
-    const auto nbRows (transfersToAdd.size());
-    if (nbRows > 0)
-    {
-        auto remainingRows (nbRows);
-
-        // Load in chunks for responsiveness
-        auto nbChunks (nbRows / INIT_ROWS_PER_CHUNK);
-
-        // Add 1 chunk more if needed
-        if ((nbChunks * INIT_ROWS_PER_CHUNK) < nbRows)
+        // Then load them in the model by chunks
+        const auto nbRows (transfersToAdd.size());
+        if (nbRows > 0)
         {
-            nbChunks++;
-        }
+            auto remainingRows (nbRows);
 
-        for (auto chunk (0); chunk < nbChunks; ++chunk)
-        {
-            auto first (nbRows - remainingRows);
-            auto nbRowsInChunk (std::min(remainingRows, INIT_ROWS_PER_CHUNK));
+            // Load in chunks for responsiveness
+            auto nbChunks (nbRows / INIT_ROWS_PER_CHUNK);
 
-            mModelMutex->lock();
-            // Use the actual number of items to update the rows, in case
-            // transfers were added/removed between chunks.
-            auto nbRowsInModel (mOrder.size());
-            beginInsertRows(DEFAULT_IDX, nbRowsInModel,
-                            nbRowsInModel + nbRowsInChunk - 1);
-
-            // Insert transfers
-            for (auto row (first); row < first + nbRowsInChunk; ++row)
+            // Add 1 chunk more if needed
+            if ((nbChunks * INIT_ROWS_PER_CHUNK) < nbRows)
             {
-                insertTransfer(mMegaApi, transfers->get(transfersToAdd[row]), row);
+                nbChunks++;
             }
 
-            mModelMutex->unlock();
+            for (auto chunk (0); chunk < nbChunks; ++chunk)
+            {
+                auto first (nbRows - remainingRows);
+                auto nbRowsInChunk (std::min(remainingRows, INIT_ROWS_PER_CHUNK));
 
-            endInsertRows();
-            remainingRows -= INIT_ROWS_PER_CHUNK;
+                mModelMutex->lock();
+                // Use the actual number of items to update the rows, in case
+                // transfers were added/removed between chunks.
+                auto nbRowsInModel (mOrder.size());
+
+                Utilities::queueFunctionInAppThread([=]()
+                {
+                    beginInsertRows(DEFAULT_IDX, nbRowsInModel,
+                                    nbRowsInModel + nbRowsInChunk - 1);
+                });
+                QApplication::processEvents();
+                // Insert transfers
+                for (auto row (first); row < first + nbRowsInChunk; ++row)
+                {
+                    insertTransfer(mMegaApi, transfers->get(transfersToAdd[row]), row);
+                }
+
+                mModelMutex->unlock();
+                Utilities::queueFunctionInAppThread([=]()
+                {
+                    endInsertRows();
+                });
+                QApplication::processEvents();
+
+                remainingRows -= INIT_ROWS_PER_CHUNK;
+            }
         }
-    }
-    delete transferData;
-    delete transfers;
+        delete transferData;
+        delete transfers;
 
-    megaApiLock->unlockOnce();
-    delete megaApiLock;
+        megaApiLock->unlockOnce();
+        delete megaApiLock;
+    });
+
+    // Connect to transfer changes signals
+    mMegaApi->addTransferListener(this);
 }
 
 void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer)
@@ -364,14 +370,10 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
     {
         auto row (rowIt - mOrder.cbegin());
 
-        //auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
-       // auto transferItem (qvariant_cast<TransferItem2>(mTransfers[tag]));
         QVariant& v (mTransfers[tag]);
         auto transferItem (v.value<TransferItem2>());
 
         auto d (transferItem.getTransferData());
-
-
 
         auto state (transfer->getState());
         auto prevState (d->mState);
@@ -423,10 +425,10 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
             delete rem;
         }
     }
-    else
-    {
-        onTransferStart(api, transfer);
-    }
+//    else
+//    {
+//        onTransferStart(api, transfer);
+//    }
     mModelMutex->unlock();
 }
 
@@ -449,7 +451,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
     if (rowIt != mOrder.cend())
     {
         auto row (rowIt - mOrder.cbegin());
-        //        auto transferItem (static_cast<TransferItem2*>(mTransfers[tag].data()));
         QVariant& v (mTransfers[tag]);
         auto transferItem (v.value<TransferItem2>());
         auto d (transferItem.getTransferData());
@@ -610,10 +611,10 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
             }
         }
     }
-    else
-    {
-        onTransferStart(api, transfer);
-    }
+//    else
+//    {
+//        onTransferStart(api, transfer);
+//    }
     mModelMutex->unlock();
 }
 
@@ -671,10 +672,10 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
             mNbTransfersPerState[state]++;
         }
     }
-    else
-    {
-        onTransferStart(api, transfer);
-    }
+//    else
+//    {
+//        onTransferStart(api, transfer);
+//    }
     mModelMutex->unlock();
 }
 
@@ -682,16 +683,6 @@ bool QTransfersModel2::areAllPaused()
 {
     return mAreAllPaused;
 }
-
-//bool QTransfersModel2::areDlPaused()
-//{
-//    return mAreDlPaused;
-//}
-
-//bool QTransfersModel2::areUlPaused()
-//{
-//    return mAreUlPaused;
-//}
 
 void QTransfersModel2::getLinks(QList<int>& rows)
 {
@@ -754,6 +745,8 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
 {
     QMap<int, TransferTag> tags;
     QList<int> rows;
+    QList<int> toCancel;
+    QList<int>& rowsToCancel (clear? toCancel : rows);
 
     mModelMutex->lock();
 
@@ -793,28 +786,27 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
                         //                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
                         //                    row = rowIt - mOrder.cbegin();
                     }
-
-                    // Flush pooled rows (start at row+1), init row with tag's
-                    if (row == -1 || mOrder.at(row) != tag)
+                    count++;
+                    row--;
+                }
+                // Do not cancel/clear completing transfers.
+                else
+                {
+                    // Flush pooled rows (start at row+1)
+                    if (count > 0)
                     {
                         removeRows(row + 1, count, DEFAULT_IDX);
                         count = 0;
-                        row = mOrder.lastIndexOf(tag, row);
-                        //                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
-                        //                    row = rowIt - mOrder.cbegin();
                     }
-                    count++;
-                    row--;
-                    rows.removeOne(item);
-                }
-                // Do not cancel/clear completing transfers.
-                else if (d->mState == MegaTransfer::STATE_COMPLETING)
-                {
-                    rows.removeOne(item);
+
+                    if (cancel && d->mState != MegaTransfer::STATE_COMPLETING)
+                    {
+                        toCancel.push_back(item);
+                    }
                 }
             }
         }
-        // Flush pooled rows (start at row).
+        // Flush pooled rows (start at row + 1).
         if (count > 0)
         {
             removeRows(row + 1, count, DEFAULT_IDX);
@@ -825,7 +817,7 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
     if (cancel)
     {
         // All remaining tags, if any, are cancelable transfers. Cancel them.
-        for (auto item : rows)
+        for (auto item : rowsToCancel)
         {
             mMegaApi->cancelTransferByTag(tags[item]);
         }
@@ -854,7 +846,6 @@ void QTransfersModel2::pauseResumeAllTransfers()
 {
     bool newPauseState (!mAreAllPaused);
 
-//    mApiLock->lockOnce();
     mModelMutex->lock();
 
     mAreAllPaused = newPauseState;
@@ -876,7 +867,6 @@ void QTransfersModel2::pauseResumeAllTransfers()
     }
 
     mModelMutex->unlock();
-//    mApiLock->unlockOnce();
 
     emit pauseStateChanged(mAreAllPaused);
 }
@@ -1068,14 +1058,12 @@ bool QTransfersModel2::moveRows(const QModelIndex &sourceParent, int sourceRow, 
     return false;
 }
 
-Qt::ItemFlags QTransfersModel2::flags(const QModelIndex &index) const
+Qt::ItemFlags QTransfersModel2::flags(const QModelIndex& index) const
 {
     Qt::ItemFlags flags (QAbstractItemModel::flags(index));
     if (index.isValid())
     {
         mModelMutex->lock();
-//        auto d (static_cast<TransferData*>(index.internalPointer()));
-        //        auto d (static_cast<TransferData*>(index.internalPointer()));
         TransferTag tag (static_cast<TransferTag>(index.internalId()));
         const auto d (static_cast<const TransferItem2*>(mTransfers[tag]
                           .constData())->getTransferData());
@@ -1165,7 +1153,7 @@ bool QTransfersModel2::dropMimeData(const QMimeData* data, Qt::DropAction action
     return false;
 }
 
-void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row)
+void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal)
 {
     auto tag (transfer->getTag());
     QMutexLocker lock (mModelMutex);
@@ -1211,7 +1199,10 @@ void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* tr
          if (mOrder.size() == 1)
          {
              mModelHasTransfers = true;
-             Utilities::queueFunctionInAppThread([=](){emit transfersInModelChanged(true);});
+             if (signal)
+             {
+                Utilities::queueFunctionInAppThread([=](){emit transfersInModelChanged(true);});
+             }
          }
     }
 }

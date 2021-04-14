@@ -4683,7 +4683,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
         transferManager->showNormal();
         transferManager->activateWindow();
         transferManager->raise();
-        transferManager->updateState();
         return;
     }
 
@@ -8201,11 +8200,6 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
             });
 
         });
-    }
-
-    if (transferManager)
-    {
-        transferManager->updateState();
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1 Indexing = %2 Waiting = %3 Syncing = %4")

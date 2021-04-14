@@ -51,7 +51,8 @@ TransferManagerItem2* MegaTransferDelegate2::getTransferItemWidget(int row, int 
 void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem& option,
                                   const QModelIndex& index) const
 {
-    if (index.isValid())
+    auto rowCount (index.model()->rowCount());
+    if (index.isValid() && index.row() < rowCount)
     {
         auto transferItem (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
         auto w (getTransferItemWidget(index.row(), option.rect.height()));

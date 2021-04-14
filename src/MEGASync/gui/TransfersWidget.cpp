@@ -42,9 +42,12 @@ void TransfersWidget::setupTransfers()
 {
     model2 = new QTransfersModel2(this);
     mProxyModel = new TransfersSortFilterProxyModel(this);
+    mProxyModel->setDynamicSortFilter(false);
     mProxyModel->setSourceModel(model2);
 
     configureTransferView();
+    model2->initModel();
+
 //    onTransferAdded();
 }
 
@@ -104,10 +107,8 @@ void TransfersWidget::configureTransferView()
     {
         tDelegate2 = new MegaTransferDelegate2(mProxyModel, ui->tvTransfers, this);
         ui->tvTransfers->setup(this);
-        ui->tvTransfers->setItemDelegate(tDelegate2);
-//        ui->tvTransfers->setModel(model2);
-        mProxyModel->setDynamicSortFilter(false);
         ui->tvTransfers->setModel(mProxyModel);
+        ui->tvTransfers->setItemDelegate(tDelegate2);
 
 //        QObject::connect(this, &TransfersWidget::updateSearchFilter,
 ////                         mProxyModel,static_cast<void (TransfersSortFilterProxyModel::*)(const QRegularExpression&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
@@ -324,7 +325,7 @@ void TransfersWidget::transferFilterApply()
 
 int TransfersWidget::rowCount()
 {
-    return ui->tvTransfers->model()->rowCount(QModelIndex());
+    return ui->tvTransfers->model()->rowCount();
 }
 
 void TransfersWidget::changeEvent(QEvent *event)
