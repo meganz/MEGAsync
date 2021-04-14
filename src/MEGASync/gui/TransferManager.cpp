@@ -528,21 +528,26 @@ void TransferManager::on_bSearch_clicked()
 
 void TransferManager::on_tSearchIcon_clicked()
 {
-    mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
-                                .elidedText(mUi->leSearchField->text(),
-                                            Qt::ElideMiddle,
-                                            mUi->bSearchString->width() - 24));
-    mUi->wTransfers->transferFilterReset();
-    mUi->wTransfers->textFilterChanged(mUi->leSearchField->text());
+    QString pattern (mUi->leSearchField->text());
 
-    mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
-                              .elidedText(mUi->leSearchField->text(),
-                                          Qt::ElideMiddle,
-                                          mUi->lTextSearch->width() - 24));
-    // Add number of found results
-    mUi->wSearch->show();
+    if (pattern != QString())
+    {
+        mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
+                                    .elidedText(pattern,
+                                                Qt::ElideMiddle,
+                                                mUi->bSearchString->width() - 24));
+        mUi->wTransfers->transferFilterReset();
+        mUi->wTransfers->textFilterChanged(pattern);
 
-    toggleTab(SEARCH_TAB);
+        mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
+                                  .elidedText(pattern,
+                                              Qt::ElideMiddle,
+                                              mUi->lTextSearch->width() - 24));
+        // Add number of found results
+        mUi->wSearch->show();
+
+        toggleTab(SEARCH_TAB);
+    }
 }
 
 void TransferManager::on_tSearchCancel_clicked()
@@ -719,17 +724,17 @@ void TransferManager::toggleTab(TM_TABS tab)
             mUi->tClearCompleted->hide();
         }
 
-        if (tab == SEARCH_TAB)
-        {
-            currentContentHeaderWidget = mUi->pSearchHeader;
-            mShadowTab->setEnabled(false);
-        }
-
         emit showCompleted(tab == COMPLETED_TAB);
 
         mUi->bPause->setVisible(tab != COMPLETED_TAB);
 
         mCurrentTab = tab;
+    }
+
+    if (tab == SEARCH_TAB)
+    {
+        currentContentHeaderWidget = mUi->pSearchHeader;
+        mShadowTab->setEnabled(false);
     }
 
     mUi->sCurrentContent->setCurrentWidget(currentContentHeaderWidget);
