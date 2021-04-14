@@ -2949,7 +2949,7 @@ void MegaApplication::runConnectivityCheck()
         }
 
         proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(preferences->proxyPort());
+        proxy.setPort(qint16(preferences->proxyPort()));
         if (preferences->proxyRequiresAuth())
         {
             proxy.setUser(preferences->getProxyUsername());
@@ -2978,7 +2978,7 @@ void MegaApplication::runConnectivityCheck()
             if (arguments.size() == 2)
             {
                 proxy.setHostName(arguments[0]);
-                proxy.setPort(arguments[1].toInt());
+                proxy.setPort(quint16(arguments[1].toInt()));
             }
         }
         delete autoProxy;
@@ -3483,7 +3483,7 @@ void MegaApplication::applyProxySettings()
         proxySettings->setProxyURL(proxyString.toUtf8().constData());
 
         proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(preferences->proxyPort());
+        proxy.setPort(qint16(preferences->proxyPort()));
         if (preferences->proxyRequiresAuth())
         {
             QString username = preferences->getProxyUsername();
@@ -3510,7 +3510,7 @@ void MegaApplication::applyProxySettings()
             {
                 proxy.setType(QNetworkProxy::HttpProxy);
                 proxy.setHostName(arguments[0]);
-                proxy.setPort(arguments[1].toInt());
+                proxy.setPort(qint16(arguments[1].toInt()));
             }
         }
     }
@@ -3675,7 +3675,10 @@ void MegaApplication::checkOperatingSystem()
 #endif
 
 #ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable: 4996) // declared deprecated
         DWORD dwVersion = GetVersion();
+#pragma warning(pop)
         DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
         DWORD dwMinorVersion = (DWORD) (HIBYTE(LOWORD(dwVersion)));
         isOSdeprecated = (dwMajorVersion < 6) || ((dwMajorVersion == 6) && (dwMinorVersion == 0));
@@ -5188,9 +5191,9 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
     MegaNode *node = NULL;
 
 #ifdef WIN32
-    if (!localPath.startsWith(QByteArray((const char *)L"\\\\", 4)))
+    if (!localPath.startsWith(QByteArray((const char *)(void*)L"\\\\", 4)))
     {
-        localPath.insert(0, QByteArray((const char *)L"\\\\?\\", 8));
+        localPath.insert(0, QByteArray((const char *)(void*)L"\\\\?\\", 8));
     }
 
     string tmpPath((const char*)localPath.constData(), localPath.size() - 2);

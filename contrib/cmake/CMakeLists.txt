@@ -167,6 +167,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
     )
 
 

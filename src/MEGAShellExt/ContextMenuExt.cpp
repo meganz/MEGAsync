@@ -526,7 +526,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
         // Learn how to add sub-menu from:
         // http://www.codeproject.com/KB/shell/ctxextsubmenu.aspx
 
-        int lastItem;
+        int lastItem = 0;
         if (unsyncedFolders || unsyncedFiles)
         {
             LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD, unsyncedFiles, unsyncedFolders);

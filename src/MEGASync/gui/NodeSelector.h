@@ -5,6 +5,7 @@
 #include <QInputDialog>
 #include <QTreeWidgetItem>
 #include <QDir>
+#include <QTimer>
 
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
@@ -12,6 +13,9 @@
 
 namespace Ui {
 class NodeSelector;
+}
+namespace Ui {
+class NewFolderDialog;
 }
 
 class NodeSelector : public QDialog, public mega::MegaRequestListener
@@ -30,19 +34,6 @@ public:
     void setSelectedFolderHandle(long long selectedHandle);
     bool getDefaultUploadOption();
 
-private:
-    Ui::NodeSelector *ui;
-    mega::MegaApi *megaApi;
-    QIcon folderIcon;
-    unsigned long long selectedFolder;
-    QModelIndex selectedItem;
-    int selectMode;
-    QMegaModel *model;
-
-protected:
-    void nodesReady();
-    mega::QTMegaRequestListener *delegateListener;
-
 public slots:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     void onCustomContextMenu(const QPoint &);
@@ -51,11 +42,28 @@ public slots:
 
 protected:
     void changeEvent(QEvent * event);
+    void nodesReady();
+    mega::QTMegaRequestListener *delegateListener;
 
 private slots:
     void onSelectionChanged(QItemSelection,QItemSelection);
     void on_bNewFolder_clicked();
     void on_bOk_clicked();
+
+private:
+    Ui::NodeSelector *ui;
+    Ui::NewFolderDialog *newFolderUi;
+    QDialog *newFolder;
+    QTimer newFolderErrorTimer;
+
+    mega::MegaApi *megaApi;
+    QIcon folderIcon;
+    unsigned long long selectedFolder;
+    QModelIndex selectedItem;
+    int selectMode;
+    QMegaModel *model;
+
+    void setupNewFolderDialog();
 };
 
 #endif // NODESELECTOR_H
