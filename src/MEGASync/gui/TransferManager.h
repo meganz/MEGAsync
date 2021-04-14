@@ -50,7 +50,6 @@ signals:
     void completedTransfersTabActive(bool);
     void userActivity();
     void showCompleted(bool showCompleted);
-    void pauseStateChanged(bool pauseState);
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 500;

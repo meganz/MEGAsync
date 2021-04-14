@@ -857,19 +857,29 @@ void QTransfersModel2::pauseResumeAllTransfers()
 {
     bool newPauseState (!mAreAllPaused);
 
-    mApiLock->lockOnce();
+//    mApiLock->lockOnce();
     mModelMutex->lock();
-
-    for (auto tag : qAsConst(mOrder))
-    {
-        pauseResumeTransferByTag(tag, newPauseState);
-    }
 
     mAreAllPaused = newPauseState;
     mMegaApi->pauseTransfers(newPauseState);
 
+    if (newPauseState)
+    {
+        std::for_each(mOrder.crbegin(), mOrder.crend(), [this, newPauseState](TransferTag tag)
+        {
+            pauseResumeTransferByTag(tag, newPauseState);
+        });
+    }
+    else
+    {
+        std::for_each(mOrder.cbegin(), mOrder.cend(), [this, newPauseState](TransferTag tag)
+        {
+            pauseResumeTransferByTag(tag, newPauseState);
+        });
+    }
+
     mModelMutex->unlock();
-    mApiLock->unlockOnce();
+//    mApiLock->unlockOnce();
 
     emit pauseStateChanged(mAreAllPaused);
 }
