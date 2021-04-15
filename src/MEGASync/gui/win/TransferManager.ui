@@ -247,19 +247,6 @@ QGroupBox::title
     margin-right: 6px;
 }
 
-#tClearCompleted
-{
-	 height: 32px;
-    min-height: 32px;
-    max-height: 32px;
-  border-radius: 16px;
-	padding-left: 20px;
-	padding-right: 20px;
-  background-color: #FFA500;
-  color: #FFFFFF;
-	margin-left: 16px;
-}
-
 #bClearAll
 {
     height: 24px;
@@ -290,6 +277,19 @@ QGroupBox::title
 #sTransfers QToolButton
 {
   qProperty-iconSize: 156px;
+}
+
+#tClearCompleted
+{
+	 height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+  border-radius: 16px;
+	padding-left: 20px;
+	padding-right: 20px;
+  background-color: #FFA500;
+  color: #FFFFFF;
+	margin-left: 16px;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
