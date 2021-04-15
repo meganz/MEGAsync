@@ -32,7 +32,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, NETWORK_TAB = 2, ADVANCED_TAB = 3, SECURITY_TAB = 4};
+    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, IMPORTS_TAB = 2, NETWORK_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
@@ -74,6 +74,7 @@ private slots:
     void on_bSyncs_clicked();
     void on_bNetwork_clicked();
     void on_bSecurity_clicked();
+    void on_bImports_clicked();
     void on_bAdvanced_clicked();
 
     void on_bHelp_clicked();

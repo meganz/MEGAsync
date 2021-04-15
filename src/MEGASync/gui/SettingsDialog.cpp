@@ -234,6 +234,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bImports->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -302,6 +303,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 #ifndef Q_OS_MACOS
     ui->bAccount->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
+    ui->bImports->setEnabled(!proxyOnly);
     ui->bSyncs->setEnabled(!proxyOnly);
     ui->bAdvanced->setEnabled(!proxyOnly);
 #else
@@ -641,6 +643,20 @@ void SettingsDialog::on_bSecurity_clicked()
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 
+}
+
+void SettingsDialog::on_bImports_clicked()
+{
+    emit userActivity();
+
+    setWindowTitle(tr("Imports"));
+
+    if (ui->wStack->currentWidget() == ui->pImports)
+    {
+        return;
+    }
+
+    ui->wStack->setCurrentWidget(ui->pImports);
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
@@ -1946,6 +1962,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bAdvanced->setEnabled(completed);
     ui->bNetwork->setEnabled(completed);
     ui->bSecurity->setEnabled(completed);
+    ui->bImports->setEnabled(completed);
 #else
     enableNSToolBarItem(bAccount.get(), completed);
     enableNSToolBarItem(bSyncs.get() , completed);
@@ -2128,6 +2145,12 @@ void SettingsDialog::openSettingsTab(int tab)
         ui->bSyncs->setChecked(true);
 #else
         emit bSyncs.get()->activated();
+#endif
+        break;
+
+    case IMPORTS_TAB:
+#ifndef Q_OS_MACOS
+        ui->bImports->setChecked(true);
 #endif
         break;
 
