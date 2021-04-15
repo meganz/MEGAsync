@@ -595,5 +595,8 @@
         <file>images/new_contact@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
+        <file>images/imports_32.png</file>
+        <file>images/imports_32@3x.png</file>
+        <file>images/imports_32@2x.png</file>
     </qresource>
 </RCC>

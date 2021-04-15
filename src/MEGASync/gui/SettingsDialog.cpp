@@ -45,7 +45,9 @@ constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
-// TODO: Re-evaluate sizes for Network tab
+// FIXME: Re-evaluate size for Imports tab
+constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
+// FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
@@ -182,6 +184,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     QIcon account(QString::fromUtf8("://images/settings-general.png"));
     QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
+    QIcon imports(QString::fromUtf8("://images/imports-32.png"));
     QIcon network(QString::fromUtf8("://images/settings-network.png"));
     QIcon security(QString::fromUtf8("://images/settings-security.png"));
     QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
@@ -194,6 +197,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     bSyncs.reset(toolBar->addItem(syncs, tr("Syncs")));
     bSyncs.get()->setIcon(syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
+
+    bImports.reset(toolBar->addItem(imports, tr("Imports")));
+    bImports.get()->setIcon(imports);
+    connect(bImports.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bImports_clicked);
 
     bNetwork.reset(toolBar->addItem(network, tr("Network")));
     bNetwork.get()->setIcon(network);
@@ -209,6 +216,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     bAccount.get()->setSelectable(true);
     bSyncs.get()->setSelectable(true);
+    bImports.get()->setSelectable(true);
     bNetwork.get()->setSelectable(true);
     bSecurity.get()->setSelectable(true);
     bAdvanced.get()->setSelectable(true);
@@ -311,6 +319,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     enableNSToolBarItem(bAccount.get(), !proxyOnly);
     enableNSToolBarItem(bSecurity.get(), !proxyOnly);
     enableNSToolBarItem(bSyncs.get(), !proxyOnly);
+    enableNSToolBarItem(bImports.get(), !proxyOnly);
     enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
 #endif
 
@@ -642,7 +651,6 @@ void SettingsDialog::on_bSecurity_clicked()
     ui->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
-
 }
 
 void SettingsDialog::on_bImports_clicked()
@@ -653,10 +661,20 @@ void SettingsDialog::on_bImports_clicked()
 
     if (ui->wStack->currentWidget() == ui->pImports)
     {
+#ifdef Q_OS_MACOS
+        checkNSToolBarItem(toolBar.get(), bImports.get());
+#endif
         return;
     }
 
     ui->wStack->setCurrentWidget(ui->pImports);
+
+#ifdef Q_OS_MACOS
+    checkNSToolBarItem(toolBar.get(), bImports.get());
+
+    ui->pImports->hide();
+    animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
@@ -1966,8 +1984,10 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
 #else
     enableNSToolBarItem(bAccount.get(), completed);
     enableNSToolBarItem(bSyncs.get() , completed);
-    enableNSToolBarItem(bAdvanced.get(), completed);
+    enableNSToolBarItem(bSecurity.get(), completed);
+    enableNSToolBarItem(bImports.get(), completed);
     enableNSToolBarItem(bNetwork.get(), completed);
+    enableNSToolBarItem(bAdvanced.get(), completed);
 #endif
 }
 
@@ -2151,6 +2171,8 @@ void SettingsDialog::openSettingsTab(int tab)
     case IMPORTS_TAB:
 #ifndef Q_OS_MACOS
         ui->bImports->setChecked(true);
+#else
+        emit bImports.get()->activated();
 #endif
         break;
 
@@ -2236,6 +2258,10 @@ void SettingsDialog::onAnimationFinished()
     else if (ui->wStack->currentWidget() == ui->pSyncs)
     {
         ui->pSyncs->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pImports)
+    {
+        ui->pImports->show();
     }
     else if (ui->wStack->currentWidget() == ui->pNetwork)
     {
