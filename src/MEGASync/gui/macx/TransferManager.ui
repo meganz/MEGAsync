@@ -256,6 +256,7 @@ QGroupBox::title
 	padding-left: 20px;
 	padding-right: 20px;
   background-color: #FFA500;
+  color: #FFFFFF;
 	margin-left: 16px;
 }
 
@@ -393,7 +394,7 @@ QGroupBox::title
           <item>
            <widget class="QToolButton" name="bSearch">
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
             </property>
            </widget>
@@ -426,7 +427,7 @@ QGroupBox::title
              </sizepolicy>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
             </property>
            </widget>
@@ -453,7 +454,7 @@ QGroupBox::title
           <item>
            <widget class="QToolButton" name="tSearchCancel">
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/ico_tm_clear.png</normaloff>:/images/ico_tm_clear.png</iconset>
             </property>
            </widget>
@@ -567,7 +568,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -640,7 +641,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -713,7 +714,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -741,7 +742,7 @@ QGroupBox::title
             <item>
              <widget class="QPushButton" name="tCompleted">
               <property name="enabled">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -789,7 +790,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -883,7 +884,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -953,7 +954,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -1020,7 +1021,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -1087,7 +1088,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -1154,7 +1155,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -1221,7 +1222,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -1288,7 +1289,7 @@ QGroupBox::title
                </sizepolicy>
               </property>
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -1411,6 +1412,9 @@ QGroupBox::title
           </property>
           <item>
            <widget class="QPushButton" name="bDownSpeed">
+            <property name="text">
+             <string notr="true"/>
+            </property>
             <property name="icon">
               <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/ico_tm_download_item.png</normaloff>:/images/ico_tm_download_item.png</iconset>
@@ -1419,6 +1423,9 @@ QGroupBox::title
           </item>
           <item>
            <widget class="QPushButton" name="bUpSpeed">
+            <property name="text">
+             <string notr="true"/>
+            </property>
             <property name="icon">
               <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/ico_tm_upload_item.png</normaloff>:/images/ico_tm_upload_item.png</iconset>

@@ -53,12 +53,11 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    setAttribute(Qt::WA_DeleteOnClose, true);
     Platform::enableDialogBlur(this);
-
-#ifndef __APPLE__
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
-#endif
 
     mUi->wSearch->hide();
     mUi->wMediaType->hide();
@@ -762,6 +761,7 @@ void TransferManager::changeEvent(QEvent *event)
     {
         mUi->retranslateUi(this);
         setActiveTab(mCurrentTab);
+        onUpdatePauseState(mModel->areAllPaused());
     }
     QDialog::changeEvent(event);
 }
