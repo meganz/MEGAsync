@@ -3035,6 +3035,12 @@ QTableWidget::item { background-color: #F5F5F5; }
      </widget>
      <widget class="QWidget" name="pImports">
       <layout class="QVBoxLayout" name="verticalLayout_11">
+       <property name="leftMargin">
+        <number>24</number>
+       </property>
+       <property name="rightMargin">
+        <number>24</number>
+       </property>
        <item>
         <widget class="QWidget" name="widget_5" native="true">
          <property name="sizePolicy">
@@ -3047,14 +3053,8 @@ QTableWidget::item { background-color: #F5F5F5; }
           <property name="spacing">
            <number>5</number>
           </property>
-          <property name="leftMargin">
-           <number>24</number>
-          </property>
           <property name="topMargin">
            <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>24</number>
           </property>
           <property name="bottomMargin">
            <number>8</number>
@@ -3257,6 +3257,38 @@ QTableWidget::item { background-color: #F5F5F5; }
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gExcludedFilesInfo">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_19">
+          <item>
+           <widget class="QLabel" name="lExcludedFilesInfo">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>New exclusions will only be applied after you restart the application.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

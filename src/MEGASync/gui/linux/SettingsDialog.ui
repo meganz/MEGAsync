@@ -2942,21 +2942,40 @@ padding-left: 10px;
             </layout>
            </widget>
           </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="gExcludedFilesInfo">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
           <item>
-           <spacer name="verticalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+           <widget class="QLabel" name="lExcludedFilesInfo">
+            <property name="enabled">
+             <bool>true</bool>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
+            <property name="text">
+             <string>New exclusions will only be applied after you restart the application.</string>
             </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -4118,7 +4137,6 @@ background:transparent;</string>
   <tabstop>lDownloadFolder</tabstop>
   <tabstop>eDownloadFolder</tabstop>
   <tabstop>bDownloadFolder</tabstop>
-  <tabstop>lExcludedFiles</tabstop>
   <tabstop>lExcludedNames</tabstop>
   <tabstop>bExcludeSize</tabstop>
   <tabstop>lLimitsInfo</tabstop>

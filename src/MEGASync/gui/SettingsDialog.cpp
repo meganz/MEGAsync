@@ -136,6 +136,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bUpdate->hide();
 #endif
 
+    ui->gExcludedFilesInfo->hide();
+
 #ifdef Q_OS_WINDOWS
     connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
     ui->cDisableIcons->hide();
@@ -1637,9 +1639,7 @@ void SettingsDialog::on_bExcludeSize_clicked()
         preferences->setLowerSizeLimitUnit(dialog->lowerSizeLimitUnit());
         preferences->setCrashed(true); // removes cached application state
         ui->lLimitsInfo->setText(excludeBySizeInfo());
-        QMegaMessageBox::information(this, tr("Warning"),
-                                     tr("The new excluded file sizes will be taken into account when the application starts again."),
-                                     QMessageBox::Ok);
+        ui->gExcludedFilesInfo->show();
     }
 
     delete dialog;
@@ -1764,23 +1764,7 @@ void SettingsDialog::saveExcludeSyncNames()
     preferences->setExcludedSyncPaths(excludedPaths);
     preferences->setCrashed(true);
 
-    QMessageBox *info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
-                                        tr("The new excluded file names will be taken into account\n"
-                                           "when the application starts again"));
-    info->setStandardButtons(QMessageBox::Ok | QMessageBox::Yes);
-    info->setButtonText(QMessageBox::Yes, tr("Restart"));
-    info->setDefaultButton(QMessageBox::Ok);
-    int result = info->exec();
-    delete info;
-    if (result == QMessageBox::Yes)
-    {
-        // Restart MEGAsync
-#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
-        ((MegaApplication*)qApp)->rebootApplication(false);
-#else
-        QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
-#endif
-    }
+    ui->gExcludedFilesInfo->show();
 }
 
 void SettingsDialog::updateNetworkTab()
