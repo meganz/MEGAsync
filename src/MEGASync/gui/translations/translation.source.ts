@@ -720,7 +720,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Data Protection Regulation</source>
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
-        <translation type="unfinished">Data Protection Regulation</translation>
+        <translation type="obsolete">Data Protection Regulation</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
@@ -6968,7 +6968,7 @@ Do you want to create one?</source>
         <translatorcomment>
             Message from the app, asking the user how to proceed when no expected link was found.
             The placeholder will be replaced with the app name at runtime, so it must be kept, and only moved to a different position when translation requires it,
-            i.e. "Un Start Menu link valid pentru %1 nu a fost gasit"
+            i.e. &quot;Un Start Menu link valid pentru %1 nu a fost gasit&quot;
         </translatorcomment>
         <translation type="unfinished">%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
 
