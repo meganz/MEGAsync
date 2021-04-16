@@ -16,7 +16,7 @@ void QCustomTransfersModel::refreshTransfers()
 {
     if (transferOrder.size())
     {
-        emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size() - 1, 0, QModelIndex()));
+        emit dataChanged(index(0, 0, QModelIndex()), index(int(transferOrder.size()) - 1, 0, QModelIndex()));
     }
 }
 
@@ -103,10 +103,10 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *t, Mega
                     TransferItemData *item = new TransferItemData(transfer);
                     item->data.publicNode = isPublicNode;
 
-                    if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
+                    if ((int)transfers.size() == (int)Preferences::MAX_COMPLETED_ITEMS)
                     {
                         TransferItemData *itemData = transferOrder.back();
-                        int row = transferOrder.size() - 1;
+                        int row = int(transferOrder.size()) - 1;
                         beginRemoveRows(QModelIndex(), row, row);
                         transfers.remove(itemData->data.tag);
                         transferOrder.pop_back();
@@ -189,7 +189,18 @@ void QCustomTransfersModel::updateTransferInfo(MegaTransfer *transfer)
             item->setTotalSize(transfer->getTotalBytes());
         }
 
-        item->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
+        // Get http speed, which reports speed changes faster than the transfer.
+        long long httpSpeed;
+        if (item->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentDownloadSpeed();
+        }
+        else
+        {
+            httpSpeed = static_cast<MegaApplication*>(qApp)->getMegaApi()->getCurrentUploadSpeed();
+        }
+
+        item->setSpeed(std::min(transfer->getSpeed(), httpSpeed), transfer->getMeanSpeed());
         item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
         item->setTransferState(transfer->getState());
         item->setPriority(newPriority);

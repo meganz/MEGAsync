@@ -12,12 +12,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.3.9.0";
-const int Preferences::VERSION_CODE = 4309;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.4.0.0";
+const int Preferences::VERSION_CODE = 4400;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.3.9");
-QString Preferences::SDK_ID = QString::fromAscii("c917ddc");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.4.0");
+QString Preferences::SDK_ID = QString::fromAscii("0e79b27");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Fixed detected crashes on Windows and Linux."));
 
@@ -372,6 +372,7 @@ const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("la
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
 const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
+const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -2240,6 +2241,16 @@ void Preferences::setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs)
     setValueAndSyncConcurrent(disabledSyncsKey, tags.join(QString::fromUtf8("0x1E")));
 }
 
+bool Preferences::getNotifyDisabledSyncsOnLogin()
+{
+    return getValueConcurrent<bool>(notifyDisabledSyncsKey, false);
+}
+
+void Preferences::setNotifyDisabledSyncsOnLogin(bool notify)
+{
+    setValueAndSyncConcurrent(notifyDisabledSyncsKey, notify);
+}
+
 QString Preferences::getHttpsKey()
 {
     mutex.lock();
@@ -2781,7 +2792,8 @@ void Preferences::loadExcludedSyncNames()
     if (getValue<int>(lastVersionKey) < 3400)
     {
         excludedSyncNames.append(QString::fromUtf8("*~.*"));
-        excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
+        // Avoid trigraph replacement by some pre-processors by splitting the string.("??-" --> "~").
+        excludedSyncNames.append(QString::fromUtf8("*.sb-????????""-??????"));
         excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 

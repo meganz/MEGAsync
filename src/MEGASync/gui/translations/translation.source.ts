@@ -3264,6 +3264,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
         <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</translation>
     </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">Open Preferences</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Open Settings</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3771,6 +3786,26 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>NewFolderDialog</name>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Window title for the New Folder input dialog (String short as possible)</translatorcomment>
+        <translation>New folder</translation>
+    </message>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Label to direct the user to type the new MEGA folder name (String short as possible).</translatorcomment>
+        <translation>Enter the new folder name:</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed:
+%1</source>
+        <translatorcomment>Multi-line warning label shown when the user tries to create a New MEGA Folder with invalid characters. Keep the new line after colon. Also keep the percent one designator, which is used to fill in the current list of forbidden characters programatically.</translatorcomment>
+        <translation>The following characters are not allowed:
+%1</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3810,7 +3845,7 @@ Are you sure?</source>
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Enter the new folder name:</translation>
+        <translation type="vanished">Enter the new folder name:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3888,7 +3923,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Invalid folder name.
+        <translation type="obsolete">Invalid folder name.
 Please ensure that you don’t use characters like “\” “/” or “:” in your folder names.</translation>
     </message>
 </context>
@@ -4191,7 +4226,7 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferences</translation>
     </message>
     <message>
         <source>Quit</source>

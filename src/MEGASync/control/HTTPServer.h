@@ -11,6 +11,8 @@
 
 #include <megaapi.h>
 
+#include "Utilities.h"
+
 class RequestData
 {
 public:
@@ -75,7 +77,7 @@ class HTTPServer: public QTcpServer
 
     signals:
         void onLinkReceived(QString link, QString auth);
-        void onExternalDownloadRequested(QQueue<mega::MegaNode*> files);
+        void onExternalDownloadRequested(QQueue<WrappedNode *> files);
         void onExternalDownloadRequestFinished();
         void onExternalFileUploadRequested(qlonglong targetHandle);
         void onExternalFolderUploadRequested(qlonglong targetHandle);

@@ -249,7 +249,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const QString title{tr("Shared Folder Received")};
                     const QString message{tr("New shared folder from [X]")
                                 .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
                     const bool isNewShare{true};
@@ -261,7 +260,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const QString title{tr("Shared Folder Removed")};
                     notifySharedUpdate(alert, createDeletedShareMessage(alert), DELETE_SHARE);
                 }
                 break;
@@ -270,7 +268,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const QString title{tr("Shared Folder Updated")};
                     notifySharedUpdate(alert, getItemsAddedText(alert), NEW_SHARED_NODES);
                 }
                 break;
@@ -408,7 +405,7 @@ void DesktopNotifications::notifyUnreadNotifications() const
 QString DesktopNotifications::createTakeDownMessage(mega::MegaUserAlert* alert, bool isReinstated) const
 {
     const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
-    const auto node = megaApi->getNodeByHandle(alert->getNodeHandle());
+    std::unique_ptr<mega::MegaNode> node(megaApi->getNodeByHandle(alert->getNodeHandle()));
     if (node)
     {
         if (node->getType() == mega::MegaNode::TYPE_FILE)
@@ -434,8 +431,6 @@ QString DesktopNotifications::createTakeDownMessage(mega::MegaUserAlert* alert, 
                                            : tr("Your publicly shared has been taken down");
             return message;
         }
-
-        delete node;
     }
     else
     {

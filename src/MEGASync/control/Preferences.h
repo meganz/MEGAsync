@@ -289,6 +289,8 @@ public:
     void setLastExit(long long value);
     QSet<mega::MegaHandle> getDisabledSyncTags();
     void setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs);
+    bool getNotifyDisabledSyncsOnLogin();
+    void setNotifyDisabledSyncsOnLogin(bool notify);
 
     QString getHttpsKey();
     void setHttpsKey(QString key);
@@ -669,6 +671,7 @@ protected:
     static const QString lastPublicHandleTypeKey;
     static const QString disabledSyncsKey;
     static const QString neverCreateLinkKey;
+    static const QString notifyDisabledSyncsKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
