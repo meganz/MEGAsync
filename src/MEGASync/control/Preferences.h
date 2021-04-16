@@ -257,6 +257,9 @@ public:
     long long importFolder();
     void setImportFolder(long long value);
 
+    bool neverCreateLink();
+    void setNeverCreateLink(bool value);
+
     // sync related
     void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
     void removeAllSyncSettings(); //remove all sync from cache
@@ -667,6 +670,7 @@ protected:
     static const QString lastPublicHandleTimestampKey;
     static const QString lastPublicHandleTypeKey;
     static const QString disabledSyncsKey;
+    static const QString neverCreateLinkKey;
     static const QString notifyDisabledSyncsKey;
 
     static const bool defaultShowNotifications;
@@ -705,6 +709,7 @@ protected:
     static const long long defaultHttpsCertExpiration;
     static const int defaultAccountStatus;
     static const bool defaultNeedsFetchNodes;
+    static const bool defaultNeverCreateLink;
 };
 
 #endif // PREFERENCES_H
