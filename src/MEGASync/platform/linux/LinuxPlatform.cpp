@@ -309,13 +309,20 @@ QString LinuxPlatform::getWindowManagerName()
 
     if (!cached)
     {
+	    xcb_connection_t* conn = QX11Info::connection();
+	    if (conn == nullptr) {
+	    	cached = true;
+	    	window_manager_name = "";
+	    	goto NO_X11;
+	    }
         window_manager_name =
-          getProperty(QX11Info::connection(),
+          getProperty(conn,
                       QX11Info::appRootWindow(),
                       "_NET_WM_NAME");
 
         cached = true;
     }
+    NO_X11:
 
     return QString::fromStdString(window_manager_name);
 }
