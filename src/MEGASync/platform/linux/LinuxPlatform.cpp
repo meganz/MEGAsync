@@ -311,7 +311,7 @@ QString LinuxPlatform::getWindowManagerName()
     if (!cached)
     {
     	if (qgetenv("XDG_SESSION_TYPE") == "wayland") {
-    		window_manager_name = qgetenv("XDG_CURRENT_DESKTOP");
+    		window_manager_name = qgetenv("XDG_CURRENT_DESKTOP").toStdString();
     	} else {
 		    xcb_connection_t* conn = QX11Info::connection();
 		    if (conn != nullptr) {
