@@ -115,6 +115,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     cacheSize = -1;
     remoteCacheSize = -1;
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
+    connect(ui->wStack, SIGNAL(currentChanged(int)), ui->wStackFooter, SLOT(setCurrentIndex(int)));
     ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
     ui->bAccount->setChecked(true); // override whatever might be set in .ui
     setProxyOnly(proxyOnly);
@@ -1408,8 +1409,7 @@ void SettingsDialog::on_bAdd_clicked()
     addSyncFolder(invalidMegaFolderHandle);
 }
 
-// FIXME: connect me to a new button Logout in the footer of Account page
-void SettingsDialog::on_bUnlink_clicked()
+void SettingsDialog::on_bLogout_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
     if (QMegaMessageBox::question(nullptr, tr("Logout"),
@@ -1420,6 +1420,25 @@ void SettingsDialog::on_bUnlink_clicked()
         {
             close();
             app->unlink();
+        }
+    }
+}
+
+void SettingsDialog::on_bRestart_clicked()
+{
+    QPointer<SettingsDialog> currentDialog = this;
+    if (QMegaMessageBox::warning(nullptr, tr("Restart MEGAsync"), tr("Do you want to restart MEGAsync now?"),
+                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
+    {
+        if (currentDialog)
+        {
+            // Restart MEGAsync
+#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
+            ((MegaApplication*)qApp)->rebootApplication(false);
+#else
+            //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
+            QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); });
+#endif
         }
     }
 }
@@ -2089,7 +2108,7 @@ void SettingsDialog::on_bFullCheck_clicked()
     {
         if (currentDialog)
         {
-            app->rebootApplication(false);
+            on_bRestart_clicked();
         }
     }
 }
