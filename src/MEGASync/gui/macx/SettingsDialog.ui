@@ -156,12 +156,12 @@ padding-bottom: 6px;
 	margin-top:5px;
 }
 
-#wSeparatorAccountInfo, #wSeparatorAccountLanguage, #wSeparatorAccountOptions, #wSeparatorAccountSpace, #wSeparatorBottom
+#wSeparatorAccountInfo, #wSeparatorAccountLanguage, #wSeparatorAccountOptions, #wSeparatorAccountSpace, #wSeparatorBottom, #wSeparatorNetwork
 {
 background-color: rgba(0,0,0,0.1);
 }
 
-#wSeparatorSecurityBackup, #wSeparatorSecurityPassword, #wSeparatorAccountOptions, #wSeparatorAccountSpace, #wSeparatorBottom, #wSeparatorDefaultFolders, #wSeparatorRateLimits, #wSeparatorTCPconnections
+#wSeparatorSecurityBackup, #wSeparatorSecurityPassword, #wSeparatorAccountOptions, #wSeparatorAccountSpace, #wSeparatorBottom, #wSeparatorBandwidthBottom, #wSeparatorRateLimits, #wSeparatorTCPconnections
 {
 background-color: rgba(0,0,0,0.1);
 }</string>
