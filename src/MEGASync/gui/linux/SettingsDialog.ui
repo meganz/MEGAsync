@@ -75,7 +75,6 @@ color: #333333;
 #bHelp
 {
 border: none;
-text-decoration: underline;
 }
 
 #bHelpIco
@@ -113,7 +112,6 @@ margin-left: 5px;
 #cProxyRequiresPassword
 {
 spacing: 11px;
-
 padding-top: 1px;
 padding-bottom: 0px;
 }
@@ -229,7 +227,6 @@ padding-bottom: 6px;
         <property name="font">
          <font>
           <pointsize>-1</pointsize>
-          <underline>true</underline>
          </font>
         </property>
         <property name="text">

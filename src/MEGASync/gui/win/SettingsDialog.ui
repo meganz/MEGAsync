@@ -79,7 +79,6 @@ color: #333333;
 #bHelp
 {
 border: none;
-text-decoration: underline;
 }
 
 #bHelpIco
@@ -599,7 +598,6 @@ background:transparent;</string>
         <property name="font">
          <font>
           <pointsize>-1</pointsize>
-          <underline>true</underline>
          </font>
         </property>
         <property name="cursor">
