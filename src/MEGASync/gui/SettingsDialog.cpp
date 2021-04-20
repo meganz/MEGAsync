@@ -186,7 +186,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     QIcon account(QString::fromUtf8("://images/settings-general.png"));
     QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
-    QIcon imports(QString::fromUtf8("://images/imports-32.png"));
+    QIcon imports(QString::fromUtf8("://images/settings-import.png"));
     QIcon network(QString::fromUtf8("://images/settings-network.png"));
     QIcon security(QString::fromUtf8("://images/settings-security.png"));
     QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
