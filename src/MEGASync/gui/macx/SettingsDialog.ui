@@ -2537,7 +2537,7 @@ QTableWidget::item { background-color: #F5F5F5; }
        <item>
         <widget class="QGroupBox" name="gBandwidthSettings">
          <property name="title">
-          <string>Bandwidth</string>
+          <string/>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <property name="topMargin">
@@ -2639,7 +2639,7 @@ font-weight: bold;
        <item>
         <widget class="QGroupBox" name="gProxySettings">
          <property name="title">
-          <string>Proxies</string>
+          <string/>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
           <property name="topMargin">
