@@ -1950,7 +1950,7 @@ QTableWidget::item { background-color: #F5F5F5; }
               </widget>
              </item>
              <item>
-              <widget class="QSegmentedControl" name="wSegmentedControl" native="true">
+              <widget class="QSegmentedControl" name="wSyncsSegmentedControl" native="true">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -3082,7 +3082,7 @@ QTableWidget::item { background-color: #F5F5F5; }
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="widget_12" native="true">
+           <widget class="QWidget" name="wExclusions" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -3092,13 +3092,13 @@ QTableWidget::item { background-color: #F5F5F5; }
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>85</height>
+              <height>120</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>85</height>
+              <height>120</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -3125,14 +3125,17 @@ QTableWidget::item { background-color: #F5F5F5; }
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>85</height>
+                 <height>100</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>85</height>
+                 <height>100</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true">margin:0px;</string>
@@ -3151,6 +3154,28 @@ QTableWidget::item { background-color: #F5F5F5; }
                </property>
                <property name="selectionRectVisible">
                 <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSegmentedControl" name="wExclusionsSegmentedControl" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>556</width>
+                 <height>19</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>556</width>
+                 <height>20</height>
+                </size>
                </property>
               </widget>
              </item>

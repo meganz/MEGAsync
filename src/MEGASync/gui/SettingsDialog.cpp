@@ -232,10 +232,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     toolBar->attachToWindow(this->window()->windowHandle());
 
 
-    //Configure segmented control for +/- syncs
-    ui->wSegmentedControl->configureTableSegment();
-    connect(ui->wSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
-    connect(ui->wSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+    //Configure segmented control for +/- for syncs and exclusions
+    ui->wSyncsSegmentedControl->configureTableSegment();
+    connect(ui->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
+    connect(ui->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+
+    ui->wExclusionsSegmentedControl->configureTableSegment();
+    connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAddName_clicked);
+    connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDeleteName_clicked);
 
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 #endif
