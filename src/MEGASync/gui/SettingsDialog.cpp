@@ -134,13 +134,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     uploadButtonGroup->addButton(ui->rUploadNoLimit);
     uploadButtonGroup->addButton(ui->rUploadAutoLimit);
 
-    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-
-    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
-
 #ifdef Q_OS_LINUX
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
@@ -304,6 +297,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setAvatar();
     connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
     storageStateChanged(app->getAppliedStorageState());
+
+    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+
+    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 }
 
 SettingsDialog::~SettingsDialog()
