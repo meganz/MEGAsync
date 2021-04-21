@@ -114,7 +114,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
     ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
     ui->bAccount->setChecked(true); // override whatever might be set in .ui
-    setProxyOnly(proxyOnly);
 
     reloadUIpage = false;
     debugCounter = 0;
@@ -240,6 +239,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 #endif
+
+    setProxyOnly(proxyOnly);
 
 #ifndef Q_OS_MACOS
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
