@@ -720,7 +720,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Data Protection Regulation</source>
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
-        <translation type="unfinished">Data Protection Regulation</translation>
+        <translation type="obsolete">Data Protection Regulation</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
@@ -6957,6 +6957,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation type="unfinished">Email sent</translation>
+    </message>
+</context>
+<context>
+    <name>WinToastLib</name>
+    <message>
+        <source>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</source>
+        <translatorcomment>
+            Message from the app, asking the user how to proceed when no expected link was found.
+            The placeholder will be replaced with the app name at runtime, so it must be kept, and only moved to a different position when translation requires it,
+            i.e. &quot;Un Start Menu link valid pentru %1 nu a fost gasit&quot;
+        </translatorcomment>
+        <translation type="unfinished">%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</translation>
+    </message>
+    <message>
+        <source>Yes (recommended)</source>
+        <translatorcomment>Button label with the affirmative and recommended user option.</translatorcomment>
+        <translation type="unfinished">Yes (recommended)</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Button label with the negative user option.</translatorcomment>
+        <translation type="unfinished">No</translation>
+    </message>
+    <message>
+        <source>No (never ask again)</source>
+        <translatorcomment>Button label with the negative user option, which will also prevent the dialog from being shown again.</translatorcomment>
+        <translation type="unfinished">No (never ask again)</translation>
     </message>
 </context>
 <context>

@@ -9,6 +9,10 @@ set(CMAKE_VERBOSE_MAKEFILE TRUE CACHE BOOL "Verbose output")
 FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEGASync/gui/*/*.ui" "${RepoDir}/src/MEGASync/gui/*.qrc")
 add_custom_target(ui_assets SOURCES ${ui_files})
 
+if(CMAKE_HOST_APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
+endif()
+
 PROJECT(${MEGA_PROJECT_NAME})
 
 #Qt settings
@@ -43,6 +47,7 @@ set (USE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
+set (NO_READLINE 1 CACHE STRING "")
 
 set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
@@ -50,6 +55,9 @@ set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
 set(MEGAupdaterDir "${RepoDir}/src/MEGAUpdater")
 set(MEGAShellExtDir "${RepoDir}/src/MEGAShellExt")
+if(CMAKE_HOST_APPLE)
+    set(MEGAloaderDir "${RepoDir}/src/MEGALoader")
+endif(CMAKE_HOST_APPLE)
 
 get_filename_component(MEGAsyncDir ${MEGAsyncDir} REALPATH)
 
@@ -511,9 +519,6 @@ else()
 
         ${MEGAsyncDir}/gui/PermissionsDialog.cpp
         ${MEGAsyncDir}/gui/PermissionsWidget.cpp
-        
-        ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
-        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
 
         ${MEGAsyncDir}/gui/CocoaHelpButton.mm
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
@@ -572,6 +577,8 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.mm
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.mm
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
+        ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
+        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
 
         )
 endif()
@@ -597,7 +604,6 @@ endif()
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMPS -DLOG_TO_STDOUT -DLOG_TO_LOGGER")
 
 if(CMAKE_HOST_APPLE)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
     set(MAC_RESOURCES "${MEGAsyncDir}/app.icns" "${MEGAsyncDir}/folder.icns" "${MEGAsyncDir}/folder_yosemite.icns" "${MEGAsyncDir}/appicon32.tiff")
 
     set_source_files_properties(${MAC_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
@@ -712,7 +718,13 @@ set (UPDATER_FILES
 ImportStdVcpkgLibrary(cryptopp-staticcrt        cryptopp-staticcrt cryptopp-staticcrt libcryptopp libcryptopp)
 
 if(CMAKE_HOST_APPLE)
-#    add_executable(MEGAsync MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATER_FILES} )
+    set (UPDATER_FILES
+        ${UPDATER_FILES}
+        ${MEGAupdaterDir}/MacUtils.mm
+    )
+    add_executable(MEGAupdater MACOSX_BUNDLE ${MAC_RESOURCES} ${UPDATER_FILES} )
+    target_link_libraries(MEGAupdater cryptopp-staticcrt "-framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security")
+    set_property(TARGET MEGAupdater PROPERTY AUTOMOC OFF)
 elseif(CMAKE_HOST_WIN32)
     add_executable(MEGAupdater WIN32 ${UPDATER_FILES} )
     #add_executable(MEGAupdater ${UPDATER_FILES} )
@@ -745,6 +757,12 @@ if(CMAKE_HOST_WIN32)
     set_property(TARGET MEGAShellExt PROPERTY AUTOMOC OFF)
     set_property(TARGET MEGAShellExt PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
+
+#-------------- MEGA Loader for OSX --------------------
+
+if(CMAKE_HOST_APPLE)
+    add_executable(MEGAloader MACOSX_BUNDLE ${MEGAloaderDir}/MEGALoader.cpp)
+endif(CMAKE_HOST_APPLE)
 
 #-------------- MEGA Sync unit tests --------------------
 add_library(catch INTERFACE)
