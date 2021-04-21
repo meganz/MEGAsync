@@ -150,9 +150,12 @@ void MegaTransferView::onCancelClearSelection()
 
         if (proxy)
         {
-            selection = proxy->mapSelectionToSource(selection);
+            indexes = proxy->mapSelectionToSource(selection).indexes();
         }
-        indexes = selection.indexes();
+        else
+        {
+            indexes = selection.indexes();
+        }
 
         clearSelection();
         mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
@@ -249,7 +252,7 @@ void MegaTransferView::createContextMenu()
     mCancelAction = new QAction(QIcon(QLatin1String(":/images/clear_item_ico.png")),
                                       tr("Cancel transfers in progress"), this);
     connect(mCancelAction, &QAction::triggered,
-            mParentTransferWidget, &TransfersWidget::on_tCancelAll_clicked);
+            this, &MegaTransferView::onCancelClearSelection);
 
     if (mGetLinkAction)
     {
@@ -300,7 +303,7 @@ void MegaTransferView::createContextMenu()
     mClearAction = new QAction(QIcon(QLatin1String(":/images/ico_clear.png")),
                                tr("Clear completed"), this);
     connect(mClearAction, &QAction::triggered,
-            mParentTransferWidget, &TransfersWidget::on_tCancelAll_clicked);
+            this, &MegaTransferView::onCancelClearSelection);
 
     mContextMenu->addAction(mPauseAction);
     mContextMenu->addAction(mResumeAction);
@@ -428,13 +431,23 @@ void MegaTransferView::changeEvent(QEvent *event)
     {
         createContextMenu();
     }
-    QWidget::changeEvent(event);
+    QTreeView::changeEvent(event);
 }
 
 void MegaTransferView::dropEvent(QDropEvent *event)
 {
     QAbstractItemView::dropEvent(event);
     clearSelection();
+}
+
+void MegaTransferView::resizeEvent(QResizeEvent *event)
+{
+//    auto items (findChildren<TransferManagerItem2*>());
+    for ( auto w : findChildren<TransferManagerItem2*>())
+    {
+        w->resize(event->size());
+    }
+    QTreeView::resizeEvent(event);
 }
 
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
@@ -453,25 +466,25 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
         switch (d->mState)
         {
-            case MegaTransfer::STATE_ACTIVE:
-            case MegaTransfer::STATE_QUEUED:
-            case MegaTransfer::STATE_RETRYING:
+            case TransferData::TransferState::TRANSFER_ACTIVE:
+            case TransferData::TransferState::TRANSFER_QUEUED:
+            case TransferData::TransferState::TRANSFER_RETRYING:
             {
                 enablePause = true;
                 enableMove = true;
                 enableCancel = true;
                 break;
             }
-            case MegaTransfer::STATE_PAUSED:
+            case TransferData::TransferState::TRANSFER_PAUSED:
             {
                 enableResume = true;
                 enableMove = true;
                 enableCancel = true;
                 break;
             }
-            case MegaTransfer::STATE_CANCELLED:
-            case MegaTransfer::STATE_FAILED:
-            case MegaTransfer::STATE_COMPLETED:
+            case TransferData::TransferState::TRANSFER_CANCELLED:
+            case TransferData::TransferState::TRANSFER_FAILED:
+            case TransferData::TransferState::TRANSFER_COMPLETED:
             {
                 enableClear = true;
                 break;
@@ -569,16 +582,11 @@ void MegaTransferView::getLinkClicked()
     QList<int> rows;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
 
-    const auto  selection (proxy ? proxy->mapSelectionToSource(selectionModel()->selection())
-                                 : selectionModel()->selection());
-
-
-    for (auto index : selection.indexes())
+    const auto  indexes (proxy ? proxy->mapSelectionToSource(selectionModel()->selection()).indexes()
+                                 : selectionModel()->selection().indexes());
+    for (auto index : indexes)
     {
-        if (index.isValid())
-        {
-            rows.push_back(index.row());
-        }
+        rows.push_back(index.row());
     }
 
     if (!rows.isEmpty())

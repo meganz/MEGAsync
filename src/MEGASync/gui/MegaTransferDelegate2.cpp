@@ -56,7 +56,6 @@ void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem&
     {
         auto transferItem (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
         auto w (getTransferItemWidget(index.row(), option.rect.height()));
-        w->resize(option.rect.size());
         w->move(option.rect.topLeft());
         w->updateUi(transferItem.getTransferData(), index.row());
 

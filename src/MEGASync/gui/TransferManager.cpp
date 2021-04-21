@@ -15,19 +15,33 @@ using namespace mega;
 const int TransferManager::SPEED_REFRESH_PERIOD_MS;
 const int TransferManager::STATS_REFRESH_PERIOD_MS;
 
-const QSet<int> TransferManager::ACTIVE_STATES =
+static const QSet<TransferData::TransferState> ACTIVE_STATES =
 {
-    MegaTransfer::STATE_ACTIVE,
-    MegaTransfer::STATE_PAUSED,
-    MegaTransfer::STATE_COMPLETING,
-    MegaTransfer::STATE_QUEUED,
-    MegaTransfer::STATE_RETRYING
+    TransferData::TransferState::TRANSFER_ACTIVE,
+    TransferData::TransferState::TRANSFER_PAUSED,
+    TransferData::TransferState::TRANSFER_COMPLETING,
+    TransferData::TransferState::TRANSFER_QUEUED,
+    TransferData::TransferState::TRANSFER_RETRYING
 };
-const QSet<int> TransferManager::FINISHED_STATES =
+static const TransferData::TransferStates ACTIVE_STATES_MASK =
 {
-    MegaTransfer::STATE_COMPLETED,
-    MegaTransfer::STATE_FAILED,
-    MegaTransfer::STATE_CANCELLED
+    TransferData::TransferState::TRANSFER_ACTIVE |
+    TransferData::TransferState::TRANSFER_PAUSED |
+    TransferData::TransferState::TRANSFER_COMPLETING |
+    TransferData::TransferState::TRANSFER_QUEUED |
+    TransferData::TransferState::TRANSFER_RETRYING
+};
+static const QSet<TransferData::TransferState> FINISHED_STATES =
+{
+    TransferData::TransferState::TRANSFER_COMPLETED,
+    TransferData::TransferState::TRANSFER_FAILED,
+    TransferData::TransferState::TRANSFER_CANCELLED
+};
+static const TransferData::TransferStates FINISHED_STATES_MASK =
+{
+    TransferData::TransferState::TRANSFER_COMPLETED |
+    TransferData::TransferState::TRANSFER_FAILED |
+    TransferData::TransferState::TRANSFER_CANCELLED
 };
 
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
@@ -122,8 +136,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     for (auto mediaLabel : qAsConst(mMediaNumberLabelsGroup))
     {
-        QWidget* frame = mediaLabel->parentWidget();
-        frame->hide();
+        mediaLabel->parentWidget()->hide();
     }
 
     connect(this, &TransferManager::showCompleted,
@@ -142,7 +155,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
             mModel, &QTransfersModel2::pauseResumeAllTransfers, Qt::QueuedConnection);
 
     connect(this, &TransferManager::cancelClearAllRows,
-            findChild<MegaTransferView*>(), &MegaTransferView::onCancelClearAllRows);
+            findChild<MegaTransferView*>(), &MegaTransferView::onCancelClearAllRows,
+            Qt::QueuedConnection);
 
     mSpeedRefreshTimer->setSingleShot(false);
     connect(mSpeedRefreshTimer, &QTimer::timeout,
@@ -186,54 +200,70 @@ TransferManager::~TransferManager()
 
 void TransferManager::on_tCompleted_clicked()
 {
-    emit userActivity();
-
-    mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES);
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({});
-    mUi->wTransfers->transferFilterApply();
-    mUi->lCurrentContent->setText(tr("Finished"));
-
-    toggleTab(COMPLETED_TAB);
+    if (mCurrentTab != COMPLETED_TAB)
+    {
+        emit userActivity();
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES_MASK);
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Finished"));
+        toggleTab(COMPLETED_TAB);
+    }
 }
 
 void TransferManager::on_tDownloads_clicked()
 {
-    emit userActivity();
-
-    mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES);
-    mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_DOWNLOAD});
-    mUi->wTransfers->fileTypeFilterChanged({});
-    mUi->wTransfers->transferFilterApply();
-    mUi->lCurrentContent->setText(tr("Downloads"));
-
-    toggleTab(DOWNLOADS_TAB);
+    if (mCurrentTab != DOWNLOADS_TAB)
+    {
+        emit userActivity();
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
+            mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_DOWNLOAD});
+            mUi->wTransfers->fileTypeFilterChanged({});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Downloads"));
+        toggleTab(DOWNLOADS_TAB);
+    }
 }
 
 void TransferManager::on_tUploads_clicked()
 {
-    emit userActivity();
-
-    mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES);
-    mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_UPLOAD});
-    mUi->wTransfers->fileTypeFilterChanged({});
-    mUi->wTransfers->transferFilterApply();
-    mUi->lCurrentContent->setText(tr("Uploads"));
-
-    toggleTab(UPLOADS_TAB);
+    if (mCurrentTab != UPLOADS_TAB)
+    {
+        emit userActivity();
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
+            mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_UPLOAD});
+            mUi->wTransfers->fileTypeFilterChanged({});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Uploads"));
+        toggleTab(UPLOADS_TAB);
+    }
 }
 
 void TransferManager::on_tAllTransfers_clicked()
 {
-    emit userActivity();
-
-    mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES);
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({});
-    mUi->wTransfers->transferFilterApply();
-    mUi->lCurrentContent->setText(tr("All Transfers"));
-
-    toggleTab(ALL_TRANSFERS_TAB);
+    if (mCurrentTab != ALL_TRANSFERS_TAB)
+    {
+        emit userActivity();
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("All Transfers"));
+        toggleTab(ALL_TRANSFERS_TAB);
+    }
 }
 
 void TransferManager::onUpdatePauseState(bool isPaused)
@@ -290,12 +320,12 @@ bool TransferManager::refreshStateStats()
         mUi->tClearCompleted->setVisible(((mCurrentTab == COMPLETED_TAB) && processedNumber)
                                          || ((mCurrentTab >= TYPES_TAB_BASE)
                                          && mModel->getNumberOfFinishedForFileType(
-                                             static_cast<TransferData::FileTypes>(mCurrentTab - TYPES_TAB_BASE))));
+                                             static_cast<TransferData::FileType>(mCurrentTab - TYPES_TAB_BASE))));
 
         label->parentWidget()->setVisible(show);
         label->setVisible(processedNumber);
         label->setText(QString::number(processedNumber));
-        label->updateGeometry();
+//        label->updateGeometry();
 
         mNumberOfTransfersPerTab[COMPLETED_TAB] = processedNumber;
     }
@@ -338,7 +368,7 @@ bool TransferManager::refreshStateStats()
             }
             label->setText(QString::number(processedNumber));
         }
-        label->updateGeometry();
+//        label->updateGeometry();
 
         mUi->sStatus->setCurrentWidget(leftFooterWidget);
         mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
@@ -366,7 +396,7 @@ void TransferManager::refreshTypeStats()
             mUi->lDownloads->show();
             mUi->lDownloads->setText(QString::number(number));
         }
-        mUi->lDownloads->updateGeometry();
+//        mUi->lDownloads->updateGeometry();
         mNumberOfTransfersPerTab[DOWNLOADS_TAB] = number;
     }
 
@@ -386,7 +416,7 @@ void TransferManager::refreshTypeStats()
             mUi->lUploads->show();
             mUi->lUploads->setText(QString::number(number));
         }
-        mUi->lUploads->updateGeometry();
+//        mUi->lUploads->updateGeometry();
         mNumberOfTransfersPerTab[UPLOADS_TAB] = number;
     }
 
@@ -562,85 +592,113 @@ void TransferManager::on_tClearSearchResult_clicked()
 
 void TransferManager::on_bArchives_clicked()
 {
-    mUi->wTransfers->transferStateFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_ARCHIVE});
-    mUi->wTransfers->transferFilterApply();
-
-    mUi->lCurrentContent->setText(tr("Archives"));
-
-    toggleTab(TYPE_ARCHIVE_TAB);
+    if (mCurrentTab != TYPE_ARCHIVE_TAB)
+    {
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_ARCHIVE});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Archives"));
+        toggleTab(TYPE_ARCHIVE_TAB);
+    }
 }
 
 void TransferManager::on_bDocuments_clicked()
 {
-    mUi->wTransfers->transferStateFilterChanged({});
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_DOCUMENT});
-    mUi->wTransfers->transferFilterApply();
-
-    mUi->lCurrentContent->setText(tr("Documents"));
-
-    toggleTab(TYPE_DOCUMENT_TAB);
+    if (mCurrentTab != TYPE_DOCUMENT_TAB)
+    {
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged({});
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_DOCUMENT});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Documents"));
+        toggleTab(TYPE_DOCUMENT_TAB);
+    }
 }
 
 void TransferManager::on_bImages_clicked()
 {
-    mUi->wTransfers->transferStateFilterChanged({});
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_IMAGE});
-    mUi->wTransfers->transferFilterApply();
-
-    mUi->lCurrentContent->setText(tr("Images"));
-
-    toggleTab(TYPE_IMAGE_TAB);
+    if (mCurrentTab != TYPE_IMAGE_TAB)
+    {
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged({});
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_IMAGE});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Images"));
+        toggleTab(TYPE_IMAGE_TAB);
+    }
 }
 
 void TransferManager::on_bMusic_clicked()
 {
-    mUi->wTransfers->transferStateFilterChanged({});
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_AUDIO});
-    mUi->wTransfers->transferFilterApply();
-
-    mUi->lCurrentContent->setText(tr("Music"));
-
-    toggleTab(TYPE_AUDIO_TAB);
+    if (mCurrentTab != TYPE_AUDIO_TAB)
+    {
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged({});
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_AUDIO});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Music"));
+        toggleTab(TYPE_AUDIO_TAB);
+    }
 }
 
 void TransferManager::on_bVideos_clicked()
 {
-    mUi->wTransfers->transferStateFilterChanged({});
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_VIDEO});
-    mUi->wTransfers->transferFilterApply();
-
-    mUi->lCurrentContent->setText(tr("Videos"));
-
-    toggleTab(TYPE_VIDEO_TAB);
+    if (mCurrentTab != TYPE_VIDEO_TAB)
+    {
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged({});
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_VIDEO});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Videos"));
+        toggleTab(TYPE_VIDEO_TAB);
+    }
 }
 
 void TransferManager::on_bOther_clicked()
 {
-    mUi->wTransfers->transferStateFilterChanged({});
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_OTHER});
-    mUi->wTransfers->transferFilterApply();
-
-    mUi->lCurrentContent->setText(tr("Other"));
-
-    toggleTab(TYPE_OTHER_TAB);
+    if (mCurrentTab != TYPE_OTHER_TAB)
+    {
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged({});
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_OTHER});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Other"));
+        toggleTab(TYPE_OTHER_TAB);
+    }
 }
 
 void TransferManager::on_bText_clicked()
 {
-    mUi->wTransfers->transferStateFilterChanged({});
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_TEXT});
-    mUi->wTransfers->transferFilterApply();
-
-    mUi->lCurrentContent->setText(tr("Text"));
-
-    toggleTab(TYPE_TEXT_TAB);
+    if (mCurrentTab != TYPE_TEXT_TAB)
+    {
+        QtConcurrent::run([=]
+        {
+            mUi->wTransfers->transferStateFilterChanged({});
+            mUi->wTransfers->transferTypeFilterChanged({});
+            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_TEXT});
+            mUi->wTransfers->transferFilterApply();
+        });
+        mUi->lCurrentContent->setText(tr("Text"));
+        toggleTab(TYPE_TEXT_TAB);
+    }
 }
 
 void TransferManager::on_bImportLinks_clicked()
@@ -710,7 +768,7 @@ void TransferManager::toggleTab(TM_TABS tab)
             {
                 mUi->tClearCompleted->setText(tr("Clear Completed"));
                 showClearButton = mModel->getNumberOfFinishedForFileType(
-                                      static_cast<TransferData::FileTypes>(tab - TYPES_TAB_BASE));
+                                      static_cast<TransferData::FileType>(tab - TYPES_TAB_BASE));
             }
             mUi->tClearCompleted->setVisible(showClearButton);
         }

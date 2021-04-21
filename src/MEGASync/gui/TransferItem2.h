@@ -4,6 +4,7 @@
 #include "ui_TransferManagerItem.h"
 
 #include "Utilities.h"
+#include "megaapi.h"
 
 #include <QSharedData>
 #include <QMimeDatabase>
@@ -15,21 +16,35 @@ class TransferData : public QSharedData
 {
     public:
 
-    enum FileTypes
+    enum FileType
     {
-        TYPE_OTHER    = 0,
-        TYPE_AUDIO    = 1,
-        TYPE_VIDEO    = 2,
-        TYPE_ARCHIVE  = 3,
-        TYPE_DOCUMENT = 4,
-        TYPE_IMAGE    = 5,
-        TYPE_TEXT     = 6,
+        TYPE_OTHER    = 0x01,
+        TYPE_AUDIO    = 0x02,
+        TYPE_VIDEO    = 0x04,
+        TYPE_ARCHIVE  = 0x08,
+        TYPE_DOCUMENT = 0x10,
+        TYPE_IMAGE    = 0x20,
+        TYPE_TEXT     = 0x40,
     };
+    Q_DECLARE_FLAGS(FileTypes, FileType)
 
+    enum TransferState
+    {
+        TRANSFER_NONE       = 1 << mega::MegaTransfer::STATE_NONE,
+        TRANSFER_QUEUED     = 1 << mega::MegaTransfer::STATE_QUEUED,
+        TRANSFER_ACTIVE     = 1 << mega::MegaTransfer::STATE_ACTIVE,
+        TRANSFER_PAUSED     = 1 << mega::MegaTransfer::STATE_PAUSED,
+        TRANSFER_RETRYING   = 1 << mega::MegaTransfer::STATE_RETRYING,
+        TRANSFER_COMPLETING = 1 << mega::MegaTransfer::STATE_COMPLETING,
+        TRANSFER_COMPLETED  = 1 << mega::MegaTransfer::STATE_COMPLETED,
+        TRANSFER_CANCELLED  = 1 << mega::MegaTransfer::STATE_CANCELLED,
+        TRANSFER_FAILED     = 1 << mega::MegaTransfer::STATE_FAILED,
+    };
+    Q_DECLARE_FLAGS(TransferStates, TransferState)
 
     int       mType;
     int       mErrorCode;
-    int       mState;
+    TransferState mState;
     int       mTag;
     long long mErrorValue;
     int64_t   mFinishedTime;
@@ -40,7 +55,7 @@ class TransferData : public QSharedData
     long long mMeanSpeed;
     long long mTransferredBytes;
     mega::MegaNode* mPublicNode;
-    FileTypes mFileType;
+    FileType mFileType;
     mega::MegaHandle mParentHandle;
     mega::MegaHandle mNodeHandle;
     mega::MegaApi* mMegaApi;
@@ -51,28 +66,34 @@ class TransferData : public QSharedData
 
     TransferData(TransferData const* dr) :
         mType(dr->mType), mErrorCode(dr->mErrorCode),  mState(dr->mState), mTag(dr->mTag),
-        mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime), mRemainingTime(dr->mRemainingTime),
-        mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed), mMeanSpeed(dr->mMeanSpeed),
+        mErrorValue(dr->mErrorValue), mFinishedTime(dr->mFinishedTime),
+        mRemainingTime(dr->mRemainingTime),
+        mTotalSize(dr->mTotalSize), mPriority(dr->mPriority), mSpeed(dr->mSpeed),
+        mMeanSpeed(dr->mMeanSpeed),
         mTransferredBytes(dr->mTransferredBytes),
         mPublicNode(dr->mPublicNode), mFileType(dr->mFileType),
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mMegaApi(dr->mMegaApi),
         mFilename(dr->mFilename), mPath(dr->mPath){}
 
-    TransferData(int type, int errorCode, int state, int tag, long long errorValue,
-                    int64_t finishedTime, int64_t remainingTime, long long totalSize, unsigned long long priority,
-                    long long speed, long long meanSpeed, long long transferredBytes,
-                    mega::MegaNode* publicNode, FileTypes fileType,
-                    mega::MegaHandle parentHandle, mega::MegaHandle nodeHandle,
+    TransferData(int type, int errorCode, TransferState state, int tag, long long errorValue,
+                 int64_t finishedTime, int64_t remainingTime, long long totalSize,
+                 unsigned long long priority,
+                 long long speed, long long meanSpeed, long long transferredBytes,
+                 mega::MegaNode* publicNode, FileType fileType,
+                 mega::MegaHandle parentHandle, mega::MegaHandle nodeHandle,
                  mega::MegaApi* megaApi, QString fileName, QString path) :
-         mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
-         mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
-         mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
-         mTransferredBytes(transferredBytes),
-         mPublicNode(publicNode), mFileType(fileType),
-         mParentHandle(parentHandle), mNodeHandle(nodeHandle),mMegaApi(megaApi), mFilename(fileName), mPath(path){}
+        mType(type), mErrorCode(errorCode),  mState(state), mTag(tag),
+        mErrorValue(errorValue), mFinishedTime(finishedTime), mRemainingTime(remainingTime),
+        mTotalSize(totalSize), mPriority(priority), mSpeed(speed), mMeanSpeed(meanSpeed),
+        mTransferredBytes(transferredBytes),
+        mPublicNode(publicNode), mFileType(fileType),
+        mParentHandle(parentHandle), mNodeHandle(nodeHandle),mMegaApi(megaApi),
+        mFilename(fileName), mPath(path){}
 };
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
-
+Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::FileTypes)
+Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::TransferStates)
+Q_DECLARE_METATYPE(TransferData::FileType)
 
 class TransferItem2
 {
@@ -84,7 +105,8 @@ class TransferItem2
         void updateValuesTransferFinished(int64_t finishTime,
                                           int errorCode, long long errorValue,
                                           long long meanSpeed,
-                                          int state, long long transferedBytes,
+                                          TransferData::TransferState state,
+                                          long long transferedBytes,
                                           mega::MegaHandle parentHandle,
                                           mega::MegaHandle nodeHandle,
                                           mega::MegaNode* publicNode);
@@ -94,7 +116,8 @@ class TransferItem2
                                          long long meanSpeed,
                                          long long speed,
                                          unsigned long long priority,
-                                         int state, long long transferedBytes,
+                                         TransferData::TransferState state,
+                                         long long transferedBytes,
                                          mega::MegaNode* publicNode);
 
         QExplicitlySharedDataPointer<TransferData> getTransferData() const
@@ -105,9 +128,5 @@ class TransferItem2
     protected:
             QExplicitlySharedDataPointer<TransferData> d;
 };
-Q_DECLARE_METATYPE(TransferData::FileTypes)
-//Q_DECLARE_METATYPE(TransferData)
-//Q_DECLARE_METATYPE(TransferData*)
 Q_DECLARE_METATYPE(TransferItem2)
-
 #endif // TRANSFERITEM2_H

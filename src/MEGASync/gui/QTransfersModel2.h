@@ -41,10 +41,10 @@ public:
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
     void cancelAllTransfers();
 
-    long long  getNumberOfTransfersForState(int state) const;
+    long long  getNumberOfTransfersForState(TransferData::TransferState state) const;
     long long  getNumberOfTransfersForType(int type) const;
-    long long  getNumberOfTransfersForFileType(TransferData::FileTypes fileType) const;
-    long long  getNumberOfFinishedForFileType(TransferData::FileTypes fileType) const;
+    long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
+    long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
 
     QExplicitlySharedDataPointer<TransferData> getTransferDataByRow(int row) const;
 
@@ -80,7 +80,7 @@ private:
    // std::deque<TransferTag> mOrder;
     QList<TransferTag> mOrder;
     ThreadPool* mThreadPool;
-    QHash<QString, TransferData::FileTypes> mFileTypes;
+    QHash<QString, TransferData::FileType> mFileTypes;
     QMutex* mModelMutex;
 
     QFuture<void> mInitFuture;
@@ -90,10 +90,10 @@ private:
     bool mAreAllPaused;
 
     bool mModelHasTransfers;
-    QMap<TransferData::FileTypes, long long> mNbTransfersPerFileType;
-    QMap<TransferData::FileTypes, long long> mNbFinishedPerFileType;
+    QMap<TransferData::FileType, long long> mNbTransfersPerFileType;
+    QMap<TransferData::FileType, long long> mNbFinishedPerFileType;
     QMap<int, long long> mNbTransfersPerType;
-    QMap<int, long long> mNbTransfersPerState;
+    QMap<TransferData::TransferState, long long> mNbTransfersPerState;
 
     void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
 };

@@ -31,13 +31,13 @@ public:
         COMPLETED_TAB     = 3,
         SEARCH_TAB        = 4,
         TYPES_TAB_BASE    = 5,
-        TYPE_OTHER_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_OTHER,
-        TYPE_AUDIO_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_AUDIO,
-        TYPE_VIDEO_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_VIDEO,
-        TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_ARCHIVE,
-        TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_DOCUMENT,
-        TYPE_IMAGE_TAB    = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_IMAGE,
-        TYPE_TEXT_TAB     = TYPES_TAB_BASE + TransferData::FileTypes::TYPE_TEXT,
+        TYPE_OTHER_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_OTHER,
+        TYPE_AUDIO_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_AUDIO,
+        TYPE_VIDEO_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_VIDEO,
+        TYPE_ARCHIVE_TAB  = TYPES_TAB_BASE + TransferData::FileType::TYPE_ARCHIVE,
+        TYPE_DOCUMENT_TAB = TYPES_TAB_BASE + TransferData::FileType::TYPE_DOCUMENT,
+        TYPE_IMAGE_TAB    = TYPES_TAB_BASE + TransferData::FileType::TYPE_IMAGE,
+        TYPE_TEXT_TAB     = TYPES_TAB_BASE + TransferData::FileType::TYPE_TEXT,
     };
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
@@ -53,10 +53,10 @@ signals:
     void cancelClearAllRows(bool cancel, bool clear);
 
 private:
-    static constexpr int SPEED_REFRESH_PERIOD_MS = 500;
-    static constexpr int STATS_REFRESH_PERIOD_MS = 200;
-    static const QSet<int> ACTIVE_STATES;
-    static const QSet<int> FINISHED_STATES;
+    static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
+    static constexpr int STATS_REFRESH_PERIOD_MS = 500;
+//    static const TransferData::TransferStates ACTIVE_STATES;
+//    static const TransferData::TransferStates FINISHED_STATES;
 
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
@@ -64,7 +64,7 @@ private:
     QPoint mDragPosition;
     ThreadPool* mThreadPool;
     QMap<int, QFrame*> mTabFramesToggleGroup;
-    QMap<TransferData::FileTypes, QLabel*> mMediaNumberLabelsGroup;
+    QMap<TransferData::FileType, QLabel*> mMediaNumberLabelsGroup;
     QMap<TM_TABS, QWidget*> mTabNoItem;
 
     QTransfersModel2* mModel;
@@ -72,7 +72,7 @@ private:
     TM_TABS mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;
     QGraphicsDropShadowEffect* mShadowSearch;
-    QSet<TransferData::FileTypes> mFileTypesFilter;
+    QSet<TransferData::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
 

@@ -7,7 +7,8 @@ using namespace mega;
 void TransferItem2::updateValuesTransferFinished(int64_t finishTime,
                                                  int errorCode, long long errorValue,
                                                  long long meanSpeed,
-                                                 int state, long long transferedBytes,
+                                                 TransferData::TransferState state,
+                                                 long long transferedBytes,
                                                  MegaHandle parentHandle,
                                                  MegaHandle nodeHandle,
                                                  MegaNode* publicNode)
@@ -30,7 +31,8 @@ void TransferItem2::updateValuesTransferUpdated(int64_t remainingTime,
                                                 long long meanSpeed,
                                                 long long speed,
                                                 unsigned long long priority,
-                                                int state, long long transferedBytes,
+                                                TransferData::TransferState state,
+                                                long long transferedBytes,
                                                 MegaNode* publicNode)
 {
     d->mState = state;

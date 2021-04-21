@@ -285,21 +285,21 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::fileTypeFilterChanged(const QSet<TransferData::FileTypes>& fileTypes)
+void TransfersWidget::fileTypeFilterChanged(const TransferData::FileTypes fileTypes)
 {
-    mProxyModel->setFileType(fileTypes);
+    mProxyModel->setFileTypes(fileTypes);
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::transferStateFilterChanged(const QSet<int>& transferStates)
+void TransfersWidget::transferStateFilterChanged(const TransferData::TransferStates transferStates)
 {
-    mProxyModel->setTransferState(transferStates);
+    mProxyModel->setTransferStates(transferStates);
     ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::transferTypeFilterChanged(const QSet<int>& transferTypes)
 {
-    mProxyModel->setTransferType(transferTypes);
+    mProxyModel->setTransferTypes(transferTypes);
     ui->tvTransfers->scrollToTop();
 }
 

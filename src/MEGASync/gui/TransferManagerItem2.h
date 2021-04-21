@@ -28,7 +28,7 @@ class TransferManagerItem2 : public QWidget
         void on_tPauseResumeTransfer_clicked();
         void on_tCancelClearTransfer_clicked();
         void on_tItemRetry_clicked();
-        void onPauseStateChanged();
+//        void onPauseStateChanged();
 
     private:
         Ui::TransferManagerItem *mUi;

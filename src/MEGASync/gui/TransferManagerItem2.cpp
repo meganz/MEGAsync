@@ -19,12 +19,6 @@ TransferManagerItem2::TransferManagerItem2(QWidget *parent) :
     mRow (0)
 {
     mUi->setupUi(this);
-    mAreDlPaused = mPreferences->getDownloadsPaused();
-    mAreUlPaused = mPreferences->getUploadsPaused();
-
-    // Connect to pause state change signal
-    connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::pauseStateChanged,
-            this, &TransferManagerItem2::onPauseStateChanged);
 }
 
 TransferManagerItem2::~TransferManagerItem2()
@@ -76,7 +70,6 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
 
     // Data to update in any case
     QString statusString;
-//    bool isGlobalPaused(false);
     QString timeString;
     QString speedString;
     QString pauseResumeTooltip;
@@ -87,8 +80,8 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
     // Amount transfered
     mUi->lDone->setText(Utilities::getSizeString(data->mTransferredBytes));
     // Progress bar
-    int permil = data->mState == MegaTransfer::STATE_COMPLETED
-                  || data->mState == MegaTransfer::STATE_COMPLETING ?
+    int permil = data->mState & (TransferData::TransferState::TRANSFER_COMPLETED
+                                 | TransferData::TransferState::TRANSFER_COMPLETING) ?
                      1000
                    : data->mTotalSize > 0 ?
                          (1000 * data->mTransferredBytes) / data->mTotalSize
@@ -105,13 +98,11 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
         case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
         {
             statusString = QObject::tr("Downloading");
-//            isGlobalPaused = mAreDlPaused;
             break;
         }
         case MegaTransfer::TYPE_UPLOAD:
         {
             statusString = QObject::tr("Uploading");
-//            isGlobalPaused = mAreUlPaused;
             break;
         }
     }
@@ -119,7 +110,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
     // Set values according to transfer state
     switch (data->mState)
     {
-        case MegaTransfer::STATE_ACTIVE:
+        case TransferData::TransferState::TRANSFER_ACTIVE:
         {
             long long httpSpeed(data->mMegaApi->getCurrentSpeed(data->mType));
             switch (data->mType)
@@ -149,7 +140,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             break;
         }
-        case MegaTransfer::STATE_PAUSED:
+        case TransferData::TransferState::TRANSFER_PAUSED:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(
                                                   ":images/ico_resume_transfers_state.png"));
@@ -159,7 +150,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             mIsPaused = true;
             break;
         }
-        case MegaTransfer::STATE_QUEUED:
+        case TransferData::TransferState::TRANSFER_QUEUED:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(
                                                   ":images/ico_pause_transfers_state.png"));
@@ -168,7 +159,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             mUi->sStatus->setCurrentWidget(mUi->pQueued);
             break;
         }
-        case MegaTransfer::STATE_CANCELLED:
+        case TransferData::TransferState::TRANSFER_CANCELLED:
         {
             statusString = QObject::tr("Canceled");
             cancelClearTooltip = QObject::tr("Clear transfer");
@@ -180,7 +171,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             mIsFinished = true;
             break;
         }
-        case MegaTransfer::STATE_COMPLETING:
+        case TransferData::TransferState::TRANSFER_COMPLETING:
         {
             statusString = QObject::tr("Completing");
             speedString = Utilities::getSizeString(data->mMeanSpeed) + QLatin1Literal("/s");
@@ -189,7 +180,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             break;
         }
-        case MegaTransfer::STATE_FAILED:
+        case TransferData::TransferState::TRANSFER_FAILED:
         {
             mUi->sStatus->setCurrentWidget(mUi->pFailed);
             cancelClearTooltip = QObject::tr("Clear transfer");
@@ -201,7 +192,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             mUi->tItemRetry->setToolTip(tr(MegaError::getErrorString(data->mErrorCode)));
             break;
         }
-        case MegaTransfer::STATE_RETRYING:
+        case TransferData::TransferState::TRANSFER_RETRYING:
         {
             statusString = QObject::tr("Retrying");
             icon = Utilities::getCachedPixmap(QLatin1Literal(
@@ -211,7 +202,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             mUi->sStatus->setCurrentWidget(mUi->pActive);
             break;
         }
-        case MegaTransfer::STATE_COMPLETED:
+        case TransferData::TransferState::TRANSFER_COMPLETED:
         {
             statusString = QObject::tr("Completed");
             cancelClearTooltip = QObject::tr("Clear transfer");
@@ -245,8 +236,6 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
         mUi->tCancelClearTransfer->setToolTip(cancelClearTooltip);
     }
     mUi->tCancelClearTransfer->setVisible(showTCancelClear);
-
-    update();
 }
 
 void TransferManagerItem2::on_tPauseResumeTransfer_clicked()
@@ -275,10 +264,4 @@ void TransferManagerItem2::forwardMouseEvent(QMouseEvent *me)
 void TransferManagerItem2::on_tItemRetry_clicked()
 {
     emit retryTransfer(mTransferTag);
-}
-
-void TransferManagerItem2::onPauseStateChanged()
-{
-    mAreDlPaused = mPreferences->getDownloadsPaused();
-    mAreUlPaused = mPreferences->getUploadsPaused();
 }

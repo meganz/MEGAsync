@@ -23,12 +23,12 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
                       const QModelIndex &destinationParent, int destinationChild);
 
-        void setTransferType(const QSet<int> transferTypes);
-        void addTransferType(const QSet<int> transferTypes);
-        void setTransferState(const QSet<int> transferStates);
-        void addTransferState(const QSet<int> transferStates);
-        void setFileType(const QSet<TransferData::FileTypes> fileTypes);
-        void addFileType(const QSet<TransferData::FileTypes> fileTypes);
+        void setTransferTypes(const QSet<int>& transferTypes);
+        void addTransferTypes(const QSet<int>& transferTypes);
+        void setTransferStates(const TransferData::TransferStates transferStates);
+        void addTransferStates(const TransferData::TransferStates transferStates);
+        void setFileTypes(const TransferData::FileTypes fileTypes);
+        void addFileTypes(const TransferData::FileTypes fileTypes);
         void resetAllFilters();
         void setSortBy(SORT_BY sortCriterion);
 
@@ -38,9 +38,9 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 
 
     private:
-        QSet<int> mTransferType;
-        QSet<int> mTransferState;
-        QSet<TransferData::FileTypes> mFileType;
+        QSet<int> mTransferTypes;
+        TransferData::TransferStates mTransferStates;
+        TransferData::FileTypes mFileTypes;
         SORT_BY mSortCriterion;
 };
 
