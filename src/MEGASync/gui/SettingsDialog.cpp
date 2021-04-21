@@ -91,88 +91,9 @@ void deleteRemoteCache(MegaApi *megaApi)
     delete n;
 }
 
-SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SettingsDialog)
-{
-    ui->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-
-    // TODO: get rid of this->, use unique member names when updating with m prefix
-    this->app = app;
-    this->megaApi = app->getMegaApi();
-    this->preferences = Preferences::instance();
-    this->controller = Controller::instance();
-    this->model = Model::instance();
-
-    mThreadPool = ThreadPoolSingleton::getInstance();
-
-    loadingSettings = 0;
-    accountDetailsDialog = NULL;
-    cacheSize = -1;
-    remoteCacheSize = -1;
-    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
-    ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
-    ui->bAccount->setChecked(true); // override whatever might be set in .ui
-    setProxyOnly(proxyOnly);
-
-    reloadUIpage = false;
-    debugCounter = 0;
-    areSyncsDisabled = false;
-    isSavingSyncsOnGoing = false;
-
-    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-
-    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
-
-#ifdef Q_OS_LINUX
-    ui->cAutoUpdate->hide();
-    ui->bUpdate->hide();
-#endif
-
-#ifdef Q_OS_WINDOWS
-    connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
-    ui->cDisableIcons->hide();
-
-    typedef LONG MEGANTSTATUS;
-    typedef struct _MEGAOSVERSIONINFOW {
-        DWORD dwOSVersionInfoSize;
-        DWORD dwMajorVersion;
-        DWORD dwMinorVersion;
-        DWORD dwBuildNumber;
-        DWORD dwPlatformId;
-        WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
-    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
-
-    typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
-    MEGARTL_OSVERSIONINFOW version = { 0 };
-    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
-    if (hMod)
-    {
-        RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
-        if (RtlGetVersion)
-        {
-            RtlGetVersion(&version);
-            if (version.dwMajorVersion >= 10)
-            {
-                ui->cDisableIcons->show();
-            }
-        }
-    }
-#endif
-
 #ifdef Q_OS_MACOS
-    this->setWindowTitle(tr("Preferences - MEGAsync"));
-    ui->cStartOnStartup->setText(tr("Open at login"));
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //FinderSync API support from 10.10+
-    {
-        ui->cOverlayIcons->hide();
-    }
-
+void SettingsDialog::initializeNativeUIComponents()
+{
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
     ui->layoutBottom->insertWidget(0, helpButton);
     connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
@@ -226,8 +147,95 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->wSegmentedControl->configureTableSegment();
     connect(ui->wSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
     connect(ui->wSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+}
+#endif
 
+SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::SettingsDialog)
+{
+    ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
+    // TODO: get rid of this->, use unique member names when updating with m prefix
+    this->app = app;
+    this->megaApi = app->getMegaApi();
+    this->preferences = Preferences::instance();
+    this->controller = Controller::instance();
+    this->model = Model::instance();
+
+    mThreadPool = ThreadPoolSingleton::getInstance();
+
+    loadingSettings = 0;
+    accountDetailsDialog = NULL;
+    cacheSize = -1;
+    remoteCacheSize = -1;
+    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
+    ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
+#ifndef Q_OS_MAC
+    ui->bAccount->setChecked(true); // override whatever might be set in .ui
+#endif
+    setProxyOnly(proxyOnly);
+
+    reloadUIpage = false;
+    debugCounter = 0;
+    areSyncsDisabled = false;
+    isSavingSyncsOnGoing = false;
+
+    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+
+    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
+
+#ifdef Q_OS_LINUX
+    ui->cAutoUpdate->hide();
+    ui->bUpdate->hide();
+#endif
+
+#ifdef Q_OS_WINDOWS
+    connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    ui->cDisableIcons->hide();
+
+    typedef LONG MEGANTSTATUS;
+    typedef struct _MEGAOSVERSIONINFOW {
+        DWORD dwOSVersionInfoSize;
+        DWORD dwMajorVersion;
+        DWORD dwMinorVersion;
+        DWORD dwBuildNumber;
+        DWORD dwPlatformId;
+        WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
+    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
+
+    typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
+    MEGARTL_OSVERSIONINFOW version = { 0 };
+    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
+    if (hMod)
+    {
+        RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+        if (RtlGetVersion)
+        {
+            RtlGetVersion(&version);
+            if (version.dwMajorVersion >= 10)
+            {
+                ui->cDisableIcons->show();
+            }
+        }
+    }
+#endif
+
+#ifdef Q_OS_MACOS
+    this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    ui->cStartOnStartup->setText(tr("Open at login"));
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //FinderSync API support from 10.10+
+    {
+        ui->cOverlayIcons->hide();
+    }
+
+    initializeNativeUIComponents();
 #endif
 
 #ifndef Q_OS_MACOS

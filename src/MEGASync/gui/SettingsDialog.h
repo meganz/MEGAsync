@@ -132,6 +132,7 @@ private slots:
 
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
+    void initializeNativeUIComponents();
 #endif
 
 
