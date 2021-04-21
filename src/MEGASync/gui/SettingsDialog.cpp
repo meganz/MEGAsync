@@ -393,21 +393,23 @@ void SettingsDialog::showGuestMode()
 {
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->pProxies->show();
-    ProxySettings *proxySettingsDialog = new ProxySettings(app, this);
-    proxySettingsDialog->setAttribute(Qt::WA_DeleteOnClose);
-    proxySettingsDialog->setWindowModality(Qt::WindowModal);
-    proxySettingsDialog->open();
-    connect(proxySettingsDialog, &ProxySettings::finished, this, [this](int result)
+    if(mProxySettingsDialog) return; // proxy dialog already shown
+
+    mProxySettingsDialog = new ProxySettings(app, this);
+    mProxySettingsDialog->setWindowModality(Qt::WindowModal);
+    mProxySettingsDialog->open();
+    connect(mProxySettingsDialog, &ProxySettings::finished, this, [this](int result)
     {
-        if(result == QDialog::Accepted)
+        if (result == QDialog::Accepted)
         {
             app->applyProxySettings();
-            if(proxyOnly) accept(); // close Settings in guest mode
+            if (proxyOnly) accept(); // close Settings in guest mode
         }
         else
         {
-            if(proxyOnly) reject(); // close Settings in guest mode
+            if (proxyOnly) reject(); // close Settings in guest mode
         }
+        delete mProxySettingsDialog;
     });
 }
 

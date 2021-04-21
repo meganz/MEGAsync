@@ -26,6 +26,8 @@ namespace Ui {
 class SettingsDialog;
 }
 
+class ProxySettings;
+
 class MegaApplication;
 class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
@@ -184,6 +186,7 @@ private:
     bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
     bool isSavingSyncsOnGoing;
     int debugCounter; // Easter Egg
+    QPointer<ProxySettings> mProxySettingsDialog;
 
 #ifdef Q_OS_MACOS
     QPropertyAnimation *minHeightAnimation;
