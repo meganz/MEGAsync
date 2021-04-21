@@ -2139,6 +2139,9 @@ void SettingsDialog::setUpdateAvailable(bool updateAvailable)
 
 void SettingsDialog::openSettingsTab(int tab)
 {
+    if(proxyOnly) // do not switch tabs when in guest mode
+        return;
+
     switch (tab)
     {
     case ACCOUNT_TAB:
