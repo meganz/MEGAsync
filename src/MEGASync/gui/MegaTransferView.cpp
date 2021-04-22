@@ -11,7 +11,7 @@
 
 using namespace mega;
 
-MegaTransferView::MegaTransferView(QWidget *parent) :
+MegaTransferView::MegaTransferView(QWidget* parent) :
     QTreeView(parent),
     mParentTransferWidget(nullptr),
     mContextMenu(nullptr),
@@ -48,7 +48,7 @@ void MegaTransferView::setup(int type)
     this->type = type;
 }
 
-void MegaTransferView::setup(TransfersWidget *tw)
+void MegaTransferView::setup(TransfersWidget* tw)
 {
     mParentTransferWidget = tw;
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -138,7 +138,7 @@ void MegaTransferView::onCancelClearAllRows(bool cancel, bool clear)
     }
 }
 
-void MegaTransferView::onCancelClearSelection()
+void MegaTransferView::onCancelClearSelection(bool cancel, bool clear)
 {
     auto proxy (qobject_cast<QSortFilterProxyModel*>(model()));
 
@@ -158,7 +158,7 @@ void MegaTransferView::onCancelClearSelection()
         }
 
         clearSelection();
-        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes);
+        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
     }
 }
 
@@ -252,7 +252,7 @@ void MegaTransferView::createContextMenu()
     mCancelAction = new QAction(QIcon(QLatin1String(":/images/clear_item_ico.png")),
                                       tr("Cancel transfers in progress"), this);
     connect(mCancelAction, &QAction::triggered,
-            this, &MegaTransferView::onCancelClearSelection);
+            this, &MegaTransferView::cancelSelectedClicked);
 
     if (mGetLinkAction)
     {
@@ -303,7 +303,7 @@ void MegaTransferView::createContextMenu()
     mClearAction = new QAction(QIcon(QLatin1String(":/images/ico_clear.png")),
                                tr("Clear completed"), this);
     connect(mClearAction, &QAction::triggered,
-            this, &MegaTransferView::onCancelClearSelection);
+            this, &MegaTransferView::clearSelectedClicked);
 
     mContextMenu->addAction(mPauseAction);
     mContextMenu->addAction(mResumeAction);
@@ -327,7 +327,8 @@ void MegaTransferView::createContextMenu()
     mContextMenu->addAction(mClearAction);
 }
 
-void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bool enableMove, bool enableClear, bool enableCancel)
+void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bool enableMove,
+                                         bool enableClear, bool enableCancel)
 {
     mPauseAction->setVisible(enablePause);
     mResumeAction->setVisible(enableResume);
@@ -345,53 +346,7 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
     mShowInMegaAction->setVisible(onlyOneSelected);
 }
 
-void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
-{
-//    auto model = this->model();
-//    if (model)
-//    {
-//        QModelIndex index = indexAt(event->pos());
-//        if (index.isValid())
-//        {
-//            int tag = index.internalId();
-//            if (lastItemHoveredTag)
-//            {
-//                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-//                if (lastItemHovered)
-//                {
-//                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
-//                }
-//            }
-
-//            TransferItem *item = model->transferItems[tag];
-//            if (item)
-//            {
-//                lastItemHoveredTag = item->getTransferTag();
-//                item->mouseHoverTransfer(true, event->pos() - visualRect(index).topLeft());
-//            }
-//            else
-//            {
-//                lastItemHoveredTag = 0;
-//            }
-//        }
-//        else
-//        {
-//            if (lastItemHoveredTag)
-//            {
-//                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-//                if (lastItemHovered)
-//                {
-//                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
-//                    update();
-//                }
-//                lastItemHoveredTag = 0;
-//            }
-//        }
-//    }
-    QTreeView::mouseMoveEvent(event);
-}
-
-void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
+void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)
 {
     if (!(event->button() == Qt::RightButton))
     {
@@ -406,26 +361,7 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
     QTreeView::mouseReleaseEvent(event);
 }
 
-void MegaTransferView::leaveEvent(QEvent *event)
-{
-//    QTransfersModel *model = (QTransfersModel*)this->model();
-//    if (model)
-//    {
-//        if (lastItemHoveredTag)
-//        {
-//            TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-//            if (lastItemHovered)
-//            {
-//                lastItemHovered->mouseHoverTransfer(false, QPoint(-1,-1));
-//                update();
-//            }
-//            lastItemHoveredTag = 0;
-//        }
-//    }
-    QTreeView::leaveEvent(event);
-}
-
-void MegaTransferView::changeEvent(QEvent *event)
+void MegaTransferView::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
@@ -434,13 +370,13 @@ void MegaTransferView::changeEvent(QEvent *event)
     QTreeView::changeEvent(event);
 }
 
-void MegaTransferView::dropEvent(QDropEvent *event)
+void MegaTransferView::dropEvent(QDropEvent* event)
 {
     QAbstractItemView::dropEvent(event);
     clearSelection();
 }
 
-void MegaTransferView::resizeEvent(QResizeEvent *event)
+void MegaTransferView::resizeEvent(QResizeEvent* event)
 {
 //    auto items (findChildren<TransferManagerItem2*>());
     for ( auto w : findChildren<TransferManagerItem2*>())
@@ -450,7 +386,7 @@ void MegaTransferView::resizeEvent(QResizeEvent *event)
     QTreeView::resizeEvent(event);
 }
 
-void MegaTransferView::onCustomContextMenu(const QPoint &point)
+void MegaTransferView::onCustomContextMenu(const QPoint& point)
 {
     bool enablePause = false;
     bool enableResume = false;
@@ -582,8 +518,9 @@ void MegaTransferView::getLinkClicked()
     QList<int> rows;
     auto proxy(qobject_cast<QSortFilterProxyModel*>(model()));
 
-    const auto  indexes (proxy ? proxy->mapSelectionToSource(selectionModel()->selection()).indexes()
-                                 : selectionModel()->selection().indexes());
+    const auto indexes (proxy ?
+                            proxy->mapSelectionToSource(selectionModel()->selection()).indexes()
+                          : selectionModel()->selection().indexes());
     for (auto index : indexes)
     {
         rows.push_back(index.row());
@@ -652,4 +589,14 @@ void MegaTransferView::showInMegaClicked()
         }
     }
     clearSelection();
+}
+
+void MegaTransferView::cancelSelectedClicked()
+{
+    onCancelClearSelection(true, false);
+}
+
+void MegaTransferView::clearSelectedClicked()
+{
+    onCancelClearSelection(false, true);
 }

@@ -5,7 +5,7 @@
 
 using namespace mega;
 
-TransfersWidget::TransfersWidget(QWidget *parent) :
+TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
     ui (new Ui::TransfersWidget),
     model (nullptr),
