@@ -14,10 +14,10 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
 const char Preferences::USER_AGENT[] = "MEGAsync/4.5.0.0";
 const int Preferences::VERSION_CODE = 4500;
-const int Preferences::BUILD_ID = 3;
+const int Preferences::BUILD_ID = 4;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.5.0");
-QString Preferences::SDK_ID = QString::fromAscii("97abb3f");
+QString Preferences::SDK_ID = QString::fromAscii("c11a688");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- New improvements for the management of the syncs.\n"
     "- Improved user experience when syncs are disabled.\n"
