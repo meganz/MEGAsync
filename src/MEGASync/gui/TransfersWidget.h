@@ -34,7 +34,7 @@ public:
     void textFilterChanged(const QString& pattern);
     void fileTypeFilterChanged(const TransferData::FileTypes fileTypes);
     void transferStateFilterChanged(const TransferData::TransferStates transferStates);
-    void transferTypeFilterChanged(const QSet<int>& transferTypes);
+    void transferTypeFilterChanged(const TransferData::TransferTypes transferTypes);
     void transferFilterReset();
     void transferFilterApply();
 

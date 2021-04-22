@@ -5,33 +5,26 @@
 
 TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent),
-      mTransferTypes (),
-      mTransferStates (~TransferData::TransferStates({})),
-      mFileTypes (~TransferData::FileTypes({})),
+      mTransferTypes (TransferData::TYPE_MASK),
+      mTransferStates (TransferData::STATE_MASK),
+      mFileTypes (~TransferData::FileTypes()),
       mSortCriterion (SORT_BY::PRIORITY)
 {
 }
 
-void TransfersSortFilterProxyModel::setTransferTypes(const QSet<int>& transferTypes)
+void TransfersSortFilterProxyModel::setTransferTypes(const TransferData::TransferTypes transferTypes)
 {
-    mTransferTypes = transferTypes;
+    mTransferTypes = transferTypes ? transferTypes : TransferData::TYPE_MASK;
 }
 
-void TransfersSortFilterProxyModel::addTransferTypes(const QSet<int>& transferTypes)
+void TransfersSortFilterProxyModel::addTransferTypes(const TransferData::TransferTypes transferTypes)
 {
-    mTransferTypes += transferTypes;
+    mTransferTypes |= transferTypes;
 }
 
 void TransfersSortFilterProxyModel::setTransferStates(const TransferData::TransferStates transferStates)
 {
-    if (transferStates)
-    {
-        mTransferStates = transferStates;
-    }
-    else
-    {
-        mTransferStates = ~TransferData::TransferStates({});
-    }
+    mTransferStates = transferStates ? transferStates : TransferData::STATE_MASK;
 }
 
 void TransfersSortFilterProxyModel::addTransferStates(const TransferData::TransferStates transferStates)
@@ -58,9 +51,9 @@ void TransfersSortFilterProxyModel::addFileTypes(const TransferData::FileTypes f
 
 void TransfersSortFilterProxyModel::resetAllFilters()
 {
-    mTransferTypes.clear();
-    mFileTypes = ~TransferData::FileTypes({});
-    mTransferStates = ~TransferData::TransferStates({});
+    mTransferStates = TransferData::STATE_MASK;
+    mTransferTypes = TransferData::TYPE_MASK;
+    mFileTypes = ~TransferData::FileTypes();
 }
 
 void TransfersSortFilterProxyModel::setSortBy(SORT_BY sortCriterion)
@@ -75,7 +68,7 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
     const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
 
     return     (d->mState & mTransferStates)
-            && (mTransferTypes.isEmpty()  || mTransferTypes.contains(d->mType))
+            && (d->mType & mTransferTypes)
             && (d->mFileType & mFileTypes)
             && d->mFilename.contains(filterRegExp());
 }

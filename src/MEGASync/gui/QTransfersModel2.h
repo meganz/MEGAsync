@@ -42,7 +42,7 @@ public:
     void cancelAllTransfers();
 
     long long  getNumberOfTransfersForState(TransferData::TransferState state) const;
-    long long  getNumberOfTransfersForType(int type) const;
+    long long  getNumberOfTransfersForType(TransferData::TransferType type) const;
     long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
 
@@ -68,7 +68,7 @@ private slots:
     void onPauseStateChanged();
 
 private:
-    static constexpr int INIT_ROWS_PER_CHUNK = 100;
+    static constexpr int INIT_ROWS_PER_CHUNK = 1000;
 
     mega::MegaApi* mMegaApi;
     mega::MegaApiLock* mApiLock;

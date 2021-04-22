@@ -297,7 +297,7 @@ void TransfersWidget::transferStateFilterChanged(const TransferData::TransferSta
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::transferTypeFilterChanged(const QSet<int>& transferTypes)
+void TransfersWidget::transferTypeFilterChanged(const TransferData::TransferTypes transferTypes)
 {
     mProxyModel->setTransferTypes(transferTypes);
     ui->tvTransfers->scrollToTop();

@@ -35,6 +35,9 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
 
     QIcon icon;
 
+    TransferData::TransferState state (data->mState);
+    TransferData::TransferType type (data->mType);
+
     // Data to update only if another transfer is displayed
     if (mTransferTag != data->mTag)
     {
@@ -49,16 +52,16 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
         mUi->lTransferName->setToolTip(data->mFilename);
 
         // Transfer type icon
-        switch (data->mType)
+        switch (type)
         {
-            case MegaTransfer::TYPE_DOWNLOAD:
-            case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
+            case TransferData::TransferType::TRANSFER_DOWNLOAD:
+            case TransferData::TransferType::TRANSFER_LTCPDOWNLOAD:
             {
                 icon = Utilities::getCachedPixmap(QLatin1Literal(
                                                       ":/images/ico_tm_download_item.png"));
                 break;
             }
-            case MegaTransfer::TYPE_UPLOAD:
+            case TransferData::TransferType::TRANSFER_UPLOAD:
             {
                 icon = Utilities::getCachedPixmap(QLatin1Literal(
                                                       ":/images/ico_tm_upload_item.png"));
@@ -80,8 +83,8 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
     // Amount transfered
     mUi->lDone->setText(Utilities::getSizeString(data->mTransferredBytes));
     // Progress bar
-    int permil = data->mState & (TransferData::TransferState::TRANSFER_COMPLETED
-                                 | TransferData::TransferState::TRANSFER_COMPLETING) ?
+    int permil = state & (TransferData::TransferState::TRANSFER_COMPLETED
+                          | TransferData::TransferState::TRANSFER_COMPLETING) ?
                      1000
                    : data->mTotalSize > 0 ?
                          (1000 * data->mTransferredBytes) / data->mTotalSize
@@ -92,15 +95,15 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
                                 .elidedText(data->mFilename, Qt::ElideMiddle,
                                             mUi->wName->width()-24));
     // Transfer type text
-    switch (data->mType)
+    switch (type)
     {
-        case MegaTransfer::TYPE_DOWNLOAD:
-        case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
+        case TransferData::TransferType::TRANSFER_DOWNLOAD:
+        case TransferData::TransferType::TRANSFER_LTCPDOWNLOAD:
         {
             statusString = QObject::tr("Downloading");
             break;
         }
-        case MegaTransfer::TYPE_UPLOAD:
+        case TransferData::TransferType::TRANSFER_UPLOAD:
         {
             statusString = QObject::tr("Uploading");
             break;
@@ -108,20 +111,20 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
     }
 
     // Set values according to transfer state
-    switch (data->mState)
+    switch (state)
     {
         case TransferData::TransferState::TRANSFER_ACTIVE:
         {
             long long httpSpeed(data->mMegaApi->getCurrentSpeed(data->mType));
-            switch (data->mType)
+            switch (type)
             {
-                case MegaTransfer::TYPE_DOWNLOAD:
-                case MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD:
+                case TransferData::TransferType::TRANSFER_DOWNLOAD:
+                case TransferData::TransferType::TRANSFER_LTCPDOWNLOAD:
                 {
                     statusString = QObject::tr("Downloading");
                     break;
                 }
-                case MegaTransfer::TYPE_UPLOAD:
+                case TransferData::TransferType::TRANSFER_UPLOAD:
                 {
                     statusString = QObject::tr("Uploading");
                     break;

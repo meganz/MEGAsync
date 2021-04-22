@@ -23,7 +23,7 @@ public:
 protected:
     QAbstractItemModel* mModel;
     QTransfersModel2* mSourceModel;
-    QMap<int, Ui::TransferManagerItem*> mUis;
+    QVector<TransferManagerItem2*>* mItems;
     QWidget* mView;
 
 signals:

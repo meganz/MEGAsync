@@ -30,19 +30,30 @@ class TransferData : public QSharedData
 
     enum TransferState
     {
-        TRANSFER_NONE       = 1 << mega::MegaTransfer::STATE_NONE,
-        TRANSFER_QUEUED     = 1 << mega::MegaTransfer::STATE_QUEUED,
-        TRANSFER_ACTIVE     = 1 << mega::MegaTransfer::STATE_ACTIVE,
-        TRANSFER_PAUSED     = 1 << mega::MegaTransfer::STATE_PAUSED,
-        TRANSFER_RETRYING   = 1 << mega::MegaTransfer::STATE_RETRYING,
-        TRANSFER_COMPLETING = 1 << mega::MegaTransfer::STATE_COMPLETING,
-        TRANSFER_COMPLETED  = 1 << mega::MegaTransfer::STATE_COMPLETED,
-        TRANSFER_CANCELLED  = 1 << mega::MegaTransfer::STATE_CANCELLED,
-        TRANSFER_FAILED     = 1 << mega::MegaTransfer::STATE_FAILED,
+        TRANSFER_NONE         = 1 << mega::MegaTransfer::STATE_NONE,
+        TRANSFER_QUEUED       = 1 << mega::MegaTransfer::STATE_QUEUED,
+        TRANSFER_ACTIVE       = 1 << mega::MegaTransfer::STATE_ACTIVE,
+        TRANSFER_PAUSED       = 1 << mega::MegaTransfer::STATE_PAUSED,
+        TRANSFER_RETRYING     = 1 << mega::MegaTransfer::STATE_RETRYING,
+        TRANSFER_COMPLETING   = 1 << mega::MegaTransfer::STATE_COMPLETING,
+        TRANSFER_COMPLETED    = 1 << mega::MegaTransfer::STATE_COMPLETED,
+        TRANSFER_CANCELLED    = 1 << mega::MegaTransfer::STATE_CANCELLED,
+        TRANSFER_FAILED       = 1 << mega::MegaTransfer::STATE_FAILED,
     };
     Q_DECLARE_FLAGS(TransferStates, TransferState)
 
-    int       mType;
+    enum TransferType
+    {
+        TRANSFER_DOWNLOAD     = 1 << mega::MegaTransfer::TYPE_DOWNLOAD,
+        TRANSFER_UPLOAD       = 1 << mega::MegaTransfer::TYPE_UPLOAD,
+        TRANSFER_LTCPDOWNLOAD = 1 << mega::MegaTransfer::TYPE_LOCAL_TCP_DOWNLOAD,
+    };
+    Q_DECLARE_FLAGS(TransferTypes, TransferType)
+
+    static const TransferStates STATE_MASK;
+    static const TransferTypes TYPE_MASK;
+
+    TransferType mType;
     int       mErrorCode;
     TransferState mState;
     int       mTag;
@@ -75,7 +86,7 @@ class TransferData : public QSharedData
         mParentHandle (dr->mParentHandle), mNodeHandle (dr->mNodeHandle), mMegaApi(dr->mMegaApi),
         mFilename(dr->mFilename), mPath(dr->mPath){}
 
-    TransferData(int type, int errorCode, TransferState state, int tag, long long errorValue,
+    TransferData(TransferType type, int errorCode, TransferState state, int tag, long long errorValue,
                  int64_t finishedTime, int64_t remainingTime, long long totalSize,
                  unsigned long long priority,
                  long long speed, long long meanSpeed, long long transferredBytes,
@@ -93,6 +104,7 @@ class TransferData : public QSharedData
 Q_DECLARE_TYPEINFO(TransferData, Q_MOVABLE_TYPE);
 Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::FileTypes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::TransferStates)
+Q_DECLARE_OPERATORS_FOR_FLAGS(TransferData::TransferTypes)
 Q_DECLARE_METATYPE(TransferData::FileType)
 
 class TransferItem2

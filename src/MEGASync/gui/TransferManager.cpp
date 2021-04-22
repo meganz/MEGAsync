@@ -222,7 +222,8 @@ void TransferManager::on_tDownloads_clicked()
         QtConcurrent::run([=]
         {
             mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-            mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_DOWNLOAD});
+            mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_DOWNLOAD
+                                                       | TransferData::TransferType::TRANSFER_LTCPDOWNLOAD);
             mUi->wTransfers->fileTypeFilterChanged({});
             mUi->wTransfers->transferFilterApply();
         });
@@ -239,7 +240,7 @@ void TransferManager::on_tUploads_clicked()
         QtConcurrent::run([=]
         {
             mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-            mUi->wTransfers->transferTypeFilterChanged({MegaTransfer::TYPE_UPLOAD});
+            mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_UPLOAD);
             mUi->wTransfers->fileTypeFilterChanged({});
             mUi->wTransfers->transferFilterApply();
         });
@@ -324,7 +325,6 @@ bool TransferManager::refreshStateStats()
         label->parentWidget()->setVisible(show);
         label->setVisible(processedNumber);
         label->setText(QString::number(processedNumber));
-//        label->updateGeometry();
 
         mNumberOfTransfersPerTab[COMPLETED_TAB] = processedNumber;
     }
@@ -367,7 +367,6 @@ bool TransferManager::refreshStateStats()
             }
             label->setText(QString::number(processedNumber));
         }
-//        label->updateGeometry();
 
         mUi->sStatus->setCurrentWidget(leftFooterWidget);
         mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
@@ -379,7 +378,7 @@ void TransferManager::refreshTypeStats()
 {
     QWidget* widgetToShow (mUi->sTransfers->currentWidget());
 
-    long long number (mModel->getNumberOfTransfersForType(MegaTransfer::TYPE_DOWNLOAD));
+    long long number (mModel->getNumberOfTransfersForType(TransferData::TransferType::TRANSFER_DOWNLOAD));
     if (number != mNumberOfTransfersPerTab[DOWNLOADS_TAB])
     {
         if (number == 0)
@@ -395,11 +394,10 @@ void TransferManager::refreshTypeStats()
             mUi->lDownloads->show();
             mUi->lDownloads->setText(QString::number(number));
         }
-//        mUi->lDownloads->updateGeometry();
         mNumberOfTransfersPerTab[DOWNLOADS_TAB] = number;
     }
 
-    number = mModel->getNumberOfTransfersForType(MegaTransfer::TYPE_UPLOAD);
+    number = mModel->getNumberOfTransfersForType(TransferData::TransferType::TRANSFER_UPLOAD);
     if (number != mNumberOfTransfersPerTab[UPLOADS_TAB])
     {
         if (number == 0)
@@ -415,7 +413,6 @@ void TransferManager::refreshTypeStats()
             mUi->lUploads->show();
             mUi->lUploads->setText(QString::number(number));
         }
-//        mUi->lUploads->updateGeometry();
         mNumberOfTransfersPerTab[UPLOADS_TAB] = number;
     }
 
