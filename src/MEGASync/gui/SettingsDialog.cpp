@@ -42,6 +42,8 @@ using namespace std;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
+// FIXME: Re-evaluate size for General tab
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{466};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
@@ -116,8 +118,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     remoteCacheSize = -1;
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
     connect(ui->wStack, SIGNAL(currentChanged(int)), ui->wStackFooter, SLOT(setCurrentIndex(int)));
-    ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
-    ui->bAccount->setChecked(true); // override whatever might be set in .ui
+    ui->wStack->setCurrentWidget(ui->pGeneral); // override whatever might be set in .ui
+    ui->bGeneral->setChecked(true); // override whatever might be set in .ui
     setProxyOnly(proxyOnly);
 
     reloadUIpage = false;
@@ -185,7 +187,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     // Set native NSToolBar for settings.
     toolBar = ::mega::make_unique<QMacToolBar>(this);
 
-    QIcon account(QString::fromUtf8("://images/settings-general.png"));
+    QIcon general(QString::fromUtf8("://images/settings-general.png"));
+    QIcon account(QString::fromUtf8("://images/settings-account.png"));
     QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
     QIcon imports(QString::fromUtf8("://images/imports-32.png"));
     QIcon network(QString::fromUtf8("://images/settings-network.png"));
@@ -193,6 +196,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
 
     // add Items
+    bGeneral.reset(toolBar->addItem(general, tr("General")));
+    bGeneral.get()->setIcon(general);
+    connect(bGeneral.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bGeneral_clicked);
+
     bAccount.reset(toolBar->addItem(account, tr("Account")));
     bAccount.get()->setIcon(account);
     connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
@@ -217,6 +224,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     bAdvanced.get()->setIcon(advanced);
     connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
 
+    bGeneral.get()->setSelectable(true);
     bAccount.get()->setSelectable(true);
     bSyncs.get()->setSelectable(true);
     bImports.get()->setSelectable(true);
@@ -224,9 +232,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     bSecurity.get()->setSelectable(true);
     bAdvanced.get()->setSelectable(true);
 
-    //Disable context menu and set default option to account tab
+    //Disable context menu and set default option to general tab
     customizeNSToolbar(toolBar.get());
-    checkNSToolBarItem(toolBar.get(), bAccount.get());
+    checkNSToolBarItem(toolBar.get(), bGeneral.get());
 
     // Attach to the window
     this->window()->winId(); // create window->windowhandle()
@@ -243,6 +251,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
 #ifndef Q_OS_MACOS
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
+    ui->bGeneral->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bImports->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -312,6 +321,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     this->proxyOnly = proxyOnly;
 
 #ifndef Q_OS_MACOS
+    ui->bGeneral->setEnabled(!proxyOnly);
     ui->bAccount->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
     ui->bImports->setEnabled(!proxyOnly);
@@ -319,6 +329,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     ui->bAdvanced->setEnabled(!proxyOnly);
 #else
     // TODO: enableNSToolBarItem does not disable items. Review cocoa code
+    enableNSToolBarItem(bGeneral.get(), !proxyOnly);
     enableNSToolBarItem(bAccount.get(), !proxyOnly);
     enableNSToolBarItem(bSecurity.get(), !proxyOnly);
     enableNSToolBarItem(bSyncs.get(), !proxyOnly);
@@ -530,6 +541,32 @@ void SettingsDialog::onCacheSizeAvailable()
         }
 #endif
     }
+}
+
+void SettingsDialog::on_bGeneral_clicked()
+{
+    emit userActivity();
+
+    setWindowTitle(tr("General"));
+
+    if (ui->wStack->currentWidget() == ui->pGeneral && !reloadUIpage)
+    {
+#ifdef Q_OS_MACOS
+        checkNSToolBarItem(toolBar.get(), bGeneral.get());
+#endif
+        return;
+    }
+
+    reloadUIpage = false;
+
+    ui->wStack->setCurrentWidget(ui->pGeneral);
+
+#ifdef Q_OS_MACOS
+    checkNSToolBarItem(toolBar.get(), bGeneral.get());
+
+    ui->pGeneral->hide();
+    animateSettingPage(SETTING_ANIMATION_GENERAL_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
 }
 
 void SettingsDialog::on_bAccount_clicked()
@@ -1692,6 +1729,7 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
 #ifdef Q_OS_MACOS
+        // FIXME: Do we need to do the same for the other buttons?
         bAccount.get()->setText(tr("Account"));
         //review and check
         ui->cStartOnStartup->setText(tr("Open at login"));
@@ -1978,6 +2016,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     }
 
 #ifndef Q_OS_MACOS
+    ui->bGeneral->setEnabled(completed);
     ui->bAccount->setEnabled(completed);
     ui->bSyncs->setEnabled(completed);
     ui->bAdvanced->setEnabled(completed);
@@ -1985,6 +2024,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bSecurity->setEnabled(completed);
     ui->bImports->setEnabled(completed);
 #else
+    enableNSToolBarItem(bGeneral.get(), completed);
     enableNSToolBarItem(bAccount.get(), completed);
     enableNSToolBarItem(bSyncs.get() , completed);
     enableNSToolBarItem(bSecurity.get(), completed);
@@ -2154,6 +2194,15 @@ void SettingsDialog::openSettingsTab(int tab)
 {
     switch (tab)
     {
+    case GENERAL_TAB:
+        reloadUIpage = true;
+#ifndef Q_OS_MACOS
+        ui->bGeneral->setChecked(true);
+#else
+        emit bGeneral.get()->activated();
+#endif
+        break;
+
     case ACCOUNT_TAB:
         reloadUIpage = true;
 #ifndef Q_OS_MACOS
@@ -2254,7 +2303,11 @@ void SettingsDialog::on_bHelpIco_clicked()
 #ifdef Q_OS_MACOS
 void SettingsDialog::onAnimationFinished()
 {
-    if (ui->wStack->currentWidget() == ui->pAccount)
+    if (ui->wStack->currentWidget() == ui->pGeneral)
+    {
+        ui->pGeneral->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pAccount)
     {
         ui->pAccount->show();
     }

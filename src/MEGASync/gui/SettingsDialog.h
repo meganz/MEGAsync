@@ -32,7 +32,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, IMPORTS_TAB = 2, NETWORK_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
+    enum {GENERAL_TAB = 0, ACCOUNT_TAB = 1, SYNCS_TAB = 2, IMPORTS_TAB = 3, NETWORK_TAB = 4, ADVANCED_TAB = 5, SECURITY_TAB = 6};
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
@@ -70,6 +70,7 @@ private slots:
     void onSavingSettingsProgress(double progress);
     void onSavingSettingsCompleted();
 
+    void on_bGeneral_clicked();
     void on_bAccount_clicked();
     void on_bSyncs_clicked();
     void on_bNetwork_clicked();
@@ -186,6 +187,7 @@ private:
     QParallelAnimationGroup *animationGroup;
 
     std::unique_ptr<QMacToolBar> toolBar;
+    std::unique_ptr<QMacToolBarItem> bGeneral;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
     std::unique_ptr<QMacToolBarItem> bImports;

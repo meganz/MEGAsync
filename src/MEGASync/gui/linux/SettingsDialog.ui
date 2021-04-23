@@ -261,6 +261,7 @@ padding-bottom: 6px;
         <property name="currentIndex">
          <number>0</number>
         </property>
+        <widget class="QWidget" name="wGeneralFooter"/>
         <widget class="QWidget" name="wAccountFooter">
          <layout class="QVBoxLayout" name="verticalLayout_12">
           <property name="spacing">
@@ -441,6 +442,52 @@ background:transparent;</string>
        <number>0</number>
       </property>
       <item>
+       <widget class="QToolButton" name="bGeneral">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>76</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>76</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>General</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="bAccount">
         <property name="minimumSize">
          <size>
@@ -466,8 +513,8 @@ background:transparent;</string>
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>://images/account_32.png</normaloff>://images/account_32.png</iconset>
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -751,6 +798,7 @@ background:transparent;</string>
      <property name="currentIndex">
       <number>0</number>
      </property>
+     <widget class="QWidget" name="pGeneral"/>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
