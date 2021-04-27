@@ -1,126 +1,274 @@
 #include "AccountDetailsDialog.h"
 #include "ui_AccountDetailsDialog.h"
 
-#include "control/Preferences.h"
 #include "control/Utilities.h"
-#include "math.h"
 #include "MegaApplication.h"
+#include "TransferQuota.h"
 
 #include <QStyle>
 
 using namespace mega;
 
-AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
+// Precision to use for progressbars (100 for %, 1000 for ppm...)
+static constexpr int PRECISION{100};
+
+AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::AccountDetailsDialog)
+    mUi(new Ui::AccountDetailsDialog)
 {
-    ui->setupUi(this);
+    // Setup UI
+    mUi->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    this->megaApi = megaApi;
-    ui->lLoading->setText(ui->lLoading->text().toUpper());
+    // Set progressbars precision
+    mUi->pbCloudDrive->setMaximum(PRECISION);
+    mUi->pbInbox->setMaximum(PRECISION);
+    mUi->pbRubbish->setMaximum(PRECISION);
+
+    // Set transfer quota progress bar color to blue
+    mUi->wCircularTransfer->setProgressBarGradient(QColor("#60D1FE"), QColor("#58B9F3"));
+
+    // Get fresh data
     refresh(Preferences::instance());
-    highDpiResize.init(this);
-    ((MegaApplication*)qApp)->attachStorageObserver(*this);
+
+    // Init HiDPI
+    mHighDpiResize.init(this);
+
+    // Subscribe to data updates (but detach after 1 callback)
+    qobject_cast<MegaApplication*>(qApp)->attachStorageObserver(*this);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()
 {
-    ((MegaApplication*)qApp)->dettachStorageObserver(*this);
-    delete ui;
+    qobject_cast<MegaApplication*>(qApp)->dettachStorageObserver(*this);
+    delete mUi;
 }
 
-void AccountDetailsDialog::refresh(Preferences *preferences)
+void AccountDetailsDialog::refresh(Preferences* preferences)
 {
+    // Get account type
+    auto accType(preferences->accountType());
 
-    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        setMinimumHeight(220);
-        setMaximumHeight(220);
-        setContentsMargins(0, 0, 0, 24);
-        ui->sHeader->hide();
-        ui->wAvailable->hide();
-        ui->wInbox->hide();
-    }
-    else
-    {
-        setMinimumHeight(320);
-        setMaximumHeight(320);
-        setContentsMargins(0, 24, 0, 24);
-        ui->sHeader->show();
-        ui->wAvailable->show();
-        ui->wInbox->show();
-    }
-
+    // Check if we have valid data. If not, tell the UI.
     if (preferences->totalStorage() == 0)
     {
-        ui->pUsageStorage->setValue(0);
-        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(tr("Data temporarily unavailable")));
-        ui->sHeader->setCurrentWidget(ui->pLoading);
-        usageDataAvailable(false);
+        // We don't have data, so enable loading property
+        setProperty("loading", true);
     }
     else
     {
-        ui->sHeader->setCurrentWidget(ui->pUsedData);
-        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->pUsageStorage->setValue(percentage > ui->pUsageStorage->maximum() ? ui->pUsageStorage->maximum() : percentage);
-        if (percentage > 100)
+        // We have data, so disable loading property
+        setProperty("loading", false);
+
+        // Separator between used and total.
+        QString sep(QString::fromUtf8(" / "));
+
+        // ---------- Process storage usage
+
+        // Check storage state and set property accordingly
+        switch (preferences->getStorageState())
         {
-            ui->pUsageStorage->setProperty("crossedge", true);
+            case MegaApi::STORAGE_STATE_UNKNOWN:
+            // Fallthrough
+            case MegaApi::STORAGE_STATE_GREEN:
+            {
+                mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
+                setProperty("storageState", QString::fromUtf8("ok"));
+                break;
+            }
+            case MegaApi::STORAGE_STATE_ORANGE:
+            {
+                mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
+                setProperty("storageState", QString::fromUtf8("warning"));
+                break;
+            }
+            case MegaApi::STORAGE_STATE_PAYWALL:
+            // Fallthrough
+            case MegaApi::STORAGE_STATE_RED:
+            {
+                mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
+                setProperty("storageState", QString::fromUtf8("full"));
+                break;
+            }
+        }
+
+        // Get useful data
+        auto totalStorage(preferences->totalStorage());
+        auto usedStorage(preferences->usedStorage());
+
+        if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            // Set unused fields to 0
+            mUi->wCircularStorage->setValue(0);
+            mUi->lTotalTransfer->setText(QString());
+
+            // Disable over quota and warning
+            mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
+            setProperty("storageState", QString::fromUtf8("ok"));
         }
         else
         {
-            ui->pUsageStorage->setProperty("crossedge", false);
+            mUi->wCircularStorage->setValue(Utilities::partPer(usedStorage, totalStorage));
+            mUi->lTotalStorage->setText(sep + Utilities::getSizeString(totalStorage));
         }
-        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
-        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii(" %"))))
-                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;%1</span>")
-                                     .arg(Utilities::getSizeString(preferences->totalStorage())));
-        ui->lPercentageUsedStorage->setText(used);
-        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
-                                       .arg(Utilities::getSizeString(preferences->usedStorage()))));
+        mUi->lUsedStorage->setText(Utilities::getSizeString(usedStorage));
 
+        // ---------- Process transfer usage
 
-        if (preferences->usedStorage() > preferences->totalStorage())
+        // Get useful data
+        auto totalTransfer(preferences->totalBandwidth());
+        auto usedTransfer(preferences->usedBandwidth());
+        auto transferQuotaState(qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
+
+        // Set UI according to state
+        switch (transferQuotaState) {
+            case QuotaState::OK:
+            {
+                setProperty("transferState", QString::fromUtf8("ok"));
+                break;
+            }
+            case QuotaState::WARNING:
+            {
+                setProperty("transferState", QString::fromUtf8("warning"));
+                break;
+            }
+            case QuotaState::FULL:
+            {
+                setProperty("transferState", QString::fromUtf8("full"));
+                break;
+            }
+        }
+
+        QString totalTransferString;
+
+        // Set progress bar
+        switch (accType)
         {
-            ui->pUsageStorage->setProperty("overquota", true);
+            case Preferences::ACCOUNT_TYPE_BUSINESS:
+            {
+                setProperty("accountType", QString::fromUtf8("business"));
+                mUi->wCircularStorage->setValue(0);
+                break;
+            }
+            case Preferences::ACCOUNT_TYPE_FREE:
+            {
+                setProperty("accountType", QString::fromUtf8("free"));
+
+                // Set progress bar value
+                switch (transferQuotaState) {
+                    case QuotaState::OK:
+                    // Fallthrough
+                    case QuotaState::WARNING:
+                    {
+                        mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OK);
+                        mUi->wCircularTransfer->setEmptyBarTotalValueUnknown();
+                        break;
+                    }
+                    case QuotaState::FULL:
+                    {
+                        mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OVER);
+                        mUi->wCircularTransfer->setFullBarTotalValueUnkown();
+                        break;
+                    }
+                }
+                break;
+            }
+            case Preferences::ACCOUNT_TYPE_LITE:
+            // Fallthrough
+            case Preferences::ACCOUNT_TYPE_PROI:
+            // Fallthrough
+            case Preferences::ACCOUNT_TYPE_PROII:
+            // Fallthrough
+            case Preferences::ACCOUNT_TYPE_PROIII:
+            {
+                setProperty("accountType", QString::fromUtf8("pro"));
+
+                // Check transfer state and set property accordingly
+                switch (transferQuotaState)
+                {
+                    case QuotaState::OK:
+                    {
+                        mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OK);
+                        break;
+                    }
+                    case QuotaState::WARNING:
+                    {
+                        mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_WARNING);
+                        break;
+                    }
+                    // Fallthrough
+                    case QuotaState::FULL:
+                    {
+                        mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OVER);
+                        break;
+                    }
+                }
+
+                mUi->wCircularTransfer->setValue(Utilities::partPer(usedTransfer, totalTransfer));
+
+                // Build total transfer string
+                totalTransferString = sep + Utilities::getSizeString(totalTransfer);
+                break;
+            }
+        }
+        mUi->lTotalTransfer->setText(totalTransferString);
+        mUi->lUsedTransfer->setText(Utilities::getSizeString(usedTransfer));
+
+        // ---------- Process detailed storage usage
+
+        // Compute usage wrt used storage
+        totalStorage = usedStorage;
+
+        // ---- Cloud drive storage
+        usedStorage = preferences->cloudDriveStorage();
+
+        auto parts = Utilities::partPer(usedStorage, totalStorage, PRECISION);
+        mUi->pbCloudDrive->setValue(std::min(PRECISION, parts));
+
+        mUi->lUsedCloudDrive->setText(Utilities::getSizeString(usedStorage));
+
+        // ---- Inbox usage
+        usedStorage = preferences->inboxStorage();
+
+        mUi->pbInbox->setValue(std::min(PRECISION,
+                                       Utilities::partPer(usedStorage, totalStorage, PRECISION)));
+
+        // Display only if not empty. Resize dialog to adequate height.
+        if (usedStorage > 0)
+        {
+            mUi->lUsedInbox->setText(Utilities::getSizeString(usedStorage));
+            mUi->wInbox->setVisible(true);
         }
         else
         {
-            ui->pUsageStorage->setProperty("overquota", false);
+            mUi->wInbox->setVisible(false);
         }
 
-        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+        // ---- Rubbish bin usage
+        usedStorage = preferences->rubbishStorage();
 
-        usageDataAvailable(true);
-        ui->lUsedCloudDrive->setText(Utilities::getSizeString(preferences->cloudDriveStorage()));
-        ui->lUsedInbox->setText(Utilities::getSizeString(preferences->inboxStorage()));
-        ui->lUsedShares->setText(Utilities::getSizeString(preferences->inShareStorage()));
-        ui->lUsedRubbish->setText(Utilities::getSizeString(preferences->rubbishStorage()));
-        ui->lSpaceAvailable->setText(Utilities::getSizeString(preferences->availableStorage()));
-        ui->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
+        mUi->pbRubbish->setValue(std::min(PRECISION,
+                                         Utilities::partPer(usedStorage, totalStorage, PRECISION)));
+
+        mUi->lUsedRubbish->setText(Utilities::getSizeString(usedStorage));
+
+        // ---- Versions usage
+        mUi->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
+
+        // ---------- Refresh display
+        updateGeometry();
+        style()->unpolish(this);
+        style()->polish(this);
+        update();
     }
 }
 
 void AccountDetailsDialog::updateStorageElements()
 {
+    // Prevent other updates of these fields (due to events) after the first one
+    qobject_cast<MegaApplication*>(qApp)->dettachStorageObserver(*this);
+
     refresh(Preferences::instance());
-
-    // prevent other updates of these fields (due to events), after the first one
-    ((MegaApplication*)qApp)->dettachStorageObserver(*this);
-}
-
-void AccountDetailsDialog::usageDataAvailable(bool isAvailable)
-{
-    ui->lUsedCloudDrive->setVisible(isAvailable);
-    ui->lUsedInbox->setVisible(isAvailable);
-    ui->lUsedShares->setVisible(isAvailable);
-    ui->lUsedRubbish->setVisible(isAvailable);
-    ui->lSpaceAvailable->setVisible(isAvailable);
-    ui->lUsedByVersions->setVisible(isAvailable);
 }

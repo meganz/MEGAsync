@@ -322,6 +322,9 @@ public:
     static long long getSystemsAvailableMemory();
 
     static void sleepMilliseconds(long long milliseconds);
+
+    // Compute the part per <ref> of <part> from <total>. Defaults to %
+    static int partPer(long long  part, long long total, uint ref = 100);
 };
 
 

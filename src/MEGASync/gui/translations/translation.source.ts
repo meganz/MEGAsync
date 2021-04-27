@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Storage</translation>
+        <translation type="unfinished">Storage</translation>
     </message>
     <message>
         <source>Files</source>
@@ -55,31 +55,46 @@
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Rubbish Bin</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation type="obsolete">Available</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished">Total size taken up by file versions:</translation>
+        <translation type="obsolete">Total size taken up by file versions:</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
-        <translation type="unfinished">USED STORAGE %1</translation>
+        <translation type="obsolete">USED STORAGE %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
-        <translation type="unfinished">Data temporarily unavailable</translation>
+        <translation type="obsolete">Data temporarily unavailable</translation>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation type="obsolete">%1 of %2</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label for bandwidth used.</translatorcomment>
+        <translation type="unfinished">Transfer</translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translatorcomment>Label for Rubbish Bin space used. Maintain capital letter.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished">Bin</translation>
+    </message>
+    <message>
+        <source>Of that, size taken up by file versions:</source>
+        <translatorcomment>Label for telling the user that the number shown besides is the storage space used by older file versions.</translatorcomment>
+        <translation type="unfinished">Of that, size taken up by file versions:</translation>
     </message>
 </context>
 <context>
