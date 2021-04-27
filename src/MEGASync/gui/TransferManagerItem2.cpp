@@ -58,13 +58,13 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             case TransferData::TransferType::TRANSFER_LTCPDOWNLOAD:
             {
                 icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                      ":/images/ico_tm_download_item.png"));
+                                                      ":/images/arrow_download_ico.png"));
                 break;
             }
             case TransferData::TransferType::TRANSFER_UPLOAD:
             {
                 icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                      ":/images/ico_tm_upload_item.png"));
+                                                      ":/images/arrow_upload_ico.png"));
                 break;
             }
         }
@@ -146,7 +146,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
         case TransferData::TransferState::TRANSFER_PAUSED:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                  ":images/ico_resume_transfers_state.png"));
+                                                  ":images/lists_resume_ico.png"));
             pauseResumeTooltip = QObject::tr("Resume transfer");
             cancelClearTooltip = QObject::tr("Cancel transfer");
             mUi->sStatus->setCurrentWidget(mUi->pPaused);

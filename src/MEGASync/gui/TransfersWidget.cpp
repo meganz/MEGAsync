@@ -266,8 +266,8 @@ void TransfersWidget::onShowCompleted(bool showCompleted)
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
     ui->tPauseResumeAll->setIcon(pauseState ?
-                                     QIcon(QString::fromUtf8(":/images/ico_resume_transfers_state.png"))
-                                   : QIcon(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
+                                     QIcon(QString::fromUtf8(":/images/sidebar_resume_ico.png"))
+                                   : QIcon(QString::fromUtf8(":/images/sidebar_pause_ico.png")));
     ui->tPauseResumeAll->setToolTip(pauseState ?
                                         tr("Resume visible transfers")
                                       : tr("Pause visible transfers"));

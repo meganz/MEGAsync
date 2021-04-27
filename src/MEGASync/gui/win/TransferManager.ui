@@ -164,47 +164,41 @@ QGroupBox::title
 
 #tSearchCancel
 {
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
-    min-height: 18px;
-    max-height: 18px;
-    max-width: 18px;
-    border-radius: 9px;
-    background-color: #666666;
-    qProperty-iconSize: 16px;
-	border: none;
-	padding: 0px;
-	margin: 0px;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    max-width: 24px;
+    qProperty-iconSize: 24px;
+    border: none;
+    padding: 0px;
+    margin: 0px;
 }
 
 #tClearSearchResult
 {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    min-height: 16px;
-    max-width: 16px;
-    max-height: 16px;
-    background-color: #EEEEEE;
-    qProperty-iconSize: 16px;
-    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+    qProperty-iconSize: 24px;
 }
 
 #pTransfers QToolButton
 {
-    height: 32px;
-    width: 32px;
-    min-height: 32px;
-    min-width: 32px;
-    max-height: 32px;
-    max-width: 32px;
-    qProperty-iconSize: 18px;
-    border: 1px solid #F5F5F5;
-    background-color: #E9E9E9;
-    border-radius: 17px;
-	padding: 0px;
-	margin: 0px;
+    height: 36px;
+    width: 36px;
+    min-height: 36px;
+    min-width: 36px;
+    max-height: 36px;
+    max-width: 36px;
+    qProperty-iconSize: 36px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
 }
 
 #sStatus
@@ -217,14 +211,13 @@ QGroupBox::title
 #bUpToDate
 {
     height: 36px;
-    width: 100px;
     min-height: 36px;
     max-height: 36px;
-    min-width: 100px;
-    max-width: 100px;
     border: none;
     color: #333333;
     font-size: 14px;
+    qProperty-iconSize: 36px;
+    text-align: left;
 }
 
 #pSpeedAndClear QPushButton
@@ -240,7 +233,7 @@ QGroupBox::title
     color: #333333;
     font-size: 10px;
     font-weight: bold;
-    qProperty-iconSize: 12px;
+    qProperty-iconSize: 24px;
     padding-left: 2px;
     padding-right: 2px;
     margin-left: 6px;
@@ -249,12 +242,14 @@ QGroupBox::title
 
 #bClearAll
 {
-    height: 24px;
-    width: 24px;
-    background-color: #F88183;
-    border-radius: 13px;
+    min-height: 36px;
+    min-width: 36px;
+    max-height: 36px;
+    max-width: 36px;
+    height: 36px;
+    width: 36px;
     margin-left: 12px;
-    qProperty-iconSize: 24px;
+    qProperty-iconSize: 36px;
 }
 
 #wRightPaneHeader QPushButton, QToolButton
@@ -276,7 +271,7 @@ QGroupBox::title
 
 #sTransfers QToolButton
 {
-  qProperty-iconSize: 156px;
+  qProperty-iconSize: 240px;
 }
 
 #tClearCompleted
@@ -389,13 +384,18 @@ QGroupBox::title
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="bPause"/>
+           <widget class="QToolButton" name="bPause">
+            <property name="icon">
+             <iconset resource="../Resources_win.qrc">
+              <normaloff>:/images/sidebar_pause_ico.png</normaloff>:/images/sidebar_pause_ico.png</iconset>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QToolButton" name="bSearch">
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
+              <normaloff>:/images/sidebar_search_ico.png</normaloff>:/images/sidebar_search_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -428,7 +428,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
+              <normaloff>:/images/search_ico.png</normaloff>:/images/search_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -455,7 +455,7 @@ QGroupBox::title
            <widget class="QToolButton" name="tSearchCancel">
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/ico_tm_clear.png</normaloff>:/images/ico_tm_clear.png</iconset>
+              <normaloff>:/images/delete_search_ico.png</normaloff>:/images/delete_search_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -533,7 +533,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_win.qrc">
-                <normaloff>:/images/ico_all_transfers.png</normaloff>:/images/ico_all_transfers.png</iconset>
+                <normaloff>:/images/all_transfers_ico.png</normaloff>:/images/all_transfers_ico.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -609,7 +609,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_win.qrc">
-                <normaloff>:/images/ico_tm_downloads.png</normaloff>:/images/ico_tm_downloads.png</iconset>
+                <normaloff>:/images/sidebar_downloads_ico.png</normaloff>:/images/sidebar_downloads_ico.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -682,7 +682,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_win.qrc">
-                <normaloff>:/images/ico_tm_uploads.png</normaloff>:/images/ico_tm_uploads.png</iconset>
+                <normaloff>:/images/uploads_ico.png</normaloff>:/images/uploads_ico.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -758,7 +758,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_win.qrc">
-                <normaloff>:/images/ico_tm_finished.png</normaloff>:/images/ico_tm_finished.png</iconset>
+                <normaloff>:/images/sidebar_finished_ico.png</normaloff>:/images/sidebar_finished_ico.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -1351,7 +1351,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_win.qrc">
-                <normaloff>:/images/ico_search.png</normaloff>:/images/ico_search.png</iconset>
+                <normaloff>:/images/search_result_ico.png</normaloff>:/images/search_result_ico.png</iconset>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -1365,7 +1365,7 @@ QGroupBox::title
               </property>
               <property name="icon">
                <iconset resource="../Resources_win.qrc">
-                <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+                <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
               </property>
              </widget>
             </item>
@@ -1417,7 +1417,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/ico_tm_download_item.png</normaloff>:/images/ico_tm_download_item.png</iconset>
+              <normaloff>:/images/arrow_download_ico.png</normaloff>:/images/arrow_download_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -1428,7 +1428,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/ico_tm_upload_item.png</normaloff>:/images/ico_tm_upload_item.png</iconset>
+              <normaloff>:/images/arrow_upload_ico.png</normaloff>:/images/arrow_upload_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -1442,12 +1442,12 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/ico_tm_clear.png</normaloff>:/images/ico_tm_clear.png</iconset>
+              <normaloff>:/images/sidebar_cancel_all_ico.png</normaloff>:/images/sidebar_cancel_all_ico.png</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>36</width>
+              <height>36</height>
              </size>
             </property>
            </widget>
@@ -1460,16 +1460,22 @@ QGroupBox::title
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
+            <width>231</width>
             <height>36</height>
            </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
           <property name="text">
            <string>Up to date</string>
           </property>
           <property name="icon">
            <iconset resource="../Resources_win.qrc">
-            <normaloff>:/images/ico_menu_uptodate_state.png</normaloff>:/images/ico_menu_uptodate_state.png</iconset>
+            <normaloff>:/images/sidebar_up_to_date_ico.png</normaloff>:/images/sidebar_up_to_date_ico.png</iconset>
           </property>
          </widget>
         </widget>
@@ -1683,9 +1689,6 @@ QGroupBox::title
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="lPaused">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
                <property name="text">
                 <string>Paused</string>
                </property>
@@ -1715,7 +1718,7 @@ QGroupBox::title
            </property>
            <property name="icon">
             <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/ico_tm_Import_links.png</normaloff>:/images/ico_tm_Import_links.png</iconset>
+             <normaloff>:/images/import_toolbar_ico.png</normaloff>:/images/import_toolbar_ico.png</iconset>
            </property>
           </widget>
          </item>
@@ -1726,7 +1729,7 @@ QGroupBox::title
            </property>
            <property name="icon">
             <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/ico_tm_upload.png</normaloff>:/images/ico_tm_upload.png</iconset>
+             <normaloff>:/images/upload_toolbar_ico.png</normaloff>:/images/upload_toolbar_ico.png</iconset>
            </property>
           </widget>
          </item>
@@ -1737,7 +1740,7 @@ QGroupBox::title
            </property>
            <property name="icon">
             <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/ico_tm_download.png</normaloff>:/images/ico_tm_download.png</iconset>
+             <normaloff>:/images/download_toolbar_ico.png</normaloff>:/images/download_toolbar_ico.png</iconset>
            </property>
           </widget>
          </item>
@@ -1745,7 +1748,7 @@ QGroupBox::title
           <widget class="QToolButton" name="tCogWheel">
            <property name="icon">
             <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/notification_color.png</normaloff>:/images/notification_color.png</iconset>
+             <normaloff>:/images/preferences_toolbar_ico.png</normaloff>:/images/preferences_toolbar_ico.png</iconset>
            </property>
           </widget>
          </item>
@@ -1819,7 +1822,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/no_results.png</normaloff>:/images/no_results.png</iconset>
+              <normaloff>:/images/no_search_results.png</normaloff>:/images/no_search_results.png</iconset>
             </property>
            </widget>
           </item>
@@ -1834,7 +1837,7 @@ QGroupBox::title
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/completed_transfers.png</normaloff>:/images/completed_transfers.png</iconset>
+              <normaloff>:/images/Completed_transfers.png</normaloff>:/images/Completed_transfers.png</iconset>
             </property>
            </widget>
           </item>

@@ -80,9 +80,9 @@
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
         <file>images/completed_item_ico@3x.png</file>
-        <file>images/completed_transfers.png</file>
-        <file>images/completed_transfers@2x.png</file>
-        <file>images/completed_transfers@3x.png</file>
+        <file>images/Completed_transfers.png</file>
+        <file>images/Completed_transfers@2x.png</file>
+        <file>images/Completed_transfers@3x.png</file>
         <file>images/confirmation_link.png</file>
         <file>images/confirmation_link@2x.png</file>
         <file>images/confirmation_link@3x.png</file>
@@ -847,74 +847,113 @@
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
         <file>images/ic_sync_warning@3x.png</file>
-        <file>images/ico_all_transfers.png</file>
-<!--        <file>images/ico_all_transfers@2x.png</file>-->
-<!--        <file>images/ico_all_transfers@3x.png</file>-->
-        <file>images/ico_finished.png</file>
-        <file>images/ico_finished@2x.png</file>
-        <file>images/ico_finished@3x.png</file>
-        <file>images/ico_search.png</file>
-  <!--      <file>images/ico_search@2x.png</file>
-        <file>images/ico_search@3x.png</file>-->
-<!--        <file>images/ico_search_cancel.png</file>-->
-<!--        <file>images/ico_search_cancel@2x.png</file>
-        <file>images/ico_search_cancel@3x.png</file>-->
-        <file>images/ico_move_to_top.png</file>
-<!--        <file>images/ico_move_to_top@2x.png</file>
-        <file>images/ico_move_to_top@3x.png</file>-->
-        <file>images/ico_move_up.png</file>
-<!--        <file>images/ico_move_up@2x.png</file>
-        <file>images/ico_move_up@3x.png</file>-->
-        <file>images/ico_move_down.png</file>
-<!--        <file>images/ico_move_down@2x.png</file>
-        <file>images/ico_move_down@3x.png</file>-->
-        <file>images/ico_move_to_bottom.png</file>
-<!--        <file>images/ico_move_to_bottom@2x.png</file>
-        <file>images/ico_move_to_bottom@3x.png</file>-->
-        <file>images/ico_open.png</file>
-<!--        <file>images/ico_open@2x.png</file>
-        <file>images/ico_open@3x.png</file>-->
-        <file>images/ico_show_in_folder.png</file>
-<!--        <file>images/ico_show_in_folder@2x.png</file>
-        <file>images/ico_show_in_folder@3x.png</file>-->
+        <file>images/all_transfers_ico.png</file>
+        <file>images/all_transfers_ico@2x.png</file>
+        <file>images/all_transfers_ico@3x.png</file>
+        <file>images/search_ico.png</file>
+        <file>images/search_ico@2x.png</file>
+        <file>images/search_ico@3x.png</file>
+        <file>images/move_top_ico.png</file>
+        <file>images/move_top_ico@2x.png</file>
+        <file>images/move_top_ico@3x.png</file>
+        <file>images/move_up_ico.png</file>
+        <file>images/move_up_ico@2x.png</file>
+        <file>images/move_up_ico@3x.png</file>
+        <file>images/move_down_ico.png</file>
+        <file>images/move_down_ico@2x.png</file>
+        <file>images/move_down_ico@3x.png</file>
+        <file>images/move_bottom_ico.png</file>
+        <file>images/move_bottom_ico@2x.png</file>
+        <file>images/move_bottom_ico@3x.png</file>
+        <file>images/open_file_ico.png</file>
+        <file>images/open_file_ico@2x.png</file>
+        <file>images/open_file_ico@3x.png</file>
+        <file>images/show_in_folder_ico.png</file>
+        <file>images/show_in_folder_ico@2x.png</file>
+        <file>images/show_in_folder_ico@3x.png</file>
         <file>images/ico_clear.png</file>
-<!--        <file>images/ico_clear@2x.png</file>
-        <file>images/ico_clear@3x.png</file>-->
-        <file>images/no_results.png</file>
-        <file>images/no_results@2x.png</file>
-        <file>images/no_results@3x.png</file>
+        <file>images/ico_clear@2x.png</file>
+        <file>images/ico_clear@3x.png</file>
+        <file>images/no_search_results.png</file>
+        <file>images/no_search_results@2x.png</file>
+        <file>images/no_search_results@3x.png</file>
         <file>images/sort_ascending.png</file>
         <file>images/sort_ascending@2x.png</file>
         <file>images/sort_ascending@3x.png</file>
         <file>images/sort_descending.png</file>
         <file>images/sort_descending@2x.png</file>
         <file>images/sort_descending@3x.png</file>
-        <file>images/ico_tm_clear.png</file>
-        <file>images/ico_tm_clear@2x.png</file>
-        <!--        <file>images/ico_tm_clear@3x.png</file>-->
-        <file>images/ico_tm_Import_links.png</file>
-        <file>images/ico_tm_Import_links@2x.png</file>
-        <file>images/ico_tm_Import_links@3x.png</file>
-        <file>images/ico_tm_download_item.png</file>
-        <file>images/ico_tm_download_item@2x.png</file>
-        <!--        <file>images/ico_tm_download_item@3x.png</file>-->
-        <file>images/ico_tm_upload_item.png</file>
-        <file>images/ico_tm_upload_item@2x.png</file>
-        <!--        <file>images/ico_tm_upload_item@3x.png</file>-->
-        <file>images/ico_tm_download.png</file>
-        <file>images/ico_tm_download@2x.png</file>
-        <file>images/ico_tm_download@3x.png</file>
-        <file>images/ico_tm_upload.png</file>
-        <file>images/ico_tm_upload@2x.png</file>
-        <file>images/ico_tm_upload@3x.png</file>
-        <file>images/ico_tm_uploads.png</file>
-<!--        <file>images/ico_tm_uploads@2x.png</file> -->
-<!--        <file>images/ico_tm_uploads@3x.png</file>-->
-        <file>images/ico_tm_downloads.png</file>
-<!--        <file>images/ico_tm_downloads@2x.png</file>-->
-<!--        <file>images/ico_tm_downloads@3x.png</file>-->
-        <file>images/ico_tm_finished.png</file>
-<!--        <file>images/ico_tm_finished@2x.png</file>-->
-<!--        <file>images/ico_tm_finished@3x.png</file>-->
-    </qresource>
+        <file>images/import_toolbar_ico.png</file>
+        <file>images/import_toolbar_ico@2x.png</file>
+        <file>images/import_toolbar_ico@3x.png</file>
+        <file>images/arrow_download_ico.png</file>
+        <file>images/arrow_download_ico@2x.png</file>
+        <file>images/arrow_download_ico@3x.png</file>
+        <file>images/arrow_upload_ico.png</file>
+        <file>images/arrow_upload_ico@2x.png</file>
+        <file>images/arrow_upload_ico@3x.png</file>
+        <file>images/download_toolbar_ico.png</file>
+        <file>images/download_toolbar_ico@2x.png</file>
+        <file>images/download_toolbar_ico@3x.png</file>
+        <file>images/cancel_transfer_ico.png</file>
+        <file>images/cancel_transfer_ico@2x.png</file>
+        <file>images/cancel_transfer_ico@3x.png</file>
+        <file>images/delete_search_ico.png</file>
+        <file>images/delete_search_ico@2x.png</file>
+        <file>images/delete_search_ico@3x.png</file>
+        <file>images/lists_cancel_ico.png</file>
+        <file>images/lists_cancel_ico@2x.png</file>
+        <file>images/lists_cancel_ico@3x.png</file>
+        <file>images/lists_cancel_all_ico.png</file>
+        <file>images/lists_cancel_all_ico@2x.png</file>
+        <file>images/lists_cancel_all_ico@3x.png</file>
+        <file>images/lists_pause_ico.png</file>
+        <file>images/lists_pause_ico@2x.png</file>
+        <file>images/lists_pause_ico@3x.png</file>
+        <file>images/lists_pause_all_ico.png</file>
+        <file>images/lists_pause_all_ico@2x.png</file>
+        <file>images/lists_pause_all_ico@3x.png</file>
+        <file>images/lists_resume_all_ico.png</file>
+        <file>images/lists_resume_all_ico@2x.png</file>
+        <file>images/lists_resume_all_ico@3x.png</file>
+        <file>images/lists_resume_ico.png</file>
+        <file>images/lists_resume_ico@2x.png</file>
+        <file>images/lists_resume_ico@3x.png</file>
+        <file>images/preferences_toolbar_ico.png</file>
+        <file>images/preferences_toolbar_ico@2x.png</file>
+        <file>images/preferences_toolbar_ico@3x.png</file>
+        <file>images/search_result_ico.png</file>
+        <file>images/search_result_ico@2x.png</file>
+        <file>images/search_result_ico@3x.png</file>
+        <file>images/sidebar_cancel_all_ico.png</file>
+        <file>images/sidebar_cancel_all_ico@2x.png</file>
+        <file>images/sidebar_cancel_all_ico@3x.png</file>
+        <file>images/sidebar_downloads_ico.png</file>
+        <file>images/sidebar_downloads_ico@2x.png</file>
+        <file>images/sidebar_downloads_ico@3x.png</file>
+        <file>images/sidebar_finished_ico.png</file>
+        <file>images/sidebar_finished_ico@2x.png</file>
+        <file>images/sidebar_finished_ico@3x.png</file>
+        <file>images/uploads_ico.png</file>
+        <file>images/uploads_ico@2x.png</file>
+        <file>images/uploads_ico@3x.png</file>
+        <file>images/sidebar_up_to_date_ico.png</file>
+        <file>images/sidebar_up_to_date_ico@2x.png</file>
+        <file>images/sidebar_up_to_date_ico@3x.png</file>
+        <file>images/sidebar_pause_ico.png</file>
+        <file>images/sidebar_pause_ico@2x.png</file>
+        <file>images/sidebar_pause_ico@3x.png</file>
+        <file>images/sidebar_resume_ico.png</file>
+        <file>images/sidebar_resume_ico@2x.png</file>
+        <file>images/sidebar_resume_ico@3x.png</file>
+        <file>images/sidebar_search_ico.png</file>
+        <file>images/sidebar_search_ico@2x.png</file>
+        <file>images/sidebar_search_ico@3x.png</file>
+        <file>images/upload_toolbar_ico.png</file>
+        <file>images/upload_toolbar_ico@2x.png</file>
+        <file>images/upload_toolbar_ico@3x.png</file>
+        <file>images/resume_ico.png</file>
+        <file>images/resume_ico@2x.png</file>
+        <file>images/resume_ico@3x.png</file>
+        </qresource>
 </RCC>

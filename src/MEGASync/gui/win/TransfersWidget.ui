@@ -79,25 +79,14 @@
 
 #wTableHeader QToolButton
 {
-    height: 16px;
-    max-height: 16px;
-    min-height: 16px;
-    width: 16px;
-    max-width: 16px;
-    min-width: 16px;
-    border-radius: 4px;
-    margin-right: 12px;
-    qProperty-iconSize: 16px;
-}
-
-#tCancelAll
-{
-     background-color: #F88183;
-}
-
-#tPauseResumeAll
-{
-    background-color: #ECECEC;
+    height: 24px;
+    max-height: 24px;
+    min-height: 24px;
+    width: 24px;
+    max-width: 24px;
+    min-width: 24px;
+    qProperty-iconSize: 24px;
+    border: none;
 }
 
 #wTableHeader QLabel, #wTableHeader  QPushButton
@@ -365,8 +354,8 @@
                 <string>Pause or resume all selected transfers</string>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
-                 <normaloff>:/images/ico_pause_transfers_state.png</normaloff>:/images/ico_pause_transfers_state.png</iconset>
+                <iconset resource="../Resources_win.qrc">
+                 <normaloff>:/images/lists_pause_all_ico.png</normaloff>:/images/lists_pause_all_ico.png</iconset>
                </property>
               </widget>
              </item>
@@ -379,8 +368,8 @@
              <string>Cancel all selected transfers</string>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/ico_tm_clear.png</normaloff>:/images/ico_tm_clear.png</iconset>
+             <iconset resource="../Resources_win.qrc">
+              <normaloff>:/images/lists_cancel_all_ico.png</normaloff>:/images/lists_cancel_all_ico.png</iconset>
             </property>
            </widget>
           </item>

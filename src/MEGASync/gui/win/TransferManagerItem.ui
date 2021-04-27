@@ -156,7 +156,7 @@ QProgressBar::chunk
   font-size: 12px;
   font-weight: bold;
   text-align: left;
-    qProperty-iconSize: 12px;
+  qProperty-iconSize: 24px;
 }
 
 #sStatus
@@ -236,15 +236,13 @@ QProgressBar::chunk
 
 #tPauseResumeTransfer, #tCancelClearTransfer
 {
-    width: 16px;
-    height: 16px;
-    min-width: 16px;
-    min-height: 16px;
-    max-width: 16px;
-    max-height: 16px;
-    background-color: #EEEEEE;
-    qProperty-iconSize: 16px;
-    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    max-width: 24px;
+    max-height: 24px;
+    qProperty-iconSize: 24px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -585,8 +583,8 @@ QProgressBar::chunk
           <item>
            <widget class="QToolButton" name="tPauseResumeTransfer">
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
+             <iconset resource="../Resources_win.qrc">
+              <normaloff>:/images/lists_pause_ico.png</normaloff>:/images/lists_pause_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -614,8 +612,8 @@ QProgressBar::chunk
           <item>
            <widget class="QToolButton" name="tCancelClearTransfer">
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
-              <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+             <iconset resource="../Resources_win.qrc">
+              <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>
             </property>
            </widget>
           </item>
@@ -910,7 +908,7 @@ QProgressBar::chunk
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

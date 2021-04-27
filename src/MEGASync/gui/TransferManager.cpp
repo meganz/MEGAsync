@@ -270,14 +270,14 @@ void TransferManager::onUpdatePauseState(bool isPaused)
 {
     if (isPaused)
     {
-        static const QIcon icon(QLatin1String(":/images/play_ico.png"));
+        static const QIcon icon(QLatin1String(":/images/sidebar_resume_ico.png"));
         mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Resume All"));
         mUi->lPaused->setText(tr("Paused"));
     }
     else
     {
-        static const QIcon icon(QLatin1String(":/images/pause_ico.png"));
+        static const QIcon icon(QLatin1String(":/images/sidebar_pause_ico.png"));
         mUi->bPause->setIcon(icon);
         mUi->bPause->setToolTip(tr("Pause All"));
         mUi->lPaused->setText(QString());
