@@ -19,7 +19,11 @@ static const TransferData::TransferStates PAUSABLE_STATES (
         TransferData::TransferState::TRANSFER_QUEUED
         | TransferData::TransferState::TRANSFER_ACTIVE
         | TransferData::TransferState::TRANSFER_RETRYING);
-
+static const TransferData::TransferStates CANCELABLE_STATES (
+        TransferData::TransferState::TRANSFER_QUEUED
+        | TransferData::TransferState::TRANSFER_ACTIVE
+        | TransferData::TransferState::TRANSFER_PAUSED
+        | TransferData::TransferState::TRANSFER_RETRYING);
 
 QTransfersModel2::QTransfersModel2(QObject *parent) :
     QAbstractItemModel (parent),
@@ -70,7 +74,6 @@ bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
     {
         return mModelHasTransfers;
     }
-
     return false;
 }
 
@@ -96,7 +99,6 @@ int QTransfersModel2::columnCount(const QModelIndex& parent) const
 QVariant QTransfersModel2::data(const QModelIndex& index, int role) const
 {
     int row (index.row());
-
     QMutexLocker lock (mModelMutex);
 
     if (role == Qt::DisplayRole && row >= 0 && row < mOrder.size())
@@ -126,11 +128,14 @@ QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex& pare
 
 QTransfersModel2::~QTransfersModel2()
 {
+    // Disconect listener
     mMegaApi->removeTransferListener(this);
 
+    // Wait for init to return
     mInitFuture.cancel();
     mInitFuture.waitForFinished();
 
+    // Cleanup
     mModelMutex->lock();
     for (auto transfer : qAsConst(mTransfers))
     {
@@ -176,47 +181,12 @@ void QTransfersModel2::initModel()
         for (auto i (0); i < transfers->size(); ++i)
         {
             mega::MegaTransfer* mt (transfers->get(i));
-//            auto type (mt->getType());
             auto priority (mt->getPriority());
             if (!mt->isStreamingTransfer()
                     && !mt->isFolderTransfer()
                     && priority)
             {
-//                // Sort transfers
-//                if (transfersToAdd.isEmpty())
-//                {
-                    transfersToAdd.push_back(i);
-//                }
-//                else
-//                {
-//                    auto other(transfers->get(transfersToAdd.first()));
-//                    if (type == other->getType() && priority < other->getPriority())
-//                    {
-//                        transfersToAdd.push_front(i);
-//                    }
-//                    else
-//                    {
-//                        // Start from the back
-//                        auto otherTag (transfersToAdd.rbegin());
-//                        bool found (false);
-//                        int insertAt (transfersToAdd.size());
-//                        while (!found && otherTag != transfersToAdd.rend())
-//                        {
-//                            other = transfers->get(*otherTag);
-//                            if (type == other->getType()
-//                                    && priority > other->getPriority())
-//                            {
-//                                found = true;
-//                            }
-//                            else
-//                            {
-//                                otherTag++;
-//                                insertAt--;
-//                            }
-//                        }
-//                        transfersToAdd.insert(insertAt, i);
-//                    }
-//                }
+                transfersToAdd.push_back(i);
             }
         }
         // Then load them in the model by chunks
@@ -240,8 +210,7 @@ void QTransfersModel2::initModel()
                 auto nbRowsInChunk (std::min(remainingRows, INIT_ROWS_PER_CHUNK));
 
                 mModelMutex->lock();
-                // Use the actual number of items to update the rows, in case
-                // transfers were added/removed between chunks.
+                // Use the actual number of items to update the rows
                 auto nbRowsInModel (mOrder.size());
 
                 Utilities::queueFunctionInAppThread([=]()
@@ -273,7 +242,7 @@ void QTransfersModel2::initModel()
         delete megaApiLock;
     });
 
-    // Connect to transfer changes signals
+    // Connect to transfer changes callbacks
     mMegaApi->addTransferListener(this);
 }
 
@@ -601,8 +570,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
                                       DEFAULT_IDX, destRowToPassToBeginMove))
                     {
                         mOrder.move(row, newRow);
-//                        mOrder.erase(rowIt);
-//                        mOrder.insert(mOrder.cbegin() + newRow, tag);
                         endMoveRows();
                         sameRow = false;
                     }
@@ -760,9 +727,9 @@ void QTransfersModel2::getLinks(QList<int>& rows)
 void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool cancel, bool clear)
 {
     QMap<int, TransferTag> tags;
-    QList<int> rows;
-    QList<int> toCancel;
-    QList<int>& rowsToCancel (clear? toCancel : rows);
+    QVector<int> rows;
+    QVector<int> toCancel;
+    QVector<int>& rowsToCancel (clear? toCancel : rows);
 
     mModelMutex->lock();
 
@@ -795,45 +762,70 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
                 // Init row with row of first tag
                 if (count == 0)
                 {
-                    row = mOrder.lastIndexOf(tag, row);
-                    //                    auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
-                    //                    row = rowIt - mOrder.cbegin();
+                    row = item;
                 }
+
+                // If rows are non-contiguous, flush and start from item
+                if (row != item)
+                {
+                    removeRows(row + 1, count, DEFAULT_IDX);
+                    count = 0;
+                    row = item;
+                }
+
+                // We have at least one row
                 count++;
                 row--;
             }
-            // Do not cancel/clear completing transfers.
             else
             {
                 // Flush pooled rows (start at row+1)
+                // Not strictly necessary, but allows to process rows sooner
                 if (count > 0)
                 {
                     removeRows(row + 1, count, DEFAULT_IDX);
                     count = 0;
                 }
-
-                if (cancel && d->mState != TransferData::TransferState::TRANSFER_COMPLETING)
+                // Queue transfer to be canceled (if needed)
+                if (cancel && d->mState & CANCELABLE_STATES)
                 {
                     toCancel.push_back(item);
                 }
             }
         }
         // Flush pooled rows (start at row + 1).
+        // This happens when the last item processed is in a finished state.
         if (count > 0)
         {
             removeRows(row + 1, count, DEFAULT_IDX);
         }
     }
-    mModelMutex->unlock();
 
+    // Now cancel transfers.
     if (cancel)
     {
-        // All remaining tags, if any, are cancelable transfers. Cancel them.
         for (auto item : rowsToCancel)
         {
-            mMegaApi->cancelTransferByTag(tags[item]);
+            // If we cleared before, all transfers are cancelable
+            if (clear)
+            {
+                mMegaApi->cancelTransferByTag(tags[item]);
+            }
+            // If not, check before canceling
+            else
+            {
+                auto tag (tags[item]);
+                const auto d (static_cast<const TransferItem2*>(mTransfers[tag]
+                                                                .constData())->getTransferData());
+                if (d->mState & CANCELABLE_STATES)
+                {
+                    mMegaApi->cancelTransferByTag(tag);
+                }
+            }
         }
     }
+
+    mModelMutex->unlock();
 }
 
 void QTransfersModel2::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
