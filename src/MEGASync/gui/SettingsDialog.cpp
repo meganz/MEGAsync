@@ -53,10 +53,6 @@ constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE{519};
 #endif
 
 long long calculateCacheSize()
@@ -193,7 +189,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     QIcon imports(QString::fromUtf8("://images/imports-32.png"));
     QIcon network(QString::fromUtf8("://images/settings-network.png"));
     QIcon security(QString::fromUtf8("://images/settings-security.png"));
-    QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
 
     // add Items
     bGeneral.reset(toolBar->addItem(general, tr("General")));
@@ -220,17 +215,12 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     bSecurity.get()->setIcon(security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
 
-    bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
-    bAdvanced.get()->setIcon(advanced);
-    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
-
     bGeneral.get()->setSelectable(true);
     bAccount.get()->setSelectable(true);
     bSyncs.get()->setSelectable(true);
     bImports.get()->setSelectable(true);
     bNetwork.get()->setSelectable(true);
     bSecurity.get()->setSelectable(true);
-    bAdvanced.get()->setSelectable(true);
 
     //Disable context menu and set default option to general tab
     customizeNSToolbar(toolBar.get());
@@ -256,7 +246,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bImports->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
 #endif
 
@@ -274,7 +263,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     animationGroup->addAnimation(maxHeightAnimation);
     connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
-    ui->pAdvanced->hide();
     ui->pSyncs->hide();
 
     if (!proxyOnly)
@@ -326,7 +314,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     ui->bSecurity->setEnabled(!proxyOnly);
     ui->bImports->setEnabled(!proxyOnly);
     ui->bSyncs->setEnabled(!proxyOnly);
-    ui->bAdvanced->setEnabled(!proxyOnly);
 #else
     // TODO: enableNSToolBarItem does not disable items. Review cocoa code
     enableNSToolBarItem(bGeneral.get(), !proxyOnly);
@@ -334,7 +321,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     enableNSToolBarItem(bSecurity.get(), !proxyOnly);
     enableNSToolBarItem(bSyncs.get(), !proxyOnly);
     enableNSToolBarItem(bImports.get(), !proxyOnly);
-    enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
 #endif
 
     if (proxyOnly)
@@ -533,13 +519,6 @@ void SettingsDialog::onCacheSizeAvailable()
             ui->lFileVersionsSize->hide();
             ui->bClearFileVersions->hide();
         }
-
-#ifdef Q_OS_MACOS
-        if (ui->wStack->currentWidget() == ui->pAdvanced)
-        {
-            animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE, SETTING_ANIMATION_PAGE_TIMEOUT);
-        }
-#endif
     }
 }
 
@@ -563,6 +542,8 @@ void SettingsDialog::on_bGeneral_clicked()
 
 #ifdef Q_OS_MACOS
     checkNSToolBarItem(toolBar.get(), bGeneral.get());
+
+    onCacheSizeAvailable();
 
     ui->pGeneral->hide();
     animateSettingPage(SETTING_ANIMATION_GENERAL_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
@@ -714,40 +695,6 @@ void SettingsDialog::on_bImports_clicked()
 
     ui->pImports->hide();
     animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
-}
-
-void SettingsDialog::on_bAdvanced_clicked()
-{
-    emit userActivity();
-
-    setWindowTitle(tr("Advanced"));
-
-    if (ui->wStack->currentWidget() == ui->pAdvanced)
-    {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bAdvanced.get());
-#endif
-        return;
-    }
-
-    ui->wStack->setCurrentWidget(ui->pAdvanced);
-
-#ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bAdvanced.get());
-
-    ui->pAdvanced->hide();
-
-    onCacheSizeAvailable();
-
-    if (!cacheSize && !remoteCacheSize)
-    {
-        animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
-    else
-    {
-        animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
 #endif
 }
 
@@ -917,7 +864,6 @@ void SettingsDialog::loadSettings()
 
     updateNetworkTab();
 
-    //Advanced
     ui->lExcludedNames->clear();
     QStringList excludedNames = preferences->getExcludedSyncNames();
     for (int i = 0; i < excludedNames.size(); i++)
@@ -1993,13 +1939,6 @@ void SettingsDialog::onClearCache()
     if (!cacheSize && !remoteCacheSize)
     {
         ui->gCache->setVisible(false);
-
-#ifdef Q_OS_MACOS
-        if (!cacheSize && !remoteCacheSize)
-        {
-            animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE, SETTING_ANIMATION_PAGE_TIMEOUT);
-        }
-#endif
     }
 }
 
@@ -2019,7 +1958,6 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bGeneral->setEnabled(completed);
     ui->bAccount->setEnabled(completed);
     ui->bSyncs->setEnabled(completed);
-    ui->bAdvanced->setEnabled(completed);
     ui->bNetwork->setEnabled(completed);
     ui->bSecurity->setEnabled(completed);
     ui->bImports->setEnabled(completed);
@@ -2030,7 +1968,6 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     enableNSToolBarItem(bSecurity.get(), completed);
     enableNSToolBarItem(bImports.get(), completed);
     enableNSToolBarItem(bNetwork.get(), completed);
-    enableNSToolBarItem(bAdvanced.get(), completed);
 #endif
 }
 
@@ -2244,14 +2181,6 @@ void SettingsDialog::openSettingsTab(int tab)
 #endif
         break;
 
-    case ADVANCED_TAB:
-#ifndef Q_OS_MACOS
-        ui->bAdvanced->setChecked(true);
-#else
-        emit bAdvanced.get()->activated();
-#endif
-        break;
-
     default:
         break;
     }
@@ -2326,10 +2255,6 @@ void SettingsDialog::onAnimationFinished()
     else if (ui->wStack->currentWidget() == ui->pSecurity)
     {
         ui->pSecurity->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pAdvanced)
-    {
-        ui->pAdvanced->show();
     }
 }
 
