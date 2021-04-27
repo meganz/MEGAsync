@@ -251,24 +251,6 @@
         <file>images/help_ico.png</file>
         <file>images/help_ico@2x.png</file>
         <file>images/help_ico@3x.png</file>
-        <file>images/ic_small_available.png</file>
-        <file>images/ic_small_available@2x.png</file>
-        <file>images/ic_small_available@3x.png</file>
-        <file>images/ic_small_cloud_drive.png</file>
-        <file>images/ic_small_cloud_drive@2x.png</file>
-        <file>images/ic_small_cloud_drive@3x.png</file>
-        <file>images/ic_small_inbox.png</file>
-        <file>images/ic_small_inbox@2x.png</file>
-        <file>images/ic_small_inbox@3x.png</file>
-        <file>images/ic_small_rubbish.png</file>
-        <file>images/ic_small_rubbish@2x.png</file>
-        <file>images/ic_small_rubbish@3x.png</file>
-        <file>images/ic_small_shares.png</file>
-        <file>images/ic_small_shares@2x.png</file>
-        <file>images/ic_small_shares@3x.png</file>
-        <file>images/ic_small_versions.png</file>
-        <file>images/ic_small_versions@2x.png</file>
-        <file>images/ic_small_versions@3x.png</file>
         <file>images/ico_about_MEGA.png</file>
         <file>images/ico_about_MEGA@2x.png</file>
         <file>images/ico_about_MEGA@3x.png</file>
@@ -847,5 +829,14 @@
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
         <file>images/ic_sync_warning@3x.png</file>
+        <file>images/Bin_24_ico.png</file>
+        <file>images/Bin_24_ico@2x.png</file>
+        <file>images/Bin_24_ico@3x.png</file>
+        <file>images/Cloud_Drive_24_ico.png</file>
+        <file>images/Cloud_Drive_24_ico@2x.png</file>
+        <file>images/Cloud_Drive_24_ico@3x.png</file>
+        <file>images/Inbox_24_ico.png</file>
+        <file>images/Inbox_24_ico@2x.png</file>
+        <file>images/Inbox_24_ico@3x.png</file>
     </qresource>
 </RCC>

@@ -1085,6 +1085,17 @@ void Utilities::sleepMilliseconds(long long milliseconds)
 #endif
 }
 
+int Utilities::partPer(long long  part, long long total, uint ref)
+{
+    // Use maximum precision
+    long double partd(part);
+    long double totald(total);
+    long double refd(ref);
+
+    // We can safely cast because the result should reasonably fit in an int.
+    return (static_cast<int>((partd * refd) / totald));
+}
+
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)
 {
     mExecuteInAppThread = executeInAppThread;

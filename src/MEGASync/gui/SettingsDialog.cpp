@@ -2803,7 +2803,7 @@ void SettingsDialog::onAnimationFinished()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
-    accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
+    accountDetailsDialog = new AccountDetailsDialog(this);
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
