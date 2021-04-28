@@ -45,7 +45,9 @@ constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
-// TODO: Re-evaluate sizes for Network tab
+// FIXME: Re-evaluate size for Imports tab
+constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
+// FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
@@ -188,6 +190,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bUpdate->hide();
 #endif
 
+    ui->gExcludedFilesInfo->hide();
+
 #ifdef Q_OS_WINDOWS
     connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
     ui->cDisableIcons->hide();
@@ -237,6 +241,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bImports->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -312,6 +317,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 #ifndef Q_OS_MACOS
     ui->bAccount->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
+    ui->bImports->setEnabled(!proxyOnly);
     ui->bSyncs->setEnabled(!proxyOnly);
     ui->bAdvanced->setEnabled(!proxyOnly);
 #else
@@ -319,6 +325,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     enableNSToolBarItem(bAccount.get(), !proxyOnly);
     enableNSToolBarItem(bSecurity.get(), !proxyOnly);
     enableNSToolBarItem(bSyncs.get(), !proxyOnly);
+    enableNSToolBarItem(bImports.get(), !proxyOnly);
     enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
 #endif
 
@@ -651,7 +658,30 @@ void SettingsDialog::on_bSecurity_clicked()
     ui->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
+}
 
+void SettingsDialog::on_bImports_clicked()
+{
+    emit userActivity();
+
+    setWindowTitle(tr("Imports"));
+
+    if (ui->wStack->currentWidget() == ui->pImports)
+    {
+#ifdef Q_OS_MACOS
+        checkNSToolBarItem(toolBar.get(), bImports.get());
+#endif
+        return;
+    }
+
+    ui->wStack->setCurrentWidget(ui->pImports);
+
+#ifdef Q_OS_MACOS
+    checkNSToolBarItem(toolBar.get(), bImports.get());
+
+    ui->pImports->hide();
+    animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
 }
 
 void SettingsDialog::on_bAdvanced_clicked()
@@ -1614,9 +1644,7 @@ void SettingsDialog::on_bExcludeSize_clicked()
         preferences->setLowerSizeLimitUnit(dialog->lowerSizeLimitUnit());
         preferences->setCrashed(true); // removes cached application state
         ui->lLimitsInfo->setText(excludeBySizeInfo());
-        QMegaMessageBox::information(this, tr("Warning"),
-                                     tr("The new excluded file sizes will be taken into account when the application starts again."),
-                                     QMessageBox::Ok);
+        ui->gExcludedFilesInfo->show();
     }
 
     delete dialog;
@@ -1741,23 +1769,7 @@ void SettingsDialog::saveExcludeSyncNames()
     preferences->setExcludedSyncPaths(excludedPaths);
     preferences->setCrashed(true);
 
-    QMessageBox *info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
-                                        tr("The new excluded file names will be taken into account\n"
-                                           "when the application starts again"));
-    info->setStandardButtons(QMessageBox::Ok | QMessageBox::Yes);
-    info->setButtonText(QMessageBox::Yes, tr("Restart"));
-    info->setDefaultButton(QMessageBox::Ok);
-    int result = info->exec();
-    delete info;
-    if (result == QMessageBox::Yes)
-    {
-        // Restart MEGAsync
-#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
-        ((MegaApplication*)qApp)->rebootApplication(false);
-#else
-        QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
-#endif
-    }
+    ui->gExcludedFilesInfo->show();
 }
 
 void SettingsDialog::updateNetworkTab()
@@ -1957,11 +1969,14 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bAdvanced->setEnabled(completed);
     ui->bNetwork->setEnabled(completed);
     ui->bSecurity->setEnabled(completed);
+    ui->bImports->setEnabled(completed);
 #else
     enableNSToolBarItem(bAccount.get(), completed);
     enableNSToolBarItem(bSyncs.get() , completed);
-    enableNSToolBarItem(bAdvanced.get(), completed);
+    enableNSToolBarItem(bSecurity.get(), completed);
+    enableNSToolBarItem(bImports.get(), completed);
     enableNSToolBarItem(bNetwork.get(), completed);
+    enableNSToolBarItem(bAdvanced.get(), completed);
 #endif
 }
 
@@ -2145,6 +2160,14 @@ void SettingsDialog::openSettingsTab(int tab)
 #endif
         break;
 
+    case IMPORTS_TAB:
+#ifndef Q_OS_MACOS
+        ui->bImports->setChecked(true);
+#else
+        emit bImports.get()->activated();
+#endif
+        break;
+
     case NETWORK_TAB:
 #ifndef Q_OS_MACOS
         ui->bNetwork->setChecked(true);
@@ -2227,6 +2250,10 @@ void SettingsDialog::onAnimationFinished()
     else if (ui->wStack->currentWidget() == ui->pSyncs)
     {
         ui->pSyncs->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pImports)
+    {
+        ui->pImports->show();
     }
     else if (ui->wStack->currentWidget() == ui->pNetwork)
     {
