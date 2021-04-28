@@ -63,6 +63,7 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
                       this, &QTransfersModel2::onPauseStateChanged, Qt::QueuedConnection);
 
     mAreAllPaused = mPreferences->getGlobalPaused();
+    emit pauseStateChanged(mAreAllPaused);
 
     qRegisterMetaType<TransferData::FileType>("TransferData::FileType");
     qRegisterMetaType<TransferData::TransferState>("TransferData::TransferState");
@@ -592,7 +593,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
     }
 //    else
 //    {
-//        onTransferStart(api, transfer);
+//        onTransferStart(api, transfer);int
 //    }
     mModelMutex->unlock();
     QApplication::processEvents();
@@ -893,7 +894,7 @@ void QTransfersModel2::pauseResumeTransferByTag(TransferTag tag, bool pauseState
     }
 }
 
-void QTransfersModel2::cancelAllTransfers()
+void QTransfersModel2::cancelClearAllTransfers()
 {
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
@@ -1137,7 +1138,7 @@ bool QTransfersModel2::dropMimeData(const QMimeData* data, Qt::DropAction action
 
     mModelMutex->lock();
 
-    if (destRow >= 0 && destRow <= mOrder.size() && action == Qt::MoveAction && column == 0)
+    if (destRow >= 0 && destRow <= mOrder.size() && action == Qt::MoveAction)
     {
         QList<int> rows;
         for (auto tag : qAsConst(tags))

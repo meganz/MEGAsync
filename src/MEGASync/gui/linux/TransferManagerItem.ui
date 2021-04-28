@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>768</width>
-    <height>66</height>
+    <width>752</width>
+    <height>64</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>0</height>
+    <height>64</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>16777215</height>
+    <height>64</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -42,9 +42,6 @@
 
 TransferManagerItem2, TransferManagerItem
 {
-    height: 64px;
-    min-height: 64px;
-    max-height: 64px;
     background-color: transparent;
 }
 
@@ -63,18 +60,8 @@ TransferManagerItem2, TransferManagerItem
     margin: 0;
 }
 
-#sTransferState, #stateActive, #stateCompleted, #bItemSpeed, #lItemTime, #sStatus, #tFileType, #wSize, #wPauseResume, #wClearCancel, #wName, #lItemStatus, #lItemQueued, #lItemPaused
-{
-    height: 63px;
-    min-height: 63px;
-    max-height: 63px;
-}
-
 #tFileType
 {
-    width: 38px;
-    min-width: 38px;
-    max-width: 38px;
     qProperty-iconSize: 48px;
     background: transparent;
 }
@@ -82,6 +69,8 @@ TransferManagerItem2, TransferManagerItem
 QPushButton, QToolButton
 {
     border: none;
+    padding: 0;
+    margin: 0;
 }
 
 QPushButton
@@ -89,16 +78,8 @@ QPushButton
     background: transparent;
 }
 
-#wName
-{
-    width: 165px;
-    min-width: 165px;
-}
-
 #lTransferName
 {
-    width: 170px;
-    min-width: 170px;
     color: #333333;
     font-size: 14px;
     qProperty-alignment: 'AlignLeft | AlignBottom';
@@ -106,11 +87,6 @@ QPushButton
 
 QProgressBar
 {
-    width: 160px;
-    min-width: 50px;
-    height: 4px;
-    min-height: 4px;
-    max-height: 4px;
     border:0px;
     border-radius: 2px;
     background-color: #EEEEEE;
@@ -143,13 +119,6 @@ QProgressBar::chunk
  qProperty-alignment: 'AlignLeft | AlignTop';
 }
 
-#wSize, #wSize QLabel, #bItemSpeed
-{
-    width: 100px;
-    min-width: 100px;
-    max-width: 100px;
-}
-
 #bItemSpeed
 {
   color: #333333;
@@ -157,13 +126,6 @@ QProgressBar::chunk
   font-weight: bold;
   text-align: left;
   qProperty-iconSize: 24px;
-}
-
-#sStatus
-{
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
 }
 
 #sStatus QLabel
@@ -177,25 +139,16 @@ QProgressBar::chunk
 
 #lItemStatus
 {
-  width: 120px;
-  min-width: 120px;
-  max-width: 120px;
   color: #00D26D;
 }
 
 #lItemQueued
 {
-  width: 120px;
-  min-width: 120px;
-  max-width: 120px;
   color: #666666;
 }
 
 #lItemPaused
 {
-  width: 120px;
-  min-width: 120px;
-  max-width: 120px;
   color: #FFA053;
 }
 
@@ -206,9 +159,6 @@ QProgressBar::chunk
 
 #lItemTime
 {
-    width: 92px;
-    min-width: 92px;
-    max-width: 92px;
     color: #333333;
     font-size: 12px;
     font-weight: bold;
@@ -218,8 +168,6 @@ QProgressBar::chunk
 
 #tItemRetry
 {
-    height: 24px;
-    width: 48px;
     border-radius: 10px;
     background-color: #FFEDCC;
     color: #333333;
@@ -227,30 +175,17 @@ QProgressBar::chunk
     font-weight: bold;
 }
 
-#wPauseResume, #wClearCancel
-{
-    width: 28px;
-    min-width: 28px;
-    max-width: 28px;
-}
-
 #tPauseResumeTransfer, #tCancelClearTransfer
 {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-    max-width: 24px;
-    max-height: 24px;
     qProperty-iconSize: 24px;
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="TransferManagerItemLayout">
    <property name="spacing">
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>24</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -282,6 +217,18 @@ QProgressBar::chunk
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>63</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>63</height>
+      </size>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -292,32 +239,69 @@ QProgressBar::chunk
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="minimumSize">
+       <size>
+        <width>692</width>
+        <height>63</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>63</height>
+       </size>
+      </property>
       <layout class="QHBoxLayout" name="stateActiveLayout">
        <property name="spacing">
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>24</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>6</number>
+        <number>20</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
-        <widget class="QToolButton" name="tFileType"/>
+        <widget class="QToolButton" name="tFileType">
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QWidget" name="wName" native="true">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>160</width>
+           <height>63</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>63</height>
+          </size>
          </property>
          <layout class="QVBoxLayout" name="wNameLayout">
           <property name="spacing">
@@ -343,6 +327,18 @@ QProgressBar::chunk
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>160</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -350,6 +346,24 @@ QProgressBar::chunk
           </item>
           <item>
            <widget class="QWidget" name="wProgressBar" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>160</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>160</width>
+              <height>16</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
               <number>0</number>
@@ -374,6 +388,18 @@ QProgressBar::chunk
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>160</width>
+                 <height>4</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>160</width>
+                 <height>4</height>
+                </size>
+               </property>
                <property name="maximum">
                 <number>1000</number>
                </property>
@@ -387,7 +413,7 @@ QProgressBar::chunk
                 <bool>false</bool>
                </property>
                <property name="format">
-                <string/>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -398,8 +424,8 @@ QProgressBar::chunk
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>40</width>
-                 <height>20</height>
+                 <width>0</width>
+                 <height>4</height>
                 </size>
                </property>
               </spacer>
@@ -418,6 +444,18 @@ QProgressBar::chunk
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>63</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>63</height>
+          </size>
+         </property>
          <layout class="QVBoxLayout" name="wSizeLayout">
           <property name="spacing">
            <number>0</number>
@@ -426,16 +464,28 @@ QProgressBar::chunk
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>8</number>
+           <number>12</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>8</number>
+           <number>12</number>
           </property>
           <item>
            <widget class="QLabel" name="lDone">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -443,6 +493,18 @@ QProgressBar::chunk
           </item>
           <item>
            <widget class="QLabel" name="lTotal">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -459,6 +521,18 @@ QProgressBar::chunk
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>63</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>63</height>
+          </size>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -472,8 +546,20 @@ QProgressBar::chunk
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>24</height>
+          </size>
+         </property>
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="pActive">
           <widget class="QLabel" name="lItemStatus">
@@ -482,7 +568,7 @@ QProgressBar::chunk
              <x>0</x>
              <y>0</y>
              <width>120</width>
-             <height>63</height>
+             <height>24</height>
             </rect>
            </property>
           </widget>
@@ -494,7 +580,7 @@ QProgressBar::chunk
              <x>0</x>
              <y>0</y>
              <width>120</width>
-             <height>63</height>
+             <height>24</height>
             </rect>
            </property>
            <property name="text">
@@ -509,7 +595,7 @@ QProgressBar::chunk
              <x>0</x>
              <y>0</y>
              <width>120</width>
-             <height>63</height>
+             <height>24</height>
             </rect>
            </property>
            <property name="text">
@@ -529,7 +615,7 @@ QProgressBar::chunk
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
+            <number>32</number>
            </property>
            <property name="bottomMargin">
             <number>0</number>
@@ -543,6 +629,24 @@ QProgressBar::chunk
            </item>
            <item>
             <widget class="QToolButton" name="tItemRetry">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>24</height>
+              </size>
+             </property>
              <property name="text">
               <string>Retry</string>
              </property>
@@ -560,10 +664,40 @@ QProgressBar::chunk
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>92</width>
+           <height>63</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>92</width>
+           <height>63</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QWidget" name="wPauseResume" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>24</width>
+           <height>63</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>63</height>
+          </size>
+         </property>
          <layout class="QHBoxLayout" name="wPauseResumeLayout">
           <property name="spacing">
            <number>0</number>
@@ -582,6 +716,18 @@ QProgressBar::chunk
           </property>
           <item>
            <widget class="QToolButton" name="tPauseResumeTransfer">
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/lists_pause_ico.png</normaloff>:/images/lists_pause_ico.png</iconset>
@@ -593,6 +739,24 @@ QProgressBar::chunk
        </item>
        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QWidget" name="wClearCancel" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>24</width>
+           <height>63</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>24</width>
+           <height>63</height>
+          </size>
+         </property>
          <layout class="QHBoxLayout" name="wClearCancelLayout">
           <property name="spacing">
            <number>0</number>
@@ -611,6 +775,18 @@ QProgressBar::chunk
           </property>
           <item>
            <widget class="QToolButton" name="tCancelClearTransfer">
+            <property name="minimumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
             <property name="icon">
              <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/lists_cancel_ico.png</normaloff>:/images/lists_cancel_ico.png</iconset>

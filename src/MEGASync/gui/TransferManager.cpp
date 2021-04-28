@@ -44,6 +44,8 @@ static const TransferData::TransferStates FINISHED_STATES_MASK =
     TransferData::TransferState::TRANSFER_CANCELLED
 };
 
+constexpr long long NB_INIT_VALUE = -1LL;
+
 TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::TransferManager),
@@ -53,10 +55,8 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mModel(nullptr),
     mCurrentTab(NO_TAB),
     mShadowTab (new QGraphicsDropShadowEffect(nullptr)),
-    mShadowSearch (new QGraphicsDropShadowEffect(nullptr)),
     mSpeedRefreshTimer(new QTimer(this)),
-    mStatsRefreshTimer(new QTimer(this)),
-    mNumberOfTransfersPerTab(TYPE_TEXT_TAB + 1, -1LL)
+    mStatsRefreshTimer(new QTimer(this))
 {
     mUi->setupUi(this);
     mUi->wTransfers->setupTransfers();
@@ -85,14 +85,20 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mShadowTab->setXOffset(0.);
     mShadowTab->setYOffset(0.);
     mShadowTab->setColor(shadowColor);
+    mShadowTab->setEnabled(true);
 
-    mShadowSearch->setParent(mUi->fSearchString);
-    mShadowSearch->setBlurRadius(8.);
-    mShadowSearch->setXOffset(0.);
-    mShadowSearch->setYOffset(0.);
-    mShadowSearch->setColor(shadowColor);
-
-    mUi->fSearchString->setGraphicsEffect(mShadowSearch);
+    mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[DOWNLOADS_TAB]     = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[UPLOADS_TAB]       = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[COMPLETED_TAB]     = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[SEARCH_TAB]        = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_OTHER_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_AUDIO_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_VIDEO_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_ARCHIVE_TAB]  = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_DOCUMENT_TAB] = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_IMAGE_TAB]    = NB_INIT_VALUE;
+    mNumberOfTransfersPerTab[TYPE_TEXT_TAB]     = NB_INIT_VALUE;
 
     mTabFramesToggleGroup[ALL_TRANSFERS_TAB] = mUi->fAllTransfers;
     mTabFramesToggleGroup[DOWNLOADS_TAB]     = mUi->fDownloads;
@@ -153,6 +159,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mUi->bPause, &QToolButton::clicked,
             mModel, &QTransfersModel2::pauseResumeAllTransfers, Qt::QueuedConnection);
 
+    connect(this, &TransferManager::cancelClearAllTransfers,
+            mModel, &QTransfersModel2::cancelClearAllTransfers, Qt::QueuedConnection);
+
     connect(this, &TransferManager::cancelClearAllRows,
             findChild<MegaTransferView*>(), &MegaTransferView::onCancelClearAllRows,
             Qt::QueuedConnection);
@@ -202,7 +211,7 @@ void TransferManager::on_tCompleted_clicked()
     if (mCurrentTab != COMPLETED_TAB)
     {
         emit userActivity();
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES_MASK);
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -219,7 +228,7 @@ void TransferManager::on_tDownloads_clicked()
     if (mCurrentTab != DOWNLOADS_TAB)
     {
         emit userActivity();
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
             mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_DOWNLOAD
@@ -237,7 +246,7 @@ void TransferManager::on_tUploads_clicked()
     if (mCurrentTab != UPLOADS_TAB)
     {
         emit userActivity();
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
             mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_UPLOAD);
@@ -254,7 +263,7 @@ void TransferManager::on_tAllTransfers_clicked()
     if (mCurrentTab != ALL_TRANSFERS_TAB)
     {
         emit userActivity();
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -288,10 +297,9 @@ bool TransferManager::refreshStateStats()
 {
     QLabel* label (nullptr);
     bool weHaveTransfers (true);
-    bool show (true);
     long long processedNumber (0LL);
 
-    // First check Finished states
+    // First check Finished states -----------------------------------------------------------------
     label = mUi->lCompleted;
     for (auto state : FINISHED_STATES)
     {
@@ -299,37 +307,17 @@ bool TransferManager::refreshStateStats()
     }
     weHaveTransfers = processedNumber;
 
+    // Update if the value changed
     if (processedNumber != mNumberOfTransfersPerTab[COMPLETED_TAB])
     {
-        if (processedNumber <= 0)
-        {
-            if (mCurrentTab == COMPLETED_TAB)
-            {
-                mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
-            }
-            else
-            {
-                show = false;
-            }
-        }
-        else if (mCurrentTab == COMPLETED_TAB)
-        {
-            mUi->sTransfers->setCurrentWidget(mUi->wTransfers);
-        }
-
-        mUi->tClearCompleted->setVisible(((mCurrentTab == COMPLETED_TAB) && processedNumber)
-                                         || ((mCurrentTab >= TYPES_TAB_BASE)
-                                         && mModel->getNumberOfFinishedForFileType(
-                                             static_cast<TransferData::FileType>(mCurrentTab - TYPES_TAB_BASE))));
-
-        label->parentWidget()->setVisible(show);
-        label->setVisible(processedNumber);
+        label->parentWidget()->setVisible(weHaveTransfers || mCurrentTab == COMPLETED_TAB);
+        label->setVisible(weHaveTransfers);
         label->setText(QString::number(processedNumber));
 
         mNumberOfTransfersPerTab[COMPLETED_TAB] = processedNumber;
     }
 
-    // Then active states
+    // Then Active states --------------------------------------------------------------------------
     processedNumber = 0LL;
     label = mUi->lAllTransfers;
     for (auto state : ACTIVE_STATES)
@@ -341,118 +329,72 @@ bool TransferManager::refreshStateStats()
     if (processedNumber != mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB])
     {
         QWidget* leftFooterWidget (nullptr);
+
+        // If we don't have transfers, stop refresh timer and show "Up to date",
+        // and if current tab is ALL TRANSFERS, show empty.
         if (processedNumber == 0)
         {
             leftFooterWidget = mUi->pUpToDate;
             mSpeedRefreshTimer->stop();
             label->hide();
 
-            if (mCurrentTab == ALL_TRANSFERS_TAB)
-            {
-                mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
-            }
+            // Force number to -1 to re-init timer when a transfer comes
+            mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
         }
         else
         {
+            // If we didn't have transfers, launch timer and show speed.
             if (mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] <= 0)
             {
                 leftFooterWidget = mUi->pSpeedAndClear;
                 mSpeedRefreshTimer->start(std::chrono::milliseconds(SPEED_REFRESH_PERIOD_MS));
                 label->show();
+            }
 
-            }
-            if (mCurrentTab == ALL_TRANSFERS_TAB)
-            {
-                mUi->sTransfers->setCurrentWidget(mUi->wTransfers);
-            }
             label->setText(QString::number(processedNumber));
+            mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
         }
 
         mUi->sStatus->setCurrentWidget(leftFooterWidget);
-        mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
     }
     return weHaveTransfers;
 }
 
 void TransferManager::refreshTypeStats()
 {
-    QWidget* widgetToShow (mUi->sTransfers->currentWidget());
-
-    long long number (mModel->getNumberOfTransfersForType(TransferData::TransferType::TRANSFER_DOWNLOAD));
+    // First check Downloads -----------------------------------------------------------------------
+    auto number (mModel->getNumberOfTransfersForType(TransferData::TransferType::TRANSFER_DOWNLOAD));
     if (number != mNumberOfTransfersPerTab[DOWNLOADS_TAB])
     {
-        if (number == 0)
-        {
-            if (mCurrentTab == DOWNLOADS_TAB)
-            {
-                mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
-            }
-            mUi->lDownloads->hide();
-        }
-        else
-        {
-            mUi->lDownloads->show();
-            mUi->lDownloads->setText(QString::number(number));
-        }
+        mUi->lDownloads->setVisible(number);
+        mUi->lDownloads->setText(QString::number(number));
         mNumberOfTransfersPerTab[DOWNLOADS_TAB] = number;
     }
 
+    // Then Uploads --------------------------------------------------------------------------------
     number = mModel->getNumberOfTransfersForType(TransferData::TransferType::TRANSFER_UPLOAD);
     if (number != mNumberOfTransfersPerTab[UPLOADS_TAB])
     {
-        if (number == 0)
-        {
-            if (mCurrentTab == UPLOADS_TAB)
-            {
-                mUi->sTransfers->setCurrentWidget(mTabNoItem[mCurrentTab]);
-            }
-            mUi->lUploads->hide();
-        }
-        else
-        {
-            mUi->lUploads->show();
-            mUi->lUploads->setText(QString::number(number));
-        }
+        mUi->lUploads->setVisible(number);
+        mUi->lUploads->setText(QString::number(number));
         mNumberOfTransfersPerTab[UPLOADS_TAB] = number;
-    }
-
-    if ((mCurrentTab == UPLOADS_TAB && mNumberOfTransfersPerTab[UPLOADS_TAB] == 0)
-            || (mCurrentTab == DOWNLOADS_TAB && mNumberOfTransfersPerTab[DOWNLOADS_TAB] == 0))
-    {
-        widgetToShow = mTabNoItem[mCurrentTab];
-    }
-    else if ((mCurrentTab == UPLOADS_TAB && mNumberOfTransfersPerTab[UPLOADS_TAB] != 0)
-             || (mCurrentTab == DOWNLOADS_TAB && mNumberOfTransfersPerTab[DOWNLOADS_TAB] != 0))
-    {
-        widgetToShow = mUi->wTransfers;
-    }
-
-    if (mUi->sTransfers->currentWidget() != widgetToShow)
-    {
-        mUi->sTransfers->setCurrentWidget(widgetToShow);
     }
 }
 
 void TransferManager::refreshFileTypesStats()
 {
+    // Loop through file types and update if needed
     const auto fileTypes (mMediaNumberLabelsGroup.keys());
     for (auto fileType : fileTypes)
     {
-        int tab (TYPES_TAB_BASE + fileType);
+        TM_TAB tab (static_cast<TM_TAB>(TYPES_TAB_BASE + fileType));
         long long number (mModel->getNumberOfTransfersForFileType(fileType));
-        if (mNumberOfTransfersPerTab[tab] != number)
+        if (number != mNumberOfTransfersPerTab[tab])
         {
-            bool show (false);
             QLabel* label (mMediaNumberLabelsGroup[fileType]);
-            if (number > 0 || mCurrentTab == tab)
-            {
-                show = true;
-            }
-
             label->setVisible(number);
             label->setText(QString::number(number));
-            label->parentWidget()->setVisible(show);
-
+            label->parentWidget()->setVisible(number || mCurrentTab == tab);
             mNumberOfTransfersPerTab[tab] = number;
         }
     }
@@ -460,6 +402,7 @@ void TransferManager::refreshFileTypesStats()
 
 void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
 {
+    // (De)activate stats refresh if we have transfers (or not)
     if (weHaveTransfers)
     {
         mStatsRefreshTimer->start(std::chrono::milliseconds(STATS_REFRESH_PERIOD_MS));
@@ -467,15 +410,26 @@ void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
     else
     {
         mStatsRefreshTimer->stop();
+        mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[DOWNLOADS_TAB]     = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[UPLOADS_TAB]       = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[COMPLETED_TAB]     = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[SEARCH_TAB]        = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[TYPE_OTHER_TAB]    = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[TYPE_AUDIO_TAB]    = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[TYPE_VIDEO_TAB]    = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[TYPE_ARCHIVE_TAB]  = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[TYPE_DOCUMENT_TAB] = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[TYPE_IMAGE_TAB]    = NB_INIT_VALUE;
+        mNumberOfTransfersPerTab[TYPE_TEXT_TAB]     = NB_INIT_VALUE;
     }
+
+    // Refresh stats
     refreshTypeStats();
     refreshFileTypesStats();
-
-    bool showMediaTypes(false);
-    showMediaTypes = refreshStateStats();
-    mUi->wMediaType->setVisible(showMediaTypes || mCurrentTab >= TYPES_TAB_BASE);
-
-    updateState();
+    refreshSearchStats();
+    refreshStateStats();
+    refreshView();
 }
 
 void TransferManager::refreshSpeed()
@@ -490,34 +444,26 @@ void TransferManager::refreshStats()
 {
     refreshTypeStats();
     refreshFileTypesStats();
+    refreshSearchStats();
     if (!refreshStateStats())
     {
         onTransfersInModelChanged(false);
     }
+    refreshView();
 }
 
-void TransferManager::updateState()
+void TransferManager::refreshSearchStats()
 {
-    auto nbRows (mUi->wTransfers->rowCount());
-
-    QWidget* widgetToShow (mUi->wTransfers);
-
+    // Update search results number
     if (mCurrentTab == SEARCH_TAB)
-    {
-        mUi->lNbResults->setText(QString(tr("%1 results")).arg(nbRows));
+    {    // Get number of transfers in the view
+        auto nbRows (mUi->wTransfers->rowCount());
+        if (nbRows != mNumberOfTransfersPerTab[SEARCH_TAB])
+        {
+            mUi->lNbResults->setText(QString(tr("%1 results")).arg(nbRows));
+            mNumberOfTransfersPerTab[SEARCH_TAB] = nbRows;
+        }
     }
-
-    if (nbRows == 0)
-    {
-        widgetToShow = mTabNoItem[mCurrentTab];
-    }
-
-    if (mUi->sTransfers->currentWidget() != widgetToShow)
-    {
-        mUi->sTransfers->setCurrentWidget(widgetToShow);
-    }
-
-    mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
 }
 
 void TransferManager::disableGetLink(bool disable)
@@ -538,7 +484,7 @@ void TransferManager::on_bClearAll_clicked()
         return;
     }
 
-    mModel->cancelAllTransfers();
+    emit cancelClearAllTransfers();
 }
 
 void TransferManager::on_tClearCompleted_clicked()
@@ -595,7 +541,7 @@ void TransferManager::on_bArchives_clicked()
 {
     if (mCurrentTab != TYPE_ARCHIVE_TAB)
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged({});
             mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_ARCHIVE});
@@ -610,7 +556,7 @@ void TransferManager::on_bDocuments_clicked()
 {
     if (mCurrentTab != TYPE_DOCUMENT_TAB)
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged({});
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -626,7 +572,7 @@ void TransferManager::on_bImages_clicked()
 {
     if (mCurrentTab != TYPE_IMAGE_TAB)
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged({});
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -642,7 +588,7 @@ void TransferManager::on_bMusic_clicked()
 {
     if (mCurrentTab != TYPE_AUDIO_TAB)
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged({});
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -658,7 +604,7 @@ void TransferManager::on_bVideos_clicked()
 {
     if (mCurrentTab != TYPE_VIDEO_TAB)
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged({});
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -674,7 +620,7 @@ void TransferManager::on_bOther_clicked()
 {
     if (mCurrentTab != TYPE_OTHER_TAB)
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged({});
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -690,7 +636,7 @@ void TransferManager::on_bText_clicked()
 {
     if (mCurrentTab != TYPE_TEXT_TAB)
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             mUi->wTransfers->transferStateFilterChanged({});
             mUi->wTransfers->transferTypeFilterChanged({});
@@ -727,72 +673,96 @@ void TransferManager::on_leSearchField_returnPressed()
     emit mUi->tSearchIcon->clicked();
 }
 
-void TransferManager::toggleTab(TM_TABS tab)
+void TransferManager::toggleTab(TM_TAB tab)
 {
-    QWidget* currentContentHeaderWidget (mUi->pStatusHeader);
     if (mCurrentTab != tab)
     {
-        if (mCurrentTab != SEARCH_TAB && mCurrentTab != NO_TAB)
+        // Activate frame
+        if (mCurrentTab != NO_TAB)
         {
             mTabFramesToggleGroup[mCurrentTab]->setProperty("itsOn", false);
         }
-
-        if (tab != SEARCH_TAB)
-        {
-            mTabFramesToggleGroup[tab]->setGraphicsEffect(mShadowTab);
-        }
+        mTabFramesToggleGroup[tab]->setGraphicsEffect(mShadowTab);
         mTabFramesToggleGroup[tab]->setProperty("itsOn", true);
-        mShadowTab->setEnabled(true);
 
-        if (mCurrentTab >= TYPES_TAB_BASE
-                && (mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB]
-                    + mNumberOfTransfersPerTab[COMPLETED_TAB] == 0))
+
+        // Show pause button on tab except completed tab,
+        // and set Clear All button string,
+        // Emit wether we are showing completed or not
+        if (tab == COMPLETED_TAB)
         {
-            mUi->wMediaType->hide();
+            mUi->tClearCompleted->setText(tr("Clear All"));
+            mUi->bPause->setVisible(false);
+            emit showCompleted(true);
+        }
+        else if (mCurrentTab == COMPLETED_TAB)
+        {
+            mUi->tClearCompleted->setText(tr("Clear Completed"));
+            mUi->bPause->setVisible(true);
+            emit showCompleted(false);
         }
 
-        if ((mCurrentTab == COMPLETED_TAB || mCurrentTab >= TYPES_TAB_BASE)
-                && mNumberOfTransfersPerTab[mCurrentTab] == 0)
+        // Set current header widget: search or not
+        if (tab == SEARCH_TAB)
         {
-            mTabFramesToggleGroup[mCurrentTab]->hide();
+            mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
+
+        }
+        else if (mCurrentTab == SEARCH_TAB)
+        {
+            mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
         }
 
-        if (tab == COMPLETED_TAB || tab >= TYPES_TAB_BASE)
+        mCurrentTab = tab;
+    }
+
+    refreshStats();
+
+    // Reload QSS because it can be glitchy
+    mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
+}
+
+void TransferManager::refreshView()
+{
+    if (mCurrentTab != NO_TAB)
+    {
+        QWidget* widgetToShow (mUi->wTransfers);
+
+        if (mNumberOfTransfersPerTab[mCurrentTab] <= 0)
         {
-            bool showClearButton (false);
-            if (tab == COMPLETED_TAB)
-            {
-                mUi->tClearCompleted->setText(tr("Clear All"));
-                showClearButton = mNumberOfTransfersPerTab[COMPLETED_TAB];
-            }
-            else
-            {
-                mUi->tClearCompleted->setText(tr("Clear Completed"));
-                showClearButton = mModel->getNumberOfFinishedForFileType(
-                                      static_cast<TransferData::FileType>(tab - TYPES_TAB_BASE));
-            }
-            mUi->tClearCompleted->setVisible(showClearButton);
+            widgetToShow = mTabNoItem[mCurrentTab];
+        }
+
+        if (mUi->sTransfers->currentWidget() != widgetToShow)
+        {
+            mUi->sTransfers->setCurrentWidget(widgetToShow);
+        }
+
+        // Show "Clear All/Completed" if there are any completed transfers
+        // (only for completed tab and individual media tabs)
+        if ((mCurrentTab == COMPLETED_TAB && mNumberOfTransfersPerTab[COMPLETED_TAB])
+                || (mCurrentTab >= TYPES_TAB_BASE && mModel->getNumberOfFinishedForFileType(
+                        static_cast<TransferData::FileType>(mCurrentTab - TYPES_TAB_BASE))))
+        {
+            mUi->tClearCompleted->show();
         }
         else
         {
             mUi->tClearCompleted->hide();
         }
 
-        emit showCompleted(tab == COMPLETED_TAB);
-
-        mUi->bPause->setVisible(tab != COMPLETED_TAB);
-
-        mCurrentTab = tab;
+        // Hide Media groupbox if no transfers (active or finished)
+        if (mCurrentTab >= TYPES_TAB_BASE
+                || (mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB]
+                    + mNumberOfTransfersPerTab[COMPLETED_TAB] > 0))
+        {
+            mUi->wMediaType->show();
+        }
+        else
+        {
+            mUi->wMediaType->hide();
+        }
     }
-
-    if (tab == SEARCH_TAB)
-    {
-        currentContentHeaderWidget = mUi->pSearchHeader;
-        mShadowTab->setEnabled(false);
-    }
-
-    mUi->sCurrentContent->setCurrentWidget(currentContentHeaderWidget);
-    updateState();
 }
 
 bool TransferManager::eventFilter(QObject *obj, QEvent *event)

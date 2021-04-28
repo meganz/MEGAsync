@@ -44,7 +44,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
         mTransferTag = data->mTag;
         // File type icon
         icon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                              data->mFilename, QLatin1Literal(":/images/small_")));
+                                              data->mFilename, QLatin1Literal(":/images/drag_")));
         mUi->tFileType->setIcon(icon);
         // Total size
         mUi->lTotal->setText(Utilities::getSizeString(data->mTotalSize));
@@ -137,7 +137,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             speedString = Utilities::getSizeString(std::min(data->mSpeed, httpSpeed))
                           + QLatin1Literal("/s");
             icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                  ":images/ico_pause_transfers_state.png"));
+                                                  ":images/lists_pause_ico.png"));
             pauseResumeTooltip = QObject::tr("Pause transfer");
             cancelClearTooltip = QObject::tr("Cancel transfer");
             mUi->sStatus->setCurrentWidget(mUi->pActive);
@@ -156,7 +156,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
         case TransferData::TransferState::TRANSFER_QUEUED:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                  ":images/ico_pause_transfers_state.png"));
+                                                  ":images/lists_pause_ico.png"));
             pauseResumeTooltip = QObject::tr("Pause transfer");
             cancelClearTooltip = QObject::tr("Cancel transfer");
             mUi->sStatus->setCurrentWidget(mUi->pQueued);
@@ -199,7 +199,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
         {
             statusString = QObject::tr("Retrying");
             icon = Utilities::getCachedPixmap(QLatin1Literal(
-                                                  ":images/ico_pause_transfers_state.png"));
+                                                  ":images/lists_pause_ico.png"));
             pauseResumeTooltip = QObject::tr("Pause transfer");
             cancelClearTooltip = QObject::tr("Cancel transfer");
             mUi->sStatus->setCurrentWidget(mUi->pActive);

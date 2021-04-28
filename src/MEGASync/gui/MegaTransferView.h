@@ -72,6 +72,8 @@ private slots:
     void showInMegaClicked();
     void cancelSelectedClicked();
     void clearSelectedClicked();
+    void pauseSelectedClicked();
+    void resumeSelectedClicked();
 
 signals:
     void showContextMenu(QPoint pos);

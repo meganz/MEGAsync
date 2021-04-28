@@ -10,9 +10,9 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     ui (new Ui::TransfersWidget),
     model (nullptr),
     model2 (nullptr),
-    isPaused (false),
     tDelegate (nullptr),
     tDelegate2 (nullptr),
+    mIsPaused (false),
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (0),
     mHeaderSizeState (0)
@@ -109,6 +109,7 @@ void TransfersWidget::configureTransferView()
         ui->tvTransfers->setup(this);
         ui->tvTransfers->setModel(mProxyModel);
         ui->tvTransfers->setItemDelegate(tDelegate2);
+        onPauseStateChanged(model2->areAllPaused());
 
 //        QObject::connect(this, &TransfersWidget::updateSearchFilter,
 ////                         mProxyModel,static_cast<void (TransfersSortFilterProxyModel::*)(const QRegularExpression&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
@@ -124,7 +125,7 @@ void TransfersWidget::configureTransferView()
 
 void TransfersWidget::pausedTransfers(bool paused)
 {
-    isPaused = paused;
+    mIsPaused = paused;
     if (model && model->rowCount(QModelIndex()) == 0)
     {
     }
@@ -231,7 +232,8 @@ void TransfersWidget::on_pHeaderSize_clicked()
 
 void TransfersWidget::on_tPauseResumeAll_clicked()
 {
-    emit pauseResumeAllRows(isPaused);
+    onPauseStateChanged(!mIsPaused);
+    emit pauseResumeAllRows(mIsPaused);
 }
 
 void TransfersWidget::on_tCancelAll_clicked()
@@ -266,12 +268,12 @@ void TransfersWidget::onShowCompleted(bool showCompleted)
 void TransfersWidget::onPauseStateChanged(bool pauseState)
 {
     ui->tPauseResumeAll->setIcon(pauseState ?
-                                     QIcon(QString::fromUtf8(":/images/sidebar_resume_ico.png"))
-                                   : QIcon(QString::fromUtf8(":/images/sidebar_pause_ico.png")));
+                                     QIcon(QString::fromUtf8(":/images/lists_resume_all_ico.png"))
+                                   : QIcon(QString::fromUtf8(":/images/lists_pause_all_ico.png")));
     ui->tPauseResumeAll->setToolTip(pauseState ?
                                         tr("Resume visible transfers")
                                       : tr("Pause visible transfers"));
-    isPaused = pauseState;
+    mIsPaused = pauseState;
 }
 
 void TransfersWidget::textFilterChanged(const QString& pattern)

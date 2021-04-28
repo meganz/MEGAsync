@@ -55,6 +55,10 @@ void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem&
 
     if (index.isValid() && row < rowCount)
     {
+        painter->setRenderHints(QPainter::Antialiasing
+                               | QPainter::TextAntialiasing
+                               | QPainter::SmoothPixmapTransform);
+
         auto pos (option.rect.topLeft());
         auto width (option.rect.width());
         auto height (option.rect.height());
@@ -96,7 +100,7 @@ void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem&
 QSize MegaTransferDelegate2::sizeHint(const QStyleOptionViewItem& option,
                                       const QModelIndex& index) const
 {
-    return QSize(720, 64);
+    return QSize(772, 64);
 }
 
 void MegaTransferDelegate2::onCancelClearTransfer(int row)

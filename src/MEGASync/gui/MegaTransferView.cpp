@@ -190,7 +190,7 @@ void MegaTransferView::createContextMenu()
     mPauseAction = new QAction(QIcon(QLatin1String(":/images/pause_ico.png")),
                                      tr("Pause active transfers"), this);
     connect(mPauseAction, &QAction::triggered,
-            this, &MegaTransferView::onPauseResumeSelection);
+            this, &MegaTransferView::pauseSelectedClicked);
 
     if (mResumeAction)
     {
@@ -201,7 +201,7 @@ void MegaTransferView::createContextMenu()
     mResumeAction = new QAction(QIcon(QLatin1String(":/images/resume_ico.png")),
                                       tr("Resume paused transfers"), this);
     connect(mResumeAction, &QAction::triggered,
-            this, &MegaTransferView::onPauseResumeSelection);
+            this, &MegaTransferView::resumeSelectedClicked);
 
     if (mMoveToTopAction)
     {
@@ -599,4 +599,14 @@ void MegaTransferView::cancelSelectedClicked()
 void MegaTransferView::clearSelectedClicked()
 {
     onCancelClearSelection(false, true);
+}
+
+void MegaTransferView::pauseSelectedClicked()
+{
+    onPauseResumeSelection(true);
+}
+
+void MegaTransferView::resumeSelectedClicked()
+{
+    onPauseResumeSelection(false);
 }

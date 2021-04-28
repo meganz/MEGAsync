@@ -39,7 +39,6 @@ public:
     void cancelClearTransfers(const QModelIndexList& indexes,  bool cancel = true, bool clear = true);
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
-    void cancelAllTransfers();
 
     long long  getNumberOfTransfersForState(TransferData::TransferState state) const;
     long long  getNumberOfTransfersForType(TransferData::TransferType type) const;
@@ -63,6 +62,7 @@ signals:
 public slots:
     void onRetryTransfer(TransferTag tag);
     void pauseResumeAllTransfers();
+    void cancelClearAllTransfers();
 
 private slots:
     void onPauseStateChanged();

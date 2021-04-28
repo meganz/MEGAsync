@@ -22,7 +22,7 @@ class TransferManager : public QDialog
     Q_OBJECT
 
 public:
-    enum TM_TABS
+    enum TM_TAB
     {
         NO_TAB            = -1,
         ALL_TRANSFERS_TAB = 0,
@@ -51,40 +51,36 @@ signals:
     void userActivity();
     void showCompleted(bool showCompleted);
     void cancelClearAllRows(bool cancel, bool clear);
+    void cancelClearAllTransfers();
 
 private:
     static constexpr int SPEED_REFRESH_PERIOD_MS = 700;
     static constexpr int STATS_REFRESH_PERIOD_MS = 500;
-//    static const TransferData::TransferStates ACTIVE_STATES;
-//    static const TransferData::TransferStates FINISHED_STATES;
 
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
     QPoint mDragPosition;
     ThreadPool* mThreadPool;
-    QMap<int, QFrame*> mTabFramesToggleGroup;
+    QMap<TM_TAB, QFrame*> mTabFramesToggleGroup;
     QMap<TransferData::FileType, QLabel*> mMediaNumberLabelsGroup;
-    QMap<TM_TABS, QWidget*> mTabNoItem;
+    QMap<TM_TAB, QWidget*> mTabNoItem;
 
     QTransfersModel2* mModel;
 
-    TM_TABS mCurrentTab;
+    TM_TAB mCurrentTab;
     QGraphicsDropShadowEffect* mShadowTab;
-    QGraphicsDropShadowEffect* mShadowSearch;
     QSet<TransferData::FileType> mFileTypesFilter;
     QTimer* mSpeedRefreshTimer;
     QTimer* mStatsRefreshTimer;
 
-    QVector<long long> mNumberOfTransfersPerTab;
+    QMap<TM_TAB, long long> mNumberOfTransfersPerTab;
 
-    void toggleTab(TM_TABS tab);
+    void toggleTab(TM_TAB tab);
     bool refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();
-
-public slots:
-    void updateState();
+    void refreshSearchStats();
 
 private slots:
     void on_tCompleted_clicked();
@@ -117,6 +113,8 @@ private slots:
 
     void refreshSpeed();
     void refreshStats();
+
+    void refreshView();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

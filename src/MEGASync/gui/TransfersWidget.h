@@ -63,7 +63,7 @@ private:
     MegaTransferDelegate *tDelegate;
     MegaTransferDelegate2 *tDelegate2;
     QTransfersModel::ModelType mType;
-    bool isPaused;
+    bool mIsPaused;
     MegaApplication *app;
     int mHeaderNameState;
     int mHeaderSizeState;
