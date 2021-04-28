@@ -34,7 +34,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
+    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, NETWORK_TAB = 2, ADVANCED_TAB = 3, SECURITY_TAB = 4};
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
@@ -74,10 +74,9 @@ private slots:
 
     void on_bAccount_clicked();
     void on_bSyncs_clicked();
-    void on_bBandwidth_clicked();
+    void on_bNetwork_clicked();
     void on_bSecurity_clicked();
     void on_bAdvanced_clicked();
-    void on_bProxies_clicked();
 
     void on_bHelp_clicked();
 #ifndef __APPLE__
@@ -123,20 +122,11 @@ private slots:
     void on_eUploadFolder_textChanged(const QString &text);
     void on_eDownloadFolder_textChanged(const QString &text);
 
-    void on_rUploadAutoLimit_toggled(bool checked);
-    void on_rUploadNoLimit_toggled(bool checked);
-    void on_rUploadLimit_toggled(bool checked);
-    void on_rDownloadNoLimit_toggled(bool checked);
-    void on_rDownloadLimit_toggled(bool checked);
-    void on_eUploadLimit_editingFinished();
-    void on_eDownloadLimit_editingFinished();
-    void on_eMaxDownloadConnections_valueChanged(int value);
-    void on_eMaxUploadConnections_valueChanged(int value);
-    void on_cbUseHttps_toggled(bool checked);
     void on_cDisableFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 
-    void on_openProxySettingsButton_clicked();
+    void on_bOpenProxySettings_clicked();
+    void on_bOpenBandwidthSettings_clicked();
 
 #ifdef Q_OS_WINDOWS
     void on_cDisableIcons_toggled(bool checked);
@@ -144,6 +134,7 @@ private slots:
 
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
+    void initializeNativeUIComponents();
 #endif
 
 
@@ -160,6 +151,7 @@ private:
     QString excludeBySizeInfo();
     QString cacheDaysLimitInfo();
     void saveExcludeSyncNames();
+    void updateNetworkTab();
 
     Ui::SettingsDialog *ui;
     MegaApplication *app;
@@ -196,9 +188,8 @@ private:
     std::unique_ptr<QMacToolBar> toolBar;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
-    std::unique_ptr<QMacToolBarItem> bBandwidth;
+    std::unique_ptr<QMacToolBarItem> bNetwork;
     std::unique_ptr<QMacToolBarItem> bSecurity;
-    std::unique_ptr<QMacToolBarItem> bProxies;
     std::unique_ptr<QMacToolBarItem> bAdvanced;
 
     void animateSettingPage(int endValue, int duration = 150);

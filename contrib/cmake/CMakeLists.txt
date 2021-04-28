@@ -166,6 +166,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     )
 
 
@@ -277,6 +278,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
+    ${MEGAsyncDir}/gui/BandwidthSettings.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -416,6 +418,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
+    ${MEGAsyncDir}/gui/BandwidthSettings.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp

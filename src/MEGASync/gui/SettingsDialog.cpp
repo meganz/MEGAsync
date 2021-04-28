@@ -22,6 +22,7 @@
 #include "gui/BugReportDialog.h"
 #include "gui/QSyncItemWidget.h"
 #include "gui/ProxySettings.h"
+#include "gui/BandwidthSettings.h"
 
 #include <assert.h>
 
@@ -44,10 +45,10 @@ constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT{464};
-constexpr auto SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS{444};
+// TODO: Re-evaluate sizes for Network tab
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
-constexpr auto SETTING_ANIMATION_PROXY_TAB_HEIGHT{359};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
 constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
@@ -90,6 +91,65 @@ void deleteRemoteCache(MegaApi *megaApi)
     delete n;
 }
 
+#ifdef Q_OS_MACOS
+void SettingsDialog::initializeNativeUIComponents()
+{
+    CocoaHelpButton *helpButton = new CocoaHelpButton(this);
+    ui->layoutBottom->insertWidget(0, helpButton);
+    connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
+
+    // Set native NSToolBar for settings.
+    toolBar = ::mega::make_unique<QMacToolBar>(this);
+
+    QIcon account(QString::fromUtf8("://images/settings-general.png"));
+    QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
+    QIcon network(QString::fromUtf8("://images/settings-network.png"));
+    QIcon security(QString::fromUtf8("://images/settings-security.png"));
+    QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
+
+    // add Items
+    bAccount.reset(toolBar->addItem(account, tr("Account")));
+    bAccount.get()->setIcon(account);
+    connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
+
+    bSyncs.reset(toolBar->addItem(syncs, tr("Syncs")));
+    bSyncs.get()->setIcon(syncs);
+    connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
+
+    bNetwork.reset(toolBar->addItem(network, tr("Network")));
+    bNetwork.get()->setIcon(network);
+    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);
+
+    bSecurity.reset(toolBar->addItem(security, tr("Security")));
+    bSecurity.get()->setIcon(security);
+    connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
+
+    bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
+    bAdvanced.get()->setIcon(advanced);
+    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
+
+    bAccount.get()->setSelectable(true);
+    bSyncs.get()->setSelectable(true);
+    bNetwork.get()->setSelectable(true);
+    bSecurity.get()->setSelectable(true);
+    bAdvanced.get()->setSelectable(true);
+
+    //Disable context menu and set default option to account tab
+    customizeNSToolbar(toolBar.get());
+    checkNSToolBarItem(toolBar.get(), bAccount.get());
+
+    // Attach to the window
+    this->window()->winId(); // create window->windowhandle()
+    toolBar->attachToWindow(this->window()->windowHandle());
+
+
+    //Configure segmented control for +/- syncs
+    ui->wSegmentedControl->configureTableSegment();
+    connect(ui->wSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
+    connect(ui->wSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+}
+#endif
+
 SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
@@ -113,25 +173,15 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     remoteCacheSize = -1;
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
     ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
+#ifndef Q_OS_MAC
     ui->bAccount->setChecked(true); // override whatever might be set in .ui
+#endif
+    setProxyOnly(proxyOnly);
 
     reloadUIpage = false;
     debugCounter = 0;
     areSyncsDisabled = false;
     isSavingSyncsOnGoing = false;
-
-    ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
-    ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
-    ui->eMaxDownloadConnections->setRange(1, 6);
-    ui->eMaxUploadConnections->setRange(1, 6);
-
-    QButtonGroup *downloadButtonGroup = new QButtonGroup(this);
-    downloadButtonGroup->addButton(ui->rDownloadLimit);
-    downloadButtonGroup->addButton(ui->rDownloadNoLimit);
-    QButtonGroup *uploadButtonGroup = new QButtonGroup(this);
-    uploadButtonGroup->addButton(ui->rUploadLimit);
-    uploadButtonGroup->addButton(ui->rUploadNoLimit);
-    uploadButtonGroup->addButton(ui->rUploadAutoLimit);
 
 #ifdef Q_OS_LINUX
     ui->cAutoUpdate->hide();
@@ -171,73 +221,14 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Preferences - MEGAsync"));
+    ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     ui->cStartOnStartup->setText(tr("Open at login"));
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //FinderSync API support from 10.10+
     {
         ui->cOverlayIcons->hide();
     }
 
-    CocoaHelpButton *helpButton = new CocoaHelpButton(this);
-    ui->layoutBottom->insertWidget(0, helpButton);
-    connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
-
-    // Set native NSToolBar for settings.
-    toolBar = ::mega::make_unique<QMacToolBar>(this);
-
-    QIcon account(QString::fromUtf8("://images/settings-general.png"));
-    QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
-    QIcon bandwidth(QString::fromUtf8("://images/settings-transfers.png"));
-    QIcon security(QString::fromUtf8("://images/settings-security.png"));
-    QIcon proxy(QString::fromUtf8("://images/settings-network.png"));
-    QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
-
-    // add Items
-    bAccount.reset(toolBar->addItem(account, tr("Account")));
-    bAccount.get()->setIcon(account);
-    connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
-
-    bSyncs.reset(toolBar->addItem(syncs, tr("Syncs")));
-    bSyncs.get()->setIcon(syncs);
-    connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
-
-    bBandwidth.reset(toolBar->addItem(bandwidth, tr("Bandwidth")));
-    bBandwidth.get()->setIcon(bandwidth);
-    connect(bBandwidth.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bBandwidth_clicked);
-
-    bSecurity.reset(toolBar->addItem(bandwidth, tr("Security")));
-    bSecurity.get()->setIcon(security);
-    connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
-
-    bProxies.reset(toolBar->addItem(proxy, tr("Proxy")));
-    bProxies.get()->setIcon(proxy);
-    connect(bProxies.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bProxies_clicked);
-
-    bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
-    bAdvanced.get()->setIcon(advanced);
-    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
-
-    bAccount.get()->setSelectable(true);
-    bSyncs.get()->setSelectable(true);
-    bBandwidth.get()->setSelectable(true);
-    bSecurity.get()->setSelectable(true);
-    bProxies.get()->setSelectable(true);
-    bAdvanced.get()->setSelectable(true);
-
-    //Disable context menu and set default option to account tab
-    customizeNSToolbar(toolBar.get());
-    checkNSToolBarItem(toolBar.get(), bAccount.get());
-
-    // Attach to the window
-    this->window()->winId(); // create window->windowhandle()
-    toolBar->attachToWindow(this->window()->windowHandle());
-
-
-    //Configure segmented control for +/- syncs
-    ui->wSegmentedControl->configureTableSegment();
-    connect(ui->wSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
-    connect(ui->wSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
-
-    ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    initializeNativeUIComponents();
 #endif
 
     setProxyOnly(proxyOnly);
@@ -245,8 +236,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifndef Q_OS_MACOS
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -267,7 +257,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
     ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
     ui->pSyncs->hide();
 
     if (!proxyOnly)
@@ -285,7 +274,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
             ui->gStorageSpace->setMinimumHeight(103);//TODO: check and adjust size for animations
         }
 
-        ui->pProxies->hide();
+        ui->pNetwork->hide();
     }
 #endif
 
@@ -324,28 +313,25 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     ui->bAccount->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
     ui->bSyncs->setEnabled(!proxyOnly);
-    ui->bBandwidth->setEnabled(!proxyOnly);
     ui->bAdvanced->setEnabled(!proxyOnly);
-    ui->bBandwidth->setEnabled(!proxyOnly);
 #else
     // TODO: enableNSToolBarItem does not disable items. Review cocoa code
     enableNSToolBarItem(bAccount.get(), !proxyOnly);
     enableNSToolBarItem(bSecurity.get(), !proxyOnly);
     enableNSToolBarItem(bSyncs.get(), !proxyOnly);
-    enableNSToolBarItem(bBandwidth.get(), !proxyOnly);
     enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
-    enableNSToolBarItem(bBandwidth.get(), !proxyOnly);
 #endif
 
     if (proxyOnly)
     {
 #ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bProxies.get());
+        checkNSToolBarItem(toolBar.get(), bNetwork.get());
+        // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
 #else
-        ui->bProxies->setEnabled(true);
-        ui->bProxies->setChecked(true);
+        ui->bNetwork->setEnabled(true);
+        ui->bNetwork->setChecked(true);
 #endif
     }
     else
@@ -391,14 +377,13 @@ void SettingsDialog::onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSettin
 
 void SettingsDialog::showGuestMode()
 {
-    ui->wStack->setCurrentWidget(ui->pProxies);
-    ui->pProxies->show();
-    if(mProxySettingsDialog) return; // proxy dialog already shown
-
-    mProxySettingsDialog = new ProxySettings(app, this);
-    mProxySettingsDialog->setWindowModality(Qt::WindowModal);
-    mProxySettingsDialog->open();
-    connect(mProxySettingsDialog, &ProxySettings::finished, this, [this](int result)
+    ui->wStack->setCurrentWidget(ui->pNetwork);
+    ui->pNetwork->show();
+    ProxySettings *proxySettingsDialog = new ProxySettings(app, this);
+    proxySettingsDialog->setAttribute(Qt::WA_DeleteOnClose);
+    proxySettingsDialog->setWindowModality(Qt::WindowModal);
+    proxySettingsDialog->open();
+    connect(proxySettingsDialog, &ProxySettings::finished, this, [this](int result)
     {
         if (result == QDialog::Accepted)
         {
@@ -605,26 +590,26 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 }
 
-void SettingsDialog::on_bBandwidth_clicked()
+void SettingsDialog::on_bNetwork_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("Bandwidth"));
+    setWindowTitle(tr("Network"));
 
-    if (ui->wStack->currentWidget() == ui->pBandwidth)
+    if (ui->wStack->currentWidget() == ui->pNetwork)
     {
 #ifdef Q_OS_MACOS
-       checkNSToolBarItem(toolBar.get(), bBandwidth.get());
+       checkNSToolBarItem(toolBar.get(), bNetwork.get());
 #endif
         return;
     }
 
-    ui->wStack->setCurrentWidget(ui->pBandwidth);
+    ui->wStack->setCurrentWidget(ui->pNetwork);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bBandwidth.get());
+    checkNSToolBarItem(toolBar.get(), bNetwork.get());
 
-    ui->pBandwidth->hide();
+    ui->pNetwork->hide();
 
     int bwHeight;
     ui->gBandwidthQuota->show();
@@ -633,12 +618,12 @@ void SettingsDialog::on_bBandwidth_clicked()
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->gBandwidthQuota->setMinimumHeight(59);
-        animateSettingPage(SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
+        animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
     else
     {
         ui->gBandwidthQuota->setMinimumHeight(79);
-        animateSettingPage(SETTING_ANIMATION_BANDWIDTH_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+        animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
 
 #endif
@@ -700,30 +685,6 @@ void SettingsDialog::on_bAdvanced_clicked()
     {
         animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES, SETTING_ANIMATION_PAGE_TIMEOUT);
     }
-#endif
-}
-
-void SettingsDialog::on_bProxies_clicked()
-{
-    emit userActivity();
-
-    setWindowTitle(tr("Proxy"));
-
-    if (ui->wStack->currentWidget() == ui->pProxies)
-    {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bProxies.get());
-#endif
-        return;
-    }
-
-    ui->wStack->setCurrentWidget(ui->pProxies);
-
-#ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bProxies.get());
-
-    ui->pProxies->hide();
-    animateSettingPage(SETTING_ANIMATION_PROXY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
@@ -868,11 +829,6 @@ void SettingsDialog::loadSettings()
     ui->cLanguage->addItems(languages);
     ui->cLanguage->setCurrentIndex(currentIndex);
 
-    if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
-    {
-        ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
-    }
-
     //Account
     ui->lEmail->setText(preferences->email());
     auto fullName {(preferences->firstName() + QStringLiteral(" ")+ preferences->lastName()).trimmed()};
@@ -896,24 +852,7 @@ void SettingsDialog::loadSettings()
     ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
 #endif
 
-    //Bandwidth
-    int uploadLimitKB = preferences->uploadLimitKB();
-    ui->rUploadAutoLimit->setChecked(uploadLimitKB<0);
-    ui->rUploadLimit->setChecked(uploadLimitKB>0);
-    ui->rUploadNoLimit->setChecked(uploadLimitKB==0);
-    ui->eUploadLimit->setText((uploadLimitKB<=0)? QString::fromAscii("0") : QString::number(uploadLimitKB));
-    ui->eUploadLimit->setEnabled(ui->rUploadLimit->isChecked());
-
-    int downloadLimitKB = preferences->downloadLimitKB();
-    ui->rDownloadLimit->setChecked(downloadLimitKB>0);
-    ui->rDownloadNoLimit->setChecked(downloadLimitKB==0);
-    ui->eDownloadLimit->setText((downloadLimitKB<=0)? QString::fromAscii("0") : QString::number(downloadLimitKB));
-    ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
-
-    ui->eMaxDownloadConnections->setValue(preferences->parallelDownloadConnections());
-    ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
-
-    ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
+    updateNetworkTab();
 
     //Advanced
     ui->lExcludedNames->clear();
@@ -939,7 +878,8 @@ void SettingsDialog::loadSettings()
 
 // TODO: separate storage refresh from bandwidth
 // split into separate methods
-void SettingsDialog::refreshAccountDetails() {
+void SettingsDialog::refreshAccountDetails()
+{
     int accountType = preferences->accountType();
     if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -1655,7 +1595,7 @@ void SettingsDialog::on_bDeleteName_clicked()
 
 void SettingsDialog::on_bExcludeSize_clicked()
 {
-    SizeLimitDialog *dialog = new SizeLimitDialog(this);
+    QPointer<SizeLimitDialog> dialog = new SizeLimitDialog(this);
     dialog->setUpperSizeLimit(preferences->upperSizeLimit());
     dialog->setLowerSizeLimit(preferences->lowerSizeLimit());
     dialog->setUpperSizeLimitValue(preferences->upperSizeLimitValue());
@@ -1663,7 +1603,8 @@ void SettingsDialog::on_bExcludeSize_clicked()
     dialog->setUpperSizeLimitUnit(preferences->upperSizeLimitUnit());
     dialog->setLowerSizeLimitUnit(preferences->lowerSizeLimitUnit());
 
-    if (dialog->exec() == QDialog::Accepted)
+    int ret = dialog->exec();
+    if (dialog && (ret == QDialog::Accepted))
     {
         preferences->setUpperSizeLimit(dialog->upperSizeLimit());
         preferences->setLowerSizeLimit(dialog->lowerSizeLimit());
@@ -1683,11 +1624,12 @@ void SettingsDialog::on_bExcludeSize_clicked()
 
 void SettingsDialog::on_bLocalCleaner_clicked()
 {
-    LocalCleanScheduler *dialog = new LocalCleanScheduler(this);
+    QPointer<LocalCleanScheduler> dialog = new LocalCleanScheduler(this);
     dialog->setDaysLimit(preferences->cleanerDaysLimit());
     dialog->setDaysLimitValue(preferences->cleanerDaysLimitValue());
 
-    if (dialog->exec() == QDialog::Accepted)
+    int ret = dialog->exec();
+    if (dialog && (ret == QDialog::Accepted))
     {
         preferences->setCleanerDaysLimit(dialog->daysLimit());
         preferences->setCleanerDaysLimitValue(dialog->daysLimitValue());
@@ -1713,6 +1655,8 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->cStartOnStartup->setText(tr("Open at login"));
 #endif
         onCacheSizeAvailable();
+
+        updateNetworkTab();
     }
     QDialog::changeEvent(event);
 }
@@ -1813,6 +1757,46 @@ void SettingsDialog::saveExcludeSyncNames()
 #else
         QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
 #endif
+    }
+}
+
+void SettingsDialog::updateNetworkTab()
+{
+    int uploadLimitKB = preferences->uploadLimitKB();
+    if (uploadLimitKB < 0)
+    {
+        ui->lUploadRateLimit->setText(tr("Auto"));
+    }
+    else if (uploadLimitKB > 0)
+    {
+        ui->lUploadRateLimit->setText(QStringLiteral("%1 KB/s").arg(uploadLimitKB));
+    }
+    else
+    {
+        ui->lUploadRateLimit->setText(tr("Don't limit"));
+    }
+
+    int downloadLimitKB = preferences->downloadLimitKB();
+    if (downloadLimitKB > 0)
+    {
+        ui->lDownloadRateLimit->setText(QStringLiteral("%1 KB/s").arg(downloadLimitKB));
+    }
+    else
+    {
+        ui->lDownloadRateLimit->setText(tr("Don't limit"));
+    }
+
+    switch (preferences->proxyType())
+    {
+    case Preferences::PROXY_TYPE_NONE:
+        ui->lProxySettings->setText(tr("No proxy"));
+        break;
+    case Preferences::PROXY_TYPE_AUTO:
+        ui->lProxySettings->setText(tr("Auto"));
+        break;
+    case Preferences::PROXY_TYPE_CUSTOM:
+        ui->lProxySettings->setText(tr("Manual"));
+        break;
     }
 }
 
@@ -1971,15 +1955,13 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bAccount->setEnabled(completed);
     ui->bSyncs->setEnabled(completed);
     ui->bAdvanced->setEnabled(completed);
-    ui->bBandwidth->setEnabled(completed);
-    ui->bProxies->setEnabled(completed);
+    ui->bNetwork->setEnabled(completed);
     ui->bSecurity->setEnabled(completed);
 #else
     enableNSToolBarItem(bAccount.get(), completed);
     enableNSToolBarItem(bSyncs.get() , completed);
     enableNSToolBarItem(bAdvanced.get(), completed);
-    enableNSToolBarItem(bBandwidth.get(), completed);
-    enableNSToolBarItem(bProxies.get(), completed);
+    enableNSToolBarItem(bNetwork.get(), completed);
 #endif
 }
 
@@ -2163,11 +2145,11 @@ void SettingsDialog::openSettingsTab(int tab)
 #endif
         break;
 
-    case BANDWIDTH_TAB:
+    case NETWORK_TAB:
 #ifndef Q_OS_MACOS
-        ui->bBandwidth->setChecked(true);
+        ui->bNetwork->setChecked(true);
 #else
-        emit bBandwidth.get()->activated();
+        emit bNetwork.get()->activated();
 #endif
         break;
 
@@ -2176,14 +2158,6 @@ void SettingsDialog::openSettingsTab(int tab)
         ui->bSecurity->setChecked(true);
 #else
         emit bSecurity.get()->activated();
-#endif
-        break;
-
-    case PROXY_TAB:
-#ifndef Q_OS_MACOS
-        ui->bProxies->setChecked(true);
-#else
-        emit bProxies.get()->activated();
 #endif
         break;
 
@@ -2254,17 +2228,13 @@ void SettingsDialog::onAnimationFinished()
     {
         ui->pSyncs->show();
     }
-    else if (ui->wStack->currentWidget() == ui->pBandwidth)
+    else if (ui->wStack->currentWidget() == ui->pNetwork)
     {
-        ui->pBandwidth->show();
+        ui->pNetwork->show();
     }
     else if (ui->wStack->currentWidget() == ui->pSecurity)
     {
         ui->pSecurity->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pProxies)
-    {
-        ui->pProxies->show();
     }
     else if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
@@ -2370,106 +2340,6 @@ void SettingsDialog::on_eDownloadFolder_textChanged(const QString &text)
     preferences->setHasDefaultDownloadFolder(hasDefaultDownloadOption);
 }
 
-void SettingsDialog::on_rUploadAutoLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eUploadLimit->setEnabled(!checked);
-    if (checked)
-    {
-        preferences->setUploadLimitKB(-1);
-        app->setUploadLimit(preferences->uploadLimitKB());
-        app->setMaxUploadSpeed(preferences->uploadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rUploadNoLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eUploadLimit->setEnabled(!checked);
-    if (checked)
-    {
-        preferences->setUploadLimitKB(0);
-        app->setUploadLimit(preferences->uploadLimitKB());
-        app->setMaxUploadSpeed(preferences->uploadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rUploadLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eUploadLimit->setEnabled(checked);
-    if (checked)
-    {
-        preferences->setUploadLimitKB(ui->eUploadLimit->text().toInt());
-        app->setUploadLimit(0); // TODO: Verify if I'm correct
-        app->setMaxUploadSpeed(preferences->uploadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rDownloadNoLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eDownloadLimit->setEnabled(!checked);
-    if (checked)
-    {
-        preferences->setDownloadLimitKB(0);
-        app->setMaxDownloadSpeed(preferences->downloadLimitKB());
-    }
-}
-
-void SettingsDialog::on_rDownloadLimit_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    ui->eDownloadLimit->setEnabled(checked);
-    if (checked)
-    {
-        preferences->setDownloadLimitKB(ui->eDownloadLimit->text().toInt());
-        app->setMaxDownloadSpeed(preferences->downloadLimitKB());
-    }
-}
-
-void SettingsDialog::on_eUploadLimit_editingFinished()
-{
-    if (loadingSettings) return;
-    preferences->setUploadLimitKB(ui->eUploadLimit->text().toInt());
-    app->setUploadLimit(0); // TODO: Verify if I'm correct
-    app->setMaxUploadSpeed(preferences->uploadLimitKB());
-}
-
-void SettingsDialog::on_eDownloadLimit_editingFinished()
-{
-    if (loadingSettings) return;
-    preferences->setDownloadLimitKB(ui->eDownloadLimit->text().toInt());
-    app->setMaxDownloadSpeed(preferences->downloadLimitKB());
-}
-
-void SettingsDialog::on_eMaxDownloadConnections_valueChanged(int value)
-{
-    if (loadingSettings) return;
-    if (value != preferences->parallelDownloadConnections())
-    {
-        preferences->setParallelDownloadConnections(value);
-        app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
-    }
-}
-
-void SettingsDialog::on_eMaxUploadConnections_valueChanged(int value)
-{
-    if (loadingSettings) return;
-    if (value != preferences->parallelUploadConnections())
-    {
-        preferences->setParallelUploadConnections(value);
-        app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
-    }
-}
-
-void SettingsDialog::on_cbUseHttps_toggled(bool checked)
-{
-    if (loadingSettings) return;
-    preferences->setUseHttpsOnly(checked);
-    app->setUseHttpsOnly(preferences->usingHttpsOnly());
-}
-
 void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
 {
     if (loadingSettings) return;
@@ -2505,11 +2375,36 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 #endif
 }
 
-void SettingsDialog::on_openProxySettingsButton_clicked()
+void SettingsDialog::on_bOpenProxySettings_clicked()
 {
-    ProxySettings proxySettingsDialog(app, this);
-    if (proxySettingsDialog.exec() == QDialog::Accepted)
+    ProxySettings *proxySettingsDialog = new ProxySettings(app, this);
+    if (proxySettingsDialog->exec() == QDialog::Accepted)
+    {
         app->applyProxySettings();
+        updateNetworkTab();
+    }
+}
+
+void SettingsDialog::on_bOpenBandwidthSettings_clicked()
+{
+    BandwidthSettings *bandwidthSettings = new BandwidthSettings(app, this);
+    if (bandwidthSettings->exec() == QDialog::Rejected)
+        return;
+
+    if(preferences->uploadLimitKB() > 0)
+        app->setUploadLimit(0);
+    else
+        app->setUploadLimit(preferences->uploadLimitKB());
+    app->setMaxUploadSpeed(preferences->uploadLimitKB());
+
+    app->setMaxDownloadSpeed(preferences->downloadLimitKB());
+
+    app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
+    app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+
+    app->setUseHttpsOnly(preferences->usingHttpsOnly());
+
+    updateNetworkTab();
 }
 
 #ifdef Q_OS_WINDOWS
