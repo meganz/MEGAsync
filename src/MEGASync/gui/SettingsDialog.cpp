@@ -1027,20 +1027,12 @@ void SettingsDialog::saveSyncSettings()
             {
                 bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
                 bool disabled = !enabled;
-#ifdef SYNC_ADVANCED_TEST_MODE
-                enabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Checked;
-                disabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Unchecked;
-#endif
 
                 auto tagItem = ui->tSyncs->cellWidget(j,3);
 
                 if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
                 {
-#ifdef SYNC_ADVANCED_TEST_MODE
-                    if (disabled && syncSetting->isEnabled()) //sync disabled
-#else
                     if (disabled && syncSetting->isActive()) //sync disabled
-#endif
                     {
                         ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Disabling sync: %1 - %2")
                                                                              .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
@@ -1061,11 +1053,7 @@ void SettingsDialog::saveSyncSettings()
 
                         controller->disableSync(syncSetting, disableSyncStep);
                     }
-#ifdef SYNC_ADVANCED_TEST_MODE
                     else if (enabled && !syncSetting->isActive()) //sync re-enabled!
-#else
-                    else if (enabled && !syncSetting->isActive()) //sync re-enabled!
-#endif
                     {
                         ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Enabling sync: %1 - %2")
                                                                             .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
@@ -1231,31 +1219,6 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
         c->setChecked(syncSetting->isActive()); //note: isEnabled refers to enable/disabled by the user. It could be temporary disabled or even failed. This should be shown in the UI
         c->setToolTip(tr("Enable / disable"));
 
-#ifdef SYNC_ADVANCED_TEST_MODE
-        if (syncSetting->isEnabled() && !syncSetting->isActive())
-        {
-            c->setCheckState(Qt::PartiallyChecked);
-        }
-
-        if (syncSetting->isActive())
-        {
-            localFolder->setTextColor(QColor::fromRgb(0, 255,0));
-        }
-        else
-        {
-            localFolder->setTextColor(QColor::fromRgb(255, 0,0));
-        }
-
-        if (syncSetting->isTemporaryDisabled())
-        {
-            megaFolder->setTextColor(QColor::fromRgb(125, 125, 125));
-        }
-
-        if (syncSetting->getState() == MegaSync::SYNC_FAILED)
-        {
-            megaFolder->setTextColor(QColor::fromRgb(255, 0, 0));
-        }
-#endif
         connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
 
         ui->tSyncs->setCellWidget(i, 2, c);
