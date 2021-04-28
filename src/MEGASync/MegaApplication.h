@@ -93,6 +93,7 @@ enum GetUserStatsReason {
     USERSTATS_OPENSETTINGSDIALOG,
     USERSTATS_STORAGECACHEUNKNOWN,
     USERSTATS_SHOWMAINDIALOG,
+    USERSTATS_REMOVEVERSIONS,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved
@@ -152,7 +153,7 @@ public:
      * @brief Migrate sync configuration to sdk cache
      * @param email of sync configuration to migrate from previous sessions
      */
-    void migrateSyncConfToSdk(QString email = {});
+    void migrateSyncConfToSdk(QString email = QString());
 
     mega::MegaApi *getMegaApi() { return megaApi; }
     std::unique_ptr<mega::MegaApiLock> megaApiLock;
@@ -209,7 +210,7 @@ public:
      * @param email of sync configuration to migrate from previous sessions. If present
      * syncs configured in previous sessions will be loaded.
      */
-    void fetchNodes(QString email = {});
+    void fetchNodes(QString email = QString());
     void whyAmIBlocked(bool periodicCall = false);
     bool showSyncOverquotaDialog();
     bool finished() const;
@@ -236,7 +237,7 @@ signals:
     void clearAllFinishedTransfers();
     void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
-    void closeSetupWizard(int);
+    void closeSetupWizard();
     void setupWizardCreated();
     void unblocked();
     void nodeMoved(mega::MegaHandle handle);
@@ -365,6 +366,7 @@ protected:
     void startHttpsServer();
     void initLocalServer();
     void refreshStorageUIs();
+    void manageBusinessStatus(int64_t event);
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
     std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
@@ -548,11 +550,14 @@ protected:
     std::unique_ptr<TransferQuota> transferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
+    QMutex mMutexOpenUrls;
+    QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
 private:
 #ifdef _WIN32
     std::shared_ptr<ShellNotifier> mShellNotifier;
 #endif
+    void loadSyncExclusionRules(QString email = QString());
 };
 
 class DeferPreferencesSyncForScope

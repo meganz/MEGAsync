@@ -1191,7 +1191,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your business account has expired</translation>
+        <translation type="unfinished">Your Business account has expired</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3092,7 +3092,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your syncs have been temporarily disabled</source>
         <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
-        <translation type="unfinished">Your syncs have been temporarily disabled</translation>
+        <translation type="obsolete">Your syncs have been temporarily disabled</translation>
     </message>
     <message>
         <source>Something went wrong</source>
@@ -3112,7 +3112,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your business account has expired</translation>
+        <translation type="unfinished">Your Business account has expired</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3281,7 +3281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
     </message>
     <message>
@@ -3293,6 +3293,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">Open Settings</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">Your syncs have been disabled</translation>
     </message>
 </context>
 <context>
@@ -3529,7 +3544,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The remote sync folder is not valid</translation>
+        <translation type="unfinished">The remote sync path is not valid</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3928,7 +3943,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Select just one file.</translation>
+        <translation type="unfinished">Select just one file</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4112,7 +4127,7 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Enter one or more MEGA file links</translation>
+        <translation>Enter one or more MEGA links</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4427,7 +4442,26 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>- Fixed detected crashes on Windows and Linux.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
-        <translation type="unfinished">- Fixed detected crashes on Windows and Linux.</translation>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- New improvements for the management of syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -5654,7 +5688,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Some of the syncs have been disabled. For more information, hover over the warning icon next to each disabled sync.</translation>
     </message>
 </context>
 <context>

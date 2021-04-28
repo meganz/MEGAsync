@@ -49,6 +49,8 @@ QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 QString MegaApplication::lastNotificationError = QString();
 
+constexpr auto openUrlClusterMaxElapsedTime = std::chrono::seconds(5);
+
 void MegaApplication::loadDataPath()
 {
 #if QT_VERSION < 0x050000
@@ -819,7 +821,7 @@ void MegaApplication::updateTrayIcon()
     #endif
         }
     }
-    else if (!getRootNode())
+    else if (!getRootNode() || !nodescurrent)
     {
         tooltipState = tr("Fetching file list...");
         icon = icons["synching"];
@@ -1087,43 +1089,6 @@ void MegaApplication::start()
     }
     else //Otherwise, login in the account
     {
-        if (preferences->logged()) //we have per account settings to restore
-        {
-            QStringList exclusions = preferences->getExcludedSyncNames();
-            vector<string> vExclusions;
-            for (int i = 0; i < exclusions.size(); i++)
-            {
-                vExclusions.push_back(exclusions[i].toUtf8().constData());
-            }
-            megaApi->setExcludedNames(&vExclusions);
-
-            QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-            vector<string> vExclusionPaths;
-            for (int i = 0; i < exclusionPaths.size(); i++)
-            {
-                vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-            }
-            megaApi->setExcludedPaths(&vExclusionPaths);
-
-            if (preferences->lowerSizeLimit())
-            {
-                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionLowerSizeLimit(0);
-            }
-
-            if (preferences->upperSizeLimit())
-            {
-                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionUpperSizeLimit(0);
-            }
-        }
-
         QString theSession;
         theSession = preferences->getSession();
 
@@ -1243,6 +1208,12 @@ void MegaApplication::loggedIn(bool fromWizard)
         crashReportFilePath.clear();
     }
 
+    //Check business status in case we need to alert the user
+    if (megaApi->isBusinessAccount())
+    {
+        manageBusinessStatus(megaApi->getBusinessStatus());
+    }
+
     registerUserActivity();
     pauseTransfers(paused);
 
@@ -1314,11 +1285,14 @@ if (!preferences->lastExecutionTime())
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
+
+#ifdef __APPLE__
         QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
                         tr("One or more syncs have been disabled. Go to preferences to enable them again."));
-#ifdef __APPLE__
         QPushButton *openPreferences = msg.addButton(tr("Open Preferences"), QMessageBox::YesRole);
 #else
+        QMessageBox msg(QMessageBox::Warning, QCoreApplication::applicationName(),
+                        tr("One or more syncs have been disabled. Go to settings to enable them again."));
         QPushButton *openPreferences = msg.addButton(tr("Open Settings"), QMessageBox::YesRole);
 #endif
         msg.addButton(tr("Dismiss"), QMessageBox::NoRole);
@@ -1388,6 +1362,21 @@ if (!preferences->lastExecutionTime())
     if (cachedStorageState != MegaApi::STORAGE_STATE_UNKNOWN)
     {
         applyStorageState(cachedStorageState, true);
+    }
+
+    auto cachedBlockedState = preferences->getBlockedState();
+    if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 differs from applied blockedStatus %2. Overriding cache")
+                     .arg(cachedBlockedState).arg(blockState).toUtf8().constData());
+        preferences->setBlockedState(blockState);
+    }
+    else if (!blockStateSet && cachedBlockedState != -2 && cachedBlockedState) //block state not received in this execution, and cached says we were blocked last time
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
+                     .arg(cachedBlockedState).toUtf8().constData());
+
+        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
     }
 }
 
@@ -3039,6 +3028,73 @@ void MegaApplication::proExpirityTimedOut()
     updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
 }
 
+void MegaApplication::loadSyncExclusionRules(QString email)
+{
+    assert(preferences->logged() || !email.isEmpty());
+
+    // if not logged in & email provided, read old syncs from that user and load new-cache sync from prev session
+    bool temporarilyLoggedPrefs = false;
+    if (!preferences->logged() && !email.isEmpty())
+    {
+        temporarilyLoggedPrefs = preferences->enterUser(email);
+        if (!temporarilyLoggedPrefs) // nothing to load
+        {
+            return;
+        }
+
+        preferences->loadExcludedSyncNames(); //to attend the corner case:
+                  // comming from old versions that didn't include some defaults
+
+    }
+    assert(preferences->logged()); //At this point preferences should be logged, just because you enterUser() or it was already logged
+
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    QStringList exclusions = preferences->getExcludedSyncNames();
+    vector<string> vExclusions;
+    for (int i = 0; i < exclusions.size(); i++)
+    {
+        vExclusions.push_back(exclusions[i].toUtf8().constData());
+    }
+    megaApi->setExcludedNames(&vExclusions);
+
+    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+    vector<string> vExclusionPaths;
+    for (int i = 0; i < exclusionPaths.size(); i++)
+    {
+        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+    }
+    megaApi->setExcludedPaths(&vExclusionPaths);
+
+    if (preferences->lowerSizeLimit())
+    {
+        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionLowerSizeLimit(0);
+    }
+
+    if (preferences->upperSizeLimit())
+    {
+        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+    }
+    else
+    {
+        megaApi->setExclusionUpperSizeLimit(0);
+    }
+
+
+    if (temporarilyLoggedPrefs)
+    {
+        preferences->leaveUser();
+    }
+
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -3078,40 +3134,6 @@ void MegaApplication::setupWizardFinished(int result)
             showInfoMessage(tr("Transfer canceled"));
         }
         return;
-    }
-
-    QStringList exclusions = preferences->getExcludedSyncNames();
-    vector<string> vExclusions;
-    for (int i = 0; i < exclusions.size(); i++)
-    {
-        vExclusions.push_back(exclusions[i].toUtf8().constData());
-    }
-    megaApi->setExcludedNames(&vExclusions);
-
-    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
-    vector<string> vExclusionPaths;
-    for (int i = 0; i < exclusionPaths.size(); i++)
-    {
-        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
-    }
-    megaApi->setExcludedPaths(&vExclusionPaths);
-
-    if (preferences->lowerSizeLimit())
-    {
-        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionLowerSizeLimit(0);
-    }
-
-    if (preferences->upperSizeLimit())
-    {
-        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-    }
-    else
-    {
-        megaApi->setExclusionUpperSizeLimit(0);
     }
 
     if (infoDialog && infoDialog->isVisible())
@@ -3551,6 +3573,34 @@ void MegaApplication::handleMEGAurl(const QUrl &url)
     if (appfinished)
     {
         return;
+    }
+
+    {
+        QMutexLocker locker(&mMutexOpenUrls);
+
+        //Remove outdated url refs
+        QMutableMapIterator<QString, std::chrono::system_clock::time_point> it(mOpenUrlsClusterTs);
+        while (it.hasNext())
+        {
+            it.next();
+
+            const auto elapsedTime = std::chrono::system_clock::now() - it.value();
+            if(elapsedTime > openUrlClusterMaxElapsedTime)
+            {
+                it.remove();
+            }
+        }
+
+        //Check if URl was notified within last openUrlClusterMaxElapsedTime
+        const auto megaUrlIterator = mOpenUrlsClusterTs.find(url.fragment());
+        const auto itemFound(megaUrlIterator != mOpenUrlsClusterTs.end());
+        if(itemFound)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Session transfer to URL already managed");
+            return;
+        }
+
+        mOpenUrlsClusterTs.insert(url.fragment(), std::chrono::system_clock::now());
     }
 
     megaApi->getSessionTransferURL(url.fragment().toUtf8().constData());
@@ -4026,9 +4076,57 @@ void MegaApplication::fetchNodes(QString email)
 {
     assert(!mFetchingNodes);
     mFetchingNodes = true;
-    migrateSyncConfToSdk(email);
-    //We can restore fetchnodes once we finish the migration of syncsconfigs
-    //megaApi->fetchNodes();
+
+    // We need to load exclusions and migrate sync configurations from MEGAsync held cache, to SDK's
+    // prior fetching nodes (when the SDK will resume syncing)
+
+    // If we are loging into a new session of an account previously used in MEGAsync,
+    // we will use the previous configurations stored in that user preferences
+    // However, there is a case in which we are not able to do so at this point:
+    // we don't know the user email.
+    // That should only happen when trying to resume a session (using the session id stored in general preferences)
+    // that didn't complete a fetch nodes (i.e. does not have preferences logged).
+    // that can happen for blocked accounts.
+    // Fortunately, the SDK can help us get the email of the session
+    bool needFindingOutEmail = !preferences->logged() && email.isEmpty();
+
+    auto loadMigrateAndFetchNodes = [this](const QString &email)
+    {
+        if (!preferences->logged() && email.isEmpty()) // I still couldn't get the the email: won't be able to access user settings
+        {
+            megaApi->fetchNodes();
+        }
+        else
+        {
+            loadSyncExclusionRules(email);
+            migrateSyncConfToSdk(email); // this will produce the fetch nodes once done
+        }
+    };
+
+    if (!needFindingOutEmail)
+    {
+        loadMigrateAndFetchNodes(email);
+    }
+    else // we will ask the SDK the email
+    {
+        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi* api,  MegaRequest *request, MegaError *e) {
+              QString email;
+
+              if (e->getErrorCode() == API_OK)
+              {
+                  auto emailFromRequest = request->getEmail();
+                  if (emailFromRequest)
+                  {
+                      email = QString::fromUtf8(emailFromRequest);
+                  }
+              }
+
+              // in any case, proceed:
+              loadMigrateAndFetchNodes(email);
+        }));
+
+    }
+
 }
 
 void MegaApplication::whyAmIBlocked(bool periodicCall)
@@ -6454,6 +6552,111 @@ void MegaApplication::refreshStorageUIs()
     }
 }
 
+void MegaApplication::manageBusinessStatus(int64_t event)
+{
+    switch (event)
+    {
+        case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
+        {
+            if (megaApi->isMasterBusinessAccount())
+            {
+                QMessageBox msgBox;
+                HighDpiResize hDpiResizer(&msgBox);
+                msgBox.setIcon(QMessageBox::Warning);
+                // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
+                #ifdef __APPLE__
+                    msgBox.setWindowModality(Qt::WindowModal);
+                #endif
+                msgBox.setText(tr("Payment Failed"));
+                msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
+                msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
+                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                msgBox.setDefaultButton(QMessageBox::Yes);
+                int ret = msgBox.exec();
+                if (ret == QMessageBox::AcceptRole)
+                {
+                    QString url = QString::fromUtf8("mega://#repay");
+                    Utilities::getPROurlWithParameters(url);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                }
+            }
+
+            if (preferences->logged() &&
+                    ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
+                      || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
+                    ))
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
+            }
+            break;
+        }
+        case MegaApi::BUSINESS_STATUS_EXPIRED:
+        {
+            QMessageBox msgBox;
+            HighDpiResize hDpiResizer(&msgBox);
+            msgBox.setIcon(QMessageBox::Warning);
+            // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
+            #ifdef __APPLE__
+                msgBox.setWindowModality(Qt::WindowModal);
+            #endif
+
+            if (megaApi->isMasterBusinessAccount())
+            {
+                msgBox.setText(tr("Your Business account is expired"));
+                msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
+                msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
+                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                msgBox.setDefaultButton(QMessageBox::Yes);
+                int ret = msgBox.exec();
+                if (ret == QMessageBox::AcceptRole)
+                {
+                    QString url = QString::fromUtf8("mega://#repay");
+                    Utilities::getPROurlWithParameters(url);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                }
+            }
+            else
+            {
+                msgBox.setText(tr("Account Suspended"));
+                msgBox.setTextFormat(Qt::RichText);
+                msgBox.setInformativeText(
+                            tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
+                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                            + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
+                            tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
+                                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
+                                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromAscii("\n"));
+
+                msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                msgBox.exec();
+            }
+
+            break;
+        }
+        case MegaApi::BUSINESS_STATUS_ACTIVE:
+        case MegaApi::BUSINESS_STATUS_INACTIVE:
+        {
+        if (preferences->logged() &&
+                ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
+                  || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
+                ))
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    businessStatus = event;
+    if (preferences->logged())
+    {
+        preferences->setBusinessState(businessStatus);
+    }
+}
+
 void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 {
     DeferPreferencesSyncForScope deferrer(this);
@@ -6469,7 +6672,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
-        showErrorMessage(tr("Your syncs have been temporarily disabled").append(QString::fromUtf8(": "))
+        showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
                          .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
@@ -6558,107 +6761,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
-        switch (event->getNumber())
-        {
-            case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
-            {
-                if (megaApi->isMasterBusinessAccount())
-                {
-                    QMessageBox msgBox;
-                    HighDpiResize hDpiResizer(&msgBox);
-                    msgBox.setIcon(QMessageBox::Warning);
-                    // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
-                    #ifdef __APPLE__
-                        msgBox.setWindowModality(Qt::WindowModal);
-                    #endif
-                    msgBox.setText(tr("Payment Failed"));
-                    msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
-                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
-                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                    msgBox.setDefaultButton(QMessageBox::Yes);
-                    int ret = msgBox.exec();
-                    if (ret == QMessageBox::AcceptRole)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                    }
-                }
-
-                if (preferences->logged() &&
-                        ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
-                          || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
-                        ))
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
-                }
-                break;
-            }
-            case MegaApi::BUSINESS_STATUS_EXPIRED:
-            {
-                QMessageBox msgBox;
-                HighDpiResize hDpiResizer(&msgBox);
-                msgBox.setIcon(QMessageBox::Warning);
-                // Remove ifdef code for window modality when upgrade to QT 5.9. Issue seems to be fixed.
-                #ifdef __APPLE__
-                    msgBox.setWindowModality(Qt::WindowModal);
-                #endif
-
-                if (megaApi->isMasterBusinessAccount())
-                {
-                    msgBox.setText(tr("Your Business account is expired"));
-                    msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
-                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
-                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                    msgBox.setDefaultButton(QMessageBox::Yes);
-                    int ret = msgBox.exec();
-                    if (ret == QMessageBox::AcceptRole)
-                    {
-                        QString url = QString::fromUtf8("mega://#repay");
-                        Utilities::getPROurlWithParameters(url);
-                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                    }
-                }
-                else
-                {
-                    msgBox.setText(tr("Account Suspended"));
-                    msgBox.setTextFormat(Qt::RichText);
-                    msgBox.setInformativeText(
-                                tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
-                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                                + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
-                                tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
-                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
-                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromAscii("\n"));
-
-                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
-                    msgBox.exec();
-                }
-
-                break;
-            }
-            case MegaApi::BUSINESS_STATUS_ACTIVE:
-            case MegaApi::BUSINESS_STATUS_INACTIVE:
-            {
-            if (preferences->logged() &&
-                    ( ( businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED) // transitioning from expired
-                      || preferences->getBusinessState() == MegaApi::BUSINESS_STATUS_EXPIRED // last known was expired (in cache: previous execution)
-                    ))
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no longer BUSINESS_STATUS_EXPIRED").toUtf8().constData());
-                }
-                break;
-            }
-            default:
-                break;
-        }
-
-        businessStatus = event->getNumber();
-        if (preferences->logged())
-        {
-            preferences->setBusinessState(businessStatus);
-        }
+        manageBusinessStatus(event->getNumber());
     }
 }
 
@@ -7083,88 +7186,45 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setAccountStateInGeneral(Preferences::STATE_FETCHNODES_OK);
             preferences->setNeedsFetchNodesInGeneral(false);
 
+            if (!mRootNode)
+            {
+                QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
+                                                       "Please, try again. If the problem persists "
+                                                       "please contact bug@mega.co.nz"), QMessageBox::Ok);
+
+                setupWizardFinished(QDialog::Rejected);
+                preferences->setCrashed(true);
+                rebootApplication(false);
+                break;
+            }
+
             std::unique_ptr<char[]> email(megaApi->getMyEmail());
             bool logged = preferences->logged();
             bool firstTime = !logged && email && !preferences->hasEmail(QString::fromUtf8(email.get()));
-            bool setupWizardContinues = false;
             if (!logged) //session resumed from general storage (or logged in via user/pass)
             {
                 if (firstTime)
                 {
                     showSetupWizard(SetupWizard::PAGE_MODE);
-                    setupWizardContinues = true;
                 }
                 else
                 {
+                    // We will proceed with a new login
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-                    model->rewriteSyncSettings(); //write sync settings into user's preferences
-                    setupWizardFinished(QDialog::Accepted);
+                    model->rewriteSyncSettings(); //write sync settings into user's preferences                   
+
+                    if (infoDialog && infoDialog->isVisible())
+                    {
+                        infoDialog->hide();
+                    }
+
+                    loggedIn(true);
+                    emit closeSetupWizard();
                 }
             }
-
-            if (!firstTime)
+            else // session resumed regularly
             {
-                if (mRootNode)
-                {
-                    //If we have got the filesystem, start the app
-                    loggedIn(false);
-
-
-                    // onEvent with EVENT_BUSINESS_STATUS might have been received before logged, hence not written to cache yet.
-                    // we fix that here:
-                    auto cachedBusinessState = preferences->getBusinessState();
-                    if (businessStatus != -2 && cachedBusinessState != businessStatus)
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached business states %1 differs from applied businessStatus %2. Overriding cache")
-                                     .arg(cachedBusinessState).arg(businessStatus).toUtf8().constData());
-                        preferences->setBusinessState(businessStatus);
-                    }
-
-                    auto cachedBlockedState = preferences->getBlockedState();
-                    if (blockStateSet && cachedBlockedState != blockState) // blockstate received and needs to be updated in cache
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 differs from applied blockedStatus %2. Overriding cache")
-                                     .arg(cachedBlockedState).arg(blockState).toUtf8().constData());
-                        preferences->setBlockedState(blockState);
-                    }
-                    else if (!blockStateSet && cachedBlockedState != -2 && cachedBlockedState) //block state not received in this execution, and cached says we were blocked last time
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("cached blocked states %1 reports blocked, and no block state has been received before, lets query the block status")
-                                     .arg(cachedBlockedState).toUtf8().constData());
-
-                        whyAmIBlocked();// lets query again, to trigger transition and restoreSyncs
-                    }
-
-                    auto businessState = preferences->getBusinessState();
-                    bool businessExpired = businessState == MegaApi::BUSINESS_STATUS_EXPIRED;
-                    auto blockedState = preferences->getBlockedState();
-                    bool accountBlocked = blockedState != -2 && blockedState;
-
-                    //Restore temporarily disabled syncs for cases that don't have a transition that triggers restoreSyncs
-                    if (!isAppliedStorageOverquota()
-                            && !accountBlocked
-                            && !businessExpired)
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("no blocking situation after loggedIn").toUtf8().constData());
-                    }
-                }
-                else
-                {
-                    QMegaMessageBox::warning(nullptr, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
-
-                    setupWizardFinished(QDialog::Rejected);
-
-                    preferences->setCrashed(true);
-
-                    rebootApplication(false);
-                }
-            }
-
-            if (!setupWizardContinues) //otherwise it needs to close
-            {
-                  emit closeSetupWizard(QDialog::Accepted);
+                loggedIn(false);
             }
         }
         else
@@ -8431,9 +8491,5 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
 
 void MEGASyncDelegateListener::onEvent(MegaApi *api, MegaEvent *e)
 {
-    if (e->getType() == MegaEvent::EVENT_FIRST_SYNC_RESUMING )
-    {
-        Utilities::delayFirstSyncStart();
-    }
     QTMegaListener::onEvent(api, e);
 }

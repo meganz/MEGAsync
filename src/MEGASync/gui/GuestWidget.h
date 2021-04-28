@@ -81,7 +81,7 @@ private:
     Ui::GuestWidget *ui;
     MegaApplication *app;
     QString email, password;
-    bool incorrectCredentialsMessageReceived;
+    bool incorrectCredentialsMessageReceived = false;
 
     GuestWidgetState state = GuestWidgetState::NONE;
     void resetPageAfterBlock();

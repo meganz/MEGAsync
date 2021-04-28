@@ -155,7 +155,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_nl.ts \
     gui/translations/MEGASyncStrings_pl.ts \
     gui/translations/MEGASyncStrings_pt_BR.ts \
-    gui/translations/MEGASyncStrings_pt.ts \
     gui/translations/MEGASyncStrings_ro.ts \
     gui/translations/MEGASyncStrings_ru.ts \
     gui/translations/MEGASyncStrings_th.ts \

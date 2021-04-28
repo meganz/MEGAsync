@@ -18,6 +18,8 @@ private:
     bool mEnabled = false;
     bool mActive = false;
 
+    QString mMegaFolder; //cached (in memory) value of the remote path
+
     static constexpr int CACHE_VERSION = 1;
 public:
     SyncSetting();
@@ -32,7 +34,8 @@ public:
     SyncSetting(mega::MegaSync *sync);
     mega::MegaHandle backupId() const;
     void setBackupId(mega::MegaHandle backupId);
-    QString name() const;
+    // returns sync name verbatim or removing problematic chars (if removeUnsupportedChars = true)
+    QString name(bool removeUnsupportedChars = false) const;
 
     void setEnabled(bool value);
 
@@ -53,6 +56,7 @@ public:
 
     QString getSyncID() const;
     void setSyncID(const QString &syncID);
+    void setMegaFolder(const QString &megaFolder);
 };
 
 Q_DECLARE_METATYPE(SyncSetting);

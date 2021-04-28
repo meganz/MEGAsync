@@ -479,6 +479,12 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
+void SettingsDialog::storageChanged()
+{
+    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
+    onCacheSizeAvailable();
+}
+
 void SettingsDialog::onSyncStateChanged(std::shared_ptr<SyncSetting>)
 {
     loadSyncSettings();
@@ -499,17 +505,14 @@ void SettingsDialog::onSavingSettingsProgress(double progress)
 void SettingsDialog::onSavingSettingsCompleted()
 {
     auto closeDelay = max(qint64(0), 350 - (QDateTime::currentMSecsSinceEpoch() - ui->wSpinningIndicator->getStartTime()));
-    QTimer::singleShot(closeDelay, [this] () {
+    QTimer::singleShot(closeDelay, this, [this] () {
         isSavingSyncsOnGoing = false;
         syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
         savingSyncs(true, ui->pSyncs);
     });
 }
 
-void SettingsDialog::storageChanged()
-{
-    onCacheSizeAvailable();
-}
+
 
 void SettingsDialog::storageStateChanged(int newStorageState)
 {
@@ -1887,7 +1890,7 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
         areSyncsDisabled = areSyncsDisabled || static_cast<bool>(syncSetting->getError());
 
         // Col 1: Local folder
-        localFolder->setPathAndName(localFolderQString, syncSetting->name());
+        localFolder->setPath(localFolderQString, syncSetting->name());
         localFolder->setToolTip(localFolderQString);
         localFolder->setError(syncSetting->getError());
         ui->tSyncs->setCellWidget(i, 0, localFolder);
@@ -1895,8 +1898,10 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
         // Col 2: Mega Folder
         QSyncItemWidget *megaFolder = new QSyncItemWidget();
         assert(syncSetting->getMegaFolder().size() && "remote folder lacks path");
-        megaFolder->setPathAndGuessName(syncSetting->getMegaFolder().size()?syncSetting->getMegaFolder():QString::fromUtf8("---"));
+        megaFolder->setPath(syncSetting->getMegaFolder().size()?syncSetting->getMegaFolder():QString::fromUtf8("---"));
         megaFolder->setToolTip(syncSetting->getMegaFolder());
+        megaFolder->setSyncSetting(syncSetting);
+        megaFolder->mSyncRootHandle = syncSetting->getMegaHandle();
         ui->tSyncs->setCellWidget(i, 1, megaFolder);
 
         // Col 3: Enabled/Disabled checkbox
@@ -2032,11 +2037,11 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     }
 
     QSyncItemWidget *localFolder = new QSyncItemWidget();
-    localFolder->setPathAndName(localFolderPath, dialog->getSyncName());
+    localFolder->setPath(localFolderPath, dialog->getSyncName());
     QSyncItemWidget *megaFolder = new QSyncItemWidget();
 
     //Check if need to setError here or it is enough setting when syncstatechanged
-    megaFolder->setPathAndGuessName(dialog->getMegaPath());
+    megaFolder->setPath(dialog->getMegaPath());
     int pos = ui->tSyncs->rowCount();
     ui->tSyncs->setRowCount(pos+1);
     localFolder->setToolTip(localFolderPath);
@@ -2149,7 +2154,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromAscii(handle);
+            QString url = QString::fromAscii("mega://#fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
@@ -2546,9 +2551,14 @@ void SettingsDialog::on_bClearFileVersions_clicked()
         return;
     }
 
-    megaApi->removeVersions();
-    // Reset file version size to adjust UI
-    fileVersionsSize = 0;
+    megaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,  MegaRequest *request, MegaError *e)
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
+            megaApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+        }
+    }));
 
     ui->lFileVersionsSize->hide();
     ui->bClearFileVersions->hide();
