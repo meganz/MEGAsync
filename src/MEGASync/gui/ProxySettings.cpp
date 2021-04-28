@@ -83,8 +83,6 @@ void ProxySettings::onProxyTestError()
         mProgressDialog->hide();
     QMegaMessageBox::critical(this, tr("Error"),
                               tr("Your proxy settings are invalid or the proxy doesn't respond"));
-
-//    reject(); reconsider in Guest mode
 }
 
 void ProxySettings::onProxyTestSuccess()

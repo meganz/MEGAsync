@@ -26,6 +26,8 @@ namespace Ui {
 class SettingsDialog;
 }
 
+class ProxySettings;
+
 class MegaApplication;
 class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidthObserver, public IAccountObserver
 {
@@ -42,7 +44,7 @@ public:
     void setOverQuotaMode(bool mode);
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
-    void openSettingsTab(int tab);
+    void openSettingsTab(int tab = -1);
     void storageChanged();
     void addSyncFolder(mega::MegaHandle megaFolderHandle);
     void loadSyncSettings();
@@ -64,6 +66,7 @@ public slots:
     void onSyncStateChanged(std::shared_ptr<SyncSetting>);
     void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
     void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
+    void showGuestMode();
 
 private slots:
     void onSavingSettingsProgress(double progress);
@@ -183,6 +186,7 @@ private:
     bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
     bool isSavingSyncsOnGoing;
     int debugCounter; // Easter Egg
+    QPointer<ProxySettings> mProxySettingsDialog;
 
 #ifdef Q_OS_MACOS
     QPropertyAnimation *minHeightAnimation;
