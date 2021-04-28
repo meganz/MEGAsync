@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">#sWidget
 {
-  background-color: #FFFFFF;
+  background-color: transparent;
 }
 
 #lTitle

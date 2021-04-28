@@ -3,6 +3,7 @@
 
 #include "MegaApplication.h"
 #include "control/Utilities.h"
+#include "control/AppStatsEvents.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
 #include "platform/Platform.h"
@@ -63,7 +64,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
     connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
 
-    connect(static_cast<MegaApplication*>(qApp), SIGNAL(closeSetupWizard(int)), this, SLOT(done(int)));
+    connect(static_cast<MegaApplication*>(qApp), SIGNAL(closeSetupWizard()), this, SLOT(close()));
 
     page_newaccount();
 
@@ -128,7 +129,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 ui->ePassword->clear();
                 ui->eRepeatPassword->clear();
 
-                megaApi->sendEvent(99505, "MEGAsync account creation start");
+                megaApi->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
+                                   "MEGAsync account creation start");
                 if (!preferences->accountCreationTime())
                 {
                     preferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -163,7 +165,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 if (loggingStarted)
                 {
                     preferences->setAccountStateInGeneral(Preferences::STATE_LOGGED_OK);
-                    static_cast<MegaApplication*>(qApp)->fetchNodes();
+                    auto email = request->getEmail();
+                    static_cast<MegaApplication*>(qApp)->fetchNodes(QString::fromUtf8(email ? email : ""));
                     if (!preferences->hasLoggedIn())
                     {
                         preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -295,7 +298,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         case MegaRequest::TYPE_FETCH_NODES:
         {
             if (error->getErrorCode() != MegaError::API_OK)
-            {   
+            {
                 if (loggingStarted)
                 {
                     if (error->getErrorCode() == MegaError::API_EBLOCKED)
@@ -587,7 +590,7 @@ void SetupWizard::on_bBack_clicked()
     QWidget *w = ui->sPages->currentWidget();
     if (w == ui->pSetupType)
     {
-        megaApi->logout();
+        megaApi->logout(true, nullptr);
         page_logout();
     }
     else if (w == ui->pAdvanced)
@@ -621,7 +624,7 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
+        mPreconfiguredSyncs.append(PreConfiguredSync(ui->eLocalFolder->text(), selectedMegaFolderHandle, syncName));
         done(QDialog::Accepted);
     }
     else
@@ -652,14 +655,14 @@ void SetupWizard::on_bCancel_clicked()
             if (megaApi->isLoggedIn())
             {
                 closing = true;
-                megaApi->logout();
+                megaApi->logout(true, nullptr);
                 page_logout();
             }
             else
             {
                 megaApi->localLogout();
                 done(QDialog::Rejected);
-            }            
+            }
         }
     }
 }
@@ -712,6 +715,8 @@ void SetupWizard::on_bLocalFolder_clicked()
     delete dialog;
 #else
     QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
+    path = QDir::toNativeSeparators(path);
+
 #endif
 
     if (path.length())
@@ -790,7 +795,7 @@ void SetupWizard::initModeSelection()
 }
 
 void SetupWizard::wTypicalSetup_clicked()
-{    
+{
     qreal ratio = 1.0;
 #if QT_VERSION >= 0x050000
     ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
@@ -929,7 +934,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
         if (megaApi->isLoggedIn())
         {
             closing = true;
-            megaApi->logout();
+            megaApi->logout(true, nullptr);
             page_logout();
         }
         else
@@ -938,11 +943,6 @@ void SetupWizard::closeEvent(QCloseEvent *event)
             done(QDialog::Rejected);
         }
     }
-}
-
-void SetupWizard::reject()
-{
-
 }
 
 void SetupWizard::page_login()
@@ -1171,6 +1171,11 @@ void SetupWizard::setLevelStrength(int level)
     }
 }
 
+QList<PreConfiguredSync> SetupWizard::preconfiguredSyncs() const
+{
+    return mPreconfiguredSyncs;
+}
+
 void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
@@ -1228,4 +1233,25 @@ void SetupWizard::onPasswordTextChanged(QString text)
 {
     int strength = megaApi->getPasswordStrength(text.toUtf8().constData());
     text.isEmpty() ? setLevelStrength(-1) : setLevelStrength(strength);
+}
+
+PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
+    mLocalFolder{localFolder}, mMegaFolderHandle{megaFolderHandle},mSyncName(syncName)
+{
+
+}
+
+QString PreConfiguredSync::localFolder() const
+{
+    return mLocalFolder;
+}
+
+QString PreConfiguredSync::syncName() const
+{
+    return mSyncName;
+}
+
+mega::MegaHandle PreConfiguredSync::megaFolderHandle() const
+{
+    return mMegaFolderHandle;
 }

@@ -17,6 +17,8 @@
 #include "MegaProgressCustomDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
+#include "MegaController.h"
+#include "../model/Model.h"
 #include "megaapi.h"
 #include "HighDpiResize.h"
 
@@ -32,6 +34,8 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
 public:
     enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, BANDWIDTH_TAB = 2, PROXY_TAB = 3, ADVANCED_TAB = 4};
 
+    enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
+
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
     ~SettingsDialog();
     void setProxyOnly(bool proxyOnly);
@@ -41,6 +45,7 @@ public:
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
     void storageChanged();
+    void addSyncFolder(mega::MegaHandle megaFolderHandle);
 
 public slots:
     void stateChanged();
@@ -50,8 +55,16 @@ public slots:
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-    
+    void onSyncStateChanged(std::shared_ptr<SyncSetting>);
+    void onSyncDeleted(std::shared_ptr<SyncSetting>);
+    void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
+    void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
+
 private slots:
+
+    void onSavingSettingsProgress(double progress);
+    void onSavingSettingsCompleted();
+
     void on_bAccount_clicked();
 
     void on_bSyncs_clicked();
@@ -133,6 +146,8 @@ private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
+    Controller *controller;
+    Model *model;
     mega::MegaApi *megaApi;
     HighDpiResize highDpiResize;
     bool syncsChanged;
@@ -145,6 +160,7 @@ private:
     MegaProgressCustomDialog *proxyTestProgressDialog;
     AccountDetailsDialog *accountDetailsDialog;
     bool shouldClose;
+    std::unique_ptr<ProgressHelper> saveSettingsProgress;
     int modifyingSettings;
     long long cacheSize;
     long long remoteCacheSize;
@@ -165,6 +181,9 @@ private:
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
     bool reloadUIpage;
+    ThreadPool* mThreadPool;
+    bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
+    bool isSavingSyncsOnGoing;
 
 #ifndef WIN32
     int folderPermissions;
@@ -183,6 +202,8 @@ private:
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
+    void savingSyncs(bool completed, QObject *item);
+    void syncsStateInformation(int state);
 
 public:
     void updateStorageElements();

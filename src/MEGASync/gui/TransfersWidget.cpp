@@ -10,15 +10,17 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     ui(new Ui::TransfersWidget)
 {
     ui->setupUi(this);
-    this->model = NULL;
+    this->model = nullptr;
+    tDelegate = nullptr;
     isPaused = false;
     app = (MegaApplication *)qApp;
 }
 
-void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
+void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferData, int type)
 {
     this->type = type;
     model = new QActiveTransfersModel(type, transferData);
+
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 
@@ -53,12 +55,12 @@ void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData,
 
 void TransfersWidget::refreshTransferItems()
 {
-    model->refreshTransfers();
+    if (model) model->refreshTransfers();
 }
 
 void TransfersWidget::clearTransfers()
 {
-    model->removeAllTransfers();
+    if (model) model->removeAllTransfers();
 }
 
 TransfersWidget::~TransfersWidget()
@@ -108,7 +110,7 @@ void TransfersWidget::configureTransferView()
 void TransfersWidget::pausedTransfers(bool paused)
 {
     isPaused = paused;
-    if (model->rowCount(QModelIndex()) == 0)
+    if (model && model->rowCount(QModelIndex()) == 0)
     {
         noTransfers();
     }

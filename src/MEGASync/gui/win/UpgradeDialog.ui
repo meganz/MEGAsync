@@ -207,7 +207,7 @@ font-size: 18px;
            <string notr="true"/>
           </property>
           <property name="icon">
-           <iconset resource="../Resources_linux.qrc">
+           <iconset resource="../Resources_win.qrc">
             <normaloff>:/images/icon_question_white.png</normaloff>:/images/icon_question_white.png</iconset>
           </property>
           <property name="iconSize">
@@ -377,7 +377,7 @@ font-size: 18px;
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

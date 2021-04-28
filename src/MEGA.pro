@@ -27,11 +27,14 @@ unix:!macx {
 macx {
     SUBDIRS += MEGAUpdater
     SUBDIRS += MEGALoader
-    #SUBDIRS += MEGADeprecatedVersion
 }
 
 CONFIG(with_updater) {
     SUBDIRS += MEGAUpdateGenerator
+}
+
+CONFIG(with_tests) {
+    SUBDIRS += ../tests/MEGASyncUnitTests
 }
 
 CONFIG(with_tools) {

@@ -64,7 +64,11 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
                         char *escapedName = megaApi->escapeFsIncompatible(node->getName(), path.toStdString().c_str());
                         QString nodeName = QString::fromUtf8(escapedName);
                         delete [] escapedName;
-                        data->localPath += QDir::separator() + nodeName;
+                        if (!data->localPath.endsWith(QDir::separator()))
+                        {
+                            data->localPath += QDir::separator();
+                        }
+                        data->localPath += nodeName;
                     }
                 }
             }
@@ -88,25 +92,29 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, QString appData)
         return;
     }
 
-    QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
+    QString currentPathWithSep = QDir::toNativeSeparators(info.absoluteFilePath());
+    if (!currentPathWithSep.endsWith(QDir::separator()))
+    {
+        currentPathWithSep += QDir::separator();
+    }
 
     if (parent->getType() == MegaNode::TYPE_FILE)
     {
-        megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(),appData.toUtf8().constData());
+        megaApi->startDownloadWithData(parent, currentPathWithSep.toUtf8().constData(),appData.toUtf8().constData());
     }
     else
     {
         if (!parent->isForeign())
         {
-            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), appData.toUtf8().constData());
+            megaApi->startDownloadWithData(parent, currentPathWithSep.toUtf8().constData(), appData.toUtf8().constData());
         }
         else
         {
-            char *escapedName = megaApi->escapeFsIncompatible(parent->getName(), currentPath.toStdString().c_str());
+            char *escapedName = megaApi->escapeFsIncompatible(parent->getName(), currentPathWithSep.toStdString().c_str());
             QString nodeName = QString::fromUtf8(escapedName);
             delete [] escapedName;
 
-            QString destPath = currentPath + QDir::separator() + nodeName;
+            QString destPath = currentPathWithSep + nodeName;
             QDir dir(destPath);
             if (!dir.exists())
             {
