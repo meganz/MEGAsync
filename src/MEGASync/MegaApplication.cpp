@@ -2839,6 +2839,23 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaUiMessage, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
 }
 
+QuotaState MegaApplication::getTransferQuotaState() const
+{
+     QuotaState quotaState (QuotaState::OK);
+
+     if (transferQuota->isQuotaWarning())
+     {
+         quotaState = QuotaState::WARNING;
+     }
+     else if (transferQuota->isOverQuota())
+     {
+         quotaState = QuotaState::FULL;
+     }
+
+     return quotaState;
+}
+
+
 int MegaApplication::getAppliedStorageState() const
 {
     return appliedStorageState;

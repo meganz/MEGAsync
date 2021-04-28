@@ -221,6 +221,7 @@ public:
 
     mega::MegaPricing *getPricing() const;
 
+    QuotaState getTransferQuotaState() const;
     int getAppliedStorageState() const;
     bool isAppliedStorageOverquota() const;
     void reloadSyncsInSettings();

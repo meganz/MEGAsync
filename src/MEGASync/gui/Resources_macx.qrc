@@ -163,18 +163,6 @@
         <file>images/full_sync_ico@2x.png</file>
         <file>images/grey_folder.png</file>
         <file>images/grey_folder@2x.png</file>
-        <file>images/ic_small_available.png</file>
-        <file>images/ic_small_available@2x.png</file>
-        <file>images/ic_small_cloud_drive.png</file>
-        <file>images/ic_small_cloud_drive@2x.png</file>
-        <file>images/ic_small_inbox.png</file>
-        <file>images/ic_small_inbox@2x.png</file>
-        <file>images/ic_small_rubbish.png</file>
-        <file>images/ic_small_rubbish@2x.png</file>
-        <file>images/ic_small_shares.png</file>
-        <file>images/ic_small_shares@2x.png</file>
-        <file>images/ic_small_versions.png</file>
-        <file>images/ic_small_versions@2x.png</file>
         <file>images/ico_about_MEGA.png</file>
         <file>images/ico_about_MEGA@2x.png</file>
         <file>images/ico_add_sync.png</file>
@@ -576,7 +564,12 @@
         <file>images/new_contact@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
-        <file>images/ic_sync_warning@3x.png</file>
+        <file>images/Bin_24_ico.png</file>
+        <file>images/Bin_24_ico@2x.png</file>
+        <file>images/Cloud_Drive_24_ico.png</file>
+        <file>images/Cloud_Drive_24_ico@2x.png</file>
+        <file>images/Inbox_24_ico.png</file>
+        <file>images/Inbox_24_ico@2x.png</file>
         <file>images/all_transfers_ico.png</file>
         <file>images/all_transfers_ico@2x.png</file>
         <file>images/search_ico.png</file>
@@ -649,5 +642,5 @@
         <file>images/upload_toolbar_ico@2x.png</file>
         <file>images/resume_ico.png</file>
         <file>images/resume_ico@2x.png</file>
-        </qresource>
+    </qresource>
 </RCC>
