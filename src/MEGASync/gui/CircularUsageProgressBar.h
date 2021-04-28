@@ -4,68 +4,64 @@
 #include <QWidget>
 #include <QPen>
 #include <QIcon>
-
-#define ALMOSTOVERQUOTA_VALUE 90
-
-const char DEFAULT_FGCOLOR[] = "#00BFA5";
-const char DEFAULT_BKCOLOR[] = "#E5E5E5";
-const char DEFAULT_OQCOLOR[] = "#DF4843";
-const char DEFAULT_ALMOSTOQCOLOR[] = "#F98400";
-const char DEFAULT_FGCOLOR_QUOTA[] = "#8DD0EF";
-const char DEFAULT_TEXT_COLOR[] = "#000000";
+#include <QEvent>
+#include <QPainter>
 
 class CircularUsageProgressBar : public QWidget
 {
     Q_OBJECT
+
 public:
     static const int MAXVALUE = 100;
     static const int MINVALUE = 0;
-    explicit CircularUsageProgressBar(QWidget *parent = 0);
 
-    int getValue() const;
+    enum STATE
+    {
+        STATE_OK      = 0,
+        STATE_WARNING = 1,
+        STATE_OVER    = 2,
+    };
+
+    explicit CircularUsageProgressBar(QWidget* parent = 0);
+
     void setValue(int value);
+    void setState(STATE state);
     void setEmptyBarTotalValueUnknown();
     void setFullBarTotalValueUnkown();
-
-    QColor getBackgroundColor() const;
-    void setBackgroundColor(const QColor &color);
-
-    QColor getForegroundColor() const;
-    void setForegroundColor(const QColor &color);
-
-    QColor getOverquotaColor() const;
-    void setOverquotaColor(const QColor &color);
-
-    QColor getAlmostOverquotaColor() const;
-    void setAlmostOverquotaColor(const QColor &color);
+    void setProgressBarGradient(QColor light, QColor dark);
 
 protected:
-    void paintEvent(QPaintEvent *event);
-    void drawBackgroundBar(QPainter &p, QRectF &baseRect);
-    void drawArcValue(QPainter &p, const QRectF &baseRect, double arcLength);
-    void drawText(QPainter &p, const QRectF &innerRect, double innerRadius, double progressBarValue);
-    void setPenColor(QPen &pen, QColor color, bool forceRepaint = true);
-    void setBarTotalValueUnkown(int value, const QColor& color);
+    void paintEvent(QPaintEvent* event);
 
-    int progressBarValue = -1;
-    double penWidth;
-    double outerRadius;
-    QString textValue;
+private:
+    void drawText(QPainter& p, const QRectF& innerRect, double innerRadius, double mPbValue);
+    void setPenColor(QPen& pen, QColor color, bool forceRepaint = true);
+    void setPenGradient(QPen& pen, QConicalGradient& gradient, bool forceRepaint = true);
+    void setBarTotalValueUnkown(int value, QConicalGradient* gradient);
 
-    QColor backgroundColor;
-    QColor foregroundColor;
-    QColor overquotaColor;
-    QColor almostOverquotaColor;
-    QColor currentColor;
+    int     mPbValue;
+    double  mPenWidth;
+    double  mOuterRadius;
+    QRectF  mBaseRect;
+    QString mTextValue;
 
-    QPen backgroundPen;
-    QPen foregroundPen;
+    STATE mState;
 
-    const QIcon markWarning;
-    const QIcon markFull;
-    const QIcon dynamicTransferBlue;
-    const QIcon dynamicTransferRed;
-    bool totalValueUnkown;
+    QColor mPbBgColor;
+
+    QConicalGradient  mOkPbGradient;
+    QConicalGradient  mWarnPbGradient;
+    QConicalGradient  mFullPbGradient;
+    QConicalGradient* mPbGradient;
+
+    QPen mBgPen;
+    QPen mFgPen;
+
+    const QIcon mMarkWarning;
+    const QIcon mMarkFull;
+    const QIcon mDynTrsfOk;
+    const QIcon mDynTrsfFull;
+    bool  mNoTotalValue;
 };
 
 #endif // CIRCULARUSAGEPROGRESSBAR_H

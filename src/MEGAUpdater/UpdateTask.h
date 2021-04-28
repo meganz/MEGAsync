@@ -47,7 +47,7 @@ public:
     ~SignatureChecker();
 
     void init();
-    void add(const char *data, unsigned size);
+    void add(const char *data, size_t size);
     bool checkSignature(const char *base64Signature);
 
 protected:
@@ -68,7 +68,7 @@ protected:
     bool processUpdateFile(FILE *fd);
     bool fileExist(const char* path);
     void initSignature();
-    void addToSignature(const char *bytes, int length);
+    void addToSignature(const char *bytes, size_t length);
     bool checkSignature(std::string value);
     bool alreadyInstalled(std::string relativePath, std::string fileSignature);
     bool alreadyDownloaded(std::string relativePath, std::string fileSignature);

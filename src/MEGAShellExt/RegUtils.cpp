@@ -66,7 +66,7 @@ bool DeleteRegKey(HKEY key, LPTSTR subkey, REGSAM samDesired)
         return (result == ERROR_FILE_NOT_FOUND);
     }
 
-    int len =  _tcslen(subkey);
+    size_t len =  _tcslen(subkey);
     if (!len || len >= (MAX_PATH - 1) || _tcscpy_s(keyPath, MAX_PATH, subkey))
     {
         RegCloseKey(hKey);
@@ -83,7 +83,7 @@ bool DeleteRegKey(HKEY key, LPTSTR subkey, REGSAM samDesired)
 
     do
     {
-        maxSize = MAX_PATH - len;
+        maxSize = DWORD(MAX_PATH - len);
     } while (RegEnumKeyEx(hKey, 0, endPos, &maxSize, NULL, NULL, NULL, NULL) == ERROR_SUCCESS
              && DeleteRegKey(key, keyPath, samDesired));
 

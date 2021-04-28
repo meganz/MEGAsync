@@ -31,7 +31,6 @@ private slots:
     void on_bTerms_clicked();
     void on_bPolicy_clicked();
     void on_bAck_clicked();
-    void on_bGDPR_clicked();
 };
 
 #endif // CHANGELOGDIALOG_H

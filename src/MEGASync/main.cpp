@@ -431,6 +431,28 @@ int main(int argc, char *argv[])
 
     app.setStyle(new MegaProxyStyle());
 
+#ifdef WIN32
+    // Set Hi-DPI friendly checkboxes and radiobuttons for Windows.
+    app.setStyleSheet(app.styleSheet() + QString::fromUtf8(
+                          "QCheckBox::indicator::unchecked {image: url(:/images/cb_unchecked.svg);}"
+                          "QCheckBox::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
+                          "QCheckBox::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
+                          "QCheckBox::indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
+                          "QCheckBox::indicator::checked {image: url(:/images/cb_checked.svg);}"
+                          "QCheckBox::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
+                          "QCheckBox::indicator:checked:pressed {image: url(:/images/cb_checked_pressed.svg);}"
+                          "QCheckBox::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
+                          "QRadioButton::indicator::unchecked {image: url(:/images/rb_unchecked.svg);}"
+                          "QRadioButton::indicator:unchecked:hover {image: url(:/images/rb_unchecked_hover.svg);}"
+                          "QRadioButton::indicator:unchecked:pressed {image: url(:/images/rb_unchecked_pressed.svg);}"
+                          "QRadioButton::indicator:unchecked:disabled {image: url(:/images/rb_unchecked_disabled.svg);}"
+                          "QRadioButton::indicator::checked {image: url(:/images/rb_checked.svg);}"
+                          "QRadioButton::indicator:checked:hover {image: url(:/images/rb_checked_hover.svg);}"
+                          "QRadioButton::indicator:checked:pressed {image: url(:/images/rb_checked_pressed.svg);}"
+                          "QRadioButton::indicator:checked:disabled {image: url(:/images/rb_checked_disabled.svg);}"
+                        ));
+#endif
+
 #ifdef Q_OS_MACX
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running on macOS version: %1").arg(QString::number(QSysInfo::MacintoshVersion)).toUtf8().constData());

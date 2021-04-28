@@ -21,6 +21,7 @@
 #include "../model/Model.h"
 #include "megaapi.h"
 #include "HighDpiResize.h"
+#include "control/Utilities.h"
 
 namespace Ui {
 class SettingsDialog;
