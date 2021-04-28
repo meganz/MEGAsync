@@ -183,13 +183,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     areSyncsDisabled = false;
     isSavingSyncsOnGoing = false;
 
-    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
-
-    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
-
 #ifdef Q_OS_LINUX
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
@@ -237,6 +230,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     initializeNativeUIComponents();
 #endif
+
+    setProxyOnly(proxyOnly);
 
 #ifndef Q_OS_MACOS
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
@@ -292,6 +287,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setAvatar();
     connect(app, SIGNAL(storageStateChanged(int)), this, SLOT(storageStateChanged(int)));
     storageStateChanged(app->getAppliedStorageState());
+
+    connect(this->model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+    connect(this->model, SIGNAL(syncRemoved(std::shared_ptr<SyncSetting>)),
+            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+
+    syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -383,15 +385,16 @@ void SettingsDialog::showGuestMode()
     proxySettingsDialog->open();
     connect(proxySettingsDialog, &ProxySettings::finished, this, [this](int result)
     {
-        if(result == QDialog::Accepted)
+        if (result == QDialog::Accepted)
         {
             app->applyProxySettings();
-            if(proxyOnly) accept(); // close Settings in guest mode
+            if (proxyOnly) accept(); // close Settings in guest mode
         }
         else
         {
-            if(proxyOnly) reject(); // close Settings in guest mode
+            if (proxyOnly) reject(); // close Settings in guest mode
         }
+        delete mProxySettingsDialog;
     });
 }
 
@@ -2120,6 +2123,9 @@ void SettingsDialog::setUpdateAvailable(bool updateAvailable)
 
 void SettingsDialog::openSettingsTab(int tab)
 {
+    if(proxyOnly) // do not switch tabs when in guest mode
+        return;
+
     switch (tab)
     {
     case ACCOUNT_TAB:
