@@ -2,9 +2,7 @@
 #include "QMegaMessageBox.h"
 #include "ui_TransferManager.h"
 #include "MegaApplication.h"
-#include "Utilities.h"
 #include "platform/Platform.h"
-
 #include "MegaTransferDelegate2.h"
 #include "MegaTransferView.h"
 
@@ -81,7 +79,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     QColor shadowColor (188, 188, 188);
     mShadowTab->setParent(mUi->wTransferring);
-    mShadowTab->setBlurRadius(8.);
+    mShadowTab->setBlurRadius(10.);
     mShadowTab->setXOffset(0.);
     mShadowTab->setYOffset(0.);
     mShadowTab->setColor(shadowColor);
@@ -113,6 +111,11 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabFramesToggleGroup[TYPE_IMAGE_TAB]    = mUi->fImages;
     mTabFramesToggleGroup[TYPE_TEXT_TAB]     = mUi->fText;
 
+    for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
+    {
+        tabFrame->setProperty("itsOn", false);
+    }
+
     mTabNoItem[ALL_TRANSFERS_TAB] = mUi->wNoTransfers;
     mTabNoItem[DOWNLOADS_TAB]     = mUi->wNoDownloads;
     mTabNoItem[UPLOADS_TAB]       = mUi->wNoUploads;
@@ -125,11 +128,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     mTabNoItem[TYPE_DOCUMENT_TAB] = mUi->wNoTransfers;
     mTabNoItem[TYPE_IMAGE_TAB]    = mUi->wNoTransfers;
     mTabNoItem[TYPE_TEXT_TAB]     = mUi->wNoTransfers;
-
-    mUi->lAllTransfers->hide();
-    mUi->lDownloads->hide();
-    mUi->lUploads->hide();
-    mUi->tClearCompleted->hide();
 
     mMediaNumberLabelsGroup[TransferData::TYPE_OTHER]    = mUi->lOtherNb;
     mMediaNumberLabelsGroup[TransferData::TYPE_AUDIO]    = mUi->lMusicNb;
@@ -174,8 +172,32 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(mStatsRefreshTimer, &QTimer::timeout,
             this, &TransferManager::refreshStats);
 
+
+    // Connect to storage quota signals
+    connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::storageStateChanged,
+            this, &TransferManager::onStorageStateChanged,
+            Qt::QueuedConnection);
+    // Connect to transfer quota signals
+//    auto tq (qobject_cast<MegaApplication*>(qApp)->transferQuota);
+
+
+    // Init state
     onTransfersInModelChanged(true);
     onUpdatePauseState(mModel->areAllPaused());
+    onStorageStateChanged(qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
+    onTransferQuotaStateChanged(qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
+    setActiveTab(ALL_TRANSFERS_TAB);
+
+    // Refresh Style, QSS is glitchy on first start???
+    auto tabFrame (mTabFramesToggleGroup[mCurrentTab]);
+    tabFrame->style()->unpolish(tabFrame);
+    tabFrame->style()->polish(tabFrame);
+    const auto children (tabFrame->findChildren<QWidget*>());
+    for (auto w : children)
+    {
+        w->style()->unpolish(w);
+        w->style()->polish(w);
+    }
 }
 
 void TransferManager::setActiveTab(int t)
@@ -314,7 +336,7 @@ bool TransferManager::refreshStateStats()
         label->setVisible(weHaveTransfers);
         label->setText(QString::number(processedNumber));
 
-        mNumberOfTransfersPerTab[COMPLETED_TAB] = processedNumber;
+        mNumberOfTransfersPerTab[COMPLETED_TAB] = weHaveTransfers ? processedNumber : NB_INIT_VALUE;
     }
 
     // Then Active states --------------------------------------------------------------------------
@@ -432,6 +454,53 @@ void TransferManager::onTransfersInModelChanged(bool weHaveTransfers)
     refreshView();
 }
 
+void TransferManager::onStorageStateChanged(int storageState)
+{
+    switch (storageState)
+    {
+        case MegaApi::STORAGE_STATE_PAYWALL:
+        case MegaApi::STORAGE_STATE_RED:
+        {
+            mUi->tSeePlans->show();
+            mUi->lStorageOverQuota->show();
+            break;
+        }
+        case MegaApi::STORAGE_STATE_GREEN:
+        case MegaApi::STORAGE_STATE_ORANGE:
+        case MegaApi::STORAGE_STATE_UNKNOWN:
+        default:
+        {
+            mUi->lStorageOverQuota->hide();
+            QuotaState tQuotaState (qobject_cast<MegaApplication*>(qApp)->getTransferQuotaState());
+            mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
+            break;
+        }
+    }
+}
+
+void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
+{
+    switch (transferQuotaState)
+    {
+        case QuotaState::FULL:
+        {
+            mUi->tSeePlans->show();
+            mUi->lTransferOverQuota->show();
+            break;
+        }
+        case QuotaState::OK:
+        case QuotaState::WARNING:
+        default:
+        {
+            mUi->lTransferOverQuota->hide();
+            int storageState (qobject_cast<MegaApplication*>(qApp)->getAppliedStorageState());
+            mUi->tSeePlans->setVisible(storageState == MegaApi::STORAGE_STATE_PAYWALL
+                                       || storageState == MegaApi::STORAGE_STATE_RED);
+            break;
+        }
+    }
+}
+
 void TransferManager::refreshSpeed()
 {
     mUi->bUpSpeed->setText(Utilities::getSizeString(mMegaApi->getCurrentUploadSpeed())
@@ -490,6 +559,14 @@ void TransferManager::on_bClearAll_clicked()
 void TransferManager::on_tClearCompleted_clicked()
 {
     emit cancelClearAllRows(false, true);
+    mUi->tClearCompleted->hide();
+}
+
+void TransferManager::on_tSeePlans_clicked()
+{
+    QString url = QString::fromUtf8("mega://#pro");
+    Utilities::getPROurlWithParameters(url);
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
 void TransferManager::on_bSearch_clicked()
@@ -677,14 +754,15 @@ void TransferManager::toggleTab(TM_TAB tab)
 {
     if (mCurrentTab != tab)
     {
-        // Activate frame
+        // De-activate old tab frame
         if (mCurrentTab != NO_TAB)
         {
             mTabFramesToggleGroup[mCurrentTab]->setProperty("itsOn", false);
         }
-        mTabFramesToggleGroup[tab]->setGraphicsEffect(mShadowTab);
-        mTabFramesToggleGroup[tab]->setProperty("itsOn", true);
 
+        // Activate new tab frame
+        mTabFramesToggleGroup[tab]->setProperty("itsOn", true);
+        mTabFramesToggleGroup[tab]->setGraphicsEffect(mShadowTab);
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
@@ -692,13 +770,13 @@ void TransferManager::toggleTab(TM_TAB tab)
         if (tab == COMPLETED_TAB)
         {
             mUi->tClearCompleted->setText(tr("Clear All"));
-            mUi->bPause->setVisible(false);
+            mUi->bPause->hide();
             emit showCompleted(true);
         }
         else if (mCurrentTab == COMPLETED_TAB)
         {
             mUi->tClearCompleted->setText(tr("Clear Completed"));
-            mUi->bPause->setVisible(true);
+            mUi->bPause->show();
             emit showCompleted(false);
         }
 
@@ -706,7 +784,6 @@ void TransferManager::toggleTab(TM_TAB tab)
         if (tab == SEARCH_TAB)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
-
         }
         else if (mCurrentTab == SEARCH_TAB)
         {
@@ -714,12 +791,12 @@ void TransferManager::toggleTab(TM_TAB tab)
         }
 
         mCurrentTab = tab;
+
+        refreshStats();
+
+        // Reload QSS because it is glitchy
+        mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
     }
-
-    refreshStats();
-
-    // Reload QSS because it can be glitchy
-    mUi->wLeftPane->setStyleSheet(mUi->wLeftPane->styleSheet());
 }
 
 void TransferManager::refreshView()
@@ -740,7 +817,7 @@ void TransferManager::refreshView()
 
         // Show "Clear All/Completed" if there are any completed transfers
         // (only for completed tab and individual media tabs)
-        if ((mCurrentTab == COMPLETED_TAB && mNumberOfTransfersPerTab[COMPLETED_TAB])
+        if ((mCurrentTab == COMPLETED_TAB && mNumberOfTransfersPerTab[COMPLETED_TAB] > 0)
                 || (mCurrentTab >= TYPES_TAB_BASE && mModel->getNumberOfFinishedForFileType(
                         static_cast<TransferData::FileType>(mCurrentTab - TYPES_TAB_BASE))))
         {

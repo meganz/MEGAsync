@@ -7,6 +7,7 @@
 #include "Utilities.h"
 #include "TransferItem2.h"
 #include "QTransfersModel2.h"
+#include "TransferQuota.h"
 
 #include <QGraphicsEffect>
 #include <QTimer>
@@ -81,6 +82,8 @@ private:
     void refreshTypeStats();
     void refreshFileTypesStats();
     void refreshSearchStats();
+public slots:
+    void onTransferQuotaStateChanged(QuotaState transferQuotaState);
 
 private slots:
     void on_tCompleted_clicked();
@@ -89,6 +92,7 @@ private slots:
     void on_tAllTransfers_clicked();
     void on_bClearAll_clicked();
     void on_tClearCompleted_clicked();
+    void on_tSeePlans_clicked();
     void on_bSearch_clicked();
     void on_tSearchIcon_clicked();
     void on_tSearchCancel_clicked();
@@ -110,6 +114,8 @@ private slots:
 
     void onUpdatePauseState(bool isPaused);
     void onTransfersInModelChanged(bool weHaveTransfers);
+
+    void onStorageStateChanged(int storageState);
 
     void refreshSpeed();
     void refreshStats();

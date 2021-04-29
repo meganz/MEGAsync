@@ -376,16 +376,6 @@ void MegaTransferView::dropEvent(QDropEvent* event)
     clearSelection();
 }
 
-void MegaTransferView::resizeEvent(QResizeEvent* event)
-{
-//    auto items (findChildren<TransferManagerItem2*>());
-    for ( auto w : findChildren<TransferManagerItem2*>())
-    {
-        w->resize(event->size());
-    }
-    QTreeView::resizeEvent(event);
-}
-
 void MegaTransferView::onCustomContextMenu(const QPoint& point)
 {
     bool enablePause = false;

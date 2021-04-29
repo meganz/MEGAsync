@@ -63,10 +63,10 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
                       this, &QTransfersModel2::onPauseStateChanged, Qt::QueuedConnection);
 
     mAreAllPaused = mPreferences->getGlobalPaused();
-    emit pauseStateChanged(mAreAllPaused);
 
     qRegisterMetaType<TransferData::FileType>("TransferData::FileType");
     qRegisterMetaType<TransferData::TransferState>("TransferData::TransferState");
+    qRegisterMetaType<TransferData::TransferType>("TransferData::TransferState");
 }
 
 bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
@@ -168,6 +168,8 @@ QExplicitlySharedDataPointer<TransferData> QTransfersModel2::getTransferDataByRo
 
 void QTransfersModel2::initModel()
 {
+    emit pauseStateChanged(mAreAllPaused);
+
     mInitFuture = QtConcurrent::run([=]
     {
         mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
@@ -451,11 +453,19 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
             auto totalBytes (transfer->getTotalBytes());
             auto rem (mRemainingTimes[transfer->getTag()]);
             auto remSecs (rem->calculateRemainingTimeSeconds(speed, totalBytes - transferredBytes));
+            int errorCode (MegaError::API_OK);
+            auto errorValue (0LL);
+            auto megaError (transfer->getLastErrorExtended());
+            if (megaError)
+            {
+                errorCode = megaError->getErrorCode();
+                errorValue = megaError->getValue();
+            }
 
-            transferItem.updateValuesTransferUpdated(remSecs.count(), 0, 0,
-                                                      transfer->getMeanSpeed(), speed, priority,
-                                                      state, transferredBytes,
-                                                      transfer->getPublicMegaNode());
+            transferItem.updateValuesTransferUpdated(remSecs.count(), errorCode, errorValue,
+                                                     transfer->getMeanSpeed(), speed, priority,
+                                                     state, transferredBytes,
+                                                     transfer->getPublicMegaNode());
             v = QVariant::fromValue(transferItem);
             // Re-order if priority changed
             bool sameRow (true);

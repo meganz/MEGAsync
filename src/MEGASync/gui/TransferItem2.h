@@ -30,7 +30,7 @@ class TransferData : public QSharedData
 
     enum TransferState
     {
-        TRANSFER_NONE         = 1 << mega::MegaTransfer::STATE_NONE,
+//        TRANSFER_NONE         = 1 << mega::MegaTransfer::STATE_NONE,
         TRANSFER_QUEUED       = 1 << mega::MegaTransfer::STATE_QUEUED,
         TRANSFER_ACTIVE       = 1 << mega::MegaTransfer::STATE_ACTIVE,
         TRANSFER_PAUSED       = 1 << mega::MegaTransfer::STATE_PAUSED,

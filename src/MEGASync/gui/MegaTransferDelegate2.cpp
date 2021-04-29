@@ -28,9 +28,9 @@ MegaTransferDelegate2::MegaTransferDelegate2(QAbstractItemModel* model, QWidget*
 {
 }
 
-TransferManagerItem2* MegaTransferDelegate2::getTransferItemWidget(int row, int itemHeight) const
+TransferManagerItem2* MegaTransferDelegate2::getTransferItemWidget(int row, const QSize& size) const
 {
-    auto nbRowsMaxInView (mView->height() / itemHeight + 1);
+    auto nbRowsMaxInView (mView->height() / size.height() + 1);
     auto item (row % nbRowsMaxInView);
 
     if (item >= mItems->size())
@@ -55,22 +55,28 @@ void MegaTransferDelegate2::paint(QPainter* painter, const QStyleOptionViewItem&
 
     if (index.isValid() && row < rowCount)
     {
-        painter->setRenderHints(QPainter::Antialiasing
-                               | QPainter::TextAntialiasing
-                               | QPainter::SmoothPixmapTransform);
-
         auto pos (option.rect.topLeft());
         auto width (option.rect.width());
         auto height (option.rect.height());
         auto transferItem (qvariant_cast<TransferItem2>(index.data(Qt::DisplayRole)));
-        auto w (getTransferItemWidget(row, height));
+        TransferManagerItem2* w (getTransferItemWidget(row, option.rect.size()));
 
+        // Move if position changed
         if (w->pos() != pos)
         {
             w->move(pos);
         }
+
+        // Resize if window resized
+        if (w->width() != width)
+        {
+            w->resize(width, height);
+        }
+
+        // Update data
         w->updateUi(transferItem.getTransferData(), row);
 
+        // Draw border if selected
         if (option.state & QStyle::State_Selected)
         {
             static const QPen pen (QColor::fromRgbF(0.84, 0.84, 0.84, 1), 1);
@@ -142,7 +148,7 @@ bool MegaTransferDelegate2::editorEvent(QEvent* event, QAbstractItemModel* model
                 QMouseEvent* me = static_cast<QMouseEvent*>(event);
                 if( me->button() == Qt::LeftButton )
                 {
-                    auto currentRow (getTransferItemWidget(index.row(), option.rect.height()));
+                    auto currentRow (getTransferItemWidget(index.row(), option.rect.size()));
                     currentRow->forwardMouseEvent(me);
                 }
                 break;
@@ -159,7 +165,7 @@ bool MegaTransferDelegate2::helpEvent(QHelpEvent* event, QAbstractItemView* view
 {
     if (event->type() == QEvent::ToolTip && index.isValid())
     {
-        auto currentRow (getTransferItemWidget(index.row(), option.rect.height()));
+        auto currentRow (getTransferItemWidget(index.row(), option.rect.size()));
         auto widget (currentRow->childAt(event->pos() - currentRow->pos()));
         if (widget)
         {

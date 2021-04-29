@@ -5,7 +5,7 @@
 using namespace mega;
 
 const TransferData::TransferStates TransferData::STATE_MASK = TransferData::TransferStates (
-        TransferData::TransferState::TRANSFER_NONE |
+//        TransferData::TransferState::TRANSFER_NONE |
         TransferData::TransferState::TRANSFER_QUEUED |
         TransferData::TransferState::TRANSFER_ACTIVE |
         TransferData::TransferState::TRANSFER_PAUSED |

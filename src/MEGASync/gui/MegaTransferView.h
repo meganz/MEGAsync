@@ -52,7 +52,6 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent* event );
     void changeEvent(QEvent* event);
     void dropEvent(QDropEvent* event);
-    void resizeEvent(QResizeEvent* event);
 
 public slots:
     void onPauseResumeAllRows(bool pauseState);

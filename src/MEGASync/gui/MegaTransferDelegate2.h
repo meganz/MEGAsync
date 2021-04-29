@@ -37,7 +37,7 @@ private slots:
 private:
     void setupUi(Ui::TransferManagerItem& ui, const TransferItem2& transferItem, QWidget* w) const;
     void updateUi(Ui::TransferManagerItem& ui, const TransferItem2& transferItem) const;
-    TransferManagerItem2* getTransferItemWidget(int row, int itemHeight) const;
+    TransferManagerItem2* getTransferItemWidget(int row, const QSize& size) const;
 };
 
 #endif // MEGATRANSFERDELEGATE2_H

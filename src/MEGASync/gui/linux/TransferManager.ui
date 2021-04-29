@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>1103</width>
     <height>720</height>
    </rect>
   </property>
@@ -57,12 +57,9 @@
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#wTransferring QLabel, #wMediaType QLabel
+#lCurrentContent
 {
-    color: #777777;
-    font-size: 10px;
-    font-weight: bold;
-    qproperty-alignment: 'AlignVCenter';
+  margin-right: 16px;
 }
 
 #wMediaType QFrame, #wTransferring QFrame, #wSearch QFrame
@@ -231,13 +228,13 @@ QToolButton
   border: none;
 }
 
-#wRightPaneHeader QPushButton
+#wRightPaneHeader QPushButton, #tCogWheel
 {
   border: none;
   color: #333333;
   font-size: 14px;
   font-weight: 600;
-  qProperty-iconSize: 22px;
+  qProperty-iconSize: 24px;
 }
 
 #lPaused, #lNbResults
@@ -248,21 +245,37 @@ QToolButton
   padding-left: 14px;
 }
 
+#lTransferOverQuota, #lStorageOverQuota
+{
+   color: #F46265;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 14px;
+}
+
 #sTransfers QToolButton
 {
   qProperty-iconSize: 240px;
 }
 
-#tClearCompleted
+#pStatusHeader  QToolButton
 {
   border-radius: 16px;
-	padding-left: 20px;
-	padding-right: 20px;
-  background-color: #FFA500;
+  padding-left: 20px;
+  padding-right: 20px;
   color: #FFFFFF;
   font-size: 14px;
   font-weight: 600;
-	margin-left: 16px;
+}
+
+#tClearCompleted
+{
+  background-color: #FFA500;
+}
+
+#tSeePlans
+{
+  background-color: #3ACC86;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
@@ -302,22 +315,48 @@ QToolButton
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">#wLeftPane QFrame[itsOn=true] 
+      <string notr="true">#wLeftPane QFrame &gt; QLabel
+{
+    font-weight: bold;
+    font-size: 10px;
+	text-align: right;
+    border-radius: 12px;
+}
+
+#wLeftPane QFrame[itsOn=true] 
 {
 	border-radius: 4px;
-    background-color: white;
+    background: solid white;
 }
 
 #wLeftPane QFrame[itsOn=true]  QLabel
 {
     border: 1px solid #F5F5F5; 
     background-color: #FAFAFA;
-    border-radius: 12px;
+    color: #333333;
 }
 
 #wLeftPane QFrame[itsOn=true] QPushButton
 {
     font-weight: bold;
+}
+
+#wLeftPane QFrame[itsOn=false] 
+{
+	border-radius: none;
+    background-color: transparent;
+}
+
+#wLeftPane QFrame[itsOn=false]  QLabel
+{
+    border: 1px transparent #FAFAFA; 
+    background: transparent;
+    color: #999999;
+}
+
+#wLeftPane QFrame[itsOn=false] QPushButton
+{
+    font-weight: normal;
 }
 </string>
      </property>
@@ -1522,7 +1561,7 @@ QToolButton
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout">
@@ -1679,14 +1718,20 @@ QToolButton
       <item>
        <widget class="QWidget" name="wRightPaneHeader" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>84</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="wRightPaneHeaderLayout">
          <property name="spacing">
-          <number>24</number>
+          <number>27</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -1834,13 +1879,35 @@ QToolButton
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>66</height>
+              <height>84</height>
              </size>
             </property>
             <layout class="QGridLayout" name="currentContentLayout">
-             <property name="spacing">
+             <property name="horizontalSpacing">
+              <number>2</number>
+             </property>
+             <property name="verticalSpacing">
               <number>0</number>
              </property>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="tSeePlans">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>See plans</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="1">
               <widget class="QToolButton" name="tClearCompleted">
                <property name="sizePolicy">
@@ -1858,7 +1925,7 @@ QToolButton
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>32</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="text">
@@ -1868,8 +1935,27 @@ QToolButton
              </item>
              <item row="0" column="0">
               <widget class="QLabel" name="lCurrentContent">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>32</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="lTransferOverQuota">
+               <property name="text">
+                <string>Depleted transfer quota</string>
                </property>
               </widget>
              </item>
@@ -1880,7 +1966,7 @@ QToolButton
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
+             <item row="0" column="3">
               <spacer name="horizontalSpacer_13">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1892,6 +1978,13 @@ QToolButton
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="lStorageOverQuota">
+               <property name="text">
+                <string>Account is full</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
