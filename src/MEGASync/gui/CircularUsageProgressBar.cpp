@@ -1,134 +1,168 @@
 #include "CircularUsageProgressBar.h"
-#include <QPainter>
-#include <QDebug>
-#include <math.h>
+
+const int CircularUsageProgressBar::MINVALUE;
+const int CircularUsageProgressBar::MAXVALUE;
+
+static const QColor DEFAULT_OK_LIGHT       ("#00BEA4");
+static const QColor DEFAULT_OK_DARK        ("#009985");
+static const QColor DEFAULT_BAR_BACKGROUND ("#E5E5E5");
+static const QColor DEFAULT_FULL_LIGHT     ("#EE7272");
+static const QColor DEFAULT_FULL_DARK      ("#DB080F");
+static const QColor DEFAULT_WARN_LIGHT     ("#FFAF00");
+static const QColor DEFAULT_WARN_DARK      ("#F06F01");
+static const QColor DEFAULT_TEXT_COLOR     ("#000000");
+
+constexpr qreal LIGHT_ANGLE    (1.);
+constexpr qreal DARK_ANGLE     (0.);
+constexpr qreal GRADIENT_ANGLE (90.);
 
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
-    QWidget(parent), penWidth(0), outerRadius(0),
-    markWarning{QStringLiteral(":/images/icon_warning_24.png")},
-    markFull{QStringLiteral(":/images/icon_error_24.png")},
-    dynamicTransferBlue{QStringLiteral(":/images/dynamic_transfer_icon_32.png")},
-    dynamicTransferRed{QStringLiteral(":/images/dynamic_transfer_overquota_icon.png")},
-    totalValueUnkown{true}
+    QWidget       (parent),
+    mPbValue      (0),
+    mPenWidth     (0.),
+    mOuterRadius  (0.),
+    mState        (STATE_OK),
+    mPbBgColor    (DEFAULT_BAR_BACKGROUND),
+    mPbGradient   (&mOkPbGradient),
+    mMarkWarning  (QStringLiteral(":/images/icon_warning_24.png")),
+    mMarkFull     (QStringLiteral(":/images/icon_error_24.png")),
+    mDynTrsfOk    (QStringLiteral(":/images/dynamic_transfer_icon_32.png")),
+    mDynTrsfFull  (QStringLiteral(":/images/dynamic_transfer_overquota_icon.png")),
+    mNoTotalValue (true)
 {
-    setPenColor(backgroundPen, QColor(QString::fromUtf8(DEFAULT_BKCOLOR)));
-    setPenColor(foregroundPen, QColor(QString::fromUtf8(DEFAULT_FGCOLOR)));
+    // Init Gradients
+    mOkPbGradient.setAngle(GRADIENT_ANGLE);
+    mOkPbGradient.setColorAt(DARK_ANGLE, DEFAULT_OK_DARK);
+    mOkPbGradient.setColorAt(LIGHT_ANGLE, DEFAULT_OK_LIGHT);
 
-    backgroundColor = QColor(QString::fromUtf8(DEFAULT_BKCOLOR));
-    foregroundColor = QColor(QString::fromUtf8(DEFAULT_FGCOLOR));
-    overquotaColor = QColor(QString::fromUtf8(DEFAULT_OQCOLOR));
-    almostOverquotaColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
+    mWarnPbGradient.setAngle(GRADIENT_ANGLE);
+    mWarnPbGradient.setColorAt(DARK_ANGLE, DEFAULT_WARN_DARK);
+    mWarnPbGradient.setColorAt(LIGHT_ANGLE, DEFAULT_WARN_LIGHT);
 
-    currentColor = foregroundColor;
+    mFullPbGradient.setAngle(GRADIENT_ANGLE);
+    mFullPbGradient.setColorAt(DARK_ANGLE, DEFAULT_FULL_DARK);
+    mFullPbGradient.setColorAt(LIGHT_ANGLE, DEFAULT_FULL_LIGHT);
+
+    setPenColor(mBgPen, mPbBgColor);
+    setPenGradient(mFgPen, *mPbGradient);
 }
 
 void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 {
-    constexpr int padingPixels{6};
-    double updatedOuterRadius = qMin(width(), height()) - padingPixels;
-    if (updatedOuterRadius != outerRadius)
+    constexpr int padingPixels (4);
+    const double updatedOuterRadius (std::min(width(), height()) - padingPixels);
+
+    if (updatedOuterRadius != mOuterRadius)
     {
-        outerRadius = updatedOuterRadius;
-        penWidth = outerRadius / 352.0 * 37;
+        mOuterRadius = updatedOuterRadius;
+        mPenWidth    = mOuterRadius / 352. * 37.;
 
-        setPenColor(backgroundPen, backgroundColor, false);
-        backgroundPen.setWidth(static_cast<int>(penWidth));
+        // Update baseRect dimensions
+        mBaseRect.setX(mPenWidth / 2.);
+        mBaseRect.setY((mPenWidth / 2.) + (padingPixels / 2.));
+        mBaseRect.setWidth(mOuterRadius - mPenWidth);
+        mBaseRect.setHeight(mBaseRect.width());
 
-        setPenColor(foregroundPen, currentColor, false);
-        foregroundPen.setWidth(static_cast<int>(penWidth));
+        setPenColor(mBgPen, mPbBgColor, false);
+        mBgPen.setWidth(static_cast<int>(mPenWidth));
+
+        setPenGradient(mFgPen, *mPbGradient, false);
+        mFgPen.setWidth(static_cast<int>(mPenWidth));
     }
 
-    QRectF baseRect(penWidth / 2, (penWidth / 2) + padingPixels / 2, outerRadius - penWidth, outerRadius - penWidth);
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing
-                           | QPainter::SmoothPixmapTransform
-                           | QPainter::HighQualityAntialiasing);
+                           | QPainter::TextAntialiasing
+                           | QPainter::SmoothPixmapTransform);
 
-    painter.fillRect(baseRect, Qt::NoBrush);
+    painter.fillRect(mBaseRect, Qt::NoBrush);
+
+    // Draw white disc background
+    painter.setBrush(Qt::white);
+    painter.drawEllipse(mBaseRect);
 
     // Draw background progress bar
-    drawBackgroundBar(painter, baseRect);
+    painter.setPen(mBgPen);
+    painter.drawArc(mBaseRect, 90 * 16, -(CircularUsageProgressBar::MAXVALUE * 360 * 16) / 100);
 
     // Draw value arc
-    double arcStep = 3.60 * progressBarValue;
-    drawArcValue(painter, baseRect, arcStep);
+    painter.setPen(mFgPen);
+    painter.drawArc(mBaseRect, 90 * 16, -(mPbValue * 360 * 16) / 100);
 
     //Draw percentage text or dynamic transfer icon
-    const double innerRadius{outerRadius - penWidth / 2};
-    const double delta{(outerRadius - innerRadius) / 2};
-    const QRectF innerRect{QRectF(delta, delta + padingPixels / 2, innerRadius, innerRadius)};
-    if(totalValueUnkown)
+    const double innerRadius (mOuterRadius - mPenWidth / 2.);
+    const double delta       ((mOuterRadius - innerRadius) / 2.);
+    const QRectF innerRect   (delta, delta + padingPixels / 2., innerRadius, innerRadius);
+
+    if (mNoTotalValue)
     {
-        constexpr QSize dynamicIconNativeSizePixels{QSize{32, 32}};
-        QRectF dynamicIconRect{QRectF(QPoint(0, 0), dynamicIconNativeSizePixels)};
+        constexpr QSize dynamicIconNativeSizePixels (32, 32);
+
+        QRectF dynamicIconRect(QPoint(0, 0), dynamicIconNativeSizePixels);
         dynamicIconRect.moveCenter(innerRect.center());
-        QIcon dynamicQuotaIcon{dynamicTransferBlue};
-        if(progressBarValue == CircularUsageProgressBar::MAXVALUE)
-        {
-            dynamicQuotaIcon = dynamicTransferRed;
-        }
-        painter.drawPixmap(dynamicIconRect.toRect(), dynamicQuotaIcon.pixmap(dynamicIconNativeSizePixels));
+
+        const QIcon& dynamicQuotaIcon (mState == STATE_OVER ? mDynTrsfFull : mDynTrsfOk);
+
+        painter.drawPixmap(dynamicIconRect.toRect(),
+                           dynamicQuotaIcon.pixmap(dynamicIconNativeSizePixels));
     }
     else
     {
-        drawText(painter, innerRect, innerRadius, progressBarValue);
+        drawText(painter, innerRect, innerRadius, mPbValue);
     }
 
-    if (progressBarValue >= ALMOSTOVERQUOTA_VALUE) // If value higher than almost oq threshold show warning image
+    // If value higher than warning threshold show warning image
+    if (mState != STATE_OK)
     {
-        constexpr double nativeOuterRadius{44.0};
-        const double ratio{outerRadius / nativeOuterRadius};
-        constexpr int iconSizePixels{24};
-        const double pixmapTotalSideLength{ratio * iconSizePixels};
-        constexpr int iconPaddingX{3};
-        const double x{outerRadius - (pixmapTotalSideLength / 2) - iconPaddingX};
-        constexpr int iconPaddingY{5};
-        const double y{padingPixels / 2 - iconPaddingY};
-        const double width{pixmapTotalSideLength};
-        const double height{pixmapTotalSideLength};
-        const QIcon icon{progressBarValue >= CircularUsageProgressBar::MAXVALUE ? markFull : markWarning};
-        const QPixmap pixmap{icon.pixmap(iconSizePixels, iconSizePixels)};
-        painter.drawPixmap(x, y, width, height, pixmap);
+        constexpr double nativeOuterRadius (48.);
+        constexpr int    iconSizePixels    (24);
+        constexpr int    iconPaddingX      (3);
+        constexpr int    iconPaddingY      (4);
+
+        const double pixmapTotalSideLength ((mOuterRadius / nativeOuterRadius) * iconSizePixels);
+
+        const int x (static_cast<int>(mOuterRadius - (pixmapTotalSideLength / 2.) - iconPaddingX));
+        const int y (padingPixels / 2 - iconPaddingY);
+
+        const int sideLength(static_cast<int>(pixmapTotalSideLength));
+
+        const QIcon&  icon   (mState == STATE_OVER ? mMarkFull : mMarkWarning);
+        const QPixmap pixmap (icon.pixmap(iconSizePixels, iconSizePixels));
+
+        painter.drawPixmap(x, y, sideLength, sideLength, pixmap);
     }
 }
 
-void CircularUsageProgressBar::drawBackgroundBar(QPainter &p, QRectF &baseRect)
-{
-    p.setPen(backgroundPen);
-    p.setBrush(Qt::white);
-    p.drawArc(baseRect, 90 * 16, -100 * 3.60 * 16); //360º
-}
-
-void CircularUsageProgressBar::drawArcValue(QPainter &p, const QRectF &baseRect, double arcLength)
-{
-    p.setPen(foregroundPen);
-    p.setBrush(Qt::white);
-    p.drawArc(baseRect, 90 * 16, -arcLength * 16);
-}
-
-void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, double innerRadius, double value)
+void CircularUsageProgressBar::drawText(QPainter& p, const QRectF& innerRect, double innerRadius,
+                                        double value)
 {
     QFont f(font());
-    qreal factor_decrease = 0.86;
-    qreal factor = 1.0;
-    auto aux = value;
-    while (aux >= 1000)
+    const double factor_decrease (0.86);
+    double factor (1.);
+
+    double aux (value);
+
+    while (aux >= 1000.)
     {
         factor *= factor_decrease;
-        aux = aux / 10;
+        aux    /= 10.;
     }
-    int pixelSize = innerRadius * 0.30;
-    f.setPixelSize( std::max(5.0, floor(pixelSize * factor)) );
+
+    double pixelSize (innerRadius * 0.3);
+
+    f.setPixelSize(std::max(5, static_cast<int>(pixelSize * factor)));
     f.setFamily(QString::fromUtf8("Lato"));
+
     p.setFont(f);
 
-    QRectF textRect(innerRect);
-    const auto penColor(value < ALMOSTOVERQUOTA_VALUE ? DEFAULT_TEXT_COLOR : currentColor);
+    const auto penColor(mState == STATE_OK ? DEFAULT_TEXT_COLOR
+                                           : mPbGradient->stops().begin()->second);
     p.setPen(penColor);
-    p.drawText(textRect, Qt::AlignCenter, textValue);
+
+    p.drawText(innerRect, Qt::AlignCenter, mTextValue);
 }
 
-void CircularUsageProgressBar::setPenColor(QPen &pen, QColor color, bool forceRepaint)
+void CircularUsageProgressBar::setPenColor(QPen& pen, QColor color, bool forceRepaint)
 {
     pen.setCapStyle(Qt::FlatCap);
     pen.setColor(color);
@@ -139,102 +173,79 @@ void CircularUsageProgressBar::setPenColor(QPen &pen, QColor color, bool forceRe
     }
 }
 
-QColor CircularUsageProgressBar::getAlmostOverquotaColor() const
+void CircularUsageProgressBar::setPenGradient(QPen& pen, QConicalGradient& gradient,
+                                              bool forceRepaint)
 {
-    return almostOverquotaColor;
-}
+    pen.setCapStyle(Qt::FlatCap);
+    gradient.setCenter(mBaseRect.center());
+    pen.setBrush(gradient);
 
-void CircularUsageProgressBar::setAlmostOverquotaColor(const QColor &color)
-{
-    almostOverquotaColor = color;
-    update();
-}
-
-QColor CircularUsageProgressBar::getOverquotaColor() const
-{
-    return overquotaColor;
-}
-
-void CircularUsageProgressBar::setOverquotaColor(const QColor &color)
-{
-    overquotaColor = color;
-    update();
-}
-
-int CircularUsageProgressBar::getValue() const
-{
-    return progressBarValue;
-}
-
-void CircularUsageProgressBar::setValue(int value)
-{
-    if (value < CircularUsageProgressBar::MINVALUE)
+    if (forceRepaint)
     {
-        value = CircularUsageProgressBar::MINVALUE;
-    }
-
-    if (progressBarValue != value || totalValueUnkown)
-    {
-        totalValueUnkown = false;
-        textValue = tr("[A]%").replace(QStringLiteral("[A]"), QString::number(value));
-        progressBarValue = value;
-
-        if (value >= CircularUsageProgressBar::MAXVALUE)
-        {
-            currentColor = overquotaColor;
-            setPenColor(foregroundPen, overquotaColor, false);
-        }
-        else if (value >= ALMOSTOVERQUOTA_VALUE)
-        {
-            currentColor = almostOverquotaColor;
-            setPenColor(foregroundPen, almostOverquotaColor, false);
-        }
-        else
-        {
-            currentColor = foregroundColor;
-            setPenColor(foregroundPen, currentColor, false);
-        }
         update();
     }
 }
 
-void CircularUsageProgressBar::setBarTotalValueUnkown(int value, const QColor &color)
+void CircularUsageProgressBar::setValue(int value)
 {
-    totalValueUnkown = true;
-    progressBarValue = value;
-    currentColor = color;
-    setPenColor(foregroundPen, currentColor, false);
-    update();
+    if ( value != mPbValue || mNoTotalValue)
+    {
+        mPbValue = std::max(CircularUsageProgressBar::MINVALUE, value);
+
+        mNoTotalValue = false;
+        mTextValue = tr("[A]%").replace(QStringLiteral("[A]"), QString::number(mPbValue));
+    }
+
+    switch (mState)
+    {
+        case STATE_OK:
+        {
+            mPbGradient = &mOkPbGradient;
+            break;
+        }
+        case STATE_WARNING:
+        {
+            mPbGradient = &mWarnPbGradient;
+            break;
+        }
+        case STATE_OVER:
+        {
+            mPbGradient = &mFullPbGradient;
+            break;
+        }
+    }
+
+    setPenGradient(mFgPen, *mPbGradient);
+}
+
+void CircularUsageProgressBar::setBarTotalValueUnkown(int value, QConicalGradient* gradient)
+{
+    mNoTotalValue = true;
+    mPbValue = value;
+    mPbGradient = gradient;
+    setPenGradient(mFgPen, *mPbGradient);
+}
+
+void CircularUsageProgressBar::setState(STATE state)
+{
+    mState = state;
+    // Refresh color if necessary
+    setValue(mPbValue);
 }
 
 void CircularUsageProgressBar::setEmptyBarTotalValueUnknown()
 {
-    setBarTotalValueUnkown(0, foregroundColor);
+    setBarTotalValueUnkown(0, &mOkPbGradient);
 }
 
 void CircularUsageProgressBar::setFullBarTotalValueUnkown()
 {
-    setBarTotalValueUnkown(CircularUsageProgressBar::MAXVALUE, overquotaColor);
+    setBarTotalValueUnkown(CircularUsageProgressBar::MAXVALUE, &mFullPbGradient);
 }
 
-QColor CircularUsageProgressBar::getForegroundColor() const
+void CircularUsageProgressBar::setProgressBarGradient(QColor light, QColor dark)
 {
-    return foregroundColor;
-}
-
-void CircularUsageProgressBar::setForegroundColor(const QColor &color)
-{
-    foregroundColor = color;
-    update();
-}
-
-QColor CircularUsageProgressBar::getBackgroundColor() const
-{
-    return backgroundColor;
-}
-
-void CircularUsageProgressBar::setBackgroundColor(const QColor &color)
-{
-    backgroundColor = color;
-    update();
+    mOkPbGradient.stops().clear();
+    mOkPbGradient.setColorAt(DARK_ANGLE, dark);
+    mOkPbGradient.setColorAt(LIGHT_ANGLE, light);
 }

@@ -139,7 +139,7 @@ void BindFolderDialog::on_bOK_clicked()
    {
        syncName = QDir::toNativeSeparators(localFolderPath);
    }
-   syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+   syncName.remove(QDir::separator());
 
    do
    {

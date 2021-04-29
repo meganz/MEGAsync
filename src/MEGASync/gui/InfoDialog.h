@@ -211,7 +211,7 @@ private:
     bool transferOverquotaAlertEnabled;
     bool transferAlmostOverquotaAlertEnabled;
     int storageState;
-    QuotaState transferOverquotaState;
+    QuotaState transferQuotaState;
     int actualAccountType;
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;

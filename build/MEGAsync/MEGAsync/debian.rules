@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
 FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 19.10\|Ubuntu [2-9][0-9]\|Debian.* 10" >/dev/null && echo "-q" || echo " ")
-EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2357]\|Debian.* 7\|Ubuntu 1[468].10\|Ubuntu 19.04" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
+EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[234579]\|Debian.* [78]\|Ubuntu 1[68].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
 export PATH := /opt/mega/bin:$(PATH)
 QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")

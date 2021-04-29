@@ -54,6 +54,8 @@ Makefile
 /src/MEGAShellExtDolphin/megasync-plugin-overlay.moc
 build-MEGA*
 build-cmake*
+build-x??-*/
+
 
 .vs
 

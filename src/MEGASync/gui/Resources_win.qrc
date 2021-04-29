@@ -57,6 +57,14 @@
         <file>images/card_border.png</file>
         <file>images/card_border@2x.png</file>
         <file>images/card_border@3x.png</file>
+        <file>images/cb_checked.svg</file>
+        <file>images/cb_checked_disabled.svg</file>
+        <file>images/cb_checked_hover.svg</file>
+        <file>images/cb_checked_pressed.svg</file>
+        <file>images/cb_unchecked.svg</file>
+        <file>images/cb_unchecked_disabled.svg</file>
+        <file>images/cb_unchecked_hover.svg</file>
+        <file>images/cb_unchecked_pressed.svg</file>
         <file>images/clear_ico.png</file>
         <file>images/clear_ico@2x.png</file>
         <file>images/clear_ico@3x.png</file>
@@ -252,24 +260,6 @@
         <file>images/help_ico.png</file>
         <file>images/help_ico@2x.png</file>
         <file>images/help_ico@3x.png</file>
-        <file>images/ic_small_available.png</file>
-        <file>images/ic_small_available@2x.png</file>
-        <file>images/ic_small_available@3x.png</file>
-        <file>images/ic_small_cloud_drive.png</file>
-        <file>images/ic_small_cloud_drive@2x.png</file>
-        <file>images/ic_small_cloud_drive@3x.png</file>
-        <file>images/ic_small_inbox.png</file>
-        <file>images/ic_small_inbox@2x.png</file>
-        <file>images/ic_small_inbox@3x.png</file>
-        <file>images/ic_small_rubbish.png</file>
-        <file>images/ic_small_rubbish@2x.png</file>
-        <file>images/ic_small_rubbish@3x.png</file>
-        <file>images/ic_small_shares.png</file>
-        <file>images/ic_small_shares@2x.png</file>
-        <file>images/ic_small_shares@3x.png</file>
-        <file>images/ic_small_versions.png</file>
-        <file>images/ic_small_versions@2x.png</file>
-        <file>images/ic_small_versions@3x.png</file>
         <file>images/ico_about_MEGA.png</file>
         <file>images/ico_about_MEGA@2x.png</file>
         <file>images/ico_about_MEGA@3x.png</file>
@@ -565,6 +555,14 @@
         <file>images/proxies_32.png</file>
         <file>images/proxies_32@2x.png</file>
         <file>images/proxies_32@3x.png</file>
+        <file>images/rb_checked.svg</file>
+        <file>images/rb_checked_disabled.svg</file>
+        <file>images/rb_checked_hover.svg</file>
+        <file>images/rb_checked_pressed.svg</file>
+        <file>images/rb_unchecked.svg</file>
+        <file>images/rb_unchecked_disabled.svg</file>
+        <file>images/rb_unchecked_hover.svg</file>
+        <file>images/rb_unchecked_pressed.svg</file>
         <file>images/resume.png</file>
         <file>images/resume@2x.png</file>
         <file>images/resume@3x.png</file>
@@ -832,7 +830,6 @@
         <file>translations/MEGASyncStrings_ko.qm</file>
         <file>translations/MEGASyncStrings_nl.qm</file>
         <file>translations/MEGASyncStrings_pl.qm</file>
-        <file>translations/MEGASyncStrings_pt.qm</file>
         <file>translations/MEGASyncStrings_pt_BR.qm</file>
         <file>translations/MEGASyncStrings_ro.qm</file>
         <file>translations/MEGASyncStrings_ru.qm</file>
@@ -869,5 +866,14 @@
         <file>images/imports_32.png</file>
         <file>images/imports_32@3x.png</file>
         <file>images/imports_32@2x.png</file>
+        <file>images/Bin_24_ico.png</file>
+        <file>images/Bin_24_ico@2x.png</file>
+        <file>images/Bin_24_ico@3x.png</file>
+        <file>images/Cloud_Drive_24_ico.png</file>
+        <file>images/Cloud_Drive_24_ico@2x.png</file>
+        <file>images/Cloud_Drive_24_ico@3x.png</file>
+        <file>images/Inbox_24_ico.png</file>
+        <file>images/Inbox_24_ico@2x.png</file>
+        <file>images/Inbox_24_ico@3x.png</file>
     </qresource>
 </RCC>

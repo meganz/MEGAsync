@@ -737,15 +737,15 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">비밀번호 변경</translation>
+        <translation type="unfinished">암호 변경</translation>
     </message>
     <message>
         <source>New password</source>
-        <translation type="unfinished">새 비밀번호</translation>
+        <translation type="unfinished">새 암호</translation>
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation type="unfinished">새 비밀번호 확인</translation>
+        <translation type="unfinished">새 암호 확인</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -777,15 +777,15 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please enter your password</source>
-        <translation type="unfinished">비밀번호를 입력하세요</translation>
+        <translation type="unfinished">암호를 입력하세요</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation type="unfinished">입력한 비밀번호가 일치하지 않습니다</translation>
+        <translation type="unfinished">입력한 암호가 일치하지 않습니다</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">더 강력한 비밀번호를 입력하세요</translation>
+        <translation type="unfinished">더 강력한 암호를 입력하세요</translation>
     </message>
     <message>
         <source>Too many requests. Please wait.</source>
@@ -1438,12 +1438,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Password</source>
         <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
-        <translation type="unfinished">비밀번호</translation>
+        <translation type="unfinished">암호</translation>
     </message>
     <message>
         <source>Forgot password?</source>
         <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
-        <translation type="unfinished">비밀번호를 잊었나요?</translation>
+        <translation type="unfinished">암호를 잊었나요?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1473,7 +1473,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
-        <translation type="unfinished">잘못된 이메일 또는 비밀번호</translation>
+        <translation type="unfinished">잘못된 이메일 또는 암호</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -1515,7 +1515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
-        <translation type="unfinished">비밀번호를 입력하세요</translation>
+        <translation type="unfinished">암호를 입력하세요</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -2160,7 +2160,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">설정 열기</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">설정 열기</translation>
     </message>
 </context>
@@ -2496,8 +2501,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>종료</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">종료</translation>
     </message>
     <message>
         <source>About</source>
@@ -2506,8 +2511,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>설정</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">설정</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2573,7 +2578,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>업데이트가 가능합니다!</translation>
+        <translation>업데이트가 가능합니다</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2656,7 +2661,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>MEGAsync의 새 버전을 사용할 수 있습니다!</translation>
+        <translation>MEGAsync의 새 버전을 사용할 수 있습니다</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2665,13 +2670,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>나가기</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">나가기</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>설정</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">설정</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -2873,7 +2878,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync가 계속 작동할 것이지만, 업데이트는 더이상 OS X Mavericks 이전 버전을 지원하지 않을 것입니다.</translation>
+        <translation type="obsolete">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -2903,12 +2908,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Password changed</source>
         <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
-        <translation type="unfinished">비밀번호 변경됨</translation>
+        <translation type="unfinished">암호 변경됨</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">비밀번호가 변경되었습니다.</translation>
+        <translation type="unfinished">암호가 변경되었습니다.</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -3255,6 +3260,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
         <translation type="unfinished">당신의 동기화 “%1”가 활성화되었습니다</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync는 계속해서 작동하지만, OS X Yosemite 이전 버전은 업데이트를 지원하지 않을 예정입니다.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation type="unfinished">하나 이상의 동기화가 해제되었습니다. 다시 활성화하려면 설정으로 가세요.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">설정 열기</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">설정 열기</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">하나 이상의 동기화가 해제되었습니다. 다시 활성화하려면 설정으로 가세요.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">동기화가 해제되었습니다</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3490,7 +3530,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">원격 동기화 폴더가 유효하지 않습니다</translation>
+        <translation type="unfinished">원격 동기화 경로가 유효하지 않습니다</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3838,7 +3878,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">선택한 폴더에 업로드하려면 읽기 &amp; 쓰기 또는 전체 액세스 권한이 있어야합니다.</translation>
+        <translation type="unfinished">선택한 폴더에 업로드하려면 읽기와 쓰기 또는 전체 액세스 권한이 있어야합니다.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -3869,7 +3909,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">하나의 파일만 선택하세요</translation>
+        <translation type="unfinished">파일 하나만 선택하세요</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4178,6 +4218,29 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished">설정</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">나가기</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">설정</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">종료</translation>
+    </message>
+</context>
+<context>
     <name>Preferences</name>
     <message>
         <source>- New design for the main dialog
@@ -4340,7 +4403,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="obsolete">- Fixed decryption errors for downloads during integrity verification.</translation>
+    </message>
+    <message>
+        <source>- Fixed detected crashes on Windows and Linux.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- 동기화 관리 향상.
+- 동기화가 해제되었을 때의 이용자 경험 향상.
+- 여러 계정의 이벤트 발생을 이용자에게 알리는 시스템 알림 향상.
+- 많은 수의 전송과 동기화를 처리할 때의 이용자 경험 향상.
+- Ubuntu에서 사용할 때 gnome-shell의 CPU 이용량이 높은 문제 수정.
+- Windows와 Linux에서 감지된 충돌 수정.
+- 기타 성능 향상과 조정.
+- 기타 UI 수정과 조정.</translation>
     </message>
 </context>
 <context>
@@ -4850,7 +4937,7 @@ Do you want to delete it anyway?</source>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>설정 - MEGAsync</translation>
     </message>
     <message>
@@ -5057,7 +5144,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>프록시 서버가 비밀번호를 요구합니다</translation>
+        <translation>프록시 서버가 암호를 요구합니다</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -5067,7 +5154,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
-        <translation>비밀번호:</translation>
+        <translation>암호:</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -5233,7 +5320,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>설정 - MEGAsync</translation>
     </message>
     <message>
@@ -5276,12 +5363,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>로컬 폴더가 존재하지 않아서 동기화를 진행할 수 없습니다.</translation>
+        <translation type="vanished">로컬 폴더가 존재하지 않아서 동기화를 진행할 수 없습니다.</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>원격 폴더가 없어서 이 동기화를 활성화할 수 없습니다</translation>
+        <translation type="vanished">원격 폴더가 없어서 이 동기화를 활성화할 수 없습니다</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -5497,7 +5584,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">비밀번호 변경</translation>
+        <translation type="unfinished">암호 변경</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
@@ -5567,7 +5654,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">일부 동기화가 해제되었습니다. 자세한 정보를 보려면, 각각의 해제된 동기화 옆 경고 아이콘에 마우스를 올려놓으세요.</translation>
     </message>
 </context>
 <context>
@@ -5605,12 +5692,12 @@ when the application starts again</source>
     <message>
         <source>Password:</source>
         <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>비밀번호:</translation>
+        <translation>암호:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
         <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>비밀번호 재입력:</translation>
+        <translation>암호 재입력:</translation>
     </message>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
@@ -5726,7 +5813,7 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>잘못된 이메일 또는 비밀번호</translation>
+        <translation>잘못된 이메일 또는 암호</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -5756,7 +5843,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>비밀번호를 입력하세요</translation>
+        <translation>암호를 입력하세요</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
@@ -5766,12 +5853,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>더 강력한 비밀번호를 입력하세요</translation>
+        <translation>더 강력한 암호를 입력하세요</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>입력한 비밀번호가 일치하지 않습니다</translation>
+        <translation>입력한 암호가 일치하지 않습니다</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -5931,7 +6018,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">계정을 인증하려면 이메일을 확인하고 링크를 클릭하세요.</translation>
+        <translation type="unfinished">당신의 이메일을 확인하고 계정 확인을 위한 링크를 클릭하세요.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -6447,12 +6534,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">설정</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">설정</translation>
+        <translation type="obsolete">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>
