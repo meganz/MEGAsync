@@ -1328,7 +1328,13 @@ void SettingsDialog::on_bPermissions_clicked()
         preferences->setFolderPermissionsValue(folderPermissions);
     }
 }
+
 #endif
+
+void SettingsDialog::on_bSessionHistory_clicked()
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account/security")));
+}
 
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {

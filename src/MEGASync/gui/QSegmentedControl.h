@@ -5,7 +5,6 @@
 #include <QPointer>
 #include <QMacCocoaViewContainer>
 
-class QSegmentedControlPrivate;
 class QSegmentedControl : public QWidget
 {
     Q_OBJECT
