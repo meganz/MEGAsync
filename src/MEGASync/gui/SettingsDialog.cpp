@@ -901,7 +901,7 @@ void SettingsDialog::refreshAccountDetails()
         }
         else
         {
-            long double percentage = floor(100.0L*(usedStorage/totalStorage));
+            long double percentage = floor((100.0L*usedStorage)/totalStorage);
             int storagePercentage = static_cast<int>(percentage);
             ui->pStorage->setValue(storagePercentage > ui->pStorage->maximum() ? ui->pStorage->maximum() : storagePercentage);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
@@ -945,7 +945,7 @@ void SettingsDialog::refreshAccountDetails()
         {
             ui->gBandwidthQuota->show();
 //            ui->bSeparatorBandwidth->show();
-            long double percentage = floor(100.0L*(usedBandwidth/totalBandwidth));
+            long double percentage = floor((100.0L*usedBandwidth)/totalBandwidth);
             int bandwidthPercentage = static_cast<int>(percentage);
             ui->pUsedBandwidth->show();
             ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
