@@ -268,7 +268,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
     {
         bool found (false);
         auto priority (transfer->getPriority());
-        auto type (transfer->getType());
+        auto type (static_cast<TransferData::TransferType>(1 << transfer->getType()));
 
         // Find first of same type if any.
         if (mNbTransfersPerType[type] > 0)

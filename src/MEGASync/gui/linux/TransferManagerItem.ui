@@ -182,7 +182,6 @@ QProgressBar::chunk
   color: #F46265;
 }
 
-
 #lItemTime
 {
     color: #333333;
@@ -618,7 +617,7 @@ QProgressBar::chunk
             </rect>
            </property>
            <property name="text">
-            <string>TextLabel</string>
+            <string/>
            </property>
            <property name="wordWrap">
             <bool>true</bool>

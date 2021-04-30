@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
+    <width>1103</width>
     <height>720</height>
    </rect>
   </property>
@@ -36,26 +36,16 @@
 {
     background-color: #FAFAFA;
     border-right: 1px solid #EEEEEE;
-    width: 256px;
-    min-width: 256px;
-    max-width: 256px;
-    height: 720px;
-    min-height: 600px;
 }
 
 #wRightPane, #wTransfers
 {
     background-color: white;
-    width: 788px;
-    min-width: 768px;
 }
 
 #wRightPaneHeader, #sCurrentContent
 {
     background-color: white;
-    height: 66px;
-    min-height: 66px;
-    max-height: 66px;
 }
 
 #lTransfers, #lCurrentContent, #lSearch, #lTextSearch
@@ -67,19 +57,9 @@
     qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#wTransferring QLabel, #wMediaType QLabel
+#lCurrentContent
 {
-    height: 24px;
-    min-height: 24px;
-    max-height: 24px;
-    width: 36px;
-    min-width: 36px;
-    max-width: 50px;
-    margin-right: 6px;
-    color: #777777;
-    font-size: 10px;
-    font-weight: bold;
-    qproperty-alignment: 'AlignHCenter | AlignVCenter';
+  margin-right: 16px;
 }
 
 #wMediaType QFrame, #wTransferring QFrame, #wSearch QFrame
@@ -562,10 +542,22 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -635,10 +627,22 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -708,10 +712,22 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -784,10 +800,22 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -878,10 +906,22 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -948,10 +988,22 @@ QGroupBox::title
                <bool>true</bool>
               </property>
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1015,10 +1067,22 @@ QGroupBox::title
             <item>
              <widget class="QLabel" name="lDocumentsNb">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1082,10 +1146,22 @@ QGroupBox::title
             <item>
              <widget class="QLabel" name="lImagesNb">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1149,10 +1225,22 @@ QGroupBox::title
             <item>
              <widget class="QLabel" name="lVideosNb">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1216,10 +1304,22 @@ QGroupBox::title
             <item>
              <widget class="QLabel" name="lMusicNb">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1283,10 +1383,22 @@ QGroupBox::title
             <item>
              <widget class="QLabel" name="lOtherNb">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1390,28 +1502,43 @@ QGroupBox::title
       </item>
       <item>
        <widget class="QStackedWidget" name="sStatus">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="pSpeedAndClearLayout">
           <property name="spacing">
-           <number>0</number>
+           <number>12</number>
           </property>
           <property name="leftMargin">
-           <number>0</number>
+           <number>18</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>10</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
            <widget class="QPushButton" name="bDownSpeed">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
+            </property>
             <property name="text">
              <string notr="true"/>
             </property>
@@ -1423,6 +1550,18 @@ QGroupBox::title
           </item>
           <item>
            <widget class="QPushButton" name="bUpSpeed">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
+            </property>
             <property name="text">
              <string notr="true"/>
             </property>
@@ -1431,6 +1570,19 @@ QGroupBox::title
               <normaloff>:/images/arrow_upload_ico.png</normaloff>:/images/arrow_upload_ico.png</iconset>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item>
            <widget class="QToolButton" name="bClearAll">
@@ -1511,14 +1663,20 @@ QGroupBox::title
       <item>
        <widget class="QWidget" name="wRightPaneHeader" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>84</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="wRightPaneHeaderLayout">
          <property name="spacing">
-          <number>24</number>
+          <number>27</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -1666,15 +1824,55 @@ QGroupBox::title
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>66</height>
+              <height>84</height>
              </size>
             </property>
             <layout class="QGridLayout" name="currentContentLayout">
-             <property name="spacing">
+             <property name="horizontalSpacing">
+              <number>2</number>
+             </property>
+             <property name="verticalSpacing">
               <number>0</number>
              </property>
+             <item row="0" column="2">
+              <widget class="QToolButton" name="tSeePlans">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>See plans</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="1">
               <widget class="QToolButton" name="tClearCompleted">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Clear Completed</string>
                </property>
@@ -1682,8 +1880,27 @@ QGroupBox::title
              </item>
              <item row="0" column="0">
               <widget class="QLabel" name="lCurrentContent">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>32</height>
+                </size>
+               </property>
                <property name="text">
                 <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="lTransferOverQuota">
+               <property name="text">
+                <string>Depleted transfer quota</string>
                </property>
               </widget>
              </item>
@@ -1694,7 +1911,7 @@ QGroupBox::title
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
+             <item row="0" column="3">
               <spacer name="horizontalSpacer_13">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -1706,6 +1923,13 @@ QGroupBox::title
                 </size>
                </property>
               </spacer>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="lStorageOverQuota">
+               <property name="text">
+                <string>Account is full</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1758,7 +1982,7 @@ QGroupBox::title
       <item>
        <widget class="QStackedWidget" name="sTransfers">
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="TransfersWidget" name="wTransfers">
          <property name="sizePolicy">
