@@ -50,6 +50,8 @@ private:
     UpgradeDialog* mUpgradeDialog;
     QuotaState mQuotaState;
     std::chrono::system_clock::time_point mWaitTimeUntil;
+    bool overQuotaAlertVisible;
+    bool almostQuotaAlertVisible;
 
     void sendQuotaWarningOsNotification();
     void sendOverQuotaOsNotification();
@@ -62,12 +64,16 @@ private:
 
 public slots:
     void upgradeDialogFinished(int result);
-    void onDismissOverQuotaUiAlert();
-    void onDismissAlmostOverQuotaUiMessage();
+    void onTransferOverquotaVisibilityChange(bool messageShown);
+    void onAlmostTransferOverquotaVisibilityChange(bool messageShown);
 
 signals:
-    void almostOverQuotaUiMessage();
-    void overQuotaUiMessage();
+    // emitted when checking almost OQ and the respective UI message
+    // needs to be present (hasn't been discarded by the user for a while)
+    void almostOverQuotaMessageNeedsToBeShown();
+    // emitted when checking OQ and the respective UI message
+    // needs to be present (hasn't been discarded by the user for a while)
+    void overQuotaMessageNeedsToBeShown();
     void sendState(QuotaState state);
     void waitTimeIsOver();
 };
