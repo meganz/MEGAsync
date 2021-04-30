@@ -98,10 +98,10 @@ void SettingsDialog::initializeNativeUIComponents()
 {
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
     ui->layoutBottom->insertWidget(0, helpButton);
-    connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
+    connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));   
 
     // Set native NSToolBar for settings.
-    toolBar = ::mega::make_unique<QMacToolBar>(this);
+    toolBar = ::mega::make_unique<QCustomMacToolbar>(this);
 
     QIcon account(QString::fromUtf8("://images/settings-general.png"));
     QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
@@ -130,20 +130,13 @@ void SettingsDialog::initializeNativeUIComponents()
     bAdvanced.get()->setIcon(advanced);
     connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
 
-    bAccount.get()->setSelectable(true);
-    bSyncs.get()->setSelectable(true);
-    bNetwork.get()->setSelectable(true);
-    bSecurity.get()->setSelectable(true);
-    bAdvanced.get()->setSelectable(true);
+    toolBar->setSelectableItems(true);
+    toolBar->setAllowsUserCustomization(false);
+    toolBar->setSelectedItem(bAccount.get());
 
-    //Disable context menu and set default option to account tab
-    customizeNSToolbar(toolBar.get());
-    checkNSToolBarItem(toolBar.get(), bAccount.get());
-
-    // Attach to the window
+    // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
-    toolBar->attachToWindow(this->window()->windowHandle());
-
+    toolBar->attachToWindowWithStyle(window()->windowHandle(), QCustomMacToolbar::StylePreference);
 
     //Configure segmented control for +/- syncs
     ui->wSyncsSegmentedControl->configureTableSegment();
@@ -320,19 +313,11 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     ui->bImports->setEnabled(!proxyOnly);
     ui->bSyncs->setEnabled(!proxyOnly);
     ui->bAdvanced->setEnabled(!proxyOnly);
-#else
-    // TODO: enableNSToolBarItem does not disable items. Review cocoa code
-    enableNSToolBarItem(bAccount.get(), !proxyOnly);
-    enableNSToolBarItem(bSecurity.get(), !proxyOnly);
-    enableNSToolBarItem(bSyncs.get(), !proxyOnly);
-    enableNSToolBarItem(bImports.get(), !proxyOnly);
-    enableNSToolBarItem(bAdvanced.get(), !proxyOnly);
 #endif
 
     if (proxyOnly)
     {
 #ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bNetwork.get());
         // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
@@ -547,9 +532,6 @@ void SettingsDialog::on_bAccount_clicked()
 
     if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bAccount.get());
-#endif
         return;
     }
 
@@ -558,7 +540,6 @@ void SettingsDialog::on_bAccount_clicked()
     ui->wStack->setCurrentWidget(ui->pAccount);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bAccount.get());
 
     ui->pAccount->hide();
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
@@ -583,9 +564,6 @@ void SettingsDialog::on_bSyncs_clicked()
 
     if (ui->wStack->currentWidget() == ui->pSyncs)
     {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bSyncs.get());
-#endif
         return;
     }
 
@@ -593,8 +571,6 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->tSyncs->horizontalHeader()->setVisible(true);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bSyncs.get());
-
     ui->pSyncs->hide();
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -608,16 +584,12 @@ void SettingsDialog::on_bNetwork_clicked()
 
     if (ui->wStack->currentWidget() == ui->pNetwork)
     {
-#ifdef Q_OS_MACOS
-       checkNSToolBarItem(toolBar.get(), bNetwork.get());
-#endif
         return;
     }
 
     ui->wStack->setCurrentWidget(ui->pNetwork);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bNetwork.get());
 
     ui->pNetwork->hide();
 
@@ -647,17 +619,12 @@ void SettingsDialog::on_bSecurity_clicked()
 
     if (ui->wStack->currentWidget() == ui->pSecurity)
     {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bSecurity.get());
-#endif
         return;
     }
 
     ui->wStack->setCurrentWidget(ui->pSecurity);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bSecurity.get());
-
     ui->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -671,17 +638,12 @@ void SettingsDialog::on_bImports_clicked()
 
     if (ui->wStack->currentWidget() == ui->pImports)
     {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bImports.get());
-#endif
         return;
     }
 
     ui->wStack->setCurrentWidget(ui->pImports);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bImports.get());
-
     ui->pImports->hide();
     animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -695,17 +657,12 @@ void SettingsDialog::on_bAdvanced_clicked()
 
     if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bAdvanced.get());
-#endif
         return;
     }
 
     ui->wStack->setCurrentWidget(ui->pAdvanced);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bAdvanced.get());
-
     ui->pAdvanced->hide();
 
     onCacheSizeAvailable();
@@ -1981,12 +1938,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     ui->bSecurity->setEnabled(completed);
     ui->bImports->setEnabled(completed);
 #else
-    enableNSToolBarItem(bAccount.get(), completed);
-    enableNSToolBarItem(bSyncs.get() , completed);
-    enableNSToolBarItem(bSecurity.get(), completed);
-    enableNSToolBarItem(bImports.get(), completed);
-    enableNSToolBarItem(bNetwork.get(), completed);
-    enableNSToolBarItem(bAdvanced.get(), completed);
+    toolBar->setEnableToolbarItems(completed);
 #endif
 }
 

@@ -29,9 +29,6 @@ bool runHttpServer();
 bool runHttpsServer();
 bool userActive();
 double uptime();
-void customizeNSToolbar(QMacToolBar *toolBar);
-void checkNSToolBarItem(QMacToolBar *toolBar, QMacToolBarItem *defaultItem);
-void enableNSToolBarItem(QMacToolBarItem *defaultItem, bool isEnabled);
 
 //You take the ownership of the returned value
 NSPopover* allocatePopOverWithView(NSView* view, QSize size);
