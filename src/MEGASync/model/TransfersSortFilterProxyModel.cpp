@@ -8,31 +8,40 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mTransferTypes (TransferData::TYPE_MASK),
       mTransferStates (TransferData::STATE_MASK),
       mFileTypes (~TransferData::FileTypes()),
-      mSortCriterion (SORT_BY::PRIORITY)
+      mSortCriterion (SORT_BY::PRIORITY),
+      mDlNumber (new int(0)),
+      mUlNumber (new int(0))
 {
 }
 
-void TransfersSortFilterProxyModel::setTransferTypes(const TransferData::TransferTypes transferTypes)
+TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
+{
+    delete mUlNumber;
+    delete mDlNumber;
+}
+
+
+void TransfersSortFilterProxyModel::setTransferTypes(TransferData::TransferTypes transferTypes)
 {
     mTransferTypes = transferTypes ? transferTypes : TransferData::TYPE_MASK;
 }
 
-void TransfersSortFilterProxyModel::addTransferTypes(const TransferData::TransferTypes transferTypes)
+void TransfersSortFilterProxyModel::addTransferTypes(TransferData::TransferTypes transferTypes)
 {
     mTransferTypes |= transferTypes;
 }
 
-void TransfersSortFilterProxyModel::setTransferStates(const TransferData::TransferStates transferStates)
+void TransfersSortFilterProxyModel::setTransferStates(TransferData::TransferStates transferStates)
 {
     mTransferStates = transferStates ? transferStates : TransferData::STATE_MASK;
 }
 
-void TransfersSortFilterProxyModel::addTransferStates(const TransferData::TransferStates transferStates)
+void TransfersSortFilterProxyModel::addTransferStates(TransferData::TransferStates transferStates)
 {
     mTransferStates |= transferStates;
 }
 
-void TransfersSortFilterProxyModel::setFileTypes(const TransferData::FileTypes fileTypes)
+void TransfersSortFilterProxyModel::setFileTypes(TransferData::FileTypes fileTypes)
 {
     if (fileTypes)
     {
@@ -44,7 +53,7 @@ void TransfersSortFilterProxyModel::setFileTypes(const TransferData::FileTypes f
     }
 }
 
-void TransfersSortFilterProxyModel::addFileTypes(const TransferData::FileTypes fileTypes)
+void TransfersSortFilterProxyModel::addFileTypes(TransferData::FileTypes fileTypes)
 {
     mFileTypes |= fileTypes;
 }
@@ -54,11 +63,73 @@ void TransfersSortFilterProxyModel::resetAllFilters()
     mTransferStates = TransferData::STATE_MASK;
     mTransferTypes = TransferData::TYPE_MASK;
     mFileTypes = ~TransferData::FileTypes();
+    *mDlNumber = 0;
 }
 
 void TransfersSortFilterProxyModel::setSortBy(SORT_BY sortCriterion)
 {
     mSortCriterion = sortCriterion;
+}
+
+int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)
+{
+    auto nbRows (rowCount());
+    if (mTransferTypes == (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
+    {
+        *mDlNumber = nbRows;
+        *mUlNumber = 0;
+    }
+    else if (mTransferTypes == TransferData::TRANSFER_UPLOAD)
+    {
+        *mDlNumber = 0;
+        *mUlNumber = nbRows;
+    }
+    else
+    {
+        if (*mDlNumber + *mUlNumber != nbRows)
+        {
+            // Case where only one type: easy!
+            if (*mDlNumber == 0)
+            {
+                *mUlNumber = nbRows;
+            }
+            else if (*mUlNumber == 0)
+            {
+                *mDlNumber = nbRows;
+            }
+            // Mixed... we have to count :(
+            else
+            {
+                *mUlNumber = 0;
+                for (int i = 0; i < nbRows; ++i)
+                {
+                    QModelIndex idx (index(i, 0));
+                    const auto d (qvariant_cast<TransferItem2>(idx.data()).getTransferData());
+                    if (d->mType == TransferData::TRANSFER_UPLOAD)
+                    {
+                        (*mUlNumber)++;
+                    }
+                }
+                *mDlNumber = nbRows - *mUlNumber;
+            }
+        }
+    }
+
+
+    if (transferType == TransferData::TRANSFER_DOWNLOAD)
+    {
+        return *mDlNumber;
+    }
+    else
+    {
+        return *mUlNumber;
+    }
+}
+
+void TransfersSortFilterProxyModel::resetNumberOfItems()
+{
+    *mDlNumber = 0;
+    *mUlNumber = 0;
 }
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -67,10 +138,28 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
     const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
 
-    return     (d->mState & mTransferStates)
-            && (d->mType & mTransferTypes)
-            && (d->mFileType & mFileTypes)
-            && d->mFilename.contains(filterRegExp());
+    if (filterRegExp().isEmpty())
+    {
+        return     (d->mState & mTransferStates)
+                && (d->mType & mTransferTypes)
+                && (d->mFileType & mFileTypes);
+    }
+
+    bool accept ( (d->mState & mTransferStates)
+                  && (d->mType & mTransferTypes)
+                  && (d->mFileType & mFileTypes)
+                  && d->mFilename.contains(filterRegExp()));
+
+    if (accept && d->mType == TransferData::TRANSFER_UPLOAD)
+    {
+        (*mUlNumber)++;
+    }
+    else
+    {
+        (*mDlNumber)++;
+    }
+
+    return accept;
 }
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const

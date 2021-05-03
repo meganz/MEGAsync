@@ -290,25 +290,21 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
 void TransfersWidget::fileTypeFilterChanged(const TransferData::FileTypes fileTypes)
 {
     mProxyModel->setFileTypes(fileTypes);
-    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::transferStateFilterChanged(const TransferData::TransferStates transferStates)
 {
     mProxyModel->setTransferStates(transferStates);
-    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::transferTypeFilterChanged(const TransferData::TransferTypes transferTypes)
 {
     mProxyModel->setTransferTypes(transferTypes);
-    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::transferFilterReset()
 {
     mProxyModel->resetAllFilters();
-    ui->tvTransfers->scrollToTop();
 }
 
 void TransfersWidget::transferFilterApply()
@@ -321,7 +317,9 @@ void TransfersWidget::transferFilterApply()
     }
     else
     {
+        mProxyModel->resetNumberOfItems();
         emit applyFilter();
+        ui->tvTransfers->scrollToTop();
     }
 }
 

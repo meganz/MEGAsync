@@ -205,12 +205,12 @@ QProgressBar::chunk
     width: 24px;
     min-width: 24px;
     max-width: 24px;
-    heigth: 24px;
-    min-heigth: 24px;
-    max-heigth: 24px;
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
     qProperty-iconSize: 24px;
-    left-padding: 0px;
-    right-margin: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
     border: none;}</string>
   </property>
   <layout class="QVBoxLayout" name="TransferManagerItemLayout">
@@ -416,7 +416,7 @@ QProgressBar::chunk
              <item>
               <widget class="QProgressBar" name="pbTransfer">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -429,7 +429,7 @@ QProgressBar::chunk
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>160</width>
+                 <width>16777215</width>
                  <height>4</height>
                 </size>
                </property>

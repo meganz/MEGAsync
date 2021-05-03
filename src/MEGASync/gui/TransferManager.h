@@ -76,6 +76,7 @@ private:
     QTimer* mStatsRefreshTimer;
 
     QMap<TM_TAB, long long> mNumberOfTransfersPerTab;
+    QMap<TransferData::TransferTypes, long long> mNumberOfSearchResultsPerTypes;
 
     void toggleTab(TM_TAB tab);
     bool refreshStateStats();
@@ -97,6 +98,9 @@ private slots:
     void on_tSearchIcon_clicked();
     void on_tSearchCancel_clicked();
     void on_tClearSearchResult_clicked();
+    void on_tAllResults_clicked();
+    void on_tDlResults_clicked();
+    void on_tUlResults_clicked();
 
     void on_bImportLinks_clicked();
     void on_tCogWheel_clicked();

@@ -208,7 +208,7 @@ QGroupBox::title
     font-size: 10px;
     font-weight: bold;
     qProperty-iconSize: 24px;
-    text-align: center;
+    text-align: left;
 	padding-right: 8px;
 }
 
@@ -245,6 +245,16 @@ QToolButton
   padding-left: 14px;
 }
 
+#lNbResults[results=true]
+{
+  color: #2BA6DE;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 14px;
+}
+
+
+
 #lTransferOverQuota, #lStorageOverQuota
 {
    color: #F46265;
@@ -270,13 +280,38 @@ QToolButton
 
 #tClearCompleted
 {
+	 height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+  border-radius: 16px;
+	padding-left: 20px;
+	padding-right: 20px;
   background-color: #FFA500;
 }
 
 #tSeePlans
 {
   background-color: #3ACC86;
-}</string>
+}
+
+#pSearchHeader QToolButton
+{
+  height: 24px;
+  border-radius: 12px;
+  font-size: 12px;
+  background-color: #EEEEEE;
+	padding-left: 12px;
+	padding-right: 12px;
+  color: #777777;
+    font-weight: bold;
+}
+
+#pSearchHeader  QToolButton:checked
+{
+  background-color: #2BA6DE;
+  color: #FFFFFF;
+}
+</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
@@ -1561,7 +1596,7 @@ QToolButton
          <string notr="true"/>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pSpeedAndClear">
          <layout class="QHBoxLayout" name="pSpeedAndClearLayout">
@@ -1860,6 +1895,80 @@ QToolButton
                 <string/>
                </property>
               </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="searchByTypeLayout">
+               <property name="spacing">
+                <number>8</number>
+               </property>
+               <property name="leftMargin">
+                <number>24</number>
+               </property>
+               <item>
+                <widget class="QToolButton" name="tAllResults">
+                 <property name="text">
+                  <string>All</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                 <property name="autoExclusive">
+                  <bool>true</bool>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextOnly</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="tDlResults">
+                 <property name="text">
+                  <string>Downloads</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                 <property name="autoExclusive">
+                  <bool>true</bool>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextOnly</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QToolButton" name="tUlResults">
+                 <property name="text">
+                  <string>Uploads</string>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                 <property name="autoExclusive">
+                  <bool>true</bool>
+                 </property>
+                 <property name="toolButtonStyle">
+                  <enum>Qt::ToolButtonTextOnly</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_15">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
              </item>
             </layout>
            </widget>

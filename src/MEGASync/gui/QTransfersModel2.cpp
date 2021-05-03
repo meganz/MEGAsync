@@ -12,18 +12,18 @@ static const QVector<int> DATA_ROLE = {Qt::DisplayRole};
 static const QModelIndex DEFAULT_IDX = QModelIndex();
 
 static const TransferData::TransferStates FINISHED_STATES (
-        TransferData::TransferState::TRANSFER_COMPLETED
-        | TransferData::TransferState::TRANSFER_CANCELLED
-        | TransferData::TransferState::TRANSFER_FAILED);
+        TransferData::TRANSFER_COMPLETED
+        | TransferData::TRANSFER_CANCELLED
+        | TransferData::TRANSFER_FAILED);
 static const TransferData::TransferStates PAUSABLE_STATES (
-        TransferData::TransferState::TRANSFER_QUEUED
-        | TransferData::TransferState::TRANSFER_ACTIVE
-        | TransferData::TransferState::TRANSFER_RETRYING);
+        TransferData::TRANSFER_QUEUED
+        | TransferData::TRANSFER_ACTIVE
+        | TransferData::TRANSFER_RETRYING);
 static const TransferData::TransferStates CANCELABLE_STATES (
-        TransferData::TransferState::TRANSFER_QUEUED
-        | TransferData::TransferState::TRANSFER_ACTIVE
-        | TransferData::TransferState::TRANSFER_PAUSED
-        | TransferData::TransferState::TRANSFER_RETRYING);
+        TransferData::TRANSFER_QUEUED
+        | TransferData::TRANSFER_ACTIVE
+        | TransferData::TRANSFER_PAUSED
+        | TransferData::TRANSFER_RETRYING);
 
 QTransfersModel2::QTransfersModel2(QObject *parent) :
     QAbstractItemModel (parent),
@@ -387,7 +387,7 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
 
         Utilities::queueFunctionInAppThread([=](){emit dataChanged(idx, idx, DATA_ROLE);});
 
-        if (state == TransferData::TransferState::TRANSFER_FAILED)
+        if (state == TransferData::TRANSFER_FAILED)
         {
             mFailedTransfers[tag] = transfer->copy();
         }
@@ -700,7 +700,7 @@ void QTransfersModel2::getLinks(QList<int>& rows)
 
             MegaNode *node (nullptr);
 
-            if (d->mState == TransferData::TransferState::TRANSFER_FAILED)
+            if (d->mState == TransferData::TRANSFER_FAILED)
             {
                 node = mFailedTransfers[tag]->getPublicMegaNode();
             }
@@ -897,7 +897,7 @@ void QTransfersModel2::pauseResumeTransferByTag(TransferTag tag, bool pauseState
 
     auto state (d->mState);
 
-    if ((!pauseState && (state == TransferData::TransferState::TRANSFER_PAUSED))
+    if ((!pauseState && (state == TransferData::TRANSFER_PAUSED))
             || (pauseState && (state & PAUSABLE_STATES)))
     {
         d->mMegaApi->pauseTransferByTag(d->mTag, pauseState);
@@ -984,7 +984,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex& parent)
                 mNbTransfersPerType[d->mType]--;
             }
 
-            if (state == TransferData::TransferState::TRANSFER_FAILED)
+            if (state == TransferData::TRANSFER_FAILED)
             {
                 auto transfer (mFailedTransfers.take(tag));
                 if (transfer)

@@ -19,29 +19,33 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         };
 
         TransfersSortFilterProxyModel(QObject *parent = 0);
+        ~TransfersSortFilterProxyModel();
 
-        bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
-                      const QModelIndex &destinationParent, int destinationChild);
+        bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
+                      const QModelIndex& destinationParent, int destinationChild);
 
-        void setTransferTypes(const TransferData::TransferTypes transferTypes);
-        void addTransferTypes(const TransferData::TransferTypes transferTypes);
-        void setTransferStates(const TransferData::TransferStates transferStates);
-        void addTransferStates(const TransferData::TransferStates transferStates);
-        void setFileTypes(const TransferData::FileTypes fileTypes);
-        void addFileTypes(const TransferData::FileTypes fileTypes);
+        void setTransferTypes(TransferData::TransferTypes transferTypes);
+        void addTransferTypes(TransferData::TransferTypes transferTypes);
+        void setTransferStates(TransferData::TransferStates transferStates);
+        void addTransferStates(TransferData::TransferStates transferStates);
+        void setFileTypes(TransferData::FileTypes fileTypes);
+        void addFileTypes(TransferData::FileTypes fileTypes);
         void resetAllFilters();
         void setSortBy(SORT_BY sortCriterion);
+        int  getNumberOfItems(TransferData::TransferType transferType);
+        void resetNumberOfItems();
 
     protected:
-        bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-        bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
-
+        bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+        bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
 
     private:
         TransferData::TransferStates mTransferStates;
         TransferData::TransferTypes mTransferTypes;
         TransferData::FileTypes mFileTypes;
         SORT_BY mSortCriterion;
+        int* mDlNumber;
+        int* mUlNumber;
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

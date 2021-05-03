@@ -208,7 +208,7 @@ QGroupBox::title
     font-size: 10px;
     font-weight: bold;
     qProperty-iconSize: 24px;
-    text-align: center;
+    text-align: left;
 	padding-right: 8px;
 }
 
@@ -244,6 +244,16 @@ QToolButton
   font-weight: bold;
   padding-left: 14px;
 }
+
+#lNbResults[results=true]
+{
+  color: #2BA6DE;
+  font-size: 12px;
+  font-weight: bold;
+  padding-left: 14px;
+}
+
+
 
 #lTransferOverQuota, #lStorageOverQuota
 {
@@ -282,7 +292,26 @@ QToolButton
 #tSeePlans
 {
   background-color: #3ACC86;
-}</string>
+}
+
+#pSearchHeader QToolButton
+{
+  height: 24px;
+  border-radius: 12px;
+  font-size: 12px;
+  background-color: #EEEEEE;
+	padding-left: 12px;
+	padding-right: 12px;
+  color: #777777;
+    font-weight: bold;
+}
+
+#pSearchHeader  QToolButton:checked
+{
+  background-color: #2BA6DE;
+  color: #FFFFFF;
+}
+</string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
    <property name="spacing">
