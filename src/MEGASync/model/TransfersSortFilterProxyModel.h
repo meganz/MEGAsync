@@ -34,6 +34,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void setSortBy(SORT_BY sortCriterion);
         int  getNumberOfItems(TransferData::TransferType transferType);
         void resetNumberOfItems();
+        void applyFilters();
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

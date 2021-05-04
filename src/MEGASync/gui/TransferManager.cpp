@@ -48,6 +48,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
+    mApiLock (mMegaApi->getMegaApiLock(false)),
     mPreferences(Preferences::instance()),
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mModel(nullptr),
@@ -228,6 +229,7 @@ void TransferManager::setActiveTab(int t)
 
 TransferManager::~TransferManager()
 {
+    delete mApiLock;
     delete mUi;
 }
 
@@ -241,7 +243,6 @@ void TransferManager::on_tCompleted_clicked()
             mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES_MASK);
             mUi->wTransfers->transferTypeFilterChanged({});
             mUi->wTransfers->fileTypeFilterChanged({});
-            mUi->wTransfers->textFilterChanged(QString());
         });
         mUi->lCurrentContent->setText(tr("Finished"));
         toggleTab(COMPLETED_TAB);
@@ -253,14 +254,10 @@ void TransferManager::on_tDownloads_clicked()
     if (mCurrentTab != DOWNLOADS_TAB)
     {
         emit userActivity();
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-            mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_DOWNLOAD
-                                                       | TransferData::TransferType::TRANSFER_LTCPDOWNLOAD);
-            mUi->wTransfers->fileTypeFilterChanged({});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
+        mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_DOWNLOAD
+                                                   | TransferData::TRANSFER_LTCPDOWNLOAD);
+        mUi->wTransfers->fileTypeFilterChanged({});
         mUi->lCurrentContent->setText(tr("Downloads"));
         toggleTab(DOWNLOADS_TAB);
     }
@@ -271,13 +268,9 @@ void TransferManager::on_tUploads_clicked()
     if (mCurrentTab != UPLOADS_TAB)
     {
         emit userActivity();
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-            mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_UPLOAD);
-            mUi->wTransfers->fileTypeFilterChanged({});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
+        mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_UPLOAD);
+        mUi->wTransfers->fileTypeFilterChanged({});
         mUi->lCurrentContent->setText(tr("Uploads"));
         toggleTab(UPLOADS_TAB);
     }
@@ -288,13 +281,9 @@ void TransferManager::on_tAllTransfers_clicked()
     if (mCurrentTab != ALL_TRANSFERS_TAB)
     {
         emit userActivity();
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({});
         mUi->lCurrentContent->setText(tr("All Transfers"));
         toggleTab(ALL_TRANSFERS_TAB);
     }
@@ -529,8 +518,9 @@ void TransferManager::refreshSearchStats()
     // Update search results number
     if (mCurrentTab == SEARCH_TAB)
     {
-        long long nbDl (mUi->wTransfers->getProxyModel()->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
-        long long nbUl (mUi->wTransfers->getProxyModel()->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
+        auto proxy (mUi->wTransfers->getProxyModel());
+        long long nbDl (proxy->getNumberOfItems(TransferData::TRANSFER_DOWNLOAD));
+        long long nbUl (proxy->getNumberOfItems(TransferData::TRANSFER_UPLOAD));
         long long nbAll (mNumberOfTransfersPerTab[SEARCH_TAB]);
 
         auto rowCount (mUi->wTransfers->rowCount());
@@ -630,6 +620,7 @@ void TransferManager::on_tSearchIcon_clicked()
 
     if (pattern != QString())
     {
+        mApiLock->lockOnce();
         mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
                                     .elidedText(pattern,
                                                 Qt::ElideMiddle,
@@ -648,6 +639,7 @@ void TransferManager::on_tSearchIcon_clicked()
         mUi->wSearch->show();
 
         toggleTab(SEARCH_TAB);
+        mApiLock->unlockOnce();
     }
 }
 
@@ -661,8 +653,11 @@ void TransferManager::on_tClearSearchResult_clicked()
 {
     mUi->wSearch->hide();
     mUi->bSearchString->setText(QString());
-    mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
-    on_tAllTransfers_clicked();
+    if (mCurrentTab == SEARCH_TAB)
+    {
+        mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
+        on_tAllTransfers_clicked();
+    }
 }
 
 void TransferManager::on_tAllResults_clicked()
@@ -689,12 +684,8 @@ void TransferManager::on_bArchives_clicked()
 {
     if (mCurrentTab != TYPE_ARCHIVE_TAB)
     {
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_ARCHIVE});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_ARCHIVE});
         mUi->lCurrentContent->setText(tr("Archives"));
         toggleTab(TYPE_ARCHIVE_TAB);
     }
@@ -704,13 +695,9 @@ void TransferManager::on_bDocuments_clicked()
 {
     if (mCurrentTab != TYPE_DOCUMENT_TAB)
     {
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged({});
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_DOCUMENT});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_DOCUMENT});
         mUi->lCurrentContent->setText(tr("Documents"));
         toggleTab(TYPE_DOCUMENT_TAB);
     }
@@ -720,13 +707,9 @@ void TransferManager::on_bImages_clicked()
 {
     if (mCurrentTab != TYPE_IMAGE_TAB)
     {
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged({});
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_IMAGE});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_IMAGE});
         mUi->lCurrentContent->setText(tr("Images"));
         toggleTab(TYPE_IMAGE_TAB);
     }
@@ -736,13 +719,9 @@ void TransferManager::on_bMusic_clicked()
 {
     if (mCurrentTab != TYPE_AUDIO_TAB)
     {
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged({});
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_AUDIO});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_AUDIO});
         mUi->lCurrentContent->setText(tr("Music"));
         toggleTab(TYPE_AUDIO_TAB);
     }
@@ -752,13 +731,9 @@ void TransferManager::on_bVideos_clicked()
 {
     if (mCurrentTab != TYPE_VIDEO_TAB)
     {
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged({});
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_VIDEO});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_VIDEO});
         mUi->lCurrentContent->setText(tr("Videos"));
         toggleTab(TYPE_VIDEO_TAB);
     }
@@ -768,13 +743,9 @@ void TransferManager::on_bOther_clicked()
 {
     if (mCurrentTab != TYPE_OTHER_TAB)
     {
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged({});
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_OTHER});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_OTHER});
         mUi->lCurrentContent->setText(tr("Other"));
         toggleTab(TYPE_OTHER_TAB);
     }
@@ -784,13 +755,9 @@ void TransferManager::on_bText_clicked()
 {
     if (mCurrentTab != TYPE_TEXT_TAB)
     {
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged({});
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_TEXT});
-            mUi->wTransfers->textFilterChanged(QString());
-        });
+        mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_TEXT});
         mUi->lCurrentContent->setText(tr("Text"));
         toggleTab(TYPE_TEXT_TAB);
     }
@@ -859,6 +826,7 @@ void TransferManager::toggleTab(TM_TAB tab)
         else if (mCurrentTab == SEARCH_TAB)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
+            mUi->wTransfers->textFilterChanged(QString());
         }
         else
         {

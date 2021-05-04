@@ -45,8 +45,6 @@ public:
     long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
 
-    QExplicitlySharedDataPointer<TransferData> getTransferDataByRow(int row) const;
-
     void initModel();
 
     void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);

@@ -49,7 +49,6 @@ public:
 
 signals:
     void clearTransfers(int firstRow, int amount);
-    //    void updateSearchFilter(const QRegularExpression& pattern);
     void updateSearchFilter(const QString& pattern);
     void applyFilter();
     void pauseResumeAllRows(bool pauseState);
@@ -67,6 +66,7 @@ private:
     MegaApplication *app;
     int mHeaderNameState;
     int mHeaderSizeState;
+    QMutex* mFilterMutex;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);

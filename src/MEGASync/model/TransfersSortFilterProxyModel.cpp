@@ -132,6 +132,11 @@ void TransfersSortFilterProxyModel::resetNumberOfItems()
     *mUlNumber = 0;
 }
 
+void TransfersSortFilterProxyModel::applyFilters()
+{
+    invalidateFilter();
+}
+
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);

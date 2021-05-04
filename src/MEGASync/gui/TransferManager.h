@@ -60,6 +60,8 @@ private:
 
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
+    mega::MegaApiLock* mApiLock;
+
     Preferences* mPreferences;
     QPoint mDragPosition;
     ThreadPool* mThreadPool;
@@ -83,6 +85,7 @@ private:
     void refreshTypeStats();
     void refreshFileTypesStats();
     void refreshSearchStats();
+
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
 

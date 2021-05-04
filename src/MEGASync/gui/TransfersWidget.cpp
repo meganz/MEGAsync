@@ -15,8 +15,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     mIsPaused (false),
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (0),
-    mHeaderSizeState (0)
-
+    mHeaderSizeState (0),
+    mFilterMutex(new QMutex(QMutex::NonRecursive))
 {
     ui->setupUi(this);
 }
@@ -278,12 +278,14 @@ void TransfersWidget::onPauseStateChanged(bool pauseState)
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
 {
-//    emit updateSearchFilter(QRegularExpression(regExp, QRegularExpression::CaseInsensitiveOption
-//                                               ));
-//    mProxyModel->setFilterRegExp(QRegExp(regExp, Qt::CaseInsensitive));
-//    emit updateSearchFilter(pattern);
-    mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    mProxyModel->setFilterFixedString(pattern);
+    QtConcurrent::run([=]
+    {
+        QMutexLocker lock (mFilterMutex);
+        mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
+        mProxyModel->setFilterFixedString(pattern);
+        delete apiLock;
+    });
+
     ui->tvTransfers->scrollToTop();
 }
 
@@ -311,16 +313,23 @@ void TransfersWidget::transferFilterApply()
 {
     if (!mProxyModel->dynamicSortFilter())
     {
+        mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
         mProxyModel->setDynamicSortFilter(true);
         connect(this, &TransfersWidget::applyFilter,
                 mProxyModel, &TransfersSortFilterProxyModel::invalidate);
     }
     else
     {
-        mProxyModel->resetNumberOfItems();
-        emit applyFilter();
-        ui->tvTransfers->scrollToTop();
+        QtConcurrent::run([=]
+        {
+            QMutexLocker lock (mFilterMutex);
+            mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
+            mProxyModel->resetNumberOfItems();
+            mProxyModel->applyFilters();
+            delete apiLock;
+        });
     }
+    ui->tvTransfers->scrollToTop();
 }
 
 int TransfersWidget::rowCount()
