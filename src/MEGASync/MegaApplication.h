@@ -36,6 +36,7 @@
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
 #include "control/MegaController.h"
+#include "control/Utilities.h"
 #include "model/Model.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
@@ -61,7 +62,7 @@ public:
                     : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
                       localPath(path), totalFiles(0), totalFolders(0),
                       transfersFileOK(0), transfersFolderOK(0),
-                      transfersFailed(0), transfersCancelled(0) {}
+                      transfersFailed(0), transfersCancelled(0){}
 
     int totalTransfers;
     int pendingTransfers;
@@ -119,29 +120,30 @@ public:
     void updateTrayIcon();
     void repositionInfoDialog();
 
-    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e);
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    virtual void onAccountUpdate(mega::MegaApi *api);
-    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list);
-    virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
-    virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
-    virtual void onReloadNeeded(mega::MegaApi* api);
-    virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
-    virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
-    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
+    void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
+    void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
+    void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
+    void onAccountUpdate(mega::MegaApi *api) override;
+    void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
+    void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
+    void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
+    void onReloadNeeded(mega::MegaApi* api) override;
+    void onGlobalSyncStateChanged(mega::MegaApi *api) override;
+    void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync) override;
+    void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState) override;
 
-    virtual void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState);
-    virtual void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync);
-    virtual void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync);
-    virtual void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync);
+    void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync, int additionState) override;
+    void onSyncDisabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncEnabled(mega::MegaApi *api, mega::MegaSync *sync) override;
+    void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
 
     virtual void onCheckDeferredPreferencesSync(bool timeout);
+    void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
@@ -172,8 +174,13 @@ public:
     void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
+    // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
+    // Create menus used in the app.
     void createAppMenus();
+    // Create menus for the tray icon.
+    void createTrayIconMenus();
+    // Create menus for the "..." menu in InfoDialog view.
     void createInfoDialogMenus();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
@@ -265,7 +272,7 @@ public slots:
     void shellViewOnMega(QByteArray localPath, bool versions);
     void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
-    void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
+    void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
@@ -367,9 +374,9 @@ protected:
 
     QSystemTrayIcon *trayIcon;
 
-    QAction *changeProxyAction;
+    QAction *guestSettingsAction;
     QAction *initialExitAction;
-    std::unique_ptr<QMenu> initialMenu;
+    std::unique_ptr<QMenu> initialTrayMenu;
 
 #ifdef _WIN32
     std::unique_ptr<QMenu> windowsMenu;
@@ -442,7 +449,7 @@ protected:
     QPointer<StreamingFromMegaDialog> streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
-    QQueue<mega::MegaNode *> downloadQueue;
+    QQueue<WrappedNode *> downloadQueue;
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mInboxNode;
@@ -574,9 +581,8 @@ class MEGASyncDelegateListener: public mega::QTMegaListener
 {
 public:
     MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent = NULL, MegaApplication *app = NULL);
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
-
-    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *e) override;
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onEvent(mega::MegaApi *api, mega::MegaEvent *e) override;
 
 protected:
     MegaApplication *app;

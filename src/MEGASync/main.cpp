@@ -2,6 +2,7 @@
 #include "gui/MegaProxyStyle.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
+#include "control/AppStatsEvents.h"
 #include "control/CrashHandler.h"
 #include "ScaleFactorManager.h"
 
@@ -223,7 +224,7 @@ int main(int argc, char *argv[])
                 base64stats.resize(base64stats.size() - 1);
             }
 
-            megaApi->sendEvent(99504, base64stats.constData());
+            megaApi->sendEvent(AppStatsEvents::EVENT_INSTALL_STATS, base64stats.constData());
             Sleep(5000);
         }
 #endif
@@ -289,8 +290,8 @@ int main(int argc, char *argv[])
     QSslSocket::supportsSsl();
 
 #ifndef Q_OS_MACX
-   const auto autoScreenScaleFactor{getenv("QT_AUTO_SCREEN_SCALE_FACTOR")};
-   const auto autoScreenScaleFactorDisabled{autoScreenScaleFactor && autoScreenScaleFactor == std::string("0")};
+   const auto autoScreenScaleFactor = getenv("QT_AUTO_SCREEN_SCALE_FACTOR");
+   const bool autoScreenScaleFactorDisabled{autoScreenScaleFactor && autoScreenScaleFactor == std::string("0")};
    if(autoScreenScaleFactorDisabled)
    {
        logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, QStringLiteral("auto screen scale factor disabled because of QT_AUTO_SCREEN_SCALE_FACTOR set to 0"));
@@ -359,7 +360,7 @@ int main(int argc, char *argv[])
         scaleFactorManager.setScaleFactorEnvironmentVariable();
     } catch (const std::exception& exception)
     {
-        const auto errorMessage{QString::fromStdString("Error while setting scale factor environment variable: "+
+        const QString errorMessage{QString::fromStdString("Error while setting scale factor environment variable: "+
                     std::string(exception.what()))};
         logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, errorMessage);
     }
@@ -407,7 +408,7 @@ int main(int argc, char *argv[])
     }
 
 #ifndef Q_OS_MACX
-    const auto scaleFactorLogMessages{scaleFactorManager.getLogMessages()};
+    const auto scaleFactorLogMessages = scaleFactorManager.getLogMessages();
     for(const auto& message : scaleFactorLogMessages)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.c_str());

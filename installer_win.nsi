@@ -23,14 +23,14 @@ BrandingText "MEGA Limited"
 
 VIAddVersionKey "CompanyName" "MEGA Limited"
 VIAddVersionKey "FileDescription" "MEGAsync"
-VIAddVersionKey "LegalCopyright" "MEGA Limited 2019"
+VIAddVersionKey "LegalCopyright" "MEGA Limited 2021"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "4.3.8.0"
-VIAddVersionKey "FileVersion" "4.3.8.0"
-VIAddVersionKey "ProductVersion" "4.3.8.0"
-!define PRODUCT_VERSION "4.3.8"
+VIProductVersion "4.4.0.0"
+VIAddVersionKey "FileVersion" "4.4.0.0"
+VIAddVersionKey "ProductVersion" "4.4.0.0"
+!define PRODUCT_VERSION "4.4.0"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"

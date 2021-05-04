@@ -343,3 +343,7 @@ void MacXPlatform::disableSignalHandler()
     signal(SIGFPE, SIG_DFL);
     signal(SIGABRT, SIG_DFL);
 }
+
+// Platform-specific strings
+const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
+const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};

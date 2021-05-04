@@ -102,12 +102,12 @@
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation type="unfinished">Нет загрузок с сервера</translation>
+        <translation type="unfinished">Нет скачиваний</translation>
     </message>
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished">Оставшиеся загрузки на сервер</translation>
+        <translation type="unfinished">Оставшиеся загрузки в облако</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -117,7 +117,7 @@
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation type="unfinished">Нет загрузок на сервер</translation>
+        <translation type="unfinished">Нет загрузок в облако</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -331,7 +331,7 @@
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] добавил вас в контакты</translation>
+        <translation type="unfinished">[A] принял ваш запрос связаться</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -411,27 +411,27 @@
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation type="unfinished">Ваша PRO-подписка истекает через 1 день</translation>
+        <translation type="unfinished">Ваша Pro-подписка истекает через 1 день</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">Ваша PRO-подписка истекает через [A] д.</translation>
+        <translation type="unfinished">Ваша Pro-подписка истекает через [A] д.</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation type="unfinished">PRO-подписка скоро истекает</translation>
+        <translation type="unfinished">Pro-подписка скоро истекает</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation type="unfinished">Ваша PRO-подписка истекла 1 день назад</translation>
+        <translation type="unfinished">Ваша Pro-подписка истекла 1 день назад</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished">Ваша PRO-подписка истекла [A] д. назад</translation>
+        <translation type="unfinished">Ваша Pro-подписка истекла [A] д. назад</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
@@ -927,6 +927,274 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DesktopNotifications</name>
+    <message>
+        <source>[A] added 1 item</source>
+        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
+        <translation type="unfinished">[A] добавил 1 элемент</translation>
+    </message>
+    <message>
+        <source>[A] added [B] items</source>
+        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
+        <translation type="unfinished">[A] добавил элементы ([B])</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in 1 day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
+        <translation type="unfinished">Ваша Pro-подписка истекает через 1 день</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in [A] days</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation type="unfinished">Ваша Pro-подписка истекает через [A] д.</translation>
+    </message>
+    <message>
+        <source>PRO membership plan expiring soon</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
+        <translation type="unfinished">Pro-подписка скоро истекает</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired 1 day ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
+        <translation type="unfinished">Ваша Pro-подписка истекла 1 день назад</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired [A] days ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
+        <translation type="unfinished">Ваша Pro-подписка истекла [A] д. назад</translation>
+    </message>
+    <message>
+        <source>[A] has left the shared folder</source>
+        <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
+        <translation type="unfinished">[A] покинул общую папку</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
+        <translation type="unfinished">Доступ к общей входящей папке был закрыт</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed by [A]</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
+        <translation type="unfinished">Доступ к общей папке был закрыт пользователем [A]</translation>
+    </message>
+    <message>
+        <source>New Contact Request</source>
+        <translatorcomment>Title of the notification when a contact request has been received</translatorcomment>
+        <translation type="unfinished">Новый контакт</translation>
+    </message>
+    <message>
+        <source>[A] sent you a contact request</source>
+        <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
+        <translation type="unfinished">[A] хочет добавить вас в контакты</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translatorcomment>Button label of system notification to accept the notification.</translatorcomment>
+        <translation type="unfinished">Принять</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
+        <translation type="unfinished">Отклонить</translation>
+    </message>
+    <message>
+        <source>Cancelled Contact Request</source>
+        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
+        <translation type="unfinished">Отменён запрос добавления в контакты</translation>
+    </message>
+    <message>
+        <source>[A] cancelled the contact request</source>
+        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
+        <translation type="unfinished">[A] отменил запрос добавления в контакты</translation>
+    </message>
+    <message>
+        <source>Reminder</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation type="unfinished">Напоминание</translation>
+    </message>
+    <message>
+        <source>You have a contact request</source>
+        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
+        <translation type="unfinished">У вас есть запрос добавления в контакты</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Button label of system notification to view all unread notifications.</translatorcomment>
+        <translation type="unfinished">Посмотреть</translation>
+    </message>
+    <message>
+        <source>New Contact Established</source>
+        <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
+        <translation type="unfinished">Новый контакт</translation>
+    </message>
+    <message>
+        <source>New contact with [A] has been established</source>
+        <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
+        <translation type="unfinished">Новый контакт с [A] установлен</translation>
+    </message>
+    <message>
+        <source>Chat</source>
+        <translatorcomment>Button of system notification that forwards the user to webclient to chat section.</translatorcomment>
+        <translation type="unfinished">Чат</translation>
+    </message>
+    <message>
+        <source>Shared Folder Received</source>
+        <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
+        <translation type="unfinished">Общая папка принята</translation>
+    </message>
+    <message>
+        <source>New shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Новая папка с общим доступом от [X]</translation>
+    </message>
+    <message>
+        <source>Shared Folder Removed</source>
+        <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
+        <translation type="unfinished">Общая папка удалена</translation>
+    </message>
+    <message>
+        <source>Shared Folder Updated</source>
+        <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Общая папка обновлена</translation>
+    </message>
+    <message>
+        <source>Payment Info</source>
+        <translatorcomment>Notification label related to a payment.</translatorcomment>
+        <translation type="unfinished">Платежная информация</translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translatorcomment>Button label of system notification to upgrade the current account.</translatorcomment>
+        <translation type="unfinished">Улучшить</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">Активность общик папок</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translatorcomment>Button label of system notification to show incoming shared folder received.</translatorcomment>
+        <translation type="unfinished">Показать</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button label of system notification to set a new sync when an incoming shared folder is received</translatorcomment>
+        <translation type="unfinished">Синхронизировать</translation>
+    </message>
+    <message>
+        <source>You have unread notifications</source>
+        <translatorcomment>Label to indicate that actual user has unread notification.</translatorcomment>
+        <translation type="unfinished">У вас есть непрочитанные уведомления</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Ваш общедоступный файл ([A]) был восстановлен</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">Ваш общедоступный файл ([A]) был изъят</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Ваша общедоступная папка ([A]) была восстановлена</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">Ваша общедоступная папка ([A]) была изъята</translation>
+    </message>
+    <message>
+        <source>Your taken down has been reinstated</source>
+        <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
+        <translation type="unfinished">Ваш публичный элемент был восстановлен.</translation>
+    </message>
+    <message>
+        <source>Your publicly shared has been taken down</source>
+        <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
+        <translation type="unfinished">Ваш публичный элемент был изъят.</translation>
+    </message>
+    <message>
+        <source>Takedown Notice</source>
+        <translatorcomment>Notification label related to takedown notice</translatorcomment>
+        <translation type="unfinished">Уведомление о нарушении</translation>
+    </message>
+    <message>
+        <source>Your account is almost full.</source>
+        <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
+        <translation type="unfinished">Ваш аккаунт почти заполнен.</translation>
+    </message>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">Улучшите аккаунт до PRO сейчас.</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished">Получить PRO</translation>
+    </message>
+    <message>
+        <source>Your account is full.</source>
+        <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
+        <translation type="unfinished">Ваш аккаунт запись заполнен.</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation type="unfinished">Ваши данные в опасности</translation>
+    </message>
+    <message>
+        <source>You have [A] days left to save your data</source>
+        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
+        <translation type="unfinished">У вас есть [A] д., чтобы сохранить данные</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Показать в папке</translation>
+    </message>
+    <message>
+        <source>Payment Failed</source>
+        <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">Платеж не прошел</translation>
+    </message>
+    <message>
+        <source>Please resolve your payment issue to avoid suspension of your account.</source>
+        <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
+        <translation type="unfinished">Пожалуйста, решите проблему с оплатой, чтобы избежать блокировки вашего бизнес-аккаунта.</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
+        <translation type="unfinished">Оплатить сейчас</translation>
+    </message>
+    <message>
+        <source>Your Business account is expired</source>
+        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
+        <translation type="unfinished">Срок действия вашего бизнес-аккаунта истёк</translation>
+    </message>
+    <message>
+        <source>Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
+        <translation type="unfinished">Срок действия вашего аккаунта истёк. Он переведён в режим только для чтения, пока вы не выполните необходимые платежи.</translation>
+    </message>
+    <message>
+        <source>Account Suspended</source>
+        <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
+        <translation type="unfinished">Аккаунт приостановлен</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
+        <translation type="unfinished">Обратитесь к администратору своего бизнес-аккаунта, чтобы решить проблему и активировать аккаунт.</translation>
+    </message>
+</context>
+<context>
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
@@ -989,7 +1257,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
         <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation type="unfinished">[A]Ваш IP-адрес использовал %1 передачи данных за последние 6 часов, что привело к превышению вашего текущего лимита. Чтобы снять этот лимит, вы можете перейти на план PRO, который предоставит вам собственный пакет квот на передачу, а также достаточно места для хранения.[/A]</translation>
+        <translation type="unfinished">[A]Ваш IP-адрес использовал %1 передачи данных за последние 6 часов, что привело к превышению вашего текущего лимита. Чтобы снять этот лимит, вы можете перейти на план Pro, который предоставит вам собственный пакет квот на передачу, а также достаточно места для хранения.[/A]</translation>
     </message>
 </context>
 <context>
@@ -1554,6 +1822,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
         <translation type="unfinished">Настройки</translation>
     </message>
     <message>
@@ -1756,7 +2025,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage</source>
         <translatorcomment>Label to indicate the storage section of current account</translatorcomment>
-        <translation type="unfinished">свободного места</translation>
+        <translation type="unfinished">Хранилище</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -1861,7 +2130,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation type="unfinished">Повысить</translation>
+        <translation type="unfinished">Улучшить</translation>
     </message>
     <message>
         <source>Limited available transfer quota</source>
@@ -1877,6 +2146,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
         <translation type="unfinished">У вас остаётся[A][B] ч.[/A], чтобы улучшить аккаунт. После этого ваши данные подлежат удалению.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled</source>
+        <translatorcomment>Label to indicate that some syncs have been disable due to some error.</translatorcomment>
+        <translation type="unfinished">Одна или несколько синхронизаций были отключены</translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to sync your folders.</source>
+        <translatorcomment>Label to indicate that an error occurs while trying to resume the syncs</translatorcomment>
+        <translation type="unfinished">Что-то пошло не так при попытке синхронизировать ваши папки.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translation type="unfinished">Открыть настройки</translation>
     </message>
 </context>
 <context>
@@ -2288,7 +2572,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>Доступно обновление!</translation>
+        <translation>Доступно обновление</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2357,7 +2641,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="unfinished">Не удалось получить файловую систему. Пожалуйста, попробуйте еще раз. Если проблема не исчезнет, свяжитесь с нами по адресу bug@mega.nz</translation>
+        <translation type="unfinished">Не удалось получить файловую систему. Пожалуйста, попробуйте ещё раз. Если проблема не исчезнет, свяжитесь с нами по адресу bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -2371,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>Доступна новая версия MEGAsync!</translation>
+        <translation>Доступна новая версия MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2471,7 +2755,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Ваша синхронизация &quot;%1&quot; была отключена, так как синхронизация общих папок VirtualBox не поддерживается из-за недостатков этой файловой системы.</translation>
+        <translation type="unfinished">Ваша синхронизация «%1» была отключена, так как синхронизация общих папок VirtualBox не поддерживается из-за недостатков этой файловой системы.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2580,7 +2864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">Синхронизируемая локальная папка использует файловую систему FAT. Эта файловая система не поддерживает большие файлы и запись времени изменения, что может нарушить синхронизацию (например, при переходе на летнее время), поэтому рекомендуется синхронизировать папки с более надёжной файловой системой, как NTFS (подробнее [A]здесь[/A]).</translation>
+        <translation type="obsolete">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
@@ -2633,17 +2917,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation type="unfinished">Ваш аккаунт почти заполнен.</translation>
+        <translation type="obsolete">Your account is almost full.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Улучшите аккаунт до PRO сейчас.</translation>
+        <translation type="obsolete">Upgrade now to a PRO account.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation type="unfinished">Ваш аккаунт полон.</translation>
+        <translation type="obsolete">Your account is full.</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
@@ -2758,17 +3042,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">Вы синхронизируете локальную папку, используемую совместно с VMWare. Эти папки не поддерживают уведомления файловой системы, поэтому MEGAsync должен будет постоянно сканировать их, чтобы обнаружить изменения в файлах и папках. Пожалуйста, используйте другую папку, если это возможно, чтобы уменьшить нагрузку на процессор.</translation>
+        <translation type="obsolete">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Получить PRO</translation>
+        <translation type="obsolete">Get PRO</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation type="unfinished">Показать в папке</translation>
+        <translation type="obsolete">Show in folder</translation>
     </message>
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
@@ -2813,7 +3097,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Срок действия вашего аккаунта истёк. Он переведён в режим только для чтения, пока вы не выполните необходимые платежи.</translation>
+        <translation type="obsolete">Your account is expired as read only until you proceed with the needed payments.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2833,7 +3117,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished">Похоже, что оплата вашего бизнес-аккаунта не прошла. Ваш аккаунт переведён режим только для чтения, пока вы не выполните необходимые платежи.</translation>
+        <translation type="unfinished">Похоже, оплата вашего бизнес-аккаунта не прошла. Срок действия вашего аккаунта истёк, и ему предоставлены права только для чтения до тех пор, пока вы не произведёте требуемый платёж.</translation>
     </message>
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
@@ -2853,12 +3137,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">Пожалуйста, решите проблему с оплатой, чтобы избежать приостановки вашего бизнес-аккаунта.</translation>
+        <translation type="obsolete">Please resolve your payment issue to avoid suspension of your business account.</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation type="unfinished">Обратитесь к администратору своего аккаунта, чтобы найти выход и активировать аккаунт.</translation>
+        <translation type="obsolete">Contact your business account administrator to resolve the issue and activate your account.</translation>
     </message>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
@@ -2873,7 +3157,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished">Ваш аккаунт [A]приостановлен[/A]. Вы можете только просматривать свои данные.</translation>
+        <translation type="unfinished">Срок действия вашего аккаунта [A]истёк[/A]. Вы можете только просматривать свои данные.</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2913,22 +3197,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation type="unfinished">Ваши данные в опасности</translation>
+        <translation type="obsolete">Your data is at risk</translation>
     </message>
     <message>
         <source>You have [A] days left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation type="unfinished">У вас остаётся [A] д., чтобы спасти данные</translation>
+        <translation type="obsolete">You have [A] days left to save your data</translation>
     </message>
     <message>
         <source>You have [A] hours left to save your data</source>
         <translatorcomment>Notification content to inform the hours the user have to save the date before possible deletion. [A] will be replace with remaining hours amount.</translatorcomment>
-        <translation type="unfinished">У вас остаётся [A] ч., чтобы спасти данные</translation>
+        <translation type="obsolete">You have [A] hours left to save your data</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Notification content to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation type="unfinished">Вы должны действовать немедленно, чтобы спасти свои данные</translation>
+        <translation type="obsolete">You must act immediately to save your data</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled</source>
+        <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
+        <translation type="unfinished">Одна или несколько синхронизаций были отключены</translation>
+    </message>
+    <message>
+        <source>Your syncs have been enabled</source>
+        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
+        <translation type="unfinished">Ваши синхронизации были включены</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
+        <translation type="unfinished">Ошибка при добавлении синхронизации</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be added: %1. Reason: %2</source>
+        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
+        <translation type="unfinished">Невозможно добавить эту синхронизацию: %1. Причина: %2</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
+        <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="unfinished">Ваша синхронизация «%1» временно отключена</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
+        <translation type="unfinished">Ваша синхронизация «%1» отключена. Причина: %2</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been re-enabled. State = %2. Error = %3</source>
+        <translatorcomment>Notification message launched when a sync has been re-enabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime, %2 with current sync state and %3 with error.</translatorcomment>
+        <translation type="obsolete">Your sync “%1” has been re-enabled. State = %2. Error = %3</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been enabled</source>
+        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
+        <translation type="unfinished">Ваша синхронизация «%1» включена</translation>
     </message>
 </context>
 <context>
@@ -3059,7 +3383,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Ваша учетная запись была приостановлена из-за многочисленных нарушений Условий предоставления услуг MEGA. Пожалуйста, проверьте свой почтовый ящик.</translation>
+        <translation type="unfinished">Ваш аккаунт был заблокирован из-за многочисленных нарушений Условий предоставления услуг MEGA. Пожалуйста, проверьте свой почтовый ящик.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -3143,6 +3467,154 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
         <translation type="unfinished">Пожалуйста, подождите…</translation>
+    </message>
+</context>
+<context>
+    <name>MegaSyncError</name>
+    <message>
+        <source>No error</source>
+        <translatorcomment>Label to show that an SDK operation has been completed successfully.</translatorcomment>
+        <translation type="unfinished">Нет ошибок</translation>
+    </message>
+    <message>
+        <source>Unknown error</source>
+        <translatorcomment>Label to show that an unknown error occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Неизвестная ошибка</translation>
+    </message>
+    <message>
+        <source>File system not supported</source>
+        <translatorcomment>Label to show that an error related with a file system not supported for a sync occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Файловая система не поддерживается</translation>
+    </message>
+    <message>
+        <source>Remote node is not valid</source>
+        <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Удалённая синхронизируемая папка недействителена</translation>
+    </message>
+    <message>
+        <source>Local path is not valid</source>
+        <translatorcomment>Label to show that local path is invalid for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Локальный путь недействителен</translation>
+    </message>
+    <message>
+        <source>Initial scan failed</source>
+        <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Ошибка при первоначальном сканировании</translation>
+    </message>
+    <message>
+        <source>Local path temporarily unavailable</source>
+        <translatorcomment>Label to show that local path is temporarely unavailable for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Локальный путь временно недоступен</translation>
+    </message>
+    <message>
+        <source>Local path not available</source>
+        <translatorcomment>Label to show that local path is unavailable for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Локальный путь недоступен</translation>
+    </message>
+    <message>
+        <source>Remote node not found</source>
+        <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Удалённая синхронизируемая папка не найдена</translation>
+    </message>
+    <message>
+        <source>Reached storage quota limit</source>
+        <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Превышена квота хранения</translation>
+    </message>
+    <message>
+        <source>Business account expired</source>
+        <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Срок действия вашего бизнес-аккаунта истёк</translation>
+    </message>
+    <message>
+        <source>Foreign target storage quota reached</source>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Владелец синхронизируемой папки превысил квоту хранения</translation>
+    </message>
+    <message>
+        <source>Remote path has changed</source>
+        <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Местоположение удалённой синхронизируемой папки изменилось</translation>
+    </message>
+    <message>
+        <source>Remote node moved to Rubbish Bin</source>
+        <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
+        <translation type="unfinished">Удалённая синхронизируемая папка перемещёна в корзину</translation>
+    </message>
+    <message>
+        <source>Share without full access</source>
+        <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
+        <translation type="unfinished">У вас нет полного доступа к удалённой синхронизируемой папке</translation>
+    </message>
+    <message>
+        <source>Local fingerprint mismatch</source>
+        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
+        <translation type="unfinished">Обнаружено изменение локальной файловой системы</translation>
+    </message>
+    <message>
+        <source>Put nodes error</source>
+        <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
+        <translation type="unfinished">Ошибка создания новых элементов в MEGA</translation>
+    </message>
+    <message>
+        <source>Active sync below path</source>
+        <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
+        <translation type="unfinished">В вашей удалённой папке уже есть активная синхронизация</translation>
+    </message>
+    <message>
+        <source>Active sync above path</source>
+        <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
+        <translation type="unfinished">Удалённая папка уже включена в существующую активную синхронизацию</translation>
+    </message>
+    <message>
+        <source>Remote node has been deleted</source>
+        <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
+        <translation type="unfinished">Удаленная синхронизируемая папка удалена</translation>
+    </message>
+    <message>
+        <source>Remote node is inside Rubbish Bin</source>
+        <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
+        <translation type="unfinished">Удаленная синхронизируемая папка находится в корзине</translation>
+    </message>
+    <message>
+        <source>Unsupported VBoxSharedFolderFS filesystem</source>
+        <translatorcomment>SDK error label shown when local filesystem is the unsupported VBoxSharedFolderFS during setting a sync</translatorcomment>
+        <translation type="unfinished">Файловая система VBoxSharedFolderFS не поддерживается</translation>
+    </message>
+    <message>
+        <source>Local path collides with an existing sync</source>
+        <translatorcomment>SDK error label shown when local path collides due to an existing sync while setting a new one.</translatorcomment>
+        <translation type="unfinished">Локальный путь уже синхронизирован</translation>
+    </message>
+    <message>
+        <source>Local filesystem is FAT</source>
+        <translatorcomment>SDK error label shown when local filesystem is FAT during setting a sync</translatorcomment>
+        <translation type="unfinished">Файловые системы FAT не поддерживаются</translation>
+    </message>
+    <message>
+        <source>Local filesystem is HGFS</source>
+        <translatorcomment>SDK error label shown when local filesystem is HGFS during setting a sync</translatorcomment>
+        <translation type="unfinished">Файловые системы HGFS не поддерживаются</translation>
+    </message>
+    <message>
+        <source>Your account is blocked</source>
+        <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
+        <translation type="unfinished">Ваш аккаунт заблокирован</translation>
+    </message>
+    <message>
+        <source>Unknown temporary error</source>
+        <translatorcomment>SDK error label shown for a unknown temporary error.</translatorcomment>
+        <translation type="unfinished">Неизвестная временная ошибка</translation>
+    </message>
+    <message>
+        <source>Too many changes in account, local state invalid</source>
+        <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
+        <translation type="unfinished">Неверный статус синхронизации из-за слишком большого количества изменений в вашем аккаунте.</translation>
+    </message>
+    <message>
+        <source>Undefined error</source>
+        <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Неопределённая ошибка</translation>
     </message>
 </context>
 <context>
@@ -3268,6 +3740,24 @@ Are you sure?</source>
         <source>Upload failed</source>
         <translatorcomment>Informative message shown to the user when an upload has failed</translatorcomment>
         <translation type="unfinished">Загрузка не удалась</translation>
+    </message>
+</context>
+<context>
+    <name>Model</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Label used for title of a system message box.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
+        <translation type="unfinished">Синхронизируемая локальная папка использует файловую систему FAT. Эта файловая система не поддерживает большие файлы и запись времени изменения, что может нарушить синхронизацию (например, при переходе на летнее время), поэтому рекомендуется синхронизировать папки с более надёжными файловыми системами, такими как NTFS (подробнее [A]здесь[/A]).</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
+        <translation type="unfinished">Вы синхронизируете локальную папку, используемую совместно с VMWare. Эти папки не поддерживают уведомления файловой системы, поэтому MEGAsync должен будет постоянно сканировать их, чтобы обнаружить изменения в файлах и папках. Пожалуйста, используйте другую папку, если это возможно, чтобы уменьшить нагрузку на процессор.</translation>
     </message>
 </context>
 <context>
@@ -3401,6 +3891,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>OsNotifications</name>
+    <message>
+        <source>[A] removed 1 item</source>
+        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
+        <translation type="unfinished">[A] удалил 1 элемент</translation>
+    </message>
+    <message>
+        <source>[A] removed [B] items</source>
+        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
+        <translation type="unfinished">[A] удалил элементы ([B])</translation>
+    </message>
+</context>
+<context>
     <name>OverQuotaDialog</name>
     <message>
         <source>Storage full</source>
@@ -3450,7 +3953,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation type="unfinished">Повысить учётную запись</translation>
+        <translation type="unfinished">Улучшить аккаунт</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
@@ -3503,7 +4006,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
-        <translation type="unfinished">Повысить</translation>
+        <translation type="unfinished">Улучшить</translation>
     </message>
 </context>
 <context>
@@ -3636,7 +4139,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">свободного места</translation>
+        <translation type="unfinished">Хранилище</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -3655,7 +4158,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage and transfers</source>
         <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
-        <translation type="unfinished">Хранение и передача</translation>
+        <translation type="obsolete">Storage and Transfer</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -3666,6 +4169,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
         <translation type="unfinished">%1 на пользователя</translation>
+    </message>
+    <message>
+        <source>SCALABLE</source>
+        <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
+        <translation type="unfinished">МАСШТАБИРУЕМОСТЬ</translation>
     </message>
 </context>
 <context>
@@ -3814,14 +4322,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
-        <translation type="unfinished">- Улучшено взаимодействие с пользователем, когда квота передач превышена.
-- Обновлён перевод.
-- Исправлены проблемы при обработке RAW-изображений.
-- Уменьшено использование памяти в MacOS.
-- Теперь поддерживаются имена файлов с использованием специальных символов, когда они поддерживаются целевой файловой системой.
-- Интегрирована форма двухфакторной аутентификации в главное диалоговое окно.
-- Другие исправления и корректировки пользовательского интерфейса.
-- Другие улучшения и корректировки производительности.</translation>
+        <translation type="obsolete">- User experience improvement when transfer quota is exceeded.
+- Updated translations.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS.
+- Filenames are no longer escaped when special characters are supported by the target file system.
+- Integration of 2FA form within the main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
+    </message>
+    <message>
+        <source>- Fixed crash on OSX 10.9 systems.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.6</translatorcomment>
+        <translation type="obsolete">- Fixed crash on OSX 10.9 systems.</translation>
+    </message>
+    <message>
+        <source>- Fixed decryption errors for downloads during integrity verification.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
+        <translation type="unfinished">- Исправлены ошибки расшифровки загрузок при проверке целостности.</translation>
     </message>
 </context>
 <context>
@@ -4057,7 +4575,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Shortcut</source>
         <translatorcomment>Label for shourcut in all other platforms</translatorcomment>
-        <translation type="unfinished">Ярлык</translation>
+        <translation type="unfinished">Быстрая команда</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -4341,7 +4859,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>Учётная запись</translation>
+        <translation>Аккаунт</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -4426,7 +4944,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Повысить</translation>
+        <translation>Улучшить</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -4563,17 +5081,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>PRO I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>PRO II</source>
         <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
-        <translation>PRO II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>PRO III</source>
         <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
-        <translation>PRO III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
@@ -4752,7 +5270,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the default folder for downloads. String as short as possible</translatorcomment>
-        <translation>Загрузки с сервера:</translation>
+        <translation>Скачивания:</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
@@ -4771,7 +5289,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Включить / отключить</translation>
+        <translation>Включить/отключить</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -4900,16 +5418,16 @@ when the application starts again</source>
     <message>
         <source>Downloads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
-        <translation type="unfinished">Загрузки с сервера</translation>
+        <translation type="unfinished">Скачивания</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
-        <translation type="unfinished">Загрузки на сервер</translation>
+        <translation type="unfinished">Загрузки в облако</translation>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">Pro Lite</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -5020,6 +5538,36 @@ when the application starts again</source>
         <translatorcomment>Button label to export master key of the current user. </translatorcomment>
         <translation type="unfinished">Сохранить ключ восстановления</translation>
     </message>
+    <message>
+        <source>Saving syncs...</source>
+        <translatorcomment>Label shown when a sync operation is being saved (enable, disable, create a new one, etc)</translatorcomment>
+        <translation type="unfinished">Сохранение синхронизации…</translation>
+    </message>
+    <message>
+        <source>Unexpected error disabling sync %1</source>
+        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1</translatorcomment>
+        <translation type="unfinished">Неожиданная ошибка при отключении синхронизации %1</translation>
+    </message>
+    <message>
+        <source>Error enabling sync</source>
+        <translatorcomment>Error message shown when an error occurs while trying to enable a sync.</translatorcomment>
+        <translation type="unfinished">Ошибка при включении синхронизации</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
+        <translatorcomment>Error message shown when an error occurs trying to enabling a sync. %1 name of sync, %2 reason of error.</translatorcomment>
+        <translation type="unfinished">Невозможно включить синхронизацию «%1». Причина: %2</translation>
+    </message>
+    <message>
+        <source>Saving settings</source>
+        <translatorcomment>Title of dialog shown when settings are being saved.</translatorcomment>
+        <translation type="unfinished">Сохранение настроек</translation>
+    </message>
+    <message>
+        <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
+        <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
+        <translation type="unfinished">Некоторые синхронизации были отключены. Для получения дополнительной информации наведите курсор на значок предупреждения рядом с каждой отключенной синхронизацией.</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5031,7 +5579,7 @@ when the application starts again</source>
     <message>
         <source>I have a MEGA account</source>
         <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
-        <translation type="vanished">У меня есть учётная запись MEGA</translation>
+        <translation type="vanished">У меня есть аккаунт MEGA</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
@@ -5284,7 +5832,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Не удалось получить файловую систему. Пожалуйста, попробуйте еще раз. Если проблема не исчезнет, свяжитесь с нами по адресу bug@mega.nz</translation>
+        <translation>Не удалось получить файловую систему. Пожалуйста, попробуйте ещё раз. Если проблема не исчезнет, свяжитесь с нами по адресу bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -5852,12 +6400,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
-        <translation type="unfinished">Загрузки с сервера</translation>
+        <translation type="unfinished">Скачивания</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation type="unfinished">Загрузки на сервер</translation>
+        <translation type="unfinished">Загрузки в облако</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -5896,12 +6444,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
         <translation type="unfinished">Настройки</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
         <translation type="unfinished">Настройки</translation>
     </message>
     <message>
@@ -5985,12 +6533,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Informative label of system notification to encourage user to upgrade account.</translatorcomment>
-        <translation type="unfinished">Улучшите аккаунт до PRO сейчас.</translation>
+        <translation type="obsolete">Upgrade now to a PRO account.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished">Получить PRO</translation>
+        <translation type="obsolete">Get PRO</translation>
     </message>
     <message>
         <source>Limited available transfer quota.</source>
@@ -6008,12 +6556,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation type="unfinished">Нет загрузок с сервера</translation>
+        <translation type="unfinished">Нет скачиваний</translation>
     </message>
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation type="unfinished">Нет загрузок на сервер</translation>
+        <translation type="unfinished">Нет загрузок в облако</translation>
     </message>
     <message>
         <source>Paused Transfers</source>

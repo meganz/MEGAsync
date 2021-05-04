@@ -39,7 +39,7 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync").toUtf8().constData());
 
-    api->removeSync(syncSetting->tag(),
+    api->removeSync(syncSetting->backupId(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));
@@ -58,7 +58,7 @@ void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Enabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
-    api->enableSync(syncSetting->tag(),
+    api->enableSync(syncSetting->backupId(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));
@@ -77,7 +77,7 @@ void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionPro
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Disabling sync %1 to %2")
                  .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()).toUtf8().constData() );
 
-    api->disableSync(syncSetting->tag(),
+    api->disableSync(syncSetting->backupId(),
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));

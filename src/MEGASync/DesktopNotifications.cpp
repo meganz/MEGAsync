@@ -5,15 +5,15 @@
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrent>
 
-const auto iconPrefix{QStringLiteral("://images/")};
-const auto iconFolderName{QStringLiteral("icons")};
-const auto newContactIconName{QStringLiteral("new_contact@3x.png")};
-const auto storageQuotaFullIconName{QStringLiteral("Storage_Quota_full@3x.png")};
-const auto storageQuotaWarningIconName{QStringLiteral("Storage_Quota_almost_full@3x.png")};
-const auto failedToDownloadIconName{QStringLiteral("Failed_to_download@3x.png")};
-const auto folderIconName{QStringLiteral("Folder@3x.png")};
-const auto fileDownloadSucceedIconName{QStringLiteral("File_download_succeed@3x.png")};
-constexpr auto maxNumberOfUnseenNotifications{3};
+const QString iconPrefix{QStringLiteral("://images/")};
+const QString iconFolderName{QStringLiteral("icons")};
+const QString newContactIconName{QStringLiteral("new_contact@3x.png")};
+const QString storageQuotaFullIconName{QStringLiteral("Storage_Quota_full@3x.png")};
+const QString storageQuotaWarningIconName{QStringLiteral("Storage_Quota_almost_full@3x.png")};
+const QString failedToDownloadIconName{QStringLiteral("Failed_to_download@3x.png")};
+const QString folderIconName{QStringLiteral("Folder@3x.png")};
+const QString fileDownloadSucceedIconName{QStringLiteral("File_download_succeed@3x.png")};
+constexpr int maxNumberOfUnseenNotifications{3};
 
 bool checkIfActionIsValid(MegaNotification::Action action)
 {
@@ -44,14 +44,14 @@ QString getIconsPath()
 }
 
 DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIcon *trayIcon, Preferences *preferences)
-    :mAppIcon{QString::fromUtf8("://images/app_128.png")},
-     mNewContactIconPath{getIconsPath() + newContactIconName},
-     mStorageQuotaFullIconPath{getIconsPath() + storageQuotaFullIconName},
-     mStorageQuotaWarningIconPath{getIconsPath() + storageQuotaWarningIconName},
-     mFolderIconPath{getIconsPath() + folderIconName},
-     mFileDownloadSucceedIconPath{getIconsPath() + fileDownloadSucceedIconName},
-     mPreferences{preferences},
-     mIsFirstTime{true}
+    :mAppIcon(QString::fromUtf8("://images/app_128.png")),
+     mNewContactIconPath(getIconsPath() + newContactIconName),
+     mStorageQuotaFullIconPath(getIconsPath() + storageQuotaFullIconName),
+     mStorageQuotaWarningIconPath(getIconsPath() + storageQuotaWarningIconName),
+     mFolderIconPath(getIconsPath() + folderIconName),
+     mFileDownloadSucceedIconPath(getIconsPath() + fileDownloadSucceedIconName),
+     mPreferences(preferences),
+     mIsFirstTime(true)
 {
 #ifdef __APPLE__
     mNotificator = new Notificator(appName, NULL, this);
@@ -68,7 +68,7 @@ DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIc
 
 QString DesktopNotifications::getItemsAddedText(mega::MegaUserAlert* alert)
 {
-    const auto updatedItems{alert->getNumber(1) + alert->getNumber(0)};
+    const auto updatedItems = alert->getNumber(1) + alert->getNumber(0);
     if (updatedItems == 1)
     {
         return tr("[A] added 1 item")
@@ -88,7 +88,7 @@ QString DesktopNotifications::createPaymentReminderText(int64_t expirationTimeSt
     expiredDate.setMSecsSinceEpoch(expirationTimeStamp * 1000);
     QDateTime currentDate(QDateTime::currentDateTime());
 
-    const auto daysExpired{currentDate.daysTo(expiredDate)};
+    const auto daysExpired = currentDate.daysTo(expiredDate);
     if (daysExpired == 1)
     {
         return tr("Your PRO membership plan will expire in 1 day");
@@ -116,8 +116,8 @@ QString DesktopNotifications::createPaymentReminderText(int64_t expirationTimeSt
 QString DesktopNotifications::createDeletedShareMessage(mega::MegaUserAlert* alert)
 {
     QString message;
-    const auto email{QString::fromUtf8(alert->getEmail())};
-    const auto someoneLeftTheFolder{alert->getNumber(0) == 0};
+    const QString email{QString::fromUtf8(alert->getEmail())};
+    const bool someoneLeftTheFolder{alert->getNumber(0) == 0};
     if (someoneLeftTheFolder)
     {
         message = tr("[A] has left the shared folder")
@@ -134,7 +134,7 @@ QString DesktopNotifications::createDeletedShareMessage(mega::MegaUserAlert* ale
 
 int DesktopNotifications::countUnseenAlerts(mega::MegaUserAlertList *alertList)
 {
-    auto count{0};
+    auto count = 0;
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
         if(!alertList->get(iAlert)->getSeen())
@@ -149,8 +149,8 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 {
     if(mPreferences->showNotifications())
     {
-        const auto unseenAlertsCount{countUnseenAlerts(alertList)};
-        const auto tooManyAlertsUnseen{unseenAlertsCount > maxNumberOfUnseenNotifications};
+        const auto unseenAlertsCount = countUnseenAlerts(alertList);
+        const bool tooManyAlertsUnseen{unseenAlertsCount > maxNumberOfUnseenNotifications};
         if(tooManyAlertsUnseen || (mIsFirstTime && unseenAlertsCount))
         {
             mIsFirstTime = false;
@@ -162,7 +162,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
     for(int iAlert = 0; iAlert < alertList->size(); iAlert++)
     {
-        const auto alert{alertList->get(iAlert)};
+        const auto alert = alertList->get(iAlert);
         // alerts are sent again after seen state updated, so lets only notify the unseen alerts
         if(!alert->getSeen())
         {
@@ -172,7 +172,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    auto notification{new MegaNotification()};
+                    auto notification = new MegaNotification();
                     notification->setTitle(tr("New Contact Request"));
                     notification->setText(tr("[A] sent you a contact request")
                                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
@@ -194,7 +194,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    auto notification{new MegaNotification()};
+                    auto notification = new MegaNotification();
                     notification->setTitle(tr("Cancelled Contact Request"));
                     notification->setText(tr("[A] cancelled the contact request")
                                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
@@ -208,7 +208,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    auto notification{new MegaNotification()};
+                    auto notification = new MegaNotification();
                     notification->setTitle(tr("New Contact Request"));
                     notification->setText(tr("Reminder") + QStringLiteral(": ") +
                                           tr("You have a contact request"));
@@ -227,7 +227,7 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    auto notification{new MegaNotification()};
+                    auto notification = new MegaNotification();
                     notification->setTitle(tr("New Contact Established"));
                     notification->setText(tr("New contact with [A] has been established")
                                           .replace(QString::fromUtf8("[A]"), QString::fromUtf8(alert->getEmail())));
@@ -249,10 +249,9 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const auto title{tr("Shared Folder Received")};
-                    const auto message{tr("New shared folder from [X]")
+                    const QString message{tr("New shared folder from [X]")
                                 .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
-                    const auto isNewShare{true};
+                    const bool isNewShare{true};
                     notifySharedUpdate(alert, message, NEW_SHARE);
                 }
                 break;
@@ -261,7 +260,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const auto title{tr("Shared Folder Removed")};
                     notifySharedUpdate(alert, createDeletedShareMessage(alert), DELETE_SHARE);
                 }
                 break;
@@ -270,7 +268,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             {
                 if(mPreferences->showNotifications())
                 {
-                    const auto title{tr("Shared Folder Updated")};
                     notifySharedUpdate(alert, getItemsAddedText(alert), NEW_SHARED_NODES);
                 }
                 break;
@@ -285,9 +282,9 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
             }
             case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
             {
-                auto notification{new MegaNotification()};
+                auto notification = new MegaNotification();
                 notification->setTitle(tr("Payment Info"));
-                constexpr auto paymentReminderIndex{1};
+                constexpr int paymentReminderIndex{1};
                 notification->setText(createPaymentReminderText(alert->getTimestamp(paymentReminderIndex)));
                 notification->setActions(QStringList() << tr("Upgrade"));
                 notification->setImage(mAppIcon);
@@ -314,14 +311,14 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
 
 void DesktopNotifications::replayIncomingPendingRequest(MegaNotification::Action action) const
 {
-    const auto notification{static_cast<MegaNotification*>(QObject::sender())};
-    const auto megaApp{static_cast<MegaApplication*>(qApp)};
-    const auto requestList{megaApp->getMegaApi()->getIncomingContactRequests()};
-    const auto sourceEmail{notification->getData()};
+    const auto notification = static_cast<MegaNotification*>(QObject::sender());
+    const auto megaApp = static_cast<MegaApplication*>(qApp);
+    const auto requestList = megaApp->getMegaApi()->getIncomingContactRequests();
+    const auto sourceEmail = notification->getData();
 
     for(int iRequest=0; iRequest < requestList->size(); iRequest++)
     {
-        const auto request{requestList->get(iRequest)};
+        const auto request = requestList->get(iRequest);
         if(QString::fromUtf8(request->getSourceEmail()) == sourceEmail)
         {
             if(action == MegaNotification::Action::firstButton)
@@ -338,15 +335,15 @@ void DesktopNotifications::replayIncomingPendingRequest(MegaNotification::Action
 
 std::unique_ptr<mega::MegaNode> getMegaNode(mega::MegaUserAlert* alert)
 {
-    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+    const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
     return std::unique_ptr<mega::MegaNode>(megaApi->getNodeByHandle(alert->getNodeHandle()));
 }
 
 void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const QString& message, int type) const
 {
-    auto notification{new MegaNotification()};
-    const auto node{getMegaNode(alert)};
-    auto sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
+    auto notification = new MegaNotification();
+    const auto node = getMegaNode(alert);
+    QString sharedFolderName{QString::fromUtf8(node ? node->getName() : alert->getName())};
     if(sharedFolderName.isEmpty())
     {
         switch (type) {
@@ -370,8 +367,8 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
     if(node)
     {
         notification->setData(QString::fromUtf8(node->getBase64Handle()));
-        const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
-        const auto fullAccess{megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL};
+        const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+        const auto fullAccess = megaApi->getAccess(node.get()) >= mega::MegaShare::ACCESS_FULL;
         if(type == NEW_SHARE && fullAccess)
         {
 #ifdef __APPLE__
@@ -397,7 +394,7 @@ void DesktopNotifications::notifySharedUpdate(mega::MegaUserAlert *alert, const 
 
 void DesktopNotifications::notifyUnreadNotifications() const
 {
-    auto notification{new MegaNotification()};
+    auto notification = new MegaNotification();
     notification->setText(tr("You have unread notifications"));
     notification->setImage(mAppIcon);
     notification->setActions(QStringList() << tr("View"));
@@ -407,8 +404,8 @@ void DesktopNotifications::notifyUnreadNotifications() const
 
 QString DesktopNotifications::createTakeDownMessage(mega::MegaUserAlert* alert, bool isReinstated) const
 {
-    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
-    const auto node{megaApi->getNodeByHandle(alert->getNodeHandle())};
+    const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+    const auto node = megaApi->getNodeByHandle(alert->getNodeHandle());
     if (node)
     {
         if (node->getType() == mega::MegaNode::TYPE_FILE)
@@ -447,8 +444,8 @@ QString DesktopNotifications::createTakeDownMessage(mega::MegaUserAlert* alert, 
 
 void DesktopNotifications::notifyTakeDown(mega::MegaUserAlert *alert, bool isReinstated) const
 {
-    auto notification{new MegaNotification()};
-    const auto node{getMegaNode(alert)};
+    auto notification = new MegaNotification();
+    const auto node = getMegaNode(alert);
     notification->setTitle(tr("Takedown Notice"));
     notification->setText(createTakeDownMessage(alert, isReinstated));
     if(node)
@@ -463,16 +460,16 @@ void DesktopNotifications::notifyTakeDown(mega::MegaUserAlert *alert, bool isRei
 
 void DesktopNotifications::viewContactOnWebClient(MegaNotification::Action activationButton) const
 {
-    const auto notification{static_cast<MegaNotification*>(QObject::sender())};
-    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
-    const auto userMail{megaApi->getContact(notification->getData().toUtf8())};
-    auto url{QUrl(QString::fromUtf8("mega://#fm/contacts"))};
-    const auto userVisible{userMail && userMail->getVisibility() == mega::MegaUser::VISIBILITY_VISIBLE};
+    const auto notification = static_cast<MegaNotification*>(QObject::sender());
+    const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+    const auto userMail = megaApi->getContact(notification->getData().toUtf8());
+    auto url = QUrl(QString::fromUtf8("mega://#fm/contacts"));
+    const auto userVisible = userMail && userMail->getVisibility() == mega::MegaUser::VISIBILITY_VISIBLE;
     if (userVisible)
     {
-        const auto userHandle{QString::fromUtf8(megaApi->userHandleToBase64(userMail->getHandle()))};
-        const auto actionIsViewContact{checkIfActionIsValid(activationButton)};
-        const auto actionIsOpenChat{activationButton == MegaNotification::Action::secondButton};
+        const QString userHandle{QString::fromUtf8(megaApi->userHandleToBase64(userMail->getHandle()))};
+        const bool actionIsViewContact{checkIfActionIsValid(activationButton)};
+        const bool actionIsOpenChat{activationButton == MegaNotification::Action::secondButton};
         if(actionIsViewContact)
         {
             url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(userHandle));
@@ -492,7 +489,7 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
     {
     case Preferences::STATE_ALMOST_OVER_STORAGE:
     {
-        auto notification{new MegaNotification()};
+        auto notification = new MegaNotification();
         notification->setTitle(tr("Your account is almost full."));
         notification->setText(tr("Upgrade now to a PRO account."));
         notification->setActions(QStringList() << tr("Get PRO"));
@@ -504,7 +501,7 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
     }
     case Preferences::STATE_OVER_STORAGE:
     {
-        auto notification{new MegaNotification()};
+        auto notification = new MegaNotification();
         notification->setTitle(tr("Your account is full."));
         notification->setText(tr("Upgrade now to a PRO account."));
         notification->setActions(QStringList() << tr("Get PRO"));
@@ -516,9 +513,9 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
     }
     case Preferences::STATE_PAYWALL:
     {
-        auto notification{new MegaNotification()};
+        auto notification = new MegaNotification();
         notification->setTitle(tr("Your data is at risk"));
-        const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+        const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
         int64_t remainDaysOut(0);
         Utilities::getDaysToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut);
         notification->setText(tr("You have [A] days left to save your data").replace(QString::fromUtf8("[A]"), QString::number(remainDaysOut)));
@@ -535,7 +532,7 @@ void DesktopNotifications::sendOverStorageNotification(int state) const
 
 void DesktopNotifications::sendOverTransferNotification(const QString &title) const
 {
-    const auto notification{new MegaNotification()};
+    const auto notification = new MegaNotification();
     notification->setTitle(title);
     notification->setText(tr("Upgrade now to a PRO account."));
     notification->setActions(QStringList() << tr("Get PRO"));
@@ -548,7 +545,7 @@ void DesktopNotifications::sendFinishedTransferNotification(const QString &title
 {
     if(mPreferences->showNotifications())
     {
-        auto notification{new MegaNotification()};
+        auto notification = new MegaNotification();
         notification->setTitle(title);
         notification->setText(message);
         notification->setActions(QStringList() << tr("Show in folder"));
@@ -572,7 +569,7 @@ void DesktopNotifications::redirectToUpgrade(MegaNotification::Action activation
 
 void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) const
 {
-    const auto megaApi{static_cast<MegaApplication*>(qApp)->getMegaApi()};
+    const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
 
     switch (businessStatus)
     {
@@ -580,7 +577,7 @@ void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) c
     {
         if (megaApi->isMasterBusinessAccount())
         {
-            const auto notification{new MegaNotification()};
+            const auto notification = new MegaNotification();
             notification->setTitle(tr("Payment Failed"));
             notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
             notification->setActions(QStringList() << tr("Pay Now"));
@@ -592,7 +589,7 @@ void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) c
     }
     case mega::MegaApi::BUSINESS_STATUS_EXPIRED:
     {
-        const auto notification{new MegaNotification()};
+        const auto notification = new MegaNotification();
 
         if (megaApi->isMasterBusinessAccount())
         {
@@ -648,7 +645,7 @@ void DesktopNotifications::redirectToPayBusiness(MegaNotification::Action activa
 
 void DesktopNotifications::showInFolder(MegaNotification::Action action) const
 {
-    const auto notification{static_cast<MegaNotification*>(QObject::sender())};
+    const auto notification = static_cast<MegaNotification*>(QObject::sender());
 
     if (checkIfActionIsValid(action) && notification->getData().size() > 1)
     {
@@ -668,11 +665,11 @@ void DesktopNotifications::viewShareOnWebClient(MegaNotification::Action action)
 {
     if (checkIfActionIsValid(action))
     {
-        const auto notification{static_cast<MegaNotification*>(QObject::sender())};
-        const auto nodeHandlerBase64{notification->getData()};
+        const auto notification = static_cast<MegaNotification*>(QObject::sender());
+        const auto nodeHandlerBase64 = notification->getData();
         if (!nodeHandlerBase64.isEmpty())
         {
-            const auto url{QUrl(QString::fromUtf8("mega://#fm/%1").arg(nodeHandlerBase64))};
+            const auto url = QUrl(QString::fromUtf8("mega://#fm/%1").arg(nodeHandlerBase64));
             QtConcurrent::run(QDesktopServices::openUrl, url);
         }
     }
@@ -691,20 +688,20 @@ void DesktopNotifications::receiveClusteredAlert(mega::MegaUserAlert *alert, con
 
 void DesktopNotifications::replayNewShareReceived(MegaNotification::Action action) const
 {
-    const auto actionIsViewOnWebClient{checkIfActionIsValid(action)};
-    const auto actionIsSyncShare{action == MegaNotification::Action::secondButton};
+    const bool actionIsViewOnWebClient{checkIfActionIsValid(action)};
+    const bool actionIsSyncShare{action == MegaNotification::Action::secondButton};
     if(actionIsViewOnWebClient)
     {
         viewShareOnWebClient(action);
     }
     else if(actionIsSyncShare)
     {
-        const auto notification{static_cast<MegaNotification*>(QObject::sender())};
-        const auto nodeHandlerBase64{notification->getData()};
+        const auto notification = static_cast<MegaNotification*>(QObject::sender());
+        const auto nodeHandlerBase64 = notification->getData();
         if (!nodeHandlerBase64.isEmpty())
         {
-            const auto megaFolderHandle{mega::MegaApi::base64ToUserHandle(nodeHandlerBase64.toStdString().c_str())};
-            const auto megaApp{static_cast<MegaApplication*>(qApp)};
+            const auto megaFolderHandle = mega::MegaApi::base64ToUserHandle(nodeHandlerBase64.toStdString().c_str());
+            const auto megaApp = static_cast<MegaApplication*>(qApp);
             megaApp->openSettingsAddSync(megaFolderHandle);
         }
     }
@@ -714,7 +711,7 @@ void DesktopNotifications::viewOnInfoDialogNotifications(MegaNotification::Actio
 {
     if(checkIfActionIsValid(action))
     {
-        const auto megaApp{static_cast<MegaApplication*>(qApp)};
+        const auto megaApp = static_cast<MegaApplication*>(qApp);
         megaApp->showInfoDialogNotifications();
     }
 }

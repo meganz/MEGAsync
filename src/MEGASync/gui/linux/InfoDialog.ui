@@ -502,12 +502,6 @@ border: none;
                 <height>120</height>
                </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">#wPSA
-{
-background-color: #F4F6F8;
-}</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -1976,7 +1970,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #333333;
   font-family: Lato;
   font-size: 16px;
-  letter-spacing: 0;
   line-height: 24px;
 }</string>
                                </property>
@@ -2032,7 +2025,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #666666;
   font-family: Lato;
   font-size: 13px;
-  letter-spacing: 0;
 }</string>
                                </property>
                                <property name="text">
@@ -2627,7 +2619,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>Open Preferences</string>
+                                <string>Open Settings</string>
                                </property>
                               </widget>
                              </item>
@@ -2726,23 +2718,6 @@ background-color: #FFFFFF;
                           <height>16777215</height>
                          </size>
                         </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_15">
-                         <property name="spacing">
-                          <number>3</number>
-                         </property>
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                        </layout>
                        </widget>
                       </item>
                       <item>

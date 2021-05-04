@@ -84,12 +84,11 @@ void ExtServer::onClientData()
         return;
     }
 
-    qint64 len;
     char buf[1024];
-    while ((len = client->readLine(buf, sizeof(buf))) > 0) {
+    while (client->readLine(buf, sizeof(buf)) > 0) {
         const char *out = GetAnswerToRequest(buf);
         if (out) {
-            qint64 len = client->write(out);
+            client->write(out);
             client->write("\n");
         }
     }

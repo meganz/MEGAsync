@@ -344,7 +344,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_win.qrc">
                    <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -386,7 +386,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_win.qrc">
                    <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -428,7 +428,7 @@ border: none;
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_win.qrc">
                    <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -506,12 +506,6 @@ border: none;
                 <width>400</width>
                 <height>120</height>
                </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">#wPSA
-{
-background-color: #F4F6F8;
-}</string>
               </property>
              </widget>
             </item>
@@ -1981,7 +1975,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #333333;
   font-family: Lato;
   font-size: 16px;
-  letter-spacing: 0;
   line-height: 24px;
 }</string>
                                </property>
@@ -2037,7 +2030,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
   color: #666666;
   font-family: Lato;
   font-size: 13px;
-  letter-spacing: 0;
 }</string>
                                </property>
                                <property name="text">
@@ -2632,7 +2624,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 }</string>
                                </property>
                                <property name="text">
-                                <string>Open Preferences</string>
+                                <string>Open Settings</string>
                                </property>
                               </widget>
                              </item>
@@ -2731,23 +2723,6 @@ background-color: #FFFFFF;
                           <height>16777215</height>
                          </size>
                         </property>
-                        <layout class="QHBoxLayout" name="horizontalLayout_15">
-                         <property name="spacing">
-                          <number>3</number>
-                         </property>
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                        </layout>
                        </widget>
                       </item>
                       <item>

@@ -1,5 +1,6 @@
 #include "HTTPServer.h"
 #include "Preferences.h"
+#include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 
@@ -422,7 +423,8 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
             if (!isFirstWebDownloadDone && !Preferences::instance()->isFirstWebDownloadDone())
             {
-                megaApi->sendEvent(99503, "MEGAsync first webclient download");
+                megaApi->sendEvent(AppStatsEvents::EVENT_1ST_WEBCLIENT_DL,
+                                   "MEGAsync first webclient download");
                 isFirstWebDownloadDone = true;
             }
         }
@@ -456,7 +458,8 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
             if (privateAuth.size() || publicAuth.size())
             {
-                QQueue<MegaNode *> downloadQueue;
+                QQueue<WrappedNode *> downloadQueue;
+
                 int end;
                 bool firstnode = true;
 
@@ -528,7 +531,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                         MegaNode *node = megaApi->createForeignFolderNode(h, name.toUtf8().constData(), p,
                                                                          privateAuth.toUtf8().constData(),
                                                                          publicAuth.toUtf8().constData());
-                        downloadQueue.append(node);
+                        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
                     }
                     else
                     {
@@ -542,7 +545,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                                                              name.toUtf8().constData(), size, mtime,
                                                              p, privateAuth.toUtf8().constData(),
                                                              publicAuth.toUtf8().constData(), chatAuth.isEmpty() ? NULL : chatAuth.toUtf8().constData());
-                            downloadQueue.append(node);
+                            downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node));
                             QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
                             if (it != webTransferStateRequests.end())
                             {

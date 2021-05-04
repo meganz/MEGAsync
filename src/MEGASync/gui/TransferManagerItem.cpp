@@ -184,10 +184,10 @@ void TransferManagerItem::updateTransfer()
         {
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
-            const auto totalRemainingSeconds{mTransferRemainigTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes)};
+            const auto totalRemainingSeconds = mTransferRemainigTime.calculateRemainingTimeSeconds(transferSpeed, remainingBytes);
 
             QString remainingTime;
-            const auto printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
+            const bool printableValue{totalRemainingSeconds.count() && totalRemainingSeconds < std::chrono::seconds::max()};
             if (printableValue)
             {
                 remainingTime = Utilities::getTimeString(totalRemainingSeconds.count());

@@ -57,6 +57,9 @@ public:
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
     static bool isUserActive();
+
+    static const char* settingsString;
+    static const char* exitString;
 };
 
 

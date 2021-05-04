@@ -261,7 +261,7 @@ public:
     void writeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //write sync into cache
     void removeAllSyncSettings(); //remove all sync from cache
     void removeSyncSetting(std::shared_ptr<SyncSetting> syncSettings); //remove one sync from cache
-    QMap<int, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting> > getLoadedSyncsMap() const; //return loaded syncs when loggedin/entered user
     void removeAllFolders(); //remove all syncs from cache
     // old cache transition related:
     void removeOldCachedSync(int position, QString email = {});
@@ -284,8 +284,10 @@ public:
     void setLastReboot(long long value);
     long long getLastExit();
     void setLastExit(long long value);
-    QSet<int> getDisabledSyncTags();
-    void setDisabledSyncTags(QSet<int> disabledSyncs);
+    QSet<mega::MegaHandle> getDisabledSyncTags();
+    void setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs);
+    bool getNotifyDisabledSyncsOnLogin();
+    void setNotifyDisabledSyncsOnLogin(bool notify);
 
     QString getHttpsKey();
     void setHttpsKey(QString key);
@@ -510,7 +512,7 @@ protected:
     // loaded syncs when loggedin/entered user. This is intended to be used to load values that are not stored in the sdk (like sync name/last known remote path)
     // the actual SyncSettings model is stored in Model::configuredSyncsMap. That one is the one that will be updated and persistent accordingly
     // These are only used for retrieving values or removing at uninstall
-    QMap<int, std::shared_ptr<SyncSetting>> loadedSyncsMap;
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> loadedSyncsMap;
 
     QStringList excludedSyncNames;
     QStringList excludedSyncPaths;
@@ -665,6 +667,7 @@ protected:
     static const QString lastPublicHandleTimestampKey;
     static const QString lastPublicHandleTypeKey;
     static const QString disabledSyncsKey;
+    static const QString notifyDisabledSyncsKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

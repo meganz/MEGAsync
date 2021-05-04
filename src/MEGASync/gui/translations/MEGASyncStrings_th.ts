@@ -331,7 +331,7 @@
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] ได้สร้างคุณเป็นผู้ติดต่อ</translation>
+        <translation type="unfinished">[A] ได้ยอมรับคำขอผู้ติดต่อของคุณ</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
@@ -411,27 +411,27 @@
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation type="unfinished">แผนสมาชิก PRO ของคุณจะหมดอายุใน 1 วัน</translation>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณจะหมดอายุใน 1 วัน</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">แผนสมาชิก PRO ของคุณจะหมดอายุใน [A] วัน</translation>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณจะหมดอายุใน [A] วัน</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
         <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
-        <translation type="unfinished">แผนสมาชิกแบบ PRO จะหมดอายุเร็ว ๆนี้</translation>
+        <translation type="unfinished">แผนสมาชิก Pro จะหมดอายุเร็ว ๆ นี้</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation type="unfinished">แผนสมาชิก PRO ของคุณหมดอายุ 1 วันที่ผ่านมา</translation>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณหมดอายุเมื่อ 1 วันก่อน</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished">แผนสมาชิก PRO ของคุณหมดอายุ [A] วันที่ผ่านมา</translation>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณหมดอายุเมื่อ [A] วันก่อน</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
@@ -529,7 +529,7 @@
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>กรุณาเลือกโฟลเดอร์บนเครื่องและโฟลเดอร์ของ MEGA</translation>
+        <translation>กรุณาเลือกโฟลเดอร์บนเครื่องและโฟลเดอร์ MEGA</translation>
     </message>
     <message>
         <source>The selected local folder is already synced</source>
@@ -836,7 +836,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">คุณกำลังจะอนุญาตการตั้งค่า ที่อาจทำให้การสื่อสารถูกดักฟังได้ ข้อมูลของคุณจะยังไม่สามารถเข้าถึงเมื่อถูกโจมตี เนื่องจากมีการเข้ารหัสตั้งแต่ต้นทางถึงปลายทาง แต่พวกเขาสามารถสุ่มการย้ายไฟล์และโฟลเดอร์ของคุณใน MEGA ได้ ให้คุณลบหรือปฏิเสธการเข้าถึงบัญชีของคุณ</translation>
+        <translation type="unfinished">คุณกำลังจะอนุญาตการตั้งค่า ที่อาจทำให้การสื่อสารถูกดักฟังได้ ข้อมูลของคุณจะยังไม่สามารถเข้าถึงเมื่อถูกโจมตี เนื่องจากมีการเข้ารหัสลับแบบต้นทางถึงปลายทาง แต่พวกเขาสามารถสุ่มการย้ายไฟล์และโฟลเดอร์ของคุณใน MEGA ได้ ให้คุณลบหรือปฏิเสธการเข้าถึงบัญชีของคุณ</translation>
     </message>
 </context>
 <context>
@@ -927,6 +927,274 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>DesktopNotifications</name>
+    <message>
+        <source>[A] added 1 item</source>
+        <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
+        <translation type="unfinished">[A] ได้เพิ่ม 1 รายการ</translation>
+    </message>
+    <message>
+        <source>[A] added [B] items</source>
+        <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
+        <translation type="unfinished">[A] ได้เพิ่ม [B] รายการ</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in 1 day</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณจะหมดอายุใน 1 วัน</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan will expire in [A] days</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณจะหมดอายุใน [A] วัน</translation>
+    </message>
+    <message>
+        <source>PRO membership plan expiring soon</source>
+        <translatorcomment>Label to indicate that the PRO membership will expire soon.</translatorcomment>
+        <translation type="unfinished">แผนสมาชิก Pro จะหมดอายุเร็ว ๆ นี้</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired 1 day ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณหมดอายุเมื่อ 1 วันก่อน</translation>
+    </message>
+    <message>
+        <source>Your PRO membership plan expired [A] days ago</source>
+        <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
+        <translation type="unfinished">แผนสมาชิก Pro ของคุณหมดอายุเมื่อ [A] วันก่อน</translation>
+    </message>
+    <message>
+        <source>[A] has left the shared folder</source>
+        <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
+        <translation type="unfinished">[A] ออกจากโฟลเดอร์ที่แชร์แล้ว</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
+        <translation type="unfinished">การเข้าถึงโฟลเดอร์ที่แชร์ถูกนำออกแล้ว</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed by [A]</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
+        <translation type="unfinished">การเข้าถึงโฟลเดอร์ที่แชร์ถูกลบโดย [A]</translation>
+    </message>
+    <message>
+        <source>New Contact Request</source>
+        <translatorcomment>Title of the notification when a contact request has been received</translatorcomment>
+        <translation type="unfinished">คำขอติดต่อใหม่</translation>
+    </message>
+    <message>
+        <source>[A] sent you a contact request</source>
+        <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
+        <translation type="unfinished">[A] ได้ส่งคำขอผู้ติดต่อถึงคุณ</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translatorcomment>Button label of system notification to accept the notification.</translatorcomment>
+        <translation type="unfinished">ยอมรับ</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translatorcomment>Button label of system notification to reject the notification of incoming contact request.</translatorcomment>
+        <translation type="unfinished">ปฏิเสธ</translation>
+    </message>
+    <message>
+        <source>Cancelled Contact Request</source>
+        <translatorcomment>Title of the notification about a cancellation of a contact request</translatorcomment>
+        <translation type="unfinished">คำขอการติดต่อถูกยกเลิก</translation>
+    </message>
+    <message>
+        <source>[A] cancelled the contact request</source>
+        <translatorcomment>Label to indicate that usar [A] has cancelled the contact request. Placeholder will be replaced by email of the user that made the cancellation.</translatorcomment>
+        <translation type="unfinished">[A] ยกเลิกคำขอติดต่อ</translation>
+    </message>
+    <message>
+        <source>Reminder</source>
+        <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
+        <translation type="unfinished">การแจ้งเตือน</translation>
+    </message>
+    <message>
+        <source>You have a contact request</source>
+        <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
+        <translation type="unfinished">คุณมีคำขอผู้ติดต่อ</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Button label of system notification to view all unread notifications.</translatorcomment>
+        <translation type="unfinished">ดู</translation>
+    </message>
+    <message>
+        <source>New Contact Established</source>
+        <translatorcomment>Title of the notification when a contact relationship has been established.</translatorcomment>
+        <translation type="unfinished">สร้างผู้ติดต่อใหม่แล้ว</translation>
+    </message>
+    <message>
+        <source>New contact with [A] has been established</source>
+        <translatorcomment>Label to indicate that contact relationship with [A] has been established Placeholder will be replaced by email of the user who established the contact.</translatorcomment>
+        <translation type="unfinished">สร้างผู้ติดต่อใหม่กับ [A] แล้ว</translation>
+    </message>
+    <message>
+        <source>Chat</source>
+        <translatorcomment>Button of system notification that forwards the user to webclient to chat section.</translatorcomment>
+        <translation type="unfinished">แชท</translation>
+    </message>
+    <message>
+        <source>Shared Folder Received</source>
+        <translatorcomment>Title of the notification when a shared folder has been received</translatorcomment>
+        <translation type="unfinished">แชร์โฟลเดอร์ที่ได้รับ</translation>
+    </message>
+    <message>
+        <source>New shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">มีการแชร์โฟลเดอร์ใหม่จาก [X]</translation>
+    </message>
+    <message>
+        <source>Shared Folder Removed</source>
+        <translatorcomment>Title of the notification when a shared folder has been removed</translatorcomment>
+        <translation type="unfinished">แชร์โฟลเดอร์ถูกลบออก</translation>
+    </message>
+    <message>
+        <source>Shared Folder Updated</source>
+        <translatorcomment>Generic label to indicate that there is an update in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">แชร์โฟลเดอร์อัปเดตแล้ว</translation>
+    </message>
+    <message>
+        <source>Payment Info</source>
+        <translatorcomment>Notification label related to a payment.</translatorcomment>
+        <translation type="unfinished">ข้อมูลการชำระเงิน</translation>
+    </message>
+    <message>
+        <source>Upgrade</source>
+        <translatorcomment>Button label of system notification to upgrade the current account.</translatorcomment>
+        <translation type="unfinished">อัปเกรด</translation>
+    </message>
+    <message>
+        <source>Shared Folder Activity</source>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
+        <translation type="unfinished">กิจกรรมโฟลเดอร์ที่ใช้ร่วมกัน</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translatorcomment>Button label of system notification to show incoming shared folder received.</translatorcomment>
+        <translation type="unfinished">แสดง</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Button label of system notification to set a new sync when an incoming shared folder is received</translatorcomment>
+        <translation type="unfinished">ซิงค์</translation>
+    </message>
+    <message>
+        <source>You have unread notifications</source>
+        <translatorcomment>Label to indicate that actual user has unread notification.</translatorcomment>
+        <translation type="unfinished">คุณมีแจ้งเตือนที่ยังไม่ได้อ่าน</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared file has been reinstated. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">ไฟล์ ([A]) ที่คุณแชร์แบบสาธารณะถูกคืนสถานะแล้ว</translation>
+    </message>
+    <message>
+        <source>Your publicly shared file ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared file has been taken down. Placeholder [A] will be replaced by the name of the file.</translatorcomment>
+        <translation type="unfinished">ไฟล์ ([A]) ที่คุณแชร์แบบสาธารณะถูกลบแล้ว</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been reinstated</source>
+        <translatorcomment>Label to indicate that public shared folder has been reinstated. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">โฟลเดอร์ ([A]) ที่แชร์ของคุณถูกคืนสถานะแล้ว</translation>
+    </message>
+    <message>
+        <source>Your publicly shared folder ([A]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder has been taken down. Placeholder [A] will be replaced by the name of the folder.</translatorcomment>
+        <translation type="unfinished">โฟลเดอร์ ([A]) ที่คุณแชร์แบบสาธารณะถูกลบแล้ว</translation>
+    </message>
+    <message>
+        <source>Your taken down has been reinstated</source>
+        <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
+        <translation type="unfinished">การแชร์สาธารณะของคุณได้รับการคืนสถานะแล้ว</translation>
+    </message>
+    <message>
+        <source>Your publicly shared has been taken down</source>
+        <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
+        <translation type="unfinished">การแชร์สาธารณะของคุณถูกลบแล้ว</translation>
+    </message>
+    <message>
+        <source>Takedown Notice</source>
+        <translatorcomment>Notification label related to takedown notice</translatorcomment>
+        <translation type="unfinished">แจ้งให้ลบเนื้อหา</translation>
+    </message>
+    <message>
+        <source>Your account is almost full.</source>
+        <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
+        <translation type="unfinished">บัญชีของคุณใกล้เต็มแล้ว</translation>
+    </message>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">อัปเกรดเป็นบัญชี PRO ทันที</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
+        <translation type="unfinished">รับบัญชี PRO</translation>
+    </message>
+    <message>
+        <source>Your account is full.</source>
+        <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
+        <translation type="unfinished">บัญชีของคุณเต็มแล้ว</translation>
+    </message>
+    <message>
+        <source>Your data is at risk</source>
+        <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
+        <translation type="unfinished">ข้อมูลของคุณตกอยู่ในความเสี่ยง</translation>
+    </message>
+    <message>
+        <source>You have [A] days left to save your data</source>
+        <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
+        <translation type="unfinished">คุณมีเวลาเหลือ [A] วันในการจัดเก็บข้อมูลของคุณ</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">แสดงในโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Payment Failed</source>
+        <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">ชำระเงินไม่สำเร็จ</translation>
+    </message>
+    <message>
+        <source>Please resolve your payment issue to avoid suspension of your account.</source>
+        <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
+        <translation type="unfinished">กรุณาแก้ไขปัญหาการชำระเงินของคุณ เพื่อหลีกเลี่ยงการถูกระงับบัญชีธุรกิจของคุณ</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
+        <translation type="unfinished">จ่ายตอนนี้</translation>
+    </message>
+    <message>
+        <source>Your Business account is expired</source>
+        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
+        <translation type="unfinished">บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+    </message>
+    <message>
+        <source>Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
+        <translation type="unfinished">บัญชีของคุณหมดอายุ และจะอ่านได้อย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
+    </message>
+    <message>
+        <source>Account Suspended</source>
+        <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
+        <translation type="unfinished">บัญชีถูกระงับ</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
+        <translation type="unfinished">ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณ เพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ</translation>
+    </message>
+</context>
+<context>
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
@@ -989,7 +1257,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
         <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation type="unfinished">[A]ที่อยู่ IP ที่คุณใช้ มีการถ่ายโอนข้อมูลไปแล้ว %1 ใน 6 ชั่วโมงที่ผ่านมา ซึ่งเกินขีดจำกัดปัจจุบันของคุณ ในการยกเลิกขีดจำกัดนี้ คุณสามารถอัปเกรดเป็นบัญชี PRO ได้ ซึ่งจะเป็นการเพิ่มแพ็คเกจโควต้าการโอนถ่ายของคุณเองรวมไปถึงพื้นที่เก็บข้อมูลได้อย่างเหลือเฟือ[/A]</translation>
+        <translation type="unfinished">[A]ที่อยู่ IP ที่คุณใช้ มีการถ่ายโอนข้อมูลไปแล้ว %1 ใน 6 ชั่วโมงที่ผ่านมา ซึ่งเกินขีดจำกัดปัจจุบันของคุณ ในการยกเลิกขีดจำกัดนี้ คุณสามารถอัปเกรดเป็นบัญชี Pro ได้ ซึ่งจะเป็นการเพิ่มแพ็คเกจโควต้าการโอนถ่ายของคุณเองรวมไปถึงพื้นที่เก็บข้อมูลได้อย่างเหลือเฟือ[/A]</translation>
     </message>
 </context>
 <context>
@@ -1160,7 +1428,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login to MEGA</source>
         <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation type="unfinished">เข้าสู่ MEGA</translation>
+        <translation type="unfinished">เข้าสู่ระบบ MEGA</translation>
     </message>
     <message>
         <source>Email address</source>
@@ -1261,7 +1529,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify email in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ กรุณายืนยันอีเมลของคุณและทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ กรุณาตรวจสอบอีเมลและทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1276,7 +1544,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description to explain why the current account is locked. The user needs to verify his phone number in order to continue using the application.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิดได้ กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิด กรุณาตรวจสอบหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Verify now</source>
@@ -1360,7 +1628,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>นำเข้าสู่คลาวด์ไดรฟ์ของฉัน</translation>
+        <translation>นำเข้าไปยังคลาวด์ไดรฟ์ของฉัน</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1431,7 +1699,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>RECENTLY UPDATED</source>
         <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
-        <translation type="vanished">อัปเดตเมื่อเร็วๆ นี้</translation>
+        <translation type="vanished">อัปเดตล่าสุด</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
@@ -1554,6 +1822,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
+        <translatorcomment>This is the string used to refer to settings, or preferences, in Windows and Linux. .</translatorcomment>
         <translation type="unfinished">ตั้งค่า</translation>
     </message>
     <message>
@@ -1831,7 +2100,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>We have contacted you by email to [A] on [B] but you still have [C] files taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  [C] - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation type="unfinished">เราได้ติดต่อคุณทางอีเมลถึง [A] เมื่อ [B] แต่คุณยังมีไฟล์ [C] รายการสูงถึง [D] ในบัญชี MEGA ของคุณ ซึ่งจะต้องมีแผน [E] เป็นอย่างน้อย</translation>
+        <translation type="unfinished">เราได้ติดต่อคุณทางอีเมล [A] เมื่อ [B] แต่คุณยังมีไฟล์ [C] ไฟล์ซึ่งมีเนื้อที่ [D] ในบัญชี MEGA ของคุณ คุณจำเป็นต้องมีบัญชี [E] เป็นอย่างน้อย</translation>
     </message>
     <message>
         <source>You have [A][B] days[/A] left to upgrade. After that, your data is subject to deletion.</source>
@@ -1876,7 +2145,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, [B]- number of hours left to upgrade.</translatorcomment>
-        <translation type="unfinished">You have [A][B] hours[/A] left to upgrade. After that, your data is subject to deletion.</translation>
+        <translation type="unfinished">คุณมีเวลาเหลือ [A][B] ชั่วโมง[/A]ในการอัปเกรด หลังจากนั้นข้อมูลของคุณจะถูกลบ</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled</source>
+        <translatorcomment>Label to indicate that some syncs have been disable due to some error.</translatorcomment>
+        <translation type="unfinished">รายการซิงค์บางรายการถูกปิดใช้งาน</translation>
+    </message>
+    <message>
+        <source>Something went wrong while trying to sync your folders.</source>
+        <translatorcomment>Label to indicate that an error occurs while trying to resume the syncs</translatorcomment>
+        <translation type="unfinished">เกิดข้อผิดพลาดขึ้น ขณะพยายามซิงค์โฟลเดอร์ของคุณ</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translation type="unfinished">เปิดการตั้งค่า</translation>
     </message>
 </context>
 <context>
@@ -1994,7 +2278,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation type="unfinished">สร้างบัญชีเพื่อเข้าร่วมแพลตฟอร์มการทำงานร่วมกันของ MEGA</translation>
+        <translation type="unfinished">สร้างบัญชีเพื่อเข้าร่วมแพลตฟอร์มการทำงานร่วมกันบน MEGA</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
@@ -2083,7 +2367,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.[/A]</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation type="unfinished">[A]รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ[/A]</translation>
+        <translation type="unfinished">[A]รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึงการไม่จำกัดบัญชี MEGA ของคุณ[/A]</translation>
     </message>
     <message>
         <source>Locked Accounts</source>
@@ -2096,7 +2380,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login Verification</source>
         <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
-        <translation type="unfinished">การยืนยันการเข้าสู่ระบบ</translation>
+        <translation type="unfinished">ตรวจสอบการเข้าสู่ระบบ</translation>
     </message>
     <message>
         <source>Please enter the code generated by your authentication app</source>
@@ -2371,7 +2655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>MEGAsync  มีเวอร์ชันใหม่พร้อมใช้งานแล้ว</translation>
+        <translation>MEGAsync เวอร์ชันใหม่พร้อมใช้งานแล้ว</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -2421,12 +2705,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
+        <translation type="unfinished">การซิงค์ ”%1″ ของคุณถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">การซิงค์ &quot;%1&quot; ของคุณถูกการปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
+        <translation type="unfinished">การซิงค์ ”%1″ ของคุณถูกปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -2471,7 +2755,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์ที่แชร์การซิงโครไนซ์กับ VirtualBox ไม่รองรับ อันเนื่องมาจากข้อบกพร่องในไฟล์ระบบ</translation>
+        <translation type="unfinished">การซิงค์ “%1” ของคุณถูกปิดใช้งาน เนื่องจากไม่สนับสนุนการซิงโครไนซ์โฟลเดอร์ที่แชร์กับ VirtualBox เพราะมีข้อบกพร่องในระบบไฟล์นั้น</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2580,7 +2864,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์บนเครื่องที่มีฟอร์แมตด้วยระบบไฟล์ FAT ระบบไฟล์ดังกล่าวมีข้อบกพร่องในการจัดการไฟล์ขนาดใหญ่และเวลาในการแก้ไขที่อาจทำให้เกิดปัญหาการซิงค์ได้ (เช่น เมื่อการเปลี่ยนแปลงการปรับบันทึกตามฤดูกาล) ดังนั้น ขอแนะนำให้คุณซิงค์โฟลเดอร์ที่จัดรูปแบบด้วยระบบไฟล์ที่เชื่อถือได้เช่น NTFS (ข้อมูลเพิ่มเติม[A]ที่นี่[/A])</translation>
+        <translation type="obsolete">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it’s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
@@ -2633,17 +2917,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณมีพื้นที่เกือบเต็มแล้ว</translation>
+        <translation type="obsolete">Your account is almost full.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">อัปเกรดเป็นบัญชี PRO ทันที</translation>
+        <translation type="obsolete">Upgrade now to a PRO account.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณมีพื้นที่เต็มแล้ว</translation>
+        <translation type="obsolete">Your account is full.</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
@@ -2758,17 +3042,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ ดังนั้น MEGAsync จะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่น เพื่อลดการใช้งาน CPU</translation>
+        <translation type="obsolete">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">รับบัญชี PRO</translation>
+        <translation type="obsolete">Get PRO</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
-        <translation type="unfinished">แสดงในโฟลเดอร์</translation>
+        <translation type="obsolete">Show in folder</translation>
     </message>
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
@@ -2813,7 +3097,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณหมดอายุ และจะอ่านได้อย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
+        <translation type="obsolete">Your account is expired as read only until you proceed with the needed payments.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2833,7 +3117,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished">ดูเหมือนว่าการชำระเงินสำหรับบัญชีธุรกิจของคุณล้มเหลว บัญชีของคุณหมดอายุ และจะอ่านได้อย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
+        <translation type="unfinished">ดูเหมือนว่าการชำระเงินสำหรับบัญชีธุรกิจของคุณล้มเหลว บัญชีของคุณหมดอายุแล้ว และได้รับสิทธิ์การเข้าถึงแบบอ่านอย่างเดียวจนกว่าคุณจะดำเนินการชำระเงินให้เรียบร้อย</translation>
     </message>
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
@@ -2853,12 +3137,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">กรุณาแก้ไขปัญหาการชำระเงิน เพื่อหลีกเลี่ยงการระงับบัญชีธุรกิจของคุณ</translation>
+        <translation type="obsolete">Please resolve your payment issue to avoid suspension of your business account.</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
-        <translation type="unfinished">ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ</translation>
+        <translation type="obsolete">Contact your business account administrator to resolve the issue and activate your account.</translation>
     </message>
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
@@ -2873,7 +3157,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูก[A]ระงับ[/A]ในขณะนี้ คุณสามารถเรียกดูได้เฉพาะข้อมูลของคุณเท่านั้น</translation>
+        <translation type="unfinished">บัญชีของคุณ[A]หมดอายุแล้ว[/A] คุณสามารถเรียกดูได้เฉพาะข้อมูลเท่านั้น</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
@@ -2913,22 +3197,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation type="unfinished">ข้อมูลของคุณมีความเสี่ยง</translation>
+        <translation type="obsolete">Your data is at risk</translation>
     </message>
     <message>
         <source>You have [A] days left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. [A] will be replace with remaining days amount.</translatorcomment>
-        <translation type="unfinished">คุณเหลือเวลาอีก [A] วันในการเก็บรักษาข้อมูลของคุณ</translation>
+        <translation type="obsolete">You have [A] days left to save your data</translation>
     </message>
     <message>
         <source>You have [A] hours left to save your data</source>
         <translatorcomment>Notification content to inform the hours the user have to save the date before possible deletion. [A] will be replace with remaining hours amount.</translatorcomment>
-        <translation type="unfinished">You have [A] hours left to save your data</translation>
+        <translation type="obsolete">You have [A] hours left to save your data</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
         <translatorcomment>Notification content to inform the user that deadline for upgrade has been reached. The user needs to fix the situation asap to avoid data deletion.</translatorcomment>
-        <translation type="unfinished">คุณต้องดำเนินการทันทีเพื่อปกป้องข้อมูลของคุณ</translation>
+        <translation type="obsolete">You must act immediately to save your data</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled</source>
+        <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
+        <translation type="unfinished">รายการซิงค์บางรายการถูกปิดใช้งาน</translation>
+    </message>
+    <message>
+        <source>Your syncs have been enabled</source>
+        <translatorcomment>Notification message shown when the syncs have been enabled.</translatorcomment>
+        <translation type="unfinished">เปิดใช้งานการซิงค์ของคุณแล้ว</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Error message title shown when an error occurs adding a sync.</translatorcomment>
+        <translation type="unfinished">เกิดข้อผิดพลาดในการเพิ่มการซิงค์</translation>
+    </message>
+    <message>
+        <source>This sync can&apos;t be added: %1. Reason: %2</source>
+        <translatorcomment>Error message shown when there is an error adding a sync. %1 will be replaced with name of sync and %2 with the reason of the error.</translatorcomment>
+        <translation type="unfinished">ไม่สามารถเพิ่มการซิงค์นี้ได้: %1 สาเหตุ: %2</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been temporarily disabled</source>
+        <translatorcomment>Notification message launched when a sync is temporarily disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="unfinished">การซิงค์ “%1” ของคุณถูกปิดใช้งานชั่วคราว</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled. Reason: %2</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime and %2 with the reason of the error.</translatorcomment>
+        <translation type="unfinished">การซิงค์ “%1” ของคุณถูกปิดใช้งาน สาเหตุ: %2</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been re-enabled. State = %2. Error = %3</source>
+        <translatorcomment>Notification message launched when a sync has been re-enabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime, %2 with current sync state and %3 with error.</translatorcomment>
+        <translation type="obsolete">Your sync “%1” has been re-enabled. State = %2. Error = %3</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been enabled</source>
+        <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
+        <translation type="unfinished">เปิดใช้งานการซิงค์ “%1” ของคุณแล้ว</translation>
     </message>
 </context>
 <context>
@@ -3068,7 +3392,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
-        <translation type="unfinished">ยืนยัน SSL ไม่สำเร็จ</translation>
+        <translation type="unfinished">การตรวจสอบ SSL ล้มเหลว</translation>
     </message>
     <message>
         <source>Not enough quota</source>
@@ -3093,7 +3417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation type="unfinished">Storage Quota Exceeded. Please upgrade now</translation>
+        <translation type="unfinished">เกินโควต้าพื้นที่เก็บข้อมูลแล้ว กรุณาอัปเกรดทันที</translation>
     </message>
 </context>
 <context>
@@ -3121,7 +3445,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.</source>
         <translatorcomment>Description label to indicate the user that his password may be leaked and needs to perform email verification to continue.</translatorcomment>
-        <translation type="unfinished">รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ</translation>
+        <translation type="unfinished">รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึงการไม่จำกัดบัญชี MEGA ของคุณ</translation>
     </message>
 </context>
 <context>
@@ -3143,6 +3467,154 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
         <translation type="unfinished">กรุณารอสักครู่...</translation>
+    </message>
+</context>
+<context>
+    <name>MegaSyncError</name>
+    <message>
+        <source>No error</source>
+        <translatorcomment>Label to show that an SDK operation has been completed successfully.</translatorcomment>
+        <translation type="unfinished">ไม่มีข้อผิดพลาด</translation>
+    </message>
+    <message>
+        <source>Unknown error</source>
+        <translatorcomment>Label to show that an unknown error occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">ข้อผิดพลาดที่ไม่รู้จัก</translation>
+    </message>
+    <message>
+        <source>File system not supported</source>
+        <translatorcomment>Label to show that an error related with a file system not supported for a sync occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">ไม่สนับสนุนไฟล์ระบบ</translation>
+    </message>
+    <message>
+        <source>Remote node is not valid</source>
+        <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">โฟลเดอร์ซิงค์ระยะไกลไม่ถูกต้อง</translation>
+    </message>
+    <message>
+        <source>Local path is not valid</source>
+        <translatorcomment>Label to show that local path is invalid for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">เส้นทางภายในเครื่องไม่ถูกต้อง</translation>
+    </message>
+    <message>
+        <source>Initial scan failed</source>
+        <translatorcomment>Label to show that initial scan of a sync failed during a SDK operation.</translatorcomment>
+        <translation type="unfinished">เริ่มต้นการสแกนล้มเหลว</translation>
+    </message>
+    <message>
+        <source>Local path temporarily unavailable</source>
+        <translatorcomment>Label to show that local path is temporarely unavailable for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">เส้นทางภายในเครื่องไม่สามารถใช้งานได้ชั่วคราว</translation>
+    </message>
+    <message>
+        <source>Local path not available</source>
+        <translatorcomment>Label to show that local path is unavailable for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">เส้นทางภายในเครื่องไม่พร้อมใช้งาน</translation>
+    </message>
+    <message>
+        <source>Remote node not found</source>
+        <translatorcomment>Label to show that remote node was not found for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">ไม่พบโฟลเดอร์ซิงค์ระยะไกล</translation>
+    </message>
+    <message>
+        <source>Reached storage quota limit</source>
+        <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
+        <translation type="unfinished">เกินโควต้าพื้นที่เก็บข้อมูลแล้ว</translation>
+    </message>
+    <message>
+        <source>Business account expired</source>
+        <translatorcomment>Label to show that the current business account is expired during a SDK operation.</translatorcomment>
+        <translation type="unfinished">บัญชีธุรกิจของคุณหมดอายุแล้ว</translation>
+    </message>
+    <message>
+        <source>Foreign target storage quota reached</source>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
+        <translation type="unfinished">เกินโควต้าพื้นที่เก็บข้อมูลโฟลเดอร์ซิงค์ของเจ้าของแล้ว</translation>
+    </message>
+    <message>
+        <source>Remote path has changed</source>
+        <translatorcomment>Label to show that remote path has changed for a sync during a SDK operation.</translatorcomment>
+        <translation type="unfinished">เส้นทางโฟลเดอร์ซิงค์ระยะไกลมีการเปลี่ยนแปลง</translation>
+    </message>
+    <message>
+        <source>Remote node moved to Rubbish Bin</source>
+        <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
+        <translation type="unfinished">โฟลเดอร์ซิงค์ระยะไกลถูกย้ายไปที่ถังขยะแล้ว</translation>
+    </message>
+    <message>
+        <source>Share without full access</source>
+        <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
+        <translation type="unfinished">คุณไม่มีสิทธิ์เข้าถึงโฟลเดอร์ซิงค์ระยะไกลแบบเต็มที่ได้</translation>
+    </message>
+    <message>
+        <source>Local fingerprint mismatch</source>
+        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
+        <translation type="unfinished">ตรวจพบการเปลี่ยนแปลงระบบไฟล์ภายในเครื่อง</translation>
+    </message>
+    <message>
+        <source>Put nodes error</source>
+        <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
+        <translation type="unfinished">เกิดข้อผิดพลาดในการสร้างรายการใหม่บน MEGA</translation>
+    </message>
+    <message>
+        <source>Active sync below path</source>
+        <translatorcomment>SDK error label shown when setting a sync and there is an active sync with path inside the selected remote target</translatorcomment>
+        <translation type="unfinished">โฟลเดอร์ระยะไกลของคุณมีการซิงค์ที่ใช้งานอยู่แล้ว</translation>
+    </message>
+    <message>
+        <source>Active sync above path</source>
+        <translatorcomment>SDK error label shown when setting a sync and there is an active sync with a remote path as includes the selected remote target.</translatorcomment>
+        <translation type="unfinished">โฟลเดอร์ระยะไกลเป็นส่วนหนึ่งของการซิงค์ที่ใช้งานอยู่แล้ว</translation>
+    </message>
+    <message>
+        <source>Remote node has been deleted</source>
+        <translatorcomment>SDK error label shown when remote node has been deleted</translatorcomment>
+        <translation type="unfinished">ลบโฟลเดอร์ซิงค์ระยะไกลแล้ว</translation>
+    </message>
+    <message>
+        <source>Remote node is inside Rubbish Bin</source>
+        <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
+        <translation type="unfinished">โฟลเดอร์ซิงค์ระยะไกลอยู่ในถังขยะของคุณ</translation>
+    </message>
+    <message>
+        <source>Unsupported VBoxSharedFolderFS filesystem</source>
+        <translatorcomment>SDK error label shown when local filesystem is the unsupported VBoxSharedFolderFS during setting a sync</translatorcomment>
+        <translation type="unfinished">ไม่สนับสนุนระบบไฟล์ VBoxSharedFolderFS</translation>
+    </message>
+    <message>
+        <source>Local path collides with an existing sync</source>
+        <translatorcomment>SDK error label shown when local path collides due to an existing sync while setting a new one.</translatorcomment>
+        <translation type="unfinished">เส้นทางภายในเครื่องถูกซิงค์แล้ว</translation>
+    </message>
+    <message>
+        <source>Local filesystem is FAT</source>
+        <translatorcomment>SDK error label shown when local filesystem is FAT during setting a sync</translatorcomment>
+        <translation type="unfinished">ไม่สนับสนุนระบบไฟล์ FAT</translation>
+    </message>
+    <message>
+        <source>Local filesystem is HGFS</source>
+        <translatorcomment>SDK error label shown when local filesystem is HGFS during setting a sync</translatorcomment>
+        <translation type="unfinished">ไม่สนับสนุนระบบไฟล์ HGFS</translation>
+    </message>
+    <message>
+        <source>Your account is blocked</source>
+        <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
+        <translation type="unfinished">บัญชีของคุณถูกบล็อกแล้ว</translation>
+    </message>
+    <message>
+        <source>Unknown temporary error</source>
+        <translatorcomment>SDK error label shown for a unknown temporary error.</translatorcomment>
+        <translation type="unfinished">ข้อผิดพลาดชั่วคราวที่ไม่รู้จัก</translation>
+    </message>
+    <message>
+        <source>Too many changes in account, local state invalid</source>
+        <translatorcomment>SDK error label shown to inform the user that local state of a sync is invalid due to too many changes.</translatorcomment>
+        <translation type="unfinished">สถานะการซิงค์ไม่ถูกต้อง เนื่องจากบัญชีของคุณมีการเปลี่ยนแปลงมากเกินไป</translation>
+    </message>
+    <message>
+        <source>Undefined error</source>
+        <translatorcomment>Label to show that an undefined error occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">ข้อผิดพลาดที่ไม่ได้กำหนด</translation>
     </message>
 </context>
 <context>
@@ -3271,6 +3743,24 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>Model</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Label used for title of a system message box.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
+        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ในเครื่องที่ฟอร์แมตด้วยระบบไฟล์ FAT ระบบไฟล์ดังกล่าวมีข้อบกพร่องในการจัดการไฟล์ขนาดใหญ่และเวลาแก้ไขไฟล์ที่อาจทำให้เกิดปัญหาในการซิงโครไนซ์ได้ (เช่น เมื่อเวลาออมแสงมีการเปลี่ยนแปลง) ดังนั้น ขอแนะนำอย่างยิ่งให้คุณซิงค์เฉพาะโฟลเดอร์ที่ฟอร์แมตด้วยระบบไฟล์ที่เชื่อถือได้เท่านั้น เช่น NTFS เป็นต้น (ดูข้อมูลเพิ่มเติม[A]ที่นี่[/A])</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
+        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ ดังนั้น MEGAsync จะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่น เพื่อลดการใช้งาน CPU</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3347,7 +3837,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">คุณจะต้องสามารถอ่านและเขียนหรือมีสิทธิ์การเข้าถึงแบบเต็มที่ จึงจะสามารถอัปโหลดไปยังโฟลเดอร์ที่เลือกได้</translation>
+        <translation type="unfinished">คุณต้องมีสิทธิ์ในการอ่านและเขียนหรือสิทธิ์การเข้าถึงแบบเต็มที่ เพื่อให้สามารถอัปโหลดไปยังโฟลเดอร์ที่เลือกได้</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -3398,6 +3888,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>MEGAsync</source>
         <translatorcomment>Product name.</translatorcomment>
         <translation type="unfinished">MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>OsNotifications</name>
+    <message>
+        <source>[A] removed 1 item</source>
+        <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
+        <translation type="unfinished">[A] ได้ลบ 1 รายการ</translation>
+    </message>
+    <message>
+        <source>[A] removed [B] items</source>
+        <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
+        <translation type="unfinished">[A] ได้ลบ [B] รายการ</translation>
     </message>
 </context>
 <context>
@@ -3529,7 +4032,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>กรอกลิงก์ไฟล์ของ MEGA แบบเดี่ยวหรือหลายรายการ</translation>
+        <translation>กรอกลิงก์ไฟล์ MEGA หนึ่งไฟล์หรือหลายไฟล์</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -3549,7 +4052,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>กรอกลิงก์ไฟล์ของ MEGA แบบเดี่ยวหรือมากกว่า</translation>
+        <translation>กรอกลิงก์ไฟล์ MEGA อย่างน้อยหนึ่งลิงก์</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -3655,7 +4158,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage and transfers</source>
         <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
-        <translation type="unfinished">การจัดเก็บข้อมูลและถ่ายโอน</translation>
+        <translation type="obsolete">Storage and Transfer</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -3666,6 +4169,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
         <translation type="unfinished">ต่อผู้ใช้ %1</translation>
+    </message>
+    <message>
+        <source>SCALABLE</source>
+        <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
+        <translation type="unfinished">ปรับขนาดได้</translation>
     </message>
 </context>
 <context>
@@ -3814,14 +4322,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.4</translatorcomment>
-        <translation type="unfinished">- ปรับปรุงประสบการณ์ผู้ใช้เมื่อโควต้าการถ่ายโอนเกินกว่าที่กำหนด
-- ปรับปรุงการแปลภาษาต่าง ๆ
-- แก้ไขปัญหาขั้นตอนการประมวลผลภาพ RAW
-- ลดการใช้หน่วยความจำในระบบ macOS
-- ชื่อไฟล์จะไม่เป็นอักขระ Escape อีกต่อไปเมื่อปลายทางระบบไฟล์มีการสนับสนุนอักขระพิเศษ
-- รวมฟอร์ม 2FA ไว้ในกล่องโต้ตอบหลัก
-- แก้ไขและปรับแต่ง UI อื่น ๆ
-- ปรับปรุงและเพิ่มประสิทธิภาพการทำงานอื่น ๆ</translation>
+        <translation type="obsolete">- User experience improvement when transfer quota is exceeded.
+- Updated translations.
+- Fixed issues during processing of RAW images.
+- Reduce memory usage on macOS.
+- Filenames are no longer escaped when special characters are supported by the target file system.
+- Integration of 2FA form within the main dialog.
+- Other UI fixes and adjustments.
+- Other performance improvements and adjustments.</translation>
+    </message>
+    <message>
+        <source>- Fixed crash on OSX 10.9 systems.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.6</translatorcomment>
+        <translation type="obsolete">- Fixed crash on OSX 10.9 systems.</translation>
+    </message>
+    <message>
+        <source>- Fixed decryption errors for downloads during integrity verification.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
+        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
     </message>
 </context>
 <context>
@@ -3977,7 +4495,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show </source>
         <translatorcomment>Contextual menu from file list headers that allow to enable or disable diferent columns (size, type, data modified)</translatorcomment>
-        <translation type="unfinished">Show </translation>
+        <translation type="unfinished">แสดง </translation>
     </message>
     <message>
         <source>All files (*)</source>
@@ -4563,17 +5081,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>PRO I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>PRO II</source>
         <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
-        <translation>PRO II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>PRO III</source>
         <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
-        <translation>PRO III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>/MEGAsync Uploads</source>
@@ -4771,7 +5289,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>เปิด/ ปิดใช้งาน</translation>
+        <translation>เปิด/ปิดใช้งาน</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -4909,7 +5427,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">Pro Lite</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -5020,6 +5538,36 @@ when the application starts again</source>
         <translatorcomment>Button label to export master key of the current user. </translatorcomment>
         <translation type="unfinished">สำรองคีย์การกู้คืน</translation>
     </message>
+    <message>
+        <source>Saving syncs...</source>
+        <translatorcomment>Label shown when a sync operation is being saved (enable, disable, create a new one, etc)</translatorcomment>
+        <translation type="unfinished">กำลังบันทึกการซิงค์…</translation>
+    </message>
+    <message>
+        <source>Unexpected error disabling sync %1</source>
+        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1</translatorcomment>
+        <translation type="unfinished">เกิดข้อผิดพลาดที่ไม่คาดคิดในการปิดใช้งานการซิงค์ %1</translation>
+    </message>
+    <message>
+        <source>Error enabling sync</source>
+        <translatorcomment>Error message shown when an error occurs while trying to enable a sync.</translatorcomment>
+        <translation type="unfinished">เกิดข้อผิดพลาดในการเปิดใช้งานการซิงค์</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
+        <translatorcomment>Error message shown when an error occurs trying to enabling a sync. %1 name of sync, %2 reason of error.</translatorcomment>
+        <translation type="unfinished">ไม่สามารถเปิดใช้งานการซิงค์ “%1” ของคุณได้ สาเหตุ: %2</translation>
+    </message>
+    <message>
+        <source>Saving settings</source>
+        <translatorcomment>Title of dialog shown when settings are being saved.</translatorcomment>
+        <translation type="unfinished">บันทึกการตั้งค่า</translation>
+    </message>
+    <message>
+        <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
+        <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
+        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -5066,7 +5614,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>ฉันเห็นด้วยกับ &lt;a href=&quot;https://mega.nz/terms&quot;&gt;เงื่อนไขการให้บริการ&lt;/a&gt; ของ MEG</translation>
+        <translation>ฉันยอมรับ&lt;a href=&quot;https://mega.nz/terms&quot;&gt;เงื่อนไขการให้บริการ&lt;/a&gt;ของ MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -5076,7 +5624,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>กรุณาตรวจสอบบัญชีของคุณ โดยใช้ลิงก์ในการยืนยันว่า เราได้ส่งไปยังบัญชีอีเมลของคุณแล้ว</translation>
+        <translation>โปรดตรวจสอบบัญชีของคุณโดยใช้ลิงก์ยืนยันที่เราส่งไปยังบัญชีอีเมลของคุณ</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -5182,7 +5730,7 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation type="vanished">คุณได้ผ่านการตรวจสอบบัญชีของคุณหรือยัง</translation>
+        <translation type="vanished">คุณได้ตรวจสอบบัญชีของคุณแล้วหรือยัง?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -5304,12 +5852,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>โฟลเดอร์บนเครื่องและคลาวด์ไดร์ฟบน MEGA ของคุณจะได้รับการซิงค์โดยอัตโนมัติ</translation>
+        <translation>โฟลเดอร์บนเครื่องและคลาวด์ไดร์ฟบน MEGA ของคุณจะซิงโครไนซ์โดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation type="vanished">คลาวด์ไดร์ฟของคุณจะถูกซิงค์ให้ตรงกันกับโฟลเดอร์นี้:</translation>
+        <translation type="vanished">คลาวด์ไดร์ฟของคุณจะซิงโครไนซ์กับโฟลเดอร์นี้:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -5577,7 +6125,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">ไม่สามารถกำหนดค่าเป็นศูนย์</translation>
+        <translation type="unfinished">การจำกัดขนาดไม่สามารถกำหนดค่าเป็นศูนย์ได้</translation>
     </message>
     <message>
         <source>Bytes</source>
@@ -5896,12 +6444,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
         <translation type="unfinished">ตั้งค่า</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
         <translation type="unfinished">การกำหนดลักษณะ</translation>
     </message>
     <message>
@@ -5985,12 +6533,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Informative label of system notification to encourage user to upgrade account.</translatorcomment>
-        <translation type="unfinished">อัปเกรดเป็นบัญชี PRO ทันที</translation>
+        <translation type="obsolete">Upgrade now to a PRO account.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Notification button to redirect the user to upgrade account.</translatorcomment>
-        <translation type="unfinished">รับบัญชี PRO</translation>
+        <translation type="obsolete">Get PRO</translation>
     </message>
     <message>
         <source>Limited available transfer quota.</source>
@@ -6300,7 +6848,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Verify your email</source>
         <translatorcomment>Label to verify a locked account. It will redirect to webclient to confirm email.</translatorcomment>
-        <translation type="unfinished">ยืนยันอีเมลของคุณ</translation>
+        <translation type="unfinished">ตรวจสอบอีเมลของคุณ</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -6310,7 +6858,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ กรุณายืนยันอีเมลของคุณและทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัยของคุณ กรุณาตรวจสอบอีเมลและทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Resend email</source>
@@ -6325,7 +6873,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.</source>
         <translatorcomment>Description label to inform user that the account has been locked and needs phone number verification to unlock.</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิดได้ กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิด กรุณาตรวจสอบหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ</translation>
     </message>
     <message>
         <source>Verify now</source>
