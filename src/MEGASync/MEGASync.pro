@@ -8,8 +8,12 @@ win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_M
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 
-macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
-macx:VCPKG_TRIPLET = x64-osx
+macx {
+    isEmpty(THIRDPARTY_VCPKG_BASE_PATH){
+        THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+    }
+    VCPKG_TRIPLET = x64-osx-mega
+}
 
 unix:!macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
 unix:!macx:VCPKG_TRIPLET = x64-linux
@@ -151,7 +155,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_nl.ts \
     gui/translations/MEGASyncStrings_pl.ts \
     gui/translations/MEGASyncStrings_pt_BR.ts \
-    gui/translations/MEGASyncStrings_pt.ts \
     gui/translations/MEGASyncStrings_ro.ts \
     gui/translations/MEGASyncStrings_ru.ts \
     gui/translations/MEGASyncStrings_th.ts \
@@ -190,6 +193,7 @@ macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
+    QMAKE_LFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 }
 
 

@@ -96,6 +96,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                     {
                        ti->setIsLinkAvailable(true);
                     }
+
+                    if (tData->data.nodeAccess != mega::MegaShare::ACCESS_UNKNOWN)
+                    {
+                        ti->setNodeAccess(tData->data.nodeAccess);
+                    }
                 }
             }
         }

@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation type="unfinished">Libre</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
@@ -1519,7 +1519,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation type="unfinished">Déconnexion…</translation>
+        <translation type="unfinished">Déconnexion en cours…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -2159,8 +2159,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
         <translation type="unfinished">Ouvrir Préférences</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Ouvrir les réglages</translation>
     </message>
 </context>
 <context>
@@ -2301,7 +2306,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Choisir $(^NameDA) doit être installé pour vous seul ou pour tous les utilisateurs de cet ordinateur. $(^ClickNext)</translation>
+        <translation>Choisissez si vous voulez installer $(^NameDA) pour vous seul ou pour tous les utilisateurs de cet ordinateur. $(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -2495,8 +2500,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Fermer</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Fermer</translation>
     </message>
     <message>
         <source>About</source>
@@ -2505,8 +2510,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Paramètres</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Paramètres</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2664,13 +2669,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Fermer</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Fermer</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Préférences</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Préférences</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -2700,7 +2705,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation type="unfinished">MEGAsync ne peut pas se connecter. Veuillez vérifier votre connexion à Internet et la configuration de votre pare-feu local. Notez qu’un pare-feu est inclus à la plupart des logiciels antivirus.</translation>
+        <translation type="unfinished">MEGAsync ne peut pas se connecter. Veuillez vérifier votre connexion à Internet et la configuration de votre pare-feu local. Notez que la plupart des logiciels antivirus comprennent un pare-feu.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -2872,7 +2877,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à OS X Mavericks.</translation>
+        <translation type="obsolete">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -2897,7 +2902,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation type="unfinished">MEGAsync continuera à fonctionner, mais vous pourriez ne pas recevoir les nouvelles mises à jour.</translation>
+        <translation type="unfinished">MEGAsync continuera à fonctionner, cependant vous pourriez ne pas recevoir les nouvelles mises à jour.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -3254,6 +3259,36 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
         <translation type="unfinished">Votre synchronisation « %1 » a été activée.</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync continuera à fonctionner, cependant les mises à jour ne seront bientôt plus prises en charge pour les versions antérieures à OS X Yosemite.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation type="unfinished">Une ou plusieurs synchronisations ont été désactivées. Allez dans les préférences pour les réactiver.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">Ouvrir Préférences</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Ouvrir les réglages</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">Une ou plusieurs synchronisations ont été désactivées. Accédez aux paramètres pour les réactiver.</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">Vos synchronisations ont été désactivées</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3489,7 +3524,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Le dossier de synchronisation distant est invalide</translation>
+        <translation type="unfinished">Le chemin de synchronisation distant est invalide</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3868,7 +3903,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Ne sélectionner qu’un seul fichier.</translation>
+        <translation type="unfinished">Ne sélectionner qu&apos;un fichier</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4052,7 +4087,7 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Saisissez un ou plusieurs liens de fichier MEGA</translation>
+        <translation>Saisissez un ou plusieurs liens MEGA</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4174,6 +4209,29 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
         <source>SCALABLE</source>
         <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
         <translation type="unfinished">Extensible</translation>
+    </message>
+</context>
+<context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished">Préférence</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">Paramètres</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">Fermer</translation>
     </message>
 </context>
 <context>
@@ -4339,7 +4397,31 @@ Veuillez vous assurer de ne pas utiliser de caractères tels que « \ » « /
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">– Correctif d’erreurs de déchiffrement pour les téléchargements lors de la vérification de l’intégrité.</translation>
+        <translation type="obsolete">- Fixed decryption errors for downloads during integrity verification.</translation>
+    </message>
+    <message>
+        <source>- Fixed detected crashes on Windows and Linux.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">– Améliorations de la gestion des synchronisations.
+– Expérience utilisateur améliorée quand les synchronisations sont désactivées.
+– Amélioration des notifications système pour signaler les différents événements du compte aux utilisateurs.
+– Expérience utilisateur améliorée lors de très nombreux transferts et synchronisations.
+– Correctif de problèmes entraînant une utilisation élevée de l’UCT sous environnement Gnome et Ubuntu.
+– Correctif de plantages détectés sous Windows et Linux.
+– Autres améliorations des performances et mises au point.
+– Autres correctifs de l’IU et mises au point.</translation>
     </message>
 </context>
 <context>
@@ -4849,7 +4931,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>Paramètres – MEGAsync</translation>
     </message>
     <message>
@@ -5232,7 +5314,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>Préférences – MEGAsync</translation>
     </message>
     <message>
@@ -5275,12 +5357,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>Cette synchronisation ne peut pas être activée, car le dossier local n’existe pas</translation>
+        <translation type="vanished">Cette synchronisation ne peut pas être activée, car le dossier local n’existe pas</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>Cette synchronisation ne peut pas être activée, car le dossier distant n’existe pas</translation>
+        <translation type="vanished">Cette synchronisation ne peut pas être activée, car le dossier distant n’existe pas</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -5566,7 +5648,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Certaines synchronisations ont été désactivées. Pour plus de précisions, survolez avec votre curseur l’icône d’avertissement située à côté de chaque synchronisation désactivée.</translation>
+        <translation type="unfinished">Certaines synchronisations ont été désactivées. Pour plus de précisions, survolez l’icône d’avertissement située à côté de chaque synchronisation désactivée.</translation>
     </message>
 </context>
 <context>
@@ -5901,7 +5983,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Déconnexion…</translation>
+        <translation type="unfinished">Déconnexion en cours…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5930,7 +6012,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Veuillez vérifier vos courriels et cliquer sur le lien afin de confirmer votre compte.</translation>
+        <translation type="unfinished">Veuillez vérifier vos courriels et cliquer sur le lien pour confirmer votre compte.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -6445,12 +6527,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">Paramètres</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Préférences</translation>
+        <translation type="obsolete">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>
@@ -6742,7 +6824,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation type="unfinished">Libre</translation>
     </message>
 </context>
 <context>

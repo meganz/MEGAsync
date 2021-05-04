@@ -1176,7 +1176,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Uw zakelijke account is verlopen</translation>
+        <translation type="unfinished">Uw Zakelijke account is verlopen</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -1725,7 +1725,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation type="vanished">Gebruik: %1</translation>
+        <translation type="vanished">Verbruik: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -2160,8 +2160,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
         <translation type="unfinished">Open voorkeuren</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Instellingen Openen</translation>
     </message>
 </context>
 <context>
@@ -2302,7 +2307,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Selecteer of u $ (^ NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $ (^ ClickNext)</translation>
+        <translation>Selecteer of u $(^NameDA) voor uzelf of voor alle gebruikers van deze computer wilt installeren. $ (^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -2496,8 +2501,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Sluiten</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Sluiten</translation>
     </message>
     <message>
         <source>About</source>
@@ -2506,8 +2511,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Instellingen</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">Instellingen</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2665,13 +2670,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Afsluiten</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Afsluiten</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Voorkeur</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">Voorkeur</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -2873,7 +2878,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync blijft doorgaan, hoewel binnenkort updates niet langer ondersteund worden voor versies jonger dan OS X Mavericks.</translation>
+        <translation type="obsolete">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -3093,7 +3098,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Uw zakelijke account is verlopen</translation>
+        <translation type="unfinished">Uw Zakelijke account is verlopen</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3255,6 +3260,36 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
         <translation type="unfinished">Uw synchronisatie ”%1″ is ingeschakeld</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync zal blijven werken, maar updates worden binnenkort niet langer ondersteund voor versies vóór OS X Yosemite.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation type="unfinished">Een of meer synchronisaties zijn uitgeschakeld. Ga naar voorkeuren om ze weer in te schakelen.</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">Open voorkeuren</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">Instellingen Openen</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">Een of meer synchronisaties zijn uitgeschakeld. Ga naar instellingen om ze weer in te schakelen.</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">Uw synchronisaties zijn uitgeschakeld</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3384,7 +3419,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Uw account is geschorst door meerdere misbruiken van MEGA&apos;s Algemene Voorwaarden. Controleer uw Email Postbak.</translation>
+        <translation type="unfinished">Uw account is geschorst door meerdere misbruiken van MEGA’s Algemene Voorwaarden. Controleer uw email postbak.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -3490,7 +3525,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">De map voor externe synchronisatie is niet geldig</translation>
+        <translation type="unfinished">Het pad voor externe synchronisatie is niet geldig</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3869,7 +3904,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Selecteer slechts één bestand.</translation>
+        <translation type="unfinished">Selecteer alleen één bestand</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4053,7 +4088,7 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Vul één of meer MEGA bestandskoppelingen in</translation>
+        <translation>Voer een of meer MEGA links in</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4175,6 +4210,29 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
         <source>SCALABLE</source>
         <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
         <translation type="unfinished">SCHAALBAAR</translation>
+    </message>
+</context>
+<context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished">Voorkeuren</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Afsluiten</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">Instellingen</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">Sluiten</translation>
     </message>
 </context>
 <context>
@@ -4340,7 +4398,31 @@ Zorg ervoor dat u geen tekens zoals ‘\’ ‘/’ of ‘:’ in uw map namen g
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Decoderingsfouten opgelost voor downloads tijdens integriteitsverificatie.</translation>
+        <translation type="obsolete">- Fixed decryption errors for downloads during integrity verification.</translation>
+    </message>
+    <message>
+        <source>- Fixed detected crashes on Windows and Linux.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- Nieuwe verbeteringen voor het beheer van synchronisaties. 
+- Verbeterde gebruikerservaring wanneer synchronisaties zijn uitgeschakeld. 
+- Verbeterde systeemmeldingen om gebruikers op de hoogte te stellen van verschillende accountgebeurtenissen. 
+- Verbeterde gebruikerservaring tijdens het werken met een groot aantal overdrachten en synchronisaties. 
+- Problemen opgelost met een hoog CPU-gebruik van de gnome-shell bij het draaien op Ubuntu. 
+- Opgeloste crashes op Windows en Linux opgelost. 
+- Andere prestatieverbeteringen en aanpassingen. 
+- Andere UI-fixes en aanpassingen.</translation>
     </message>
 </context>
 <context>
@@ -4850,7 +4932,7 @@ Do you want to delete it anyway?</source>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>Instellingen - MEGAsync</translation>
     </message>
     <message>
@@ -5233,7 +5315,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>Voorkeur - MEGAsync</translation>
     </message>
     <message>
@@ -5276,12 +5358,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>De synchronisatie kan niet worden geactiveerd want de lokale map bestaat niet</translation>
+        <translation type="vanished">De synchronisatie kan niet worden geactiveerd want de lokale map bestaat niet</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>Deze synchronisatie kan niet worden ingeschakeld omdat de externe map niet bestaat</translation>
+        <translation type="vanished">Deze synchronisatie kan niet worden ingeschakeld omdat de externe map niet bestaat</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -5567,7 +5649,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Sommige synchronisaties zijn uitgeschakeld. Beweeg voor meer informatie uw muis over het waarschuwingspictogram naast elke uitgeschakelde synchronisatie.</translation>
+        <translation type="unfinished">Sommige synchronisaties zijn uitgeschakeld. Beweeg voor meer informatie de muisaanwijzer over het waarschuwingspictogram naast elke uitgeschakelde synchronisatie.</translation>
     </message>
 </context>
 <context>
@@ -5931,7 +6013,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Controleer alstublieft uw e-mail en klik op de koppeling om uw account te bevestigen.</translation>
+        <translation type="unfinished">Check uw email en klik op de koppeling in het bericht om uw account te bevestigen.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -6447,12 +6529,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">Instellingen</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">Voorkeur</translation>
+        <translation type="obsolete">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>
@@ -6589,7 +6671,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
-        <translation type="unfinished">Het IP-adres dat u gebruikt, heeft in de afgelopen 6 uur %1 van gegevensoverdracht gebruikt, waardoor u onze huidige limiet heeft overschreden. Om deze limiet te verwijderen, kunt u [A] uw account upgraden [/A], waarmee u uw eigen overdracht tegoed pakket krijgt en ook voldoende extra opslagruimte.</translation>
+        <translation type="unfinished">Het IP-adres dat u gebruikt, heeft in de afgelopen 6 uur %1 van gegevensoverdracht gebruikt, waardoor u onze huidige limiet heeft overschreden. Om deze limiet te verwijderen, kunt u [A]uw account upgraden [/A], waarmee u uw eigen overdracht tegoed pakket krijgt en ook voldoende extra opslagruimte.</translation>
     </message>
     <message>
         <source>Depleted transfer quota</source>

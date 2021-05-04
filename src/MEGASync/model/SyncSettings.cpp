@@ -18,7 +18,7 @@ SyncSetting::~SyncSetting()
 SyncSetting::SyncSetting(const SyncSetting& a) :
     mSync(a.getSync()->copy()), mBackupId(a.backupId()),
     mSyncID(a.getSyncID()), mEnabled(a.isEnabled()),
-    mActive(a.isActive())
+    mActive(a.isActive()), mMegaFolder(a.mMegaFolder)
 {
 }
 
@@ -29,6 +29,7 @@ SyncSetting& SyncSetting::operator=(const SyncSetting& a)
     mSyncID = a.getSyncID();
     mEnabled = a.isEnabled();
     mActive = a.isActive();
+    mMegaFolder = a.mMegaFolder;
     return *this;
 }
 
@@ -42,6 +43,11 @@ void SyncSetting::setSyncID(const QString &syncID)
     mSyncID = syncID;
 }
 
+void SyncSetting::setMegaFolder(const QString &megaFolder)
+{
+    mMegaFolder = megaFolder;
+}
+
 SyncSetting::SyncSetting()
 {
     mSync.reset(new MegaSync()); // MegaSync getters return fair enough defaults
@@ -52,9 +58,11 @@ SyncSetting::SyncSetting(MegaSync *sync)
     setSync(sync);
 }
 
-QString SyncSetting::name() const
+QString SyncSetting::name(bool removeUnsupportedChars) const
 {
-    return QString::fromUtf8(mSync->getName());
+    //Provide name removing ':' to avoid possible issues during communications with shell extension
+    return removeUnsupportedChars ? QString::fromUtf8(mSync->getName()).remove(QChar::fromAscii(':'))
+                                  : QString::fromUtf8(mSync->getName());
 }
 
 void SyncSetting::setEnabled(bool value)
@@ -138,7 +146,14 @@ void SyncSetting::setSync(MegaSync *sync)
 
 QString SyncSetting::getLocalFolder() const
 {
-    return QString::fromUtf8(mSync->getLocalFolder());
+    auto toret = QString::fromUtf8(mSync->getLocalFolder());
+#ifdef WIN32
+    if (toret.startsWith(QString::fromAscii("\\\\?\\")))
+    {
+        toret = toret.mid(4);
+    }
+#endif
+    return toret;
 }
 
 long long SyncSetting::getLocalFingerprint()  const
@@ -148,8 +163,13 @@ long long SyncSetting::getLocalFingerprint()  const
 
 QString SyncSetting::getMegaFolder()  const
 {
-    auto folder = mSync->getLastKnownMegaFolder();
-    return folder ? QString::fromUtf8(folder) : QString();
+    if (mMegaFolder.isEmpty())
+    {
+        auto folder = mSync->getLastKnownMegaFolder();
+        return folder ? QString::fromUtf8(folder) : QString();
+    }
+
+    return mMegaFolder;
 }
 
 MegaHandle SyncSetting::getMegaHandle()  const

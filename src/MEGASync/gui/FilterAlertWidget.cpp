@@ -92,3 +92,12 @@ void FilterAlertWidget::on_bPayment_clicked()
     emit onFilterClicked(QFilterAlertsModel::FILTER_PAYMENT);
     QApplication::postEvent(ui->bPayment, new QEvent(QEvent::Leave));
 }
+
+void FilterAlertWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}

@@ -174,7 +174,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     reset();
 
-    ui->lSDKblock->setText(QString::fromUtf8(""));
+    ui->lSDKblock->setText(QString());
     ui->wBlocked->setVisible(false);
 
     //Initialize header dialog and disable chat features
@@ -186,7 +186,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-    ui->wCircularQuota->setForegroundColor(QColor(QString::fromUtf8(DEFAULT_FGCOLOR_QUOTA)));
+    ui->wCircularQuota->setProgressBarGradient(QColor("#60D1FE"), QColor("#58B9F3"));
 
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
@@ -338,7 +338,7 @@ void InfoDialog::showEvent(QShowEvent *event)
 
 void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
-    transferOverquotaState = state;
+    transferQuotaState = state;
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -396,94 +396,166 @@ void InfoDialog::setAvatar()
 
 void InfoDialog::setUsage()
 {
-    int accType = preferences->accountType();
-    QString usedStorage;
+    auto accType = preferences->accountType();
+
+    // ---------- Process storage usage
+    QString usedStorageString;
+
+    auto totalStorage(preferences->totalStorage());
+    auto usedStorage(preferences->usedStorage());
+
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
         ui->wCircularStorage->setValue(0);
-        usedStorage = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style='color: #333333; font-size:20px; font-family: Lato; text-decoration:none;'>%1</span>")
-                                     .arg(Utilities::getSizeString(preferences->usedStorage())));
+        usedStorageString = QString::fromUtf8("<span style='color: #333333; font-size:20px;"
+                                              "font-family: Lato; text-decoration:none;'>%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->usedStorage()));
     }
     else
     {
         ui->sStorage->setCurrentWidget(ui->wCircularStorage);
-        if (preferences->totalStorage() == 0)
+        if (totalStorage == 0)
         {
             ui->wCircularStorage->setValue(0);
-            usedStorage = Utilities::getSizeString(preferences->totalStorage());
+            usedStorageString = Utilities::getSizeString(0);
         }
         else
         {
-            int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-            ui->wCircularStorage->setValue(percentage);
-
-            QString usageColorS = (percentage < 90 ? QString::fromUtf8("#666666")
-                                                          : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
-                                                          : QString::fromUtf8("#FF6F00"));
-
-            usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
-                                         .arg(usageColorS).arg(Utilities::getSizeString(preferences->usedStorage())))
-                                         .arg(QString::fromUtf8("<span style=' font-family: Lato; text-decoration:none;'>&nbsp;%1</span>")
-                                         .arg(Utilities::getSizeString(preferences->totalStorage())));
+            QString usageColorS;
+            switch (preferences->getStorageState())
+                {
+                    case MegaApi::STORAGE_STATE_GREEN:
+                    {
+                        ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
+                        usageColorS = QString::fromUtf8("#666666");
+                        break;
+                    }
+                    case MegaApi::STORAGE_STATE_ORANGE:
+                    {
+                        ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
+                        usageColorS = QString::fromUtf8("#F98400");
+                        break;
+                    }
+                    case MegaApi::STORAGE_STATE_PAYWALL:
+                    // Fallthrough
+                    case MegaApi::STORAGE_STATE_RED:
+                    {
+                        ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
+                        usageColorS = QString::fromUtf8("#D90007");
+                        break;
+                    }
+                }
+            ui->wCircularStorage->setValue(Utilities::partPer(usedStorage, totalStorage));
+            usedStorageString = QString::fromUtf8("%1 /%2")
+                                .arg(QString::fromUtf8("<span style='color:%1;"
+                                                       "font-family: Lato;"
+                                                       "text-decoration:none;'>%2</span>")
+                                     .arg(usageColorS)
+                                     .arg(Utilities::getSizeString(usedStorage)))
+                                .arg(QString::fromUtf8("<span style=' font-family: Lato;"
+                                                       "text-decoration:none;'>&nbsp;%1</span>")
+                                     .arg(Utilities::getSizeString(totalStorage)));
         }
     }
 
-    ui->lUsedStorage->setText(usedStorage);
+    ui->lUsedStorage->setText(usedStorageString);
 
-    QString usedQuota;
+    // ---------- Process transfer usage
+    QString usedTransferString;
+
+    auto usedTransfer(preferences->usedBandwidth());
+
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
         ui->wCircularStorage->setEmptyBarTotalValueUnknown();
-        usedQuota = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style='color: #333333; font-size:20px; font-family: Lato; text-decoration:none;'>%1</span>")
-                                     .arg(Utilities::getSizeString(preferences->usedBandwidth())));
-
-    }
-    else if(accType == Preferences::ACCOUNT_TYPE_FREE)
-    {
-        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
-        QString usageColor;
-        if(transferOverquotaState == QuotaState::OK)
-        {
-            ui->wCircularQuota->setEmptyBarTotalValueUnknown();
-            usageColor = QString::fromUtf8("#666666");
-        }
-        else
-        {
-            ui->wCircularQuota->setFullBarTotalValueUnkown();
-            usageColor = QString::fromUtf8("#DF4843");
-        }
-
-        usedQuota = tr("%1 used").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
-                                      .arg(usageColor)
-                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+        usedTransferString = QString::fromUtf8("<span style='color: #333333;"
+                                                    "font-size:20px; font-family: Lato;"
+                                                    "text-decoration:none;'>%1</span>")
+                                  .arg(Utilities::getSizeString(usedTransfer));
     }
     else
     {
+        QString usageColor;
+        // Set color according to state
+        switch (transferQuotaState) {
+            case QuotaState::OK:
+            {
+                ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OK);
+                usageColor = QString::fromUtf8("#666666");
+                break;
+            }
+            case QuotaState::WARNING:
+            {
+                ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_WARNING);
+                usageColor = QString::fromUtf8("#F98400");
+                break;
+            }
+            case QuotaState::FULL:
+            {
+                ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
+                usageColor = QString::fromUtf8("#D90007");
+                break;
+            }
+        }
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
-        if (preferences->totalBandwidth() == 0)
+
+        if (accType == Preferences::ACCOUNT_TYPE_FREE)
         {
-            ui->wCircularQuota->setEmptyBarTotalValueUnknown();
-            usedQuota = Utilities::getSizeString(preferences->totalBandwidth());
+
+            // Set UI according to state
+            switch (transferQuotaState) {
+                case QuotaState::OK:
+                // Fallthrough
+                case QuotaState::WARNING:
+                {
+                    ui->wCircularQuota->setEmptyBarTotalValueUnknown();
+                    break;
+                }
+                case QuotaState::FULL:
+                {
+                    ui->wCircularQuota->setFullBarTotalValueUnkown();
+                    break;
+                }
+            }
+
+            usedTransferString = tr("%1 used")
+                                 .arg(QString::fromUtf8("<span style='color:%1;"
+                                                        "font-family: Lato;"
+                                                        "text-decoration:none;'>%2</span>")
+                                      .arg(usageColor)
+                                      .arg(Utilities::getSizeString(usedTransfer)));
         }
         else
         {
-            int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-            ui->wCircularQuota->setValue((percentage < 100) ? percentage : 100);
+            if (preferences->totalBandwidth() == 0)
+            {
+                ui->wCircularQuota->setEmptyBarTotalValueUnknown();
+                usedTransferString = Utilities::getSizeString(0);
+            }
+            else
+            {
+                auto totalTransfer(preferences->totalBandwidth());
 
-            QString usageColorB = (percentage < 90 ? QString::fromUtf8("#666666")
-                                                          : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
-                                                          : QString::fromUtf8("#FF6F00"));
+                auto percentage = Utilities::partPer(usedTransfer, totalTransfer);
+                ui->wCircularQuota->setValue(percentage);
 
-            usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
-                                         .arg(usageColorB).arg(Utilities::getSizeString(preferences->usedBandwidth())))
-                                         .arg(QString::fromUtf8("<span style='font-family: Lato; text-decoration:none;'>&nbsp;%1</span>")
-                                         .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+                usedTransferString = QString::fromUtf8("%1 /%2")
+                                     .arg(QString::fromUtf8("<span style='color:%1;"
+                                                            "font-family: Lato;"
+                                                            "text-decoration:none;'>%2</span>")
+                                          .arg(usageColor)
+                                          .arg(Utilities::getSizeString(usedTransfer)))
+                                     .arg(QString::fromUtf8("<span style='font-family: Lato;"
+                                                            "text-decoration:none;"
+                                                            "'>&nbsp;%1</span>")
+                                          .arg(Utilities::getSizeString(totalTransfer)));
+            }
         }
     }
 
-    ui->lUsedQuota->setText(usedQuota);
+    ui->lUsedQuota->setText(usedTransferString);
 }
 
 void InfoDialog::setTransfer(MegaTransfer *transfer)
@@ -844,7 +916,7 @@ void InfoDialog::onAllTransfersFinished()
 void InfoDialog::updateDialogState()
 {
     updateState();
-    const bool transferOverQuotaEnabled{transferOverquotaState == QuotaState::FULL &&
+    const bool transferOverQuotaEnabled{transferQuotaState == QuotaState::FULL &&
                 transferOverquotaAlertEnabled};
 
     if (storageState == Preferences::STATE_PAYWALL)
@@ -898,7 +970,7 @@ void InfoDialog::updateDialogState()
     }
     else if(storageState == Preferences::STATE_OVER_STORAGE)
     {
-        const bool transferIsOverQuota{transferOverquotaState == QuotaState::FULL};
+        const bool transferIsOverQuota{transferQuotaState == QuotaState::FULL};
         const bool userIsFree{preferences->accountType() == Preferences::Preferences::ACCOUNT_TYPE_FREE};
         if(transferIsOverQuota && userIsFree)
         {
@@ -948,7 +1020,7 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if(transferOverquotaState == QuotaState::WARNING &&
+    else if(transferQuotaState == QuotaState::WARNING &&
             transferAlmostOverquotaAlertEnabled)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii(":/images/transfer_empty_64.png")));
@@ -1312,7 +1384,7 @@ void InfoDialog::reset()
 
     transferOverquotaAlertEnabled = false;
     transferAlmostOverquotaAlertEnabled = false;
-    transferOverquotaState = QuotaState::OK;
+    transferQuotaState = QuotaState::OK;
 }
 
 QCustomTransfersModel *InfoDialog::stealModel()
@@ -1557,7 +1629,7 @@ void InfoDialog::on_bStorageDetails_clicked()
         return;
     }
 
-    accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
+    accountDetailsDialog = new AccountDetailsDialog(this);
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
@@ -1691,11 +1763,11 @@ void InfoDialog::drawAvatar(QString email)
         QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
         if (fullname.isEmpty())
         {
-            char *email = megaApi->getMyEmail();
-            if (email)
+            char *myEmail = megaApi->getMyEmail();
+            if (myEmail)
             {
-                fullname = QString::fromUtf8(email);
-                delete [] email;
+                fullname = QString::fromUtf8(myEmail);
+                delete [] myEmail;
             }
             else
             {
@@ -1891,12 +1963,12 @@ void InfoDialog::on_bNotificationsSettings_clicked()
 
 void InfoDialog::on_bDiscard_clicked()
 {
-    if(transferOverquotaState == QuotaState::FULL)
+    if(transferQuotaState == QuotaState::FULL)
     {
         transferOverquotaAlertEnabled = false;
         emit dismissTransferOverquota();
     }
-    else if(transferOverquotaState == QuotaState::WARNING)
+    else if(transferQuotaState == QuotaState::WARNING)
     {
         transferAlmostOverquotaAlertEnabled = false;
         emit dismissTransferAlmostOverquota();

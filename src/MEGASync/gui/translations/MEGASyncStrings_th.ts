@@ -602,7 +602,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation type="unfinished">โปรดอธิบายปัญหาที่คุณพบอย่างชัดเจน ยิ่งคุณให้รายละเอียดมากเท่าไหร่เราก็จะยิ่งแก้ไขได้ง่ายขึ้นเท่านั้น การส่งรายงานปัญหาของคุณจะถูกตรวจสอบโดยทีมพัฒนาของเรา</translation>
+        <translation type="unfinished">กรุณาอธิบายปัญหาที่คุณพบโดยละเอียด ยิ่งคุณให้รายละเอียดมากเท่าไหร่เราก็จะยิ่งแก้ไขได้ง่ายขึ้นเท่านั้น การส่งรายงานปัญหาของคุณจะถูกตรวจสอบโดยทีมพัฒนาของเรา</translation>
     </message>
     <message>
         <source>Title</source>
@@ -2159,7 +2159,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Open Preferences</source>
-        <translatorcomment>Button label to open MEGAsync preferences dialog.</translatorcomment>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">เปิดการกำหนดลักษณะ</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">เปิดการตั้งค่า</translation>
     </message>
 </context>
@@ -2354,7 +2359,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">ตั้งกำหนดการเคลียร์ %1</translation>
+        <translation type="unfinished">ตั้งกำหนดการล้าง %1</translation>
     </message>
 </context>
 <context>
@@ -2495,8 +2500,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Exit</source>
-        <translatorcomment>Label to indicate the Exit option for the application (MAX 20 characters)</translatorcomment>
-        <translation>จบการทำงาน</translation>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">จบการทำงาน</translation>
     </message>
     <message>
         <source>About</source>
@@ -2505,8 +2510,8 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>ตั้งค่า</translation>
+        <translatorcomment>Label to indicate the Settings option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="vanished">ตั้งค่า</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -2572,7 +2577,7 @@ Exit anyway?</source>
     <message>
         <source>Update available!</source>
         <translatorcomment>Label of tray icon to indicate that there is an update available to download.</translatorcomment>
-        <translation>พร้อมแล้วสำหรับการอัปเดต!</translation>
+        <translation>การอัปเดตพร้อมใช้งานแล้ว</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -2664,13 +2669,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Quit</source>
-        <translatorcomment>Label displayed to let the user quit the application. Max 20 characters. Keep capital letter.</translatorcomment>
-        <translation>จบการทำงาน</translation>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">จบการทำงาน</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translatorcomment>Label and title of the preferences dialog. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>การกำหนดลักษณะ</translation>
+        <translatorcomment>Label and title of the preferences dialog. (MacOS) MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="vanished">การกำหนดลักษณะ</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
@@ -2872,7 +2877,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync จะทำงานต่อไป แต่การอัปเดตจะไม่ได้รับการสนับสนุนสำหรับเวอร์ชันก่อน OS X Mavericks อีกต่อไป</translation>
+        <translation type="obsolete">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -3254,6 +3259,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
         <translation type="unfinished">เปิดใช้งานการซิงค์ “%1” ของคุณแล้ว</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
+        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
+        <translation type="unfinished">MEGAsync จะยังคงทำงานต่อไปได้ แต่ถึงอย่างนั้นก็จะไม่สนับสนุนการอัปเดตเวอร์ชันที่เก่ากว่า OS X Yosemite ในเร็ว ๆ นี้</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
+        <translation type="unfinished">รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การกำหนดลักษณะเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Open Preferences</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (MacOS).</translatorcomment>
+        <translation type="unfinished">เปิดการกำหนดลักษณะ</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
+        <translation type="unfinished">เปิดการตั้งค่า</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">Your syncs have been disabled</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3489,7 +3529,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">โฟลเดอร์ซิงค์ระยะไกลไม่ถูกต้อง</translation>
+        <translation type="unfinished">เส้นทางการซิงค์ระยะไกลไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3529,7 +3569,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation type="unfinished">เกินโควต้าพื้นที่เก็บข้อมูลโฟลเดอร์ซิงค์ของเจ้าของแล้ว</translation>
+        <translation type="unfinished">บัญชีของเจ้าของโฟลเดอร์ที่ซิงค์ มีพื้นที่เก็บข้อมูลเกินโควต้าแล้ว</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3599,7 +3639,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is blocked</source>
         <translatorcomment>SDK error shown when your account is blocked</translatorcomment>
-        <translation type="unfinished">บัญชีของคุณถูกบล็อกแล้ว</translation>
+        <translation type="unfinished">บัญชีของคุณถูกล็อก</translation>
     </message>
     <message>
         <source>Unknown temporary error</source>
@@ -3700,12 +3740,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation type="unfinished">เคลียร์</translation>
+        <translation type="unfinished">ล้าง</translation>
     </message>
     <message>
         <source>Clear All</source>
         <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
-        <translation type="unfinished">ลบทั้งหมด</translation>
+        <translation type="unfinished">ล้างทั้งหมด</translation>
     </message>
     <message>
         <source>Resume Transfer</source>
@@ -3868,7 +3908,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">เลือกเพียงหนึ่งไฟล์</translation>
+        <translation type="unfinished">เลือกไฟล์เพียงไฟล์เดียว</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -4052,7 +4092,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>กรอกลิงก์ไฟล์ MEGA อย่างน้อยหนึ่งลิงก์</translation>
+        <translation>กรอกลิงก์ MEGA อย่างน้อยหนึ่งลิงก์</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4174,6 +4214,29 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>SCALABLE</source>
         <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
         <translation type="unfinished">ปรับขนาดได้</translation>
+    </message>
+</context>
+<context>
+    <name>Platform</name>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
+        <translation type="unfinished">การกำหนดลักษณะ</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translatorcomment>Label displayed to let the user quit the application (MacOS). Max 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">จบการทำงาน</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">ตั้งค่า</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
+        <translation type="unfinished">จบการทำงาน</translation>
     </message>
 </context>
 <context>
@@ -4339,7 +4402,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>- Fixed decryption errors for downloads during integrity verification.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.8</translatorcomment>
-        <translation type="unfinished">- Fixed decryption errors for downloads during integrity verification.</translation>
+        <translation type="obsolete">- Fixed decryption errors for downloads during integrity verification.</translation>
+    </message>
+    <message>
+        <source>- Fixed detected crashes on Windows and Linux.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- ปรับปรุงการจัดการซิงค์ใหม่
+- ปรับปรุงประสบการณ์การใช้งานของผู้ใช้เมื่อปิดใช้งานการซิงค์
+- ปรับปรุงการแจ้งเตือนระบบขั้นสูง เพื่อแจ้งเตือนผู้ใช้เกี่ยวกับเหตุการณ์ต่าง ๆ ในบัญชี
+- ปรับปรุงประสบการณ์การใช้งานของผู้ใช้ในขณะที่ทำงานกับการถ่ายโอนและการซิงค์จำนวนมาก
+- แก้ไขปัญหาการใช้งาน CPU ของ gnome-shell สูงเมื่อทำงานบน Ubuntu
+- แก้ไขข้อขัดข้องที่ตรวจพบใน Windows และ Linux
+- ปรับปรุงและปรับแต่งประสิทธิภาพอื่น ๆ
+- แก้ไขและปรับแต่ง UI อื่น ๆ</translation>
     </message>
 </context>
 <context>
@@ -4849,7 +4936,7 @@ Do you want to delete it anyway?</source>
     <name>SettingsDialog</name>
     <message>
         <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
+        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
         <translation>การตั้งค่า - MEGAsync</translation>
     </message>
     <message>
@@ -5149,7 +5236,7 @@ when the application starts again.</source>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>เคลียร์</translation>
+        <translation>ล้าง</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -5232,7 +5319,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog.</translatorcomment>
+        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
         <translation>การกำหนดลักษณะ - MEGAsync</translation>
     </message>
     <message>
@@ -5275,12 +5362,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>ไม่สามารถเปิดใช้งานการซิงค์นี้ได้เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
+        <translation type="vanished">ไม่สามารถเปิดใช้งานการซิงค์นี้ได้เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>ไม่สามารถเปิดใช้งานการซิงค์ได้ เนื่องจากไม่มีโฟลเดอร์ระยะไกล</translation>
+        <translation type="vanished">ไม่สามารถเปิดใช้งานการซิงค์ได้ เนื่องจากไม่มีโฟลเดอร์ระยะไกล</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -5391,7 +5478,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Clear local backup</source>
-        <translation type="unfinished">ล้างการสำรองข้อมูลภายในเครื่อง</translation>
+        <translation type="unfinished">ล้างข้อมูลสำรองในเครื่อง</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
@@ -5399,7 +5486,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Clear remote backup</source>
-        <translation type="unfinished">ล้างการสำรองข้อมูลระยะไกล</translation>
+        <translation type="unfinished">ล้างข้อมูลสำรองระยะไกล</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
@@ -5506,7 +5593,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">ตั้งกำหนดการเคลียร์ %1</translation>
+        <translation type="unfinished">ตั้งกำหนดการล้าง %1</translation>
     </message>
     <message>
         <source>%1 used</source>
@@ -5566,7 +5653,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">การซิงค์บางรายการถูกปิดใช้งาน สำหรับข้อมูลเพิ่มเติม ให้วางเมาส์เหนือไอคอนคำเตือนถัดจากการซิงค์ที่ปิดใช้งานแต่ละรายการ</translation>
     </message>
 </context>
 <context>
@@ -5930,7 +6017,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">โปรดตรวจสอบอีเมลของคุณและคลิกลิงก์เพื่อยืนยันบัญชีของคุณ</translation>
+        <translation type="unfinished">กรุณาตรวจสอบอีเมลของคุณและคลิกที่ลิงก์เพื่อยืนยันการเปิดบัญชีของคุณ</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -6420,7 +6507,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear all</source>
         <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation type="unfinished">ลบทั้งหมด</translation>
+        <translation type="unfinished">ล้างทั้งหมด</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6445,12 +6532,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (Windows and Linux)</translatorcomment>
-        <translation type="unfinished">ตั้งค่า</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation type="unfinished">การกำหนดลักษณะ</translation>
+        <translation type="obsolete">Preferences</translation>
     </message>
     <message>
         <source>Cancel all</source>

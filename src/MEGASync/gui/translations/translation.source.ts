@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Storage</translation>
+        <translation type="unfinished">Storage</translation>
     </message>
     <message>
         <source>Files</source>
@@ -55,31 +55,46 @@
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Rubbish Bin</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation type="obsolete">Available</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished">Total size taken up by file versions:</translation>
+        <translation type="obsolete">Total size taken up by file versions:</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
-        <translation type="unfinished">USED STORAGE %1</translation>
+        <translation type="obsolete">USED STORAGE %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
-        <translation type="unfinished">Data temporarily unavailable</translation>
+        <translation type="obsolete">Data temporarily unavailable</translation>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation type="obsolete">%1 of %2</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label for bandwidth used.</translatorcomment>
+        <translation type="unfinished">Transfer</translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translatorcomment>Label for Rubbish Bin space used. Maintain capital letter.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished">Bin</translation>
+    </message>
+    <message>
+        <source>Of that, size taken up by file versions:</source>
+        <translatorcomment>Label for telling the user that the number shown besides is the storage space used by older file versions.</translatorcomment>
+        <translation type="unfinished">Of that, size taken up by file versions:</translation>
     </message>
 </context>
 <context>
@@ -720,7 +735,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Data Protection Regulation</source>
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
-        <translation type="unfinished">Data Protection Regulation</translation>
+        <translation type="obsolete">Data Protection Regulation</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
@@ -1176,7 +1191,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your business account has expired</translation>
+        <translation type="unfinished">Your Business account has expired</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3077,7 +3092,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your syncs have been temporarily disabled</source>
         <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
-        <translation type="unfinished">Your syncs have been temporarily disabled</translation>
+        <translation type="obsolete">Your syncs have been temporarily disabled</translation>
     </message>
     <message>
         <source>Something went wrong</source>
@@ -3097,7 +3112,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your business account has expired</translation>
+        <translation type="unfinished">Your Business account has expired</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
@@ -3266,7 +3281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
         <translation type="unfinished">One or more syncs have been disabled. Go to preferences to enable them again.</translation>
     </message>
     <message>
@@ -3278,6 +3293,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Open Settings</source>
         <translatorcomment>Button label to open MEGAsync preferences dialog (Linux and Windows).</translatorcomment>
         <translation type="unfinished">Open Settings</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (Windows and Linux)</translatorcomment>
+        <translation type="unfinished">One or more syncs have been disabled. Go to settings to enable them again.</translation>
+    </message>
+    <message>
+        <source>Your sync &quot;%1&quot; has been disabled</source>
+        <translatorcomment>Notification message launched when a sync is disabled. Keep &quot;%1&quot; code because is filled with the name of the sync at runtime.</translatorcomment>
+        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled</translation>
+    </message>
+    <message>
+        <source>Your syncs have been disabled</source>
+        <translatorcomment>Notification message launched when your syncs have been disabled.</translatorcomment>
+        <translation type="unfinished">Your syncs have been disabled</translation>
     </message>
 </context>
 <context>
@@ -3514,7 +3544,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remote node is not valid</source>
         <translatorcomment>Label to show that remote node is invalid for a sync during a SDK operation.</translatorcomment>
-        <translation type="unfinished">The remote sync folder is not valid</translation>
+        <translation type="unfinished">The remote sync path is not valid</translation>
     </message>
     <message>
         <source>Local path is not valid</source>
@@ -3786,6 +3816,26 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>NewFolderDialog</name>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Window title for the New Folder input dialog (String short as possible)</translatorcomment>
+        <translation>New folder</translation>
+    </message>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Label to direct the user to type the new MEGA folder name (String short as possible).</translatorcomment>
+        <translation>Enter the new folder name:</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed:
+%1</source>
+        <translatorcomment>Multi-line warning label shown when the user tries to create a New MEGA Folder with invalid characters. Keep the new line after colon. Also keep the percent one designator, which is used to fill in the current list of forbidden characters programatically.</translatorcomment>
+        <translation>The following characters are not allowed:
+%1</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3825,7 +3875,7 @@ Are you sure?</source>
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Enter the new folder name:</translation>
+        <translation type="vanished">Enter the new folder name:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3893,7 +3943,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Select just one file.</translation>
+        <translation type="unfinished">Select just one file</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -3903,7 +3953,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Invalid folder name.
+        <translation type="obsolete">Invalid folder name.
 Please ensure that you don’t use characters like “\” “/” or “:” in your folder names.</translation>
     </message>
 </context>
@@ -4077,7 +4127,7 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Enter one or more MEGA file links</translation>
+        <translation>Enter one or more MEGA links</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
@@ -4392,7 +4442,26 @@ Please ensure that you don’t use characters like “\” “/” or “:” in
     <message>
         <source>- Fixed detected crashes on Windows and Linux.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.9</translatorcomment>
-        <translation type="unfinished">- Fixed detected crashes on Windows and Linux.</translation>
+        <translation type="obsolete">- Fixed detected crashes on Windows and Linux.</translation>
+    </message>
+    <message>
+        <source>- New improvements for the management of the syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify various account events.
+- Improved user experience while working with huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
+        <translation type="unfinished">- New improvements for the management of syncs.
+- Improved user experience when syncs are disabled.
+- Enhanced system notifications to notify users about various account events.
+- Improved user experience while working with a huge number of transfers and syncs.
+- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
+- Fixed detected crashes on Windows and Linux.
+- Other performance improvements and adjustments.
+- Other UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -5619,7 +5688,7 @@ when the application starts again</source>
     <message>
         <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
         <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation type="unfinished">Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</translation>
+        <translation type="unfinished">Some of the syncs have been disabled. For more information, hover over the warning icon next to each disabled sync.</translation>
     </message>
 </context>
 <context>
@@ -6937,6 +7006,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation type="unfinished">Email sent</translation>
+    </message>
+</context>
+<context>
+    <name>WinToastLib</name>
+    <message>
+        <source>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</source>
+        <translatorcomment>
+            Message from the app, asking the user how to proceed when no expected link was found.
+            The placeholder will be replaced with the app name at runtime, so it must be kept, and only moved to a different position when translation requires it,
+            i.e. &quot;Un Start Menu link valid pentru %1 nu a fost gasit&quot;
+        </translatorcomment>
+        <translation type="unfinished">%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</translation>
+    </message>
+    <message>
+        <source>Yes (recommended)</source>
+        <translatorcomment>Button label with the affirmative and recommended user option.</translatorcomment>
+        <translation type="unfinished">Yes (recommended)</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Button label with the negative user option.</translatorcomment>
+        <translation type="unfinished">No</translation>
+    </message>
+    <message>
+        <source>No (never ask again)</source>
+        <translatorcomment>Button label with the negative user option, which will also prevent the dialog from being shown again.</translatorcomment>
+        <translation type="unfinished">No (never ask again)</translation>
     </message>
 </context>
 <context>
