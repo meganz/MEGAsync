@@ -869,5 +869,11 @@
         <file>images/imports_32.png</file>
         <file>images/imports_32@3x.png</file>
         <file>images/imports_32@2x.png</file>
+        <file>images/settings-general@3x.png</file>
+        <file>images/settings-account@3x.png</file>
+        <file>images/settings-account@2x.png</file>
+        <file>images/settings-account.png</file>
+        <file>images/settings-general@2x.png</file>
+        <file>images/settings-general.png</file>
     </qresource>
 </RCC>
