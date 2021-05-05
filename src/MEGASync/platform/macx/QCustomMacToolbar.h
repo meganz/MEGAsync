@@ -28,6 +28,8 @@ public:
     void setEnableToolbarItems(bool isEnabled);
     //Only takes effect on macOS 11.0+ big sur
     void attachToWindowWithStyle(QWindow *window, BigSurToolbarStyle style);
+
+    void customizeIconToolBarItem(QMacToolBarItem *toolbarItem, QString iconName);
 };
 
 #endif // QCUSTOMMACTOOLBAR_H

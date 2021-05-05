@@ -103,31 +103,31 @@ void SettingsDialog::initializeNativeUIComponents()
     // Set native NSToolBar for settings.
     toolBar = ::mega::make_unique<QCustomMacToolbar>(this);
 
-    QIcon account(QString::fromUtf8("://images/settings-general.png"));
-    QIcon syncs(QString::fromUtf8("://images/settings-syncs.png"));
-    QIcon network(QString::fromUtf8("://images/settings-network.png"));
-    QIcon security(QString::fromUtf8("://images/settings-security.png"));
-    QIcon advanced(QString::fromUtf8("://images/settings-advanced.png"));
+    QString account(QString::fromUtf8("settings-general"));
+    QString syncs(QString::fromUtf8("settings-syncs"));
+    QString network(QString::fromUtf8("settings-network"));
+    QString security(QString::fromUtf8("settings-security"));
+    QString advanced(QString::fromUtf8("settings-advanced"));
 
     // add Items
-    bAccount.reset(toolBar->addItem(account, tr("Account")));
-    bAccount.get()->setIcon(account);
+    bAccount.reset(toolBar->addItem(QIcon(), tr("Account")));
+    toolBar->customizeIconToolBarItem(bAccount.get(), account);
     connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
 
-    bSyncs.reset(toolBar->addItem(syncs, tr("Syncs")));
-    bSyncs.get()->setIcon(syncs);
+    bSyncs.reset(toolBar->addItem(QIcon(), tr("Syncs")));
+    toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
 
-    bNetwork.reset(toolBar->addItem(network, tr("Network")));
-    bNetwork.get()->setIcon(network);
+    bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
+    toolBar->customizeIconToolBarItem(bNetwork.get(), network);
     connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);
 
-    bSecurity.reset(toolBar->addItem(security, tr("Security")));
-    bSecurity.get()->setIcon(security);
+    bSecurity.reset(toolBar->addItem(QIcon(), tr("Security")));
+    toolBar->customizeIconToolBarItem(bSecurity.get(), security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
 
-    bAdvanced.reset(toolBar->addItem(advanced, tr("Advanced")));
-    bAdvanced.get()->setIcon(advanced);
+    bAdvanced.reset(toolBar->addItem(QIcon(), tr("Advanced")));
+    toolBar->customizeIconToolBarItem(bAdvanced.get(), advanced);
     connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
 
     toolBar->setSelectableItems(true);

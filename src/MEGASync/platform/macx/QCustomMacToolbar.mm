@@ -43,3 +43,23 @@ void QCustomMacToolbar::attachToWindowWithStyle(QWindow *window, QCustomMacToolb
 
     QMacToolBar::attachToWindow(window);
 }
+
+void QCustomMacToolbar::customizeIconToolBarItem(QMacToolBarItem *toolbarItem, QString iconName)
+{
+    if (!toolbarItem)
+    {
+        return;
+    }
+
+    if (@available(macOS 10.16, *))
+    {// macOS 11 is not properly detected when building for other targets
+
+        //Load icon from images.xcassets, needed to load SF symbol (svg image)
+        [toolbarItem->nativeToolBarItem() setImage:[NSImage imageNamed:iconName.toNSString()]];
+    }
+    else
+    {
+        QIcon icon(QString::fromUtf8("://images/%1.png").arg((iconName)));
+        toolbarItem->setIcon(icon);
+    }
+}
