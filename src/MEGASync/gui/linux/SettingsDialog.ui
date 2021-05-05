@@ -1262,7 +1262,7 @@ background:transparent;</string>
        <item>
         <widget class="QGroupBox" name="gBugReport">
          <property name="title">
-          <string>Bug report</string>
+          <string>Bug Report</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
@@ -1612,7 +1612,7 @@ padding-left: 10px;
        <item>
         <widget class="QGroupBox" name="gBandwidthQuota">
          <property name="title">
-          <string>Transfer quota</string>
+          <string>Transfer Quota</string>
          </property>
          <property name="flat">
           <bool>true</bool>
