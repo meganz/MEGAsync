@@ -326,6 +326,7 @@ else()
         ${MEGAsyncDir}/gui/PermissionsWidget.h
 
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
+	    ${MEGAsyncDir}/gui/QSegmentedControl.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
@@ -529,6 +530,7 @@ else()
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
 
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
+	    ${MEGAsyncDir}/gui/QSegmentedControl.mm
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
 
@@ -568,6 +570,7 @@ else()
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
+	    ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
@@ -584,6 +587,7 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
         ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
         ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
+	    ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
 
         )
 endif()
