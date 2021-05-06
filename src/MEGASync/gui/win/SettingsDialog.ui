@@ -3429,8 +3429,6 @@ font-weight: bold;
  <tabstops>
   <tabstop>bSyncs</tabstop>
   <tabstop>bAccount</tabstop>
-  <tabstop>bAdvanced</tabstop>
-  <tabstop>lStorageSpace</tabstop>
   <tabstop>pStorage</tabstop>
   <tabstop>lStorage</tabstop>
   <tabstop>bStorageDetails</tabstop>
@@ -3439,14 +3437,11 @@ font-weight: bold;
   <tabstop>cStartOnStartup</tabstop>
   <tabstop>cAutoUpdate</tabstop>
   <tabstop>bUpdate</tabstop>
-  <tabstop>label_6</tabstop>
   <tabstop>cLanguage</tabstop>
   <tabstop>tSyncs</tabstop>
   <tabstop>bDelete</tabstop>
   <tabstop>bAdd</tabstop>
-  <tabstop>label_9</tabstop>
   <tabstop>bUpgradeBandwidth</tabstop>
-  <tabstop>label_11</tabstop>
   <tabstop>lUploadFolder</tabstop>
   <tabstop>eUploadFolder</tabstop>
   <tabstop>bUploadFolder</tabstop>
