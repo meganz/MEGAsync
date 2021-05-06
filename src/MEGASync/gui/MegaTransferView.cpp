@@ -25,7 +25,6 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
     mGetLinkAction(nullptr),
     mOpenItemAction(nullptr),
     mShowInFolderAction(nullptr),
-    mShowInMegaAction(nullptr),
     mClearAction(nullptr)
 {
     setMouseTracking(true);
@@ -38,13 +37,6 @@ MegaTransferView::MegaTransferView(QWidget* parent) :
 void MegaTransferView::setup(int type)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    // Disable and find out alternative way to position context menu,
-    // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
-    // connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
-    //createContextMenu();
-//    createCompletedContextMenu();
-   // connect(this, &MegaTransferView::showContextMenu, this, &MegaTransferView::onCustomContextMenu);
-
     this->type = type;
 }
 
@@ -134,7 +126,10 @@ void MegaTransferView::onCancelClearAllRows(bool cancel, bool clear)
             }
             indexes.push_back(index);
         }
-        mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
+        QtConcurrent::run([=]
+        {
+            mParentTransferWidget->getModel2()->cancelClearTransfers(indexes, cancel, clear);
+        });
     }
 }
 
@@ -188,7 +183,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mPauseAction = new QAction(QIcon(QLatin1String(":/images/pause_ico.png")),
-                                     tr("Pause active transfers"), this);
+                                     tr("Pause Transfer(s)"), this);
     connect(mPauseAction, &QAction::triggered,
             this, &MegaTransferView::pauseSelectedClicked);
 
@@ -199,7 +194,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mResumeAction = new QAction(QIcon(QLatin1String(":/images/resume_ico.png")),
-                                      tr("Resume paused transfers"), this);
+                                      tr("Resume Transfer(s)"), this);
     connect(mResumeAction, &QAction::triggered,
             this, &MegaTransferView::resumeSelectedClicked);
 
@@ -250,7 +245,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mCancelAction = new QAction(QIcon(QLatin1String(":/images/cancel_transfer_ico.png")),
-                                      tr("Cancel transfers in progress"), this);
+                                      tr("Cancel Transfer(s)"), this);
     connect(mCancelAction, &QAction::triggered,
             this, &MegaTransferView::cancelSelectedClicked);
 
@@ -284,16 +279,6 @@ void MegaTransferView::createContextMenu()
                                       tr("Show in folder"), this);
     connect(mShowInFolderAction, &QAction::triggered, this, &MegaTransferView::showInFolderClicked);
 
-    if (mShowInMegaAction)
-    {
-        mShowInMegaAction->deleteLater();
-        mShowInMegaAction = nullptr;
-    }
-
-    mShowInMegaAction = new QAction(QIcon(QLatin1String(":/images/ico_about_MEGA.png")),
-                                    tr("Show in Mega"), this);
-    connect(mShowInMegaAction, &QAction::triggered, this, &MegaTransferView::showInMegaClicked);
-
     if (mClearAction)
     {
         mClearAction->deleteLater();
@@ -301,7 +286,7 @@ void MegaTransferView::createContextMenu()
     }
 
     mClearAction = new QAction(QIcon(QLatin1String(":/images/ico_clear.png")),
-                               tr("Clear completed"), this);
+                               tr("Clear"), this);
     connect(mClearAction, &QAction::triggered,
             this, &MegaTransferView::clearSelectedClicked);
 
@@ -310,7 +295,6 @@ void MegaTransferView::createContextMenu()
 
     mContextMenu->addAction(mOpenItemAction);
     mContextMenu->addAction(mShowInFolderAction);
-    mContextMenu->addAction(mShowInMegaAction);
 
     mContextMenu->addSeparator();
 
@@ -325,6 +309,9 @@ void MegaTransferView::createContextMenu()
 
     mContextMenu->addAction(mCancelAction);
     mContextMenu->addAction(mClearAction);
+
+    // Set default action to have it painted red
+    mContextMenu->setDefaultAction(mCancelAction);
 }
 
 void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bool enableMove,
@@ -339,11 +326,55 @@ void MegaTransferView::updateContextMenu(bool enablePause, bool enableResume, bo
     mCancelAction->setVisible(enableCancel);
     mClearAction->setVisible(enableClear);
 
-    bool onlyOneSelected (enableClear && (selectedIndexes().size() == 1));
-    mGetLinkAction->setVisible(onlyOneSelected);
-    mOpenItemAction->setVisible(onlyOneSelected);
-    mShowInFolderAction->setVisible(onlyOneSelected);
-    mShowInMegaAction->setVisible(onlyOneSelected);
+    bool onlyOneSelected ((selectedIndexes().size() == 1));
+    bool onlyOneAndClear(enableClear && onlyOneSelected);
+
+    bool showLink (false);
+    bool showOpen (false);
+    bool showShowInFolder (false);
+
+    if (onlyOneAndClear)
+    {
+        auto d (qvariant_cast<TransferItem2>(selectedIndexes().first().data()).getTransferData());
+
+        auto state (d->mState);
+        auto type ((d->mType & TransferData::TRANSFER_UPLOAD) ?
+                       TransferData::TRANSFER_UPLOAD
+                     : TransferData::TRANSFER_DOWNLOAD);
+
+        if (state == TransferData::TRANSFER_COMPLETED)
+        {
+            showLink = true;
+            showOpen = true;
+            showShowInFolder = true;
+        }
+        else if (type == TransferData::TRANSFER_UPLOAD)
+        {
+            showOpen = true;
+            showShowInFolder = true;
+        }
+        else if (type == TransferData::TRANSFER_DOWNLOAD)
+        {
+            showLink = true;
+        }
+    }
+
+    mGetLinkAction->setVisible(showLink);
+    mOpenItemAction->setVisible(showOpen);
+    mShowInFolderAction->setVisible(showShowInFolder);
+
+    if (onlyOneSelected)
+    {
+        mPauseAction->setText(tr("Pause Transfer"));
+        mResumeAction->setText(tr("Resume Transfer"));
+        mCancelAction->setText(tr("Cancel Transfer"));
+    }
+    else
+    {
+        mPauseAction->setText(tr("Pause Transfers"));
+        mResumeAction->setText(tr("Resume Transfers"));
+        mCancelAction->setText(tr("Cancel Transfers"));
+    }
 }
 
 void MegaTransferView::mouseReleaseEvent(QMouseEvent* event)
@@ -389,28 +420,27 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
     for (auto index : qAsConst(indexes))
     {
         auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
-
         switch (d->mState)
         {
-            case TransferData::TransferState::TRANSFER_ACTIVE:
-            case TransferData::TransferState::TRANSFER_QUEUED:
-            case TransferData::TransferState::TRANSFER_RETRYING:
+            case TransferData::TRANSFER_ACTIVE:
+            case TransferData::TRANSFER_QUEUED:
+            case TransferData::TRANSFER_RETRYING:
             {
                 enablePause = true;
                 enableMove = true;
-                enableCancel = true;
+                enableCancel = !(d->mType & TransferData::TRANSFER_SYNC);
                 break;
             }
-            case TransferData::TransferState::TRANSFER_PAUSED:
+            case TransferData::TRANSFER_PAUSED:
             {
                 enableResume = true;
                 enableMove = true;
-                enableCancel = true;
+                enableCancel = !(d->mType & TransferData::TRANSFER_SYNC);
                 break;
             }
-            case TransferData::TransferState::TRANSFER_CANCELLED:
-            case TransferData::TransferState::TRANSFER_FAILED:
-            case TransferData::TransferState::TRANSFER_COMPLETED:
+            case TransferData::TRANSFER_CANCELLED:
+            case TransferData::TRANSFER_FAILED:
+            case TransferData::TRANSFER_COMPLETED:
             {
                 enableClear = true;
                 break;
@@ -419,8 +449,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint& point)
                 break;
         }
     }
-    updateContextMenu(enablePause, enableResume, enableMove,
-                      enableClear, enableCancel);
+    updateContextMenu(enablePause, enableResume, enableMove, enableClear, enableCancel);
     mContextMenu->exec(mapToGlobal(point));
 }
 

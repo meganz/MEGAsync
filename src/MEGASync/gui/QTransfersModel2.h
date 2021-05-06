@@ -79,7 +79,8 @@ private:
     QList<TransferTag> mOrder;
     ThreadPool* mThreadPool;
     QHash<QString, TransferData::FileType> mFileTypes;
-    QMutex* mModelMutex;
+//    QMutex* mModelMutex;
+    QReadWriteLock* mModelMutex;
 
     QFuture<void> mInitFuture;
 

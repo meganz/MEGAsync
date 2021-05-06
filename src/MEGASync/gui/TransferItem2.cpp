@@ -22,9 +22,9 @@ const TransferData::TransferTypes TransferData::TYPE_MASK = TransferData::Transf
 
 void TransferItem2::updateValuesTransferFinished(int64_t finishTime,
                                                  int errorCode, long long errorValue,
-                                                 long long meanSpeed,
+                                                 unsigned long long meanSpeed,
                                                  TransferData::TransferState state,
-                                                 long long transferedBytes,
+                                                 unsigned long long transferedBytes,
                                                  MegaHandle parentHandle,
                                                  MegaHandle nodeHandle,
                                                  MegaNode* publicNode)
@@ -44,11 +44,11 @@ void TransferItem2::updateValuesTransferFinished(int64_t finishTime,
 
 void TransferItem2::updateValuesTransferUpdated(int64_t remainingTime,
                                                 int errorCode, long long errorValue,
-                                                long long meanSpeed,
-                                                long long speed,
+                                                unsigned long long meanSpeed,
+                                                unsigned long long speed,
                                                 unsigned long long priority,
                                                 TransferData::TransferState state,
-                                                long long transferedBytes,
+                                                unsigned long long transferedBytes,
                                                 MegaNode* publicNode)
 {
     d->mState = state;

@@ -22,7 +22,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         ~TransfersSortFilterProxyModel();
 
         bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
-                      const QModelIndex& destinationParent, int destinationChild);
+                      const QModelIndex& destinationParent, int destinationChild) override;
 
         void setTransferTypes(TransferData::TransferTypes transferTypes);
         void addTransferTypes(TransferData::TransferTypes transferTypes);
@@ -44,9 +44,13 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         TransferData::TransferStates mTransferStates;
         TransferData::TransferTypes mTransferTypes;
         TransferData::FileTypes mFileTypes;
+        TransferData::TransferStates mNextTransferStates;
+        TransferData::TransferTypes mNextTransferTypes;
+        TransferData::FileTypes mNextFileTypes;
         SORT_BY mSortCriterion;
         int* mDlNumber;
         int* mUlNumber;
+        QMutex* mFilterMutex;
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

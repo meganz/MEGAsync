@@ -67,6 +67,7 @@ private:
     int mHeaderNameState;
     int mHeaderSizeState;
     QMutex* mFilterMutex;
+    ThreadPool* mThreadPool;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);

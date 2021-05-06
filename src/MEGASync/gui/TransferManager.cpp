@@ -324,11 +324,18 @@ bool TransferManager::refreshStateStats()
     // Update if the value changed
     if (processedNumber != mNumberOfTransfersPerTab[COMPLETED_TAB])
     {
-        label->parentWidget()->setVisible(weHaveTransfers || mCurrentTab == COMPLETED_TAB);
-        label->setVisible(weHaveTransfers);
-        label->setText(QString::number(processedNumber));
-
-        mNumberOfTransfersPerTab[COMPLETED_TAB] = weHaveTransfers ? processedNumber : NB_INIT_VALUE;
+        if (mCurrentTab != COMPLETED_TAB && !weHaveTransfers)
+        {
+            label->parentWidget()->hide();
+            mNumberOfTransfersPerTab[COMPLETED_TAB] = 0;
+        }
+        else
+        {
+            label->parentWidget()->show();
+            label->setVisible(weHaveTransfers);
+            label->setText(QString::number(processedNumber));
+            mNumberOfTransfersPerTab[COMPLETED_TAB] = weHaveTransfers ? processedNumber : NB_INIT_VALUE;
+        }
     }
 
     // Then Active states --------------------------------------------------------------------------
@@ -401,15 +408,23 @@ void TransferManager::refreshFileTypesStats()
     const auto fileTypes (mMediaNumberLabelsGroup.keys());
     for (auto fileType : fileTypes)
     {
-        TM_TAB tab (static_cast<TM_TAB>(TYPES_TAB_BASE + fileType));
+        TM_TAB tab (static_cast<TM_TAB>(int(TYPES_TAB_BASE) + int(fileType)));
         long long number (mModel->getNumberOfTransfersForFileType(fileType));
         if (number != mNumberOfTransfersPerTab[tab])
         {
             QLabel* label (mMediaNumberLabelsGroup[fileType]);
-            label->setVisible(number);
-            label->setText(QString::number(number));
-            label->parentWidget()->setVisible(number || mCurrentTab == tab);
-            mNumberOfTransfersPerTab[tab] = number;
+            if (mCurrentTab != tab && number == 0)
+            {
+                label->parentWidget()->hide();
+                mNumberOfTransfersPerTab[tab] = 0;
+            }
+            else
+            {
+                label->parentWidget()->show();
+                label->setVisible(number);
+                label->setText(QString::number(number));
+                mNumberOfTransfersPerTab[tab] = number ? number : NB_INIT_VALUE;
+            }
         }
     }
 }
@@ -495,10 +510,10 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
 
 void TransferManager::refreshSpeed()
 {
-    mUi->bUpSpeed->setText(Utilities::getSizeString(mMegaApi->getCurrentUploadSpeed())
-                           + QLatin1Literal("/s"));
-    mUi->bDownSpeed->setText(Utilities::getSizeString(mMegaApi->getCurrentDownloadSpeed())
-                             + QLatin1Literal("/s"));
+    auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
+    auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
+    mUi->bUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
+    mUi->bDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
 }
 
 void TransferManager::refreshStats()
@@ -548,15 +563,13 @@ void TransferManager::refreshSearchStats()
 
         if (nbDl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD])
         {
-            mUi->tDlResults->setText(QString(tr("Downloads\t\t%1")).arg(nbDl));
-            mUi->tDlResults->setVisible(nbDl);
+            mUi->tDlResults->setText(QString(tr("Downloads\t\t\t\t%1")).arg(nbDl));
             mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = nbDl;
         }
 
         if (nbUl != mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD])
         {
-            mUi->tUlResults->setText(QString(tr("Uploads\t\t%1")).arg(nbUl));
-            mUi->tUlResults->setVisible(nbUl);
+            mUi->tUlResults->setText(QString(tr("Uploads\t\t\t\t%1")).arg(nbUl));
             mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = nbUl;
         }
 
@@ -567,10 +580,13 @@ void TransferManager::refreshSearchStats()
             mUi->lNbResults->setProperty("results", bool(nbAll));
             mUi->lNbResults->style()->unpolish(mUi->lNbResults);
             mUi->lNbResults->style()->polish(mUi->lNbResults);
-
-            mUi->tAllResults->setText(QString(tr("All\t\t%1")).arg(nbAll));
-            mUi->tAllResults->setVisible(nbAll);
+            mUi->tAllResults->setText(QString(tr("All\t\t\t\t%1")).arg(nbAll));
         }
+
+        bool showTypeFilters (nbDl && nbUl);
+        mUi->tDlResults->setVisible(showTypeFilters);
+        mUi->tUlResults->setVisible(showTypeFilters);
+        mUi->tAllResults->setVisible(showTypeFilters);
     }
 }
 

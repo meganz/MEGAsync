@@ -7,7 +7,7 @@
 
 #include <QMouseEvent>
 
-constexpr int PB_PRECISION = 1000;
+constexpr uint PB_PRECISION = 1000;
 
 using namespace mega;
 
@@ -39,7 +39,7 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
     QIcon icon;
 
     TransferData::TransferState state (data->mState);
-    TransferData::TransferType type (data->mType);
+    TransferData::TransferTypes type (data->mType);
 
     // Data to update only if a different transfer is now displayed
     if (mTransferTag != data->mTag)
@@ -66,6 +66,11 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
             case TransferData::TRANSFER_UPLOAD:
             {
                 icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/arrow_upload_ico.png"));
+                break;
+            }
+            default:
+            {
+                icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/synching_ico.png"));
                 break;
             }
         }
@@ -112,12 +117,16 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
                 case TransferData::TRANSFER_UPLOAD:
                 {
                     statusString = tr("Uploading");
-
+                    break;
+                }
+                default:
+                {
+                    statusString = tr("Synching");
                     break;
                 }
             }
             // Override speed if http speed is lower
-            long long httpSpeed (data->mMegaApi->getCurrentSpeed(type >> 1));
+            auto httpSpeed (static_cast<unsigned long long>(data->mMegaApi->getCurrentSpeed((type & TransferData::TYPE_MASK) >> 1)));
             timeString = (httpSpeed == 0 || data->mSpeed == 0) ?
                              timeString
                            : Utilities::getTimeString(data->mRemainingTime);
@@ -228,6 +237,11 @@ void TransferManagerItem2::updateUi(const QExplicitlySharedDataPointer<TransferD
     mUi->tPauseResumeTransfer->setVisible(showTPauseResume);
 
     // Cancel/Clear Button
+    if ((type & TransferData::TRANSFER_SYNC)
+            && !(state & (TransferData::TRANSFER_FAILED | TransferData::TRANSFER_COMPLETED)))
+    {
+        showTCancelClear = false;
+    }
     if (showTCancelClear)
     {
         mUi->tCancelClearTransfer->setToolTip(cancelClearTooltip);

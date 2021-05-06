@@ -5,6 +5,7 @@
 #include "QTransfersModel.h"
 #include "TransfersWidget.h"
 
+#include <QGraphicsEffect>
 #include <QTreeView>
 #include <QMenu>
 #include <QMouseEvent>
@@ -41,7 +42,6 @@ private:
     QAction* mGetLinkAction;
     QAction* mOpenItemAction;
     QAction* mShowInFolderAction;
-    QAction* mShowInMegaAction;
     QAction* mClearAction;
 
     void createContextMenu();

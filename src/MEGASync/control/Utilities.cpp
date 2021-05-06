@@ -1085,7 +1085,7 @@ void Utilities::sleepMilliseconds(long long milliseconds)
 #endif
 }
 
-int Utilities::partPer(long long  part, long long total, uint ref)
+int Utilities::partPer(unsigned long long  part, unsigned long long total, uint ref)
 {
     // Use maximum precision
     long double partd(part);

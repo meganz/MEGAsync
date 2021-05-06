@@ -16,7 +16,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     app (qobject_cast<MegaApplication*>(qApp)),
     mHeaderNameState (0),
     mHeaderSizeState (0),
-    mFilterMutex(new QMutex(QMutex::NonRecursive))
+    mFilterMutex(new QMutex(QMutex::NonRecursive)),
+    mThreadPool(ThreadPoolSingleton::getInstance())
 {
     ui->setupUi(this);
 }
@@ -278,7 +279,7 @@ void TransfersWidget::onPauseStateChanged(bool pauseState)
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
 {
-    QtConcurrent::run([=]
+    mThreadPool->push([=]
     {
         QMutexLocker lock (mFilterMutex);
         mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
@@ -291,36 +292,55 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
 
 void TransfersWidget::fileTypeFilterChanged(const TransferData::FileTypes fileTypes)
 {
-    mProxyModel->setFileTypes(fileTypes);
+    mThreadPool->push([=]
+    {
+        QMutexLocker lock (mFilterMutex);
+        mProxyModel->setFileTypes(fileTypes);
+    });
 }
 
 void TransfersWidget::transferStateFilterChanged(const TransferData::TransferStates transferStates)
 {
-    mProxyModel->setTransferStates(transferStates);
+    mThreadPool->push([=]
+    {
+        QMutexLocker lock (mFilterMutex);
+        mProxyModel->setTransferStates(transferStates);
+    });
 }
 
 void TransfersWidget::transferTypeFilterChanged(const TransferData::TransferTypes transferTypes)
 {
-    mProxyModel->setTransferTypes(transferTypes);
+    mThreadPool->push([=]
+    {
+        QMutexLocker lock (mFilterMutex);
+        mProxyModel->setTransferTypes(transferTypes);
+    });
 }
 
 void TransfersWidget::transferFilterReset()
 {
-    mProxyModel->resetAllFilters();
+    mThreadPool->push([=]
+    {
+        QMutexLocker lock (mFilterMutex);
+        mProxyModel->resetAllFilters();
+    });
 }
 
 void TransfersWidget::transferFilterApply()
 {
     if (!mProxyModel->dynamicSortFilter())
     {
+        QMutexLocker lock (mFilterMutex);
+        mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
         mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
         mProxyModel->setDynamicSortFilter(true);
-        connect(this, &TransfersWidget::applyFilter,
-                mProxyModel, &TransfersSortFilterProxyModel::invalidate);
+        delete apiLock;
+//        connect(this, &TransfersWidget::applyFilter,
+//                mProxyModel, &TransfersSortFilterProxyModel::invalidate);
     }
     else
     {
-        QtConcurrent::run([=]
+        mThreadPool->push([=]
         {
             QMutexLocker lock (mFilterMutex);
             mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));

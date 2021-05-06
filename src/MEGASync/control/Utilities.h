@@ -324,7 +324,7 @@ public:
     static void sleepMilliseconds(long long milliseconds);
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
-    static int partPer(long long  part, long long total, uint ref = 100);
+    static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
 };
 
 

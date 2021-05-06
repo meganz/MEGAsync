@@ -9,14 +9,14 @@ TransferRemainingTime::TransferRemainingTime()
 {
 }
 
-TransferRemainingTime::TransferRemainingTime(long long speedBytesSecond, long long remainingBytes)
+TransferRemainingTime::TransferRemainingTime(unsigned long long speedBytesSecond, unsigned long long remainingBytes)
     :mRemainingSeconds{0}, mUpdateRemainingTimeCounter{0},
         mRemainingTimesBuffer{}
 {
     // Seed the object with given values
     if (speedBytesSecond > 0)
     {
-        for (auto i(0); i < REMAINING_SECONDS_BUFFER_SIZE; ++i)
+        for (unsigned int i(0); i < REMAINING_SECONDS_BUFFER_SIZE; ++i)
         {
             calculateRemainingTimeSeconds(speedBytesSecond, remainingBytes);
         }
@@ -35,12 +35,12 @@ void TransferRemainingTime::calculateMedian()
     mRemainingSeconds = std::chrono::seconds(mRemainingTimesBuffer[MEDIAN_IDX]);
 }
 
-std::chrono::seconds TransferRemainingTime::calculateRemainingTimeSeconds(long long speedBytesSecond,
-                                                                          long long remainingBytes)
+std::chrono::seconds TransferRemainingTime::calculateRemainingTimeSeconds(unsigned long long speedBytesSecond,
+                                                                          unsigned long long remainingBytes)
 {
     // If the speed is positive, compute real remaining time value. Otherwise, set remaining time to
     // current remaining time.
-    long long remTime {mRemainingSeconds.count()};
+    unsigned long long remTime (static_cast<unsigned long long>(mRemainingSeconds.count()));
     if (speedBytesSecond > 0)
     {
         remTime = remainingBytes / speedBytesSecond;
