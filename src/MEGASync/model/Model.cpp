@@ -388,6 +388,11 @@ std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
     return configuredSyncsMap[configuredSyncs.at(num)];
 }
 
+QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> Model::getCopyOfSettings()
+{
+    QMutexLocker qm(&syncMutex);
+    return configuredSyncsMap;
+}
 
 std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(MegaHandle tag)
 {
