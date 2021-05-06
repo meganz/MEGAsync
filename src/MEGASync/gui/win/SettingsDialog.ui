@@ -43,10 +43,6 @@
 font-size: 11px;
 }
 
-QGroupBox {
-	border:none;
-}
-
 QPushButton {
 padding-right: 12px;
 padding-left: 12px;
@@ -699,9 +695,6 @@ background:transparent;</string>
           <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QWidget" name="widget_11" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_17">
@@ -756,9 +749,6 @@ background:transparent;</string>
           <string>File Versions</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_22">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QCheckBox" name="cDisableFileVersioning">
             <property name="text">
@@ -817,9 +807,6 @@ background:transparent;</string>
           <bool>true</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QWidget" name="wLocalCache" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -973,9 +960,6 @@ background:transparent;</string>
           <string>Local Cleaner</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_21">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="minimumSize">
@@ -1018,9 +1002,6 @@ background:transparent;</string>
           <string>Bug Report</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QLabel" name="label">
             <property name="minimumSize">

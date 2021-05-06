@@ -43,10 +43,6 @@
 font-size: 11px;
 }
 
-QGroupBox {
-	border:none;
-}
-
 QScrollBar:horizontal {
 height: 16px;
 }
@@ -919,9 +915,6 @@ background:transparent;</string>
           <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_17">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QWidget" name="widget_11" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -976,9 +969,6 @@ background:transparent;</string>
           <string>File Versions</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QCheckBox" name="cDisableFileVersioning">
             <property name="text">
@@ -1046,9 +1036,6 @@ background:transparent;</string>
           <bool>true</bool>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QWidget" name="wLocalCache" native="true">
             <property name="sizePolicy">
@@ -1214,9 +1201,6 @@ background:transparent;</string>
           <string>Local Cleaner</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_21">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="minimumSize">
@@ -1267,9 +1251,6 @@ background:transparent;</string>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
            <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>25</number>
           </property>
           <item>
            <widget class="QLabel" name="label">
