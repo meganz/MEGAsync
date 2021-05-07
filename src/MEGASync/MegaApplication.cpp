@@ -8236,6 +8236,12 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         transferring = megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads();
 
         Utilities::queueFunctionInAppThread([=](){
+
+            if (!infoDialog)
+            {
+                return;
+            }
+
             int pendingUploads = megaApi->getNumPendingUploads();
             int pendingDownloads = megaApi->getNumPendingDownloads();
 
