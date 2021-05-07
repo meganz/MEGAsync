@@ -665,6 +665,12 @@ if (CMAKE_HOST_APPLE)
     add_custom_command(
             TARGET MEGAsync
             POST_BUILD
+            COMMAND xcrun actool --compile \"$<TARGET_FILE_DIR:MEGAsync>/../Resources\" --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} \"${MEGAsyncDir}/gui/images/Images.xcassets\"
+            COMMENT "Building Assets.car in Resources..."
+            )
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
             COMMAND touch \"$<TARGET_FILE_DIR:MEGAsync>/../Resources/empty.lproj\"
             COMMENT "Adding empty.lproj file to Resources..."
             )
