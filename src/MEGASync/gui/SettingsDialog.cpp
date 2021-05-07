@@ -1875,9 +1875,8 @@ void SettingsDialog::loadSyncSettings()
     areSyncsDisabled = false;
 
     int i = 0;
-    foreach (auto sync, syncs.keys())
+    foreach (auto &syncSetting, syncs.values())
     {
-        auto syncSetting = syncs.value(sync);
         if (!syncSetting)
         {
             assert("A sync has been deleting while trying to loop in");
