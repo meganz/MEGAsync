@@ -27,6 +27,7 @@ struct TransferCachedData {
     int64_t updateTime;
     bool publicNode = false;
     bool isSyncTransfer = false;
+    int nodeAccess = mega::MegaShare::ACCESS_UNKNOWN;
 };
 
 class TransferItemData

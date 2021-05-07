@@ -218,7 +218,6 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("nl")] = QString::fromUtf8("Nederlands");
         languageNames[QString::fromAscii("pl")] = QString::fromUtf8("Polski");
         languageNames[QString::fromAscii("pt_BR")] = QString::fromUtf8("Português Brasil");
-        languageNames[QString::fromAscii("pt")] = QString::fromUtf8("Português");
         languageNames[QString::fromAscii("ro")] = QString::fromUtf8("Română");
         languageNames[QString::fromAscii("ru")] = QString::fromUtf8("Pусский");
         languageNames[QString::fromAscii("th")] = QString::fromUtf8("ภาษาไทย"); // thai
@@ -258,6 +257,8 @@ QString Utilities::languageCodeToString(QString code)
         // languageNames[QString::fromAscii("tr")] = QString::fromUtf8("Türkçe");
         // languageNames[QString::fromAscii("tl")] = QString::fromUtf8("Tagalog");
         // languageNames[QString::fromAscii("uk")] = QString::fromUtf8("Українська");
+        // languageNames[QString::fromAscii("pt")] = QString::fromUtf8("Português");
+
 
     }
     return languageNames.value(code);
@@ -1039,18 +1040,6 @@ QProgressDialog *Utilities::showProgressDialog(ProgressHelper *progressHelper, Q
     });
 
     return progressDialog;
-}
-
-void Utilities::delayFirstSyncStart()
-{
-#ifdef __APPLE__
-    double time = Platform::getUpTime();
-
-    if (time >= 0 && time < Preferences::MAX_FIRST_SYNC_DELAY_S)
-    {
-        sleep(std::min(Preferences::MIN_FIRST_SYNC_DELAY_S, Preferences::MAX_FIRST_SYNC_DELAY_S - (int)time));
-    }
-#endif
 }
 
 long long Utilities::getSystemsAvailableMemory()
