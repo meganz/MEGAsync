@@ -277,6 +277,8 @@ public:
     static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
     static QString getReadablePROplanFromId(int identifier);
+    static void animateFadeout(QWidget *object, int msecs = 700);
+    static void animateFadein(QWidget *object, int msecs = 700);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
@@ -289,8 +291,6 @@ public:
     // shows a ProgressDialog while some progress goes on. it returns a copy of the object,
     // but the object will be deleted when the progress closes
     static QProgressDialog *showProgressDialog(ProgressHelper *progressHelper, QWidget *parent = nullptr);
-
-    static void delayFirstSyncStart();
 
 private:
     Utilities() {}
@@ -320,6 +320,9 @@ public:
     static long long getSystemsAvailableMemory();
 
     static void sleepMilliseconds(long long milliseconds);
+
+    // Compute the part per <ref> of <part> from <total>. Defaults to %
+    static int partPer(long long  part, long long total, uint ref = 100);
 };
 
 

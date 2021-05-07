@@ -1,6 +1,11 @@
 #include "wintoastlib.h"
+#include "Preferences.h"
+#include <VersionHelpers.h>
 #include <memory>
 #include <assert.h>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QCoreApplication>
 
 #pragma comment(lib,"shlwapi")
 #pragma comment(lib,"user32")
@@ -185,6 +190,12 @@ public:
 };
 
 namespace Util {
+    enum UserScope
+    {
+        CURRENT_USER,
+        ALL_USERS
+    };
+
     inline HRESULT defaultExecutablePath(_In_ WCHAR* path, _In_ DWORD nSize = MAX_PATH) {
         DWORD written = GetModuleFileNameExW(GetCurrentProcess(), nullptr, path, nSize);
         DEBUG_MSG("Default executable path: " << path);
@@ -192,28 +203,35 @@ namespace Util {
     }
 
 
-    inline HRESULT defaultShellLinksDirectory(_In_ WCHAR* path, _In_ DWORD nSize = MAX_PATH) {
-        DWORD written = GetEnvironmentVariableW(L"APPDATA", path, nSize);
-        HRESULT hr = written > 0 ? S_OK : E_INVALIDARG;
-        if (SUCCEEDED(hr)) {
-            errno_t result = wcscat_s(path, nSize, DEFAULT_SHELL_LINKS_PATH);
-            hr = (result == 0) ? S_OK : E_INVALIDARG;
-            DEBUG_MSG("Default shell link path: " << path);
+    std::wstring getShellLinkPath(const std::wstring& appname, UserScope scope)
+    {
+        std::wstring link;
+        wchar_t programsPath[MAX_PATH];
+        auto csidl = scope == CURRENT_USER ? CSIDL_PROGRAMS : CSIDL_COMMON_PROGRAMS;
+
+        if (SUCCEEDED(SHGetSpecialFolderPathW(nullptr, programsPath, csidl, FALSE)))
+        {
+            link = programsPath + std::wstring(L"\\") + appname + L"\\" + appname + DEFAULT_LINK_FORMAT;
         }
-        return hr;
+
+        return link;
     }
 
-    inline HRESULT defaultShellLinkPath(const std::wstring& appname, _In_ WCHAR* path, _In_ DWORD nSize = MAX_PATH) {
-        HRESULT hr = defaultShellLinksDirectory(path, nSize);
-        if (SUCCEEDED(hr)) {
-            const std::wstring appLink(appname + L"\\" + appname + DEFAULT_LINK_FORMAT);
-            errno_t result = wcscat_s(path, nSize, appLink.c_str());
-            hr = (result == 0) ? S_OK : E_INVALIDARG;
-            DEBUG_MSG("Default shell link file path: " << path);
-        }
-        return hr;
-    }
+    std::wstring findShellLink(const std::wstring& appname)
+    {
+        // Get "Start Menu/Programs" path for current user
+        std::wstring link = getShellLinkPath(appname, CURRENT_USER);
 
+        if (!PathFileExistsW(link.c_str()))
+        {
+            // Get "Start Menu/Programs" path for all users
+            link = getShellLinkPath(appname, ALL_USERS);
+
+            if (!PathFileExistsW(link.c_str()))  link.clear();
+        }
+
+        return link;
+    }
 
     inline PCWSTR AsString(ComPtr<IXmlDocument> &xmlDocument) {
         HSTRING xml;
@@ -426,6 +444,32 @@ std::wstring WinToast::configureAUMI(_In_ const std::wstring &companyName,
     return aumi;
 }
 
+bool getCreateLinkUserPreference(const std::wstring &appName)
+{
+    // Load user preference
+    Preferences* p = Preferences::instance();
+    if (p->neverCreateLink())
+        return false;
+
+    // Create user dialog
+    const QString& title = QString::fromWCharArray(appName.c_str());
+    QMessageBox msgbox(QMessageBox::Question, title,
+        QCoreApplication::translate("WinToastLib", "%1 did not find a valid link in Start Menu. "
+            "Not having a link may prevent the correct functioning of desktop notifications.\n\n"
+            "Do you want to create one?").arg(title));
+    auto yesButton = msgbox.addButton(QCoreApplication::translate("WinToastLib", "Yes (recommended)"), QMessageBox::YesRole);
+    msgbox.addButton(QCoreApplication::translate("WinToastLib", "No"), QMessageBox::NoRole);
+    auto neverButton = msgbox.addButton(QCoreApplication::translate("WinToastLib", "No (never ask again)"), QMessageBox::NoRole);
+
+    msgbox.exec();
+    auto clickedButton = msgbox.clickedButton();
+
+    // Evaluate user option
+    if (clickedButton == neverButton)
+        p->setNeverCreateLink(true);
+
+    return clickedButton == yesButton;
+}
 
 enum WinToast::ShortcutResult WinToast::createShortcut() {
     if (_aumi.empty() || _appName.empty()) {
@@ -456,6 +500,11 @@ enum WinToast::ShortcutResult WinToast::createShortcut() {
     if (SUCCEEDED(hr))
         return wasChanged ? SHORTCUT_WAS_CHANGED : SHORTCUT_UNCHANGED;
 
+    // If shortcut was not found, get user preference for creating one
+    bool create = getCreateLinkUserPreference(_appName);
+    if (!create)
+        return SHORTCUT_CREATE_SKIPPED;
+
     hr = createShellLinkHelper();
     if (SUCCEEDED(hr))
         return SHORTCUT_WAS_CREATED;
@@ -465,7 +514,7 @@ enum WinToast::ShortcutResult WinToast::createShortcut() {
 bool WinToast::initialize() {
     _isInitialized = false;
 
-    if (createShortcut() < 0)
+    if (createShortcut() < 0 && !IsWindows10OrGreater()) // for Win10 allow fallback notifications when toasts don't work
         return false;
 
     if (FAILED(DllImporter::SetCurrentProcessExplicitAppUserModelID(_aumi.c_str()))) {
@@ -478,12 +527,11 @@ bool WinToast::initialize() {
 }
 
 HRESULT	WinToast::validateShellLinkHelper(_Out_ bool& wasChanged) {
-	WCHAR	path[MAX_PATH] = { L'\0' };
-    Util::defaultShellLinkPath(_appName, path);
-    // Check if the file exist
-    DWORD attr = GetFileAttributesW(path);
-    if (attr >= 0xFFFFFFF) {
-        DEBUG_MSG("Error, shell link not found. Try to create a new one in: " << path);
+    const std::wstring& path = Util::findShellLink(_appName);
+    if (path.empty())
+    {
+        const std::wstring& defaultPath = Util::getShellLinkPath(_appName, Util::CURRENT_USER);
+        DEBUG_MSG("Error, shell link not found. Try to create a new one in: " << defaultPath.c_str());
         return E_FAIL;
     }
 
@@ -499,7 +547,7 @@ HRESULT	WinToast::validateShellLinkHelper(_Out_ bool& wasChanged) {
         ComPtr<IPersistFile> persistFile;
         hr = shellLink.As(&persistFile);
         if (SUCCEEDED(hr)) {
-            hr = persistFile->Load(path, STGM_READWRITE);
+            hr = persistFile->Load(path.c_str(), STGM_READWRITE);
             if (SUCCEEDED(hr)) {
                 ComPtr<IPropertyStore> propertyStore;
                 hr = shellLink.As(&propertyStore);
@@ -520,7 +568,7 @@ HRESULT	WinToast::validateShellLinkHelper(_Out_ bool& wasChanged) {
                                 if (SUCCEEDED(hr)) {
                                     hr = propertyStore->Commit();
                                     if (SUCCEEDED(hr) && SUCCEEDED(persistFile->IsDirty())) {
-                                        hr = persistFile->Save(path, TRUE);
+                                        hr = persistFile->Save(path.c_str(), TRUE);
                                     }
                                 }
                             }
@@ -538,8 +586,7 @@ HRESULT	WinToast::validateShellLinkHelper(_Out_ bool& wasChanged) {
 
 HRESULT	WinToast::createShellLinkHelper() {
 	WCHAR   exePath[MAX_PATH]{L'\0'};
-	WCHAR	slPath[MAX_PATH]{L'\0'};
-    Util::defaultShellLinkPath(_appName, slPath);
+    const std::wstring& slPath = getShellLinkPath(_appName, Util::CURRENT_USER);
     Util::defaultExecutablePath(exePath);
     ComPtr<IShellLinkW> shellLink;
     HRESULT hr = CoCreateInstance(CLSID_ShellLink, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&shellLink));
@@ -563,7 +610,7 @@ HRESULT	WinToast::createShellLinkHelper() {
                                     ComPtr<IPersistFile> persistFile;
                                     hr = shellLink.As(&persistFile);
                                     if (SUCCEEDED(hr)) {
-                                        hr = persistFile->Save(slPath, TRUE);
+                                        hr = persistFile->Save(slPath.c_str(), TRUE);
 
                                         // attempt to create the full path if some dir was missing, then try again
                                         if (hr == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)) {
@@ -574,7 +621,7 @@ HRESULT	WinToast::createShellLinkHelper() {
                                             }
                                             int err = SHCreateDirectoryEx(nullptr, linkDir.c_str(), nullptr);
                                             if (err == ERROR_SUCCESS) {
-                                                hr = persistFile->Save(slPath, TRUE);
+                                                hr = persistFile->Save(slPath.c_str(), TRUE);
                                             }
                                         }
                                     }

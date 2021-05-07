@@ -324,8 +324,55 @@ padding-bottom: 6px;
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="wSyncsFooter"/>
-        <widget class="QWidget" name="wSecurityFooter"/>
+        <widget class="QWidget" name="wSyncsFooter">
+         <layout class="QVBoxLayout" name="verticalLayout_26">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bPermissions">
+            <property name="text">
+             <string>Permissions</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="wSecurityFooter">
+         <layout class="QVBoxLayout" name="verticalLayout_211">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bSessionHistory">
+            <property name="text">
+             <string>Session history</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
         <widget class="QWidget" name="wImportsFooter">
          <layout class="QVBoxLayout" name="verticalLayout_18">
           <property name="spacing">
@@ -1946,13 +1993,6 @@ padding-left: 10px;
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="bPermissions">
-               <property name="text">
-                <string>Permissions</string>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>

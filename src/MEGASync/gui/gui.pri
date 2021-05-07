@@ -206,6 +206,7 @@ win32 {
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui
+                $$PWD/win/NewFolderDialog.ui \
 }
 
 macx {
@@ -263,7 +264,8 @@ macx {
                 $$PWD/macx/DynamicTransferQuotaPopOver.ui \
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
-                $$PWD/macx/BandwidthSettings.ui
+                $$PWD/macx/BandwidthSettings.ui \
+                $$PWD/macx/NewFolderDialog.ui
 
     QT += macextras
 
@@ -342,7 +344,8 @@ unix:!macx {
                 $$PWD/linux/DynamicTransferQuotaPopOver.ui \
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
-                $$PWD/linux/BandwidthSettings.ui
+                $$PWD/linux/BandwidthSettings.ui \
+                $$PWD/linux/NewFolderDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

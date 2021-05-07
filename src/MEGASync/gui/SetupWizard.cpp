@@ -64,7 +64,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
     connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
 
-    connect(static_cast<MegaApplication*>(qApp), SIGNAL(closeSetupWizard(int)), this, SLOT(done(int)));
+    connect(static_cast<MegaApplication*>(qApp), SIGNAL(closeSetupWizard()), this, SLOT(close()));
 
     page_newaccount();
 
@@ -715,6 +715,8 @@ void SetupWizard::on_bLocalFolder_clicked()
     delete dialog;
 #else
     QString path = QFileDialog::getExistingDirectory(0,  tr("Select local folder"), defaultPath);
+    path = QDir::toNativeSeparators(path);
+
 #endif
 
     if (path.length())
@@ -941,11 +943,6 @@ void SetupWizard::closeEvent(QCloseEvent *event)
             done(QDialog::Rejected);
         }
     }
-}
-
-void SetupWizard::reject()
-{
-
 }
 
 void SetupWizard::page_login()

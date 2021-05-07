@@ -12,23 +12,27 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.4.0.0";
-const int Preferences::VERSION_CODE = 4400;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.5.0.0";
+const int Preferences::VERSION_CODE = 4500;
+const int Preferences::BUILD_ID = 4;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.4.0");
-QString Preferences::SDK_ID = QString::fromAscii("0e79b27");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.5.0");
+QString Preferences::SDK_ID = QString::fromAscii("c11a688");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fixed detected crashes on Windows and Linux."));
+    "- New improvements for the management of the syncs.\n"
+    "- Improved user experience when syncs are disabled.\n"
+    "- Enhanced system notifications to notify various account events.\n"
+    "- Improved user experience while working with huge number of transfers and syncs.\n"
+    "- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.\n"
+    "- Fixed detected crashes on Windows and Linux.\n"
+    "- Other performance improvements and adjustments.\n"
+    "- Other UI fixes and adjustments."));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
 int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
-
-int Preferences::MAX_FIRST_SYNC_DELAY_S = 120; // Max delay time to wait for local paths before trying to restore syncs
-int Preferences::MIN_FIRST_SYNC_DELAY_S = 40; // Min delay time to wait for local paths before trying to restore syncs
 
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
@@ -371,6 +375,7 @@ const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPu
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
+const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
@@ -412,6 +417,8 @@ const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
 const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
 const bool  Preferences::defaultNeedsFetchNodes   = false;
+
+const bool  Preferences::defaultNeverCreateLink   = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -1940,6 +1947,16 @@ void Preferences::setImportFolder(long long value)
     setValueAndSyncConcurrent(importFolderKey, value);
 }
 
+bool Preferences::neverCreateLink()
+{
+    return getValueConcurrent<bool>(neverCreateLinkKey, defaultNeverCreateLink);
+}
+
+void Preferences::setNeverCreateLink(bool value)
+{
+    setValueAndSyncConcurrent(neverCreateLinkKey, value);
+}
+
 
 /////////   Sync related stuff /////////////////////
 
@@ -2914,18 +2931,31 @@ QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *c
     {
         settings->beginGroup(i);
 
+        bool enabled = settings->value(folderActiveKey, true).toBool();
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
+
+        if (temporarilyLoggedPrefs) //coming from old session
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromAscii(" ... sync configuration rescued from old session. Set as disabled.")
+                         .toUtf8().constData());
+
+            enabled = false; // syncs coming from old sessions are now considered unsafe to continue automatically
+            // Note: in this particular case, we are not showing any error in the sync (since that information is not carried out
+            // to the SDK)
+        }
+
         oldSyncs.push_back(SyncData(settings->value(syncNameKey).toString(),
                                     settings->value(localFolderKey).toString(),
                                     settings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
                                     settings->value(megaFolderKey).toString(),
                                     settings->value(localFingerprintKey, 0).toLongLong(),
-                                    settings->value(folderActiveKey, true).toBool(),
+                                    enabled,
                                     settings->value(temporaryInactiveKey, false).toBool(),
                                      i,
                                     settings->value(syncIdKey, true).toString()
                                     ));
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Reading old cache sync setting ... ").toUtf8().constData());
         settings->endGroup();
     }
     settings->endGroup();
@@ -3085,9 +3115,6 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MIN_REBOOT_INTERVAL_MS"), Preferences::MIN_REBOOT_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS);
     overridePreference(settings, QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS);
-
-    overridePreference(settings, QString::fromUtf8("MAX_FIRST_SYNC_DELAY_S"), Preferences::MAX_FIRST_SYNC_DELAY_S);
-    overridePreference(settings, QString::fromUtf8("MIN_FIRST_SYNC_DELAY_S"), Preferences::MIN_FIRST_SYNC_DELAY_S);
 
     overridePreference(settings, QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS);
     overridePreference(settings, QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS);

@@ -113,4 +113,5 @@ public:
 
     ///////////// END OF SYNCS ////////////////////
 
+    void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting> cs);
 };

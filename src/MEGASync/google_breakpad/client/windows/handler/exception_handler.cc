@@ -936,7 +936,7 @@ void TranslateOffset(DWORD64 absoluteoffset, DWORD64 *offset, string *modulename
                     if ((s = GetModuleFileNameW(hMods[i], ModuleName, MAX_PATH)) && s != MAX_PATH)
                     {
                         mega::MegaApi::utf16ToUtf8(ModuleName, s, modulename);
-                        int index = modulename->find_last_of("\\");
+                        size_t index = modulename->find_last_of("\\");
                         if (index <= string::npos && index < (modulename->size() - 1))
                         {
                             *modulename = modulename->substr(index + 1, modulename->size() - (index + 1));

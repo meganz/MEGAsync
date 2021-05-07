@@ -21,22 +21,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QWidget" name="wSeparatorDefaultFolders" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>1</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>1</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QWidget" name="wContainerTransferRate" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_21">
       <property name="spacing">
@@ -998,6 +982,22 @@ margin-right:0px;
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wSeparatorBandwidthBottom" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>1</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>1</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item>

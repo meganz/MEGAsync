@@ -163,23 +163,10 @@
         <file>images/full_sync_ico@2x.png</file>
         <file>images/grey_folder.png</file>
         <file>images/grey_folder@2x.png</file>
-        <file>images/ic_small_available.png</file>
-        <file>images/ic_small_available@2x.png</file>
-        <file>images/ic_small_cloud_drive.png</file>
-        <file>images/ic_small_cloud_drive@2x.png</file>
-        <file>images/ic_small_inbox.png</file>
-        <file>images/ic_small_inbox@2x.png</file>
-        <file>images/ic_small_rubbish.png</file>
-        <file>images/ic_small_rubbish@2x.png</file>
-        <file>images/ic_small_shares.png</file>
-        <file>images/ic_small_shares@2x.png</file>
-        <file>images/ic_small_versions.png</file>
-        <file>images/ic_small_versions@2x.png</file>
         <file>images/ico_about_MEGA.png</file>
         <file>images/ico_about_MEGA@2x.png</file>
         <file>images/ico_add_sync.png</file>
         <file>images/ico_add_sync@2x.png</file>
-        <file>images/ico_add_sync_folder.png</file>
         <file>images/ico_add_sync_folder.png</file>
         <file>images/ico_add_sync_folder@2x.png</file>
         <file>images/ico_add_sync_folder@2x.png</file>
@@ -559,7 +546,6 @@
         <file>translations/MEGASyncStrings_ko.qm</file>
         <file>translations/MEGASyncStrings_nl.qm</file>
         <file>translations/MEGASyncStrings_pl.qm</file>
-        <file>translations/MEGASyncStrings_pt.qm</file>
         <file>translations/MEGASyncStrings_pt_BR.qm</file>
         <file>translations/MEGASyncStrings_ro.qm</file>
         <file>translations/MEGASyncStrings_ru.qm</file>
@@ -598,5 +584,13 @@
         <file>images/imports_32.png</file>
         <file>images/imports_32@3x.png</file>
         <file>images/imports_32@2x.png</file>
+        <file>images/settings-import.png</file>
+        <file>images/settings-import@2x.png</file>
+        <file>images/Bin_24_ico.png</file>
+        <file>images/Bin_24_ico@2x.png</file>
+        <file>images/Cloud_Drive_24_ico.png</file>
+        <file>images/Cloud_Drive_24_ico@2x.png</file>
+        <file>images/Inbox_24_ico.png</file>
+        <file>images/Inbox_24_ico@2x.png</file>
     </qresource>
 </RCC>

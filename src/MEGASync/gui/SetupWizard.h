@@ -88,7 +88,6 @@ signals:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
     void closeEvent(QCloseEvent * event);
-    void reject();
 
     void setupPreferences();
     void page_login();

@@ -30,6 +30,9 @@ signals:
 
 private:
     Ui::FilterAlertWidget *ui;
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 #endif // FILTERALERTWIDGET_H

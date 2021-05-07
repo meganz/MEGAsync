@@ -4,10 +4,15 @@
 #include <QWidget>
 #include <QMenu>
 #include "gui/MenuItemAction.h"
+#include <megaapi.h>
+
+#include "model/Model.h"
 
 namespace Ui {
 class QSyncItemWidget;
 }
+
+class MegaApplication;
 
 class QSyncItemWidget : public QWidget
 {
@@ -20,27 +25,33 @@ public:
     };
     explicit QSyncItemWidget(int itemType, QWidget *parent = nullptr);
 
-    void setText(const QString &path);
-    void setPathAndName(const QString &path, const QString &name);
-    void setPathAndGuessName(const QString &path);
+    void setPath(const QString &path, const QString &name);
+    void setPath(const QString &path);
+
     void setToolTip(const QString &tooltip);
     QString text();
     QString fullPath();
     void setError(int error);
 
     ~QSyncItemWidget();
-private:
-    void elidePathLabel();
+
+    mega::MegaHandle mSyncRootHandle = mega::INVALID_HANDLE;
+
+    void setSyncSetting(const std::shared_ptr<SyncSetting> &value);
+
+private slots:
+    void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
+    void nodeChanged(mega::MegaHandle handle);
+    void on_bSyncOptions_clicked();
+    void on_bReveal_clicked();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
+    bool event(QEvent* event) override;
 
     bool getIsCacheAvailable() const;
     void setIsCacheAvailable(bool value);
-
-private slots:
-    void on_bSyncOptions_clicked();
-    void on_bReveal_clicked();
 
 signals:
     void onSyncInfo();
@@ -57,13 +68,16 @@ private:
     bool mIsCacheAvailable;
     int mItemType;
     QString mFullPath;
-    QString mSyncName;
     int mError;
 
-    void configureSyncTypeUI(int type) const;
+    QString mDisplayName;
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+    int64_t mLastRemotePathCheck = 0;
+    bool mNodesUpToDate = true;
+    std::shared_ptr<SyncSetting> mSyncSetting;
+
+    void elidePathLabel();
+    void configureSyncTypeUI(int type) const;
 };
 
 #endif // QSYNCITEMWIDGET_H
