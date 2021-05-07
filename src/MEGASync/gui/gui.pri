@@ -205,8 +205,8 @@ win32 {
                 $$PWD/win/DynamicTransferQuotaPopOver.ui \
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
-                $$PWD/win/BandwidthSettings.ui
-                $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/BandwidthSettings.ui \
+                $$PWD/win/NewFolderDialog.ui
 }
 
 macx {
