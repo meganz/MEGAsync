@@ -665,8 +665,9 @@ if (CMAKE_HOST_APPLE)
     add_custom_command(
             TARGET MEGAsync
             POST_BUILD
-            COMMAND xcrun actool --compile \"$<TARGET_FILE_DIR:MEGAsync>/../Resources\" --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} \"${MEGAsyncDir}/gui/images/Images.xcassets\"
+            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${MEGAsyncDir}/gui/images/Images.xcassets" > /dev/null 2>&1
             COMMENT "Building Assets.car in Resources..."
+            VERBATIM
             )
     add_custom_command(
             TARGET MEGAsync
