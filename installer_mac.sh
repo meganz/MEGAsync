@@ -28,9 +28,9 @@ APP_NAME=MEGAsync
 ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
-MSYNC_PREFIX=${APP_NAME}/
-MLOADER_PREFIX=MEGAloader/
-MUPDATER_PREFIX=MEGAupdater/
+MSYNC_PREFIX=MEGASync/
+MLOADER_PREFIX=MEGALoader/
+MUPDATER_PREFIX=MEGAUpdater/
 
 full_pkg=0
 full_pkg_cmake=0
@@ -186,7 +186,8 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
         install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
         install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 
-        mv $APP_NAME/$APP_NAME.app ./
+        rm $APP_NAME.app || :
+        mv $MSYNC_PREFIX/$APP_NAME.app ./
     fi
 
     otool -L MEGAsync.app/Contents/MacOS/MEGAclient
