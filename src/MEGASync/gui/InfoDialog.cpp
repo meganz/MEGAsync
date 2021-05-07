@@ -343,13 +343,21 @@ void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 
 void InfoDialog::enableTransferOverquotaAlert()
 {
-    transferOverquotaAlertEnabled = true;
+    if (!transferOverquotaAlertEnabled)
+    {
+        transferOverquotaAlertEnabled = true;
+        emit transferOverquotaMsgVisibilityChange(transferOverquotaAlertEnabled);
+    }
     updateDialogState();
 }
 
 void InfoDialog::enableTransferAlmostOverquotaAlert()
 {
-    transferAlmostOverquotaAlertEnabled = true;
+    if (!transferAlmostOverquotaAlertEnabled)
+    {
+        transferAlmostOverquotaAlertEnabled = true;
+        emit almostTransferOverquotaMsgVisibilityChange(transferAlmostOverquotaAlertEnabled);
+    }
     updateDialogState();
 }
 
@@ -1966,12 +1974,12 @@ void InfoDialog::on_bDiscard_clicked()
     if(transferQuotaState == QuotaState::FULL)
     {
         transferOverquotaAlertEnabled = false;
-        emit dismissTransferOverquota();
+        emit transferOverquotaMsgVisibilityChange(transferOverquotaAlertEnabled);
     }
     else if(transferQuotaState == QuotaState::WARNING)
     {
         transferAlmostOverquotaAlertEnabled = false;
-        emit dismissTransferAlmostOverquota();
+        emit almostTransferOverquotaMsgVisibilityChange(transferAlmostOverquotaAlertEnabled);
     }
 
     if(storageState == Preferences::STATE_ALMOST_OVER_STORAGE ||

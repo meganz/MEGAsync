@@ -95,6 +95,7 @@ public:
     // Getters
     std::shared_ptr<SyncSetting> getSyncSetting(int num);
     std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle num);
+    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> getCopyOfSettings();
 
     int getNumSyncedFolders();
 
