@@ -4,23 +4,18 @@
 #
 #-------------------------------------------------
 
-win32:THIRDPARTY_VCPKG_BASE_PATH = C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200529
+win32:THIRDPARTY_VCPKG_BASE_PATH = c:/w/3rdParty
 win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
 win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
 
-macx {
-    isEmpty(THIRDPARTY_VCPKG_BASE_PATH){
-        THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
-    }
-    VCPKG_TRIPLET = x64-osx-mega
-}
+macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
+macx:VCPKG_TRIPLET = x64-osx
 
 unix:!macx:THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
 unix:!macx:VCPKG_TRIPLET = x64-linux
 
 message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
 message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
-
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x000000
 
@@ -194,7 +189,6 @@ macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
-    QMAKE_LFLAGS += -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 }
 
 

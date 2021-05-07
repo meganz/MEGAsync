@@ -279,6 +279,7 @@ void TransfersWidget::onPauseStateChanged(bool pauseState)
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
 {
+//    QtConcurrent::run([=]
     mThreadPool->push([=]
     {
         QMutexLocker lock (mFilterMutex);
@@ -294,7 +295,6 @@ void TransfersWidget::fileTypeFilterChanged(const TransferData::FileTypes fileTy
 {
     mThreadPool->push([=]
     {
-        QMutexLocker lock (mFilterMutex);
         mProxyModel->setFileTypes(fileTypes);
     });
 }
@@ -303,7 +303,6 @@ void TransfersWidget::transferStateFilterChanged(const TransferData::TransferSta
 {
     mThreadPool->push([=]
     {
-        QMutexLocker lock (mFilterMutex);
         mProxyModel->setTransferStates(transferStates);
     });
 }
@@ -312,40 +311,37 @@ void TransfersWidget::transferTypeFilterChanged(const TransferData::TransferType
 {
     mThreadPool->push([=]
     {
-        QMutexLocker lock (mFilterMutex);
         mProxyModel->setTransferTypes(transferTypes);
     });
 }
 
 void TransfersWidget::transferFilterReset()
 {
+    mFilterMutex->lock();
     mThreadPool->push([=]
     {
-        QMutexLocker lock (mFilterMutex);
         mProxyModel->resetAllFilters();
+        mFilterMutex->unlock();
     });
 }
 
-void TransfersWidget::transferFilterApply()
+void TransfersWidget::transferFilterApply(bool invalidate)
 {
     if (!mProxyModel->dynamicSortFilter())
     {
-        QMutexLocker lock (mFilterMutex);
         mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
+        mProxyModel->applyFilters(false);
         mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
         mProxyModel->setDynamicSortFilter(true);
         delete apiLock;
-//        connect(this, &TransfersWidget::applyFilter,
-//                mProxyModel, &TransfersSortFilterProxyModel::invalidate);
     }
     else
     {
         mThreadPool->push([=]
         {
-            QMutexLocker lock (mFilterMutex);
             mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
             mProxyModel->resetNumberOfItems();
-            mProxyModel->applyFilters();
+            mProxyModel->applyFilters(invalidate);
             delete apiLock;
         });
     }

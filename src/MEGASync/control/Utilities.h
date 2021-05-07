@@ -179,7 +179,7 @@ class ThreadPoolSingleton
         {
             if (instance == nullptr)
             {
-                instance.reset(new ThreadPool(1));
+                instance.reset(new ThreadPool(5));
             }
 
             return instance.get();

@@ -4,6 +4,7 @@
 #include "TransferItem2.h"
 
 #include <QSortFilterProxyModel>
+#include <QSemaphore>
 
 class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 {
@@ -25,16 +26,13 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
                       const QModelIndex& destinationParent, int destinationChild) override;
 
         void setTransferTypes(TransferData::TransferTypes transferTypes);
-        void addTransferTypes(TransferData::TransferTypes transferTypes);
         void setTransferStates(TransferData::TransferStates transferStates);
-        void addTransferStates(TransferData::TransferStates transferStates);
         void setFileTypes(TransferData::FileTypes fileTypes);
-        void addFileTypes(TransferData::FileTypes fileTypes);
         void resetAllFilters();
         void setSortBy(SORT_BY sortCriterion);
         int  getNumberOfItems(TransferData::TransferType transferType);
         void resetNumberOfItems();
-        void applyFilters();
+        void applyFilters(bool invalidate = true);
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
@@ -51,6 +49,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         int* mDlNumber;
         int* mUlNumber;
         QMutex* mFilterMutex;
+        QSemaphore* mNewFiltersSemaphore;
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

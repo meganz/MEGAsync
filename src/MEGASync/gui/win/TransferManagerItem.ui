@@ -52,6 +52,8 @@ TransferManagerItem2, TransferManagerItem
     max-height: 1px;
     border: none;
     background: #EEEEEE;
+	margin-left: 24px;
+	margin-right: 24px;
 }
 
 #sStatus, #sStatus QWidget

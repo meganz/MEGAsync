@@ -323,6 +323,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
 
     beginInsertRows(DEFAULT_IDX, insertAt, insertAt);
     insertTransfer(api, transfer, insertAt);
+    qApp->processEvents();
 
     auto state (static_cast<TransferData::TransferState>(1 << transfer->getState()));
     if (mAreAllPaused && (state & PAUSABLE_STATES))
@@ -334,7 +335,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
 
     endInsertRows();
 
-    QApplication::processEvents();
+    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -398,6 +399,8 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
             emit dataChanged(idx, idx, DATA_ROLE);
         });
 
+        qApp->processEvents();
+
         if (state == TransferData::TRANSFER_FAILED)
         {
             mFailedTransfers[tag] = transfer->copy();
@@ -426,7 +429,7 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
 //        onTransferStart(api, transfer);
 //    }
     mModelMutex->unlock();
-    QApplication::processEvents();
+    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -601,6 +604,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
                         mOrder.move(row, newRow);
                         endMoveRows();
                         sameRow = false;
+                        qApp->processEvents();
                     }
                 }
             }
@@ -619,6 +623,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
                     QModelIndex idx (index(row, 0, DEFAULT_IDX));
                     emit dataChanged(idx, idx, DATA_ROLE);
                 });
+                qApp->processEvents();
             }
         }
     }
@@ -627,7 +632,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
 //        onTransferStart(api, transfer);int
 //    }
     mModelMutex->unlock();
-    QApplication::processEvents();
+    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -699,7 +704,7 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
 //        onTransferStart(api, transfer);
 //    }
     mModelMutex->unlock();
-    QApplication::processEvents();
+    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -844,7 +849,7 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
         }
     }
     mModelMutex->unlock();
-    QApplication::processEvents();
+    qApp->processEvents();
 
     // Now cancel transfers.
     if (cancel)
@@ -876,14 +881,14 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
 
 void QTransfersModel2::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
 {
-    QReadLocker lock (mModelMutex);
     mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+    QReadLocker lock (mModelMutex);
 
     for (auto index : indexes)
     {
         TransferTag tag (static_cast<TransferTag>(index.internalId()));
         pauseResumeTransferByTag(tag, pauseState);
-        QApplication::processEvents();
+        qApp->processEvents();
     }
 
     if (!pauseState && mAreAllPaused)
@@ -900,8 +905,8 @@ void QTransfersModel2::pauseResumeAllTransfers()
     bool newPauseState (!mAreAllPaused);
     mAreAllPaused = newPauseState;
 
-    mThreadPool->push([=]
-//    QtConcurrent::run([=]
+//    mThreadPool->push([=]
+    QtConcurrent::run([=]
     {
         mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
 
@@ -916,7 +921,7 @@ void QTransfersModel2::pauseResumeAllTransfers()
             std::for_each(orderCopy.crbegin(), orderCopy.crend(), [this, newPauseState](TransferTag tag)
             {
                 pauseResumeTransferByTag(tag, newPauseState);
-                QApplication::processEvents();
+                qApp->processEvents();
             });
         }
         else
@@ -924,7 +929,7 @@ void QTransfersModel2::pauseResumeAllTransfers()
             std::for_each(orderCopy.cbegin(), orderCopy.cend(), [this, newPauseState](TransferTag tag)
             {
                 pauseResumeTransferByTag(tag, newPauseState);
-                QApplication::processEvents();
+                qApp->processEvents();
             });
             mMegaApi->pauseTransfers(newPauseState);
         }
@@ -998,6 +1003,7 @@ void QTransfersModel2::onRetryTransfer(TransferTag tag)
         lock.unlock();
 
         Utilities::queueFunctionInAppThread([=](){removeRows(row, 1, DEFAULT_IDX);});
+        qApp->processEvents();
     }
 }
 
@@ -1053,6 +1059,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex& parent)
             mOrder.erase(mOrder.begin() + row);
         }
         endRemoveRows();
+        qApp->processEvents();
 
         if (mOrder.empty())
         {

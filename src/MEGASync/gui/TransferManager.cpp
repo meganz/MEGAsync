@@ -181,9 +181,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     connect(qobject_cast<MegaApplication*>(qApp), &MegaApplication::storageStateChanged,
             this, &TransferManager::onStorageStateChanged,
             Qt::QueuedConnection);
-    // Connect to transfer quota signals
-//    auto tq (qobject_cast<MegaApplication*>(qApp)->transferQuota);
-
 
     // Init state
     onTransfersInModelChanged(true);
@@ -238,12 +235,9 @@ void TransferManager::on_tCompleted_clicked()
     if (mCurrentTab != COMPLETED_TAB)
     {
         emit userActivity();
-        mThreadPool->push([=]
-        {
-            mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES_MASK);
-            mUi->wTransfers->transferTypeFilterChanged({});
-            mUi->wTransfers->fileTypeFilterChanged({});
-        });
+        mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES_MASK);
+        mUi->wTransfers->transferTypeFilterChanged({});
+        mUi->wTransfers->fileTypeFilterChanged({});
         mUi->lCurrentContent->setText(tr("Finished"));
         toggleTab(COMPLETED_TAB);
     }
@@ -587,6 +581,12 @@ void TransferManager::refreshSearchStats()
         mUi->tDlResults->setVisible(showTypeFilters);
         mUi->tUlResults->setVisible(showTypeFilters);
         mUi->tAllResults->setVisible(showTypeFilters);
+
+        if ((mUi->tDlResults->isChecked() && nbDl == 0)
+                || (mUi->tUlResults->isChecked() && nbUl == 0))
+        {
+            on_tAllResults_clicked();
+        }
     }
 }
 
@@ -652,6 +652,9 @@ void TransferManager::on_tSearchIcon_clicked()
         mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_DOWNLOAD] = NB_INIT_VALUE;
         mNumberOfSearchResultsPerTypes[TransferData::TRANSFER_UPLOAD] = NB_INIT_VALUE;
         mUi->tAllResults->setChecked(true);
+        mUi->tAllResults->hide();
+        mUi->tDlResults->hide();
+        mUi->tUlResults->hide();
         mUi->wSearch->show();
 
         toggleTab(SEARCH_TAB);
@@ -679,20 +682,25 @@ void TransferManager::on_tClearSearchResult_clicked()
 void TransferManager::on_tAllResults_clicked()
 {
     mUi->wTransfers->transferTypeFilterChanged({});
+    mUi->wTransfers->fileTypeFilterChanged({});
+    mUi->wTransfers->transferStateFilterChanged({});
     mUi->wTransfers->transferFilterApply();
 }
 
 void TransferManager::on_tDlResults_clicked()
 {
-    mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_DOWNLOAD
-                                               | TransferData::TransferType::TRANSFER_LTCPDOWNLOAD);
+    mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_DOWNLOAD
+                                               | TransferData::TRANSFER_LTCPDOWNLOAD);
     mUi->wTransfers->fileTypeFilterChanged({});
+    mUi->wTransfers->transferStateFilterChanged({});
     mUi->wTransfers->transferFilterApply();
 }
 
 void TransferManager::on_tUlResults_clicked()
 {
-    mUi->wTransfers->transferTypeFilterChanged(TransferData::TransferType::TRANSFER_UPLOAD);
+    mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_UPLOAD);
+    mUi->wTransfers->fileTypeFilterChanged({});
+    mUi->wTransfers->transferStateFilterChanged({});
     mUi->wTransfers->transferFilterApply();
 }
 
@@ -701,6 +709,7 @@ void TransferManager::on_bArchives_clicked()
     if (mCurrentTab != TYPE_ARCHIVE_TAB)
     {
         mUi->wTransfers->transferStateFilterChanged({});
+        mUi->wTransfers->transferTypeFilterChanged({});
         mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_ARCHIVE});
         mUi->lCurrentContent->setText(tr("Archives"));
         toggleTab(TYPE_ARCHIVE_TAB);
@@ -842,6 +851,7 @@ void TransferManager::toggleTab(TM_TAB tab)
         else if (mCurrentTab == SEARCH_TAB)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pStatusHeader);
+            mUi->wTransfers->transferFilterApply(false);
             mUi->wTransfers->textFilterChanged(QString());
         }
         else

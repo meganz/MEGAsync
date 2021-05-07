@@ -36,7 +36,7 @@ public:
     void transferStateFilterChanged(const TransferData::TransferStates transferStates);
     void transferTypeFilterChanged(const TransferData::TransferTypes transferTypes);
     void transferFilterReset();
-    void transferFilterApply();
+    void transferFilterApply(bool invalidate = true);
 
     int rowCount();
 
