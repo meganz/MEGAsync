@@ -171,7 +171,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     accountDetailsDialog = NULL;
     cacheSize = -1;
     remoteCacheSize = -1;
-    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
     connect(ui->wStack, SIGNAL(currentChanged(int)), ui->wStackFooter, SLOT(setCurrentIndex(int)));
     ui->wStack->setCurrentWidget(ui->pGeneral); // override whatever might be set in .ui
 #ifndef Q_OS_MAC
@@ -192,8 +191,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->gExcludedFilesInfo->hide();
 
 #ifdef Q_OS_WINDOWS
-    connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
-    ui->cDisableIcons->hide();
+    ui->cFinderIcons->hide();
 
     typedef LONG MEGANTSTATUS;
     typedef struct _MEGAOSVERSIONINFOW {
@@ -216,7 +214,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
             RtlGetVersion(&version);
             if (version.dwMajorVersion >= 10)
             {
-                ui->cDisableIcons->show();
+                ui->cFinderIcons->show();
             }
         }
     }
@@ -249,8 +247,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 
     ui->gCache->setVisible(false);
-    ui->lFileVersionsSize->setVisible(false);
-    ui->bClearFileVersions->setVisible(false);
 
 #ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
@@ -439,7 +435,6 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 
 void SettingsDialog::storageChanged()
 {
-    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
     onCacheSizeAvailable();
 }
 
@@ -475,9 +470,12 @@ void SettingsDialog::storageStateChanged(int newStorageState)
 
 void SettingsDialog::onCacheSizeAvailable()
 {
+    if(preferences->logged())
+        ui->lFileVersionsSize->setText(tr("Used space: %1").arg(Utilities::getSizeString(preferences->versionsStorage())));
+
     if (cacheSize != -1 && remoteCacheSize != -1)
     {
-        if (!cacheSize && !remoteCacheSize && !fileVersionsSize)
+        if (!cacheSize && !remoteCacheSize)
         {
             return;
         }
@@ -512,20 +510,6 @@ void SettingsDialog::onCacheSizeAvailable()
             //Hide and remove from layout to avoid  uneeded space
             ui->lRemoteCacheSize->hide();
             ui->bClearRemoteCache->hide();
-        }
-
-        fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
-        if (fileVersionsSize)
-        {
-            ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
-            ui->lFileVersionsSize->setVisible(true);
-            ui->bClearFileVersions->setVisible(true);
-        }
-        else
-        {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lFileVersionsSize->hide();
-            ui->bClearFileVersions->hide();
         }
     }
 }
@@ -867,7 +851,7 @@ void SettingsDialog::loadSettings()
     loadSyncSettings();
 
 #ifdef Q_OS_WINDOWS
-    ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
+    ui->cFinderIcons->setChecked(!preferences->leftPaneIconsDisabled());
 #endif
 
     updateNetworkTab();
@@ -887,8 +871,8 @@ void SettingsDialog::loadSettings()
 
     ui->lLimitsInfo->setText(excludeBySizeInfo());
     ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
-    ui->cDisableFileVersioning->setChecked(preferences->fileVersioningDisabled());
-    ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
+    ui->cFileVersioning->setChecked(!preferences->fileVersioningDisabled());
+    ui->cOverlayIcons->setChecked(!preferences->overlayIconsDisabled());
 
     loadingSettings--;
 }
@@ -1651,7 +1635,7 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
 
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
-        ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
+        ui->lFileVersionsSize->setText(tr("Used space: %1").arg(Utilities::getSizeString(preferences->versionsStorage())));
 
 #ifdef Q_OS_MACOS
         // FIXME: Do we need to do the same for the other buttons?
@@ -1907,15 +1891,14 @@ void SettingsDialog::on_bClearFileVersions_clicked()
 
     megaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,  MegaRequest *request, MegaError *e)
     {
+        Q_UNUSED(api)
+        Q_UNUSED(request)
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
             megaApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
         }
     }));
-
-    ui->lFileVersionsSize->hide();
-    ui->bClearFileVersions->hide();
 }
 
 void SettingsDialog::onClearCache()
@@ -2343,10 +2326,10 @@ void SettingsDialog::on_eDownloadFolder_textChanged(const QString &text)
     preferences->setHasDefaultDownloadFolder(hasDefaultDownloadOption);
 }
 
-void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
+void SettingsDialog::on_cFileVersioning_toggled(bool checked)
 {
     if (loadingSettings) return;
-    if (checked)
+    if (!checked)
     {
         auto answer = QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
                                                tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
@@ -2354,19 +2337,19 @@ void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
 
         if (answer == QMessageBox::No)
         {
-            ui->cDisableFileVersioning->blockSignals(true);
-            ui->cDisableFileVersioning->setChecked(false);
-            ui->cDisableFileVersioning->blockSignals(false);
+            ui->cFileVersioning->blockSignals(true);
+            ui->cFileVersioning->setChecked(true);
+            ui->cFileVersioning->blockSignals(false);
             return;
         }
     }
-    megaApi->setFileVersionsOption(checked); // This is actually saved to Preferences after the megaApi call succeeds
+    megaApi->setFileVersionsOption(!checked); // This is actually saved to Preferences after the megaApi call succeeds
 }
 
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (loadingSettings) return;
-    preferences->disableOverlayIcons(checked);
+    preferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();
 #else
@@ -2411,14 +2394,10 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 }
 
 #ifdef Q_OS_WINDOWS
-void SettingsDialog::on_cDisableIcons_toggled(bool checked)
+void SettingsDialog::on_cFinderIcons_toggled(bool checked)
 {
     if (loadingSettings) return;
     if (checked)
-    {
-        Platform::removeAllSyncsFromLeftPane();
-    }
-    else
     {
         for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
@@ -2428,6 +2407,10 @@ void SettingsDialog::on_cDisableIcons_toggled(bool checked)
                                         syncSetting->getSyncID());
         }
     }
-    preferences->disableLeftPaneIcons(checked);
+    else
+    {
+        Platform::removeAllSyncsFromLeftPane();
+    }
+    preferences->disableLeftPaneIcons(!checked);
 }
 #endif

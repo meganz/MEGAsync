@@ -861,7 +861,7 @@ background:transparent;</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Disable overlay icons</string>
+             <string>Enable overlay icons</string>
             </property>
            </widget>
           </item>
@@ -1017,29 +1017,9 @@ background:transparent;</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <item>
-           <widget class="QCheckBox" name="cDisableFileVersioning">
-            <property name="text">
-             <string>Disable file versioning</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_92">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>103</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QLabel" name="lFileVersionsSize">
             <property name="text">
-             <string>File versions: %1</string>
+             <string>Used space: %1</string>
             </property>
            </widget>
           </item>
@@ -1059,6 +1039,26 @@ background:transparent;</string>
             </property>
             <property name="text">
              <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_92">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>103</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cFileVersioning">
+            <property name="text">
+             <string>Enable file versioning</string>
             </property>
            </widget>
           </item>

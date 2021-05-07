@@ -120,7 +120,7 @@ private slots:
     void on_eUploadFolder_textChanged(const QString &text);
     void on_eDownloadFolder_textChanged(const QString &text);
 
-    void on_cDisableFileVersioning_toggled(bool checked);
+    void on_cFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 
     void on_bOpenProxySettings_clicked();
@@ -136,7 +136,7 @@ private slots:
     void on_bSessionHistory_clicked();
 
 #ifdef Q_OS_WINDOWS
-    void on_cDisableIcons_toggled(bool checked);
+    void on_cFinderIcons_toggled(bool checked);
 #endif
 
 #ifdef Q_OS_MACOS
@@ -177,7 +177,6 @@ private:
     int loadingSettings;
     long long cacheSize;
     long long remoteCacheSize;
-    long long fileVersionsSize;
     bool hasDefaultUploadOption;
     bool hasDefaultDownloadOption;
     bool reloadUIpage;
