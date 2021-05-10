@@ -18,6 +18,7 @@ BuildRequires: ffmpeg-mega
 
     BuildRequires: libopenssl-devel, sqlite3-devel
     BuildRequires: libbz2-devel
+    BuildRequires: libudev-devel
 
     # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
     # plus it speeds up building process
@@ -73,6 +74,7 @@ BuildRequires: ffmpeg-mega
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, cryptopp-devel
     BuildRequires: desktop-file-utils
     BuildRequires: bzip2-devel
+    BuildRequires: systemd-devel
 
     %if 0%{?fedora_version} >= 26
         Requires: cryptopp >= 5.6.5
@@ -101,6 +103,7 @@ BuildRequires: ffmpeg-mega
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
     BuildRequires: desktop-file-utils
+    BuildRequires: systemd-devel
 
     %if 0%{?centos_version} >= 800
         BuildRequires: bzip2-devel
@@ -294,6 +297,8 @@ make install DESTDIR=%{buildroot}%{_bindir}
 mkdir -p  %{buildroot}/etc/sysctl.d/
 echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-megasync-inotify-limit.conf
 
+mkdir -p  %{buildroot}/etc/udev/rules.d/
+echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > %{buildroot}/etc/udev/rules.d/99-megasync-udev.rules
 
 %post
 %if 0%{?suse_version} >= 1140
@@ -509,6 +514,7 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
 /etc/sysctl.d/100-megasync-inotify-limit.conf
+/etc/udev/rules.d/99-megasync-udev.rules
 %if 0%{?centos_version} && 0%{?centos_version} < 800
 /opt/*
 %endif
