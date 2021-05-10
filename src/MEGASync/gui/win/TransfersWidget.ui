@@ -389,7 +389,7 @@
               <string>Pause or resume all selected transfers</string>
              </property>
              <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+              <iconset resource="../Resources_win.qrc">
                <normaloff>:/images/lists_pause_all_ico.png</normaloff>:/images/lists_pause_all_ico.png</iconset>
              </property>
             </widget>
@@ -456,9 +456,6 @@ QScrollBar::handle:vertical
 
 QMenu
 {
-  width: 180px;
-	min-width: 180px;
-	max-width: 180px;
     border: 1px solid #B8B8B8;
    border-radius: 8px;
     background: #ffffff;

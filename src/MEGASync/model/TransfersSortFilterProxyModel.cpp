@@ -131,6 +131,7 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
 
 void TransfersSortFilterProxyModel::resetNumberOfItems()
 {
+    QMutexLocker lock (mFilterMutex);
     *mDlNumber = 0;
     *mUlNumber = 0;
 }

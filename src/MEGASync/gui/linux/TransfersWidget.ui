@@ -456,9 +456,6 @@ QScrollBar::handle:vertical
 
 QMenu
 {
-  width: 180px;
-	min-width: 180px;
-	max-width: 180px;
     border: 1px solid #B8B8B8;
    border-radius: 8px;
     background: #ffffff;
