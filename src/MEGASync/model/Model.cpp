@@ -158,13 +158,27 @@ void Model::activateSync(std::shared_ptr<SyncSetting> syncSetting)
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
     }
 
-    Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
+    Platform::syncFolderAdded(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
 }
 
 void Model::deactivateSync(std::shared_ptr<SyncSetting> syncSetting)
 {
-    Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(), syncSetting->getSyncID());
+    Platform::syncFolderRemoved(syncSetting->getLocalFolder(), syncSetting->name(true), syncSetting->getSyncID());
     MegaSyncApp->notifyItemChange(syncSetting->getLocalFolder(), MegaApi::STATE_NONE);
+}
+
+void Model::updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting> cs)
+{
+    QMutexLocker qm(&syncMutex);
+    auto oldMegaFolder = cs->getMegaFolder();
+    cs->setMegaFolder(newRemotePath);
+    if (oldMegaFolder != newRemotePath)
+    {
+        Utilities::queueFunctionInAppThread([=]() //we need this for emit to work!
+        {//queued function
+            emit syncStateChanged(cs);
+        });//end of queued function
+    }
 }
 
 std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addingState)
@@ -222,6 +236,15 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
         configuredSyncs.append(sync->getBackupId());
     }
+
+    //queue an update of the sync remote node
+    ThreadPoolSingleton::getInstance()->push([this, cs]()
+    {//thread pool function
+
+        std::unique_ptr<char[]> np(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(cs->getMegaHandle()));
+        updateMegaFolder(np ? QString::fromUtf8(np.get()) : QString(), cs);
+
+    });// end of thread pool function
 
 
     if (addingState) //new or resumed
@@ -363,6 +386,11 @@ std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
     return configuredSyncsMap[configuredSyncs.at(num)];
 }
 
+QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> Model::getCopyOfSettings()
+{
+    QMutexLocker qm(&syncMutex);
+    return configuredSyncsMap;
+}
 
 std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(MegaHandle tag)
 {
