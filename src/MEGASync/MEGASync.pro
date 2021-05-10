@@ -104,6 +104,9 @@ else {
     CONFIG += USE_FFMPEG
 }
 
+# Drive notifications (for SDK)
+CONFIG += USE_DRIVE_NOTIFICATIONS
+
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
 include(control/control.pri)
