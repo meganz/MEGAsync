@@ -186,7 +186,7 @@ if [ ${build} -eq 1 -o ${build_cmake} -eq 1 ]; then
         install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
         install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 
-        rm $APP_NAME.app || :
+        rm -r $APP_NAME.app || :
         mv $MSYNC_PREFIX/$APP_NAME.app ./
     fi
 
