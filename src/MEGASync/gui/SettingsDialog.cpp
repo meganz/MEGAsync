@@ -184,8 +184,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     isSavingSyncsOnGoing = false;
 
 #ifdef Q_OS_LINUX
-    ui->cAutoUpdate->hide();
-    ui->bUpdate->hide();
+    ui->wUpdateSection->hide();
 #endif
 
     ui->gExcludedFilesInfo->hide();
