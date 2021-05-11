@@ -205,8 +205,8 @@ win32 {
                 $$PWD/win/DynamicTransferQuotaPopOver.ui \
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
-                $$PWD/win/BandwidthSettings.ui
-                $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/BandwidthSettings.ui \
+                $$PWD/win/NewFolderDialog.ui
 }
 
 macx {
@@ -266,6 +266,9 @@ macx {
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/NewFolderDialog.ui
+
+    #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
+    QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
 
     QT += macextras
 

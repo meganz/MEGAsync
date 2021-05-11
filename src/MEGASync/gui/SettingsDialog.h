@@ -7,7 +7,7 @@
 #include <QtCore>
 
 #ifdef Q_OS_MACOS
-#include <QMacToolBar>
+#include "platform/macx/QCustomMacToolbar.h"
 #endif
 
 #include "AccountDetailsDialog.h"
@@ -81,7 +81,7 @@ private slots:
     void on_bAdvanced_clicked();
 
     void on_bHelp_clicked();
-#ifndef __APPLE__
+#ifndef Q_OS_MACOS
     void on_bHelpIco_clicked();
 #endif
 
@@ -192,7 +192,7 @@ private:
     QPropertyAnimation *maxHeightAnimation;
     QParallelAnimationGroup *animationGroup;
 
-    std::unique_ptr<QMacToolBar> toolBar;
+    std::unique_ptr<QCustomMacToolbar> toolBar;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
     std::unique_ptr<QMacToolBarItem> bImports;
