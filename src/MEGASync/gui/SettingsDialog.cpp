@@ -184,8 +184,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     isSavingSyncsOnGoing = false;
 
 #ifdef Q_OS_LINUX
-    ui->cAutoUpdate->hide();
-    ui->bUpdate->hide();
+    ui->wUpdateSection->hide();
 #endif
 
     ui->gExcludedFilesInfo->hide();
@@ -235,13 +234,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     setProxyOnly(proxyOnly);
 
 #ifndef Q_OS_MACOS
-    ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
-    ui->bGeneral->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bImports->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader QToolButton:checked { background-color: #FFFFFF; border-bottom: 3px solid #0078D7; }"));
 #endif
 
     ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
