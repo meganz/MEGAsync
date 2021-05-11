@@ -94,7 +94,6 @@ private slots:
     void on_bExcludeSize_clicked();
     void on_bLocalCleaner_clicked();
 
-    void on_bExportMasterKey_clicked();
 
     void on_tSyncs_doubleClicked(const QModelIndex &index);
     void on_bUploadFolder_clicked();
@@ -108,7 +107,6 @@ private slots:
     void on_bUpdate_clicked();
     void on_bStorageDetails_clicked();
     void on_lAccountImage_clicked();
-    void on_bChangePassword_clicked();
     void on_bSendBug_clicked();
 
     void setAvatar();
@@ -125,6 +123,11 @@ private slots:
 
     void on_bOpenProxySettings_clicked();
     void on_bOpenBandwidthSettings_clicked();
+
+    // Security tab buttons
+    void on_bExportMasterKey_clicked();
+    void on_bChangePassword_clicked();
+
 
     // Footer buttons
     void on_bLogout_clicked();

@@ -863,5 +863,7 @@
         <file>images/Inbox_24_ico.png</file>
         <file>images/Inbox_24_ico@2x.png</file>
         <file>images/Inbox_24_ico@3x.png</file>
+        <file>images/recovery_key.png</file>
+        <file>images/change_password.png</file>
     </qresource>
 </RCC>
