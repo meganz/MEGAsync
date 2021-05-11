@@ -2174,7 +2174,7 @@ void MegaApplication::periodicTasks()
     if (queuedUserStats[0] || queuedUserStats[1] || queuedUserStats[2])
     {
         bool storage = queuedUserStats[0], transfer = queuedUserStats[1], pro = queuedUserStats[2];
-        queuedUserStats[0] = queuedUserStats[1] = queuedUserStats[3] = false;
+        queuedUserStats[0] = queuedUserStats[1] = queuedUserStats[2] = false;
         updateUserStats(storage, transfer, pro, false, -1);
     }
 
