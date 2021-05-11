@@ -38,17 +38,7 @@
    <string>Settings - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-font-size: 11px;
-}
-
-QPushButton {
-padding-right: 12px;
-padding-left: 12px;
-}
-
-QComboBox::drop-down {
+   <string notr="true">QComboBox::drop-down {
 width: 16px;
 }
 
@@ -63,13 +53,11 @@ height: 16px;
 
 #wTabHeader QToolButton
 {
-
 border: none;
 background-color: transparent;
 padding-top: 9px;
 padding-bottom: 9px;
 color: #333333;
-
 }
 
 #bHelp
@@ -268,9 +256,7 @@ background:transparent;</string>
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -314,9 +300,7 @@ background:transparent;</string>
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -360,9 +344,7 @@ background:transparent;</string>
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -409,9 +391,7 @@ background:transparent;</string>
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -458,9 +438,7 @@ background:transparent;</string>
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -504,9 +482,7 @@ background:transparent;</string>
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -548,7 +524,7 @@ background:transparent;</string>
      </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>560</width>
        <height>460</height>
       </size>
      </property>
@@ -1106,9 +1082,7 @@ background:transparent;</string>
           </size>
          </property>
          <property name="font">
-          <font>
-           <pointsize>-1</pointsize>
-          </font>
+          <font/>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -2248,9 +2222,7 @@ background:transparent;</string>
              <item row="2" column="0">
               <widget class="QLabel" name="lDownloadFolder">
                <property name="font">
-                <font>
-                 <pointsize>-1</pointsize>
-                </font>
+                <font/>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -2327,7 +2299,7 @@ background:transparent;</string>
        </item>
       </layout>
      </widget>
-      <widget class="QWidget" name="pSecurity">
+     <widget class="QWidget" name="pSecurity">
       <layout class="QVBoxLayout" name="verticalLayout_20">
        <property name="spacing">
         <number>6</number>
@@ -3020,9 +2992,7 @@ font-weight: bold;
       <item>
        <widget class="QPushButton" name="bHelp">
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
