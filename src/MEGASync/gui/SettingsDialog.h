@@ -88,15 +88,12 @@ private slots:
     void on_bUpgrade_clicked();
     void on_bUpgradeBandwidth_clicked();
 
-#ifndef WIN32
-    void on_bPermissions_clicked();
-#endif
+
     void on_bAdd_clicked();
     void on_bDelete_clicked();
     void on_bExcludeSize_clicked();
     void on_bLocalCleaner_clicked();
 
-    void on_bUnlink_clicked();
     void on_bExportMasterKey_clicked();
 
     void on_tSyncs_doubleClicked(const QModelIndex &index);
@@ -109,7 +106,6 @@ private slots:
     void on_bClearRemoteCache_clicked();
     void on_bClearFileVersions_clicked();
     void on_bUpdate_clicked();
-    void on_bFullCheck_clicked();
     void on_bStorageDetails_clicked();
     void on_lAccountImage_clicked();
     void on_bChangePassword_clicked();
@@ -129,6 +125,15 @@ private slots:
 
     void on_bOpenProxySettings_clicked();
     void on_bOpenBandwidthSettings_clicked();
+
+    // Footer buttons
+    void on_bLogout_clicked();
+    void on_bRestart_clicked();
+    void on_bFullCheck_clicked();
+#ifndef WIN32
+    void on_bPermissions_clicked();
+#endif
+    void on_bSessionHistory_clicked();
 
 #ifdef Q_OS_WINDOWS
     void on_cDisableIcons_toggled(bool checked);
