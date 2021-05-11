@@ -73,7 +73,7 @@ shift $((OPTIND-1))
 # if archives are not yet downloaded
 if [ ! -d "$archives" ]; then
     mkdir $archives
-    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n $FLAG_CARES $FLAG_LIBMEDIA -f $FLAG_CURL $FLAG_DISABLE_ZLIB $FLAG_RAW -w -s -v -u -o $archives
+    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n -N $FLAG_CARES $FLAG_LIBMEDIA -f $FLAG_CURL $FLAG_DISABLE_ZLIB $FLAG_RAW -w -s -v -u -o $archives
     rm_archives=1
 fi
 
@@ -84,6 +84,7 @@ cd MEGASync/mega
     -f $FLAG_CARES $FLAG_CURL $FLAG_LIBMEDIA $FLAG_DISABLE_ZLIB $FLAG_RAW \
     -l \
     -n \
+    -N \
     -c \
     -t \
     -s \
