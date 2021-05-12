@@ -295,7 +295,7 @@ make install DESTDIR=%{buildroot}%{_bindir}
 %endif
 
 mkdir -p  %{buildroot}/etc/sysctl.d/
-echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-megasync-inotify-limit.conf
+echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/99-megasync-inotify-limit.conf
 
 mkdir -p  %{buildroot}/etc/udev/rules.d/
 echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > %{buildroot}/etc/udev/rules.d/99-megasync-udev.rules
@@ -464,7 +464,7 @@ KEY
     fi
 fi
 
-sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 
 ### END of POSTINST
 
@@ -513,7 +513,7 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_datadir}/icons/*/*/*/*
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
-/etc/sysctl.d/100-megasync-inotify-limit.conf
+/etc/sysctl.d/99-megasync-inotify-limit.conf
 /etc/udev/rules.d/99-megasync-udev.rules
 %if 0%{?centos_version} && 0%{?centos_version} < 800
 /opt/*
