@@ -228,10 +228,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     setProxyOnly(proxyOnly);
 
-#ifndef Q_OS_MACOS
-    ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader QToolButton:checked { background-color: #FFFFFF; border-bottom: 3px solid #0078D7; }"));
-#endif
-
     ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 
     ui->gCache->setVisible(false);
@@ -498,8 +494,6 @@ void SettingsDialog::on_bGeneral_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("General"));
-
     if (ui->wStack->currentWidget() == ui->pGeneral && !reloadUIpage)
     {
         return;
@@ -520,8 +514,6 @@ void SettingsDialog::on_bGeneral_clicked()
 void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
-
-    setWindowTitle(tr("Account"));
 
     if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
@@ -553,8 +545,6 @@ void SettingsDialog::on_bSyncs_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("Syncs"));
-
     if (ui->wStack->currentWidget() == ui->pSyncs)
     {
         return;
@@ -572,8 +562,6 @@ void SettingsDialog::on_bSyncs_clicked()
 void SettingsDialog::on_bNetwork_clicked()
 {
     emit userActivity();
-
-    setWindowTitle(tr("Network"));
 
     if (ui->wStack->currentWidget() == ui->pNetwork)
     {
@@ -608,8 +596,6 @@ void SettingsDialog::on_bSecurity_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("Security"));
-
     if (ui->wStack->currentWidget() == ui->pSecurity)
     {
         return;
@@ -626,8 +612,6 @@ void SettingsDialog::on_bSecurity_clicked()
 void SettingsDialog::on_bImports_clicked()
 {
     emit userActivity();
-
-    setWindowTitle(tr("Imports"));
 
     if (ui->wStack->currentWidget() == ui->pImports)
     {
