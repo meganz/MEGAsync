@@ -252,9 +252,6 @@ padding-bottom: 6px;
           <height>25</height>
          </size>
         </property>
-        <property name="shortcut">
-         <string>Ctrl+S</string>
-        </property>
         <property name="checkable">
          <bool>true</bool>
         </property>
