@@ -2344,7 +2344,7 @@ background:transparent;</string>
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/recovery_key.png</normaloff>:/images/recovery_key.png</iconset>
+              <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -2436,7 +2436,7 @@ background:transparent;</string>
             </property>
             <property name="icon">
              <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/change_password.png</normaloff>:/images/change_password.png</iconset>
+              <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
              <size>

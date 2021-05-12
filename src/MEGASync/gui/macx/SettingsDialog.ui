@@ -2927,7 +2927,7 @@ font-weight: bold;
             </property>
             <property name="icon">
              <iconset resource="../Resources_macx.qrc">
-              <normaloff>:/images/recovery_key.png</normaloff>:/images/recovery_key.png</iconset>
+              <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -3019,7 +3019,7 @@ font-weight: bold;
             </property>
             <property name="icon">
              <iconset resource="../Resources_macx.qrc">
-              <normaloff>:/images/change_password.png</normaloff>:/images/change_password.png</iconset>
+              <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
              <size>
