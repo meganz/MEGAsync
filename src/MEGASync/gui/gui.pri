@@ -267,6 +267,9 @@ macx {
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/NewFolderDialog.ui
 
+    #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
+    QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
+
     QT += macextras
 
     OBJECTIVE_SOURCES +=    $$PWD/CocoaHelpButton.mm \
