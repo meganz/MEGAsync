@@ -810,9 +810,6 @@
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
-        <file>images/settings-syncs.png</file>
-        <file>images/settings-syncs@2x.png</file>
-        <file>images/settings-syncs@3x.png</file>
         <file>images/new_contact@3x.png</file>
         <file>images/Storage_Quota_full@3x.png</file>
         <file>images/Storage_Quota_almost_full@3x.png</file>
@@ -828,9 +825,6 @@
         <file>images/ic_two_way_sync.png</file>
         <file>images/ic_two_way_sync@2x.png</file>
         <file>images/ic_two_way_sync@3x.png</file>
-        <file>images/settings-syncs-error.png</file>
-        <file>images/settings-syncs-error@2x.png</file>
-        <file>images/settings-syncs-error@3x.png</file>
         <file>images/ic_options_hover.png</file>
         <file>images/ic_options_hover@3x.png</file>
         <file>images/ic_options_hover@2x.png</file>
@@ -864,5 +858,8 @@
         <file>images/lock_big.png</file>
         <file>images/lock_big@2x.png</file>
         <file>images/lock_big@3x.png</file>
+        <file>images/warning-disabled-syncs.png</file>
+        <file>images/warning-disabled-syncs@2x.png</file>
+        <file>images/warning-disabled-syncs@3x.png</file>
     </qresource>
 </RCC>
