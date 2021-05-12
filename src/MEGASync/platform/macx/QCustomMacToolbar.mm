@@ -59,7 +59,7 @@ void QCustomMacToolbar::customizeIconToolBarItem(QMacToolBarItem *toolbarItem, Q
     }
     else
     {
-        QIcon icon(QString::fromUtf8("://images/%1.png").arg((iconName)));
+        QIcon icon(QString::fromUtf8("://images/%1-macx.png").arg((iconName)));
         toolbarItem->setIcon(icon);
     }
 }
