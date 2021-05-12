@@ -326,6 +326,7 @@ else()
         ${MEGAsyncDir}/gui/PermissionsWidget.h
 
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
+        ${MEGAsyncDir}/gui/QSegmentedControl.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
@@ -529,6 +530,7 @@ else()
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
 
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
+        ${MEGAsyncDir}/gui/QSegmentedControl.mm
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
 
@@ -568,6 +570,7 @@ else()
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
+        ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
@@ -584,6 +587,7 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
         ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
         ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
+        ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
 
         )
 endif()
@@ -658,6 +662,13 @@ endif()
 
 # Place empty.lproj and PkgInfo files, needed to translate strings in native dialogs according system locale and identify the bundle as an application within Finder.
 if (CMAKE_HOST_APPLE)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${MEGAsyncDir}/gui/images/Images.xcassets" > /dev/null 2>&1
+            COMMENT "Building Assets.car in Resources..."
+            VERBATIM
+            )
     add_custom_command(
             TARGET MEGAsync
             POST_BUILD
