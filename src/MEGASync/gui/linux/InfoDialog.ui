@@ -2402,7 +2402,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/settings-syncs.png</normalon>
+                                 <normalon>:/images/warning-disabled-syncs.png</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">
