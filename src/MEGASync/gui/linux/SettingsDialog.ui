@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>600</height>
+    <width>571</width>
+    <height>634</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -500,7 +500,7 @@ padding-bottom: 6px;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2218,7 +2218,7 @@ padding-left: 10px;
             <item>
              <widget class="QLabel" name="lRecoveryKey">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -2307,7 +2307,7 @@ padding-left: 10px;
             <item>
              <widget class="QLabel" name="lChangePassword">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
