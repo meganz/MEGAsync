@@ -1386,6 +1386,19 @@ void SettingsDialog::on_bExportMasterKey_clicked()
                                  QMessageBox::Ok);
 }
 
+void SettingsDialog::on_bChangePassword_clicked()
+{
+    QPointer<ChangePassword> cPassword = new ChangePassword(this);
+    int result = cPassword->exec();
+    if (!cPassword || result != QDialog::Accepted)
+    {
+        delete cPassword;
+        return;
+    }
+
+    delete cPassword;
+}
+
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 {
     //FIXME: When using custom widget for row items, remove double check or use cellwidget to fix it.
@@ -2115,19 +2128,6 @@ void SettingsDialog::on_lAccountImage_clicked()
         app->toggleLogging();
         debugCounter = 0;
     }
-}
-
-void SettingsDialog::on_bChangePassword_clicked()
-{
-    QPointer<ChangePassword> cPassword = new ChangePassword(this);
-    int result = cPassword->exec();
-    if (!cPassword || result != QDialog::Accepted)
-    {
-        delete cPassword;
-        return;
-    }
-
-    delete cPassword;
 }
 
 void SettingsDialog::on_bSendBug_clicked()

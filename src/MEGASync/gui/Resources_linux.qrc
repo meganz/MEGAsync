@@ -839,6 +839,7 @@
         <file>images/ic_sync_warning@3x.png</file>
         <file>images/settings-security.png</file>
         <file>images/settings-security@2x.png</file>
+        <file>images/settings-security@3x.png</file>
         <file>images/imports_32.png</file>
         <file>images/imports_32@3x.png</file>
         <file>images/imports_32@2x.png</file>
@@ -857,5 +858,11 @@
         <file>images/Inbox_24_ico.png</file>
         <file>images/Inbox_24_ico@2x.png</file>
         <file>images/Inbox_24_ico@3x.png</file>
+        <file>images/key_big.png</file>
+        <file>images/key_big@2x.png</file>
+        <file>images/key_big@3x.png</file>
+        <file>images/lock_big.png</file>
+        <file>images/lock_big@2x.png</file>
+        <file>images/lock_big@3x.png</file>
     </qresource>
 </RCC>
