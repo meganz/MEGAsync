@@ -297,10 +297,9 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 #ifndef Q_OS_MACOS
     ui->bGeneral->setEnabled(!proxyOnly);
     ui->bAccount->setEnabled(!proxyOnly);
+    ui->bSyncs->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
     ui->bImports->setEnabled(!proxyOnly);
-    ui->bSyncs->setEnabled(!proxyOnly);
-    ui->bAdvanced->setEnabled(!proxyOnly);
 #endif
 
     if (proxyOnly)
