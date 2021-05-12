@@ -101,13 +101,19 @@ void SettingsDialog::initializeNativeUIComponents()
     // Set native NSToolBar for settings.
     toolBar = ::mega::make_unique<QCustomMacToolbar>(this);
 
-    QString account(QString::fromUtf8("settings-general"));
+    QString general(QString::fromUtf8("settings-general"));
+    QString account(QString::fromUtf8("settings-account"));
     QString syncs(QString::fromUtf8("settings-syncs"));
     QString network(QString::fromUtf8("settings-network"));
     QString security(QString::fromUtf8("settings-security"));
     QString advanced(QString::fromUtf8("settings-advanced"));
 
     // add Items
+    bGeneral.reset(toolBar->addItem(QIcon(), tr("General")));
+    toolBar->customizeIconToolBarItem(bGeneral.get(), general);
+    connect(bGeneral.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bGeneral_clicked);
+
+
     bAccount.reset(toolBar->addItem(QIcon(), tr("Account")));
     toolBar->customizeIconToolBarItem(bAccount.get(), account);
     connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
@@ -123,10 +129,6 @@ void SettingsDialog::initializeNativeUIComponents()
     bSecurity.reset(toolBar->addItem(QIcon(), tr("Security")));
     toolBar->customizeIconToolBarItem(bSecurity.get(), security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
-
-    bAdvanced.reset(toolBar->addItem(QIcon(), tr("Advanced")));
-    toolBar->customizeIconToolBarItem(bAdvanced.get(), advanced);
-    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
 
     toolBar->setSelectableItems(true);
     toolBar->setAllowsUserCustomization(false);
@@ -500,9 +502,6 @@ void SettingsDialog::on_bGeneral_clicked()
 
     if (ui->wStack->currentWidget() == ui->pGeneral && !reloadUIpage)
     {
-#ifdef Q_OS_MACOS
-        checkNSToolBarItem(toolBar.get(), bGeneral.get());
-#endif
         return;
     }
 
@@ -511,8 +510,6 @@ void SettingsDialog::on_bGeneral_clicked()
     ui->wStack->setCurrentWidget(ui->pGeneral);
 
 #ifdef Q_OS_MACOS
-    checkNSToolBarItem(toolBar.get(), bGeneral.get());
-
     onCacheSizeAvailable();
 
     ui->pGeneral->hide();
