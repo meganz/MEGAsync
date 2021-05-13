@@ -104,9 +104,9 @@ void SettingsDialog::initializeNativeUIComponents()
     QString general(QString::fromUtf8("settings-general"));
     QString account(QString::fromUtf8("settings-account"));
     QString syncs(QString::fromUtf8("settings-syncs"));
-    QString network(QString::fromUtf8("settings-network"));
     QString security(QString::fromUtf8("settings-security"));
-    QString advanced(QString::fromUtf8("settings-advanced"));
+    QString imports(QString::fromUtf8("settings-imports"));
+    QString network(QString::fromUtf8("settings-network"));
 
     // add Items
     bGeneral.reset(toolBar->addItem(QIcon(), tr("General")));
@@ -124,6 +124,10 @@ void SettingsDialog::initializeNativeUIComponents()
     bSecurity.reset(toolBar->addItem(QIcon(), tr("Security")));
     toolBar->customizeIconToolBarItem(bSecurity.get(), security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
+
+    bImports.reset(toolBar->addItem(QIcon(), tr("Imports")));
+    toolBar->customizeIconToolBarItem(bImports.get(), imports);
+    connect(bImports.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bImports_clicked);
 
     bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
     toolBar->customizeIconToolBarItem(bNetwork.get(), network);
