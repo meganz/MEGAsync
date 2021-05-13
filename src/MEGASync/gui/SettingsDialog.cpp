@@ -228,9 +228,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     setProxyOnly(proxyOnly);
 
-    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
-
-    ui->gCache->setVisible(false);
+    ui->gCache->setTitle(ui->gCache->title().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 
 #ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
@@ -446,48 +444,19 @@ void SettingsDialog::storageStateChanged(int newStorageState)
 
 void SettingsDialog::onCacheSizeAvailable()
 {
-    if(preferences->logged())
-        ui->lFileVersionsSize->setText(tr("Used space: %1").arg(Utilities::getSizeString(preferences->versionsStorage())));
+    if(!preferences->logged())
+        return;
 
-    if (cacheSize != -1 && remoteCacheSize != -1)
-    {
-        if (!cacheSize && !remoteCacheSize)
-        {
-            return;
-        }
+    ui->lFileVersionsSize->setText(tr("Used space: %1").arg(Utilities::getSizeString(preferences->versionsStorage())));
 
-        if (cacheSize)
-        {
-            ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
-            ui->gCache->setVisible(true);
-        }
-        else
-        {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lCacheSize->hide();
-            ui->bClearCache->hide();
+    if (cacheSize != -1)
+        ui->lCacheSize->setText(QString::fromUtf8("Used space: %1").arg(Utilities::getSizeString(cacheSize)));
+    if (remoteCacheSize != -1)
+        ui->lRemoteCacheSize->setText(QString::fromUtf8("Used space: %1").arg(Utilities::getSizeString(remoteCacheSize)));
 
-            // Move remote SyncDebris widget to left side
-            ui->gCache->layout()->removeWidget(ui->wLocalCache);
-            ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef Q_OS_MACOS
-            ui->lRemoteCacheSize->setMargin(2);
-#endif
-            ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
-        }
-
-        if (remoteCacheSize)
-        {
-            ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
-            ui->gCache->setVisible(true);
-        }
-        else
-        {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lRemoteCacheSize->hide();
-            ui->bClearRemoteCache->hide();
-        }
-    }
+    ui->bClearCache->setEnabled(cacheSize > 0);
+    ui->bClearRemoteCache->setEnabled(remoteCacheSize > 0);
+    ui->bClearFileVersions->setEnabled(preferences->versionsStorage() > 0);
 }
 
 void SettingsDialog::on_bGeneral_clicked()
@@ -698,6 +667,10 @@ void SettingsDialog::loadSettings()
     }
 
     //General
+    ui->cCacheSchedulerEnabled->setChecked(preferences->cleanerDaysLimit());
+    ui->sCacheSchedulerDays->setEnabled(preferences->cleanerDaysLimit());
+    ui->sCacheSchedulerDays->setValue(preferences->cleanerDaysLimitValue());
+
     ui->cShowNotifications->setChecked(preferences->showNotifications());
 
     if (!preferences->canUpdate(MegaApplication::applicationFilePath()))
@@ -806,7 +779,6 @@ void SettingsDialog::loadSettings()
     }
 
     ui->lLimitsInfo->setText(excludeBySizeInfo());
-    ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
     ui->cFileVersioning->setChecked(!preferences->fileVersioningDisabled());
     ui->cOverlayIcons->setChecked(!preferences->overlayIconsDisabled());
 
@@ -1559,22 +1531,26 @@ void SettingsDialog::on_bExcludeSize_clicked()
     delete dialog;
 }
 
-void SettingsDialog::on_bLocalCleaner_clicked()
+void SettingsDialog::on_cCacheSchedulerEnabled_toggled()
 {
-    QPointer<LocalCleanScheduler> dialog = new LocalCleanScheduler(this);
-    dialog->setDaysLimit(preferences->cleanerDaysLimit());
-    dialog->setDaysLimitValue(preferences->cleanerDaysLimitValue());
-
-    int ret = dialog->exec();
-    if (dialog && (ret == QDialog::Accepted))
+    if (loadingSettings) return;
+    bool isEnabled = ui->cCacheSchedulerEnabled->isChecked();
+    ui->sCacheSchedulerDays->setEnabled(isEnabled);
+    preferences->setCleanerDaysLimit(isEnabled);
+    if(isEnabled)
     {
-        preferences->setCleanerDaysLimit(dialog->daysLimit());
-        preferences->setCleanerDaysLimitValue(dialog->daysLimitValue());
-        ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
         app->cleanLocalCaches();
     }
+}
 
-    delete dialog;
+void SettingsDialog::on_sCacheSchedulerDays_valueChanged(int)
+{
+    if (loadingSettings) return;
+    if(ui->cCacheSchedulerEnabled->isChecked())
+    {
+        preferences->setCleanerDaysLimitValue(ui->sCacheSchedulerDays->value());
+        app->cleanLocalCaches();
+    }
 }
 
 void SettingsDialog::changeEvent(QEvent *event)
@@ -1582,9 +1558,6 @@ void SettingsDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-
-        ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
-        ui->lFileVersionsSize->setText(tr("Used space: %1").arg(Utilities::getSizeString(preferences->versionsStorage())));
 
 #ifdef Q_OS_MACOS
         // FIXME: Do we need to do the same for the other buttons?
@@ -1632,29 +1605,6 @@ QString SettingsDialog::excludeBySizeInfo()
         }
 
         format += QString::fromUtf8(")");
-    }
-    else
-    {
-        format = tr("Disabled");
-    }
-    return format;
-}
-
-QString SettingsDialog::cacheDaysLimitInfo()
-{
-    QString format;
-    bool hasDaysLimit = preferences->cleanerDaysLimit();
-    int  daysLimit = preferences->cleanerDaysLimitValue();
-    if (hasDaysLimit)
-    {
-        if (daysLimit > 1)
-        {
-            format += tr("Remove files older than %1 days").arg(QString::number(daysLimit));
-        }
-        else
-        {
-            format += tr("Remove files older than 1 day");
-        }
     }
     else
     {
@@ -1760,21 +1710,8 @@ void SettingsDialog::on_bClearCache_clicked()
     delete warningDel;
 
     QtConcurrent::run(deleteCache);
-
     cacheSize = 0;
-
-    ui->bClearCache->hide();
-    ui->lCacheSize->hide();
-
-    // Move remote SyncDebris widget to left side
-    ui->gCache->layout()->removeWidget(ui->wLocalCache);
-    ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef Q_OS_MACOS
-    ui->lRemoteCacheSize->setMargin(2);
-#endif
-    ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
-
-    onClearCache();
+    onCacheSizeAvailable();
 }
 
 void SettingsDialog::on_bClearRemoteCache_clicked()
@@ -1783,9 +1720,6 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     if (!syncDebris)
     {
         remoteCacheSize = 0;
-        ui->bClearRemoteCache->hide();
-        ui->lRemoteCacheSize->hide();
-        onClearCache();
         return;
     }
 
@@ -1819,11 +1753,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QtConcurrent::run(deleteRemoteCache, megaApi);
     remoteCacheSize = 0;
-
-    ui->bClearRemoteCache->hide();
-    ui->lRemoteCacheSize->hide();
-
-    onClearCache();
+    onCacheSizeAvailable();
 }
 
 void SettingsDialog::on_bClearFileVersions_clicked()
@@ -1848,14 +1778,6 @@ void SettingsDialog::on_bClearFileVersions_clicked()
             megaApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
         }
     }));
-}
-
-void SettingsDialog::onClearCache()
-{
-    if (!cacheSize && !remoteCacheSize)
-    {
-        ui->gCache->setVisible(false);
-    }
 }
 
 void SettingsDialog::savingSyncs(bool completed, QObject *item)

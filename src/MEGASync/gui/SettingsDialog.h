@@ -13,7 +13,6 @@
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "SizeLimitDialog.h"
-#include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
@@ -92,7 +91,6 @@ private slots:
     void on_bAdd_clicked();
     void on_bDelete_clicked();
     void on_bExcludeSize_clicked();
-    void on_bLocalCleaner_clicked();
 
 
     void on_tSyncs_doubleClicked(const QModelIndex &index);
@@ -102,6 +100,8 @@ private slots:
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
+    void on_cCacheSchedulerEnabled_toggled();
+    void on_sCacheSchedulerDays_valueChanged(int);
     void on_bClearRemoteCache_clicked();
     void on_bClearFileVersions_clicked();
     void on_bUpdate_clicked();
@@ -155,11 +155,9 @@ private:
     void loadSettings();
     void saveSyncSettings();
     void onCacheSizeAvailable();
-    void onClearCache();
     void savingSyncs(bool completed, QObject *item);
     void syncsStateInformation(int state);
     QString excludeBySizeInfo();
-    QString cacheDaysLimitInfo();
     void saveExcludeSyncNames();
     void updateNetworkTab();
 

@@ -160,7 +160,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/MegaSpeedGraph.ui
     ${MEGAsyncDir}/gui/${UiDir}/ActiveTransfersWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/LocalCleanScheduler.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
@@ -248,7 +247,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/InfoDialog.h
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/gui/InfoWizard.h
-    ${MEGAsyncDir}/gui/LocalCleanScheduler.h
     ${MEGAsyncDir}/gui/TransfersStatusWidget.h
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
@@ -412,7 +410,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
     ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
-    ${MEGAsyncDir}/gui/LocalCleanScheduler.cpp
     ${MEGAsyncDir}/gui/TransferManagerItem.cpp
     ${MEGAsyncDir}/gui/TransferItem.cpp
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.cpp
