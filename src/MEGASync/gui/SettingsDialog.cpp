@@ -113,7 +113,6 @@ void SettingsDialog::initializeNativeUIComponents()
     toolBar->customizeIconToolBarItem(bGeneral.get(), general);
     connect(bGeneral.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bGeneral_clicked);
 
-
     bAccount.reset(toolBar->addItem(QIcon(), tr("Account")));
     toolBar->customizeIconToolBarItem(bAccount.get(), account);
     connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
@@ -122,17 +121,17 @@ void SettingsDialog::initializeNativeUIComponents()
     toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
 
-    bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
-    toolBar->customizeIconToolBarItem(bNetwork.get(), network);
-    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);
-
     bSecurity.reset(toolBar->addItem(QIcon(), tr("Security")));
     toolBar->customizeIconToolBarItem(bSecurity.get(), security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
 
+    bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
+    toolBar->customizeIconToolBarItem(bNetwork.get(), network);
+    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);    
+
     toolBar->setSelectableItems(true);
     toolBar->setAllowsUserCustomization(false);
-    toolBar->setSelectedItem(bAccount.get());
+    toolBar->setSelectedItem(bGeneral.get());
 
     // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
