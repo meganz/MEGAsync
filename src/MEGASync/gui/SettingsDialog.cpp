@@ -52,7 +52,7 @@ constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
 // FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
-constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
+constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{400};
 #endif
 
 long long calculateCacheSize()
