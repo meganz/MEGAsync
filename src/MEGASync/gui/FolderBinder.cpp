@@ -2,6 +2,7 @@
 #include "ui_FolderBinder.h"
 
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "control/Utilities.h"
 
 using namespace mega;
