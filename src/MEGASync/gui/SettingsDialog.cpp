@@ -104,15 +104,14 @@ void SettingsDialog::initializeNativeUIComponents()
     QString general(QString::fromUtf8("settings-general"));
     QString account(QString::fromUtf8("settings-account"));
     QString syncs(QString::fromUtf8("settings-syncs"));
-    QString network(QString::fromUtf8("settings-network"));
     QString security(QString::fromUtf8("settings-security"));
-    QString advanced(QString::fromUtf8("settings-advanced"));
+    QString imports(QString::fromUtf8("settings-imports"));
+    QString network(QString::fromUtf8("settings-network"));
 
     // add Items
     bGeneral.reset(toolBar->addItem(QIcon(), tr("General")));
     toolBar->customizeIconToolBarItem(bGeneral.get(), general);
     connect(bGeneral.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bGeneral_clicked);
-
 
     bAccount.reset(toolBar->addItem(QIcon(), tr("Account")));
     toolBar->customizeIconToolBarItem(bAccount.get(), account);
@@ -122,17 +121,21 @@ void SettingsDialog::initializeNativeUIComponents()
     toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
 
-    bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
-    toolBar->customizeIconToolBarItem(bNetwork.get(), network);
-    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);
-
     bSecurity.reset(toolBar->addItem(QIcon(), tr("Security")));
     toolBar->customizeIconToolBarItem(bSecurity.get(), security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
 
+    bImports.reset(toolBar->addItem(QIcon(), tr("Imports")));
+    toolBar->customizeIconToolBarItem(bImports.get(), imports);
+    connect(bImports.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bImports_clicked);
+
+    bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
+    toolBar->customizeIconToolBarItem(bNetwork.get(), network);
+    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);    
+
     toolBar->setSelectableItems(true);
     toolBar->setAllowsUserCustomization(false);
-    toolBar->setSelectedItem(bAccount.get());
+    toolBar->setSelectedItem(bGeneral.get());
 
     // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
