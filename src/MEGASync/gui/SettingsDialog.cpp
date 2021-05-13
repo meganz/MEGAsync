@@ -1740,10 +1740,7 @@ void SettingsDialog::on_bClearCache_clicked()
     warningDel->setIcon(QMessageBox::Warning);
     warningDel->setWindowTitle(tr("Clear local backup"));
     warningDel->setTextFormat(Qt::RichText);
-
-#if QT_VERSION > 0x050100
     warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-#endif
 
     warningDel->setText(tr("Backups of the previous versions of your synced files in your computer will be permanently deleted. "
                            "Please, check your backup folders to see if you need to rescue something before continuing:")
@@ -1793,10 +1790,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     warningDel->setIcon(QMessageBox::Warning);
     warningDel->setWindowTitle(tr("Clear remote backup"));
     warningDel->setTextFormat(Qt::RichText);
-
-#if QT_VERSION > 0x050100
     warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-#endif
 
     char *base64Handle = syncDebris->getBase64Handle();
     warningDel->setText(tr("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
