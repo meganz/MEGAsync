@@ -182,9 +182,6 @@ padding-bottom: 6px;
        <height>80</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
        <number>0</number>
@@ -331,9 +328,6 @@ padding-bottom: 6px;
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
         </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
         <property name="text">
          <string>Syncs</string>
         </property>
@@ -379,9 +373,6 @@ padding-bottom: 6px;
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
         </property>
         <property name="text">
          <string>Security</string>
@@ -521,20 +512,62 @@ padding-bottom: 6px;
       <number>0</number>
      </property>
      <widget class="QWidget" name="pGeneral">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="pGeneralLayout">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>10</number>
+       </property>
        <item>
         <widget class="QGroupBox" name="gGeneral">
          <property name="flat">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_33">
+         <layout class="QVBoxLayout" name="gGeneralLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QCheckBox" name="cShowNotifications">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
             </property>
             <property name="text">
              <string>Show notifications</string>
@@ -547,13 +580,50 @@ padding-bottom: 6px;
              <bool>true</bool>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
+            </property>
             <property name="text">
              <string>Open at login</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cFinderIcons">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Enable Windows Explorer integration</string>
             </property>
            </widget>
           </item>
@@ -565,6 +635,18 @@ padding-bottom: 6px;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
+            </property>
             <property name="text">
              <string>Enable overlay icons</string>
             </property>
@@ -572,6 +654,24 @@ padding-bottom: 6px;
           </item>
           <item>
            <widget class="QWidget" name="wUpdateSection" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="lUpdateSection">
              <property name="leftMargin">
               <number>0</number>
@@ -593,8 +693,14 @@ padding-bottom: 6px;
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                  <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
+                 <verstretch>24</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>24</height>
+                </size>
                </property>
                <property name="text">
                 <string>Update automatically</string>
@@ -653,59 +759,41 @@ padding-bottom: 6px;
            <height>16777215</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="title">
           <string>Language</string>
          </property>
          <property name="flat">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_17">
+          <property name="topMargin">
+           <number>11</number>
+          </property>
           <item>
-           <widget class="QWidget" name="widget_11" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_17">
-             <property name="leftMargin">
-              <number>0</number>
+           <widget class="QComboBox" name="cLanguage">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>24</height>
+             </size>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">English</string>
              </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QComboBox" name="cLanguage">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <item>
-                <property name="text">
-                 <string notr="true">English</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
+            </item>
            </widget>
           </item>
          </layout>
@@ -728,7 +816,7 @@ padding-bottom: 6px;
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <layout class="QHBoxLayout" name="horizontalLayout_111">
           <item>
            <widget class="QLabel" name="lCacheSize">
             <property name="sizePolicy">
@@ -806,6 +894,19 @@ padding-bottom: 6px;
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -889,6 +990,18 @@ padding-bottom: 6px;
           <property name="spacing">
            <number>0</number>
           </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
@@ -916,19 +1029,17 @@ padding-bottom: 6px;
             </item>
             <item>
              <widget class="QPushButton" name="bSendBug">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>24</height>
+               </size>
               </property>
-              <property name="styleSheet">
-               <string notr="true">
-#bSendBug
-{
-padding-right: 6px;
-padding-left: 10px;
-}</string>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="text">
                <string>Report a bug</string>
@@ -939,19 +1050,6 @@ padding-left: 10px;
           </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_8">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -982,9 +1080,6 @@ padding-left: 10px;
            <pointsize>-1</pointsize>
           </font>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="title">
           <string notr="true"/>
          </property>
@@ -1005,9 +1100,6 @@ padding-left: 10px;
               <width>36</width>
               <height>36</height>
              </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -1081,9 +1173,6 @@ padding-left: 10px;
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
-               <property name="styleSheet">
-                <string notr="true">border: none;</string>
-               </property>
                <property name="text">
                 <string/>
                </property>
@@ -1132,9 +1221,6 @@ padding-left: 10px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="title">
           <string>Storage Space</string>
          </property>
@@ -1164,10 +1250,6 @@ padding-left: 10px;
              <widget class="QLabel" name="lStorage">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">margin-left: 1px;
-</string>
               </property>
               <property name="text">
                <string notr="true"/>
@@ -1204,9 +1286,6 @@ padding-left: 10px;
              <widget class="QPushButton" name="bUpgrade">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
               </property>
               <property name="text">
                <string>Upgrade</string>
@@ -1352,9 +1431,6 @@ padding-left: 10px;
               <widget class="QTableWidget" name="tSyncs">
                <property name="enabled">
                 <bool>true</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -1608,9 +1684,6 @@ padding-left: 10px;
               <height>35</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_32">
              <property name="spacing">
               <number>0</number>
@@ -1651,9 +1724,6 @@ padding-left: 10px;
                 <number>1</number>
                </property>
                <widget class="QWidget" name="pSavingSyncs">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_33">
                  <property name="spacing">
                   <number>0</number>
@@ -1697,9 +1767,6 @@ padding-left: 10px;
                      <height>16</height>
                     </size>
                    </property>
-                   <property name="styleSheet">
-                    <string notr="true"/>
-                   </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_27">
                     <property name="spacing">
                      <number>0</number>
@@ -1729,9 +1796,6 @@ padding-left: 10px;
                         <width>16</width>
                         <height>16</height>
                        </size>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
@@ -1816,9 +1880,6 @@ padding-left: 10px;
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true"/>
                    </property>
                    <property name="text">
                     <string>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</string>
@@ -2280,9 +2341,6 @@ padding-left: 10px;
           </item>
           <item>
            <widget class="QListWidget" name="lExcludedNames">
-            <property name="styleSheet">
-             <string notr="true">margin:0px;</string>
-            </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::ExtendedSelection</enum>
             </property>
@@ -2510,24 +2568,13 @@ padding-left: 10px;
             </item>
             <item row="0" column="1">
              <widget class="QLabel" name="lUploadRateLimit">
-              <property name="styleSheet">
-               <string notr="true">QLabel {
-font-weight: bold;
-}</string>
-              </property>
               <property name="text">
                <string/>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="lDownloadRateLimit">
-              <property name="styleSheet">
-               <string notr="true">QLabel {
-font-weight: bold;
-}</string>
-              </property>
-             </widget>
+             <widget class="QLabel" name="lDownloadRateLimit"/>
             </item>
            </layout>
           </item>
@@ -2599,11 +2646,6 @@ font-weight: bold;
             </item>
             <item row="0" column="1">
              <widget class="QLabel" name="lProxySettings">
-              <property name="styleSheet">
-               <string notr="true">QLabel {
-font-weight: bold;
-}</string>
-              </property>
               <property name="text">
                <string/>
               </property>
@@ -2667,13 +2709,16 @@ font-weight: bold;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">
-       <number>14</number>
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>14</number>
+       <number>20</number>
       </property>
       <property name="bottomMargin">
-       <number>14</number>
+       <number>20</number>
       </property>
       <item>
        <widget class="QPushButton" name="bHelpIco">
@@ -2923,7 +2968,6 @@ font-weight: bold;
   <tabstop>cStartOnStartup</tabstop>
   <tabstop>cAutoUpdate</tabstop>
   <tabstop>bUpdate</tabstop>
-  <tabstop>cLanguage</tabstop>
   <tabstop>tSyncs</tabstop>
   <tabstop>bDelete</tabstop>
   <tabstop>bAdd</tabstop>
