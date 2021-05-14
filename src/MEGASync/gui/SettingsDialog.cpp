@@ -171,8 +171,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     remoteCacheSize = -1;
     connect(ui->wStack, SIGNAL(currentChanged(int)), ui->wStackFooter, SLOT(setCurrentIndex(int)));
     ui->wStack->setCurrentWidget(ui->pGeneral); // override whatever might be set in .ui
+
 #ifndef Q_OS_MAC
     ui->bGeneral->setChecked(true); // override whatever might be set in .ui
+    ui->gCache->setTitle(ui->gCache->title().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 #endif
     setProxyOnly(proxyOnly);
 
@@ -221,6 +223,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     ui->cStartOnStartup->setText(tr("Open at login"));
+    ui->lLocalDebris->setText(ui->lLocalDebris->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //FinderSync API support from 10.10+
     {
         ui->cOverlayIcons->hide();
@@ -230,8 +234,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #endif
 
     setProxyOnly(proxyOnly);
-
-    ui->gCache->setTitle(ui->gCache->title().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 
 #ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
