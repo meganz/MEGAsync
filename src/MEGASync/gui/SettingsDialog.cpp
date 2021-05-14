@@ -1969,6 +1969,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bGeneral->setChecked(true);
 #else
+        toolBar->setSelectedItem(bGeneral.get());
         emit bGeneral.get()->activated();
 #endif
         break;
@@ -1978,6 +1979,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bAccount->setChecked(true);
 #else
+        toolBar->setSelectedItem(bAccount.get());
         emit bAccount.get()->activated();
 #endif
         break;
@@ -1986,6 +1988,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bSyncs->setChecked(true);
 #else
+        toolBar->setSelectedItem(bSyncs.get());
         emit bSyncs.get()->activated();
 #endif
         break;
@@ -1994,6 +1997,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bImports->setChecked(true);
 #else
+        toolBar->setSelectedItem(bImports.get());
         emit bImports.get()->activated();
 #endif
         break;
@@ -2002,6 +2006,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bNetwork->setChecked(true);
 #else
+        toolBar->setSelectedItem(bNetwork.get());
         emit bNetwork.get()->activated();
 #endif
         break;
@@ -2010,6 +2015,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bSecurity->setChecked(true);
 #else
+        toolBar->setSelectedItem(bSecurity.get());
         emit bSecurity.get()->activated();
 #endif
         break;
