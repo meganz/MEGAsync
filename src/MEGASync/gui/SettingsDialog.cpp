@@ -43,7 +43,7 @@ using namespace std;
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 // FIXME: Re-evaluate size for General tab
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{466};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{530};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
@@ -245,19 +245,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     if (!proxyOnly)
     {
-        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
-            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
-            ui->gStorageSpace->setMinimumHeight(83);
-        }
-        else
-        {
-            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
-            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
-            ui->gStorageSpace->setMinimumHeight(103);//TODO: check and adjust size for animations
-        }
-
+        setMinimumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
+        setMaximumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
         ui->pNetwork->hide();
     }
 #endif
