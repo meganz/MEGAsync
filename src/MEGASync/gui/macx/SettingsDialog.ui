@@ -4276,7 +4276,7 @@ margin-right: 32px;</string>
   <tabstop>bFullCheck</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
