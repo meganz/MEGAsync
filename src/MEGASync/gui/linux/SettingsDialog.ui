@@ -877,6 +877,12 @@ padding-bottom: 6px;
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
            </spacer>
           </item>
          </layout>
@@ -1033,7 +1039,7 @@ padding-bottom: 6px;
        <item>
         <widget class="QGroupBox" name="gBugReport">
          <property name="title">
-          <string>Bug Report</string>
+          <string>Bug report</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
@@ -1271,7 +1277,7 @@ padding-bottom: 6px;
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Storage Space</string>
+          <string>Storage space</string>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -1352,7 +1358,7 @@ padding-bottom: 6px;
        <item>
         <widget class="QGroupBox" name="gBandwidthQuota">
          <property name="title">
-          <string>Transfer Quota</string>
+          <string>Transfer quota</string>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -1961,7 +1967,7 @@ padding-bottom: 6px;
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Default Folders</string>
+          <string>Default folders</string>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -2174,7 +2180,7 @@ padding-bottom: 6px;
        <item>
         <widget class="QGroupBox" name="gRecoveryKey">
          <property name="title">
-          <string>Recovery Key</string>
+          <string>Recovery key</string>
          </property>
          <layout class="QHBoxLayout" name="gRecoveryKeyLayout">
           <property name="spacing">

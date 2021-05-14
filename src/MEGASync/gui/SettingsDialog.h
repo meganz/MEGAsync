@@ -34,7 +34,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {GENERAL_TAB = 0, ACCOUNT_TAB = 1, SYNCS_TAB = 2, IMPORTS_TAB = 3, NETWORK_TAB = 4, SECURITY_TAB = 5};
+    enum {GENERAL_TAB = 0, ACCOUNT_TAB = 1, SYNCS_TAB = 2, SECURITY_TAB = 3, IMPORTS_TAB = 4, NETWORK_TAB = 5};
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
