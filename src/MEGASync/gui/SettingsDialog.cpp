@@ -43,7 +43,7 @@ using namespace std;
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 // FIXME: Re-evaluate size for General tab
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{466};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{530};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
@@ -171,8 +171,10 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     remoteCacheSize = -1;
     connect(ui->wStack, SIGNAL(currentChanged(int)), ui->wStackFooter, SLOT(setCurrentIndex(int)));
     ui->wStack->setCurrentWidget(ui->pGeneral); // override whatever might be set in .ui
+
 #ifndef Q_OS_MAC
     ui->bGeneral->setChecked(true); // override whatever might be set in .ui
+    ui->gCache->setTitle(ui->gCache->title().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 #endif
     setProxyOnly(proxyOnly);
 
@@ -221,6 +223,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     ui->cStartOnStartup->setText(tr("Open at login"));
+    ui->lLocalDebris->setText(ui->lLocalDebris->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //FinderSync API support from 10.10+
     {
         ui->cOverlayIcons->hide();
@@ -230,8 +234,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #endif
 
     setProxyOnly(proxyOnly);
-
-    ui->gCache->setTitle(ui->gCache->title().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 
 #ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
@@ -245,19 +247,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     if (!proxyOnly)
     {
-        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
-            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
-            ui->gStorageSpace->setMinimumHeight(83);
-        }
-        else
-        {
-            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
-            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
-            ui->gStorageSpace->setMinimumHeight(103);//TODO: check and adjust size for animations
-        }
-
+        setMinimumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
+        setMaximumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
         ui->pNetwork->hide();
     }
 #endif
@@ -307,6 +298,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
+        toolBar->setSelectedItem(bNetwork.get());
 #else
         ui->bNetwork->setEnabled(true);
         ui->bNetwork->setChecked(true);
@@ -1969,6 +1961,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bGeneral->setChecked(true);
 #else
+        toolBar->setSelectedItem(bGeneral.get());
         emit bGeneral.get()->activated();
 #endif
         break;
@@ -1978,6 +1971,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bAccount->setChecked(true);
 #else
+        toolBar->setSelectedItem(bAccount.get());
         emit bAccount.get()->activated();
 #endif
         break;
@@ -1986,6 +1980,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bSyncs->setChecked(true);
 #else
+        toolBar->setSelectedItem(bSyncs.get());
         emit bSyncs.get()->activated();
 #endif
         break;
@@ -1994,6 +1989,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bImports->setChecked(true);
 #else
+        toolBar->setSelectedItem(bImports.get());
         emit bImports.get()->activated();
 #endif
         break;
@@ -2002,6 +1998,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bNetwork->setChecked(true);
 #else
+        toolBar->setSelectedItem(bNetwork.get());
         emit bNetwork.get()->activated();
 #endif
         break;
@@ -2010,6 +2007,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bSecurity->setChecked(true);
 #else
+        toolBar->setSelectedItem(bSecurity.get());
         emit bSecurity.get()->activated();
 #endif
         break;
