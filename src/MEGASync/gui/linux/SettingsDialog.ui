@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>571</width>
-    <height>635</height>
+    <height>695</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -791,18 +791,25 @@ padding-bottom: 6px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_111">
           <item>
+           <widget class="QLabel" name="lCacheSizeStatic">
+            <property name="text">
+             <string>Used space:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="lCacheSize">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
             </property>
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>Used space: %1</string>
+             <string>%1</string>
             </property>
            </widget>
           </item>
@@ -897,12 +904,25 @@ padding-bottom: 6px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_21">
           <item>
+           <widget class="QLabel" name="lRemoteCacheSizeStatic">
+            <property name="text">
+             <string>Used space:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLabel" name="lRemoteCacheSize">
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>Used space: %1</string>
+             <string>%1</string>
             </property>
            </widget>
           </item>
@@ -936,9 +956,22 @@ padding-bottom: 6px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <item>
-           <widget class="QLabel" name="lFileVersionsSize">
+           <widget class="QLabel" name="lFileVersionsSizeStatic">
             <property name="text">
-             <string>Used space: %1</string>
+             <string>Used space:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lFileVersionsSize">
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>%1</string>
             </property>
            </widget>
           </item>

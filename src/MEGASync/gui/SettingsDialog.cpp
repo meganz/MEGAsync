@@ -450,12 +450,12 @@ void SettingsDialog::onCacheSizeAvailable()
     if(!preferences->logged())
         return;
 
-    ui->lFileVersionsSize->setText(tr("Used space: %1").arg(Utilities::getSizeString(preferences->versionsStorage())));
+    ui->lFileVersionsSize->setText(tr("%1").arg(Utilities::getSizeString(preferences->versionsStorage())));
 
     if (cacheSize != -1)
-        ui->lCacheSize->setText(QString::fromUtf8("Used space: %1").arg(Utilities::getSizeString(cacheSize)));
+        ui->lCacheSize->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(cacheSize)));
     if (remoteCacheSize != -1)
-        ui->lRemoteCacheSize->setText(QString::fromUtf8("Used space: %1").arg(Utilities::getSizeString(remoteCacheSize)));
+        ui->lRemoteCacheSize->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(remoteCacheSize)));
 
     ui->bClearCache->setEnabled(cacheSize > 0);
     ui->bClearRemoteCache->setEnabled(remoteCacheSize > 0);
