@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>571</width>
-    <height>695</height>
+    <height>698</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -38,7 +38,7 @@ spacing: 6px;
 
 QCheckBox
 {
-spacing: 10px;
+spacing: 4px;
 }
 
 QRadioButton::indicator, QCheckBox::indicator
@@ -76,12 +76,7 @@ background-color: #FFFFFF;
 border-bottom: 3px solid #0078D7;
 }
 
-#bHelp
-{
-border: none;
-}
-
-#bHelpIco
+#bHelpIco, #bHelp, #bChangePasswordPic, #bRecoveryKeyPic
 {
 border: none;
 }
@@ -106,11 +101,6 @@ margin-right: 5px;
 {
 margin-right: 6px;
 margin-left: 1px;
-}
-
-#label
-{
-margin-left: 5px;
 }
 
 #cProxyRequiresPassword
@@ -140,15 +130,11 @@ border: none;
 {
 padding-bottom: 6px;
 }
-
-#wStack QToolButton
-{
-   border: none;
-}</string>
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
    <property name="spacing">
-    <number>10</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -520,17 +506,32 @@ padding-bottom: 6px;
         <number>20</number>
        </property>
        <property name="topMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
         <number>20</number>
        </property>
        <property name="bottomMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="gGeneral">
          <layout class="QVBoxLayout" name="gGeneralLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QCheckBox" name="cShowNotifications">
             <property name="sizePolicy">
@@ -704,6 +705,24 @@ padding-bottom: 6px;
              </item>
              <item>
               <widget class="QPushButton" name="bUpdate">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
@@ -723,28 +742,22 @@ padding-bottom: 6px;
        </item>
        <item>
         <widget class="QGroupBox" name="gLanguage">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="title">
           <string>Language</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_17">
+          <property name="leftMargin">
+           <number>11</number>
+          </property>
+          <property name="topMargin">
+           <number>11</number>
+          </property>
+          <property name="rightMargin">
+           <number>11</number>
+          </property>
+          <property name="bottomMargin">
+           <number>11</number>
+          </property>
           <item>
            <widget class="QComboBox" name="cLanguage">
             <property name="sizePolicy">
@@ -777,19 +790,22 @@ padding-bottom: 6px;
        </item>
        <item>
         <widget class="QGroupBox" name="gCache">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
          <property name="title">
           <string>%1 (local cache)</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_111">
+         <layout class="QHBoxLayout" name="horizontalLayout_112">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QLabel" name="lCacheSizeStatic">
             <property name="text">
@@ -830,7 +846,7 @@ padding-bottom: 6px;
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_5">
+           <spacer name="horizontalSpacer_8">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -881,19 +897,6 @@ padding-bottom: 6px;
             </property>
            </widget>
           </item>
-          <item>
-           <spacer name="horizontalSpacer_14">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
         </widget>
        </item>
@@ -903,6 +906,18 @@ padding-bottom: 6px;
           <string>SyncDebris (remote cache)</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_21">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QLabel" name="lRemoteCacheSizeStatic">
             <property name="text">
@@ -934,7 +949,7 @@ padding-bottom: 6px;
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_8">
+           <spacer name="horizontalSpacer_20">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -955,6 +970,18 @@ padding-bottom: 6px;
           <string>File versions</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QLabel" name="lFileVersionsSizeStatic">
             <property name="text">
@@ -1002,6 +1029,19 @@ padding-bottom: 6px;
             </property>
            </widget>
           </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </widget>
        </item>
@@ -1014,8 +1054,20 @@ padding-bottom: 6px;
           <property name="spacing">
            <number>0</number>
           </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="lBugReport">
             <property name="text">
              <string>If you run into a bug we would appreciate hearing about it so that we can fix it - the more details you can provide, the better.</string>
             </property>
@@ -2156,7 +2208,7 @@ padding-bottom: 6px;
            <number>10</number>
           </property>
           <item>
-           <widget class="QToolButton" name="tRecoveryKey">
+           <widget class="QPushButton" name="bRecoveryKeyPic">
             <property name="text">
              <string/>
             </property>
@@ -2169,6 +2221,9 @@ padding-bottom: 6px;
               <width>72</width>
               <height>72</height>
              </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -2248,7 +2303,7 @@ padding-bottom: 6px;
            <number>10</number>
           </property>
           <item>
-           <widget class="QToolButton" name="tChangePassword">
+           <widget class="QPushButton" name="bChangePasswordPic">
             <property name="text">
              <string/>
             </property>
@@ -2261,6 +2316,9 @@ padding-bottom: 6px;
               <width>72</width>
               <height>72</height>
              </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -2724,7 +2782,7 @@ padding-bottom: 6px;
        <number>20</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>20</number>
       </property>
       <property name="rightMargin">
        <number>20</number>
