@@ -32,12 +32,7 @@
    <string>Preferences - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-font-size: 11px;
-}
-
-QGroupBox {
+   <string notr="true">QGroupBox {
   border-radius: 3px;
   border-top: 2px inset rgba(0,0,0,0.05);
   border-left: 1px inset rgba(0,0,0,0.05);
@@ -176,7 +171,6 @@ background-color: rgba(0,0,0,0.1);
   background-color: rgba(0,0,0,0.1);
 }
 
-
 /* Security pane css props*/
 
 #lRecoveryKeyTitle, #lChangePasswordTitle
@@ -237,10 +231,13 @@ background-color: rgba(0,0,0,0.1);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
+       <property name="spacing">
+        <number>10</number>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -267,7 +264,7 @@ background-color: rgba(0,0,0,0.1);
            <height>16777215</height>
           </size>
          </property>
-         <layout class="QGridLayout" name="gridLayout" rowstretch="0" columnminimumwidth="232,0">
+         <layout class="QGridLayout" name="gridLayout" rowstretch="0" columnminimumwidth="200,0">
           <property name="leftMargin">
            <number>25</number>
           </property>
@@ -281,7 +278,7 @@ background-color: rgba(0,0,0,0.1);
            <number>12</number>
           </property>
           <property name="horizontalSpacing">
-           <number>4</number>
+           <number>6</number>
           </property>
           <property name="verticalSpacing">
            <number>0</number>
@@ -556,7 +553,7 @@ margin-right: 32px;
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" columnminimumwidth="232,0,0">
+         <layout class="QGridLayout" name="gridLayout_2" columnminimumwidth="200,0,0">
           <property name="leftMargin">
            <number>25</number>
           </property>
@@ -570,7 +567,7 @@ margin-right: 32px;
            <number>0</number>
           </property>
           <property name="horizontalSpacing">
-           <number>0</number>
+           <number>2</number>
           </property>
           <item row="0" column="1">
            <widget class="QWidget" name="wContainerLanguage" native="true">
@@ -716,7 +713,7 @@ margin-right: 32px;</string>
        </item>
        <item>
         <widget class="QWidget" name="gDebris" native="true">
-         <layout class="QGridLayout" name="gridLayout_4" columnminimumwidth="232,0">
+         <layout class="QGridLayout" name="gridLayout_4" columnminimumwidth="200,0">
           <property name="leftMargin">
            <number>25</number>
           </property>
@@ -730,7 +727,7 @@ margin-right: 32px;</string>
            <number>0</number>
           </property>
           <property name="horizontalSpacing">
-           <number>4</number>
+           <number>6</number>
           </property>
           <property name="verticalSpacing">
            <number>0</number>
@@ -753,7 +750,7 @@ margin-right: 32px;</string>
              <item>
               <widget class="QLabel" name="lLocalDebris">
                <property name="text">
-                <string>%1 (local cache)</string>
+                <string>%1 (local cache):</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -766,7 +763,7 @@ margin-right: 32px;</string>
                 <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeType">
-                <enum>QSizePolicy::Maximum</enum>
+                <enum>QSizePolicy::Fixed</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -826,6 +823,12 @@ margin-right: 32px;</string>
                 </property>
                 <item>
                  <widget class="QLabel" name="lCacheSize">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="focusPolicy">
                    <enum>Qt::StrongFocus</enum>
                   </property>
@@ -836,7 +839,10 @@ margin-right: 32px;</string>
                    <string notr="true">margin-top: 2px;</string>
                   </property>
                   <property name="text">
-                   <string>Local backup: %1</string>
+                   <string> %1</string>
+                  </property>
+                  <property name="indent">
+                   <number>0</number>
                   </property>
                  </widget>
                 </item>
@@ -878,6 +884,9 @@ margin-right: 32px;</string>
              <item>
               <widget class="QWidget" name="wScheduler" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <property name="spacing">
+                 <number>-1</number>
+                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -1003,7 +1012,7 @@ margin-right: 32px;</string>
        </item>
        <item>
         <widget class="QWidget" name="gSyncDebris" native="true">
-         <layout class="QGridLayout" name="gridLayout_5" columnminimumwidth="232,0">
+         <layout class="QGridLayout" name="gridLayout_5" columnminimumwidth="200,0">
           <property name="leftMargin">
            <number>25</number>
           </property>
@@ -1017,7 +1026,7 @@ margin-right: 32px;</string>
            <number>0</number>
           </property>
           <property name="horizontalSpacing">
-           <number>4</number>
+           <number>6</number>
           </property>
           <item row="0" column="1">
            <widget class="QWidget" name="wRemoteCache" native="true">
@@ -1048,6 +1057,12 @@ margin-right: 32px;</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>100</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
@@ -1055,10 +1070,10 @@ margin-right: 32px;</string>
                 <string>Folder in MEGA with a backup of files deleted in the local computer</string>
                </property>
                <property name="text">
-                <string>Remote backup: %1</string>
+                <string>%1</string>
                </property>
                <property name="margin">
-                <number>2</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
@@ -1171,7 +1186,7 @@ margin-right: 32px;</string>
        </item>
        <item>
         <widget class="QWidget" name="gVersions" native="true">
-         <layout class="QGridLayout" name="gridLayout_6" columnminimumwidth="232,0">
+         <layout class="QGridLayout" name="gridLayout_6" columnminimumwidth="200,0">
           <property name="leftMargin">
            <number>25</number>
           </property>
@@ -1185,7 +1200,7 @@ margin-right: 32px;</string>
            <number>0</number>
           </property>
           <property name="horizontalSpacing">
-           <number>4</number>
+           <number>6</number>
           </property>
           <item row="0" column="0">
            <widget class="QWidget" name="wVersions" native="true">
@@ -1218,7 +1233,7 @@ margin-right: 32px;</string>
                 <enum>Qt::Vertical</enum>
                </property>
                <property name="sizeType">
-                <enum>QSizePolicy::Maximum</enum>
+                <enum>QSizePolicy::Fixed</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -1278,14 +1293,23 @@ margin-right: 32px;</string>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
                   <property name="focusPolicy">
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string>File versions: %1</string>
+                   <string>%1</string>
                   </property>
                   <property name="margin">
-                   <number>2</number>
+                   <number>0</number>
+                  </property>
+                  <property name="indent">
+                   <number>0</number>
                   </property>
                  </widget>
                 </item>
@@ -1316,22 +1340,53 @@ margin-right: 32px;</string>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="cFileVersioning">
-               <property name="minimumSize">
-                <size>
-                 <width>145</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Disable file versioning</string>
-               </property>
+              <widget class="QWidget" name="widget_4" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_14">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="cFileVersioning">
+                  <property name="minimumSize">
+                   <size>
+                    <width>145</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Disable file versioning</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_9">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>227</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -1383,7 +1438,7 @@ margin-right: 32px;</string>
        </item>
        <item>
         <widget class="QWidget" name="gBugReport" native="true">
-         <layout class="QGridLayout" name="gridLayout_7" columnminimumwidth="232,0">
+         <layout class="QGridLayout" name="gridLayout_7" columnminimumwidth="200,0">
           <property name="leftMargin">
            <number>25</number>
           </property>
@@ -1397,7 +1452,7 @@ margin-right: 32px;</string>
            <number>0</number>
           </property>
           <property name="horizontalSpacing">
-           <number>4</number>
+           <number>6</number>
           </property>
           <property name="verticalSpacing">
            <number>0</number>
@@ -1423,7 +1478,7 @@ margin-right: 32px;</string>
                 <string>Bug report:</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
                </property>
               </widget>
              </item>
@@ -1431,6 +1486,9 @@ margin-right: 32px;</string>
               <spacer name="verticalSpacer_11">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Minimum</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -1517,6 +1575,9 @@ margin-right: 32px;</string>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
@@ -1565,9 +1626,7 @@ margin-right: 32px;</string>
           </size>
          </property>
          <property name="font">
-          <font>
-           <pointsize>-1</pointsize>
-          </font>
+          <font/>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -3165,9 +3224,7 @@ QTableWidget::item { background-color: #F5F5F5; }
              </size>
             </property>
             <property name="font">
-             <font>
-              <pointsize>-1</pointsize>
-             </font>
+             <font/>
             </property>
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
@@ -4139,7 +4196,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_linux.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -4517,7 +4574,7 @@ margin-right: 32px;</string>
   <tabstop>bFullCheck</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
