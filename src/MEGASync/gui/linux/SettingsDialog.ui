@@ -530,25 +530,7 @@ padding-bottom: 6px;
        </property>
        <item>
         <widget class="QGroupBox" name="gGeneral">
-         <property name="flat">
-          <bool>false</bool>
-         </property>
          <layout class="QVBoxLayout" name="gGeneralLayout">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
           <item>
            <widget class="QCheckBox" name="cShowNotifications">
             <property name="sizePolicy">
@@ -762,13 +744,7 @@ padding-bottom: 6px;
          <property name="title">
           <string>Language</string>
          </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_17">
-          <property name="topMargin">
-           <number>11</number>
-          </property>
           <item>
            <widget class="QComboBox" name="cLanguage">
             <property name="sizePolicy">
@@ -813,9 +789,6 @@ padding-bottom: 6px;
          <property name="title">
           <string>%1 (local cache)</string>
          </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_111">
           <item>
            <widget class="QLabel" name="lCacheSize">
@@ -856,6 +829,12 @@ padding-bottom: 6px;
             </property>
             <property name="sizeType">
              <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
             </property>
            </spacer>
           </item>
@@ -912,7 +891,7 @@ padding-bottom: 6px;
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="gLocalCleaner">
+        <widget class="QGroupBox" name="gRemoteCache">
          <property name="title">
           <string>SyncDebris (remote cache)</string>
          </property>
@@ -938,6 +917,12 @@ padding-bottom: 6px;
            <spacer name="horizontalSpacer_8">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
             </property>
            </spacer>
           </item>
@@ -969,6 +954,12 @@ padding-bottom: 6px;
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
            </spacer>
           </item>
           <item>
@@ -989,18 +980,6 @@ padding-bottom: 6px;
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
            <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
           </property>
           <item>
            <widget class="QLabel" name="label">
