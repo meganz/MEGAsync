@@ -296,6 +296,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
+        toolBar->setSelectedItem(bNetwork.get());
 #else
         ui->bNetwork->setEnabled(true);
         ui->bNetwork->setChecked(true);
