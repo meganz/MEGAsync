@@ -3,6 +3,7 @@
 #include "ui_NewFolderDialog.h"
 
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "control/Utilities.h"
 
 #include <QMessageBox>

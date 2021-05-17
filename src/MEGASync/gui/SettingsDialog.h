@@ -13,7 +13,6 @@
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "SizeLimitDialog.h"
-#include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
@@ -35,7 +34,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {ACCOUNT_TAB = 0, SYNCS_TAB = 1, IMPORTS_TAB = 2, NETWORK_TAB = 3, ADVANCED_TAB = 4, SECURITY_TAB = 5};
+    enum {GENERAL_TAB = 0, ACCOUNT_TAB = 1, SYNCS_TAB = 2, SECURITY_TAB = 3, IMPORTS_TAB = 4, NETWORK_TAB = 5};
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
     explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
@@ -73,12 +72,12 @@ private slots:
     void onSavingSettingsProgress(double progress);
     void onSavingSettingsCompleted();
 
+    void on_bGeneral_clicked();
     void on_bAccount_clicked();
     void on_bSyncs_clicked();
     void on_bNetwork_clicked();
     void on_bSecurity_clicked();
     void on_bImports_clicked();
-    void on_bAdvanced_clicked();
 
     void on_bHelp_clicked();
 #ifndef Q_OS_MACOS
@@ -92,9 +91,7 @@ private slots:
     void on_bAdd_clicked();
     void on_bDelete_clicked();
     void on_bExcludeSize_clicked();
-    void on_bLocalCleaner_clicked();
 
-    void on_bExportMasterKey_clicked();
 
     void on_tSyncs_doubleClicked(const QModelIndex &index);
     void on_bUploadFolder_clicked();
@@ -103,12 +100,13 @@ private slots:
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
+    void on_cCacheSchedulerEnabled_toggled();
+    void on_sCacheSchedulerDays_valueChanged(int);
     void on_bClearRemoteCache_clicked();
     void on_bClearFileVersions_clicked();
     void on_bUpdate_clicked();
     void on_bStorageDetails_clicked();
     void on_lAccountImage_clicked();
-    void on_bChangePassword_clicked();
     void on_bSendBug_clicked();
 
     void setAvatar();
@@ -120,11 +118,16 @@ private slots:
     void on_eUploadFolder_textChanged(const QString &text);
     void on_eDownloadFolder_textChanged(const QString &text);
 
-    void on_cDisableFileVersioning_toggled(bool checked);
+    void on_cFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 
     void on_bOpenProxySettings_clicked();
     void on_bOpenBandwidthSettings_clicked();
+
+    // Security tab buttons
+    void on_bExportMasterKey_clicked();
+    void on_bChangePassword_clicked();
+
 
     // Footer buttons
     void on_bLogout_clicked();
@@ -136,7 +139,7 @@ private slots:
     void on_bSessionHistory_clicked();
 
 #ifdef Q_OS_WINDOWS
-    void on_cDisableIcons_toggled(bool checked);
+    void on_cFinderIcons_toggled(bool checked);
 #endif
 
 #ifdef Q_OS_MACOS
@@ -152,11 +155,9 @@ private:
     void loadSettings();
     void saveSyncSettings();
     void onCacheSizeAvailable();
-    void onClearCache();
     void savingSyncs(bool completed, QObject *item);
     void syncsStateInformation(int state);
     QString excludeBySizeInfo();
-    QString cacheDaysLimitInfo();
     void saveExcludeSyncNames();
     void updateNetworkTab();
 
@@ -177,7 +178,6 @@ private:
     int loadingSettings;
     long long cacheSize;
     long long remoteCacheSize;
-    long long fileVersionsSize;
     bool hasDefaultUploadOption;
     bool hasDefaultDownloadOption;
     bool reloadUIpage;
@@ -193,12 +193,13 @@ private:
     QParallelAnimationGroup *animationGroup;
 
     std::unique_ptr<QCustomMacToolbar> toolBar;
+    std::unique_ptr<QMacToolBarItem> bGeneral;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
+    std::unique_ptr<QMacToolBarItem> bSecurity;
     std::unique_ptr<QMacToolBarItem> bImports;
     std::unique_ptr<QMacToolBarItem> bNetwork;
-    std::unique_ptr<QMacToolBarItem> bSecurity;
-    std::unique_ptr<QMacToolBarItem> bAdvanced;
+
 
     void animateSettingPage(int endValue, int duration = 150);
 #endif

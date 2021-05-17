@@ -319,10 +319,6 @@
         <file>images/mbox-warning@2x.png</file>
         <file>images/mega_notifications.png</file>
         <file>images/mega_notifications@2x.png</file>
-        <file>images/menu_header.png</file>
-        <file>images/menu_header@2x.png</file>
-        <file>images/menu_selected.png</file>
-        <file>images/menu_selected@2x.png</file>
         <file>images/more_settings.png</file>
         <file>images/more_settings@2x.png</file>
         <file>images/Nav_Dot_active.png</file>
@@ -553,24 +549,26 @@
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
-        <file>images/settings-syncs.png</file>
-        <file>images/settings-syncs@2x.png</file>
-        <file>images/settings-advanced.png</file>
-        <file>images/settings-advanced@2x.png</file>
-        <file>images/settings-general.png</file>
-        <file>images/settings-general@2x.png</file>
-        <file>images/settings-network.png</file>
-        <file>images/settings-network@2x.png</file>
-        <file>images/settings-transfers.png</file>
-        <file>images/settings-transfers@2x.png</file>
-        <file>images/settings-security.png</file>
-        <file>images/settings-security@2x.png</file>
+        <file>images/settings-account-macx.png</file>
+        <file>images/settings-account-macx@2x.png</file>
+        <file>images/settings-syncs-macx.png</file>
+        <file>images/settings-syncs-macx@2x.png</file>
+        <file>images/settings-advanced-macx.png</file>
+        <file>images/settings-advanced-macx@2x.png</file>
+        <file>images/settings-general-macx.png</file>
+        <file>images/settings-general-macx@2x.png</file>
+        <file>images/settings-network-macx.png</file>
+        <file>images/settings-network-macx@2x.png</file>
+        <file>images/settings-transfers-macx.png</file>
+        <file>images/settings-transfers-macx@2x.png</file>
+        <file>images/settings-security-macx.png</file>
+        <file>images/settings-security-macx@2x.png</file>
         <file>images/ic_options@2x.png</file>
         <file>images/ic_options.png</file>
         <file>images/ic_two_way_sync.png</file>
         <file>images/ic_two_way_sync@2x.png</file>
-        <file>images/settings-syncs-error.png</file>
-        <file>images/settings-syncs-error@2x.png</file>
+        <file>images/settings-syncs-error-macx.png</file>
+        <file>images/settings-syncs-error-macx@2x.png</file>
         <file>images/ic_options_hover.png</file>
         <file>images/ic_options_hover@2x.png</file>
         <file>images/Storage_Quota_full@3x.png</file>
@@ -584,13 +582,20 @@
         <file>images/imports_32.png</file>
         <file>images/imports_32@3x.png</file>
         <file>images/imports_32@2x.png</file>
-        <file>images/settings-import.png</file>
-        <file>images/settings-import@2x.png</file>
+        <file>images/settings-imports-macx.png</file>
+        <file>images/settings-imports-macx@2x.png</file>
         <file>images/Bin_24_ico.png</file>
         <file>images/Bin_24_ico@2x.png</file>
         <file>images/Cloud_Drive_24_ico.png</file>
         <file>images/Cloud_Drive_24_ico@2x.png</file>
         <file>images/Inbox_24_ico.png</file>
         <file>images/Inbox_24_ico@2x.png</file>
+        <file>images/Inbox_24_ico@3x.png</file>
+        <file>images/key_big.png</file>
+        <file>images/key_big@2x.png</file>
+        <file>images/lock_big.png</file>
+        <file>images/lock_big@2x.png</file>
+        <file>images/warning-disabled-syncs.png</file>
+        <file>images/warning-disabled-syncs@2x.png</file>
     </qresource>
 </RCC>

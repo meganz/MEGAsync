@@ -42,6 +42,7 @@ using namespace std;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
@@ -50,11 +51,7 @@ constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
 // FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
-constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{293};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT{519};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES{564};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE{496};
-constexpr auto SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE{519};
+constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{400};
 #endif
 
 long long calculateCacheSize()
@@ -103,13 +100,18 @@ void SettingsDialog::initializeNativeUIComponents()
     // Set native NSToolBar for settings.
     toolBar = ::mega::make_unique<QCustomMacToolbar>(this);
 
-    QString account(QString::fromUtf8("settings-general"));
+    QString general(QString::fromUtf8("settings-general"));
+    QString account(QString::fromUtf8("settings-account"));
     QString syncs(QString::fromUtf8("settings-syncs"));
-    QString network(QString::fromUtf8("settings-network"));
     QString security(QString::fromUtf8("settings-security"));
-    QString advanced(QString::fromUtf8("settings-advanced"));
+    QString imports(QString::fromUtf8("settings-imports"));
+    QString network(QString::fromUtf8("settings-network"));
 
     // add Items
+    bGeneral.reset(toolBar->addItem(QIcon(), tr("General")));
+    toolBar->customizeIconToolBarItem(bGeneral.get(), general);
+    connect(bGeneral.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bGeneral_clicked);
+
     bAccount.reset(toolBar->addItem(QIcon(), tr("Account")));
     toolBar->customizeIconToolBarItem(bAccount.get(), account);
     connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
@@ -118,21 +120,21 @@ void SettingsDialog::initializeNativeUIComponents()
     toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
 
-    bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
-    toolBar->customizeIconToolBarItem(bNetwork.get(), network);
-    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);
-
     bSecurity.reset(toolBar->addItem(QIcon(), tr("Security")));
     toolBar->customizeIconToolBarItem(bSecurity.get(), security);
     connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
 
-    bAdvanced.reset(toolBar->addItem(QIcon(), tr("Advanced")));
-    toolBar->customizeIconToolBarItem(bAdvanced.get(), advanced);
-    connect(bAdvanced.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAdvanced_clicked);
+    bImports.reset(toolBar->addItem(QIcon(), tr("Imports")));
+    toolBar->customizeIconToolBarItem(bImports.get(), imports);
+    connect(bImports.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bImports_clicked);
+
+    bNetwork.reset(toolBar->addItem(QIcon(), tr("Network")));
+    toolBar->customizeIconToolBarItem(bNetwork.get(), network);
+    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);    
 
     toolBar->setSelectableItems(true);
     toolBar->setAllowsUserCustomization(false);
-    toolBar->setSelectedItem(bAccount.get());
+    toolBar->setSelectedItem(bGeneral.get());
 
     // Attach to the window according Qt docs
     this->window()->winId(); // create window->windowhandle()
@@ -166,11 +168,12 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     accountDetailsDialog = NULL;
     cacheSize = -1;
     remoteCacheSize = -1;
-    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
     connect(ui->wStack, SIGNAL(currentChanged(int)), ui->wStackFooter, SLOT(setCurrentIndex(int)));
-    ui->wStack->setCurrentWidget(ui->pAccount); // override whatever might be set in .ui
+    ui->wStack->setCurrentWidget(ui->pGeneral); // override whatever might be set in .ui
+
 #ifndef Q_OS_MAC
-    ui->bAccount->setChecked(true); // override whatever might be set in .ui
+    ui->bGeneral->setChecked(true); // override whatever might be set in .ui
+    ui->gCache->setTitle(ui->gCache->title().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 #endif
     setProxyOnly(proxyOnly);
 
@@ -180,15 +183,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     isSavingSyncsOnGoing = false;
 
 #ifdef Q_OS_LINUX
-    ui->cAutoUpdate->hide();
-    ui->bUpdate->hide();
+    ui->wUpdateSection->hide();
 #endif
 
     ui->gExcludedFilesInfo->hide();
 
 #ifdef Q_OS_WINDOWS
-    connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
-    ui->cDisableIcons->hide();
+    ui->cFinderIcons->hide();
 
     typedef LONG MEGANTSTATUS;
     typedef struct _MEGAOSVERSIONINFOW {
@@ -211,7 +212,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
             RtlGetVersion(&version);
             if (version.dwMajorVersion >= 10)
             {
-                ui->cDisableIcons->show();
+                ui->cFinderIcons->show();
             }
         }
     }
@@ -221,6 +222,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     ui->cStartOnStartup->setText(tr("Open at login"));
+    ui->lLocalDebris->setText(ui->lLocalDebris->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //FinderSync API support from 10.10+
     {
         ui->cOverlayIcons->hide();
@@ -231,22 +234,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     setProxyOnly(proxyOnly);
 
-#ifndef Q_OS_MACOS
-    ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
-    ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bNetwork->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bImports->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-    ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-#endif
-
-    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
-
-    ui->gCache->setVisible(false);
-    ui->lFileVersionsSize->setVisible(false);
-    ui->bClearFileVersions->setVisible(false);
-
 #ifdef Q_OS_MACOS
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
@@ -255,24 +242,12 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     animationGroup->addAnimation(maxHeightAnimation);
     connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
-    ui->pAdvanced->hide();
     ui->pSyncs->hide();
 
     if (!proxyOnly)
     {
-        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
-            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS);
-            ui->gStorageSpace->setMinimumHeight(83);
-        }
-        else
-        {
-            setMinimumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
-            setMaximumHeight(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT);
-            ui->gStorageSpace->setMinimumHeight(103);//TODO: check and adjust size for animations
-        }
-
+        setMinimumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
+        setMaximumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
         ui->pNetwork->hide();
     }
 #endif
@@ -309,11 +284,11 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     this->proxyOnly = proxyOnly;
 
 #ifndef Q_OS_MACOS
+    ui->bGeneral->setEnabled(!proxyOnly);
     ui->bAccount->setEnabled(!proxyOnly);
+    ui->bSyncs->setEnabled(!proxyOnly);
     ui->bSecurity->setEnabled(!proxyOnly);
     ui->bImports->setEnabled(!proxyOnly);
-    ui->bSyncs->setEnabled(!proxyOnly);
-    ui->bAdvanced->setEnabled(!proxyOnly);
 #endif
 
     if (proxyOnly)
@@ -322,6 +297,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         // TODO: Re-evaluate sizes for Network tab
         setMinimumHeight(435);
         setMaximumHeight(435);
+        toolBar->setSelectedItem(bNetwork.get());
 #else
         ui->bNetwork->setEnabled(true);
         ui->bNetwork->setChecked(true);
@@ -427,7 +403,6 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 
 void SettingsDialog::storageChanged()
 {
-    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
     onCacheSizeAvailable();
 }
 
@@ -463,73 +438,45 @@ void SettingsDialog::storageStateChanged(int newStorageState)
 
 void SettingsDialog::onCacheSizeAvailable()
 {
-    if (cacheSize != -1 && remoteCacheSize != -1)
+    if(!preferences->logged())
+        return;
+
+    ui->lFileVersionsSize->setText(tr("%1").arg(Utilities::getSizeString(preferences->versionsStorage())));
+
+    if (cacheSize != -1)
+        ui->lCacheSize->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(cacheSize)));
+    if (remoteCacheSize != -1)
+        ui->lRemoteCacheSize->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(remoteCacheSize)));
+
+    ui->bClearCache->setEnabled(cacheSize > 0);
+    ui->bClearRemoteCache->setEnabled(remoteCacheSize > 0);
+    ui->bClearFileVersions->setEnabled(preferences->versionsStorage() > 0);
+}
+
+void SettingsDialog::on_bGeneral_clicked()
+{
+    emit userActivity();
+
+    if (ui->wStack->currentWidget() == ui->pGeneral && !reloadUIpage)
     {
-        if (!cacheSize && !remoteCacheSize && !fileVersionsSize)
-        {
-            return;
-        }
+        return;
+    }
 
-        if (cacheSize)
-        {
-            ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
-            ui->gCache->setVisible(true);
-        }
-        else
-        {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lCacheSize->hide();
-            ui->bClearCache->hide();
+    reloadUIpage = false;
 
-            // Move remote SyncDebris widget to left side
-            ui->gCache->layout()->removeWidget(ui->wLocalCache);
-            ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef Q_OS_MACOS
-            ui->lRemoteCacheSize->setMargin(2);
-#endif
-            ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
-        }
-
-        if (remoteCacheSize)
-        {
-            ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
-            ui->gCache->setVisible(true);
-        }
-        else
-        {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lRemoteCacheSize->hide();
-            ui->bClearRemoteCache->hide();
-        }
-
-        fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
-        if (fileVersionsSize)
-        {
-            ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
-            ui->lFileVersionsSize->setVisible(true);
-            ui->bClearFileVersions->setVisible(true);
-        }
-        else
-        {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lFileVersionsSize->hide();
-            ui->bClearFileVersions->hide();
-        }
+    ui->wStack->setCurrentWidget(ui->pGeneral);
 
 #ifdef Q_OS_MACOS
-        if (ui->wStack->currentWidget() == ui->pAdvanced)
-        {
-            animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CACHE_AVAILABLE, SETTING_ANIMATION_PAGE_TIMEOUT);
-        }
+    onCacheSizeAvailable();
+
+    ui->pGeneral->hide();
+    animateSettingPage(SETTING_ANIMATION_GENERAL_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
-    }
 }
 
 void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
-
-    setWindowTitle(tr("Account"));
 
     if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
@@ -561,8 +508,6 @@ void SettingsDialog::on_bSyncs_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("Syncs"));
-
     if (ui->wStack->currentWidget() == ui->pSyncs)
     {
         return;
@@ -580,8 +525,6 @@ void SettingsDialog::on_bSyncs_clicked()
 void SettingsDialog::on_bNetwork_clicked()
 {
     emit userActivity();
-
-    setWindowTitle(tr("Network"));
 
     if (ui->wStack->currentWidget() == ui->pNetwork)
     {
@@ -616,8 +559,6 @@ void SettingsDialog::on_bSecurity_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("Security"));
-
     if (ui->wStack->currentWidget() == ui->pSecurity)
     {
         return;
@@ -635,8 +576,6 @@ void SettingsDialog::on_bImports_clicked()
 {
     emit userActivity();
 
-    setWindowTitle(tr("Imports"));
-
     if (ui->wStack->currentWidget() == ui->pImports)
     {
         return;
@@ -647,35 +586,6 @@ void SettingsDialog::on_bImports_clicked()
 #ifdef Q_OS_MACOS
     ui->pImports->hide();
     animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
-}
-
-void SettingsDialog::on_bAdvanced_clicked()
-{
-    emit userActivity();
-
-    setWindowTitle(tr("Advanced"));
-
-    if (ui->wStack->currentWidget() == ui->pAdvanced)
-    {
-        return;
-    }
-
-    ui->wStack->setCurrentWidget(ui->pAdvanced);
-
-#ifdef Q_OS_MACOS
-    ui->pAdvanced->hide();
-
-    onCacheSizeAvailable();
-
-    if (!cacheSize && !remoteCacheSize)
-    {
-        animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
-    else
-    {
-        animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_WITH_CACHES, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
 #endif
 }
 
@@ -751,6 +661,10 @@ void SettingsDialog::loadSettings()
     }
 
     //General
+    ui->cCacheSchedulerEnabled->setChecked(preferences->cleanerDaysLimit());
+    ui->sCacheSchedulerDays->setEnabled(preferences->cleanerDaysLimit());
+    ui->sCacheSchedulerDays->setValue(preferences->cleanerDaysLimitValue());
+
     ui->cShowNotifications->setChecked(preferences->showNotifications());
 
     if (!preferences->canUpdate(MegaApplication::applicationFilePath()))
@@ -840,12 +754,11 @@ void SettingsDialog::loadSettings()
     loadSyncSettings();
 
 #ifdef Q_OS_WINDOWS
-    ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
+    ui->cFinderIcons->setChecked(!preferences->leftPaneIconsDisabled());
 #endif
 
     updateNetworkTab();
 
-    //Advanced
     ui->lExcludedNames->clear();
     QStringList excludedNames = preferences->getExcludedSyncNames();
     for (int i = 0; i < excludedNames.size(); i++)
@@ -860,9 +773,8 @@ void SettingsDialog::loadSettings()
     }
 
     ui->lLimitsInfo->setText(excludeBySizeInfo());
-    ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
-    ui->cDisableFileVersioning->setChecked(preferences->fileVersioningDisabled());
-    ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
+    ui->cFileVersioning->setChecked(!preferences->fileVersioningDisabled());
+    ui->cOverlayIcons->setChecked(!preferences->overlayIconsDisabled());
 
     loadingSettings--;
 }
@@ -1009,20 +921,12 @@ void SettingsDialog::saveSyncSettings()
             {
                 bool enabled = ((QCheckBox *)ui->tSyncs->cellWidget(j, 2))->isChecked();
                 bool disabled = !enabled;
-#ifdef SYNC_ADVANCED_TEST_MODE
-                enabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Checked;
-                disabled = static_cast<QCheckBox*>(ui->tSyncs->cellWidget(j, 2))->checkState() == Qt::Unchecked;
-#endif
 
                 auto tagItem = ui->tSyncs->cellWidget(j,3);
 
                 if (tagItem && static_cast<QLabel *>(tagItem)->text().toULongLong() == syncSetting->backupId())
                 {
-#ifdef SYNC_ADVANCED_TEST_MODE
-                    if (disabled && syncSetting->isEnabled()) //sync disabled
-#else
                     if (disabled && syncSetting->isActive()) //sync disabled
-#endif
                     {
                         ActionProgress *disableSyncStep = new ActionProgress(true, QString::fromUtf8("Disabling sync: %1 - %2")
                                                                              .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
@@ -1043,11 +947,7 @@ void SettingsDialog::saveSyncSettings()
 
                         controller->disableSync(syncSetting, disableSyncStep);
                     }
-#ifdef SYNC_ADVANCED_TEST_MODE
                     else if (enabled && !syncSetting->isActive()) //sync re-enabled!
-#else
-                    else if (enabled && !syncSetting->isActive()) //sync re-enabled!
-#endif
                     {
                         ActionProgress *enableSyncStep = new ActionProgress(true, QString::fromUtf8("Enabling sync: %1 - %2")
                                                                             .arg(syncSetting->getLocalFolder()).arg(syncSetting->getMegaFolder()));
@@ -1215,31 +1115,6 @@ if (localFolderQString.startsWith(QString::fromAscii("\\\\?\\")))
         c->setChecked(syncSetting->isActive()); //note: isEnabled refers to enable/disabled by the user. It could be temporary disabled or even failed. This should be shown in the UI
         c->setToolTip(tr("Enable / disable"));
 
-#ifdef SYNC_ADVANCED_TEST_MODE
-        if (syncSetting->isEnabled() && !syncSetting->isActive())
-        {
-            c->setCheckState(Qt::PartiallyChecked);
-        }
-
-        if (syncSetting->isActive())
-        {
-            localFolder->setTextColor(QColor::fromRgb(0, 255,0));
-        }
-        else
-        {
-            localFolder->setTextColor(QColor::fromRgb(255, 0,0));
-        }
-
-        if (syncSetting->isTemporaryDisabled())
-        {
-            megaFolder->setTextColor(QColor::fromRgb(125, 125, 125));
-        }
-
-        if (syncSetting->getState() == MegaSync::SYNC_FAILED)
-        {
-            megaFolder->setTextColor(QColor::fromRgb(255, 0, 0));
-        }
-#endif
         connect(c, SIGNAL(stateChanged(int)), this, SLOT(syncStateChanged(int)),Qt::QueuedConnection);
 
         ui->tSyncs->setCellWidget(i, 2, c);
@@ -1457,6 +1332,19 @@ void SettingsDialog::on_bExportMasterKey_clicked()
                                  QMessageBox::Ok);
 }
 
+void SettingsDialog::on_bChangePassword_clicked()
+{
+    QPointer<ChangePassword> cPassword = new ChangePassword(this);
+    int result = cPassword->exec();
+    if (!cPassword || result != QDialog::Accepted)
+    {
+        delete cPassword;
+        return;
+    }
+
+    delete cPassword;
+}
+
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
 {
     //FIXME: When using custom widget for row items, remove double check or use cellwidget to fix it.
@@ -1637,22 +1525,26 @@ void SettingsDialog::on_bExcludeSize_clicked()
     delete dialog;
 }
 
-void SettingsDialog::on_bLocalCleaner_clicked()
+void SettingsDialog::on_cCacheSchedulerEnabled_toggled()
 {
-    QPointer<LocalCleanScheduler> dialog = new LocalCleanScheduler(this);
-    dialog->setDaysLimit(preferences->cleanerDaysLimit());
-    dialog->setDaysLimitValue(preferences->cleanerDaysLimitValue());
-
-    int ret = dialog->exec();
-    if (dialog && (ret == QDialog::Accepted))
+    if (loadingSettings) return;
+    bool isEnabled = ui->cCacheSchedulerEnabled->isChecked();
+    ui->sCacheSchedulerDays->setEnabled(isEnabled);
+    preferences->setCleanerDaysLimit(isEnabled);
+    if(isEnabled)
     {
-        preferences->setCleanerDaysLimit(dialog->daysLimit());
-        preferences->setCleanerDaysLimitValue(dialog->daysLimitValue());
-        ui->lLocalCleanerState->setText(cacheDaysLimitInfo());
         app->cleanLocalCaches();
     }
+}
 
-    delete dialog;
+void SettingsDialog::on_sCacheSchedulerDays_valueChanged(int)
+{
+    if (loadingSettings) return;
+    if(ui->cCacheSchedulerEnabled->isChecked())
+    {
+        preferences->setCleanerDaysLimitValue(ui->sCacheSchedulerDays->value());
+        app->cleanLocalCaches();
+    }
 }
 
 void SettingsDialog::changeEvent(QEvent *event)
@@ -1661,10 +1553,8 @@ void SettingsDialog::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
 
-        ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
-        ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
-
 #ifdef Q_OS_MACOS
+        // FIXME: Do we need to do the same for the other buttons?
         bAccount.get()->setText(tr("Account"));
         //review and check
         ui->cStartOnStartup->setText(tr("Open at login"));
@@ -1709,29 +1599,6 @@ QString SettingsDialog::excludeBySizeInfo()
         }
 
         format += QString::fromUtf8(")");
-    }
-    else
-    {
-        format = tr("Disabled");
-    }
-    return format;
-}
-
-QString SettingsDialog::cacheDaysLimitInfo()
-{
-    QString format;
-    bool hasDaysLimit = preferences->cleanerDaysLimit();
-    int  daysLimit = preferences->cleanerDaysLimitValue();
-    if (hasDaysLimit)
-    {
-        if (daysLimit > 1)
-        {
-            format += tr("Remove files older than %1 days").arg(QString::number(daysLimit));
-        }
-        else
-        {
-            format += tr("Remove files older than 1 day");
-        }
     }
     else
     {
@@ -1817,10 +1684,7 @@ void SettingsDialog::on_bClearCache_clicked()
     warningDel->setIcon(QMessageBox::Warning);
     warningDel->setWindowTitle(tr("Clear local backup"));
     warningDel->setTextFormat(Qt::RichText);
-
-#if QT_VERSION > 0x050100
     warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-#endif
 
     warningDel->setText(tr("Backups of the previous versions of your synced files in your computer will be permanently deleted. "
                            "Please, check your backup folders to see if you need to rescue something before continuing:")
@@ -1837,21 +1701,8 @@ void SettingsDialog::on_bClearCache_clicked()
     delete warningDel;
 
     QtConcurrent::run(deleteCache);
-
     cacheSize = 0;
-
-    ui->bClearCache->hide();
-    ui->lCacheSize->hide();
-
-    // Move remote SyncDebris widget to left side
-    ui->gCache->layout()->removeWidget(ui->wLocalCache);
-    ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef Q_OS_MACOS
-    ui->lRemoteCacheSize->setMargin(2);
-#endif
-    ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
-
-    onClearCache();
+    onCacheSizeAvailable();
 }
 
 void SettingsDialog::on_bClearRemoteCache_clicked()
@@ -1860,9 +1711,6 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     if (!syncDebris)
     {
         remoteCacheSize = 0;
-        ui->bClearRemoteCache->hide();
-        ui->lRemoteCacheSize->hide();
-        onClearCache();
         return;
     }
 
@@ -1870,10 +1718,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     warningDel->setIcon(QMessageBox::Warning);
     warningDel->setWindowTitle(tr("Clear remote backup"));
     warningDel->setTextFormat(Qt::RichText);
-
-#if QT_VERSION > 0x050100
     warningDel->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-#endif
 
     char *base64Handle = syncDebris->getBase64Handle();
     warningDel->setText(tr("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
@@ -1896,11 +1741,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QtConcurrent::run(deleteRemoteCache, megaApi);
     remoteCacheSize = 0;
-
-    ui->bClearRemoteCache->hide();
-    ui->lRemoteCacheSize->hide();
-
-    onClearCache();
+    onCacheSizeAvailable();
 }
 
 void SettingsDialog::on_bClearFileVersions_clicked()
@@ -1917,30 +1758,14 @@ void SettingsDialog::on_bClearFileVersions_clicked()
 
     megaApi->removeVersions(new MegaListenerFuncExecuter(true, [](MegaApi* api,  MegaRequest *request, MegaError *e)
     {
+        Q_UNUSED(api)
+        Q_UNUSED(request)
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
             megaApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
         }
     }));
-
-    ui->lFileVersionsSize->hide();
-    ui->bClearFileVersions->hide();
-}
-
-void SettingsDialog::onClearCache()
-{
-    if (!cacheSize && !remoteCacheSize)
-    {
-        ui->gCache->setVisible(false);
-
-#ifdef Q_OS_MACOS
-        if (!cacheSize && !remoteCacheSize)
-        {
-            animateSettingPage(SETTING_ANIMATION_ADVANCED_TAB_HEIGHT_ON_CLEAR_CACHE, SETTING_ANIMATION_PAGE_TIMEOUT);
-        }
-#endif
-    }
 }
 
 void SettingsDialog::savingSyncs(bool completed, QObject *item)
@@ -1956,9 +1781,9 @@ void SettingsDialog::savingSyncs(bool completed, QObject *item)
     }
 
 #ifndef Q_OS_MACOS
+    ui->bGeneral->setEnabled(completed);
     ui->bAccount->setEnabled(completed);
     ui->bSyncs->setEnabled(completed);
-    ui->bAdvanced->setEnabled(completed);
     ui->bNetwork->setEnabled(completed);
     ui->bSecurity->setEnabled(completed);
     ui->bImports->setEnabled(completed);
@@ -2130,11 +1955,22 @@ void SettingsDialog::openSettingsTab(int tab)
 
     switch (tab)
     {
+    case GENERAL_TAB:
+        reloadUIpage = true;
+#ifndef Q_OS_MACOS
+        ui->bGeneral->setChecked(true);
+#else
+        toolBar->setSelectedItem(bGeneral.get());
+        emit bGeneral.get()->activated();
+#endif
+        break;
+
     case ACCOUNT_TAB:
         reloadUIpage = true;
 #ifndef Q_OS_MACOS
         ui->bAccount->setChecked(true);
 #else
+        toolBar->setSelectedItem(bAccount.get());
         emit bAccount.get()->activated();
 #endif
         break;
@@ -2143,6 +1979,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bSyncs->setChecked(true);
 #else
+        toolBar->setSelectedItem(bSyncs.get());
         emit bSyncs.get()->activated();
 #endif
         break;
@@ -2151,6 +1988,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bImports->setChecked(true);
 #else
+        toolBar->setSelectedItem(bImports.get());
         emit bImports.get()->activated();
 #endif
         break;
@@ -2159,6 +1997,7 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bNetwork->setChecked(true);
 #else
+        toolBar->setSelectedItem(bNetwork.get());
         emit bNetwork.get()->activated();
 #endif
         break;
@@ -2167,15 +2006,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         ui->bSecurity->setChecked(true);
 #else
+        toolBar->setSelectedItem(bSecurity.get());
         emit bSecurity.get()->activated();
-#endif
-        break;
-
-    case ADVANCED_TAB:
-#ifndef Q_OS_MACOS
-        ui->bAdvanced->setChecked(true);
-#else
-        emit bAdvanced.get()->activated();
 #endif
         break;
 
@@ -2192,19 +2024,6 @@ void SettingsDialog::on_lAccountImage_clicked()
         app->toggleLogging();
         debugCounter = 0;
     }
-}
-
-void SettingsDialog::on_bChangePassword_clicked()
-{
-    QPointer<ChangePassword> cPassword = new ChangePassword(this);
-    int result = cPassword->exec();
-    if (!cPassword || result != QDialog::Accepted)
-    {
-        delete cPassword;
-        return;
-    }
-
-    delete cPassword;
 }
 
 void SettingsDialog::on_bSendBug_clicked()
@@ -2230,7 +2049,11 @@ void SettingsDialog::on_bHelpIco_clicked()
 #ifdef Q_OS_MACOS
 void SettingsDialog::onAnimationFinished()
 {
-    if (ui->wStack->currentWidget() == ui->pAccount)
+    if (ui->wStack->currentWidget() == ui->pGeneral)
+    {
+        ui->pGeneral->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pAccount)
     {
         ui->pAccount->show();
     }
@@ -2249,10 +2072,6 @@ void SettingsDialog::onAnimationFinished()
     else if (ui->wStack->currentWidget() == ui->pSecurity)
     {
         ui->pSecurity->show();
-    }
-    else if (ui->wStack->currentWidget() == ui->pAdvanced)
-    {
-        ui->pAdvanced->show();
     }
 }
 
@@ -2354,10 +2173,10 @@ void SettingsDialog::on_eDownloadFolder_textChanged(const QString &text)
     preferences->setHasDefaultDownloadFolder(hasDefaultDownloadOption);
 }
 
-void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
+void SettingsDialog::on_cFileVersioning_toggled(bool checked)
 {
     if (loadingSettings) return;
-    if (checked)
+    if (!checked)
     {
         auto answer = QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"),
                                                tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
@@ -2365,19 +2184,19 @@ void SettingsDialog::on_cDisableFileVersioning_toggled(bool checked)
 
         if (answer == QMessageBox::No)
         {
-            ui->cDisableFileVersioning->blockSignals(true);
-            ui->cDisableFileVersioning->setChecked(false);
-            ui->cDisableFileVersioning->blockSignals(false);
+            ui->cFileVersioning->blockSignals(true);
+            ui->cFileVersioning->setChecked(true);
+            ui->cFileVersioning->blockSignals(false);
             return;
         }
     }
-    megaApi->setFileVersionsOption(checked); // This is actually saved to Preferences after the megaApi call succeeds
+    megaApi->setFileVersionsOption(!checked); // This is actually saved to Preferences after the megaApi call succeeds
 }
 
 void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 {
     if (loadingSettings) return;
-    preferences->disableOverlayIcons(checked);
+    preferences->disableOverlayIcons(!checked);
 #ifdef Q_OS_MACOS
     Platform::notifyRestartSyncFolders();
 #else
@@ -2422,14 +2241,10 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 }
 
 #ifdef Q_OS_WINDOWS
-void SettingsDialog::on_cDisableIcons_toggled(bool checked)
+void SettingsDialog::on_cFinderIcons_toggled(bool checked)
 {
-    if (modifyingSettings) return;
+    if (loadingSettings) return;
     if (checked)
-    {
-        Platform::removeAllSyncsFromLeftPane();
-    }
-    else
     {
         for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
@@ -2439,6 +2254,10 @@ void SettingsDialog::on_cDisableIcons_toggled(bool checked)
                                         syncSetting->getSyncID());
         }
     }
-    preferences->disableLeftPaneIcons(checked);
+    else
+    {
+        Platform::removeAllSyncsFromLeftPane();
+    }
+    preferences->disableLeftPaneIcons(!checked);
 }
 #endif

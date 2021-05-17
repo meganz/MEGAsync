@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "platform/Platform.h"
 #include "control/AppStatsEvents.h"
+#include "QMegaMessageBox.h"
 
 #include <assert.h>
 

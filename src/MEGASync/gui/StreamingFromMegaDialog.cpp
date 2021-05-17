@@ -3,6 +3,7 @@
 #include "ui_StreamingFromMegaDialog.h"
 #include "NodeSelector.h"
 
+#include "QMegaMessageBox.h"
 #include "platform/Platform.h"
 #include "control/Utilities.h"
 #include "HighDpiResize.h"

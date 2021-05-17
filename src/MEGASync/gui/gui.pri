@@ -42,7 +42,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
     $$PWD/AddExclusionDialog.cpp \
-    $$PWD/LocalCleanScheduler.cpp \
     $$PWD/TransferManagerItem.cpp \
     $$PWD/TransferItem.cpp \
     $$PWD/InfoDialogTransfersWidget.cpp \
@@ -115,7 +114,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
     $$PWD/AddExclusionDialog.h \
-    $$PWD/LocalCleanScheduler.h \
     $$PWD/TransferManagerItem.h \
     $$PWD/TransferItem.h \
     $$PWD/InfoDialogTransfersWidget.h \
@@ -185,7 +183,6 @@ win32 {
                 $$PWD/win/MegaSpeedGraph.ui \
                 $$PWD/win/ActiveTransfersWidget.ui \
                 $$PWD/win/AddExclusionDialog.ui \
-                $$PWD/win/LocalCleanScheduler.ui \
                 $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
@@ -243,7 +240,6 @@ macx {
                 $$PWD/macx/MegaSpeedGraph.ui \
                 $$PWD/macx/ActiveTransfersWidget.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
-                $$PWD/macx/LocalCleanScheduler.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/CustomTransferItem.ui \
@@ -327,7 +323,6 @@ unix:!macx {
                 $$PWD/linux/MegaSpeedGraph.ui \
                 $$PWD/linux/ActiveTransfersWidget.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
-                $$PWD/linux/LocalCleanScheduler.ui \
                 $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \

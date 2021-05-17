@@ -1,7 +1,9 @@
 #include "BindFolderDialog.h"
 #include "ui_BindFolderDialog.h"
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "control/Utilities.h"
+
 #include <QInputDialog>
 
 using namespace mega;
