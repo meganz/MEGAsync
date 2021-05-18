@@ -45,7 +45,7 @@ constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
-constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
+constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
 // FIXME: Re-evaluate size for Imports tab
 constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
 // FIXME: Re-evaluate sizes for Network tab
