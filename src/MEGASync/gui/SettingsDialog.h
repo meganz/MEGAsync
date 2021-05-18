@@ -86,7 +86,7 @@ private slots:
 
     void on_bUpgrade_clicked();
     void on_bUpgradeBandwidth_clicked();
-
+    void on_bMyAccount_clicked();
 
     void on_bAdd_clicked();
     void on_bDelete_clicked();

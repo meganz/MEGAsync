@@ -602,6 +602,11 @@ void SettingsDialog::on_bUpgrade_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
+void SettingsDialog::on_bMyAccount_clicked()
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account")));
+}
+
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
     on_bUpgrade_clicked();

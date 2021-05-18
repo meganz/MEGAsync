@@ -15,9 +15,6 @@ public:
     void drawAvatarFromEmail(QString email);
     void clearData();
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
-
 protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
