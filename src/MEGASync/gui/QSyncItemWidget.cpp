@@ -175,8 +175,6 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
 
 void QSyncItemWidget::on_bReveal_clicked()
 {
-    //TODO: Path is not longer presetn at lSyncName, so we need to figure out how to get that in order to open it
-    // both local or remote.
     switch (mItemType)
     {
         case LOCAL_FOLDER:
