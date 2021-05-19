@@ -1812,11 +1812,21 @@ void SettingsDialog::syncsStateInformation(int state)
             // If any sync is disabled, shows warning message
             if (areSyncsDisabled)
             {
+                // TODO: Replace toolbar item image for win and linux with specific icon for a disabled sync
+                // and uptodate one depending if there are syncs disabled or not
                 ui->sSyncsState->setCurrentWidget(ui->pSyncsDisabled);
+#ifdef Q_OS_MACOS
+                QString syncs(QString::fromUtf8("settings-syncs-error"));
+                toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+#endif
             }
             else
             {
                 ui->sSyncsState->setCurrentWidget(ui->pNoErrors);
+#ifdef Q_OS_MACOS
+                QString syncs(QString::fromUtf8("settings-syncs"));
+                toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+#endif
             }
         }
             break;
