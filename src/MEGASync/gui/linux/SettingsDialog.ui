@@ -1127,21 +1127,8 @@ padding-bottom: 6px;
           <string>Account</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="AvatarWidget" name="wAvatar" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
-            </property>
-           </widget>
+          <item alignment="Qt::AlignTop">
+           <widget class="AvatarWidget" name="wAvatar" native="true"/>
           </item>
           <item>
            <widget class="QWidget" name="wDetails" native="true">
@@ -1199,10 +1186,52 @@ padding-bottom: 6px;
                </property>
               </widget>
              </item>
+             <item row="0" column="0" colspan="5">
+              <widget class="QLabel" name="lName">
+               <property name="styleSheet">
+                <string notr="true">QLabel
+{
+font-weight: bold;
+}</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="bUpgrade">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="text">
+                <string>Upgrade</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QPushButton" name="bMyAccount">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>My Account</string>
+               </property>
+              </widget>
+             </item>
              <item row="2" column="1">
               <widget class="QLabel" name="lAccountType">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -1221,35 +1250,28 @@ font-weight: bold;
                </property>
               </widget>
              </item>
-             <item row="2" column="2">
-              <widget class="QPushButton" name="bMyAccount">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>My Account</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="3">
+             <item row="1" column="0" colspan="5">
               <widget class="QLabel" name="lEmail">
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
               </widget>
              </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="lName">
-               <property name="styleSheet">
-                <string notr="true">QLabel
-{
-font-weight: bold;
-}</string>
+             <item row="2" column="3">
+              <spacer name="horizontalSpacer_15">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-              </widget>
+               <property name="sizeType">
+                <enum>QSizePolicy::Maximum</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>12</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -1266,17 +1288,14 @@ font-weight: bold;
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Storage space</string>
+          <string>Storage Space</string>
          </property>
          <property name="flat">
           <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
           <item>
-           <widget class="QProgressBar" name="pStorage">
+           <widget class="QProgressBar" name="pStorageQuota">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1326,19 +1345,6 @@ font-weight: bold;
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QPushButton" name="bUpgrade">
-              <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
-              </property>
-              <property name="text">
-               <string>Upgrade</string>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
          </layout>
@@ -1347,17 +1353,14 @@ font-weight: bold;
        <item>
         <widget class="QGroupBox" name="gBandwidthQuota">
          <property name="title">
-          <string>Transfer quota</string>
+          <string>Transfer Quota</string>
          </property>
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <property name="topMargin">
-           <number>25</number>
-          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_999">
           <item>
-           <widget class="QProgressBar" name="pUsedBandwidth">
+           <widget class="QProgressBar" name="pTransferQuota">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1390,19 +1393,6 @@ font-weight: bold;
                </size>
               </property>
              </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="bUpgradeBandwidth">
-              <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
-              </property>
-              <property name="text">
-               <string>Upgrade</string>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-             </widget>
             </item>
            </layout>
           </item>
@@ -3010,10 +3000,9 @@ font-weight: bold;
   <tabstop>bSyncs</tabstop>
   <tabstop>bAccount</tabstop>
   <tabstop>bNetwork</tabstop>
-  <tabstop>pStorage</tabstop>
+  <tabstop>pStorageQuota</tabstop>
   <tabstop>lStorage</tabstop>
   <tabstop>bStorageDetails</tabstop>
-  <tabstop>bUpgrade</tabstop>
   <tabstop>cShowNotifications</tabstop>
   <tabstop>cStartOnStartup</tabstop>
   <tabstop>cAutoUpdate</tabstop>
@@ -3021,7 +3010,6 @@ font-weight: bold;
   <tabstop>tSyncs</tabstop>
   <tabstop>bDelete</tabstop>
   <tabstop>bAdd</tabstop>
-  <tabstop>bUpgradeBandwidth</tabstop>
   <tabstop>lUploadFolder</tabstop>
   <tabstop>eUploadFolder</tabstop>
   <tabstop>bUploadFolder</tabstop>

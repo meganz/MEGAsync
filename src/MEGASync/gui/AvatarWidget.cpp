@@ -84,8 +84,20 @@ void AvatarWidget::clearData()
     color = QString();
 }
 
+QSize AvatarWidget::minimumSizeHint() const
+{
+    return QSize(36, 36);
+}
+
+QSize AvatarWidget::sizeHint() const
+{
+    return QSize(36, 36);
+}
+
 void AvatarWidget::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event)
+
     if (letter.isNull() && pathToFile.isNull())
     {
         return;
