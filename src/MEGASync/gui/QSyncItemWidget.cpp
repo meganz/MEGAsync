@@ -217,6 +217,7 @@ void QSyncItemWidget::configureSyncTypeUI(int type) const
     {
     case LOCAL_FOLDER:
     {
+        ui->bSyncState->setIcon(QIcon(QString::fromAscii("://images/ic_two_way_sync.png")));
         ui->bSyncState->show();
         ui->bSyncOptions->hide();
         }
@@ -256,6 +257,11 @@ void QSyncItemWidget::setError(int error)
     if (error)
     {
         ui->bSyncState->setToolTip(QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(error)));
+        ui->bSyncState->setIcon(QIcon(QString::fromAscii("://images/ic_sync_warning.png")));
+    }
+    else
+    {
+        ui->bSyncState->setToolTip(QString::fromUtf8(""));
     }
 
     elidePathLabel();
