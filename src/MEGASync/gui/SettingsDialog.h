@@ -85,6 +85,7 @@ private slots:
 #endif
 
     void on_bUpgrade_clicked();
+    void on_bBuyMoreSpace_clicked();
     void on_bUpgradeBandwidth_clicked();
 
 

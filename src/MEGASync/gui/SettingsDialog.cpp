@@ -313,16 +313,10 @@ void SettingsDialog::setOverQuotaMode(bool mode)
 {
     if (mode)
     {
-        QString url = QString::fromUtf8("mega://#pro");
-        Utilities::getPROurlWithParameters(url);
-        ui->lOQWarning->setText(tr("Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]")
-                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
-                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
         ui->wOQError->show();
     }
     else
     {
-        ui->lOQWarning->setText(QString::fromUtf8(""));
         ui->wOQError->hide();
     }
 
@@ -600,6 +594,11 @@ void SettingsDialog::on_bUpgrade_clicked()
     QString url = QString::fromUtf8("mega://#pro");
     Utilities::getPROurlWithParameters(url);
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+}
+
+void SettingsDialog::on_bBuyMoreSpace_clicked()
+{
+    on_bUpgrade_clicked();
 }
 
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
