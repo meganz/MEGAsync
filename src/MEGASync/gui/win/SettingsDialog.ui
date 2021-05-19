@@ -1301,7 +1301,7 @@ padding-bottom: 6px;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <widget class="QProgressBar" name="pStorage">
+           <widget class="QProgressBar" name="pStorageQuota">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1366,7 +1366,7 @@ padding-bottom: 6px;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9999">
           <item>
-           <widget class="QProgressBar" name="pUsedBandwidth">
+           <widget class="QProgressBar" name="pTransferQuota">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -3006,7 +3006,7 @@ padding-bottom: 6px;
   <tabstop>bSyncs</tabstop>
   <tabstop>bAccount</tabstop>
   <tabstop>bNetwork</tabstop>
-  <tabstop>pStorage</tabstop>
+  <tabstop>pStorageQuota</tabstop>
   <tabstop>lStorage</tabstop>
   <tabstop>bStorageDetails</tabstop>
   <tabstop>cShowNotifications</tabstop>
