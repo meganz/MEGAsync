@@ -61,7 +61,7 @@ void QSyncItemWidget::setPath(const QString &path)
     //If full sync mode ("/"), avoid empty display name
     if (mDisplayName.isEmpty())
     {
-        mDisplayName.append(QChar::fromAscii('/'));
+        mDisplayName.append(QLatin1Char('/'));
     }
 
     elidePathLabel();
@@ -98,9 +98,9 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
     {
         mOptionsMenu = new QMenu();
 #ifdef __APPLE__
-        mOptionsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        mOptionsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
-        mOptionsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
+        mOptionsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
     }
     else
@@ -126,7 +126,7 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
     #else
         auto openLocalDebris{tr("Open .debris folder")};
     #endif
-        mOpenDebris = new MenuItemAction(openLocalDebris, QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
+        mOpenDebris = new MenuItemAction(openLocalDebris, QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
         connect(mOpenDebris, SIGNAL(triggered()), this, SIGNAL(onOpenLocalCache()), Qt::QueuedConnection);
     }
 
@@ -137,7 +137,7 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
         mSyncInfo = NULL;
     }
 
-    mSyncInfo = new MenuItemAction(tr("Info"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
+    mSyncInfo = new MenuItemAction(tr("Info"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
     connect(mSyncInfo, SIGNAL(triggered()), this, SIGNAL(onSyncInfo()), Qt::QueuedConnection);
 
     //Add deleteSync item
@@ -147,7 +147,7 @@ void QSyncItemWidget::on_bSyncOptions_clicked()
         mDeleteSync = NULL;
     }
 
-    mDeleteSync = new MenuItemAction(tr("Delete Sync"), QIcon(QString::fromAscii("://images/ico_about_MEGA.png")));
+    mDeleteSync = new MenuItemAction(tr("Delete Sync"), QIcon(QString::fromUtf8("://images/ico_about_MEGA.png")));
     connect(mDeleteSync, SIGNAL(triggered()), this, SIGNAL(onDeleteSync()), Qt::QueuedConnection);
 
     mOptionsMenu->addAction(mSyncInfo);
@@ -217,7 +217,7 @@ void QSyncItemWidget::configureSyncTypeUI(int type) const
     {
     case LOCAL_FOLDER:
     {
-        ui->bSyncState->setIcon(QIcon(QString::fromAscii("://images/ic_two_way_sync.png")));
+        ui->bSyncState->setIcon(QIcon(QString::fromUtf8("://images/ic_two_way_sync.png")));
         ui->bSyncState->show();
         ui->bSyncOptions->hide();
         }
@@ -257,7 +257,7 @@ void QSyncItemWidget::setError(int error)
     if (error)
     {
         ui->bSyncState->setToolTip(QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(error)));
-        ui->bSyncState->setIcon(QIcon(QString::fromAscii("://images/ic_sync_warning.png")));
+        ui->bSyncState->setIcon(QIcon(QString::fromUtf8("://images/ic_sync_warning.png")));
     }
     else
     {
