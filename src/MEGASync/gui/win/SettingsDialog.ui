@@ -468,7 +468,7 @@ border: none;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
@@ -1189,6 +1189,12 @@ border: none;
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel
+{
+font-weight: bold;
+}</string>
+               </property>
                <property name="indent">
                 <number>5</number>
                </property>
@@ -1240,7 +1246,14 @@ border: none;
               </widget>
              </item>
              <item row="0" column="0" colspan="5">
-              <widget class="QLabel" name="lName"/>
+              <widget class="QLabel" name="lName">
+               <property name="styleSheet">
+                <string notr="true">QLabel
+{
+font-weight: bold;
+}</string>
+               </property>
+              </widget>
              </item>
              <item row="2" column="3">
               <spacer name="horizontalSpacer_15">
