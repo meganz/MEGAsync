@@ -16,7 +16,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaProxyStyle.cpp \
     $$PWD/AccountDetailsDialog.cpp \
     $$PWD/DownloadFromMegaDialog.cpp \
-    $$PWD/SizeLimitDialog.cpp \
     $$PWD/UsageWidget.cpp \
     $$PWD/QMegaModel.cpp \
     $$PWD/MegaItem.cpp \
@@ -88,7 +87,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaProxyStyle.h \
     $$PWD/AccountDetailsDialog.h \
     $$PWD/DownloadFromMegaDialog.h \
-    $$PWD/SizeLimitDialog.h \
     $$PWD/UsageWidget.h \
     $$PWD/QMegaModel.h \
     $$PWD/MegaItem.h \
@@ -167,7 +165,6 @@ win32 {
                 $$PWD/win/SettingsDialog.ui \
                 $$PWD/win/AccountDetailsDialog.ui \
                 $$PWD/win/DownloadFromMegaDialog.ui \
-                $$PWD/win/SizeLimitDialog.ui \
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
@@ -222,7 +219,6 @@ macx {
                 $$PWD/macx/SettingsDialog.ui \
                 $$PWD/macx/AccountDetailsDialog.ui \
                 $$PWD/macx/DownloadFromMegaDialog.ui \
-                $$PWD/macx/SizeLimitDialog.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
                 $$PWD/macx/GuestWidget.ui \
                 $$PWD/macx/StreamingFromMegaDialog.ui \
@@ -305,7 +301,6 @@ unix:!macx {
                 $$PWD/linux/SettingsDialog.ui \
                 $$PWD/linux/AccountDetailsDialog.ui \
                 $$PWD/linux/DownloadFromMegaDialog.ui \
-                $$PWD/linux/SizeLimitDialog.ui \
                 $$PWD/linux/ChangeLogDialog.ui \
                 $$PWD/linux/GuestWidget.ui \
                 $$PWD/linux/StreamingFromMegaDialog.ui \
