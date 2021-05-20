@@ -97,39 +97,12 @@ font-style: italic;
 margin-right: 5px;
 }
 
-#pUsedBandwidth
-{
-margin-right: 6px;
-margin-left: 1px;
-}
-
-#cProxyRequiresPassword
-{
-spacing: 11px;
-padding-top: 1px;
-padding-bottom: 0px;
-}
-
-#lStorage
-{
-padding-bottom: 1px;
-}
-
-#lProxyType
-{
-padding-bottom: -1px;
-}
-
 #lHeader
 {
 background-color: white;
 border: none;
 }
 
-#lStorageSpace
-{
-padding-bottom: 6px;
-}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -1296,9 +1269,6 @@ padding-bottom: 6px;
          <property name="title">
           <string>Storage Space</string>
          </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
            <widget class="QProgressBar" name="pStorageQuota">
@@ -1360,9 +1330,6 @@ padding-bottom: 6px;
         <widget class="QGroupBox" name="gBandwidthQuota">
          <property name="title">
           <string>Transfer Quota</string>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_9999">
           <item>
