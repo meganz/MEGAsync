@@ -46,8 +46,7 @@ constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
-// FIXME: Re-evaluate size for Imports tab
-constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
+constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{513};
 // FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
@@ -144,6 +143,10 @@ void SettingsDialog::initializeNativeUIComponents()
     ui->wSyncsSegmentedControl->configureTableSegment();
     connect(ui->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
     connect(ui->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+
+    ui->wExclusionsSegmentedControl->configureTableSegment();
+    connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAddName_clicked);
+    connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDeleteName_clicked);
 }
 #endif
 
@@ -251,6 +254,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->pNetwork->hide();
     }
 #endif
+
+    ui->bRestart->hide();
 
     highDpiResize.init(this);
     ((MegaApplication*)qApp)->attachStorageObserver(*this);
@@ -563,7 +568,6 @@ void SettingsDialog::on_bImports_clicked()
     {
         return;
     }
-
     ui->wStack->setCurrentWidget(ui->pImports);
 
 #ifdef Q_OS_MACOS
@@ -574,7 +578,7 @@ void SettingsDialog::on_bImports_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromUtf8("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -644,6 +648,8 @@ void SettingsDialog::loadSettings()
     }
 
     //General
+    ui->cFileVersioning->setChecked(!preferences->fileVersioningDisabled());
+    ui->cOverlayIcons->setChecked(!preferences->overlayIconsDisabled());
     ui->cCacheSchedulerEnabled->setChecked(preferences->cleanerDaysLimit());
     ui->sCacheSchedulerDays->setEnabled(preferences->cleanerDaysLimit());
     ui->sCacheSchedulerDays->setValue(preferences->cleanerDaysLimitValue());
@@ -744,6 +750,7 @@ void SettingsDialog::loadSettings()
 
     updateNetworkTab();
 
+    // Imports tab
     ui->lExcludedNames->clear();
     QStringList excludedNames = preferences->getExcludedSyncNames();
     for (int i = 0; i < excludedNames.size(); i++)
@@ -757,9 +764,31 @@ void SettingsDialog::loadSettings()
         ui->lExcludedNames->addItem(excludedPaths[i]);
     }
 
-    ui->lLimitsInfo->setText(excludeBySizeInfo());
-    ui->cFileVersioning->setChecked(!preferences->fileVersioningDisabled());
-    ui->cOverlayIcons->setChecked(!preferences->overlayIconsDisabled());
+    bool upperSizeLimit (preferences->upperSizeLimit());
+    bool lowerSizeLimit (preferences->lowerSizeLimit());
+
+    for (auto cb : {ui->cbExcludeUpperUnit, ui->cbExcludeLowerUnit})
+    {
+        cb->clear();
+        cb->addItem(tr("Bytes"));
+        cb->addItem(tr("KB"));
+        cb->addItem(tr("MB"));
+        cb->addItem(tr("GB"));
+    }
+
+    ui->eLowerThan->setMaximum(9999);
+    ui->cExcludeUpperThan->setChecked(upperSizeLimit);
+    ui->eUpperThan->setEnabled(upperSizeLimit);
+    ui->cbExcludeUpperUnit->setEnabled(upperSizeLimit);
+    ui->eUpperThan->setValue(preferences->upperSizeLimitValue());
+    ui->cbExcludeUpperUnit->setCurrentIndex(preferences->upperSizeLimitUnit());
+
+    ui->eUpperThan->setMaximum(9999);
+    ui->cExcludeLowerThan->setChecked(lowerSizeLimit);
+    ui->eLowerThan->setEnabled(lowerSizeLimit);
+    ui->cbExcludeLowerUnit->setEnabled(lowerSizeLimit);
+    ui->eLowerThan->setValue(preferences->lowerSizeLimitValue());
+    ui->cbExcludeLowerUnit->setCurrentIndex(preferences->lowerSizeLimitUnit());
 
     loadingSettings--;
 }
@@ -1392,31 +1421,64 @@ void SettingsDialog::on_bDeleteName_clicked()
     saveExcludeSyncNames();
 }
 
-void SettingsDialog::on_bExcludeSize_clicked()
+void SettingsDialog::on_cExcludeUpperThan_clicked()
 {
-    QPointer<SizeLimitDialog> dialog = new SizeLimitDialog(this);
-    dialog->setUpperSizeLimit(preferences->upperSizeLimit());
-    dialog->setLowerSizeLimit(preferences->lowerSizeLimit());
-    dialog->setUpperSizeLimitValue(preferences->upperSizeLimitValue());
-    dialog->setLowerSizeLimitValue(preferences->lowerSizeLimitValue());
-    dialog->setUpperSizeLimitUnit(preferences->upperSizeLimitUnit());
-    dialog->setLowerSizeLimitUnit(preferences->lowerSizeLimitUnit());
+    if (loadingSettings) return;
+    bool enable (ui->cExcludeUpperThan->isChecked());
+    preferences->setUpperSizeLimit(enable);
+    preferences->setCrashed(true);
+    ui->eUpperThan->setEnabled(enable);
+    ui->cbExcludeUpperUnit->setEnabled(enable);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
 
-    int ret = dialog->exec();
-    if (dialog && (ret == QDialog::Accepted))
-    {
-        preferences->setUpperSizeLimit(dialog->upperSizeLimit());
-        preferences->setLowerSizeLimit(dialog->lowerSizeLimit());
-        preferences->setUpperSizeLimitValue(dialog->upperSizeLimitValue());
-        preferences->setLowerSizeLimitValue(dialog->lowerSizeLimitValue());
-        preferences->setUpperSizeLimitUnit(dialog->upperSizeLimitUnit());
-        preferences->setLowerSizeLimitUnit(dialog->lowerSizeLimitUnit());
-        preferences->setCrashed(true); // removes cached application state
-        ui->lLimitsInfo->setText(excludeBySizeInfo());
-        ui->gExcludedFilesInfo->show();
-    }
+void SettingsDialog::on_cExcludeLowerThan_clicked()
+{
+    if (loadingSettings) return;
+    bool enable (ui->cExcludeLowerThan->isChecked());
+    preferences->setLowerSizeLimit(enable);
+    preferences->setCrashed(true);
+    ui->eLowerThan->setEnabled(enable);
+    ui->cbExcludeLowerUnit->setEnabled(enable);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
 
-    delete dialog;
+void SettingsDialog::on_eUpperThan_valueChanged(int i)
+{
+    if (loadingSettings) return;
+    preferences->setUpperSizeLimitValue(i);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
+
+void SettingsDialog::on_eLowerThan_valueChanged(int i)
+{
+    if (loadingSettings) return;
+    preferences->setLowerSizeLimitValue(i);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
+
+void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
+{
+    if (loadingSettings) return;
+    preferences->setUpperSizeLimitUnit(index);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
+
+void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
+{
+    if (loadingSettings) return;
+    preferences->setLowerSizeLimitUnit(index);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
 }
 
 void SettingsDialog::on_cCacheSchedulerEnabled_toggled()
@@ -1460,47 +1522,6 @@ void SettingsDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-QString SettingsDialog::excludeBySizeInfo()
-{
-    QString format;
-
-    bool hasUpperLimit = preferences->upperSizeLimit();
-    bool hasLowerLimit = preferences->lowerSizeLimit();
-    long long upperLimit = preferences->upperSizeLimitValue();
-    long long lowerLimit = preferences->lowerSizeLimitValue();
-    int upperLimitUnit = preferences->upperSizeLimitUnit();
-    int lowerLimitUnit = preferences->lowerSizeLimitUnit();
-
-    if (hasLowerLimit || hasUpperLimit)
-    {
-        format += QString::fromUtf8("(");
-
-        if (hasLowerLimit)
-        {
-            auto converted = static_cast<unsigned long long>(lowerLimit * pow(1024.0L, lowerLimitUnit));
-            format  += QString::fromUtf8("<") + Utilities::getSizeString(converted);
-        }
-
-        if (hasLowerLimit && hasUpperLimit)
-        {
-            format  += QString::fromUtf8(", ");
-        }
-
-        if (hasUpperLimit)
-        {
-            auto converted = static_cast<unsigned long long>(upperLimit * pow(1024.0L, upperLimitUnit));
-            format  += QString::fromUtf8(">") + Utilities::getSizeString(converted);
-        }
-
-        format += QString::fromUtf8(")");
-    }
-    else
-    {
-        format = tr("Disabled");
-    }
-    return format;
-}
-
 void SettingsDialog::saveExcludeSyncNames()
 {
     QStringList excludedNames;
@@ -1518,6 +1539,7 @@ void SettingsDialog::saveExcludeSyncNames()
     preferences->setCrashed(true);
 
     ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
 }
 
 void SettingsDialog::updateNetworkTab()
