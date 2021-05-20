@@ -41,7 +41,6 @@ public:
 
     void setProxyOnly(bool proxyOnly);
     void setOverQuotaMode(bool mode);
-    void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab = -1);
     void storageChanged();
@@ -81,7 +80,7 @@ private slots:
 
 
     void on_bUpgrade_clicked();
-    void on_bUpgradeBandwidth_clicked();
+    void on_bMyAccount_clicked();
 
     void on_bAdd_clicked();
     void on_bDelete_clicked();
