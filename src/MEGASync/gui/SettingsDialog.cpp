@@ -1867,7 +1867,6 @@ void SettingsDialog::updateAccountElements()
     }
 
     ui->lAccountImage->setIcon(icon);
-    ui->lAccountImage->setIconSize(QSize(11, 11));
 }
 
 void SettingsDialog::on_bUpdate_clicked()
