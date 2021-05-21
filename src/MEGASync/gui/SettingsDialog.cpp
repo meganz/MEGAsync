@@ -527,22 +527,6 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 }
 
-void SettingsDialog::on_bNetwork_clicked()
-{
-    emit userActivity();
-
-    if (ui->wStack->currentWidget() == ui->pNetwork)
-    {
-        return;
-    }
-
-    ui->wStack->setCurrentWidget(ui->pNetwork);
-
-#ifdef Q_OS_MACOS
-    ui->pNetwork->hide();
-#endif
-}
-
 void SettingsDialog::on_bSecurity_clicked()
 {
     emit userActivity();
@@ -573,6 +557,22 @@ void SettingsDialog::on_bImports_clicked()
 #ifdef Q_OS_MACOS
     ui->pImports->hide();
     animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
+}
+
+void SettingsDialog::on_bNetwork_clicked()
+{
+    emit userActivity();
+
+    if (ui->wStack->currentWidget() == ui->pNetwork)
+    {
+        return;
+    }
+
+    ui->wStack->setCurrentWidget(ui->pNetwork);
+
+#ifdef Q_OS_MACOS
+    ui->pNetwork->hide();
 #endif
 }
 
@@ -2206,14 +2206,13 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 {
     BandwidthSettings *bandwidthSettings = new BandwidthSettings(app, this);
     if (bandwidthSettings->exec() == QDialog::Rejected)
+    {
         return;
+    }
 
-    if(preferences->uploadLimitKB() > 0)
-        app->setUploadLimit(0);
-    else
-        app->setUploadLimit(preferences->uploadLimitKB());
+    app->setUploadLimit(std::max(preferences->uploadLimitKB(), 0));
+
     app->setMaxUploadSpeed(preferences->uploadLimitKB());
-
     app->setMaxDownloadSpeed(preferences->downloadLimitKB());
 
     app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
