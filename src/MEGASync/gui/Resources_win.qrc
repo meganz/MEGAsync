@@ -546,9 +546,6 @@
         <file>images/proiiicrest.png</file>
         <file>images/proiiicrest@2x.png</file>
         <file>images/proiiicrest@3x.png</file>
-        <file>images/proxies_32.png</file>
-        <file>images/proxies_32@2x.png</file>
-        <file>images/proxies_32@3x.png</file>
         <file>images/rb_checked.svg</file>
         <file>images/rb_checked_disabled.svg</file>
         <file>images/rb_checked_hover.svg</file>
@@ -876,5 +873,8 @@
         <file>images/warning-disabled-syncs.png</file>
         <file>images/warning-disabled-syncs@2x.png</file>
         <file>images/warning-disabled-syncs@3x.png</file>
+        <file>images/Icon_Win_Network.png</file>
+        <file>images/Icon_Win_Network@2x.png</file>
+        <file>images/Icon_Win_Network@3x.png</file>
     </qresource>
 </RCC>
