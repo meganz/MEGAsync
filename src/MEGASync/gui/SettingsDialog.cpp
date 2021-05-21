@@ -1942,7 +1942,7 @@ void SettingsDialog::openSettingsTab(int tab)
     case GENERAL_TAB:
         reloadUIpage = true;
 #ifndef Q_OS_MACOS
-        ui->bGeneral->setChecked(true);
+        ui->bGeneral->click();
 #else
         toolBar->setSelectedItem(bGeneral.get());
         emit bGeneral.get()->activated();
@@ -1952,7 +1952,7 @@ void SettingsDialog::openSettingsTab(int tab)
     case ACCOUNT_TAB:
         reloadUIpage = true;
 #ifndef Q_OS_MACOS
-        ui->bAccount->setChecked(true);
+        ui->bAccount->click();
 #else
         toolBar->setSelectedItem(bAccount.get());
         emit bAccount.get()->activated();
@@ -1961,16 +1961,25 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case SYNCS_TAB:
 #ifndef Q_OS_MACOS
-        ui->bSyncs->setChecked(true);
+        ui->bSyncs->click();
 #else
         toolBar->setSelectedItem(bSyncs.get());
         emit bSyncs.get()->activated();
 #endif
         break;
 
+    case SECURITY_TAB:
+#ifndef Q_OS_MACOS
+        ui->bSecurity->click();
+#else
+        toolBar->setSelectedItem(bSecurity.get());
+        emit bSecurity.get()->activated();
+#endif
+        break;
+
     case IMPORTS_TAB:
 #ifndef Q_OS_MACOS
-        ui->bImports->setChecked(true);
+        ui->bImports->click();
 #else
         toolBar->setSelectedItem(bImports.get());
         emit bImports.get()->activated();
@@ -1979,19 +1988,10 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case NETWORK_TAB:
 #ifndef Q_OS_MACOS
-        ui->bNetwork->setChecked(true);
+        ui->bNetwork->click();
 #else
         toolBar->setSelectedItem(bNetwork.get());
         emit bNetwork.get()->activated();
-#endif
-        break;
-
-    case SECURITY_TAB:
-#ifndef Q_OS_MACOS
-        ui->bSecurity->setChecked(true);
-#else
-        toolBar->setSelectedItem(bSecurity.get());
-        emit bSecurity.get()->activated();
 #endif
         break;
 
