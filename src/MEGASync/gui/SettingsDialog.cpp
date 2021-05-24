@@ -48,8 +48,7 @@ constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
 constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{513};
 // FIXME: Re-evaluate sizes for Network tab
-constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
-constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{190};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{400};
 #endif
 
@@ -573,6 +572,7 @@ void SettingsDialog::on_bNetwork_clicked()
 
 #ifdef Q_OS_MACOS
     ui->pNetwork->hide();
+    animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
