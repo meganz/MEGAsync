@@ -18,9 +18,7 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
 {
     mUi->setupUi(this);
     mUi->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
-#ifdef Q_OS_LINUX
-    mUi->rProxyAuto->hide(); // Auto Proxy mode not available on Linux flavors
-#endif
+
     mProgressDialog->setWindowModality(Qt::WindowModal);
 
     initialize();
@@ -31,7 +29,9 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
     connect(mUi->rProxyManual, &QRadioButton::clicked, this, [this]{setManualMode(true);});
     connect(mUi->cProxyRequiresPassword, &QCheckBox::toggled, this, [this]{setManualMode(true);});
     connect(mUi->rNoProxy, &QRadioButton::clicked, this, [this]{setManualMode(false);});
+#ifndef Q_OS_LINUX
     connect(mUi->rProxyAuto, &QRadioButton::clicked, this, [this]{setManualMode(false);});
+#endif
 }
 
 ProxySettings::~ProxySettings()
@@ -44,7 +44,9 @@ ProxySettings::~ProxySettings()
 void ProxySettings::initialize()
 {
     mUi->rNoProxy->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_NONE);
+#ifndef Q_OS_LINUX
     mUi->rProxyAuto->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_AUTO);
+#endif
     mUi->rProxyManual->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM);
     mUi->cProxyType->setCurrentIndex(mPreferences->proxyProtocol());
     mUi->eProxyServer->setText(mPreferences->proxyServer());
@@ -93,10 +95,12 @@ void ProxySettings::onProxyTestSuccess()
     {
         mPreferences->setProxyType(Preferences::PROXY_TYPE_NONE);
     }
+#ifndef Q_OS_LINUX
     else if (mUi->rProxyAuto->isChecked())
     {
         mPreferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
     }
+#endif
     else if (mUi->rProxyManual->isChecked())
     {
         mPreferences->setProxyType(Preferences::PROXY_TYPE_CUSTOM);
@@ -108,7 +112,6 @@ void ProxySettings::onProxyTestSuccess()
     mPreferences->setProxyRequiresAuth(mUi->cProxyRequiresPassword->isChecked());
     mPreferences->setProxyUsername(mUi->eProxyUsername->text());
     mPreferences->setProxyPassword(mUi->eProxyPassword->text());
-
 
     if (mProgressDialog->isVisible())
         mProgressDialog->hide();
@@ -140,6 +143,7 @@ void ProxySettings::on_bUpdate_clicked()
             proxy.setPassword(mUi->eProxyPassword->text());
         }
     }
+#ifndef Q_OS_LINUX
     else if (mUi->rProxyAuto->isChecked())
     {
         MegaProxy *proxySettings = mApp->getMegaApi()->getAutoProxySettings();
@@ -167,7 +171,7 @@ void ProxySettings::on_bUpdate_clicked()
         }
         delete proxySettings;
     }
-
+#endif
     mProgressDialog->show();
 
     mConnectivityChecker->setProxy(proxy);
