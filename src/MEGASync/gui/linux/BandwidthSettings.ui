@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>396</height>
+    <height>391</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,12 +22,20 @@
   <property name="windowTitle">
    <string>Bandwidth</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#lUseHttps
+{
+	margin:0px;
+	padding: 0px;
+	border: none;
+}</string>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="BandwidthSettingsLayout">
    <property name="spacing">
-    <number>16</number>
+    <number>4</number>
    </property>
    <property name="leftMargin">
     <number>20</number>
@@ -39,7 +47,7 @@
     <number>20</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>20</number>
    </property>
    <item>
     <widget class="QGroupBox" name="gBandwidth">
@@ -56,6 +64,9 @@
       <string>Upload rate limit</string>
      </property>
      <layout class="QFormLayout" name="gBandwidthLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
       <property name="fieldGrowthPolicy">
        <enum>QFormLayout::FieldsStayAtSizeHint</enum>
       </property>
@@ -69,16 +80,16 @@
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
       <property name="horizontalSpacing">
-       <number>22</number>
+       <number>30</number>
       </property>
       <property name="verticalSpacing">
-       <number>8</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>16</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -130,8 +141,8 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
-          <height>0</height>
+          <width>0</width>
+          <height>24</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -153,10 +164,16 @@
       </item>
       <item row="1" column="1">
        <widget class="QWidget" name="wUploadLimit" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <layout class="QHBoxLayout" name="wUploadLimitLayout">
          <property name="spacing">
           <number>6</number>
          </property>
@@ -179,6 +196,12 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>24</height>
+            </size>
            </property>
            <property name="focusPolicy">
             <enum>Qt::StrongFocus</enum>
@@ -233,7 +256,7 @@
            <property name="minimumSize">
             <size>
              <width>20</width>
-             <height>0</height>
+             <height>24</height>
             </size>
            </property>
            <property name="focusPolicy">
@@ -243,19 +266,6 @@
             <string>KB/s</string>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="hUploadLimit">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>
@@ -288,7 +298,7 @@
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
       <property name="horizontalSpacing">
-       <number>22</number>
+       <number>30</number>
       </property>
       <property name="verticalSpacing">
        <number>0</number>
@@ -297,7 +307,7 @@
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>16</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -315,7 +325,7 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>90</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
@@ -404,7 +414,7 @@
          <item>
           <widget class="QLabel" name="lDownloadLimit">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -423,19 +433,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <spacer name="hUploadLimit_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </widget>
       </item>
@@ -453,15 +450,18 @@
      <property name="title">
       <string>Number of parallel TCP connections per transfer</string>
      </property>
-     <layout class="QHBoxLayout" name="wTransferConnectionsLayout">
-      <property name="spacing">
-       <number>10</number>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+      </property>
+      <property name="horizontalSpacing">
+       <number>30</number>
       </property>
       <property name="leftMargin">
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>16</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -469,101 +469,89 @@
       <property name="bottomMargin">
        <number>10</number>
       </property>
-      <item>
-       <widget class="QLabel" name="lDownloadConnections">
-        <property name="text">
-         <string>Downloads</string>
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="dlLayout">
+        <property name="spacing">
+         <number>10</number>
         </property>
-       </widget>
+        <item>
+         <widget class="QLabel" name="lDownloadConnections">
+          <property name="text">
+           <string>Downloads</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="eMaxDownloadConnections">
+          <property name="minimumSize">
+           <size>
+            <width>45</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>6</number>
+          </property>
+          <property name="value">
+           <number>4</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item>
-       <widget class="QSpinBox" name="eMaxDownloadConnections">
-        <property name="minimumSize">
-         <size>
-          <width>45</width>
-          <height>24</height>
-         </size>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="ulLayout">
+        <property name="spacing">
+         <number>10</number>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>6</number>
-        </property>
-        <property name="value">
-         <number>4</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="lUploadConnections">
-        <property name="text">
-         <string>Uploads</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="eMaxUploadConnections">
-        <property name="minimumSize">
-         <size>
-          <width>45</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>6</number>
-        </property>
-        <property name="value">
-         <number>3</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_7">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-       </spacer>
+        <item>
+         <widget class="QLabel" name="lUploadConnections">
+          <property name="text">
+           <string>Uploads</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="eMaxUploadConnections">
+          <property name="minimumSize">
+           <size>
+            <width>45</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>6</number>
+          </property>
+          <property name="value">
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -571,14 +559,17 @@
    <item>
     <widget class="QGroupBox" name="gUseHttps">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <layout class="QVBoxLayout" name="gUseHttpsLayout">
       <property name="spacing">
-       <number>10</number>
+       <number>2</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
       </property>
       <property name="leftMargin">
        <number>10</number>
@@ -646,7 +637,7 @@
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
