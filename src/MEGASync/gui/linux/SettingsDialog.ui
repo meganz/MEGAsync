@@ -411,7 +411,7 @@ padding-bottom: 6px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/imports_32.png</normaloff>:/images/imports_32.png</iconset>
+          <normaloff>:/images/Icon_Win_Imports.png</normaloff>:/images/Icon_Win_Imports.png</iconset>
         </property>
         <property name="iconSize">
          <size>
