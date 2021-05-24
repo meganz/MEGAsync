@@ -46,8 +46,7 @@ constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{466};//px height
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{446};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
-// FIXME: Re-evaluate size for Imports tab
-constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{344};
+constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{513};
 // FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
@@ -144,6 +143,10 @@ void SettingsDialog::initializeNativeUIComponents()
     ui->wSyncsSegmentedControl->configureTableSegment();
     connect(ui->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
     connect(ui->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+
+    ui->wExclusionsSegmentedControl->configureTableSegment();
+    connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAddName_clicked);
+    connect(ui->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDeleteName_clicked);
 }
 #endif
 
@@ -251,6 +254,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->pNetwork->hide();
     }
 #endif
+
+    ui->bRestart->hide();
 
     highDpiResize.init(this);
     ((MegaApplication*)qApp)->attachStorageObserver(*this);
@@ -528,24 +533,7 @@ void SettingsDialog::on_bNetwork_clicked()
     ui->wStack->setCurrentWidget(ui->pNetwork);
 
 #ifdef Q_OS_MACOS
-
     ui->pNetwork->hide();
-
-    int bwHeight;
-    ui->gBandwidthQuota->show();
-//    ui->bSeparatorBandwidth->show();
-
-    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        ui->gBandwidthQuota->setMinimumHeight(59);
-        animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
-    else
-    {
-        ui->gBandwidthQuota->setMinimumHeight(79);
-        animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
-
 #endif
 }
 
@@ -574,7 +562,6 @@ void SettingsDialog::on_bImports_clicked()
     {
         return;
     }
-
     ui->wStack->setCurrentWidget(ui->pImports);
 
 #ifdef Q_OS_MACOS
@@ -585,7 +572,7 @@ void SettingsDialog::on_bImports_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromUtf8("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -601,9 +588,9 @@ void SettingsDialog::on_bBuyMoreSpace_clicked()
     on_bUpgrade_clicked();
 }
 
-void SettingsDialog::on_bUpgradeBandwidth_clicked()
+void SettingsDialog::on_bMyAccount_clicked()
 {
-    on_bUpgrade_clicked();
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account")));
 }
 
 void SettingsDialog::updateUploadFolder()
@@ -660,6 +647,8 @@ void SettingsDialog::loadSettings()
     }
 
     //General
+    ui->cFileVersioning->setChecked(!preferences->fileVersioningDisabled());
+    ui->cOverlayIcons->setChecked(!preferences->overlayIconsDisabled());
     ui->cCacheSchedulerEnabled->setChecked(preferences->cleanerDaysLimit());
     ui->sCacheSchedulerDays->setEnabled(preferences->cleanerDaysLimit());
     ui->sCacheSchedulerDays->setValue(preferences->cleanerDaysLimitValue());
@@ -740,6 +729,8 @@ void SettingsDialog::loadSettings()
 
     // account type and details
     updateAccountElements();
+    updateStorageElements();
+    updateBandwidthElements();
 
     if (accountDetailsDialog)
     {
@@ -758,6 +749,7 @@ void SettingsDialog::loadSettings()
 
     updateNetworkTab();
 
+    // Imports tab
     ui->lExcludedNames->clear();
     QStringList excludedNames = preferences->getExcludedSyncNames();
     for (int i = 0; i < excludedNames.size(); i++)
@@ -771,102 +763,33 @@ void SettingsDialog::loadSettings()
         ui->lExcludedNames->addItem(excludedPaths[i]);
     }
 
-    ui->lLimitsInfo->setText(excludeBySizeInfo());
-    ui->cFileVersioning->setChecked(!preferences->fileVersioningDisabled());
-    ui->cOverlayIcons->setChecked(!preferences->overlayIconsDisabled());
+    bool upperSizeLimit (preferences->upperSizeLimit());
+    bool lowerSizeLimit (preferences->lowerSizeLimit());
+
+    for (auto cb : {ui->cbExcludeUpperUnit, ui->cbExcludeLowerUnit})
+    {
+        cb->clear();
+        cb->addItem(tr("Bytes"));
+        cb->addItem(tr("KB"));
+        cb->addItem(tr("MB"));
+        cb->addItem(tr("GB"));
+    }
+
+    ui->eLowerThan->setMaximum(9999);
+    ui->cExcludeUpperThan->setChecked(upperSizeLimit);
+    ui->eUpperThan->setEnabled(upperSizeLimit);
+    ui->cbExcludeUpperUnit->setEnabled(upperSizeLimit);
+    ui->eUpperThan->setValue(preferences->upperSizeLimitValue());
+    ui->cbExcludeUpperUnit->setCurrentIndex(preferences->upperSizeLimitUnit());
+
+    ui->eUpperThan->setMaximum(9999);
+    ui->cExcludeLowerThan->setChecked(lowerSizeLimit);
+    ui->eLowerThan->setEnabled(lowerSizeLimit);
+    ui->cbExcludeLowerUnit->setEnabled(lowerSizeLimit);
+    ui->eLowerThan->setValue(preferences->lowerSizeLimitValue());
+    ui->cbExcludeLowerUnit->setCurrentIndex(preferences->lowerSizeLimitUnit());
 
     loadingSettings--;
-}
-
-// TODO: separate storage refresh from bandwidth
-// split into separate methods
-void SettingsDialog::refreshAccountDetails()
-{
-    int accountType = preferences->accountType();
-    if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        ui->pStorage->hide();
-        ui->pUsedBandwidth->hide();
-    }
-    else
-    {
-        ui->pStorage->show();
-        ui->pUsedBandwidth->show();
-    }
-
-    long long totalStorage = preferences->totalStorage();
-    long long usedStorage = preferences->usedStorage();
-    if (totalStorage == 0)
-    {
-        ui->pStorage->setValue(0);
-        ui->lStorage->setText(tr("Data temporarily unavailable"));
-        ui->bStorageDetails->setEnabled(false);
-    }
-    else
-    {
-        ui->bStorageDetails->setEnabled(true);
-
-        if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            ui->lStorage->setText(tr("%1 used")
-                  .arg(Utilities::getSizeString(usedStorage)));
-        }
-        else
-        {
-            long double percentage = floor((100.0L*usedStorage)/totalStorage);
-            int storagePercentage = static_cast<int>(percentage);
-            ui->pStorage->setValue(storagePercentage > ui->pStorage->maximum() ? ui->pStorage->maximum() : storagePercentage);
-            ui->lStorage->setText(tr("%1 (%2%) of %3 used")
-                  .arg(Utilities::getSizeString(usedStorage))
-                  .arg(QString::number(storagePercentage))
-                  .arg(Utilities::getSizeString(totalStorage)));
-        }
-    }
-
-    long long totalBandwidth = preferences->totalBandwidth();
-    long long usedBandwidth = preferences->usedBandwidth();
-    if (accountType == Preferences::ACCOUNT_TYPE_FREE) //Free user
-    {
-        ui->gBandwidthQuota->show();
-//        ui->bSeparatorBandwidth->show();
-        ui->pUsedBandwidth->show();
-        ui->pUsedBandwidth->setValue(0);
-        ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
-                .arg(preferences->bandwidthInterval())
-                .arg(Utilities::getSizeString(usedBandwidth)));
-    }
-    else if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        ui->gBandwidthQuota->show();
-//        ui->bSeparatorBandwidth->show();
-        ui->pUsedBandwidth->hide();
-        ui->lBandwidth->setText(tr("%1 used")
-              .arg(Utilities::getSizeString(usedBandwidth)));
-    }
-    else
-    {
-        if (totalBandwidth == 0)
-        {
-            ui->gBandwidthQuota->hide();
-//            ui->bSeparatorBandwidth->hide();
-            ui->pUsedBandwidth->show();
-            ui->pUsedBandwidth->setValue(0);
-            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
-        }
-        else
-        {
-            ui->gBandwidthQuota->show();
-//            ui->bSeparatorBandwidth->show();
-            long double percentage = floor((100.0L*usedBandwidth)/totalBandwidth);
-            int bandwidthPercentage = static_cast<int>(percentage);
-            ui->pUsedBandwidth->show();
-            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
-            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-                    .arg(Utilities::getSizeString(usedBandwidth))
-                    .arg(QString::number((bandwidthPercentage < 100) ? bandwidthPercentage : 100))
-                    .arg(Utilities::getSizeString(usedBandwidth)));
-        }
-    }
 }
 
 void SettingsDialog::saveSyncSettings()
@@ -1497,31 +1420,64 @@ void SettingsDialog::on_bDeleteName_clicked()
     saveExcludeSyncNames();
 }
 
-void SettingsDialog::on_bExcludeSize_clicked()
+void SettingsDialog::on_cExcludeUpperThan_clicked()
 {
-    QPointer<SizeLimitDialog> dialog = new SizeLimitDialog(this);
-    dialog->setUpperSizeLimit(preferences->upperSizeLimit());
-    dialog->setLowerSizeLimit(preferences->lowerSizeLimit());
-    dialog->setUpperSizeLimitValue(preferences->upperSizeLimitValue());
-    dialog->setLowerSizeLimitValue(preferences->lowerSizeLimitValue());
-    dialog->setUpperSizeLimitUnit(preferences->upperSizeLimitUnit());
-    dialog->setLowerSizeLimitUnit(preferences->lowerSizeLimitUnit());
+    if (loadingSettings) return;
+    bool enable (ui->cExcludeUpperThan->isChecked());
+    preferences->setUpperSizeLimit(enable);
+    preferences->setCrashed(true);
+    ui->eUpperThan->setEnabled(enable);
+    ui->cbExcludeUpperUnit->setEnabled(enable);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
 
-    int ret = dialog->exec();
-    if (dialog && (ret == QDialog::Accepted))
-    {
-        preferences->setUpperSizeLimit(dialog->upperSizeLimit());
-        preferences->setLowerSizeLimit(dialog->lowerSizeLimit());
-        preferences->setUpperSizeLimitValue(dialog->upperSizeLimitValue());
-        preferences->setLowerSizeLimitValue(dialog->lowerSizeLimitValue());
-        preferences->setUpperSizeLimitUnit(dialog->upperSizeLimitUnit());
-        preferences->setLowerSizeLimitUnit(dialog->lowerSizeLimitUnit());
-        preferences->setCrashed(true); // removes cached application state
-        ui->lLimitsInfo->setText(excludeBySizeInfo());
-        ui->gExcludedFilesInfo->show();
-    }
+void SettingsDialog::on_cExcludeLowerThan_clicked()
+{
+    if (loadingSettings) return;
+    bool enable (ui->cExcludeLowerThan->isChecked());
+    preferences->setLowerSizeLimit(enable);
+    preferences->setCrashed(true);
+    ui->eLowerThan->setEnabled(enable);
+    ui->cbExcludeLowerUnit->setEnabled(enable);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
 
-    delete dialog;
+void SettingsDialog::on_eUpperThan_valueChanged(int i)
+{
+    if (loadingSettings) return;
+    preferences->setUpperSizeLimitValue(i);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
+
+void SettingsDialog::on_eLowerThan_valueChanged(int i)
+{
+    if (loadingSettings) return;
+    preferences->setLowerSizeLimitValue(i);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
+
+void SettingsDialog::on_cbExcludeUpperUnit_currentIndexChanged(int index)
+{
+    if (loadingSettings) return;
+    preferences->setUpperSizeLimitUnit(index);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
+}
+
+void SettingsDialog::on_cbExcludeLowerUnit_currentIndexChanged(int index)
+{
+    if (loadingSettings) return;
+    preferences->setLowerSizeLimitUnit(index);
+    preferences->setCrashed(true);
+    ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
 }
 
 void SettingsDialog::on_cCacheSchedulerEnabled_toggled()
@@ -1565,47 +1521,6 @@ void SettingsDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-QString SettingsDialog::excludeBySizeInfo()
-{
-    QString format;
-
-    bool hasUpperLimit = preferences->upperSizeLimit();
-    bool hasLowerLimit = preferences->lowerSizeLimit();
-    long long upperLimit = preferences->upperSizeLimitValue();
-    long long lowerLimit = preferences->lowerSizeLimitValue();
-    int upperLimitUnit = preferences->upperSizeLimitUnit();
-    int lowerLimitUnit = preferences->lowerSizeLimitUnit();
-
-    if (hasLowerLimit || hasUpperLimit)
-    {
-        format += QString::fromUtf8("(");
-
-        if (hasLowerLimit)
-        {
-            auto converted = static_cast<unsigned long long>(lowerLimit * pow(1024.0L, lowerLimitUnit));
-            format  += QString::fromUtf8("<") + Utilities::getSizeString(converted);
-        }
-
-        if (hasLowerLimit && hasUpperLimit)
-        {
-            format  += QString::fromUtf8(", ");
-        }
-
-        if (hasUpperLimit)
-        {
-            auto converted = static_cast<unsigned long long>(upperLimit * pow(1024.0L, upperLimitUnit));
-            format  += QString::fromUtf8(">") + Utilities::getSizeString(converted);
-        }
-
-        format += QString::fromUtf8(")");
-    }
-    else
-    {
-        format = tr("Disabled");
-    }
-    return format;
-}
-
 void SettingsDialog::saveExcludeSyncNames()
 {
     QStringList excludedNames;
@@ -1623,6 +1538,7 @@ void SettingsDialog::saveExcludeSyncNames()
     preferences->setCrashed(true);
 
     ui->gExcludedFilesInfo->show();
+    ui->bRestart->show();
 }
 
 void SettingsDialog::updateNetworkTab()
@@ -1834,64 +1750,132 @@ void SettingsDialog::syncsStateInformation(int state)
 
 void SettingsDialog::updateStorageElements()
 {
-    refreshAccountDetails();
+    int accountType = preferences->accountType();
+
+    long long totalStorage = preferences->totalStorage();
+    long long usedStorage = preferences->usedStorage();
+    if (totalStorage == 0)
+    {
+        ui->pStorageQuota->setValue(0);
+        ui->lStorage->setText(tr("Data temporarily unavailable"));
+        ui->bStorageDetails->setEnabled(false);
+    }
+    else
+    {
+        ui->bStorageDetails->setEnabled(true);
+
+        if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            ui->lStorage->setText(tr("%1 used")
+                  .arg(Utilities::getSizeString(usedStorage)));
+        }
+        else
+        {
+            long double percentage = floor((100.0L*usedStorage)/totalStorage);
+            int storagePercentage = static_cast<int>(percentage);
+            ui->pStorageQuota->setValue(storagePercentage > ui->pStorageQuota->maximum() ? ui->pStorageQuota->maximum() : storagePercentage);
+            ui->lStorage->setText(tr("%1 (%2%) of %3 used")
+                  .arg(Utilities::getSizeString(usedStorage))
+                  .arg(QString::number(storagePercentage))
+                  .arg(Utilities::getSizeString(totalStorage)));
+        }
+    }
 }
 
 void SettingsDialog::updateBandwidthElements()
 {
-    refreshAccountDetails();
+    int accountType = preferences->accountType();
+    long long totalBandwidth = preferences->totalBandwidth();
+    long long usedBandwidth = preferences->usedBandwidth();
+    if (accountType == Preferences::ACCOUNT_TYPE_FREE) //Free user
+    {
+        ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
+                .arg(preferences->bandwidthInterval())
+                .arg(Utilities::getSizeString(usedBandwidth)));
+    }
+    else if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->lBandwidth->setText(tr("%1 used")
+              .arg(Utilities::getSizeString(usedBandwidth)));
+    }
+    else
+    {
+        if (totalBandwidth == 0)
+        {
+            ui->pTransferQuota->setValue(0);
+            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+        }
+        else
+        {
+            long double percentage = floor((100.0L*usedBandwidth)/totalBandwidth);
+            int bandwidthPercentage = static_cast<int>(percentage);
+            ui->pTransferQuota->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
+            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+                    .arg(Utilities::getSizeString(usedBandwidth))
+                    .arg(QString::number((bandwidthPercentage < 100) ? bandwidthPercentage : 100))
+                    .arg(Utilities::getSizeString(usedBandwidth)));
+        }
+    }
 }
 
 void SettingsDialog::updateAccountElements()
 {
-    refreshAccountDetails(); //all those are affected by account type
-
-    // Disable Upgrade buttons for business accounts
-    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        ui->bUpgrade->hide();
-    }
-    else
-    {
-        ui->bUpgrade->show();
-    }
-
     QIcon icon;
-    int accType = preferences->accountType();
-    switch(accType)
+    switch(preferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Free.png"));
             ui->lAccountType->setText(tr("FREE"));
+            ui->bUpgrade->show();
+            ui->pStorageQuota->show();
+            ui->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
             ui->lAccountType->setText(tr("PRO I"));
+            ui->bUpgrade->hide();
+            ui->pStorageQuota->show();
+            ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_II.png"));
             ui->lAccountType->setText(tr("PRO II"));
+            ui->bUpgrade->hide();
+            ui->pStorageQuota->show();
+            ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_III.png"));
             ui->lAccountType->setText(tr("PRO III"));
+            ui->bUpgrade->hide();
+            ui->pStorageQuota->show();
+            ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Lite.png"));
             ui->lAccountType->setText(tr("PRO Lite"));
+            ui->bUpgrade->hide();
+            ui->pStorageQuota->show();
+            ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/business.png"));
             ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
+            ui->bUpgrade->hide();
+            ui->pStorageQuota->hide();
+            ui->pTransferQuota->hide();
             break;
         default:
+        // FIXME: is this correct?
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
             ui->lAccountType->setText(QString());
+            ui->bUpgrade->hide();
+            ui->pStorageQuota->show();
+            ui->pTransferQuota->show();
             break;
     }
 
     ui->lAccountImage->setIcon(icon);
-    ui->lAccountImage->setIconSize(QSize(11, 11));
 }
 
 void SettingsDialog::on_bUpdate_clicked()
@@ -1967,7 +1951,7 @@ void SettingsDialog::openSettingsTab(int tab)
     case GENERAL_TAB:
         reloadUIpage = true;
 #ifndef Q_OS_MACOS
-        ui->bGeneral->setChecked(true);
+        ui->bGeneral->click();
 #else
         toolBar->setSelectedItem(bGeneral.get());
         emit bGeneral.get()->activated();
@@ -1977,7 +1961,7 @@ void SettingsDialog::openSettingsTab(int tab)
     case ACCOUNT_TAB:
         reloadUIpage = true;
 #ifndef Q_OS_MACOS
-        ui->bAccount->setChecked(true);
+        ui->bAccount->click();
 #else
         toolBar->setSelectedItem(bAccount.get());
         emit bAccount.get()->activated();
@@ -1986,16 +1970,25 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case SYNCS_TAB:
 #ifndef Q_OS_MACOS
-        ui->bSyncs->setChecked(true);
+        ui->bSyncs->click();
 #else
         toolBar->setSelectedItem(bSyncs.get());
         emit bSyncs.get()->activated();
 #endif
         break;
 
+    case SECURITY_TAB:
+#ifndef Q_OS_MACOS
+        ui->bSecurity->click();
+#else
+        toolBar->setSelectedItem(bSecurity.get());
+        emit bSecurity.get()->activated();
+#endif
+        break;
+
     case IMPORTS_TAB:
 #ifndef Q_OS_MACOS
-        ui->bImports->setChecked(true);
+        ui->bImports->click();
 #else
         toolBar->setSelectedItem(bImports.get());
         emit bImports.get()->activated();
@@ -2004,19 +1997,10 @@ void SettingsDialog::openSettingsTab(int tab)
 
     case NETWORK_TAB:
 #ifndef Q_OS_MACOS
-        ui->bNetwork->setChecked(true);
+        ui->bNetwork->click();
 #else
         toolBar->setSelectedItem(bNetwork.get());
         emit bNetwork.get()->activated();
-#endif
-        break;
-
-    case SECURITY_TAB:
-#ifndef Q_OS_MACOS
-        ui->bSecurity->setChecked(true);
-#else
-        toolBar->setSelectedItem(bSecurity.get());
-        emit bSecurity.get()->activated();
 #endif
         break;
 

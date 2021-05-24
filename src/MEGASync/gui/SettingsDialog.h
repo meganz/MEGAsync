@@ -12,7 +12,6 @@
 
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
-#include "SizeLimitDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
@@ -42,7 +41,6 @@ public:
 
     void setProxyOnly(bool proxyOnly);
     void setOverQuotaMode(bool mode);
-    void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab = -1);
     void storageChanged();
@@ -72,6 +70,7 @@ private slots:
     void onSavingSettingsProgress(double progress);
     void onSavingSettingsCompleted();
 
+    // Tabs buttons -- header
     void on_bGeneral_clicked();
     void on_bAccount_clicked();
     void on_bSyncs_clicked();
@@ -79,27 +78,17 @@ private slots:
     void on_bSecurity_clicked();
     void on_bImports_clicked();
 
-    void on_bHelp_clicked();
-#ifndef Q_OS_MACOS
-    void on_bHelpIco_clicked();
-#endif
 
     void on_bUpgrade_clicked();
     void on_bBuyMoreSpace_clicked();
-    void on_bUpgradeBandwidth_clicked();
 
+    void on_bMyAccount_clicked();
 
     void on_bAdd_clicked();
     void on_bDelete_clicked();
-    void on_bExcludeSize_clicked();
-
 
     void on_tSyncs_doubleClicked(const QModelIndex &index);
-    void on_bUploadFolder_clicked();
-    void on_bDownloadFolder_clicked();
 
-    void on_bAddName_clicked();
-    void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
     void on_cCacheSchedulerEnabled_toggled();
     void on_sCacheSchedulerDays_valueChanged(int);
@@ -116,8 +105,6 @@ private slots:
     void on_cAutoUpdate_toggled(bool checked);
     void on_cStartOnStartup_toggled(bool checked);
     void on_cLanguage_currentIndexChanged(int index);
-    void on_eUploadFolder_textChanged(const QString &text);
-    void on_eDownloadFolder_textChanged(const QString &text);
 
     void on_cFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
@@ -129,8 +116,25 @@ private slots:
     void on_bExportMasterKey_clicked();
     void on_bChangePassword_clicked();
 
+    // Imports tab
+    void on_bUploadFolder_clicked();
+    void on_bDownloadFolder_clicked();
+    void on_eUploadFolder_textChanged(const QString &text);
+    void on_eDownloadFolder_textChanged(const QString &text);
+    void on_bAddName_clicked();
+    void on_bDeleteName_clicked();
+    void on_cExcludeUpperThan_clicked();
+    void on_cExcludeLowerThan_clicked();
+    void on_eUpperThan_valueChanged(int i);
+    void on_eLowerThan_valueChanged(int i);
+    void on_cbExcludeUpperUnit_currentIndexChanged(int index);
+    void on_cbExcludeLowerUnit_currentIndexChanged(int index);
 
     // Footer buttons
+    void on_bHelp_clicked();
+#ifndef Q_OS_MACOS
+    void on_bHelpIco_clicked();
+#endif
     void on_bLogout_clicked();
     void on_bRestart_clicked();
     void on_bFullCheck_clicked();
