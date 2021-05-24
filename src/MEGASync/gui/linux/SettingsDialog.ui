@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>572</width>
-    <height>664</height>
+    <height>679</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -495,7 +495,7 @@ padding-bottom: 6px;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
@@ -1129,8 +1129,14 @@ padding-bottom: 6px;
        </sizepolicy>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
        <property name="topMargin">
         <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -1210,8 +1216,12 @@ padding-bottom: 6px;
                <property name="styleSheet">
                 <string notr="true">QLabel
 {
-font-weight: bold;
+	font-size: 14px;
+    font-weight: 500;
 }</string>
+               </property>
+               <property name="text">
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -1261,7 +1271,8 @@ font-weight: bold;
                <property name="styleSheet">
                 <string notr="true">QLabel
 {
-font-weight: bold;
+	font-size: 14px;
+    font-weight: 500;
 }</string>
                </property>
                <property name="indent">

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>581</width>
-    <height>790</height>
+    <height>822</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -384,7 +384,7 @@ border: none;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/Icon_Win_Imports.png</normaloff>:/images/Icon_Win_Imports2.png</iconset>
+          <normaloff>:/images/Icon_Win_Imports.png</normaloff>:/images/Icon_Win_Imports.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1192,7 +1192,8 @@ border: none;
                <property name="styleSheet">
                 <string notr="true">QLabel
 {
-font-weight: bold;
+	font-size: 14px;
+    font-weight: 500;
 }</string>
                </property>
                <property name="indent">
@@ -1250,7 +1251,8 @@ font-weight: bold;
                <property name="styleSheet">
                 <string notr="true">QLabel
 {
-font-weight: bold;
+	font-size: 14px;
+    font-weight: 500;
 }</string>
                </property>
               </widget>
