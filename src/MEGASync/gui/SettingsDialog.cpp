@@ -534,6 +534,7 @@ void SettingsDialog::on_bNetwork_clicked()
 
 #ifdef Q_OS_MACOS
     ui->pNetwork->hide();
+    animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
