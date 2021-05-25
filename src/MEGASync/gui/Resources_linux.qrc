@@ -742,9 +742,6 @@
         <file>images/synching.svg</file>
         <file>images/synching@2x.gif</file>
         <file>images/synching@3x.gif</file>
-        <file>images/syncs_32.png</file>
-        <file>images/syncs_32@2x.png</file>
-        <file>images/syncs_32@3x.png</file>
         <file>images/takedown.png</file>
         <file>images/takedown@2x.png</file>
         <file>images/takedown@3x.png</file>
@@ -861,5 +858,11 @@
         <file>images/Icon_Win_Imports.png</file>
         <file>images/Icon_Win_Imports@2x.png</file>
         <file>images/Icon_Win_Imports@3x.png</file>
+        <file>images/settings-syncs-warn.png</file>
+        <file>images/settings-syncs-warn@3x.png</file>
+        <file>images/settings-syncs-warn@2x.png</file>
+        <file>images/settings-syncs.png</file>
+        <file>images/settings-syncs@3x.png</file>
+        <file>images/settings-syncs@2x.png</file>
     </qresource>
 </RCC>

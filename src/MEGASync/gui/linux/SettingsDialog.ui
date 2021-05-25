@@ -179,7 +179,7 @@ padding-bottom: 6px;
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>9</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -321,8 +321,8 @@ padding-bottom: 6px;
          <string>Syncs</string>
         </property>
         <property name="icon">
-         <iconset>
-          <normaloff>://images/syncs_32.png</normaloff>://images/syncs_32.png</iconset>
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1665,6 +1665,12 @@ font-weight: bold;
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
             </spacer>
            </item>
            <item>
@@ -1743,6 +1749,12 @@ font-weight: bold;
             <spacer name="horizontalSpacer_13">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
              </property>
             </spacer>
            </item>
