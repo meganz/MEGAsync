@@ -1815,35 +1815,35 @@ void SettingsDialog::updateAccountElements()
     switch(preferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Free.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Free.png"));
             ui->lAccountType->setText(tr("FREE"));
             ui->bUpgrade->show();
             ui->pStorageQuota->show();
             ui->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
             ui->lAccountType->setText(tr("PRO I"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
             ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_II.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_II.png"));
             ui->lAccountType->setText(tr("PRO II"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
             ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_III.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_III.png"));
             ui->lAccountType->setText(tr("PRO III"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
             ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Lite.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Lite.png"));
             ui->lAccountType->setText(tr("PRO Lite"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
@@ -1858,7 +1858,7 @@ void SettingsDialog::updateAccountElements()
             break;
         default:
         // FIXME: is this correct?
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
             ui->lAccountType->setText(QString());
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();

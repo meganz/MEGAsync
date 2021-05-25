@@ -1211,14 +1211,14 @@ border: none;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>11</width>
-                 <height>11</height>
+                 <width>12</width>
+                 <height>12</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>11</width>
-                 <height>11</height>
+                 <width>12</width>
+                 <height>12</height>
                 </size>
                </property>
                <property name="focusPolicy">
@@ -1226,12 +1226,12 @@ border: none;
                </property>
                <property name="icon">
                 <iconset resource="../Resources_win.qrc">
-                 <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
+                 <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>11</width>
-                 <height>11</height>
+                 <width>12</width>
+                 <height>12</height>
                 </size>
                </property>
                <property name="flat">

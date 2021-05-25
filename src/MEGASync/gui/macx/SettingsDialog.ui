@@ -1890,12 +1890,12 @@ margin-right: 32px;</string>
                      </property>
                      <property name="icon">
                       <iconset resource="../Resources_macx.qrc">
-                       <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
+                       <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                      </property>
                      <property name="iconSize">
                       <size>
-                       <width>11</width>
-                       <height>11</height>
+                       <width>12</width>
+                       <height>12</height>
                       </size>
                      </property>
                      <property name="flat">
