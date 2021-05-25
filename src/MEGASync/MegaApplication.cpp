@@ -3935,9 +3935,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         if (mOsNotifications && !message.isEmpty())
         {
             preferences->setLastTransferNotificationTimestamp();
-            const QString totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
-            const QString extraData{totalTransfersString + data->localPath};
-            mOsNotifications->sendFinishedTransferNotification(title, message, extraData);
+            mOsNotifications->sendFinishedTransferNotification(title, message, data->localPath);
         }
 
         transferAppData.erase(it);
