@@ -384,7 +384,7 @@ border: none;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/imports_32.png</normaloff>:/images/imports_32.png</iconset>
+          <normaloff>:/images/Icon_Win_Imports.png</normaloff>:/images/Icon_Win_Imports2.png</iconset>
         </property>
         <property name="iconSize">
          <size>
