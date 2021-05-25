@@ -44,6 +44,7 @@ using namespace std;
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
+constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{240};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
 constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{513};
 // FIXME: Re-evaluate sizes for Network tab
@@ -493,7 +494,14 @@ void SettingsDialog::on_bAccount_clicked()
 
 #ifdef Q_OS_MACOS
     ui->pAccount->hide();
-    animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
+    }
+    else
+    {
+        animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+    }
 #endif
 }
 
