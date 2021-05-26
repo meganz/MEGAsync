@@ -208,6 +208,10 @@ background-color: rgba(0,0,0,0.1);
  background-color: rgba(0,0,0,0.1);
 }
 
+#lUploadRateLimit, #lDownloadRateLimit, #lProxySettings
+{
+    font-weight: bold;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_12">

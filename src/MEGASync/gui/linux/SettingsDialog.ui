@@ -130,6 +130,11 @@ border: none;
 {
 padding-bottom: 6px;
 }
+
+#lUploadRateLimit, #lDownloadRateLimit, #lProxySettings
+{
+    font-weight: bold;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
