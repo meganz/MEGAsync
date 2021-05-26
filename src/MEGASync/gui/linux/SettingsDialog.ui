@@ -2902,11 +2902,7 @@ padding-bottom: 6px;
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="lUploadRateLimit">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
+             <widget class="QLabel" name="lUploadRateLimit"/>
             </item>
             <item row="1" column="1">
              <widget class="QLabel" name="lDownloadRateLimit"/>
@@ -2989,11 +2985,7 @@ padding-bottom: 6px;
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="lProxySettings">
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
+             <widget class="QLabel" name="lProxySettings"/>
             </item>
            </layout>
           </item>
