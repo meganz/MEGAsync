@@ -2872,13 +2872,6 @@ border: none;
             </item>
             <item row="0" column="1">
              <widget class="QLabel" name="lUploadRateLimit">
-              <property name="font">
-               <font>
-                <pointsize>-1</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
               <property name="text">
                <string/>
               </property>
