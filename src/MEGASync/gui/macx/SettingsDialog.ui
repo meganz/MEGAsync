@@ -171,6 +171,21 @@ background-color: rgba(0,0,0,0.1);
   background-color: rgba(0,0,0,0.1);
 }
 
+
+/* Account pane props */
+#lAccountType
+{
+	text-align: left;
+    border: none;
+	padding: 0px;
+    margin: 0px;
+}
+
+#lBandwidthFree
+{
+	 color: #0078D7;
+}
+
 /* Security pane css props*/
 
 #lRecoveryKeyTitle, #lChangePasswordTitle
@@ -243,7 +258,7 @@ background-color: rgba(0,0,0,0.1);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -1578,7 +1593,7 @@ margin-right: 32px;</string>
         <height>0</height>
        </size>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_26">
+      <layout class="QVBoxLayout" name="pAccountLayout">
        <property name="spacing">
         <number>5</number>
        </property>
@@ -1871,15 +1886,15 @@ margin-right: 32px;</string>
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="lAccountImage">
+                    <widget class="QPushButton" name="lAccountType">
                      <property name="focusPolicy">
                       <enum>Qt::NoFocus</enum>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">border: none;</string>
+                      <string notr="true"/>
                      </property>
                      <property name="text">
-                      <string/>
+                      <string>Free</string>
                      </property>
                      <property name="icon">
                       <iconset resource="../Resources_macx.qrc">
@@ -1891,24 +1906,11 @@ margin-right: 32px;</string>
                        <height>12</height>
                       </size>
                      </property>
+                     <property name="autoDefault">
+                      <bool>false</bool>
+                     </property>
                      <property name="flat">
                       <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="lAccountType">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="focusPolicy">
-                      <enum>Qt::StrongFocus</enum>
-                     </property>
-                     <property name="text">
-                      <string>FREE</string>
                      </property>
                     </widget>
                    </item>
@@ -2327,11 +2329,15 @@ margin-right: 32px;</string>
                 </item>
                 <item>
                  <widget class="QLabel" name="lBandwidth">
-                  <property name="text">
-                   <string/>
-                  </property>
                   <property name="alignment">
                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lBandwidthFree">
+                  <property name="text">
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -3491,7 +3497,7 @@ QTableWidget::item { background-color: #F5F5F5; }
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_14">
           <property name="spacing">
-           <number>-1</number>
+           <number>6</number>
           </property>
           <property name="leftMargin">
            <number>25</number>
@@ -3957,7 +3963,7 @@ QTableWidget::item { background-color: #F5F5F5; }
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
                </property>
                <property name="iconSize">
