@@ -105,10 +105,6 @@ private slots:
     void on_bDelete_clicked();
     void on_tSyncs_doubleClicked(const QModelIndex &index);
 
-
-    void on_bOpenProxySettings_clicked();
-    void on_bOpenBandwidthSettings_clicked();
-
     // Security tab
     void on_bExportMasterKey_clicked();
     void on_bChangePassword_clicked();
