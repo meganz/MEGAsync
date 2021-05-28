@@ -17,14 +17,15 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
     mProgressDialog(new MegaProgressCustomDialog(this))
 {
     mUi->setupUi(this);
-    mUi->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
-
+    mUi->eProxyPort->setValidator(new QIntValidator(0, std::numeric_limits<uint16_t>::max(), this));
     mProgressDialog->setWindowModality(Qt::WindowModal);
 
     initialize();
 
-    connect(mConnectivityChecker, SIGNAL(testError()), this, SLOT(onProxyTestError()));
-    connect(mConnectivityChecker, SIGNAL(testSuccess()), this, SLOT(onProxyTestSuccess()));
+    connect(mConnectivityChecker, &ConnectivityChecker::testError,
+            this, &ProxySettings::onProxyTestError);
+    connect(mConnectivityChecker, &ConnectivityChecker::testSuccess,
+            this, &ProxySettings::onProxyTestSuccess);
 
     connect(mUi->rProxyManual, &QRadioButton::clicked, this, [this]{setManualMode(true);});
     connect(mUi->cProxyRequiresPassword, &QCheckBox::toggled, this, [this]{setManualMode(true);});
@@ -152,7 +153,7 @@ void ProxySettings::on_bUpdate_clicked()
             std::string sProxyURL = proxySettings->getProxyURL();
             QString proxyURL = QString::fromUtf8(sProxyURL.data());
 
-            QStringList parts = proxyURL.split(QString::fromAscii("://"));
+            QStringList parts = proxyURL.split(QString::fromUtf8("://"));
             if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
             {
                 proxy.setType(QNetworkProxy::Socks5Proxy);
@@ -162,7 +163,7 @@ void ProxySettings::on_bUpdate_clicked()
                 proxy.setType(QNetworkProxy::HttpProxy);
             }
 
-            QStringList arguments = parts[parts.size()-1].split(QString::fromAscii(":"));
+            QStringList arguments = parts[parts.size()-1].split(QString::fromUtf8(":"));
             if (arguments.size() == 2)
             {
                 proxy.setHostName(arguments[0]);

@@ -17,10 +17,10 @@ BandwidthSettings::BandwidthSettings(MegaApplication *app, QWidget *parent) :
     mUi->eMaxDownloadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
     mUi->eMaxUploadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
 
-    QButtonGroup *downloadButtonGroup = new QButtonGroup(this);
+    QButtonGroup* downloadButtonGroup = new QButtonGroup(this);
     downloadButtonGroup->addButton(mUi->rDownloadLimit);
     downloadButtonGroup->addButton(mUi->rDownloadNoLimit);
-    QButtonGroup *uploadButtonGroup = new QButtonGroup(this);
+    QButtonGroup* uploadButtonGroup = new QButtonGroup(this);
     uploadButtonGroup->addButton(mUi->rUploadLimit);
     uploadButtonGroup->addButton(mUi->rUploadNoLimit);
     uploadButtonGroup->addButton(mUi->rUploadAutoLimit);
@@ -36,19 +36,19 @@ BandwidthSettings::~BandwidthSettings()
 void BandwidthSettings::initialize()
 {
     int uploadLimitKB = mPreferences->uploadLimitKB();
-    mUi->rUploadAutoLimit->setChecked(uploadLimitKB < 0);
+    mUi->rUploadAutoLimit->setChecked(uploadLimitKB == BANDWIDTH_LIMIT_AUTO);
     mUi->rUploadLimit->setChecked(uploadLimitKB > 0);
-    mUi->rUploadNoLimit->setChecked(uploadLimitKB == 0);
+    mUi->rUploadNoLimit->setChecked(uploadLimitKB == BANDWIDTH_LIMIT_NONE);
     mUi->eUploadLimit->setText((uploadLimitKB <= 0) ?
-                                   QString::fromAscii("0")
+                                   QString::fromUtf8("0")
                                  : QString::number(uploadLimitKB));
     mUi->eUploadLimit->setEnabled(mUi->rUploadLimit->isChecked());
 
     int downloadLimitKB = mPreferences->downloadLimitKB();
     mUi->rDownloadLimit->setChecked(downloadLimitKB > 0);
-    mUi->rDownloadNoLimit->setChecked(downloadLimitKB == 0);
+    mUi->rDownloadNoLimit->setChecked(downloadLimitKB == BANDWIDTH_LIMIT_NONE);
     mUi->eDownloadLimit->setText((downloadLimitKB <= 0) ?
-                                     QString::fromAscii("0")
+                                     QString::fromUtf8("0")
                                    : QString::number(downloadLimitKB));
     mUi->eDownloadLimit->setEnabled(mUi->rDownloadLimit->isChecked());
 
@@ -86,24 +86,40 @@ void BandwidthSettings::on_rDownloadLimit_toggled(bool checked)
 void BandwidthSettings::on_bUpdate_clicked()
 {
     if (mUi->rUploadNoLimit->isChecked())
-        mPreferences->setUploadLimitKB(0);
+    {
+        mPreferences->setUploadLimitKB(BANDWIDTH_LIMIT_NONE);
+    }
     else if (mUi->rUploadAutoLimit->isChecked())
-        mPreferences->setUploadLimitKB(-1);
+    {
+        mPreferences->setUploadLimitKB(BANDWIDTH_LIMIT_AUTO);
+    }
     else
+    {
         mPreferences->setUploadLimitKB(mUi->eUploadLimit->text().toInt());
+    }
 
     if (mUi->rDownloadNoLimit->isChecked())
-        mPreferences->setDownloadLimitKB(0);
+    {
+        mPreferences->setDownloadLimitKB(BANDWIDTH_LIMIT_NONE);
+    }
     else
+    {
         mPreferences->setDownloadLimitKB(mUi->eDownloadLimit->text().toInt());
+    }
 
     if (mUi->eMaxUploadConnections->value() != mPreferences->parallelUploadConnections())
+    {
         mPreferences->setParallelUploadConnections(mUi->eMaxUploadConnections->value());
+    }
     if (mUi->eMaxDownloadConnections->value() != mPreferences->parallelDownloadConnections())
+    {
         mPreferences->setParallelDownloadConnections(mUi->eMaxDownloadConnections->value());
+    }
 
     if (mUi->cbUseHttps->isChecked() != mPreferences->usingHttpsOnly())
+    {
         mPreferences->setUseHttpsOnly(mUi->cbUseHttps->isChecked());
+    }
 
     accept();
 }
