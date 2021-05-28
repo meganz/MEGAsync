@@ -124,6 +124,11 @@ border: none;
 #lBandwidthFree
 {
 	 color: #0078D7;
+}
+
+#lUploadRateLimit, #lDownloadRateLimit, #lProxySettings
+{
+    font-weight: bold;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -451,7 +456,7 @@ border: none;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
+          <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -2847,18 +2852,36 @@ border: none;
       <property name="focusPolicy">
        <enum>Qt::WheelFocus</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
+      <layout class="QVBoxLayout" name="pNetworkLayout">
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <item>
         <widget class="QGroupBox" name="gBandwidthSettings">
          <property name="title">
           <string>Bandwidth</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QHBoxLayout" name="gBandwidthSettingsLayout">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
           <property name="topMargin">
-           <number>24</number>
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
           </property>
           <item>
            <spacer name="horizontalSpacer_17">
@@ -2874,7 +2897,7 @@ border: none;
            </spacer>
           </item>
           <item>
-           <layout class="QFormLayout" name="formLayout">
+           <layout class="QFormLayout" name="bandwidthLimitTextLayout">
             <property name="labelAlignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
@@ -2882,20 +2905,20 @@ border: none;
              <set>Qt::AlignCenter</set>
             </property>
             <property name="horizontalSpacing">
-             <number>7</number>
+             <number>4</number>
             </property>
             <property name="verticalSpacing">
-             <number>7</number>
+             <number>8</number>
             </property>
             <item row="0" column="0">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="lUploadRateLimitText">
               <property name="text">
                <string>Upload Rate Limit:</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="lDownloadRateLimitText">
               <property name="text">
                <string>Download Rate Limit:</string>
               </property>
@@ -2947,9 +2970,18 @@ border: none;
          <property name="title">
           <string>Proxies</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <layout class="QHBoxLayout" name="gProxySettingsLayout">
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
           <property name="topMargin">
-           <number>24</number>
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
           </property>
           <item>
            <spacer name="horizontalSpacer_7">
@@ -2965,15 +2997,21 @@ border: none;
            </spacer>
           </item>
           <item>
-           <layout class="QFormLayout" name="formLayout_4">
+           <layout class="QFormLayout" name="proxyLayout">
             <property name="labelAlignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
             <property name="formAlignment">
              <set>Qt::AlignCenter</set>
             </property>
+            <property name="horizontalSpacing">
+             <number>4</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>8</number>
+            </property>
             <item row="0" column="0">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="lProxySettingsText">
               <property name="text">
                <string>Proxy Settings:</string>
               </property>

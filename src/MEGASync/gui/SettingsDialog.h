@@ -105,10 +105,6 @@ private slots:
     void on_bDelete_clicked();
     void on_tSyncs_doubleClicked(const QModelIndex &index);
 
-
-    void on_bOpenProxySettings_clicked();
-    void on_bOpenBandwidthSettings_clicked();
-
     // Security tab
     void on_bExportMasterKey_clicked();
     void on_bChangePassword_clicked();
@@ -126,6 +122,10 @@ private slots:
     void on_eLowerThan_valueChanged(int i);
     void on_cbExcludeUpperUnit_currentIndexChanged(int index);
     void on_cbExcludeLowerUnit_currentIndexChanged(int index);
+
+    // Network tab
+    void on_bOpenProxySettings_clicked();
+    void on_bOpenBandwidthSettings_clicked();
 
     // Footer buttons
     void on_bHelp_clicked();
