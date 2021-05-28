@@ -733,9 +733,6 @@
         <file>images/synching.gif</file>
         <file>images/synching@2x.gif</file>
         <file>images/synching@3x.gif</file>
-        <file>images/syncs_32.png</file>
-        <file>images/syncs_32@2x.png</file>
-        <file>images/syncs_32@3x.png</file>
         <file>images/takedown.png</file>
         <file>images/takedown@2x.png</file>
         <file>images/takedown@3x.png</file>
@@ -867,5 +864,11 @@
         <file>images/Small_Pro_III.png</file>
         <file>images/Small_Pro_III@2x.png</file>
         <file>images/Small_Pro_III@3x.png</file>
+        <file>images/settings-syncs.png</file>
+        <file>images/settings-syncs@2x.png</file>
+        <file>images/settings-syncs@3x.png</file>
+        <file>images/settings-syncs-warn@2x.png</file>
+        <file>images/settings-syncs-warn@3x.png</file>
+        <file>images/settings-syncs-warn.png</file>
     </qresource>
 </RCC>
