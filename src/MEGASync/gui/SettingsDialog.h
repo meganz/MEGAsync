@@ -33,10 +33,17 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
     Q_OBJECT
 
 public:
-    enum {GENERAL_TAB = 0, ACCOUNT_TAB = 1, SYNCS_TAB = 2, SECURITY_TAB = 3, IMPORTS_TAB = 4, NETWORK_TAB = 5};
+    enum {
+        GENERAL_TAB  = 0,
+        ACCOUNT_TAB  = 1,
+        SYNCS_TAB    = 2,
+        SECURITY_TAB = 3,
+        IMPORTS_TAB  = 4,
+        NETWORK_TAB  = 5,
+        };
     enum SyncStateInformation {NO_SAVING_SYNCS = 0, SAVING_SYNCS = 1};
 
-    explicit SettingsDialog(MegaApplication *app, bool proxyOnly = false, QWidget *parent = 0);
+    explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = 0);
     ~SettingsDialog();
 
     void setProxyOnly(bool proxyOnly);
@@ -81,7 +88,7 @@ private slots:
     // General tab
     void on_bClearCache_clicked();
     void on_cCacheSchedulerEnabled_toggled();
-    void on_sCacheSchedulerDays_valueChanged(int);
+    void on_sCacheSchedulerDays_valueChanged(int i);
     void on_bClearRemoteCache_clicked();
     void on_bClearFileVersions_clicked();
     void on_bUpdate_clicked();
@@ -151,42 +158,42 @@ private slots:
 
 
 protected:
-    void changeEvent(QEvent * event) override;
+    void changeEvent(QEvent* event) override;
 
 private:
     void loadSettings();
     void saveSyncSettings();
     void onCacheSizeAvailable();
-    void savingSyncs(bool completed, QObject *item);
+    void savingSyncs(bool completed, QObject* item);
     void syncsStateInformation(int state);
     QString excludeBySizeInfo();
     void saveExcludeSyncNames();
     void updateNetworkTab();
 
-    Ui::SettingsDialog *ui;
-    MegaApplication *app;
-    Preferences *preferences;
-    Controller *controller;
-    Model *model;
-    mega::MegaApi *megaApi;
-    HighDpiResize highDpiResize;
-    QStringList syncNames;
-    QStringList languageCodes;
-    bool proxyOnly;
-    QFutureWatcher<long long> cacheSizeWatcher;
-    QFutureWatcher<long long> remoteCacheSizeWatcher;
-    AccountDetailsDialog *accountDetailsDialog;
-    std::unique_ptr<ProgressHelper> saveSettingsProgress;
-    int loadingSettings;
-    long long cacheSize;
-    long long remoteCacheSize;
-    bool hasDefaultUploadOption;
-    bool hasDefaultDownloadOption;
-    bool reloadUIpage;
+    Ui::SettingsDialog* mUi;
+    MegaApplication* mApp;
+    Preferences* mPreferences;
+    Controller* mController;
+    Model* mModel;
+    mega::MegaApi* mMegaApi;
+    HighDpiResize mHighDpiResize;
+    QStringList mSyncNames;
+    QStringList mLanguageCodes;
+    bool mProxyOnly;
+    QFutureWatcher<long long> mCacheSizeWatcher;
+    QFutureWatcher<long long> mRemoteCacheSizeWatcher;
+    AccountDetailsDialog* mAccountDetailsDialog;
+    std::unique_ptr<ProgressHelper> mSaveSettingsProgress;
+    int mLoadingSettings;
+    long long mCacheSize;
+    long long mRemoteCacheSize;
+    bool mHasDefaultUploadOption;
+    bool mHasDefaultDownloadOption;
+    bool mReloadUIpage;
     ThreadPool* mThreadPool;
-    bool areSyncsDisabled; //Check if there are any sync disabled by any kind of error
-    bool isSavingSyncsOnGoing;
-    int debugCounter; // Easter Egg
+    bool mAreSyncsDisabled; //Check if there are any sync disabled by any kind of error
+    bool mIsSavingSyncsOnGoing;
+    int mDebugCounter; // Easter Egg
     QPointer<ProxySettings> mProxySettingsDialog;
 
 #ifdef Q_OS_MACOS

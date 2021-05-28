@@ -131,12 +131,12 @@ void NodeSelector::setDefaultUploadOption(bool value)
     ui->cbAlwaysUploadToLocation->setChecked(value);
 }
 
-long long NodeSelector::getSelectedFolderHandle()
+MegaHandle NodeSelector::getSelectedFolderHandle()
 {
     return selectedFolder;
 }
 
-void NodeSelector::setSelectedFolderHandle(long long selectedHandle)
+void NodeSelector::setSelectedFolderHandle(MegaHandle selectedHandle)
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedHandle);
     if (!node)

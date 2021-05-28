@@ -580,26 +580,44 @@ QString Utilities::getSizeString(unsigned long long bytes)
     QLocale locale(language);
     if (bytes >= TB)
     {
-        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
+        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
+        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
+        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
+        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "KB");
     }
 
-    return locale.toString(bytes) + QStringLiteral(" ") + QCoreApplication::translate("Utilities", "Bytes");
+    return locale.toString(bytes) + QStringLiteral(" ")
+            + QCoreApplication::translate("Utilities", "Bytes");
 }
+
+QString Utilities::getSizeString(long long bytes)
+{
+    if (bytes >= 0)
+    {
+        return getSizeString(static_cast<unsigned long long>(bytes));
+    }
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+    return locale.toString(bytes) + QStringLiteral(" ")
+            + QCoreApplication::translate("Utilities", "Bytes");
+}
+
 
 QString Utilities::extractJSONString(QString json, QString name)
 {

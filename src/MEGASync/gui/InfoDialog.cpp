@@ -418,8 +418,8 @@ void InfoDialog::setUsage()
         ui->sStorage->setCurrentWidget(ui->wCircularStorage);
         if (totalStorage == 0)
         {
-            ui->wCircularStorage->setValue(0);
-            usedStorageString = Utilities::getSizeString(0);
+            ui->wCircularStorage->setValue(0ull);
+            usedStorageString = Utilities::getSizeString(0ull);
         }
         else
         {
@@ -533,7 +533,7 @@ void InfoDialog::setUsage()
             if (preferences->totalBandwidth() == 0)
             {
                 ui->wCircularQuota->setEmptyBarTotalValueUnknown();
-                usedTransferString = Utilities::getSizeString(0);
+                usedTransferString = Utilities::getSizeString(0ull);
             }
             else
             {
