@@ -233,9 +233,6 @@
         <file>images/error.png</file>
         <file>images/error@2x.png</file>
         <file>images/error@3x.png</file>
-        <file>images/Free.png</file>
-        <file>images/Free@2x.png</file>
-        <file>images/Free@3x.png</file>
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/full_sync_ico@3x.png</file>
@@ -442,12 +439,6 @@
         <file>images/init_scanning.png</file>
         <file>images/init_scanning@2x.png</file>
         <file>images/init_scanning@3x.png</file>
-        <file>images/Lite.png</file>
-        <file>images/Lite@2x.png</file>
-        <file>images/Lite@3x.png</file>
-        <file>images/litecrest.png</file>
-        <file>images/litecrest@2x.png</file>
-        <file>images/litecrest@3x.png</file>
         <file>images/locked_account_ico.png</file>
         <file>images/locked_account_ico@2x.png</file>
         <file>images/locked_account_ico@3x.png</file>
@@ -519,24 +510,6 @@
         <file>images/play_ico.png</file>
         <file>images/play_ico@2x.png</file>
         <file>images/play_ico@3x.png</file>
-        <file>images/Pro_I.png</file>
-        <file>images/Pro_I@2x.png</file>
-        <file>images/Pro_I@3x.png</file>
-        <file>images/Pro_II.png</file>
-        <file>images/Pro_II@2x.png</file>
-        <file>images/Pro_II@3x.png</file>
-        <file>images/Pro_III.png</file>
-        <file>images/Pro_III@2x.png</file>
-        <file>images/Pro_III@3x.png</file>
-        <file>images/proicrest.png</file>
-        <file>images/proicrest@2x.png</file>
-        <file>images/proicrest@3x.png</file>
-        <file>images/proiicrest.png</file>
-        <file>images/proiicrest@2x.png</file>
-        <file>images/proiicrest@3x.png</file>
-        <file>images/proiiicrest.png</file>
-        <file>images/proiiicrest@2x.png</file>
-        <file>images/proiiicrest@3x.png</file>
         <file>images/proxies_32.png</file>
         <file>images/proxies_32@2x.png</file>
         <file>images/proxies_32@3x.png</file>
@@ -864,5 +837,23 @@
         <file>images/settings-syncs.png</file>
         <file>images/settings-syncs@3x.png</file>
         <file>images/settings-syncs@2x.png</file>
+        <file>images/Icon_Win_Network.png</file>
+        <file>images/Icon_Win_Network@2x.png</file>
+        <file>images/Icon_Win_Network@3x.png</file>
+        <file>images/Small_Free.png</file>
+        <file>images/Small_Free@2x.png</file>
+        <file>images/Small_Free@3x.png</file>
+        <file>images/Small_Lite.png</file>
+        <file>images/Small_Lite@2x.png</file>
+        <file>images/Small_Lite@3x.png</file>
+        <file>images/Small_Pro_I.png</file>
+        <file>images/Small_Pro_I@2x.png</file>
+        <file>images/Small_Pro_I@3x.png</file>
+        <file>images/Small_Pro_II.png</file>
+        <file>images/Small_Pro_II@2x.png</file>
+        <file>images/Small_Pro_II@3x.png</file>
+        <file>images/Small_Pro_III.png</file>
+        <file>images/Small_Pro_III@2x.png</file>
+        <file>images/Small_Pro_III@3x.png</file>
     </qresource>
 </RCC>

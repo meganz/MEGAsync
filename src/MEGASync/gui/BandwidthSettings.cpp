@@ -1,5 +1,6 @@
 #include "BandwidthSettings.h"
 #include "ui_BandwidthSettings.h"
+#include "mega/megaclient.h"
 
 #include <QButtonGroup>
 
@@ -13,8 +14,8 @@ BandwidthSettings::BandwidthSettings(MegaApplication *app, QWidget *parent) :
 
     mUi->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     mUi->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
-    mUi->eMaxDownloadConnections->setRange(1, 6);
-    mUi->eMaxUploadConnections->setRange(1, 6);
+    mUi->eMaxDownloadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
+    mUi->eMaxUploadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
 
     QButtonGroup *downloadButtonGroup = new QButtonGroup(this);
     downloadButtonGroup->addButton(mUi->rDownloadLimit);
@@ -35,16 +36,20 @@ BandwidthSettings::~BandwidthSettings()
 void BandwidthSettings::initialize()
 {
     int uploadLimitKB = mPreferences->uploadLimitKB();
-    mUi->rUploadAutoLimit->setChecked(uploadLimitKB<0);
-    mUi->rUploadLimit->setChecked(uploadLimitKB>0);
-    mUi->rUploadNoLimit->setChecked(uploadLimitKB==0);
-    mUi->eUploadLimit->setText((uploadLimitKB<=0)? QString::fromAscii("0") : QString::number(uploadLimitKB));
+    mUi->rUploadAutoLimit->setChecked(uploadLimitKB < 0);
+    mUi->rUploadLimit->setChecked(uploadLimitKB > 0);
+    mUi->rUploadNoLimit->setChecked(uploadLimitKB == 0);
+    mUi->eUploadLimit->setText((uploadLimitKB <= 0) ?
+                                   QString::fromAscii("0")
+                                 : QString::number(uploadLimitKB));
     mUi->eUploadLimit->setEnabled(mUi->rUploadLimit->isChecked());
 
     int downloadLimitKB = mPreferences->downloadLimitKB();
-    mUi->rDownloadLimit->setChecked(downloadLimitKB>0);
-    mUi->rDownloadNoLimit->setChecked(downloadLimitKB==0);
-    mUi->eDownloadLimit->setText((downloadLimitKB<=0)? QString::fromAscii("0") : QString::number(downloadLimitKB));
+    mUi->rDownloadLimit->setChecked(downloadLimitKB > 0);
+    mUi->rDownloadNoLimit->setChecked(downloadLimitKB == 0);
+    mUi->eDownloadLimit->setText((downloadLimitKB <= 0) ?
+                                     QString::fromAscii("0")
+                                   : QString::number(downloadLimitKB));
     mUi->eDownloadLimit->setEnabled(mUi->rDownloadLimit->isChecked());
 
     mUi->eMaxDownloadConnections->setValue(mPreferences->parallelDownloadConnections());
