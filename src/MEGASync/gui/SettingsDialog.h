@@ -78,39 +78,34 @@ private slots:
     void on_bSecurity_clicked();
     void on_bImports_clicked();
 
-
-    void on_bUpgrade_clicked();
-    void on_bMyAccount_clicked();
-
-    void on_bAdd_clicked();
-    void on_bDelete_clicked();
-
-    void on_tSyncs_doubleClicked(const QModelIndex &index);
-
+    // General tab
     void on_bClearCache_clicked();
     void on_cCacheSchedulerEnabled_toggled();
     void on_sCacheSchedulerDays_valueChanged(int);
     void on_bClearRemoteCache_clicked();
     void on_bClearFileVersions_clicked();
     void on_bUpdate_clicked();
-    void on_bStorageDetails_clicked();
-    void on_lAccountImage_clicked();
     void on_bSendBug_clicked();
-
-    void setAvatar();
-
     void on_cShowNotifications_toggled(bool checked);
     void on_cAutoUpdate_toggled(bool checked);
     void on_cStartOnStartup_toggled(bool checked);
     void on_cLanguage_currentIndexChanged(int index);
-
     void on_cFileVersioning_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
 
-    void on_bOpenProxySettings_clicked();
-    void on_bOpenBandwidthSettings_clicked();
+    // Account tab
+    void on_lAccountType_clicked();
+    void setAvatar();
+    void on_bUpgrade_clicked();
+    void on_bMyAccount_clicked();
+    void on_bStorageDetails_clicked();
 
-    // Security tab buttons
+    // Syncs tab
+    void on_bAdd_clicked();
+    void on_bDelete_clicked();
+    void on_tSyncs_doubleClicked(const QModelIndex &index);
+
+    // Security tab
     void on_bExportMasterKey_clicked();
     void on_bChangePassword_clicked();
 
@@ -127,6 +122,10 @@ private slots:
     void on_eLowerThan_valueChanged(int i);
     void on_cbExcludeUpperUnit_currentIndexChanged(int index);
     void on_cbExcludeLowerUnit_currentIndexChanged(int index);
+
+    // Network tab
+    void on_bOpenProxySettings_clicked();
+    void on_bOpenBandwidthSettings_clicked();
 
     // Footer buttons
     void on_bHelp_clicked();

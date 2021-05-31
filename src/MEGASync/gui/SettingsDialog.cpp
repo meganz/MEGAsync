@@ -48,8 +48,7 @@ constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{240};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{344};
 constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{513};
 // FIXME: Re-evaluate sizes for Network tab
-constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{464};
-constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT_BUSINESS{444};
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{190};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{400};
 #endif
 
@@ -523,22 +522,6 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 }
 
-void SettingsDialog::on_bNetwork_clicked()
-{
-    emit userActivity();
-
-    if (ui->wStack->currentWidget() == ui->pNetwork)
-    {
-        return;
-    }
-
-    ui->wStack->setCurrentWidget(ui->pNetwork);
-
-#ifdef Q_OS_MACOS
-    ui->pNetwork->hide();
-#endif
-}
-
 void SettingsDialog::on_bSecurity_clicked()
 {
     emit userActivity();
@@ -569,6 +552,23 @@ void SettingsDialog::on_bImports_clicked()
 #ifdef Q_OS_MACOS
     ui->pImports->hide();
     animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
+}
+
+void SettingsDialog::on_bNetwork_clicked()
+{
+    emit userActivity();
+
+    if (ui->wStack->currentWidget() == ui->pNetwork)
+    {
+        return;
+    }
+
+    ui->wStack->setCurrentWidget(ui->pNetwork);
+
+#ifdef Q_OS_MACOS
+    ui->pNetwork->hide();
+    animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
@@ -1739,8 +1739,8 @@ void SettingsDialog::updateStorageElements()
 {
     int accountType = preferences->accountType();
 
-    long long totalStorage = preferences->totalStorage();
-    long long usedStorage = preferences->usedStorage();
+    auto totalStorage = static_cast<unsigned long long>(preferences->totalStorage());
+    auto usedStorage = static_cast<unsigned long long>(preferences->usedStorage());
     if (totalStorage == 0)
     {
         ui->pStorageQuota->setValue(0);
@@ -1772,13 +1772,16 @@ void SettingsDialog::updateStorageElements()
 void SettingsDialog::updateBandwidthElements()
 {
     int accountType = preferences->accountType();
-    long long totalBandwidth = preferences->totalBandwidth();
-    long long usedBandwidth = preferences->usedBandwidth();
-    if (accountType == Preferences::ACCOUNT_TYPE_FREE) //Free user
+    auto totalBandwidth = static_cast<unsigned long long>(preferences->totalBandwidth());
+    auto usedBandwidth = static_cast<unsigned long long>(preferences->usedBandwidth());
+    ui->lBandwidthFree->hide();
+
+    if (accountType == Preferences::ACCOUNT_TYPE_FREE)
     {
-        ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
-                .arg(preferences->bandwidthInterval())
-                .arg(Utilities::getSizeString(usedBandwidth)));
+        ui->lBandwidth->setText(tr("Used quota for the last %1 hours:")
+                .arg(preferences->bandwidthInterval()));
+        ui->lBandwidthFree->show();
+        ui->lBandwidthFree->setText(Utilities::getSizeString(usedBandwidth));
     }
     else if (accountType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -1796,10 +1799,10 @@ void SettingsDialog::updateBandwidthElements()
         {
             long double percentage = floor((100.0L*usedBandwidth)/totalBandwidth);
             int bandwidthPercentage = static_cast<int>(percentage);
-            ui->pTransferQuota->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
+            ui->pTransferQuota->setValue(std::min(bandwidthPercentage, 100));
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                     .arg(Utilities::getSizeString(usedBandwidth))
-                    .arg(QString::number((bandwidthPercentage < 100) ? bandwidthPercentage : 100))
+                    .arg(QString::number(std::min(bandwidthPercentage, 100)))
                     .arg(Utilities::getSizeString(usedBandwidth)));
         }
     }
@@ -1811,50 +1814,50 @@ void SettingsDialog::updateAccountElements()
     switch(preferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Free.png"));
-            ui->lAccountType->setText(tr("FREE"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Free.png"));
+            ui->lAccountType->setText(tr("Free"));
             ui->bUpgrade->show();
             ui->pStorageQuota->show();
             ui->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
-            ui->lAccountType->setText(tr("PRO I"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
+            ui->lAccountType->setText(tr("Pro I"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
             ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_II.png"));
-            ui->lAccountType->setText(tr("PRO II"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_II.png"));
+            ui->lAccountType->setText(tr("Pro II"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
             ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_III.png"));
-            ui->lAccountType->setText(tr("PRO III"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_III.png"));
+            ui->lAccountType->setText(tr("Pro III"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
             ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Lite.png"));
-            ui->lAccountType->setText(tr("PRO Lite"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Lite.png"));
+            ui->lAccountType->setText(tr("Pro Lite"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
             ui->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/business.png"));
-            ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
+            ui->lAccountType->setText(tr("Business"));
             ui->bUpgrade->hide();
             ui->pStorageQuota->hide();
             ui->pTransferQuota->hide();
             break;
         default:
         // FIXME: is this correct?
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Pro_I.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
             ui->lAccountType->setText(QString());
             ui->bUpgrade->hide();
             ui->pStorageQuota->show();
@@ -1862,7 +1865,7 @@ void SettingsDialog::updateAccountElements()
             break;
     }
 
-    ui->lAccountImage->setIcon(icon);
+    ui->lAccountType->setIcon(icon);
 }
 
 void SettingsDialog::on_bUpdate_clicked()
@@ -1996,7 +1999,7 @@ void SettingsDialog::openSettingsTab(int tab)
     }
 }
 
-void SettingsDialog::on_lAccountImage_clicked()
+void SettingsDialog::on_lAccountType_clicked()
 {
     debugCounter++;
     if (debugCounter == 5)
@@ -2202,14 +2205,13 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 {
     BandwidthSettings *bandwidthSettings = new BandwidthSettings(app, this);
     if (bandwidthSettings->exec() == QDialog::Rejected)
+    {
         return;
+    }
 
-    if(preferences->uploadLimitKB() > 0)
-        app->setUploadLimit(0);
-    else
-        app->setUploadLimit(preferences->uploadLimitKB());
+    app->setUploadLimit(std::max(preferences->uploadLimitKB(), 0));
+
     app->setMaxUploadSpeed(preferences->uploadLimitKB());
-
     app->setMaxDownloadSpeed(preferences->downloadLimitKB());
 
     app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());

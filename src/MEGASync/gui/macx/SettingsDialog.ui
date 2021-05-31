@@ -171,6 +171,25 @@ background-color: rgba(0,0,0,0.1);
   background-color: rgba(0,0,0,0.1);
 }
 
+/* Account pane css props*/
+#lAccountType
+{
+    text-align: left;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#lBandwidthFree, #lBandwidth
+{
+	font-size: 13px;
+}
+
+#lBandwidthFree
+{
+	 color: #0078D7;
+}
+
 /* Security pane css props*/
 
 #lRecoveryKeyTitle, #lChangePasswordTitle
@@ -1723,56 +1742,38 @@ margin-right: 32px;</string>
                <property name="spacing">
                 <number>0</number>
                </property>
-               <item row="2" column="4">
-                <widget class="QPushButton" name="bMyAccount">
+               <item row="2" column="0">
+                <widget class="QPushButton" name="lAccountType">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>My Account</string>
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset>
+                   <normalon>:/images/Small_Free.png</normalon>
+                  </iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>12</width>
+                   <height>12</height>
+                  </size>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="5">
-                <widget class="QLabel" name="lEmail">
-                 <property name="focusPolicy">
-                  <enum>Qt::StrongFocus</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLabel" name="lAccountType">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="focusPolicy">
-                  <enum>Qt::StrongFocus</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="indent">
-                  <number>5</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" colspan="5">
+               <item row="0" column="0" colspan="4">
                 <widget class="QLabel" name="lName">
                  <property name="styleSheet">
                   <string notr="true"/>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="2">
+               <item row="2" column="1">
                 <widget class="QPushButton" name="bUpgrade">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -1791,45 +1792,30 @@ margin-right: 32px;</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QPushButton" name="lAccountImage">
+               <item row="2" column="3">
+                <widget class="QPushButton" name="bMyAccount">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>11</width>
-                   <height>11</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>11</width>
-                   <height>11</height>
-                  </size>
-                 </property>
-                 <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../Resources_macx.qrc">
-                   <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>11</width>
-                   <height>11</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>true</bool>
+                 <property name="text">
+                  <string>My Account</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="3">
+               <item row="1" column="0" colspan="4">
+                <widget class="QLabel" name="lEmail">
+                 <property name="focusPolicy">
+                  <enum>Qt::StrongFocus</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
                 <spacer name="horizontalSpacer_15">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -2071,7 +2057,7 @@ margin-right: 32px;</string>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout">
+            <layout class="QGridLayout" name="gridLayout_13" columnminimumwidth="0,0">
              <property name="leftMargin">
               <number>32</number>
              </property>
@@ -2081,62 +2067,31 @@ margin-right: 32px;</string>
              <property name="rightMargin">
               <number>32</number>
              </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <layout class="QGridLayout" name="gridLayout_13">
-               <property name="verticalSpacing">
-                <number>0</number>
+             <item row="0" column="0">
+              <widget class="QLabel" name="lTransfer">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
-               <item row="1" column="1">
-                <widget class="QProgressBar" name="pTransferQuota">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="value">
-                  <number>24</number>
-                 </property>
-                 <property name="textVisible">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="lTransfer">
-                 <property name="maximumSize">
-                  <size>
-                   <width>203</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Transfer quota:</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
+               <property name="maximumSize">
+                <size>
+                 <width>203</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Transfer quota:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
                 <widget class="QLabel" name="lBandwidth">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -2162,7 +2117,51 @@ margin-right: 32px;</string>
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QLabel" name="lBandwidthFree">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
               </layout>
+             </item>
+             <item row="1" column="1">
+              <widget class="QProgressBar" name="pTransferQuota">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="value">
+                <number>24</number>
+               </property>
+               <property name="textVisible">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -2737,7 +2736,7 @@ QTableWidget::item { background-color: #F5F5F5; }
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -2842,7 +2841,7 @@ QTableWidget::item { background-color: #F5F5F5; }
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3635,7 +3634,7 @@ QTableWidget::item { background-color: #F5F5F5; }
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
                </property>
                <property name="iconSize">
@@ -4236,7 +4235,7 @@ margin-right: 32px;</string>
   <tabstop>bFullCheck</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
