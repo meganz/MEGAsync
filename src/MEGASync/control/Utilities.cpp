@@ -899,7 +899,7 @@ QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
         //Skip business & non monthly plans to offer
         if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
         {
-            if (usedStorage < (pricing->getGBStorage(i) * GB))
+            if (usedStorage < (pricing->getGBStorage(i) * (long long)GB))
             {
                 int currentAmountMonth = pricing->getAmountMonth(i);
                 if (planNeeded == -1 || currentAmountMonth < amountPlanNeeded)
@@ -956,6 +956,16 @@ QString Utilities::getReadablePROplanFromId(int identifier)
     }
 
     return QString::fromUtf8("PRO");
+}
+
+void Utilities::animateFadein(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 0.0, 1.0);
+}
+
+void Utilities::animateFadeout(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 1.0, 0.0);
 }
 
 void Utilities::animatePartialFadein(QWidget *object, int msecs)
@@ -1062,6 +1072,17 @@ void Utilities::sleepMilliseconds(long long milliseconds)
 #else
     usleep(milliseconds * 1000);
 #endif
+}
+
+int Utilities::partPer(long long  part, long long total, uint ref)
+{
+    // Use maximum precision
+    long double partd(part);
+    long double totald(total);
+    long double refd(ref);
+
+    // We can safely cast because the result should reasonably fit in an int.
+    return (static_cast<int>((partd * refd) / totald));
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

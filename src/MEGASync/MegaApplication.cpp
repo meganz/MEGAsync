@@ -1554,7 +1554,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
 void MegaApplication::processDownloadQueue(QString path)
 {
-    if (appfinished)
+    if (appfinished || downloadQueue.isEmpty())
     {
         return;
     }
@@ -1562,10 +1562,12 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
-        QQueue<MegaNode *>::iterator it;
+        QQueue<WrappedNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+            HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(),
+                                             MegaTransfer::STATE_CANCELLED,
+                                             0, 0, 0, QString());
         }
 
         qDeleteAll(downloadQueue);
@@ -1575,7 +1577,9 @@ void MegaApplication::processDownloadQueue(QString path)
     }
 
     unsigned long long transferId = preferences->transferIdentifier();
-    TransferMetaData *transferData =  new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size());
+    TransferMetaData *transferData =  new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD,
+                                                           downloadQueue.size(),
+                                                           downloadQueue.size());
     transferAppData.insert(transferId, transferData);
     if (!downloader->processDownloadQueue(&downloadQueue, path, transferId))
     {
@@ -1858,7 +1862,6 @@ void MegaApplication::checkNetworkInterfaces()
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "No active network interfaces found");
         networkConnectivity = false;
-        networkConfigurationManager.updateConfigurations();
     }
     else if (!activeNetworkInterfaces.size())
     {
@@ -2195,7 +2198,6 @@ void MegaApplication::periodicTasks()
                 megaApi->sendEvent(AppStatsEvents::EVENT_UPDATE_OK, "MEGAsync updated OK");
             }
 
-            networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
             mThreadPool->push([=]()
             {//thread pool function
@@ -2747,7 +2749,7 @@ void MegaApplication::startHttpServer()
         //Start the HTTP server
         httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
         connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+        connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
         connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
         connect(httpServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
         connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
@@ -2766,7 +2768,7 @@ void MegaApplication::startHttpsServer()
         //Start the HTTPS server
         httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
         connect(httpsServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+        connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
         connect(httpsServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
@@ -2825,6 +2827,23 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
 }
+
+QuotaState MegaApplication::getTransferQuotaState() const
+{
+     QuotaState quotaState (QuotaState::OK);
+
+     if (transferQuota->isQuotaWarning())
+     {
+         quotaState = QuotaState::WARNING;
+     }
+     else if (transferQuota->isOverQuota())
+     {
+         quotaState = QuotaState::FULL;
+     }
+
+     return quotaState;
+}
+
 
 int MegaApplication::getAppliedStorageState() const
 {
@@ -2936,7 +2955,7 @@ void MegaApplication::runConnectivityCheck()
         }
 
         proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(preferences->proxyPort());
+        proxy.setPort(qint16(preferences->proxyPort()));
         if (preferences->proxyRequiresAuth())
         {
             proxy.setUser(preferences->getProxyUsername());
@@ -2965,7 +2984,7 @@ void MegaApplication::runConnectivityCheck()
             if (arguments.size() == 2)
             {
                 proxy.setHostName(arguments[0]);
-                proxy.setPort(arguments[1].toInt());
+                proxy.setPort(quint16(arguments[1].toInt()));
             }
         }
         delete autoProxy;
@@ -3095,10 +3114,10 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<MegaNode *>::iterator it;
+            QQueue<WrappedNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
-                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+                HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
             for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
@@ -3157,10 +3176,10 @@ void MegaApplication::infoWizardDialogFinished(int result)
     {
         if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<MegaNode *>::iterator it;
+            QQueue<WrappedNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
-                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+                HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
             for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
@@ -3503,7 +3522,7 @@ void MegaApplication::applyProxySettings()
         proxySettings->setProxyURL(proxyString.toUtf8().constData());
 
         proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(preferences->proxyPort());
+        proxy.setPort(qint16(preferences->proxyPort()));
         if (preferences->proxyRequiresAuth())
         {
             QString username = preferences->getProxyUsername();
@@ -3530,7 +3549,7 @@ void MegaApplication::applyProxySettings()
             {
                 proxy.setType(QNetworkProxy::HttpProxy);
                 proxy.setHostName(arguments[0]);
-                proxy.setPort(arguments[1].toInt());
+                proxy.setPort(qint16(arguments[1].toInt()));
             }
         }
     }
@@ -3723,7 +3742,10 @@ void MegaApplication::checkOperatingSystem()
 #endif
 
 #ifdef WIN32
+#pragma warning(push)
+#pragma warning(disable: 4996) // declared deprecated
         DWORD dwVersion = GetVersion();
+#pragma warning(pop)
         DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
         DWORD dwMinorVersion = (DWORD) (HIBYTE(LOWORD(dwVersion)));
         isOSdeprecated = (dwMajorVersion < 6) || ((dwMajorVersion == 6) && (dwMinorVersion == 0));
@@ -4733,7 +4755,7 @@ void MegaApplication::downloadActionClicked()
 
     if (selectedNode)
     {
-        downloadQueue.append(selectedNode);
+        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
         processDownloads();
     }
 }
@@ -5164,10 +5186,10 @@ void MegaApplication::processDownloads()
     }
     else
     {
-        QQueue<MegaNode *>::iterator it;
+        QQueue<WrappedNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+            HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
         }
 
         //If the dialog is rejected, cancel uploads
@@ -5284,9 +5306,9 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
     MegaNode *node = NULL;
 
 #ifdef WIN32
-    if (!localPath.startsWith(QByteArray((const char *)L"\\\\", 4)))
+    if (!localPath.startsWith(QByteArray((const char *)(void*)L"\\\\", 4)))
     {
-        localPath.insert(0, QByteArray((const char *)L"\\\\?\\", 8));
+        localPath.insert(0, QByteArray((const char *)(void*)L"\\\\?\\", 8));
     }
 
     string tmpPath((const char*)localPath.constData(), localPath.size() - 2);
@@ -5329,7 +5351,7 @@ void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extr
     exportOps++;
 }
 
-void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
+void MegaApplication::externalDownload(QQueue<WrappedNode *> newDownloadQueue)
 {
     if (appfinished)
     {
@@ -5578,7 +5600,7 @@ void MegaApplication::internalDownload(long long handle)
         return;
     }
 
-    downloadQueue.append(node);
+    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
     processDownloads();
 }
 
@@ -7473,7 +7495,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_PUBLIC_NODE:
     {
-        MegaNode *node = NULL;
+        MegaNode *node = nullptr;
         QString link = QString::fromUtf8(request->getLink());
         QMap<QString, QString>::iterator it = pendingLinks.find(link);
         if (e->getErrorCode() == MegaError::API_OK)
@@ -7496,7 +7518,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     node->setPrivateAuth(auth.toUtf8().constData());
                 }
 
-                downloadQueue.append(node);
+                downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
                 processDownloads();
                 break;
             }

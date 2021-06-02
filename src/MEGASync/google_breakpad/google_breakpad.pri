@@ -20,8 +20,8 @@ macx {
 
   OBJECTIVE_SOURCES += $$PWD/common/mac/MachIPC.mm
 
-  LIBS += /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
-  LIBS += /System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices
+  LIBS += -framework CoreFoundation
+  LIBS += -framework CoreServices
 
   QMAKE_CXXFLAGS+=-g
 }

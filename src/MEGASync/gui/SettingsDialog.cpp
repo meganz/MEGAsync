@@ -1430,8 +1430,6 @@ int SettingsDialog::saveSettings()
                 }
 
                 // 1.2 - enable/disable changed syncs
-                QString localPath = syncSetting->getLocalFolder();
-                QString megaPath = syncSetting->getMegaFolder();
                 for (int j = 0; j < ui->tSyncs->rowCount(); j++)
                 {
                     QString newLocalPath = static_cast<QSyncItemWidget*>(ui->tSyncs->cellWidget(j, 0))->fullPath();
@@ -2820,7 +2818,7 @@ void SettingsDialog::onAnimationFinished()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
-    accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
+    accountDetailsDialog = new AccountDetailsDialog(this);
     app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
