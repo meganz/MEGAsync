@@ -2174,7 +2174,7 @@ void MegaApplication::periodicTasks()
     if (queuedUserStats[0] || queuedUserStats[1] || queuedUserStats[2])
     {
         bool storage = queuedUserStats[0], transfer = queuedUserStats[1], pro = queuedUserStats[2];
-        queuedUserStats[0] = queuedUserStats[1] = queuedUserStats[3] = false;
+        queuedUserStats[0] = queuedUserStats[1] = queuedUserStats[2] = false;
         updateUserStats(storage, transfer, pro, false, -1);
     }
 
@@ -2818,12 +2818,12 @@ void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
     connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-    connect(infoDialog, &InfoDialog::dismissTransferOverquota, transferQuota.get(), &TransferQuota::onDismissOverQuotaUiAlert);
-    connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, transferQuota.get(), &TransferQuota::onDismissAlmostOverQuotaUiMessage);
+    connect(infoDialog, &InfoDialog::transferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
+    connect(infoDialog, &InfoDialog::almostTransferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
     connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
     connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
-    connect(transferQuota.get(), &TransferQuota::overQuotaUiMessage, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
-    connect(transferQuota.get(), &TransferQuota::almostOverQuotaUiMessage, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+    connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
+    connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
 }
 
 int MegaApplication::getAppliedStorageState() const
@@ -8236,6 +8236,12 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         transferring = megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads();
 
         Utilities::queueFunctionInAppThread([=](){
+
+            if (!infoDialog)
+            {
+                return;
+            }
+
             int pendingUploads = megaApi->getNumPendingUploads();
             int pendingDownloads = megaApi->getNumPendingDownloads();
 
