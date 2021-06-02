@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #use like this (in debian WSL):
-#mattw@DESKTOP-13186O8:~$ dos2unix /mnt/c/dev/desktop/contrib/updater/gen_fileswinWSL.sh
-#mattw@DESKTOP-13186O8:~$ /mnt/c/dev/desktop/contrib/updater/gen_fileswinWSL.sh /mnt/c/Users/mattw/AppData/Local/MEGAsync
+#$ dos2unix /mnt/c/dev/desktop/contrib/updater/gen_fileswinWSL.sh
+#$ /mnt/c/dev/desktop/contrib/updater/gen_fileswinWSL.sh /mnt/c/Users/<user>/AppData/Local/MEGAsync
 #then diff with existing version and adjust
 
 echo $1
