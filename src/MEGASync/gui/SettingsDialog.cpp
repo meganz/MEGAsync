@@ -1724,19 +1724,23 @@ void SettingsDialog::syncsStateInformation(int state)
             if (areSyncsDisabled)
             {
                 ui->sSyncsState->setCurrentWidget(ui->pSyncsDisabled);
-                ui->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
+
 #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs-error"));
                 toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+#else
+                ui->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs-warn.png")));
 #endif
             }
             else
             {
                 ui->sSyncsState->setCurrentWidget(ui->pNoErrors);
-                ui->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
+
 #ifdef Q_OS_MACOS
                 QString syncs(QString::fromUtf8("settings-syncs"));
                 toolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
+#else
+                ui->bSyncs->setIcon(QIcon(QString::fromUtf8(":/images/settings-syncs.png")));
 #endif
             }
         }
