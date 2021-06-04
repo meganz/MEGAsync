@@ -20,36 +20,9 @@
    <string>MEGA Preferences</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-QWidget
+   <string notr="true">QWidget
 {
 font-size: 11px;
-}
-
-QScrollBar:horizontal
-{
-height: 16px;
-}
-
-QRadioButton
-{
-spacing: 6px;
-}
-
-QCheckBox
-{
-spacing: 4px;
-}
-
-QRadioButton::indicator, QCheckBox::indicator
-{
-width: 13px;
-height: 13px;
-}
-
-#SettingsDialog
-{
-background-color: #f1f1f1;
 }
 
 #wTabHeader

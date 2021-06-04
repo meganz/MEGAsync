@@ -17,39 +17,7 @@
    <string>MEGA Preferences</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-QWidget
-{
-font-size: 11px;
-}
-
-QScrollBar:horizontal
-{
-height: 16px;
-}
-
-QRadioButton
-{
-spacing: 6px;
-}
-
-QCheckBox
-{
-spacing: 4px;
-}
-
-QRadioButton::indicator, QCheckBox::indicator
-{
-width: 13px;
-height: 13px;
-}
-
-#SettingsDialog
-{
-background-color: #f1f1f1;
-}
-
-#wTabHeader
+   <string notr="true">#wTabHeader
 {
 margin-left: 12px;
 margin-right: 12px;
@@ -198,9 +166,7 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -244,9 +210,7 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -290,9 +254,7 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -336,9 +298,7 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -382,9 +342,7 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -428,9 +386,7 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -1152,9 +1108,7 @@ border: none;
        <item>
         <widget class="QGroupBox" name="gAccountDetails">
          <property name="font">
-          <font>
-           <pointsize>-1</pointsize>
-          </font>
+          <font/>
          </property>
          <property name="title">
           <string>Account</string>
@@ -2339,9 +2293,7 @@ border: none;
           <item row="2" column="0">
            <widget class="QLabel" name="lDownloadFolder">
             <property name="font">
-             <font>
-              <pointsize>-1</pointsize>
-             </font>
+             <font/>
             </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
@@ -3105,9 +3057,7 @@ border: none;
       <item>
        <widget class="QPushButton" name="bHelp">
         <property name="font">
-         <font>
-          <pointsize>-1</pointsize>
-         </font>
+         <font/>
         </property>
         <property name="text">
          <string>Help</string>
