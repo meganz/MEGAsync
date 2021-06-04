@@ -105,7 +105,6 @@ private slots:
     void on_bAdd_clicked();
     void on_bDelete_clicked();
     void on_tSyncs_doubleClicked(const QModelIndex &index);
-    void on_bBuyMoreSpace_clicked();
 
     // Security tab
     void on_bExportMasterKey_clicked();
