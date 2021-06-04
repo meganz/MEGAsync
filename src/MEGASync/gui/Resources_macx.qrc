@@ -157,8 +157,6 @@
         <file>images/empty-notifications@2x.png</file>
         <file>images/error.png</file>
         <file>images/error@2x.png</file>
-        <file>images/Free.png</file>
-        <file>images/Free@2x.png</file>
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/grey_folder.png</file>
@@ -296,10 +294,6 @@
         <file>images/incoming_share@2x.png</file>
         <file>images/init_scanning.png</file>
         <file>images/init_scanning@2x.png</file>
-        <file>images/Lite.png</file>
-        <file>images/Lite@2x.png</file>
-        <file>images/litecrest.png</file>
-        <file>images/litecrest@2x.png</file>
         <file>images/locked_account_ico.png</file>
         <file>images/locked_account_ico@2x.png</file>
         <file>images/login_background.png</file>
@@ -347,18 +341,6 @@
         <file>images/payments@2x.png</file>
         <file>images/play_ico.png</file>
         <file>images/play_ico@2x.png</file>
-        <file>images/Pro_I.png</file>
-        <file>images/Pro_I@2x.png</file>
-        <file>images/Pro_II.png</file>
-        <file>images/Pro_II@2x.png</file>
-        <file>images/Pro_III.png</file>
-        <file>images/Pro_III@2x.png</file>
-        <file>images/proicrest.png</file>
-        <file>images/proicrest@2x.png</file>
-        <file>images/proiicrest.png</file>
-        <file>images/proiicrest@2x.png</file>
-        <file>images/proiiicrest.png</file>
-        <file>images/proiiicrest@2x.png</file>
         <file>images/proxies_32.png</file>
         <file>images/proxies_32@2x.png</file>
         <file>images/resume.png</file>
@@ -579,9 +561,6 @@
         <file>images/new_contact@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
-        <file>images/imports_32.png</file>
-        <file>images/imports_32@3x.png</file>
-        <file>images/imports_32@2x.png</file>
         <file>images/settings-imports-macx.png</file>
         <file>images/settings-imports-macx@2x.png</file>
         <file>images/Bin_24_ico.png</file>
@@ -597,5 +576,15 @@
         <file>images/lock_big@2x.png</file>
         <file>images/warning-disabled-syncs.png</file>
         <file>images/warning-disabled-syncs@2x.png</file>
+        <file>images/Small_Free.png</file>
+        <file>images/Small_Free@2x.png</file>
+        <file>images/Small_Lite.png</file>
+        <file>images/Small_Lite@2x.png</file>
+        <file>images/Small_Pro_I.png</file>
+        <file>images/Small_Pro_I@2x.png</file>
+        <file>images/Small_Pro_II.png</file>
+        <file>images/Small_Pro_II@2x.png</file>
+        <file>images/Small_Pro_III.png</file>
+        <file>images/Small_Pro_III@2x.png</file>
     </qresource>
 </RCC>

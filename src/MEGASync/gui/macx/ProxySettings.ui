@@ -24,18 +24,12 @@
     <enum>QLayout::SetFixedSize</enum>
    </property>
    <item>
-    <widget class="QGroupBox" name="gProxy">
+    <widget class="QWidget" name="gProxy" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="title">
-      <string/>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="sizeConstraint">
@@ -414,7 +408,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="lProxySettings">
+          <widget class="QLabel" name="lProxySettings2">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
              <horstretch>0</horstretch>

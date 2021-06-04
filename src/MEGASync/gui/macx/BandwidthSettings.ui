@@ -87,7 +87,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="lUploadRateLimit">
+             <widget class="QLabel" name="lUploadRateLimitDesc">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
@@ -458,7 +458,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="lDownloadRateLimit">
+             <widget class="QLabel" name="lDownloadRateLimitDesc">
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
               </property>
