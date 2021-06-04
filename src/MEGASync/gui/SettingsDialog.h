@@ -98,6 +98,7 @@ private slots:
     void setAvatar();
     void on_bUpgrade_clicked();
     void on_bMyAccount_clicked();
+    void on_bBuyMoreSpace_clicked();
     void on_bStorageDetails_clicked();
 
     // Syncs tab
