@@ -220,6 +220,17 @@ background-color: rgba(0,0,0,0.1);
   margin-left: 32px;
   margin-right: 32px;
 }
+
+/*Network pane css props*/
+#wSeparatorNetwork
+{
+ background-color: rgba(0,0,0,0.1);
+}
+
+#lUploadRateLimit, #lDownloadRateLimit, #lProxySettings
+{
+    font-weight: bold;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -262,7 +273,7 @@ background-color: rgba(0,0,0,0.1);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -3738,66 +3749,113 @@ QTableWidget::item { background-color: #F5F5F5; }
       <property name="focusPolicy">
        <enum>Qt::WheelFocus</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>6</number>
+       </property>
        <property name="leftMargin">
-        <number>32</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>12</number>
+        <number>16</number>
        </property>
        <property name="rightMargin">
-        <number>32</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>12</number>
+        <number>0</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="gBandwidthSettings">
-         <property name="title">
-          <string/>
+        <widget class="QWidget" name="gBandwidthSettings" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <layout class="QVBoxLayout" name="verticalLayout_40">
+          <property name="leftMargin">
+           <number>25</number>
+          </property>
           <property name="topMargin">
-           <number>24</number>
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>25</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
           <item>
-           <spacer name="horizontalSpacer_17">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <layout class="QGridLayout" name="gridLayout_14" columnminimumwidth="200,0,0">
+            <property name="topMargin">
+             <number>7</number>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QFormLayout" name="formLayout">
-            <property name="labelAlignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="formAlignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="horizontalSpacing">
+            <property name="bottomMargin">
              <number>7</number>
             </property>
             <property name="verticalSpacing">
-             <number>7</number>
+             <number>10</number>
             </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_2">
+            <item row="1" column="0">
+             <widget class="QLabel" name="lDownloadRateLimitDesc">
               <property name="text">
-               <string>Upload Rate Limit:</string>
+               <string>Download Rate Limit:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_3">
+            <item row="0" column="0">
+             <widget class="QLabel" name="lUploadRateLimitDesc">
               <property name="text">
-               <string>Download Rate Limit:</string>
+               <string>Upload Rate Limit:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2" rowspan="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <spacer name="horizontalSpacer_18">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="bOpenBandwidthSettings">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Change Settings...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="lDownloadRateLimit">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string/>
               </property>
              </widget>
             </item>
@@ -3813,80 +3871,77 @@ font-weight: bold;
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="lDownloadRateLimit">
-              <property name="styleSheet">
-               <string notr="true">QLabel {
-font-weight: bold;
-}</string>
-              </property>
-             </widget>
-            </item>
            </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_18">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="bOpenBandwidthSettings">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Change Settings...</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="gProxySettings">
-         <property name="title">
+        <widget class="QWidget" name="wSeparatorNetwork" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">margin-left: 32px;
+margin-right: 32px;
+</string>
+         </property>
+         <property name="text" stdset="0">
           <string/>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="iconSize" stdset="0">
+          <size>
+           <width>576</width>
+           <height>1</height>
+          </size>
+         </property>
+         <property name="checkable" stdset="0">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="gProxySettings" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_41">
+          <property name="leftMargin">
+           <number>25</number>
+          </property>
           <property name="topMargin">
-           <number>24</number>
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>25</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
           <item>
-           <spacer name="horizontalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QFormLayout" name="formLayout_4">
-            <property name="labelAlignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="formAlignment">
-             <set>Qt::AlignCenter</set>
-            </property>
+           <layout class="QGridLayout" name="gridLayout_15" columnminimumwidth="200,0,0">
             <item row="0" column="0">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="lProxySettingsDesc">
               <property name="text">
                <string>Proxy Settings:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -3902,33 +3957,37 @@ font-weight: bold;
               </property>
              </widget>
             </item>
+            <item row="0" column="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <spacer name="horizontalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="bOpenProxySettings">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Change Settings...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
            </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="bOpenProxySettings">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Change Settings...</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
@@ -3941,7 +4000,7 @@ font-weight: bold;
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>1</height>
+           <height>484</height>
           </size>
          </property>
         </spacer>
