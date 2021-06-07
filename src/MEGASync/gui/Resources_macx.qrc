@@ -477,8 +477,6 @@
         <file>images/sync_item_ico@2x.png</file>
         <file>images/synching.gif</file>
         <file>images/synching@2x.gif</file>
-        <file>images/syncs_32.png</file>
-        <file>images/syncs_32@2x.png</file>
         <file>images/takedown.png</file>
         <file>images/takedown@2x.png</file>
         <file>images/takedown_padding.png</file>
@@ -586,5 +584,21 @@
         <file>images/Small_Pro_II@2x.png</file>
         <file>images/Small_Pro_III.png</file>
         <file>images/Small_Pro_III@2x.png</file>
+        <file>images/megasync_logo.png</file>
+        <file>images/megasync_logo@2x.png</file>
+        <file>images/ico_Delete.png</file>
+        <file>images/ico_Delete@2x.png</file>
+        <file>images/ico_open_MEGA.png</file>
+        <file>images/ico_open_MEGA@2x.png</file>
+        <file>images/Item_sync_press.png</file>
+        <file>images/Item_sync_press@2x.png</file>
+        <file>images/Item_sync_rest.png</file>
+        <file>images/Item_sync_rest@2x.png</file>
+        <file>images/Item_options_hover.png</file>
+        <file>images/Item_options_hover@2x.png</file>
+        <file>images/Item_options_rest.png</file>
+        <file>images/Item_options_rest@2x.png</file>
+        <file>images/Item_options_press.png</file>
+        <file>images/Item_options_press@2x.png</file>
     </qresource>
 </RCC>
