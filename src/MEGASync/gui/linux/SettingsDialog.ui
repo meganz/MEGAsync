@@ -96,20 +96,15 @@ border: none;
 
 #lAccountType, #lName
 {
-    font-size: 13px;
+font-size: 13px;
 }
 
 #lAccountType
 {
-    text-align: left;
-    border: none;
-    padding: 0px;
-    margin: 0px;
-}
-
-#lBandwidthFree, #lBandwidth
-{
-	font-size: 13px;
+text-align: left;
+border: none;
+padding: 0px;
+margin: 0px;
 }
 
 #lBandwidthFree

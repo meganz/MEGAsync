@@ -1816,7 +1816,7 @@ void SettingsDialog::updateBandwidthElements()
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                     .arg(Utilities::getSizeString(usedBandwidth))
                     .arg(QString::number(std::min(bandwidthPercentage, 100)))
-                    .arg(Utilities::getSizeString(usedBandwidth)));
+                    .arg(Utilities::getSizeString(totalBandwidth)));
         }
     }
 }
