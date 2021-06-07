@@ -65,6 +65,7 @@ public slots:
     void onEnableSyncFailed(int, std::shared_ptr<SyncSetting> syncSetting);
     void onDisableSyncFailed(std::shared_ptr<SyncSetting> syncSetting);
     void showGuestMode();
+    void onSyncSelected(const QItemSelection& selected, const QItemSelection& deselected);
 
 private slots:
     void onSavingSettingsProgress(double progress);
@@ -149,12 +150,26 @@ private slots:
     void onAnimationFinished();
     void initializeNativeUIComponents();
 #endif
-
+    void showInFolderClicked();
+    void showInMegaClicked();
+    void onDeleteSync();
+    void onCellClicked(int row, int column);
 
 protected:
     void changeEvent(QEvent * event) override;
 
 private:
+    enum
+    {
+        SYNC_COL_ENABLE_CB = 0,
+        SYNC_COL_LFOLDER   = 1,
+        SYNC_COL_RFOLDER   = 2,
+        SYNC_COL_MENU      = 3,
+        SYNC_COL_TAG       = 4,
+        SYNC_COL_HANDLE    = 5,
+        SYNC_COL_NAME      = 6,
+        SYNC_COL_NB
+    };
     void loadSettings();
     void saveSyncSettings();
     void onCacheSizeAvailable();
@@ -189,6 +204,7 @@ private:
     bool isSavingSyncsOnGoing;
     int debugCounter; // Easter Egg
     QPointer<ProxySettings> mProxySettingsDialog;
+    int mSelectedSyncRow;
 
 #ifdef Q_OS_MACOS
     QPropertyAnimation *minHeightAnimation;
