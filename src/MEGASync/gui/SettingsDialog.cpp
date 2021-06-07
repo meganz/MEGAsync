@@ -1224,8 +1224,7 @@ void SettingsDialog::onCellClicked(int row, int column)
 //                                                syncSetting);
 //        });// end of thread pool function
 
-        QMenu menu;
-
+        QMenu menu(ui->tSyncs);
         // Show in explorer action
         auto showLocalAction (new MenuItemAction(tr("Open in Explorer"),
                                                  QIcon(QString::fromUtf8("://images/"

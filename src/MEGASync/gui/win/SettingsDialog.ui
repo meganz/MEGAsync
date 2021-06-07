@@ -109,6 +109,11 @@ background-color: rgba(0,120,215,0.8);
 border-right: 1px solid #2b8bd7;
 }
 
+#tSyncs QMenu
+{
+background-color: white;
+}
+
 #lAccountType, #lName
 {
 font-size: 13px;
@@ -470,7 +475,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
