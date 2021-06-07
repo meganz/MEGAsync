@@ -584,5 +584,7 @@
         <file>images/Small_Pro_II@2x.png</file>
         <file>images/Small_Pro_III.png</file>
         <file>images/Small_Pro_III@2x.png</file>
+        <file>images/megasync_logo.png</file>
+        <file>images/megasync_logo@2x.png</file>
     </qresource>
 </RCC>
