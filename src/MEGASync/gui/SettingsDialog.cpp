@@ -1229,9 +1229,16 @@ void SettingsDialog::onCellClicked(int row, int column)
 
         QMenu menu(ui->tSyncs);
         // Show in explorer action
-        auto showLocalAction (new MenuItemAction(tr("Open in Explorer"),
-                                                 QIcon(QString::fromUtf8("://images/"
-                                                                         "grey_folder.png"))));
+#ifdef Q_OS_MACOS
+        QString openLocally{tr("Open in Finder")};
+        QIcon menuItemIcon{QString::fromUtf8("://images/"
+                                             "ico_mac.png")};
+#else
+        QString openLocally{tr("Open in Explorer")};
+        QIcon menuItemIcon{QString::fromUtf8("://images/"
+                                             "grey_folder.png")};
+#endif
+        auto showLocalAction (new MenuItemAction(openLocally, menuItemIcon));
         connect(showLocalAction, &MenuItemAction::triggered,
                 this, &SettingsDialog::showInFolderClicked);
 
