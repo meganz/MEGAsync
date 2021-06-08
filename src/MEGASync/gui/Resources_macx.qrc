@@ -600,5 +600,7 @@
         <file>images/Item_options_rest@2x.png</file>
         <file>images/Item_options_press.png</file>
         <file>images/Item_options_press@2x.png</file>
+        <file>images/ico_mac.png</file>
+        <file>images/ico_mac@2x.png</file>
     </qresource>
 </RCC>
