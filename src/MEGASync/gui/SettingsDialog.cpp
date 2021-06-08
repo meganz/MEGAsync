@@ -984,7 +984,7 @@ void SettingsDialog::saveSyncSettings()
                 bool enabled = cb->isChecked();
                 if (enabled)
                 {
-                    QWidget* w (ui->tSyncs->cellWidget(j,SYNC_COL_LFOLDER));
+                    QWidget* w (ui->tSyncs->cellWidget(j, SYNC_COL_LFOLDER));
                     QString localFolderPath = qobject_cast<QSyncItemWidget*>(w)->fullPath();
                     w = ui->tSyncs->cellWidget(j, SYNC_COL_RFOLDER);
                     QString megaFolderPath = qobject_cast<QSyncItemWidget*>(w)->fullPath();
@@ -1102,77 +1102,10 @@ void SettingsDialog::loadSyncSettings()
         // Check if current sync is disabled by an error.
         areSyncsDisabled = areSyncsDisabled || static_cast<bool>(syncSetting->getError());
 
-        // Col 0: Enabled/Disabled checkbox
-        QWidget* w = new QWidget();
-        QHBoxLayout* hl = new QHBoxLayout();
-        QCheckBox* c = new QCheckBox();
-        c->setFixedSize(16, 16);
-        hl->setContentsMargins(0, 0, 0, 0);
-        hl->addWidget(c);
-        hl->setAlignment(c, Qt::AlignCenter);
-        w->setLayout(hl);
-        // Note: isEnabled refers to enable/disabled by the user. It could be temporary
-        //       disabled or even failed. This should be shown in the UI.
-        c->setChecked(syncSetting->isActive());
-        c->setToolTip(tr("Enable / disable"));
-        connect(c, &QCheckBox::stateChanged,
-                this, &SettingsDialog::syncStateChanged, Qt::QueuedConnection);
-
-        ui->tSyncs->setCellWidget(i, SYNC_COL_ENABLE_CB, w);
-
-        // Col 1: Local folder
-        QSyncItemWidget* localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER);
-        QString localFolderQString = syncSetting->getLocalFolder();
-#ifdef Q_OS_WINDOWS
-        if (localFolderQString.startsWith(QString::fromUtf8("\\\\?\\")))
-        {
-            localFolderQString = localFolderQString.mid(4);
-        }
-#endif
-        localFolder->setPath(localFolderQString, syncSetting->name());
-        localFolder->setToolTip(localFolderQString);
-        localFolder->setError(syncSetting->getError());
-        ui->tSyncs->setCellWidget(i, SYNC_COL_LFOLDER, localFolder);
-
-        // Col 2: Mega Folder
-        QSyncItemWidget* megaFolder = new QSyncItemWidget(QSyncItemWidget::REMOTE_FOLDER);
-        assert(syncSetting->getMegaFolder().size() && "remote folder lacks path");
-        megaFolder->setPath(syncSetting->getMegaFolder().size() ?
-                                syncSetting->getMegaFolder()
-                              : QString::fromUtf8("---"));
-        megaFolder->setToolTip(syncSetting->getMegaFolder());
-        megaFolder->setSyncSetting(syncSetting);
-        megaFolder->mSyncRootHandle = syncSetting->getMegaHandle();
-        ui->tSyncs->setCellWidget(i, SYNC_COL_RFOLDER, megaFolder);
-
-        // Col 3: menu
-        QLabel* lMenu (new QLabel);
-        QString menuRsc (QString::fromUtf8("://images/Item_options_rest.png"));
-        lMenu->setFixedSize(16, 16);
-
-        QWidget* menuWidget = new QWidget();
-        QHBoxLayout* horizontalLayout = new QHBoxLayout();
-        horizontalLayout->addWidget(lMenu);
-        menuWidget->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout->setAlignment(lMenu, Qt::AlignCenter);
-        menuWidget->setLayout(horizontalLayout);
-
-        ui->tSyncs->setCellWidget(i, SYNC_COL_MENU, menuWidget);
-
-        // Col 4: tag. HIDDEN
-        QLabel* lTag = new QLabel(QString::number(syncSetting->backupId()));
-        ui->tSyncs->setCellWidget(i, SYNC_COL_TAG, lTag);
-
-        // Col 5: MegaHandle. HIDDEN
-        QLabel* lHandle = new QLabel(QString::number(syncSetting->getMegaHandle()));
-        ui->tSyncs->setCellWidget(i, SYNC_COL_HANDLE, lHandle);
-
-        // Col 6: SyncName. HIDDEN
-        QLabel* lName = new QLabel(syncSetting->name());
-        ui->tSyncs->setCellWidget(i, SYNC_COL_NAME, lName);
-
-        syncNames.append(syncSetting->name());
+        addSyncRow(i, syncSetting->name(), syncSetting->getLocalFolder(),
+                   syncSetting->getMegaFolder(), syncSetting->isActive(),
+                   syncSetting->getError(), syncSetting->getMegaHandle(),
+                   syncSetting->backupId(), syncSetting);
     }
 
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
@@ -1228,13 +1161,9 @@ void SettingsDialog::onCellClicked(int row, int column)
 //        });// end of thread pool function
 
         QMenu menu(ui->tSyncs);
+
         // Show in explorer action
-#ifdef Q_OS_MACOS
-        QString openLocally{tr("Open in Finder")};
-#else
-        QString openLocally{tr("Open in Explorer")};
-#endif
-        auto showLocalAction (new MenuItemAction(openLocally,
+        auto showLocalAction (new MenuItemAction(tr("Show folder"),
                  QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
         connect(showLocalAction, &MenuItemAction::triggered,
                 this, &SettingsDialog::showInFolderClicked);
@@ -1261,6 +1190,89 @@ void SettingsDialog::onCellClicked(int row, int column)
         QWidget* w (ui->tSyncs->cellWidget(row, column));
         menu.exec(w->mapToGlobal(w->rect().center()));
     }
+}
+
+void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPath,
+                                const QString& rPath, bool isActive, int error,
+                                MegaHandle megaHandle, MegaHandle tag,
+                                std::shared_ptr<SyncSetting> syncSetting)
+{
+    // Col 0: Enabled/Disabled checkbox
+    QWidget* w = new QWidget();
+    QHBoxLayout* hl = new QHBoxLayout();
+    QCheckBox* c = new QCheckBox();
+
+    hl->setContentsMargins(0, 0, 0, 0);
+    w->setFixedWidth(ui->tSyncs->horizontalHeader()->sectionSize(SYNC_COL_ENABLE_CB));
+    w->setLayout(hl);
+    hl->addWidget(c);
+    hl->setAlignment(c, Qt::AlignCenter);
+
+    // Note: isEnabled refers to enable/disabled by the user. It could be temporary
+    //       disabled or even failed. This should be shown in the UI.
+    c->setChecked(isActive);
+    c->setToolTip(tr("Enable / disable"));
+    connect(c, &QCheckBox::stateChanged,
+            this, &SettingsDialog::syncStateChanged, Qt::QueuedConnection);
+
+    ui->tSyncs->setCellWidget(row, SYNC_COL_ENABLE_CB, w);
+
+    // Col 1: Local folder
+    QSyncItemWidget* localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER);
+    QString localFolderQString = lPath;
+#ifdef Q_OS_WINDOWS
+    if (localFolderQString.startsWith(QString::fromUtf8("\\\\?\\")))
+    {
+        localFolderQString = localFolderQString.mid(4);
+    }
+#endif
+    localFolder->setPath(localFolderQString, name);
+    localFolder->setToolTip(localFolderQString);
+    localFolder->setError(error);
+    ui->tSyncs->setCellWidget(row, SYNC_COL_LFOLDER, localFolder);
+
+    // Col 2: Mega Folder
+    QSyncItemWidget* megaFolder = new QSyncItemWidget(QSyncItemWidget::REMOTE_FOLDER);
+    assert(rPath.size() && "remote folder lacks path");
+    megaFolder->setPath(rPath.size() ?
+                            rPath
+                          : QString::fromUtf8("---"));
+    megaFolder->setToolTip(rPath);
+    megaFolder->setSyncSetting(syncSetting);
+    megaFolder->mSyncRootHandle = megaHandle;
+    ui->tSyncs->setCellWidget(row, SYNC_COL_RFOLDER, megaFolder);
+
+    // Col 3: menu
+    QLabel* lMenu (new QLabel);
+    QString menuRsc (QString::fromUtf8("://images/Item_options_rest.png"));
+    lMenu->setFixedSize(16, 16);
+
+    QWidget* menuWidget = new QWidget();
+    QHBoxLayout* horizontalLayout = new QHBoxLayout();
+    horizontalLayout->addWidget(lMenu);
+    menuWidget->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
+    horizontalLayout->setContentsMargins(0, 0, 0, 0);
+    horizontalLayout->setAlignment(lMenu, Qt::AlignCenter);
+    menuWidget->setLayout(horizontalLayout);
+
+    ui->tSyncs->setCellWidget(row, SYNC_COL_MENU, menuWidget);
+
+    // Col 4: tag. HIDDEN
+    if (tag != INVALID_HANDLE)
+    {
+        QLabel* lTag = new QLabel(QString::number(tag));
+        ui->tSyncs->setCellWidget(row, SYNC_COL_TAG, lTag);
+    }
+
+    // Col 5: MegaHandle. HIDDEN
+    QLabel* lHandle = new QLabel(QString::number(megaHandle));
+    ui->tSyncs->setCellWidget(row, SYNC_COL_HANDLE, lHandle);
+
+    // Col 6: SyncName. HIDDEN
+    QLabel* lName = new QLabel(name);
+    ui->tSyncs->setCellWidget(row, SYNC_COL_NAME, lName);
+
+    syncNames.append(name);
 }
 
 #ifndef WIN32
@@ -1327,6 +1339,7 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     {
         dialog->setMegaFolder(megaFolderHandle);
     }
+
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)
     {
@@ -1336,7 +1349,6 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 
     QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder())
                                                        .canonicalPath());
-    MegaHandle handle = dialog->getMegaFolder();
     if (!localFolderPath.length() || !dialog->getMegaPath().size())
     {
         delete dialog;
@@ -1346,51 +1358,8 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     int pos = ui->tSyncs->rowCount();
     ui->tSyncs->setRowCount(pos + 1);
 
-    // Col 0: Enabled/Disabled checkbox
-    QWidget* w = new QWidget();
-    QHBoxLayout* hl = new QHBoxLayout();
-    QCheckBox* c = new QCheckBox();
-    w->setGeometry(0, 0, ui->tSyncs->horizontalHeader()->minimumWidth(),
-                       ui->tSyncs->verticalHeader()->minimumHeight());
-    hl->setContentsMargins(0, 0, 0, 0);
-    hl->addWidget(c);
-    hl->setAlignment(c, Qt::AlignCenter);
-    w->setLayout(hl);
-
-    c->setChecked(true);
-    c->setToolTip(tr("Enable / disable"));
-    connect(c, &QCheckBox::stateChanged,
-            this, &SettingsDialog::syncStateChanged, Qt::QueuedConnection);
-    ui->tSyncs->setCellWidget(pos, SYNC_COL_ENABLE_CB, w);
-
-    // Col 1: Local folder
-    QSyncItemWidget* localFolder = new QSyncItemWidget(QSyncItemWidget::LOCAL_FOLDER);
-    localFolder->setPath(localFolderPath, dialog->getSyncName());
-    localFolder->setToolTip(localFolderPath);
-    ui->tSyncs->setCellWidget(pos, SYNC_COL_LFOLDER, localFolder);
-
-    // Col 2: Mega Folder
-    QSyncItemWidget* megaFolder = new QSyncItemWidget(QSyncItemWidget::REMOTE_FOLDER);
-    //Check if need to setError here or it is enough setting when syncstatechanged
-    megaFolder->setPath(dialog->getMegaPath());
-    megaFolder->setToolTip(dialog->getMegaPath());
-    ui->tSyncs->setCellWidget(pos, SYNC_COL_RFOLDER, megaFolder);
-
-    // Col 3: menu
-    QLabel* lMenu (new QLabel);
-    QString menuRsc (QString::fromUtf8("://images/Item_options_rest.png"));
-    lMenu->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
-    ui->tSyncs->setCellWidget(pos, SYNC_COL_MENU, lMenu);
-
-    // Col 5: MegaHandle. HIDDEN
-    QLabel* lHandle = new QLabel(QString::number(handle));
-    ui->tSyncs->setCellWidget(pos, SYNC_COL_HANDLE, lHandle);
-
-    // Col 6: SyncName. HIDDEN
-    QLabel* lName = new QLabel(dialog->getSyncName());
-    ui->tSyncs->setCellWidget(pos, SYNC_COL_NAME, lName);
-
-    syncNames.append(dialog->getSyncName());
+    addSyncRow(pos, dialog->getSyncName(), localFolderPath, dialog->getMegaPath(),
+               true, 0, dialog->getMegaFolder(), INVALID_HANDLE);
 
     delete dialog;
 

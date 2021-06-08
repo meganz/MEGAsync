@@ -154,6 +154,9 @@ private slots:
     void showInMegaClicked();
     void onDeleteSync();
     void onCellClicked(int row, int column);
+    void addSyncRow(int row, const QString& name, const QString& lPath,
+                    const QString& rPath, bool isActive, int error, mega::MegaHandle megaHandle,
+                    mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
 
 protected:
     void changeEvent(QEvent * event) override;
