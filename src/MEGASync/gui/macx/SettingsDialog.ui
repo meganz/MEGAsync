@@ -178,15 +178,38 @@ background-color: rgba(0,0,0,0.1);
 }
 
 /*Syncs pane css props*/
+#tSyncs
+{
+border: 1px solid #D8D8D8;
+}
+
+#wSyncsTable QHeaderView::section
+{
+    border-style: none;
+    background: #F0F0F0;
+}
+
 #wSyncsTable QHeaderView::section:horizontal
 {
-padding-left: 10px;
+    border-right: 1px solid #D8D8D8;
+    padding-left: 10px;
+}
+
+#wSyncsTable QTableView
+{
+    background: white;
+}
+#wSyncsTable QTableView::item
+{
+    border-right: 1px solid #D8D8D8;
 }
 
 #wSyncsTable QTableWidget::item:selected
 {
-  background-color: rgba(0,122,254,0.8);
+    	background-color: rgba(0,120,215,0.8);
+    border-right: 1px solid #2b8bd7;
 }
+
 
 #tSyncs QMenu
 {
@@ -2330,6 +2353,12 @@ margin-right: 32px;</string>
                <property name="enabled">
                 <bool>true</bool>
                </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
@@ -2343,7 +2372,7 @@ margin-right: 32px;</string>
                 <string notr="true"/>
                </property>
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::NoFrame</enum>
                </property>
                <property name="verticalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -2373,7 +2402,7 @@ margin-right: 32px;</string>
                 <enum>QAbstractItemView::ScrollPerPixel</enum>
                </property>
                <property name="showGrid">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <property name="sortingEnabled">
                 <bool>true</bool>
@@ -2394,7 +2423,7 @@ margin-right: 32px;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>29</number>
+                <number>32</number>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
                 <number>251</number>
