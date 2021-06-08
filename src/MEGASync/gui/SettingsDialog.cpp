@@ -1082,17 +1082,20 @@ void SettingsDialog::loadSyncSettings()
     syncNames.clear();
 
     ui->tSyncs->horizontalHeader()->setVisible(true);
-    int numFolders = model->getNumSyncedFolders();
-    ui->tSyncs->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    int numFolders = model->getNumSyncedFolders();
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(SYNC_COL_NB);
-    int miniMumSectionSize (ui->tSyncs->horizontalHeader()->minimumSectionSize());
-    ui->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_ENABLE_CB, miniMumSectionSize);
-    ui->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_MENU, miniMumSectionSize);
     ui->tSyncs->setColumnHidden(SYNC_COL_TAG, true);    //hidden tag
     ui->tSyncs->setColumnHidden(SYNC_COL_HANDLE, true); //hidden handle
     ui->tSyncs->setColumnHidden(SYNC_COL_NAME, true);   //hidden name
+    ui->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_ENABLE_CB, QHeaderView::Fixed);
+    ui->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_MENU, QHeaderView::Fixed);
+    ui->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_LFOLDER,QHeaderView::Stretch);
+    ui->tSyncs->horizontalHeader()->setSectionResizeMode(SYNC_COL_RFOLDER,QHeaderView::Stretch);
+    int miniMumSectionSize (ui->tSyncs->horizontalHeader()->minimumSectionSize());
+    ui->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_ENABLE_CB, miniMumSectionSize);
+    ui->tSyncs->horizontalHeader()->resizeSection(SYNC_COL_MENU, miniMumSectionSize);
 
     // New check up. Need to reset, syncs state could have changed
     areSyncsDisabled = false;
