@@ -1116,6 +1116,7 @@ void SettingsDialog::loadSyncSettings()
         QWidget* w = new QWidget();
         QHBoxLayout* hl = new QHBoxLayout();
         QCheckBox* c = new QCheckBox();
+        w->setGeometry(0, 0, miniMumSectionSize, ui->tSyncs->verticalHeader()->minimumHeight());
         hl->setContentsMargins(0, 0, 0, 0);
         hl->addWidget(c);
         hl->setAlignment(c, Qt::AlignCenter);
@@ -1350,10 +1351,13 @@ void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
     QWidget* w = new QWidget();
     QHBoxLayout* hl = new QHBoxLayout();
     QCheckBox* c = new QCheckBox();
+    w->setGeometry(0, 0, ui->tSyncs->horizontalHeader()->minimumWidth(),
+                       ui->tSyncs->verticalHeader()->minimumHeight());
     hl->setContentsMargins(0, 0, 0, 0);
     hl->addWidget(c);
     hl->setAlignment(c, Qt::AlignCenter);
     w->setLayout(hl);
+
     c->setChecked(true);
     c->setToolTip(tr("Enable / disable"));
     connect(c, &QCheckBox::stateChanged,
