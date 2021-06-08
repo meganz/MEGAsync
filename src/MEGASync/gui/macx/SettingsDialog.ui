@@ -178,18 +178,19 @@ background-color: rgba(0,0,0,0.1);
 }
 
 /*Syncs pane css props*/
-QTableWidget::item:alternate 
-{ background-color: #F5F5F5; }
-QTableWidget::item:selected 
-{ background-color: #2e74f6; }
-QTableWidget::item:hover 
-{ background-color: #ebebeb; }
-QTableWidget::item 
-{ background-color: #FFFFFF; }
-
-QHeaderView::section 
+#wSyncsTable QHeaderView::section:horizontal
 {
-  padding-left: 34px;
+padding-left: 10px;
+}
+
+#wSyncsTable QTableWidget::item:selected
+{
+  background-color: rgba(0,122,254,0.8);
+}
+
+#tSyncs QMenu
+{
+background-color: white;
 }
 
 /* Account pane css props*/
@@ -294,7 +295,7 @@ QHeaderView::section
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -2348,7 +2349,7 @@ margin-right: 32px;</string>
                 <enum>Qt::ScrollBarAlwaysOn</enum>
                </property>
                <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAsNeeded</enum>
+                <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
                <property name="autoScroll">
                 <bool>false</bool>
@@ -2384,7 +2385,7 @@ margin-right: 32px;</string>
                 <bool>true</bool>
                </property>
                <property name="columnCount">
-                <number>3</number>
+                <number>4</number>
                </property>
                <attribute name="horizontalHeaderVisible">
                 <bool>false</bool>
@@ -2393,10 +2394,10 @@ margin-right: 32px;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>21</number>
+                <number>29</number>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>270</number>
+                <number>251</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
@@ -2413,8 +2414,11 @@ margin-right: 32px;</string>
                <attribute name="verticalHeaderCascadingSectionResizes">
                 <bool>false</bool>
                </attribute>
+               <attribute name="verticalHeaderMinimumSectionSize">
+                <number>25</number>
+               </attribute>
                <attribute name="verticalHeaderDefaultSectionSize">
-                <number>30</number>
+                <number>25</number>
                </attribute>
                <attribute name="verticalHeaderHighlightSections">
                 <bool>true</bool>
@@ -2430,6 +2434,11 @@ margin-right: 32px;</string>
                  <string/>
                 </property>
                </row>
+               <column>
+                <property name="text">
+                 <string/>
+                </property>
+               </column>
                <column>
                 <property name="text">
                  <string>Local Folder</string>
@@ -2948,7 +2957,7 @@ margin-right: 32px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3053,7 +3062,7 @@ margin-right: 32px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
