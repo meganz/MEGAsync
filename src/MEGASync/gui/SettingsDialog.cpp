@@ -1106,7 +1106,7 @@ void SettingsDialog::loadSyncSettings()
         QWidget* w = new QWidget();
         QHBoxLayout* hl = new QHBoxLayout();
         QCheckBox* c = new QCheckBox();
-        w->setGeometry(0, 0, miniMumSectionSize, ui->tSyncs->verticalHeader()->minimumHeight());
+        c->setFixedSize(16, 16);
         hl->setContentsMargins(0, 0, 0, 0);
         hl->addWidget(c);
         hl->setAlignment(c, Qt::AlignCenter);
@@ -1154,6 +1154,7 @@ void SettingsDialog::loadSyncSettings()
         QHBoxLayout* horizontalLayout = new QHBoxLayout();
         horizontalLayout->addWidget(lMenu);
         menuWidget->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout->setAlignment(lMenu, Qt::AlignCenter);
         menuWidget->setLayout(horizontalLayout);
 
