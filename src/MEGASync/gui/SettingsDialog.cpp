@@ -1202,7 +1202,11 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
     QHBoxLayout* hl = new QHBoxLayout();
     QCheckBox* c = new QCheckBox();
 
+#ifdef Q_OS_WINDOWS
+    hl->setContentsMargins(6, 0, 0, 0);
+#else
     hl->setContentsMargins(0, 0, 0, 0);
+#endif
     w->setFixedWidth(ui->tSyncs->horizontalHeader()->sectionSize(SYNC_COL_ENABLE_CB));
     w->setLayout(hl);
     hl->addWidget(c);
