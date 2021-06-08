@@ -1228,7 +1228,7 @@ void SettingsDialog::onCellClicked(int row, int column)
         // Show in explorer action
         auto showLocalAction (new MenuItemAction(tr("Open in Explorer"),
                                                  QIcon(QString::fromUtf8("://images/"
-                                                                         "grey_folder.png"))));
+                                                                       "show_in_folder_ico.png"))));
         connect(showLocalAction, &MenuItemAction::triggered,
                 this, &SettingsDialog::showInFolderClicked);
 

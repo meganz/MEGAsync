@@ -600,5 +600,9 @@
         <file>images/Item_options_rest@2x.png</file>
         <file>images/Item_options_press.png</file>
         <file>images/Item_options_press@2x.png</file>
+        <file>images/Item_options_press@3x.png</file>
+        <file>images/show_in_folder_ico.png</file>
+        <file>images/show_in_folder_ico@2x.png</file>
+        <file>images/show_in_folder_ico@3x.png</file>
     </qresource>
 </RCC>
