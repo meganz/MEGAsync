@@ -1231,14 +1231,11 @@ void SettingsDialog::onCellClicked(int row, int column)
         // Show in explorer action
 #ifdef Q_OS_MACOS
         QString openLocally{tr("Open in Finder")};
-        QIcon menuItemIcon{QString::fromUtf8("://images/"
-                                             "ico_mac.png")};
 #else
         QString openLocally{tr("Open in Explorer")};
-        QIcon menuItemIcon{QString::fromUtf8("://images/"
-                                             "grey_folder.png")};
 #endif
-        auto showLocalAction (new MenuItemAction(openLocally, menuItemIcon));
+        auto showLocalAction (new MenuItemAction(openLocally,
+                 QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
         connect(showLocalAction, &MenuItemAction::triggered,
                 this, &SettingsDialog::showInFolderClicked);
 

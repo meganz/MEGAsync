@@ -602,5 +602,7 @@
         <file>images/Item_options_press@2x.png</file>
         <file>images/ico_mac.png</file>
         <file>images/ico_mac@2x.png</file>
+        <file>images/show_in_folder_ico.png</file>
+        <file>images/show_in_folder_ico@2x.png</file>
     </qresource>
 </RCC>
