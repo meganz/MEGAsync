@@ -52,17 +52,7 @@ constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{190};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{400};
 #endif
 
-const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{"
-                                                    "border-image: url(%1);"
-                                                    "margin-left: 7px;"
-                                                    "margin-top: 5px;"
-                                                    "width: 16px;"
-                                                    "height: 16px;"
-                                                    "min-width: 16px;"
-                                                    "min-height: 16px;"
-                                                    "max-width: 16px;"
-                                                    "max-height: 16px;"
-                                                    "}");
+const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
 
 long long calculateCacheSize()
 {
@@ -426,7 +416,7 @@ void SettingsDialog::onSyncSelected(const QItemSelection& selected, const QItemS
             w->setSelected(select);
 
             // Menu
-            auto lMenu (qobject_cast<QLabel*>(ui->tSyncs->cellWidget(i, SYNC_COL_MENU)));
+            auto lMenu (qobject_cast<QWidget*>(ui->tSyncs->cellWidget(i, SYNC_COL_MENU)));
             lMenu->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
         }
     }
@@ -1158,8 +1148,16 @@ void SettingsDialog::loadSyncSettings()
         // Col 3: menu
         QLabel* lMenu (new QLabel);
         QString menuRsc (QString::fromUtf8("://images/Item_options_rest.png"));
-        lMenu->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
-        ui->tSyncs->setCellWidget(i, SYNC_COL_MENU, lMenu);
+        lMenu->setFixedSize(16, 16);
+
+        QWidget* menuWidget = new QWidget();
+        QHBoxLayout* horizontalLayout = new QHBoxLayout();
+        horizontalLayout->addWidget(lMenu);
+        menuWidget->setStyleSheet(SYNCS_TAB_MENU_LABEL_QSS.arg(menuRsc));
+        horizontalLayout->setAlignment(lMenu, Qt::AlignCenter);
+        menuWidget->setLayout(horizontalLayout);
+
+        ui->tSyncs->setCellWidget(i, SYNC_COL_MENU, menuWidget);
 
         // Col 4: tag. HIDDEN
         QLabel* lTag = new QLabel(QString::number(syncSetting->backupId()));
