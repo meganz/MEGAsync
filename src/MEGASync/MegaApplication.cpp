@@ -462,7 +462,8 @@ void MegaApplication::initialize()
     {
         QSettings settings(stagingPath, QSettings::IniFormat);
         QString apiURL = settings.value(QString::fromUtf8("apiurl"), QString::fromUtf8("https://staging.api.mega.co.nz/")).toString();
-        megaApi->changeApiUrl(apiURL.toUtf8());
+        QString disablepkp = settings.value(QString::fromUtf8("disablepkp"), QString::fromUtf8("0")).toString();
+        megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp == QString::fromUtf8("1"));
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
         QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL);
 
@@ -7209,7 +7210,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     // We will proceed with a new login
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-                    model->rewriteSyncSettings(); //write sync settings into user's preferences                   
+                    model->rewriteSyncSettings(); //write sync settings into user's preferences
 
                     if (infoDialog && infoDialog->isVisible())
                     {
