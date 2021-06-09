@@ -65,11 +65,6 @@ font-size: 15px;
 font-style: italic;
 }
 
-#lExcludedNames
-{
-margin-right: 5px;
-}
-
 #pUsedBandwidth
 {
 margin-right: 6px;

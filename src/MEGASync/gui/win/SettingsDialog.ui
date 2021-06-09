@@ -57,11 +57,6 @@ font-size: 15px;
 font-style: italic;
 }
 
-#lExcludedNames
-{
-margin-right: 5px;
-}
-
 #lHeader
 {
 background-color: white;
