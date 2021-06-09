@@ -168,8 +168,12 @@ private slots:
 signals:
     void openTransferManager(int tab);
     void dismissStorageOverquota(bool oq);
-    void dismissTransferOverquota();
-    void dismissTransferAlmostOverquota();
+    // signal emitted when showing or dismissing the overquota message.
+    // parameter messageShown is true when alert is enabled, false when dismissed
+    void transferOverquotaMsgVisibilityChange(bool messageShown);
+    // signal emitted when showing or dismissing the almost overquota message.
+    // parameter messageShown is true when alert is enabled, false when dismissed
+    void almostTransferOverquotaMsgVisibilityChange(bool messageShown);
     void userActivity();
 
 private:

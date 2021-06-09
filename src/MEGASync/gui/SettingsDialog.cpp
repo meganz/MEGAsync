@@ -1071,6 +1071,9 @@ void SettingsDialog::loadSyncSettings()
     ui->tSyncs->clearContents();
     syncNames.clear();
 
+    //Get a snapshot of current syncs to avoid possible issues if some of them are removed during loop op
+    QMap<MegaHandle, std::shared_ptr<SyncSetting>> syncs = model->getCopyOfSettings();
+
     ui->tSyncs->horizontalHeader()->setVisible(true);
     ui->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     int numFolders = model->getNumSyncedFolders();
@@ -1090,9 +1093,9 @@ void SettingsDialog::loadSyncSettings()
     // New check up. Need to reset, syncs state could have changed
     areSyncsDisabled = false;
 
-    for (int i = 0; i < numFolders; i++)
+    int i = 0;
+    foreach (auto &syncSetting, syncs.values())
     {
-        auto syncSetting = model->getSyncSetting(i);
         if (!syncSetting)
         {
             assert("A sync has been deleting while trying to loop in");

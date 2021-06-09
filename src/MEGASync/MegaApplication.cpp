@@ -495,7 +495,8 @@ void MegaApplication::initialize()
     {
         QSettings settings(stagingPath, QSettings::IniFormat);
         QString apiURL = settings.value(QString::fromUtf8("apiurl"), QString::fromUtf8("https://staging.api.mega.co.nz/")).toString();
-        megaApi->changeApiUrl(apiURL.toUtf8());
+        QString disablepkp = settings.value(QString::fromUtf8("disablepkp"), QString::fromUtf8("0")).toString();
+        megaApi->changeApiUrl(apiURL.toUtf8(), disablepkp == QString::fromUtf8("1"));
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
         QMegaMessageBox::warning(nullptr, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL);
 
@@ -2210,7 +2211,7 @@ void MegaApplication::periodicTasks()
     if (queuedUserStats[0] || queuedUserStats[1] || queuedUserStats[2])
     {
         bool storage = queuedUserStats[0], transfer = queuedUserStats[1], pro = queuedUserStats[2];
-        queuedUserStats[0] = queuedUserStats[1] = queuedUserStats[3] = false;
+        queuedUserStats[0] = queuedUserStats[1] = queuedUserStats[2] = false;
         updateUserStats(storage, transfer, pro, false, -1);
     }
 
@@ -2853,12 +2854,12 @@ void MegaApplication::createInfoDialog()
 {
     infoDialog = new InfoDialog(this);
     connect(infoDialog, &InfoDialog::dismissStorageOverquota, this, &MegaApplication::onDismissStorageOverquota);
-    connect(infoDialog, &InfoDialog::dismissTransferOverquota, transferQuota.get(), &TransferQuota::onDismissOverQuotaUiAlert);
-    connect(infoDialog, &InfoDialog::dismissTransferAlmostOverquota, transferQuota.get(), &TransferQuota::onDismissAlmostOverQuotaUiMessage);
+    connect(infoDialog, &InfoDialog::transferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onTransferOverquotaVisibilityChange);
+    connect(infoDialog, &InfoDialog::almostTransferOverquotaMsgVisibilityChange, transferQuota.get(), &TransferQuota::onAlmostTransferOverquotaVisibilityChange);
     connect(infoDialog, &InfoDialog::userActivity, this, &MegaApplication::registerUserActivity);
     connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
-    connect(transferQuota.get(), &TransferQuota::overQuotaUiMessage, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
-    connect(transferQuota.get(), &TransferQuota::almostOverQuotaUiMessage, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+    connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
+    connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
@@ -3968,9 +3969,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         if (mOsNotifications && !message.isEmpty())
         {
             preferences->setLastTransferNotificationTimestamp();
-            const QString totalTransfersString{(data->totalTransfers == 1) ? QString::number(1) : QString::number(0)};
-            const QString extraData{totalTransfersString + data->localPath};
-            mOsNotifications->sendFinishedTransferNotification(title, message, extraData);
+            mOsNotifications->sendFinishedTransferNotification(title, message, data->localPath);
         }
 
         transferAppData.erase(it);
@@ -7248,7 +7247,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     // We will proceed with a new login
                     preferences->setEmailAndGeneralSettings(QString::fromUtf8(email.get()));
-                    model->rewriteSyncSettings(); //write sync settings into user's preferences                   
+                    model->rewriteSyncSettings(); //write sync settings into user's preferences
 
                     if (infoDialog && infoDialog->isVisible())
                     {
@@ -8295,6 +8294,12 @@ void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
         transferring = megaApi->getNumPendingUploads() || megaApi->getNumPendingDownloads();
 
         Utilities::queueFunctionInAppThread([=](){
+
+            if (!infoDialog)
+            {
+                return;
+            }
+
             int pendingUploads = megaApi->getNumPendingUploads();
             int pendingDownloads = megaApi->getNumPendingDownloads();
 
