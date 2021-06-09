@@ -19,8 +19,6 @@
   <property name="styleSheet">
    <string notr="true">#wTabHeader
 {
-margin-left: 12px;
-margin-right: 12px;
 border-bottom: 1px solid rgba(0,0,0,0.1);;
 }
 
@@ -176,13 +174,13 @@ font-weight: bold;
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
       <property name="topMargin">
        <number>9</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -470,7 +468,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
@@ -846,7 +844,7 @@ font-weight: bold;
           <item>
            <widget class="QSpinBox" name="sCacheSchedulerDays">
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
             <property name="minimum">
              <number>1</number>
@@ -1570,7 +1568,7 @@ font-weight: bold;
                 <number>4</number>
                </property>
                <attribute name="horizontalHeaderVisible">
-                <bool>true</bool>
+                <bool>false</bool>
                </attribute>
                <attribute name="horizontalHeaderCascadingSectionResizes">
                 <bool>true</bool>

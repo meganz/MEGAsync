@@ -23,9 +23,9 @@
    <string>Proxies</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lProxySettings
+   <string notr="true">#lProxySettings2
 {
-	margin-top: 5px;
+	margin-top: 3px;
 }</string>
   </property>
   <property name="modal">
