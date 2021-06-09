@@ -41,11 +41,6 @@
   background-color: #E2E2E2;
 }
 
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
 QRadioButton::indicator {
      width: 22px;
      height: 22px;
@@ -87,11 +82,6 @@ font-style: italic;
 {
 padding-right: 5px;
 padding-left: 5px;
-}
-
-#lExcludedNames
-{
-margin-right: 5px;
 }
 
 #pUsedBandwidth
@@ -169,6 +159,51 @@ background-color: rgba(0,0,0,0.1);
 #wSeparatorGeneralDefaultOptions, #wSeparatorGeneralLanguage, #wSeparatorGeneralLocalDebris, #wSeparatorGeneralRemoteSyncDebris, #wSeparatorGeneralFileVersions
 {
   background-color: rgba(0,0,0,0.1);
+}
+
+/*Imports pane css props*/
+#wSeparatorImportsDefaultFolders
+{
+  background-color: rgba(0,0,0,0.1);
+}
+
+/*Syncs pane css props*/
+#tSyncs
+{
+border: 1px solid #D8D8D8;
+}
+
+#wSyncsTable QHeaderView::section
+{
+    border-style: none;
+    background: #F0F0F0;
+}
+
+#wSyncsTable QHeaderView::section:horizontal
+{
+    border-right: 1px solid #D8D8D8;
+    padding-left: 10px;
+}
+
+#wSyncsTable QTableView
+{
+    background: white;
+}
+#wSyncsTable QTableView::item
+{
+    border-right: 1px solid #D8D8D8;
+}
+
+#wSyncsTable QTableWidget::item:selected
+{
+    	background-color: rgba(0,120,215,0.8);
+    border-right: 1px solid #2b8bd7;
+}
+
+
+#tSyncs QMenu
+{
+background-color: white;
 }
 
 /* Account pane css props*/
@@ -273,7 +308,7 @@ background-color: rgba(0,0,0,0.1);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -2231,13 +2266,13 @@ margin-right: 32px;</string>
      <widget class="QWidget" name="pSyncs">
       <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0">
        <property name="leftMargin">
-        <number>24</number>
+        <number>25</number>
        </property>
        <property name="topMargin">
         <number>5</number>
        </property>
        <property name="rightMargin">
-        <number>24</number>
+        <number>25</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -2246,7 +2281,7 @@ margin-right: 32px;</string>
         <widget class="QWidget" name="gSyncs" native="true">
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <property name="spacing">
-           <number>0</number>
+           <number>7</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -2258,19 +2293,47 @@ margin-right: 32px;</string>
            <number>0</number>
           </property>
           <item>
+           <widget class="QWidget" name="wSyncsLabel" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <property name="leftMargin">
+              <number>7</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>7</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lSyncs">
+               <property name="text">
+                <string>Syncs</string>
+               </property>
+               <property name="indent">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
            <widget class="QWidget" name="wSyncsTable" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_16">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>6</number>
+              <number>7</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>6</number>
+              <number>7</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -2280,22 +2343,32 @@ margin-right: 32px;</string>
                <property name="enabled">
                 <bool>true</bool>
                </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="cursor" stdset="0">
                 <cursorShape>PointingHandCursor</cursorShape>
                </property>
                <property name="styleSheet">
-                <string notr="true">QTableWidget::item:alternate { background-color: #ffffff; }
-QTableWidget::item:selected { background-color: #2e74f6; }
-QTableWidget::item:hover { background-color: #ebebeb; }
-QTableWidget::item { background-color: #F5F5F5; }
-
-</string>
+                <string notr="true"/>
                </property>
                <property name="frameShape">
-                <enum>QFrame::StyledPanel</enum>
+                <enum>QFrame::NoFrame</enum>
                </property>
                <property name="verticalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOn</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
                <property name="autoScroll">
                 <bool>false</bool>
@@ -2319,7 +2392,7 @@ QTableWidget::item { background-color: #F5F5F5; }
                 <enum>QAbstractItemView::ScrollPerPixel</enum>
                </property>
                <property name="showGrid">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <property name="sortingEnabled">
                 <bool>true</bool>
@@ -2331,7 +2404,7 @@ QTableWidget::item { background-color: #F5F5F5; }
                 <bool>true</bool>
                </property>
                <property name="columnCount">
-                <number>3</number>
+                <number>4</number>
                </property>
                <attribute name="horizontalHeaderVisible">
                 <bool>false</bool>
@@ -2340,10 +2413,10 @@ QTableWidget::item { background-color: #F5F5F5; }
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>271</number>
+                <number>32</number>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>271</number>
+                <number>251</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
@@ -2360,8 +2433,11 @@ QTableWidget::item { background-color: #F5F5F5; }
                <attribute name="verticalHeaderCascadingSectionResizes">
                 <bool>false</bool>
                </attribute>
+               <attribute name="verticalHeaderMinimumSectionSize">
+                <number>26</number>
+               </attribute>
                <attribute name="verticalHeaderDefaultSectionSize">
-                <number>30</number>
+                <number>26</number>
                </attribute>
                <attribute name="verticalHeaderHighlightSections">
                 <bool>true</bool>
@@ -2377,6 +2453,11 @@ QTableWidget::item { background-color: #F5F5F5; }
                  <string/>
                 </property>
                </row>
+               <column>
+                <property name="text">
+                 <string/>
+                </property>
+               </column>
                <column>
                 <property name="text">
                  <string>Local Folder</string>
@@ -2404,14 +2485,14 @@ QTableWidget::item { background-color: #F5F5F5; }
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>580</width>
-                 <height>19</height>
+                 <width>576</width>
+                 <height>20</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>580</width>
-                 <height>19</height>
+                 <width>16777215</width>
+                 <height>20</height>
                 </size>
                </property>
               </widget>
@@ -2438,7 +2519,7 @@ QTableWidget::item { background-color: #F5F5F5; }
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <property name="leftMargin">
-              <number>7</number>
+              <number>0</number>
              </property>
              <property name="topMargin">
               <number>0</number>
@@ -2462,32 +2543,129 @@ QTableWidget::item { background-color: #F5F5F5; }
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QPushButton" name="bPermissions">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Permissions</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
           <item>
            <widget class="QWidget" name="wOQError" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_28">
+            <layout class="QVBoxLayout" name="verticalLayout_39">
+             <property name="spacing">
+              <number>5</number>
+             </property>
              <property name="leftMargin">
               <number>7</number>
              </property>
              <property name="topMargin">
-              <number>10</number>
+              <number>8</number>
              </property>
              <property name="rightMargin">
               <number>7</number>
              </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
-              <widget class="QLabel" name="lOQWarning">
-               <property name="text">
+              <widget class="QGroupBox" name="groupBox">
+               <property name="title">
                 <string/>
                </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-               <property name="openExternalLinks">
-                <bool>true</bool>
-               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_38">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>8</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QWidget" name="wlOQWarning" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_19">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>10</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>10</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lOQWarning">
+                     <property name="text">
+                      <string>Your MEGA account is full. All uploads are disabled, which may affect your synced folders.</string>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                     <property name="margin">
+                      <number>0</number>
+                     </property>
+                     <property name="openExternalLinks">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_15">
+                  <property name="leftMargin">
+                   <number>10</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>10</number>
+                  </property>
+                  <item>
+                   <widget class="QPushButton" name="bBuyMoreSpace">
+                    <property name="text">
+                     <string>Buy more space</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_10">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -2498,13 +2676,13 @@ QTableWidget::item { background-color: #F5F5F5; }
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>35</height>
+              <height>56</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>35</height>
+              <height>56</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -2537,13 +2715,13 @@ QTableWidget::item { background-color: #F5F5F5; }
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>35</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>35</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="currentIndex">
@@ -2684,40 +2862,61 @@ QTableWidget::item { background-color: #F5F5F5; }
                <widget class="QWidget" name="pSyncsDisabled">
                 <layout class="QHBoxLayout" name="horizontalLayout_34">
                  <property name="spacing">
-                  <number>3</number>
+                  <number>0</number>
                  </property>
                  <property name="leftMargin">
-                  <number>6</number>
+                  <number>7</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>6</number>
+                  <number>7</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="lDisabledSyncs">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
+                  <widget class="QGroupBox" name="gblDisabledSyncs">
+                   <property name="title">
+                    <string/>
                    </property>
-                   <property name="styleSheet">
-                    <string notr="true"/>
-                   </property>
-                   <property name="text">
-                    <string>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_11">
+                    <property name="leftMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>8</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>8</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lDisabledSyncs">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                      </property>
+                      <property name="wordWrap">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>
@@ -2777,7 +2976,7 @@ QTableWidget::item { background-color: #F5F5F5; }
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -2882,7 +3081,7 @@ QTableWidget::item { background-color: #F5F5F5; }
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3675,7 +3874,7 @@ QTableWidget::item { background-color: #F5F5F5; }
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
                </property>
                <property name="iconSize">
@@ -4098,7 +4297,7 @@ margin-right: 32px;</string>
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="wGeneralFooter">
            <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -4208,22 +4407,6 @@ margin-right: 32px;</string>
             <property name="bottomMargin">
              <number>0</number>
             </property>
-            <item>
-             <widget class="QPushButton" name="bPermissions">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Permissions</string>
-              </property>
-              <property name="autoDefault">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="wSecurityFooter">
@@ -4324,7 +4507,7 @@ margin-right: 32px;</string>
   <tabstop>bFullCheck</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
