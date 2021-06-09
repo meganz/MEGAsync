@@ -1093,9 +1093,9 @@ void SettingsDialog::loadSyncSettings()
     // New check up. Need to reset, syncs state could have changed
     areSyncsDisabled = false;
 
-    int i = 0;
-    foreach (auto &syncSetting, syncs.values())
+    for (int i = 0; i < numFolders; i++)
     {
+        auto syncSetting = model->getSyncSetting(i);
         if (!syncSetting)
         {
             assert("A sync has been deleting while trying to loop in");
@@ -1109,7 +1109,6 @@ void SettingsDialog::loadSyncSettings()
                    syncSetting->getMegaFolder(), syncSetting->isActive(),
                    syncSetting->getError(), syncSetting->getMegaHandle(),
                    syncSetting->backupId(), syncSetting);
-        i++;
     }
 
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
