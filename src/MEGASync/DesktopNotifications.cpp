@@ -645,17 +645,10 @@ void DesktopNotifications::showInFolder(MegaNotification::Action action) const
 {
     const auto notification = static_cast<MegaNotification*>(QObject::sender());
 
-    if (checkIfActionIsValid(action) && notification->getData().size() > 1)
+    if (checkIfActionIsValid(action) && !notification->getData().isEmpty())
     {
-        QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
-        if (notification->getData().at(0) == QChar::fromAscii('1'))
-        {
-            Platform::showInFolder(localPath);
-        }
-        else
-        {
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
-        }
+        QString localPath = QDir::toNativeSeparators(notification->getData());
+        Platform::showInFolder(localPath);
     }
 }
 
