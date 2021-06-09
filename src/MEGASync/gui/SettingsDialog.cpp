@@ -1207,7 +1207,6 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
 #else
     hl->setContentsMargins(0, 0, 0, 0);
 #endif
-    w->setFixedWidth(ui->tSyncs->horizontalHeader()->sectionSize(SYNC_COL_ENABLE_CB));
     w->setLayout(hl);
     hl->addWidget(c);
     hl->setAlignment(c, Qt::AlignCenter);
