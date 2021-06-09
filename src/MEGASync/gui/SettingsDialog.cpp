@@ -1210,6 +1210,12 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
 #else
     hl->setContentsMargins(0, 0, 0, 0);
 #endif
+
+#ifdef Q_OS_MACOS
+    //Set fixed size to avoid misplaced of checkbox for sync row items
+    c->setFixedSize(16, 16);
+#endif
+
     w->setLayout(hl);
     hl->addWidget(c);
     hl->setAlignment(c, Qt::AlignCenter);
