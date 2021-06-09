@@ -1109,6 +1109,7 @@ void SettingsDialog::loadSyncSettings()
                    syncSetting->getMegaFolder(), syncSetting->isActive(),
                    syncSetting->getError(), syncSetting->getMegaHandle(),
                    syncSetting->backupId(), syncSetting);
+        i++;
     }
 
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
