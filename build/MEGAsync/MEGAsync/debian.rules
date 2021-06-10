@@ -4,7 +4,7 @@ FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 19.10\|Ubuntu [2-9][0-9]\|Deb
 EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[234579]\|Debian.* [78]\|Ubuntu 1[68].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
 INSTALL3RD := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'install3rd')
-EXTRAQMAKEFREEIMAGE := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'CONFIG += USE_OPT_FREEIMAGE')
+EXTRAQMAKEFREEIMAGE := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'QMAKE_RPATHDIR="/opt/mega/lib"')
 export PATH := /opt/mega/bin:$(PATH)
 QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "installqt" || echo "")
@@ -28,7 +28,7 @@ build-stamp:
 	  rm $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3 || : ; \
 	fi
 
-	qmake-qt5 $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE) || qmake $(FULLREQS) $(EXTRAQMAKE)  $(EXTRAQMAKEFREEIMAGE) || /usr/lib/*/qt5/bin/qmake $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE)
+	qmake-qt5 $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE) || qmake $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE) || /usr/lib/*/qt5/bin/qmake $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make
 	echo "fs.inotify.max_user_watches = 524288" > 100-megasync-inotify-limit.conf
@@ -76,8 +76,8 @@ installqt:
 	install /opt/mega/plugins/bearer/libqgenericbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
 	install /opt/mega/plugins/bearer/libqconnmanbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
 install3rd:
-	mkdir -p $(CURDIR)/debian/megacmd/opt/mega/lib
-	install $(CURDIR)/deps/lib/libfreeimage.so.* $(CURDIR)/debian/megacmd/opt/mega/lib
+	mkdir -p $(CURDIR)/debian/megasync/opt/mega/lib
+	install $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* $(CURDIR)/debian/megasync/opt/mega/lib
 
 # Build architecture-independent files here.
 binary-indep: build install $(QTINSTALL) $(INSTALL3RD)

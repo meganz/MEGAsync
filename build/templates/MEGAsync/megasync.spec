@@ -210,6 +210,10 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
 ./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
 
+# Link dynamically with freeimage
+ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libsb/libfreeimage*.so $PWD/deps/lib/libfreeimage.so.3
+ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
+
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
@@ -231,18 +235,18 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
     %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
-        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
         lrelease-qt5  MEGASync/MEGASync.pro
     %else
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
         lrelease-qt4  MEGASync/MEGASync.pro
     %endif
 %else
     %if 0%{?rhel_version} || 0%{?scientificlinux_version}
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
         lrelease-qt4  MEGASync/MEGASync.pro
     %else
-        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
         lrelease MEGASync/MEGASync.pro
     %endif
 %endif
@@ -292,7 +296,11 @@ make install DESTDIR=%{buildroot}%{_bindir}
     install -D /opt/mega/lib/libQt5VirtualKeyboard.so.*.*.* %{buildroot}/opt/mega/lib/libQt5VirtualKeyboard.so.5
     install -D /opt/mega/lib/libQt5Qml.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Qml.so.5
     install -D /opt/mega/lib/libQt5Quick.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Quick.so.5
+
 %endif
+
+mkdir -p  %{buildroot}/opt/mega/lib
+install -D MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* %{buildroot}/opt/mega/lib
 
 mkdir -p  %{buildroot}/etc/sysctl.d/
 echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-megasync-inotify-limit.conf
@@ -515,8 +523,6 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_datadir}/doc/megasync/*
 /etc/sysctl.d/100-megasync-inotify-limit.conf
 /etc/udev/rules.d/99-megasync-udev.rules
-%if 0%{?centos_version} && 0%{?centos_version} < 800
 /opt/*
-%endif
 
 %changelog
