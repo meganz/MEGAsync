@@ -5,8 +5,7 @@ using namespace std;
 
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
-MacXExtServer *MacXPlatform::extServer = NULL;
-std::unique_ptr<QThread> MacXPlatform::threadExtServer;
+QPointer<MacXExtServerService> MacXPlatform::extServer;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
@@ -67,14 +66,6 @@ QStringList MacXPlatform::multipleUpload(QString uploadTitle)
 bool MacXPlatform::enableTrayIcon(QString executable)
 {
     return false;
-}
-
-void MacXPlatform::notifyItemChange(string *localPath, int newState)
-{
-    if (extServer && localPath && localPath->size())
-    {
-        extServer->notifyItemChange(localPath, newState);
-    }
 }
 
 bool MacXPlatform::startOnStartup(bool value)
@@ -190,10 +181,7 @@ void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
 
     if (!extServer)
     {
-        threadExtServer.reset(new QThread());
-        extServer = new MacXExtServer(receiver);
-        extServer->moveToThread(threadExtServer.get());
-        threadExtServer->start();
+        extServer = new MacXExtServerService(receiver);
     }
 }
 
@@ -207,9 +195,15 @@ void MacXPlatform::stopShellDispatcher()
 
     if (extServer)
     {
-        threadExtServer->quit();
         delete extServer;
-        extServer = NULL;
+    }
+}
+
+void MacXPlatform::notifyItemChange(string *localPath, int newState)
+{
+    if (extServer && localPath && localPath->size())
+    {
+        emit extServer->itemChange(QString::fromStdString(*localPath), newState);
     }
 }
 
@@ -220,7 +214,7 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString s
 
     if (extServer)
     {
-        extServer->notifySyncAdd(syncPath, syncName);
+        emit extServer->syncAdd(syncPath, syncName);
     }
 }
 
@@ -231,7 +225,7 @@ void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString
 
     if (extServer)
     {
-        extServer->notifySyncDel(syncPath, syncName);
+        emit extServer->syncDel(syncPath, syncName);
     }
 }
 
@@ -245,7 +239,7 @@ void MacXPlatform::notifyAllSyncFoldersAdded()
 {
     if (extServer)
     {
-        extServer->notifyAllClients(MacXExtServer::NOTIFY_ADD_SYNCS);
+        emit extServer->allClients(MacXExtServer::NOTIFY_ADD_SYNCS);
     }
 }
 
@@ -253,7 +247,7 @@ void MacXPlatform::notifyAllSyncFoldersRemoved()
 {
     if (extServer)
     {
-        extServer->notifyAllClients(MacXExtServer::NOTIFY_DEL_SYNCS);
+        emit extServer->allClients(MacXExtServer::NOTIFY_DEL_SYNCS);
     }
 }
 

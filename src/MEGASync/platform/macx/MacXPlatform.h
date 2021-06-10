@@ -3,7 +3,7 @@
 
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
-#include "MacXExtServer.h"
+#include "MacXExtServerService.h"
 
 #include <QApplication>
 #include <QString>
@@ -22,8 +22,7 @@ private:
     MacXPlatform() {}
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
-    static MacXExtServer *extServer;
-    static std::unique_ptr<QThread> threadExtServer;
+    static QPointer<MacXExtServerService> extServer; //Set to NULL upon deletion
 
 public:
     static void initialize(int argc, char *argv[]);
@@ -67,6 +66,11 @@ public:
 
 private:
     static void disableSignalHandler();
+
+signals:
+    void syncAdd();
+    void syncDel();
+    void notifyAllClients();
 };
 
 #endif // MACXPLATFORM_H

@@ -140,7 +140,8 @@ unix:!macx {
 }
 
 macx {
-    SOURCES += $$PWD/macx/MacXPlatform.cpp
+    SOURCES += $$PWD/macx/MacXPlatform.cpp \
+        $$PWD/macx/MacXExtServerService.cpp
 
     HEADERS += $$PWD/macx/MacXPlatform.h \
         $$PWD/macx/MacXFunctions.h \
@@ -158,7 +159,8 @@ macx {
         $$PWD/macx/NSPopover+MISSINGBackgroundView.h \
         $$PWD/macx/LockedPopOver.h \
         $$PWD/macx/Protocol.h \
-        $$PWD/macx/DynamicTransferQuotaPopOver.h
+        $$PWD/macx/DynamicTransferQuotaPopOver.h \
+        $$PWD/macx/MacXExtServerService.h
 
 
     OBJECTIVE_SOURCES += \
