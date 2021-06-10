@@ -19,11 +19,21 @@ libzen/0.4.37
 # ffmpeg (video preview/thumbnail generation)
 ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
 
-# image analysis: qt + libraw (image preview/thumbnail generation)
+# freeimage and its dependencies (image preview/thumbnail generation)
+freeimage/c303dd024e2dc03a0665ddffbb12a1077933e649:freeimage-bool-typedef-and-xbm-msvc-compiler-bug.patch
+libpng/c303dd024e2dc03a0665ddffbb12a1077933e649
+libjpeg-turbo/c303dd024e2dc03a0665ddffbb12a1077933e649
+tiff/c303dd024e2dc03a0665ddffbb12a1077933e649
+openjpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
+libwebp/c303dd024e2dc03a0665ddffbb12a1077933e649
 libraw/c303dd024e2dc03a0665ddffbb12a1077933e649
+jxrlib/c303dd024e2dc03a0665ddffbb12a1077933e649
+openexr/c303dd024e2dc03a0665ddffbb12a1077933e649:openexr-no-python.patch
 jasper/c303dd024e2dc03a0665ddffbb12a1077933e649:jasper-no-freeglut.patch
+liblzma/c303dd024e2dc03a0665ddffbb12a1077933e649
+#python3 not needed; it only provides python bindings to use openexr from python
+libffi/c303dd024e2dc03a0665ddffbb12a1077933e649
 opengl/c303dd024e2dc03a0665ddffbb12a1077933e649
-#freeglut (cross platform window manager) not needed; problematic on some platforms, pulling in many, many dependencies
 
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
 # (see 3rdParty_deps.txt on instructions on how to get source)
