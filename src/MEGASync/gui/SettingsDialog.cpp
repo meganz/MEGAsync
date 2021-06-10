@@ -1205,12 +1205,7 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
     QHBoxLayout* hl = new QHBoxLayout();
     QCheckBox* c = new QCheckBox();
 
-#ifdef Q_OS_WINDOWS
-    hl->setContentsMargins(6, 0, 0, 0);
-#else
     hl->setContentsMargins(0, 0, 0, 0);
-#endif
-
 #ifdef Q_OS_MACOS
     //Set fixed size to avoid misplaced of checkbox for sync row items
     c->setFixedSize(16, 16);

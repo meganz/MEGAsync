@@ -136,6 +136,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
                                         "padding-left: 12px;}"
                                     "QFileDialog QWidget {"
                                         "font-size: 13px;}"
+
+                                    "QCheckBox::indicator {width: 13px, height: 13px;}"
                                     "QCheckBox::indicator::unchecked {"
                                         "image: url(:/images/cb_unchecked.svg);}"
                                     "QCheckBox::indicator:unchecked:hover {"
@@ -152,6 +154,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
                                         "image: url(:/images/cb_checked_pressed.svg);}"
                                     "QCheckBox::indicator:checked:disabled {"
                                         "image: url(:/images/cb_checked_disabled.svg);}"
+
+                                    "QRadioButton::indicator {width: 13px, height: 13px;}"
                                     "QRadioButton::indicator::unchecked {"
                                         "image: url(:/images/rb_unchecked.svg);}"
                                     "QRadioButton::indicator:unchecked:hover {"
