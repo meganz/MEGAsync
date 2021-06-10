@@ -211,7 +211,7 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 ./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
 
 # Link dynamically with freeimage
-ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libsb/libfreeimage*.so $PWD/deps/lib/libfreeimage.so.3
+ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3
 ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
 
 # Fedora uses system Crypto++ header files

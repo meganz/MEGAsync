@@ -81,5 +81,5 @@ package() {
 	mkdir -p $pkgdir/etc/udev/rules.d/
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > $pkgdir/etc/udev/rules.d/99-megasync-udev.rules
 	mkdir -p $pkgdir/opt/mega/lib
-	install -D MEGASync/mega/bindings/qt/3rdparty/libs/lib/libfreeimage.so.* $pkgdir/opt/mega/lib
+	install -D MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* $pkgdir/opt/mega/lib
 }
