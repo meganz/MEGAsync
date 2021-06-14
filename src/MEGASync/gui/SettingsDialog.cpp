@@ -1130,17 +1130,25 @@ void SettingsDialog::showInFolderClicked()
 
 void SettingsDialog::showInMegaClicked()
 {
-    QWidget* w (ui->tSyncs->cellWidget(mSelectedSyncRow, SYNC_COL_RFOLDER));
-    QString megaFolderPath (qobject_cast<QSyncItemWidget*>(w)->fullPath());
-    MegaNode* node (megaApi->getNodeByPath(megaFolderPath.toUtf8().constData()));
-    if (node)
+    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
+
+    std::unique_ptr<char[]> np (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(
+                                    syncSetting->getMegaHandle()));
+    if (np)
     {
-        const char* handle = node->getBase64Handle();
-        QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-        delete [] handle;
-        delete node;
+        MegaNode* node (megaApi->getNodeByPath(np.get()));
+        if (node)
+        {
+            const char* handle = node->getBase64Handle();
+            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+            delete [] handle;
+            delete node;
+        }
     }
+    Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
+                                           : QString(),
+                                        syncSetting);
 }
 
 void SettingsDialog::onCellClicked(int row, int column)
@@ -1148,20 +1156,6 @@ void SettingsDialog::onCellClicked(int row, int column)
     if (column == SYNC_COL_MENU)
     {
         mSelectedSyncRow = row;
-
-// TODO: activate this, but prevent row de-selection.
-//        // Make sure the remote path is up to date
-//        // queue an update of the sync remote node
-//        mThreadPool->push([=]()
-//        {//thread pool function
-//            auto syncSetting = Model::instance()->getSyncSetting(row);
-
-//            std::unique_ptr<char[]> np (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(
-//                                            syncSetting->getMegaHandle()));
-//            Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
-//                                                   : QString(),
-//                                                syncSetting);
-//        });// end of thread pool function
 
         QMenu menu(ui->tSyncs);
 
