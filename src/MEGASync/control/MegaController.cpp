@@ -21,8 +21,8 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
 
-    api->syncFolder(localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+    api->syncFolder(MegaSync::TYPE_TWOWAY, localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
+        nullptr, new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
     }));
 }
