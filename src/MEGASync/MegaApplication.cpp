@@ -4631,41 +4631,38 @@ void MegaApplication::uploadActionClicked()
         return;
     }
 
-#if QT_VERSION < 0x050000
-    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#else
     QString  defaultFolderPath;
     QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     if (paths.size())
     {
         defaultFolderPath = paths.at(0);
     }
-#endif
 
-    multiUploadFileDialog = new MultiQFileDialog(NULL,
+    multiUploadFileDialog = new MultiQFileDialog(nullptr,
            QCoreApplication::translate("ShellExtension", "Upload to MEGA"),
-           defaultFolderPath);
+           defaultFolderPath, true);
 
-    int result = multiUploadFileDialog->exec();
     if (!multiUploadFileDialog)
     {
         return;
     }
 
-    if (result == QDialog::Accepted)
+    if (multiUploadFileDialog->exec() == QDialog::Accepted)
     {
         QStringList files = multiUploadFileDialog->selectedFiles();
-        if (files.size())
+        if (files.size() > 0)
         {
             QQueue<QString> qFiles;
             foreach(QString file, files)
+            {
                 qFiles.append(file);
+            }
             shellUpload(qFiles);
         }
     }
 
     delete multiUploadFileDialog;
-    multiUploadFileDialog = NULL;
+    multiUploadFileDialog = nullptr;
 }
 
 bool MegaApplication::showSyncOverquotaDialog()
