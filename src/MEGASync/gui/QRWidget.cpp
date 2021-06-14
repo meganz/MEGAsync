@@ -1,5 +1,9 @@
 #include "QRWidget.h"
+
 #include <QPainter>
+#include <QPainterPath>
+
+#include <control/qrcodegen.h>
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent)
 {
@@ -18,6 +22,7 @@ QRWidget::~QRWidget()
 
 void QRWidget::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event)
     if (text2encode.isNull())
     {
         return;
