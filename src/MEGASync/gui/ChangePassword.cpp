@@ -1,7 +1,7 @@
 #include "ChangePassword.h"
-#include <QMessageBox>
 #include "ui_ChangePassword.h"
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "gui/Login2FA.h"
 
 using namespace mega;

@@ -247,14 +247,14 @@ background-color: #F4F6F8;
                 <widget class="AvatarWidget" name="bAvatar" native="true">
                  <property name="minimumSize">
                   <size>
-                   <width>36</width>
-                   <height>36</height>
+                   <width>28</width>
+                   <height>28</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>36</width>
-                   <height>36</height>
+                   <width>28</width>
+                   <height>28</height>
                   </size>
                  </property>
                 </widget>
@@ -2412,7 +2412,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                </property>
                                <property name="icon">
                                 <iconset>
-                                 <normalon>:/images/settings-syncs.png</normalon>
+                                 <normalon>:/images/warning-disabled-syncs.png</normalon>
                                 </iconset>
                                </property>
                                <property name="iconSize">

@@ -145,7 +145,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/SettingsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/AccountDetailsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/DownloadFromMegaDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/SizeLimitDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangeLogDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
@@ -161,7 +160,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/MegaSpeedGraph.ui
     ${MEGAsyncDir}/gui/${UiDir}/ActiveTransfersWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/LocalCleanScheduler.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
@@ -175,6 +173,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
     )
 
@@ -247,7 +247,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/InfoDialog.h
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/gui/InfoWizard.h
-    ${MEGAsyncDir}/gui/LocalCleanScheduler.h
     ${MEGAsyncDir}/gui/TransfersStatusWidget.h
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
@@ -269,7 +268,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QSyncItemWidget.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
     ${MEGAsyncDir}/gui/SetupWizard.h
-    ${MEGAsyncDir}/gui/SizeLimitDialog.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
     ${MEGAsyncDir}/gui/TransferItem.h
@@ -286,6 +284,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
 #    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
+    ${MEGAsyncDir}/gui/ProxySettings.h
+    ${MEGAsyncDir}/gui/BandwidthSettings.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -323,6 +323,7 @@ else()
         ${MEGAsyncDir}/gui/PermissionsWidget.h
 
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.h
+        ${MEGAsyncDir}/gui/QSegmentedControl.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.h
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
@@ -380,7 +381,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaProxyStyle.cpp
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
-    ${MEGAsyncDir}/gui/SizeLimitDialog.cpp
     ${MEGAsyncDir}/gui/UsageWidget.cpp
     ${MEGAsyncDir}/gui/QMegaModel.cpp
     ${MEGAsyncDir}/gui/MegaItem.cpp
@@ -408,7 +408,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
     ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
-    ${MEGAsyncDir}/gui/LocalCleanScheduler.cpp
     ${MEGAsyncDir}/gui/TransferManagerItem.cpp
     ${MEGAsyncDir}/gui/TransferItem.cpp
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.cpp
@@ -426,6 +425,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
 #    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
+    ${MEGAsyncDir}/gui/ProxySettings.cpp
+    ${MEGAsyncDir}/gui/BandwidthSettings.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -524,6 +525,7 @@ else()
         ${MEGAsyncDir}/gui/MegaSystemTrayIcon.mm
 
         ${MEGAsyncDir}/gui/QMacSpinningProgressIndicator.mm
+        ${MEGAsyncDir}/gui/QSegmentedControl.mm
 
         ${MEGAsyncDir}/qtlockedfile/qtlockedfile_unix.cpp
 
@@ -563,6 +565,7 @@ else()
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
         ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
+        ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
         ${MEGAsyncDir}/platform/macx/MacXFunctions.mm
@@ -579,6 +582,7 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
         ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
         ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
+        ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
 
         )
 endif()
@@ -653,6 +657,13 @@ endif()
 
 # Place empty.lproj and PkgInfo files, needed to translate strings in native dialogs according system locale and identify the bundle as an application within Finder.
 if (CMAKE_HOST_APPLE)
+    add_custom_command(
+            TARGET MEGAsync
+            POST_BUILD
+            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${MEGAsyncDir}/gui/images/Images.xcassets" > /dev/null 2>&1
+            COMMENT "Building Assets.car in Resources..."
+            VERBATIM
+            )
     add_custom_command(
             TARGET MEGAsync
             POST_BUILD

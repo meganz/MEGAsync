@@ -1,132 +1,164 @@
 #include "AvatarWidget.h"
 #include "control/Utilities.h"
-#include <QPainter>
-#include <QMouseEvent>
-#include <math.h>
 #include "MegaApplication.h"
 
-AvatarWidget::AvatarWidget(QWidget *parent) :
-    QWidget(parent)
+#include <math.h>
+
+#include <QLinearGradient>
+#include <QPainter>
+#include <QWindow>
+#include <QMouseEvent>
+
+static constexpr int AVATAR_DIAMETER (36);
+static constexpr int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
+static constexpr int AVATAR_LETTER_SIZE_PT_FULL (14);
+static constexpr int AVATAR_LETTER_SIZE_PT_SMALL (12);
+
+AvatarWidget::AvatarWidget(QWidget* parent) :
+    QWidget(parent),
+    mGradient(-AVATAR_RADIUS, AVATAR_RADIUS, AVATAR_RADIUS, -AVATAR_RADIUS),
+    mLetter(),
+    mLetterShadow(new QGraphicsDropShadowEffect(&mLetter))
 {
-    lastloadedwidth = 0;
+    mLetterShadow->setBlurRadius(12.0);
+    mLetterShadow->setOffset(0., 1.);
+    mLetterShadow->setEnabled(true);
+    mLetter.setGraphicsEffect(mLetterShadow);
+    mLetter.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    mLetter.setStyleSheet(QString::fromUtf8("QLabel {"
+                                             "font-family: Lato Semibold;"
+                                             "background: transparent;"
+                                             "color: white;"
+                                             "border: none;"
+                                             "margin: 0px;"
+                                             "padding: 0px;}"));
     clearData();
 }
 
-void AvatarWidget::setAvatarLetter(QChar letter, QString color)
+void AvatarWidget::setAvatarLetter(QChar letter, const QColor& color)
 {
-    this->letter = letter;
-    this->color = color;
+    mLetter.setText(letter);
+    mLetterShadow->setColor(color.darker(145));
+    mGradient.setColorAt(1.0, color.lighter(130));
+    mGradient.setColorAt(0.0, color);
     update();
 }
 
-void AvatarWidget::setAvatarImage(QString pathToFile)
+void AvatarWidget::setAvatarImage(const QString& pathToFile)
 {
-    this->pathToFile = pathToFile;
+    mPathToFile = pathToFile;
     update();
+}
+
+void AvatarWidget::drawAvatarFromEmail(const QString& email)
+{
+    mega::MegaApi *megaApi = ((MegaApplication *)qApp)->getMegaApi();
+    if (!megaApi)
+    {
+        return;
+    }
+
+    QString avatarsPath = Utilities::getAvatarPath(email);
+    QFileInfo avatar(avatarsPath);
+    if (avatar.exists())
+    {
+        setAvatarImage(Utilities::getAvatarPath(email));
+    }
+    else
+    {
+        QColor color (217, 0, 7);
+        const char* userHandle = megaApi->getMyUserHandle();
+        if (userHandle)
+        {
+            const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
+            if (avatarColor)
+            {
+                color = QColor(avatarColor);
+                delete [] avatarColor;
+            }
+            delete [] userHandle;
+        }
+
+        Preferences* preferences = Preferences::instance();
+        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
+        if (fullname.isEmpty())
+        {
+            char* apiEmail = megaApi->getMyEmail();
+            if (apiEmail)
+            {
+                fullname = QString::fromUtf8(apiEmail);
+                delete [] apiEmail;
+            }
+            else
+            {
+                fullname = preferences->email();
+            }
+
+            if (fullname.isEmpty())
+            {
+                fullname = QString::fromUtf8(" ");
+            }
+        }
+
+        setAvatarLetter(fullname.at(0).toUpper(), color);
+    }
 }
 
 void AvatarWidget::clearData()
 {
-    letter = QChar();
-    pathToFile = QString();
-    color = QString();
+    mLetter.setText(QString());
+    mPathToFile = QString();
 }
 
 QSize AvatarWidget::minimumSizeHint() const
 {
-    return QSize(30, 30);
+    return QSize(AVATAR_DIAMETER, AVATAR_DIAMETER);
 }
 
 QSize AvatarWidget::sizeHint() const
 {
-    return QSize(30, 30);
+    return QSize(AVATAR_DIAMETER, AVATAR_DIAMETER);
 }
 
 void AvatarWidget::paintEvent(QPaintEvent *event)
 {
-    if (letter.isNull() && pathToFile.isNull())
+    Q_UNUSED(event)
+
+    if (mLetter.text().isNull() && mPathToFile.isNull())
     {
         return;
     }
 
     QPainter painter(this);
 
-    // Draw border image
-    painter.setRenderHints(QPainter::Antialiasing
-                           | QPainter::SmoothPixmapTransform
-                           | QPainter::HighQualityAntialiasing);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
-    qreal factor = width() / 36.0;
-    int backgroundUnscaledWidth = qFloor(36.0 * factor/2) * 2;
-    int backgroundUnscaledHeight = qFloor(36.0 * factor/2) * 2;
+    auto width (this->width());
+    painter.translate(width / 2, height() / 2);
+    QRect rect (-width / 2, -width / 2, width, width);
 
-    if (!lastloadedwidth || lastloadedwidth != width())
+    if (QFileInfo::exists(mPathToFile))
     {
-        if (!lastloadedwidth)
-        {
-            backgroundPixmapOriginal = QIcon(QString::fromUtf8(":/images/avatar_frame.png")).pixmap(36.0, 36.0);
-        }
-
-    #if QT_VERSION >= 0x050000
-        if (width() != 36.0 )
-        {
-            backgroundPixmap = backgroundPixmapOriginal.scaled(backgroundUnscaledWidth*qApp->devicePixelRatio(), backgroundUnscaledHeight*qApp->devicePixelRatio());
-            backgroundPixmap.setDevicePixelRatio(QCoreApplication::testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0);
-        }
-        else
-    #endif
-        {
-            backgroundPixmap = backgroundPixmapOriginal;
-        }
-
-        lastloadedwidth = width();
-    }
-
-    int innercirclediam = qFloor(24.0 * factor / 2) * 2;
-
-    painter.translate(width() / 2, height() / 2);
-    painter.drawPixmap(- qRound(backgroundUnscaledWidth / 2.0 ), - qRound(backgroundUnscaledHeight / 2.0), backgroundPixmap);
-
-    if (QFileInfo(pathToFile).exists())
-    {
-        // Draw circular mask
-        QImage imageMask(36.0 * factor, 36.0 * factor, QImage::Format_ARGB32_Premultiplied);
-        imageMask.fill(Qt::transparent);
-        QPainter mask(&imageMask);
-        mask.setRenderHints(QPainter::Antialiasing
-                        | QPainter::SmoothPixmapTransform
-                        | QPainter::HighQualityAntialiasing);
-        mask.setPen(Qt::NoPen);
-        mask.setBrush(Qt::white);
-        mask.drawEllipse(QRectF(0, 0, 36 * factor, 36 * factor));
-
-        // Composite mask and avatar
-        QImage avatar(imageMask.size(), imageMask.format());
-        QImage img(pathToFile);
-        QPainter p(&avatar);
-        p.setRenderHints(QPainter::Antialiasing
-                        | QPainter::SmoothPixmapTransform
-                        | QPainter::HighQualityAntialiasing);
-        p.drawImage(QRect(0, 0, imageMask.width(), imageMask.height()), img);
-        p.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-        p.drawImage(0, 0, imageMask);
-
-
         //Apply avatar
-        painter.drawPixmap(QRect(-innercirclediam / 2, -innercirclediam / 2 , innercirclediam, innercirclediam), QPixmap::fromImage(avatar));
+        painter.drawPixmap(rect, mask_image(mPathToFile, width));
     }
     else
     {
-        QFont font;
-        font.setPixelSize(18.0 * factor);
-        font.setFamily(QString::fromUtf8("Lato"));
-        painter.setFont(font);
+        // Draw background
         painter.setPen(Qt::NoPen);
-        painter.setBrush(QBrush(QColor(color.size() ? color : QString::fromUtf8("#D90007"))));
-        painter.drawEllipse(QRect(-innercirclediam / 2, -innercirclediam / 2, innercirclediam, innercirclediam));
+        painter.setBrush(QBrush(mGradient));
+        painter.drawEllipse(rect);
 
-        painter.setPen(QPen(QColor("#ffffff")));
-        painter.drawText(QRect(-innercirclediam / 2, -innercirclediam / 2, innercirclediam, innercirclediam), Qt::AlignCenter, letter);
+        // Draw letter
+        QFont font (mLetter.font());
+        mGradient.setStart(-width / 2.0, width / 2.0);
+        mGradient.setFinalStop(width / 2.0, -width / 2.0);
+        font.setPointSize(width == AVATAR_DIAMETER ?
+                              AVATAR_LETTER_SIZE_PT_FULL
+                            : AVATAR_LETTER_SIZE_PT_SMALL);
+        mLetter.setFont(font);
+        mLetter.resize(width, width);
+        painter.drawPixmap(rect, mLetter.grab());
     }
 }
 
@@ -138,7 +170,54 @@ void AvatarWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
-AvatarWidget::~AvatarWidget()
+QPixmap AvatarWidget::mask_image(const QString& pathToFile, int size)
 {
+    // Return a QPixmap from image loaded from pathToFile masked with a smooth circle.
+    // The returned image will have a size of size × size pixels.
+    // Load image and convert to 32-bit ARGB (adds an alpha channel):
+    // Snipped based on Stefan scherfke code
 
+    if (!QFileInfo::exists(pathToFile))
+    {
+        return QPixmap();
+    }
+
+    QPixmap pm;
+    QImage image(pathToFile);
+    image = image.convertToFormat(QImage::Format_ARGB32);
+
+    // Crop image to a square:
+    int imgsize = qMin(image.width(), image.height());
+    QRect rect = QRect((image.width() - imgsize) / 2,
+                       (image.height() - imgsize) / 2,
+                       imgsize,
+                       imgsize);
+    image = image.copy(rect);
+
+    // Create the output image with the same dimensions and an alpha channel
+    // and make it completely transparent:
+    QImage out_img = QImage(imgsize, imgsize, QImage::Format_ARGB32);
+    out_img.fill(Qt::transparent);
+
+    // Create a texture brush and paint a circle with the original image onto
+    // the output image:
+    QBrush brush = QBrush(image);                       // Create texture brush
+    QPainter painter(&out_img);                         // Paint the output image
+    painter.setPen(Qt::NoPen);                          // Don't draw an outline
+    painter.setRenderHint(QPainter::Antialiasing, true);// Use AA
+
+    painter.setBrush(brush);                            // Use the image texture brush
+    painter.drawEllipse(0, 0, imgsize, imgsize);        // Actually draw the circle
+
+    painter.end();                                      // We are done (segfault if you forget this)
+
+    // Convert the image to a pixmap and rescale it.  Take pixel ratio into
+    // account to get a sharp image on retina displays:
+    qreal pr = QWindow().devicePixelRatio();
+    pm = QPixmap::fromImage(out_img);
+    pm.setDevicePixelRatio(pr);
+    size = qRound (pr * size);
+    pm = pm.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    return pm;
 }

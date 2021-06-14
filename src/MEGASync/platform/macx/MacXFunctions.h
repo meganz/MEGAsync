@@ -1,9 +1,11 @@
 #ifndef MACXFUNCTIONS_H
 #define MACXFUNCTIONS_H
 
+#include <QMacToolBar>
 #include <QString>
 #include <QStringList>
 #include <QWidget>
+
 #import <objc/runtime.h>
 
 Q_FORWARD_DECLARE_OBJC_CLASS(NSView);
