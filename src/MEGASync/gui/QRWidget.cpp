@@ -17,7 +17,6 @@ void QRWidget::setText2Encode(QString text)
 
 QRWidget::~QRWidget()
 {
-
 }
 
 void QRWidget::paintEvent(QPaintEvent *event)
