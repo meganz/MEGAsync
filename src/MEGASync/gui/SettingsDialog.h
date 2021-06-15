@@ -192,19 +192,17 @@ private:
     bool mReloadUIpage;
     ThreadPool* mThreadPool;
 #ifdef Q_OS_MACOS
-    QPropertyAnimation *minHeightAnimation;
-    QPropertyAnimation *maxHeightAnimation;
-    QParallelAnimationGroup *animationGroup;
-
-    std::unique_ptr<QCustomMacToolbar> toolBar;
+    void animateSettingPage(int endValue, int duration = 150);
+    QPropertyAnimation* mMinHeightAnimation;
+    QPropertyAnimation* mMaxHeightAnimation;
+    QParallelAnimationGroup* mAnimationGroup;
+    std::unique_ptr<QCustomMacToolbar> mToolBar;
     std::unique_ptr<QMacToolBarItem> bGeneral;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
     std::unique_ptr<QMacToolBarItem> bSecurity;
     std::unique_ptr<QMacToolBarItem> bImports;
     std::unique_ptr<QMacToolBarItem> bNetwork;
-
-    void animateSettingPage(int endValue, int duration = 150);
 #endif
 
     // General
@@ -251,5 +249,4 @@ private:
     void updateNetworkTab();
     QPointer<ProxySettings> mProxySettingsDialog;
 };
-
 #endif // SETTINGSDIALOG_H
