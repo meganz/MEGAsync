@@ -11,6 +11,8 @@
 
 static constexpr int AVATAR_DIAMETER (36);
 static constexpr int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
+static constexpr int AVATAR_LETTER_SIZE_PT_FULL (14);
+static constexpr int AVATAR_LETTER_SIZE_PT_SMALL (12);
 
 AvatarWidget::AvatarWidget(QWidget* parent) :
     QWidget(parent),
@@ -132,7 +134,6 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     auto width (this->width());
-    qreal factor = width / AVATAR_DIAMETER;
     painter.translate(width / 2, height() / 2);
     QRect rect (-width / 2, -width / 2, width, width);
 
@@ -152,7 +153,9 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
         QFont font (mLetter.font());
         mGradient.setStart(-width / 2.0, width / 2.0);
         mGradient.setFinalStop(width / 2.0, -width / 2.0);
-        font.setPixelSize(14 * qRound(factor));
+        font.setPointSize(width == AVATAR_DIAMETER ?
+                              AVATAR_LETTER_SIZE_PT_FULL
+                            : AVATAR_LETTER_SIZE_PT_SMALL);
         mLetter.setFont(font);
         mLetter.resize(width, width);
         painter.drawPixmap(rect, mLetter.grab());

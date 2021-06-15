@@ -12,7 +12,9 @@ TransferQuota::TransferQuota(mega::MegaApi* megaApi,
       mPreferences{preferences},
       mOsNotifications{std::move(desktopNotifications)},
       mUpgradeDialog{nullptr},
-      mQuotaState{QuotaState::OK}
+      mQuotaState{QuotaState::OK},
+      overQuotaAlertVisible{false},
+      almostQuotaAlertVisible{false}
 {
 }
 
@@ -109,9 +111,13 @@ void TransferQuota::checkExecuteUiMessage()
     const bool uiAlertExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
     if (uiAlertExecutionEnabled)
     {
-        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_MSG,
+        if (!overQuotaAlertVisible) //We only want to send the event when transitioning from non-visible alert message
+        {
+            mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_OVER_QUOTA_MSG,
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_UI_ALERTST_OVER_QUOTA_UI_ALERT);
-        emit overQuotaUiMessage();
+        }
+
+        emit overQuotaMessageNeedsToBeShown();
     }
 }
 
@@ -134,9 +140,13 @@ void TransferQuota::checkExecuteWarningUiMessage()
     const bool executeUiWarningAlert{std::chrono::system_clock::now() >= disabledUntil};
     if (executeUiWarningAlert)
     {
-        mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVER_QUOTA_MSG,
-                            EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT);
-        emit almostOverQuotaUiMessage();
+        if (!almostQuotaAlertVisible)
+        {
+            mMegaApi->sendEvent(AppStatsEvents::EVENT_TRSF_ALMOST_OVER_QUOTA_MSG,
+                                EVENT_MESSAGE_TRANSFER_ALMOST_QUOTA_UI_ALERT);
+        }
+
+        emit almostOverQuotaMessageNeedsToBeShown();
     }
 }
 
@@ -249,6 +259,8 @@ bool TransferQuota::checkStreamingAlertDismissed()
 
 void TransferQuota::reset()
 {
+    overQuotaAlertVisible = false;
+    almostQuotaAlertVisible = false;
     mQuotaState = QuotaState::OK;
     mWaitTimeUntil = std::chrono::system_clock::time_point();
 }
@@ -274,12 +286,22 @@ void TransferQuota::upgradeDialogFinished(int)
     }
 }
 
-void TransferQuota::onDismissOverQuotaUiAlert()
+void TransferQuota::onTransferOverquotaVisibilityChange(bool messageShown)
 {
-    mPreferences->setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
+    if (!messageShown)
+    {
+        mPreferences->setTransferOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
+    }
+
+    overQuotaAlertVisible = messageShown;
 }
 
-void TransferQuota::onDismissAlmostOverQuotaUiMessage()
+void TransferQuota::onAlmostTransferOverquotaVisibilityChange(bool messageShown)
 {
-    mPreferences->setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
+    if (!messageShown)
+    {
+        mPreferences->setTransferAlmostOverQuotaUiAlertLastExecution(std::chrono::system_clock::now());
+    }
+
+    almostQuotaAlertVisible = messageShown;
 }

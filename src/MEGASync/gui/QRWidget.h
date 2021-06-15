@@ -2,7 +2,6 @@
 #define QRWIDGET_H
 
 #include <QWidget>
-#include <control/qrcodegen.h>
 
 class QRWidget : public QWidget
 {

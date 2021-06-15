@@ -20,15 +20,15 @@ class QSyncItemWidget : public QWidget
 
 public:
     enum {
-      LOCAL_FOLDER = 0,
-      REMOTE_FOLDER = 1
+      LOCAL_FOLDER  = 0,
+      REMOTE_FOLDER = 1,
     };
-    explicit QSyncItemWidget(int itemType, QWidget *parent = nullptr);
+    explicit QSyncItemWidget(int itemType, QWidget* parent = nullptr);
 
-    void setPath(const QString &path, const QString &name);
-    void setPath(const QString &path);
+    void setPath(const QString& path, const QString &name);
+    void setPath(const QString& path);
 
-    void setToolTip(const QString &tooltip);
+    void setToolTip(const QString& tooltip);
     QString text();
     QString fullPath();
     void setError(int error);
@@ -37,18 +37,16 @@ public:
 
     mega::MegaHandle mSyncRootHandle = mega::INVALID_HANDLE;
 
-    void setSyncSetting(const std::shared_ptr<SyncSetting> &value);
+    void setSyncSetting(const std::shared_ptr<SyncSetting>& value);
+    void setSelected(bool selected = true);
 
 private slots:
     void onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings);
     void nodeChanged(mega::MegaHandle handle);
-    void on_bSyncOptions_clicked();
-    void on_bReveal_clicked();
 
 protected:
-    void resizeEvent(QResizeEvent *event) override;
-    bool eventFilter(QObject *obj, QEvent *event) override;
-    bool event(QEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
+    void enterEvent(QEvent* event) override;
 
     bool getIsCacheAvailable() const;
     void setIsCacheAvailable(bool value);
@@ -59,21 +57,18 @@ signals:
     void onDeleteSync();
 
 private:
-    Ui::QSyncItemWidget *ui;
+    Ui::QSyncItemWidget* mUi;
 
-    QMenu *mOptionsMenu;
-    MenuItemAction *mSyncInfo;
-    MenuItemAction *mOpenDebris;
-    MenuItemAction *mDeleteSync;
     bool mIsCacheAvailable;
     int mItemType;
     QString mFullPath;
     int mError;
+    bool mSelected;
 
     QString mDisplayName;
 
-    int64_t mLastRemotePathCheck = 0;
-    bool mNodesUpToDate = true;
+    int64_t mLastRemotePathCheck;
+    bool mNodesUpToDate;
     std::shared_ptr<SyncSetting> mSyncSetting;
 
     void elidePathLabel();

@@ -1,5 +1,9 @@
 #include "QRWidget.h"
+
 #include <QPainter>
+#include <QPainterPath>
+
+#include <control/qrcodegen.h>
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent)
 {
@@ -13,11 +17,11 @@ void QRWidget::setText2Encode(QString text)
 
 QRWidget::~QRWidget()
 {
-
 }
 
 void QRWidget::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event)
     if (text2encode.isNull())
     {
         return;

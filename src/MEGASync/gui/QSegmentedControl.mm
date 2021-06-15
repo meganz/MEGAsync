@@ -40,8 +40,8 @@ void QSegmentedControl::configureTableSegment()
     [segControl setImage:[NSImage imageNamed:NSImageNameAddTemplate] forSegment:0];
     [segControl setImage:[NSImage imageNamed:NSImageNameRemoveTemplate] forSegment:1];
     [segControl setEnabled:NO forSegment:2];
-    [segControl setWidth:32 forSegment:0];
-    [segControl setWidth:32 forSegment:1];
+    [segControl setWidth:31 forSegment:0];
+    [segControl setWidth:31 forSegment:1];
 
     //Remaining space witouth + and - buttons and borders
     CGFloat remainingSpace = [segControl widthForSegment:0] * 2 + 4;
