@@ -168,7 +168,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mAnimationGroup = new QParallelAnimationGroup();
     mAnimationGroup->addAnimation(minHeightAnimation);
     mAnimationGroup->addAnimation(mMaxHeightAnimation);
-    connect(mAnimationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
+    connect(mAnimationGroup, &QParallelAnimationGroup::finished,
+            this, &SettingsDialog::onAnimationFinished);
 
     mUi->pSyncs->hide();
 
@@ -338,9 +339,10 @@ void SettingsDialog::showGuestMode()
 #ifdef Q_OS_MACOS
 void SettingsDialog::initializeNativeUIComponents()
 {
-    CocoaHelpButton *helpButton = new CocoaHelpButton(this);
+    CocoaHelpButton* helpButton = new CocoaHelpButton(this);
     mUi->layoutBottom->insertWidget(0, helpButton);
-    connect(helpButton, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
+    connect(helpButton, &CocoaHelpButton::clicked,
+            this, &SettingsDialog::on_bHelp_clicked);
 
     // Set native NSToolBar for settings.
     mToolBar = ::mega::make_unique<QCustomMacToolbar>(this);
@@ -355,27 +357,33 @@ void SettingsDialog::initializeNativeUIComponents()
     // add Items
     bGeneral.reset(mToolBar->addItem(QIcon(), tr("General")));
     mToolBar->customizeIconToolBarItem(bGeneral.get(), general);
-    connect(bGeneral.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bGeneral_clicked);
+    connect(bGeneral.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bGeneral_clicked);
 
     bAccount.reset(mToolBar->addItem(QIcon(), tr("Account")));
     mToolBar->customizeIconToolBarItem(bAccount.get(), account);
-    connect(bAccount.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bAccount_clicked);
+    connect(bAccount.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bAccount_clicked);
 
     bSyncs.reset(mToolBar->addItem(QIcon(), tr("Syncs")));
     mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
-    connect(bSyncs.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSyncs_clicked);
+    connect(bSyncs.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bSyncs_clicked);
 
     bSecurity.reset(mToolBar->addItem(QIcon(), tr("Security")));
     mToolBar->customizeIconToolBarItem(bSecurity.get(), security);
-    connect(bSecurity.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bSecurity_clicked);
+    connect(bSecurity.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bSecurity_clicked);
 
     bImports.reset(mToolBar->addItem(QIcon(), tr("Imports")));
     mToolBar->customizeIconToolBarItem(bImports.get(), imports);
-    connect(bImports.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bImports_clicked);
+    connect(bImports.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bImports_clicked);
 
     bNetwork.reset(mToolBar->addItem(QIcon(), tr("Network")));
     mToolBar->customizeIconToolBarItem(bNetwork.get(), network);
-    connect(bNetwork.get(), &QMacToolBarItem::activated, this, &SettingsDialog::on_bNetwork_clicked);
+    connect(bNetwork.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bNetwork_clicked);
 
     mToolBar->setSelectableItems(true);
     mToolBar->setAllowsUserCustomization(false);
@@ -387,12 +395,16 @@ void SettingsDialog::initializeNativeUIComponents()
 
     //Configure segmented control for +/- syncs
     mUi->wSyncsSegmentedControl->configureTableSegment();
-    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAdd_clicked);
-    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDelete_clicked);
+    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked,
+            this, &SettingsDialog::on_bAdd_clicked);
+    connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked,
+            this, &SettingsDialog::on_bDelete_clicked);
 
     mUi->wExclusionsSegmentedControl->configureTableSegment();
-    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked, this, &SettingsDialog::on_bAddName_clicked);
-    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked, this, &SettingsDialog::on_bDeleteName_clicked);
+    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked,
+            this, &SettingsDialog::on_bAddName_clicked);
+    connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::removeButtonClicked,
+            this, &SettingsDialog::on_bDeleteName_clicked);
 }
 #endif
 
@@ -2170,7 +2182,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
         return;
     }
 
-    const char *nPath = mMegaApi->getNodePath(node);
+    const char* nPath = mMegaApi->getNodePath(node);
     if (!nPath)
     {
         delete nodeSelector;
