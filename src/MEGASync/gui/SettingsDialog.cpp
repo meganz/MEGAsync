@@ -49,7 +49,7 @@ constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{400};
 #endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
-static constexpr int NUMBER_OF_CLICS_TO_DEBUG {5};
+static constexpr int NUMBER_OF_CLICKS_TO_DEBUG {5};
 static constexpr int NETWORK_LIMITS_MAX {9999};
 
 long long calculateCacheSize()
@@ -72,9 +72,9 @@ long long calculateCacheSize()
 long long calculateRemoteCacheSize(MegaApi* mMegaApi)
 {
     MegaNode* n = mMegaApi->getNodeByPath("//bin/SyncDebris");
-    long long toret = mMegaApi->getSize(n);
+    long long size = mMegaApi->getSize(n);
     delete n;
-    return toret;
+    return size;
 }
 
 SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* parent) :
@@ -1222,7 +1222,7 @@ void SettingsDialog::on_bAccount_clicked()
 void SettingsDialog::on_lAccountType_clicked()
 {
     mDebugCounter++;
-    if (mDebugCounter == NUMBER_OF_CLICS_TO_DEBUG)
+    if (mDebugCounter == NUMBER_OF_CLICKS_TO_DEBUG)
     {
         mApp->toggleLogging();
         mDebugCounter = 0;
