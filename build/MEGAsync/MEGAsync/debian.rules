@@ -6,6 +6,7 @@ FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" |
 export PATH := /opt/mega/bin:$(PATH)
 QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04" >/dev/null && echo "installqt" || echo "")
+DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list | grep -v ^# | grep testing > /dev/null && echo "testing")
 export $(QMAKESPEC) := /opt/mega/mkspecs/linux-g++
 
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
@@ -21,6 +22,7 @@ build-stamp:
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make
 	echo "fs.inotify.max_user_watches = 524288" > 100-megasync-inotify-limit.conf
+	if [ -n "$(DEB_TESTING)" ]; then echo $(DEB_TESTING) > version; fi
 	touch build-stamp
 
 clean:
@@ -32,6 +34,7 @@ install: build
 	dh_auto_install --destdir=debian/megasync -- INSTALL_ROOT=$(CURDIR)/debian/megasync
 	dh_install MEGASync/megasync /usr/bin/
 	dh_install 100-megasync-inotify-limit.conf /etc/sysctl.d/
+	if [ -n "$(DEB_TESTING)" ]; then dh_install version /usr/share/doc/megasync; fi
 
 installqt:
 	for i in `ldd MEGASync/megasync | grep opt | awk '{print $$3}'`; do a=`echo $$i | awk -F "/" 'BEGIN{OFS="/"}{NF--;print $$0}' | sed "s#target/##g"`; mkdir -p $(CURDIR)/debian/megasync/$$a; install $$i $(CURDIR)/debian/megasync/$$a; done
