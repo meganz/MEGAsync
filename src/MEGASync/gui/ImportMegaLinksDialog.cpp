@@ -5,11 +5,11 @@
 #include "gui/MultiQFileDialog.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QTemporaryFile>
 #include <QPointer>
 

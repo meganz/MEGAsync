@@ -106,7 +106,9 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     }
-    return QVariant();
+#ifndef WIN32
+    return QVariant(); // warning C4702: unreachable code
+#endif
 }
 
 QModelIndex QMegaModel::index(int row, int column, const QModelIndex &parent) const

@@ -12,7 +12,7 @@
 
 #define LOGS_FOLDER_LEAFNAME_QSTRING QString::fromUtf8("logs")
 
-class LoggingThread;
+struct LoggingThread;
 class MegaSyncLogger : public QObject, public mega::MegaLogger
 {
     Q_OBJECT

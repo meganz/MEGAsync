@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Storage</translation>
+        <translation type="unfinished">Storage</translation>
     </message>
     <message>
         <source>Files</source>
@@ -55,31 +55,46 @@
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Rubbish Bin</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation type="obsolete">Available</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished">Total size taken up by file versions:</translation>
+        <translation type="obsolete">Total size taken up by file versions:</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
-        <translation type="unfinished">USED STORAGE %1</translation>
+        <translation type="obsolete">USED STORAGE %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
-        <translation type="unfinished">Data temporarily unavailable</translation>
+        <translation type="obsolete">Data temporarily unavailable</translation>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation type="obsolete">%1 of %2</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label for bandwidth used.</translatorcomment>
+        <translation type="unfinished">Transfer</translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translatorcomment>Label for Rubbish Bin space used. Maintain capital letter.(Max 18 characters)</translatorcomment>
+        <translation type="unfinished">Bin</translation>
+    </message>
+    <message>
+        <source>Of that, size taken up by file versions:</source>
+        <translatorcomment>Label for telling the user that the number shown besides is the storage space used by older file versions.</translatorcomment>
+        <translation type="unfinished">Of that, size taken up by file versions:</translation>
     </message>
 </context>
 <context>
@@ -720,7 +735,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Data Protection Regulation</source>
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
-        <translation type="unfinished">Data Protection Regulation</translation>
+        <translation type="obsolete">Data Protection Regulation</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
@@ -3801,6 +3816,26 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>NewFolderDialog</name>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Window title for the New Folder input dialog (String short as possible)</translatorcomment>
+        <translation>New folder</translation>
+    </message>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Label to direct the user to type the new MEGA folder name (String short as possible).</translatorcomment>
+        <translation>Enter the new folder name:</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed:
+%1</source>
+        <translatorcomment>Multi-line warning label shown when the user tries to create a New MEGA Folder with invalid characters. Keep the new line after colon. Also keep the percent one designator, which is used to fill in the current list of forbidden characters programatically.</translatorcomment>
+        <translation>The following characters are not allowed:
+%1</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3840,7 +3875,7 @@ Are you sure?</source>
     <message>
         <source>Enter the new folder name:</source>
         <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Enter the new folder name:</translation>
+        <translation type="vanished">Enter the new folder name:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3918,7 +3953,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Invalid folder name.
+        <translation type="obsolete">Invalid folder name.
 Please ensure that you don’t use characters like “\” “/” or “:” in your folder names.</translation>
     </message>
 </context>
@@ -6971,6 +7006,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation type="unfinished">Email sent</translation>
+    </message>
+</context>
+<context>
+    <name>WinToastLib</name>
+    <message>
+        <source>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</source>
+        <translatorcomment>
+            Message from the app, asking the user how to proceed when no expected link was found.
+            The placeholder will be replaced with the app name at runtime, so it must be kept, and only moved to a different position when translation requires it,
+            i.e. &quot;Un Start Menu link valid pentru %1 nu a fost gasit&quot;
+        </translatorcomment>
+        <translation type="unfinished">%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</translation>
+    </message>
+    <message>
+        <source>Yes (recommended)</source>
+        <translatorcomment>Button label with the affirmative and recommended user option.</translatorcomment>
+        <translation type="unfinished">Yes (recommended)</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Button label with the negative user option.</translatorcomment>
+        <translation type="unfinished">No</translation>
+    </message>
+    <message>
+        <source>No (never ask again)</source>
+        <translatorcomment>Button label with the negative user option, which will also prevent the dialog from being shown again.</translatorcomment>
+        <translation type="unfinished">No (never ask again)</translation>
     </message>
 </context>
 <context>

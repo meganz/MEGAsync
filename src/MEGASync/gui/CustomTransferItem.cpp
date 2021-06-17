@@ -67,11 +67,6 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
     TransferItem::setType(type, isSyncTransfer);
     QIcon icon, iconCompleted;
 
-    qreal ratio = 1.0;
-#if QT_VERSION >= 0x050000
-    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
-#endif
-
     switch (type)
     {
         case MegaTransfer::TYPE_UPLOAD:
@@ -281,8 +276,6 @@ void CustomTransferItem::finishTransfer()
 
 void CustomTransferItem::updateTransfer()
 {
-    int currentUpload, currentDownload;
-
     if (transferState == MegaTransfer::STATE_COMPLETED || transferState == MegaTransfer::STATE_FAILED)
     {
         ui->sTransferState->setCurrentWidget(ui->completedTransfer);

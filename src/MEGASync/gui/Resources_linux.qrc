@@ -233,9 +233,6 @@
         <file>images/error.png</file>
         <file>images/error@2x.png</file>
         <file>images/error@3x.png</file>
-        <file>images/Free.png</file>
-        <file>images/Free@2x.png</file>
-        <file>images/Free@3x.png</file>
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/full_sync_ico@3x.png</file>
@@ -251,24 +248,6 @@
         <file>images/help_ico.png</file>
         <file>images/help_ico@2x.png</file>
         <file>images/help_ico@3x.png</file>
-        <file>images/ic_small_available.png</file>
-        <file>images/ic_small_available@2x.png</file>
-        <file>images/ic_small_available@3x.png</file>
-        <file>images/ic_small_cloud_drive.png</file>
-        <file>images/ic_small_cloud_drive@2x.png</file>
-        <file>images/ic_small_cloud_drive@3x.png</file>
-        <file>images/ic_small_inbox.png</file>
-        <file>images/ic_small_inbox@2x.png</file>
-        <file>images/ic_small_inbox@3x.png</file>
-        <file>images/ic_small_rubbish.png</file>
-        <file>images/ic_small_rubbish@2x.png</file>
-        <file>images/ic_small_rubbish@3x.png</file>
-        <file>images/ic_small_shares.png</file>
-        <file>images/ic_small_shares@2x.png</file>
-        <file>images/ic_small_shares@3x.png</file>
-        <file>images/ic_small_versions.png</file>
-        <file>images/ic_small_versions@2x.png</file>
-        <file>images/ic_small_versions@3x.png</file>
         <file>images/ico_about_MEGA.png</file>
         <file>images/ico_about_MEGA@2x.png</file>
         <file>images/ico_about_MEGA@3x.png</file>
@@ -460,12 +439,6 @@
         <file>images/init_scanning.png</file>
         <file>images/init_scanning@2x.png</file>
         <file>images/init_scanning@3x.png</file>
-        <file>images/Lite.png</file>
-        <file>images/Lite@2x.png</file>
-        <file>images/Lite@3x.png</file>
-        <file>images/litecrest.png</file>
-        <file>images/litecrest@2x.png</file>
-        <file>images/litecrest@3x.png</file>
         <file>images/locked_account_ico.png</file>
         <file>images/locked_account_ico@2x.png</file>
         <file>images/locked_account_ico@3x.png</file>
@@ -494,12 +467,6 @@
         <file>images/mega_notifications.png</file>
         <file>images/mega_notifications@2x.png</file>
         <file>images/mega_notifications@3x.png</file>
-        <file>images/menu_header.png</file>
-        <file>images/menu_header@2x.png</file>
-        <file>images/menu_header@3x.png</file>
-        <file>images/menu_selected.png</file>
-        <file>images/menu_selected@2x.png</file>
-        <file>images/menu_selected@3x.png</file>
         <file>images/more_settings.png</file>
         <file>images/more_settings@2x.png</file>
         <file>images/more_settings@3x.png</file>
@@ -543,24 +510,6 @@
         <file>images/play_ico.png</file>
         <file>images/play_ico@2x.png</file>
         <file>images/play_ico@3x.png</file>
-        <file>images/Pro_I.png</file>
-        <file>images/Pro_I@2x.png</file>
-        <file>images/Pro_I@3x.png</file>
-        <file>images/Pro_II.png</file>
-        <file>images/Pro_II@2x.png</file>
-        <file>images/Pro_II@3x.png</file>
-        <file>images/Pro_III.png</file>
-        <file>images/Pro_III@2x.png</file>
-        <file>images/Pro_III@3x.png</file>
-        <file>images/proicrest.png</file>
-        <file>images/proicrest@2x.png</file>
-        <file>images/proicrest@3x.png</file>
-        <file>images/proiicrest.png</file>
-        <file>images/proiicrest@2x.png</file>
-        <file>images/proiicrest@3x.png</file>
-        <file>images/proiiicrest.png</file>
-        <file>images/proiiicrest@2x.png</file>
-        <file>images/proiiicrest@3x.png</file>
         <file>images/proxies_32.png</file>
         <file>images/proxies_32@2x.png</file>
         <file>images/proxies_32@3x.png</file>
@@ -766,9 +715,6 @@
         <file>images/synching.svg</file>
         <file>images/synching@2x.gif</file>
         <file>images/synching@3x.gif</file>
-        <file>images/syncs_32.png</file>
-        <file>images/syncs_32@2x.png</file>
-        <file>images/syncs_32@3x.png</file>
         <file>images/takedown.png</file>
         <file>images/takedown@2x.png</file>
         <file>images/takedown@3x.png</file>
@@ -834,17 +780,107 @@
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
-        <file>images/settings-syncs.png</file>
-        <file>images/settings-syncs@2x.png</file>
-        <file>images/settings-syncs@3x.png</file>
         <file>images/new_contact@3x.png</file>
         <file>images/Storage_Quota_full@3x.png</file>
         <file>images/Storage_Quota_almost_full@3x.png</file>
         <file>images/Folder@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
         <file>images/Failed_to_download@3x.png</file>
+        <file>images/ic_options.png</file>
+        <file>images/ic_options@2x.png</file>
+        <file>images/ic_options@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
         <file>images/ic_sync_warning@3x.png</file>
+        <file>images/ic_two_way_sync.png</file>
+        <file>images/ic_two_way_sync@2x.png</file>
+        <file>images/ic_two_way_sync@3x.png</file>
+        <file>images/ic_options_hover.png</file>
+        <file>images/ic_options_hover@3x.png</file>
+        <file>images/ic_options_hover@2x.png</file>
+        <file>images/ic_sync_warning.png</file>
+        <file>images/ic_sync_warning@2x.png</file>
+        <file>images/ic_sync_warning@3x.png</file>
+        <file>images/settings-security.png</file>
+        <file>images/settings-security@2x.png</file>
+        <file>images/settings-security@3x.png</file>
+        <file>images/settings-general.png</file>
+        <file>images/settings-general@3x.png</file>
+        <file>images/settings-general@2x.png</file>
+        <file>images/settings-account.png</file>
+        <file>images/settings-account@3x.png</file>
+        <file>images/settings-account@2x.png</file>
+        <file>images/Bin_24_ico.png</file>
+        <file>images/Bin_24_ico@2x.png</file>
+        <file>images/Bin_24_ico@3x.png</file>
+        <file>images/Cloud_Drive_24_ico.png</file>
+        <file>images/Cloud_Drive_24_ico@2x.png</file>
+        <file>images/Cloud_Drive_24_ico@3x.png</file>
+        <file>images/Inbox_24_ico.png</file>
+        <file>images/Inbox_24_ico@2x.png</file>
+        <file>images/Inbox_24_ico@3x.png</file>
+        <file>images/key_big.png</file>
+        <file>images/key_big@2x.png</file>
+        <file>images/key_big@3x.png</file>
+        <file>images/lock_big.png</file>
+        <file>images/lock_big@2x.png</file>
+        <file>images/lock_big@3x.png</file>
+        <file>images/warning-disabled-syncs.png</file>
+        <file>images/warning-disabled-syncs@2x.png</file>
+        <file>images/warning-disabled-syncs@3x.png</file>
+        <file>images/Icon_Win_Imports.png</file>
+        <file>images/Icon_Win_Imports@2x.png</file>
+        <file>images/Icon_Win_Imports@3x.png</file>
+        <file>images/settings-syncs-warn.png</file>
+        <file>images/settings-syncs-warn@3x.png</file>
+        <file>images/settings-syncs-warn@2x.png</file>
+        <file>images/settings-syncs.png</file>
+        <file>images/settings-syncs@3x.png</file>
+        <file>images/settings-syncs@2x.png</file>
+        <file>images/Icon_Win_Network.png</file>
+        <file>images/Icon_Win_Network@2x.png</file>
+        <file>images/Icon_Win_Network@3x.png</file>
+        <file>images/Small_Free.png</file>
+        <file>images/Small_Free@2x.png</file>
+        <file>images/Small_Free@3x.png</file>
+        <file>images/Small_Lite.png</file>
+        <file>images/Small_Lite@2x.png</file>
+        <file>images/Small_Lite@3x.png</file>
+        <file>images/Small_Pro_I.png</file>
+        <file>images/Small_Pro_I@2x.png</file>
+        <file>images/Small_Pro_I@3x.png</file>
+        <file>images/Small_Pro_II.png</file>
+        <file>images/Small_Pro_II@2x.png</file>
+        <file>images/Small_Pro_II@3x.png</file>
+        <file>images/Small_Pro_III.png</file>
+        <file>images/Small_Pro_III@2x.png</file>
+        <file>images/Small_Pro_III@3x.png</file>
+        <file>images/megasync_logo.png</file>
+        <file>images/megasync_logo@3x.png</file>
+        <file>images/megasync_logo@2x.png</file>
+        <file>images/ico_Delete.png</file>
+        <file>images/ico_Delete@2x.png</file>
+        <file>images/ico_Delete@3x.png</file>
+        <file>images/ico_open_MEGA.png</file>
+        <file>images/ico_open_MEGA@2x.png</file>
+        <file>images/ico_open_MEGA@3x.png</file>
+        <file>images/Item_sync_press.png</file>
+        <file>images/Item_sync_press@2x.png</file>
+        <file>images/Item_sync_press@3x.png</file>
+        <file>images/Item_sync_rest.png</file>
+        <file>images/Item_sync_rest@2x.png</file>
+        <file>images/Item_sync_rest@3x.png</file>
+        <file>images/Item_options_hover.png</file>
+        <file>images/Item_options_hover@2x.png</file>
+        <file>images/Item_options_hover@3x.png</file>
+        <file>images/Item_options_rest.png</file>
+        <file>images/Item_options_rest@2x.png</file>
+        <file>images/Item_options_rest@3x.png</file>
+        <file>images/Item_options_press.png</file>
+        <file>images/Item_options_press@2x.png</file>
+        <file>images/Item_options_press@3x.png</file>
+        <file>images/show_in_folder_ico.png</file>
+        <file>images/show_in_folder_ico@2x.png</file>
+        <file>images/show_in_folder_ico@3x.png</file>
     </qresource>
 </RCC>
