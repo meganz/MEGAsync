@@ -167,7 +167,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mMinHeightAnimation = new QPropertyAnimation();
     mMaxHeightAnimation = new QPropertyAnimation();
     mAnimationGroup = new QParallelAnimationGroup();
-    mAnimationGroup->addAnimation(minHeightAnimation);
+    mAnimationGroup->addAnimation(mMinHeightAnimation);
     mAnimationGroup->addAnimation(mMaxHeightAnimation);
     connect(mAnimationGroup, &QParallelAnimationGroup::finished,
             this, &SettingsDialog::onAnimationFinished);
