@@ -85,15 +85,16 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mController (Controller::instance()),
     mModel (Model::instance()),
     mMegaApi (app->getMegaApi()),
-    mAccountDetailsDialog (nullptr),
     mLoadingSettings (0),
-    mCacheSize (-1),
-    mRemoteCacheSize (-1),
     mReloadUIpage (false),
     mThreadPool (ThreadPoolSingleton::getInstance()),
+    mAccountDetailsDialog (nullptr),
+    mCacheSize (-1),
+    mRemoteCacheSize (-1),
+    mDebugCounter (0),
     mAreSyncsDisabled (false),
     mIsSavingSyncsOnGoing (false),
-    mDebugCounter (0)
+    mSelectedSyncRow(-1)
 {
     mUi->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -630,7 +631,7 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
-void SettingsDialog::onSavingSettingsProgress(double progress)
+void SettingsDialog::onSavingSyncsProgress(double progress)
 {
     Q_UNUSED(progress)
     syncsStateInformation(SyncStateInformation::SAVING_SYNCS);
@@ -638,7 +639,7 @@ void SettingsDialog::onSavingSettingsProgress(double progress)
     mIsSavingSyncsOnGoing = true;
 }
 
-void SettingsDialog::onSavingSettingsCompleted()
+void SettingsDialog::onSavingSyncsCompleted()
 {
     auto closeDelay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
                                              - mUi->wSpinningIndicator->getStartTime()));
@@ -1655,21 +1656,21 @@ void SettingsDialog::on_bPermissions_clicked()
 
 void SettingsDialog::saveSyncSettings()
 {
-    mSaveSettingsProgress.reset(new ProgressHelper(false, tr("Saving Sync settings")));
-    connect(mSaveSettingsProgress.get(), &ProgressHelper::progress,
-            this, &SettingsDialog::onSavingSettingsProgress);
-    connect(mSaveSettingsProgress.get(), &ProgressHelper::completed,
-            this, &SettingsDialog::onSavingSettingsCompleted);
+    mSaveSyncsProgress.reset(new ProgressHelper(false, tr("Saving Sync settings")));
+    connect(mSaveSyncsProgress.get(), &ProgressHelper::progress,
+            this, &SettingsDialog::onSavingSyncsProgress);
+    connect(mSaveSyncsProgress.get(), &ProgressHelper::completed,
+            this, &SettingsDialog::onSavingSyncsCompleted);
 
     // Uncomment the following to see a progress bar when saving
     // (which being modal will prevent from modifying while changing)
     //Utilities::showProgressDialog(mSaveSettingsProgress.get(), this);
 
-    ProgressHelperCompletionGuard g(mSaveSettingsProgress.get());
+    ProgressHelperCompletionGuard g(mSaveSyncsProgress.get());
 
     if (!mProxyOnly)
     {
-        onSavingSettingsProgress(0);
+        onSavingSyncsProgress(0);
 
         // 1 - loop through the syncs in the model to remove or update
         for (int i = 0; i < mModel->getNumSyncedFolders(); i++)
@@ -1703,7 +1704,7 @@ void SettingsDialog::saveSyncSettings()
                         new ActionProgress(true, QString::fromUtf8("Removing sync: %1 - %2").arg(
                                                syncSetting->getLocalFolder(),
                                                syncSetting->getMegaFolder()));
-                mSaveSettingsProgress->addStep(removeSyncStep);
+                mSaveSyncsProgress->addStep(removeSyncStep);
                 mController->removeSync(syncSetting, removeSyncStep);
             }
 
@@ -1726,7 +1727,7 @@ void SettingsDialog::saveSyncSettings()
                                                      QString::fromUtf8("Disabling sync: %1 - %2")
                                                      .arg(syncSetting->getLocalFolder(),
                                                           syncSetting->getMegaFolder()));
-                        mSaveSettingsProgress->addStep(disableSyncStep);
+                        mSaveSyncsProgress->addStep(disableSyncStep);
 
                         connect(disableSyncStep, &ActionProgress::failedRequest,
                                 this, [this, syncSetting](MegaRequest* request, MegaError* error)
@@ -1753,7 +1754,7 @@ void SettingsDialog::saveSyncSettings()
                                                      QString::fromUtf8("Enabling sync: %1 - %2")
                                                      .arg(syncSetting->getLocalFolder(),
                                                           syncSetting->getMegaFolder()));
-                        mSaveSettingsProgress->addStep(enableSyncStep);
+                        mSaveSyncsProgress->addStep(enableSyncStep);
                         connect(enableSyncStep, &ActionProgress::failedRequest,
                                 this, [this, syncSetting](MegaRequest* request, MegaError* error)
                         {
@@ -1810,7 +1811,7 @@ void SettingsDialog::saveSyncSettings()
                     ActionProgress* addSyncStep =
                             new ActionProgress(true, QString::fromUtf8("Adding sync: %1 - %2")
                                                .arg(localFolderPath, megaFolderPath));
-                    mSaveSettingsProgress->addStep(addSyncStep);
+                    mSaveSyncsProgress->addStep(addSyncStep);
 
                     //Connect failing signals
                     connect(addSyncStep, &ActionProgress::failed,

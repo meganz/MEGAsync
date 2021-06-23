@@ -91,8 +91,6 @@ public slots:
 
 private slots:
     // Common
-    void onSavingSettingsProgress(double progress);
-    void onSavingSettingsCompleted();
     void on_bHelp_clicked();
 #ifndef Q_OS_MACOS
     void on_bHelpIco_clicked();
@@ -133,6 +131,8 @@ private slots:
     void setAvatar();
 
     // Syncs
+    void onSavingSyncsProgress(double progress);
+    void onSavingSyncsCompleted();
     void on_bSyncs_clicked();
     void on_bAdd_clicked();
     void on_bDelete_clicked();
@@ -187,7 +187,6 @@ private:
     mega::MegaApi* mMegaApi;
     HighDpiResize mHighDpiResize;
     bool mProxyOnly;
-    std::unique_ptr<ProgressHelper> mSaveSettingsProgress;
     int mLoadingSettings;
     bool mReloadUIpage;
     ThreadPool* mThreadPool;
@@ -239,6 +238,7 @@ private:
     bool mAreSyncsDisabled; //Check if there are any sync disabled by any kind of error
     bool mIsSavingSyncsOnGoing;
     int mSelectedSyncRow;
+    std::unique_ptr<ProgressHelper> mSaveSyncsProgress;
 
     // Imports
     void saveExcludeSyncNames();
