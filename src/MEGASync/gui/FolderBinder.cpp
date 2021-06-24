@@ -22,7 +22,7 @@ FolderBinder::~FolderBinder()
     delete ui;
 }
 
-long long FolderBinder::selectedMegaFolder()
+MegaHandle FolderBinder::selectedMegaFolder()
 {
     return selectedMegaFolderHandle;
 }

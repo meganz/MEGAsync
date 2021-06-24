@@ -50,7 +50,7 @@ BindFolderDialog::~BindFolderDialog()
     delete ui;
 }
 
-long long BindFolderDialog::getMegaFolder()
+MegaHandle BindFolderDialog::getMegaFolder()
 {
     return ui->wBinder->selectedMegaFolder();
 }

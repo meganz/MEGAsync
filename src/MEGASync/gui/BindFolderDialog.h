@@ -24,7 +24,7 @@ public:
                                        QWidget *parent = 0);
     ~BindFolderDialog();
 
-    long long getMegaFolder();
+    mega::MegaHandle getMegaFolder();
     void setMegaFolder(mega::MegaHandle handle);
     QString getLocalFolder();
     QString getSyncName();
