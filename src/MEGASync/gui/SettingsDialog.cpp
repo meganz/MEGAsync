@@ -104,7 +104,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             mUi->wStackFooter, &QStackedWidget::setCurrentIndex);
     mUi->wStack->setCurrentWidget(mUi->pGeneral); // override whatever might be set in .ui
 
-#ifndef Q_OS_MAC
+#ifndef Q_OS_MACOS
     mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
     mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #endif
