@@ -1,10 +1,6 @@
 ﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#ifdef Q_OS_MACOS
-#include "platform/macx/QCustomMacToolbar.h"
-#endif
-
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "DownloadFromMegaDialog.h"
@@ -20,6 +16,10 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtCore>
+
+#ifdef Q_OS_MACOS
+#include "platform/macx/QCustomMacToolbar.h"
+#endif
 
 namespace Ui {
 class SettingsDialog;
