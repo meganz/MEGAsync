@@ -54,7 +54,7 @@ Download Qt online installer from [here](https://www.qt.io/download-open-source?
 2. Clone or download this repo
 3. Create a folder `Release_x32` inside the root of the code that you have just downloaded
 4. Download the required third party libraries from this link:
-https://mega.nz/#!8tZglCTR!cZ_B39i9YxLgt3_8x9LsOpFhFDHuAh4jdz78IuQTQT4
+https://mega.nz/file/FoxzRa6K#m4gnzSzALgnfGrXP_xi7z8o-8FaVMu65tiza9p-FOjU
 5. Uncompress that file into `src\MEGASync\mega\bindings\qt`
 6. Open the project `src/MEGA.pro` with Qt Creator
 7. Select the folder `Release_x32` as the target for Release and Debug builds
@@ -140,7 +140,7 @@ It's recommended to go to `Project -> Run` in Qt Creator and disable the option 
 1. Install Xcode in your system
 2. Clone or download this repo
 3. Download the required third party libraries and configuration file (`config.h`) from this link:
-https://mega.nz/#!T14B0Y4T!EXGg9dRtacgz9_vCUtVq5tj6C3PBpkOHgXG289EBxBM
+https://mega.nz/file/c1pRDaiA#VQ9yr09wQ_DAJLPFtBolS4AbbxItF21UVxXZ-WWTx0w
 4.Uncompress that file and move the folder `3rdparty` into `src/MEGASync/mega/bindings/qt`/ and the file `config.h` into `src/MEGASync/mega/include/mega/`
 5. Run the script `installer_mac.sh` to build the project and generate the application bundle for MEGAsync. If you want to generate an Apple disk image (DMG file), add the flag `--create-dmg`. Build directory is `Release_x64`
 6. Enjoy!
