@@ -10,7 +10,6 @@ if [ "x$ver" == "x" ]; then
 	ver=$(lsb_release -rs)
 fi
 
-
 if [[ $distro = "Raspbian GNU/Linux 10"* ]]; then
     str="Raspbian_10.0"
 elif [[ $distro = "Raspbian GNU/Linux 9"* ]]; then
@@ -66,7 +65,7 @@ elif [[ $ver == 9.* ]]; then
 elif [[ $ver == 10* ]]; then
     str="Debian_10.0"
 elif [[ $ver = "testing" ]]; then
-    str="Debian_10.0"
+    str="Debian_testing"
 # Elementary OS Luna uses 12.04
 elif [[ $distro = "elementary OS Luna" ]]; then
     str="xUbuntu_12.04"

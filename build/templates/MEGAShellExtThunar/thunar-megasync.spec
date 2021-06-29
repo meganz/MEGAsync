@@ -12,7 +12,7 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 %if 0%{?suse_version}
 BuildRequires:  glib2-devel, thunar-devel
-%if 0%{?suse_version} > 1500
+%if 0%{?suse_version} > 1500 || 0%{?sle_version} >= 150300
 BuildRequires: libqt5-qtbase-devel
 %else
 BuildRequires: qt-devel
