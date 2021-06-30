@@ -30,8 +30,8 @@ public:
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
     void setDefaultUploadOption(bool value);
-    long long getSelectedFolderHandle();
-    void setSelectedFolderHandle(long long selectedHandle);
+    mega::MegaHandle getSelectedFolderHandle();
+    void setSelectedFolderHandle(mega::MegaHandle selectedHandle);
     bool getDefaultUploadOption();
 
 public slots:

@@ -39,7 +39,7 @@
 #include "model/Model.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
-#include "QFilterAlertsModel.h"
+#include "gui/QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
@@ -244,6 +244,7 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
+    void avatarReady();
 
 public slots:
     void unlink(bool keepLogs = false);

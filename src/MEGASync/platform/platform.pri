@@ -160,7 +160,8 @@ macx {
         $$PWD/macx/LockedPopOver.h \
         $$PWD/macx/Protocol.h \
         $$PWD/macx/DynamicTransferQuotaPopOver.h \
-        $$PWD/macx/MacXExtServerService.h
+        $$PWD/macx/MacXExtServerService.h \
+        $$PWD/macx/QCustomMacToolbar.h
 
 
     OBJECTIVE_SOURCES += \
@@ -178,7 +179,8 @@ macx {
             $$PWD/macx/MacXLocalSocketPrivate.mm \
             $$PWD/macx/NSPopover+MISSINGBackgroundView.mm \
             $$PWD/macx/LockedPopOver.mm \
-            $$PWD/macx/DynamicTransferQuotaPopOver.mm
+            $$PWD/macx/DynamicTransferQuotaPopOver.mm \
+            $$PWD/macx/QCustomMacToolbar.mm
 
     LIBS += -framework Cocoa
     LIBS += -framework Security

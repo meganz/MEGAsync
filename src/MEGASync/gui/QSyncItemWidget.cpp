@@ -4,29 +4,39 @@
 #include "MegaApplication.h"
 #include "megaapi.h"
 
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
 
-QSyncItemWidget::QSyncItemWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::QSyncItemWidget)
+constexpr auto CHK_RPATH_INTERVAL_MS (5000); // 5s
+
+QSyncItemWidget::QSyncItemWidget(int itemType, QWidget* parent) :
+    QWidget (parent),
+    mUi (new Ui::QSyncItemWidget),
+    mItemType (itemType),
+    mError (0),
+    mSelected (false),
+    mLastRemotePathCheck (0),
+    mNodesUpToDate (true)
 {
+    mUi->setupUi(this);
 
-    ui->setupUi(this);
+    mUi->bSyncState->show();
+    mUi->bWarning->hide();
 
-    ui->bWarning->hide();
-    error = 0;
+    installEventFilter(this);
+    configureSyncTypeUI(itemType);
 
-    connect(Model::instance(), SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
-            this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
+    connect(Model::instance(), &Model::syncStateChanged,
+            this, &QSyncItemWidget::onSyncStateChanged);
 
-    connect(MegaSyncApp, SIGNAL(nodeMoved(mega::MegaHandle)),
-            this, SLOT(nodeChanged(mega::MegaHandle)), Qt::DirectConnection); //direct connection for efficiency
-    connect(MegaSyncApp, SIGNAL(nodeAttributesChanged(mega::MegaHandle)),
-            this, SLOT(nodeChanged(mega::MegaHandle)), Qt::DirectConnection);
+    connect(MegaSyncApp, &MegaApplication::nodeMoved,
+            this, &QSyncItemWidget::nodeChanged,
+            Qt::DirectConnection); //direct connection for efficiency
 
+    connect(MegaSyncApp, &MegaApplication::nodeAttributesChanged,
+            this, &QSyncItemWidget::nodeChanged,
+            Qt::DirectConnection);
+
+    setSelected(false);
 }
 
 void QSyncItemWidget::setPath(const QString &path, const QString &syncName)
@@ -51,7 +61,7 @@ void QSyncItemWidget::setPath(const QString &path)
     //If full sync mode ("/"), avoid empty display name
     if (mDisplayName.isEmpty())
     {
-        mDisplayName.append(QChar::fromAscii('/'));
+        mDisplayName.append(QLatin1Char('/'));
     }
 
     elidePathLabel();
@@ -61,22 +71,51 @@ void QSyncItemWidget::setToolTip(const QString &tooltip)
 {
     if (mSyncRootHandle == mega::INVALID_HANDLE)
     {
-        ui->lSyncName->setToolTip(tooltip);
+        mUi->lSyncName->setToolTip(tooltip);
     }
-    else
+}
+
+QSyncItemWidget::~QSyncItemWidget()
+{
+    delete mUi;
+}
+
+void QSyncItemWidget::configureSyncTypeUI(int type) const
+{
+    switch (type)
     {
-        mOriginalPath = tooltip;
+    case LOCAL_FOLDER:
+    {
+        mUi->bSyncState->show();
+        }
+        break;
+        case REMOTE_FOLDER:
+        {
+            mUi->bSyncState->hide();
+        }
+        break;
+        default:
+        break;
     }
 }
 
 void QSyncItemWidget::setError(int error)
 {
-    this->error = error;
+    mError = error;
 
     if (error)
     {
-        ui->bWarning->setToolTip(QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(error)));
-        ui->bWarning->show();
+        mUi->bWarning->setToolTip(QCoreApplication::translate("MegaSyncError",
+                                                             mega::MegaSync::getMegaSyncErrorCode(
+                                                                 error)));
+        mUi->bWarning->show();
+        mUi->bSyncState->hide();
+    }
+    else
+    {
+        mUi->bSyncState->setToolTip(QString());
+        mUi->bWarning->hide();
+        mUi->bSyncState->show();
     }
 
     elidePathLabel();
@@ -87,15 +126,11 @@ QString QSyncItemWidget::fullPath()
     return mFullPath;
 }
 
-QSyncItemWidget::~QSyncItemWidget()
-{
-    delete ui;
-}
-
 void QSyncItemWidget::elidePathLabel()
 {
-    QFontMetrics metrics(ui->lSyncName->fontMetrics());
-    ui->lSyncName->setText(metrics.elidedText(mDisplayName, Qt::ElideMiddle, ui->lSyncName->width()));
+    QFontMetrics metrics(mUi->lSyncName->fontMetrics());
+    mUi->lSyncName->setText(metrics.elidedText(mDisplayName, Qt::ElideMiddle,
+                                               mUi->lSyncName->width()));
 }
 
 void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
@@ -104,11 +139,14 @@ void  QSyncItemWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-bool QSyncItemWidget::event(QEvent* event)
+void QSyncItemWidget::enterEvent(QEvent* event)
 {
-    // when entering the item we trigger an update of the remote node path, to ensure we have an updated value
-    if (event->type() == QEvent::Enter && !mNodesUpToDate && mSyncRootHandle != mega::INVALID_HANDLE && mSyncSetting
-            && mLastRemotePathCheck + 5000 < QDateTime::currentMSecsSinceEpoch()) //only one path update every 5 secs
+    // when entering the item we trigger an update of the remote node path,
+    // to ensure we have an updated value
+    if (!mNodesUpToDate
+            && mSyncRootHandle != mega::INVALID_HANDLE
+            && mSyncSetting
+            && mLastRemotePathCheck + CHK_RPATH_INTERVAL_MS < QDateTime::currentMSecsSinceEpoch())
     {
         mNodesUpToDate = true; // to avoid further triggering updates, until some node changes
 
@@ -116,32 +154,56 @@ bool QSyncItemWidget::event(QEvent* event)
         ThreadPoolSingleton::getInstance()->push([this]()
         {//thread pool function
 
-            std::unique_ptr<char[]> np(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mSyncSetting->getMegaHandle()));
-            Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get()) : QString(), mSyncSetting);
-
+            auto megaApi (MegaSyncApp->getMegaApi());
+            std::unique_ptr<char[]> np (megaApi->getNodePathByNodeHandle(
+                                            mSyncSetting->getMegaHandle()));
+            Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
+                                                   : QString(),
+                                                mSyncSetting);
         });// end of thread pool function
         mLastRemotePathCheck = QDateTime::currentMSecsSinceEpoch();
     }
-    return QWidget::event(event);
+    return QWidget::enterEvent(event);
 }
 
 void QSyncItemWidget::onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings)
 {
     if (mSyncSetting && syncSettings->getSyncID() == mSyncSetting->getSyncID())
     {
-        ui->lSyncName->setToolTip(mSyncSetting->getMegaFolder());
+        mUi->lSyncName->setToolTip(mSyncSetting->getMegaFolder());
     }
 }
 
 void QSyncItemWidget::nodeChanged(mega::MegaHandle handle)
 {
+    Q_UNUSED(handle)
     // We could check if the handle corresponds to remote node or its ancestors
     // but for the shake of efficiency, instead of doing so for every node update,
     // we simply update the flag, so that we will update the path when hovering the element
     mNodesUpToDate = false;
 }
 
-void QSyncItemWidget::setSyncSetting(const std::shared_ptr<SyncSetting> &value)
+void QSyncItemWidget::setSyncSetting(const std::shared_ptr<SyncSetting>& value)
 {
     mSyncSetting = value;
 }
+
+void QSyncItemWidget::setSelected(bool selected)
+{
+    QString ss;
+    QIcon syncStateIcon;
+    if (selected)
+    {
+        ss = QString::fromUtf8("#lSyncName {color: white;}");
+        syncStateIcon = QIcon(QString::fromUtf8("://images/Item_sync_press.png"));
+    }
+    else
+    {
+        ss = QString::fromUtf8("#lSyncName {color: black;}");
+        syncStateIcon = QIcon(QString::fromUtf8("://images/Item_sync_rest.png"));
+    }
+    mUi->lSyncName->setStyleSheet(ss);
+    mUi->bSyncState->setIcon(syncStateIcon);
+    mSelected = selected;
+}
+

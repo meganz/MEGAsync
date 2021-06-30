@@ -3,27 +3,30 @@
 #include <QKeyEvent>
 
 MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, const QString &directory, bool multiSelect, const QString &filter)
-    : QFileDialog(parent, caption, directory, filter)
+    : QFileDialog(parent, caption, directory, filter),
+      mShowHidden(false),
+      mMultiSelect(multiSelect),
+      mEnableOkButton(false)
 {
-    this->showHidden = false;
-    this->multiSelect = multiSelect;
     setOption(QFileDialog::DontUseNativeDialog, false);
 
     if (multiSelect)
     {
         setOption(QFileDialog::DontUseNativeDialog, true);
-        le = findChild<QLineEdit*>(QString::fromUtf8("fileNameEdit"));
+        setFileMode(QFileDialog::Directory);
+
+        setMimeTypeFilters(QStringList(QLatin1String("application/octet-stream")));
+
+        mLe = findChild<QLineEdit*>(QString::fromUtf8("fileNameEdit"));
 
         QListView *l = findChild<QListView*>(QString::fromUtf8("listView"));
         if (l)
         {
             l->setSelectionMode(QListView::ExtendedSelection);
-            if (le)
+            if (mLe)
             {
-                connect(l->selectionModel(),
-                        SIGNAL(selectionChanged ( const QItemSelection &, const QItemSelection & )),
-                        this,
-                        SLOT(onSelectionChanged ( const QItemSelection &, const QItemSelection & )));
+                connect(l->selectionModel(), &QItemSelectionModel::selectionChanged,
+                        this, &MultiQFileDialog::onSelectionChanged);
             }
         }
 
@@ -31,12 +34,10 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
         if (t)
         {
             t->setSelectionMode(QAbstractItemView::ExtendedSelection);
-            if (le)
+            if (mLe)
             {
-                connect(t->selectionModel(),
-                        SIGNAL(selectionChanged ( const QItemSelection &, const QItemSelection & )),
-                        this,
-                        SLOT(onSelectionChanged ( const QItemSelection &, const QItemSelection & )));
+                connect(t->selectionModel(), &QItemSelectionModel::selectionChanged,
+                        this, &MultiQFileDialog::onSelectionChanged);
             }
         }
 
@@ -61,13 +62,17 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
         QDialogButtonBox *buttonBox = findChild<QDialogButtonBox*>(QString::fromUtf8("buttonBox"));
         if (buttonBox)
         {
-            buttonBox->button(QDialogButtonBox::Open)->setText(QCoreApplication::translate("QDialogButtonBox", "&OK"));
+            mBOpen = buttonBox->button(QDialogButtonBox::Open);
         }
 
-        setFileMode(QFileDialog::ExistingFiles);
-        if (le)
+        if (mBOpen)
         {
-            le->setText(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
+            mBOpen->setText(QCoreApplication::translate("QDialogButtonBox", "&OK"));
+        }
+
+        if (mLe)
+        {
+            mLe->setText(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
         }
     }
 
@@ -77,7 +82,7 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
        (*it)->installEventFilter(this);
     }
     installEventFilter(this);
-    highDpiResize.init(this);
+    mHighDpiResize.init(this);
 }
 
 bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)
@@ -88,9 +93,9 @@ bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)
         Qt::KeyboardModifiers modifiers = QApplication::queryKeyboardModifiers();
         if (modifiers.testFlag(Qt::ControlModifier) && keyEvent && keyEvent->key() == Qt::Key_H)
         {
-            if (showHidden)
+            if (mShowHidden)
             {
-                if (multiSelect)
+                if (mMultiSelect)
                 {
                     setFilter(QDir::AllDirs | QDir::AllEntries | QDir::NoDotAndDotDot);
                 }
@@ -101,7 +106,7 @@ bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)
             }
             else
             {
-                if (multiSelect)
+                if (mMultiSelect)
                 {
                     setFilter(QDir::AllDirs | QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
                 }
@@ -110,7 +115,48 @@ bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)
                     setFilter(QDir::AllDirs | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
                 }
             }
-            showHidden = !showHidden;
+            mShowHidden = !mShowHidden;
+        }
+    }
+
+    // Override the OK button enabled state to respect our own logic.
+    // We return to prevent QFileDialog from overriding us.
+    else if ((obj == mBOpen) && (e->type() == QEvent::EnabledChange))
+    {
+        bool enabled (mBOpen->isEnabled());
+        bool pathExists (QFileInfo::exists(mLe->text()));
+        if (!pathExists)
+        {
+            pathExists = true;
+            const QStringList items (mLe->text().split(QString::fromUtf8("\"")));
+            auto item (items.cbegin());
+
+            while (pathExists && item != items.cend())
+            {
+                if (!item->trimmed().isEmpty())
+                {
+                    pathExists &= QFileInfo::exists(directory().absolutePath()
+                                                    + QDir::separator() + *item);
+                }
+                item++;
+            }
+        }
+
+        if (enabled && !mEnableOkButton && !pathExists)
+        {
+            mBOpen->setEnabled(false);
+            mEnableOkButton = false;
+            return true;
+        }
+        else if (!enabled && pathExists)
+        {
+            mEnableOkButton = true;
+            mBOpen->setEnabled(true);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -128,18 +174,28 @@ void MultiQFileDialog::accept()
     QDialog::accept();
 }
 
-void MultiQFileDialog::onSelectionChanged(const QItemSelection &, const QItemSelection &)
+void MultiQFileDialog::onSelectionChanged()
 {
     QString actionString = QCoreApplication::translate("ShellExtension", "Upload to MEGA");
 
     QStringList files = selectedFiles();
     int numFiles = 0;
     int numFolders = 0;
-    for (int i = 0; i < files.size(); i++)
+
+    QString dir (directory().absolutePath());
+
+    // Do not select a file/folder whose name is the same as the parent
+    // upon entering a directory.
+    if (files.size() == 2 && (files[0] == dir || files[0] == files[1]))
     {
-        if (files[i] != directory().absolutePath())
+        files.clear();
+    }
+
+    for (auto file : qAsConst(files))
+    {
+        if (file != dir)
         {
-            QFileInfo fi(files[i]);
+            QFileInfo fi(file);
             if (fi.exists())
             {
                 if (fi.isDir())
@@ -154,10 +210,27 @@ void MultiQFileDialog::onSelectionChanged(const QItemSelection &, const QItemSel
         }
     }
 
-    if (!numFiles && !numFolders)
+    if (mBOpen)
     {
-        le->setText(actionString);
-        return;
+        int nbSelected (numFolders + numFiles);
+        mEnableOkButton = (nbSelected > 0);
+
+        // Check that the lineEdit and the view are in sync
+        if (nbSelected > 0)
+        {
+            int nbItemsInLineEdit (0);
+            const QStringList items (mLe->text().split(QString::fromUtf8("\"")));
+            for (auto item (items.cbegin()); item != items.cend(); item++)
+            {
+                if (!item->trimmed().isEmpty())
+                {
+                    nbItemsInLineEdit++;
+                }
+            }
+            mEnableOkButton = nbItemsInLineEdit == nbSelected;
+        }
+
+        mBOpen->setEnabled(mEnableOkButton);
     }
 
     QString sNumFiles;
@@ -198,7 +271,5 @@ void MultiQFileDialog::onSelectionChanged(const QItemSelection &, const QItemSel
         fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
                 .arg(actionString).arg(sNumFolders);
     }
-
-    le->setText(fullString);
+    setWindowTitle(fullString);
 }
-
