@@ -1,18 +1,17 @@
-MEGA Sync Client
-================
+# MEGA Sync Client
 
 Easy automated syncing between your computers and your MEGA cloud drive.
 
 This repository contains all the development history of the official sync client of MEGA:
 https://mega.nz/sync
 
-#### Supported Platforms
+## Supported Platforms
 
 * Microsoft Windows operating systems
 * OS X
 * Linux
 
-#### Get the source
+## Get the source
 
 ```
 git clone --recursive https://github.com/meganz/MEGAsync.git
@@ -31,14 +30,14 @@ A typical layout may look like this:
 * .../desktop (megasync)
 * .../desktop/src/megasync/mega (SDK specifically for megasync)
 
-# Windows compilation
+### Windows compilation
 
-##### Requirements:
+#### Requirements:
 * Visual Studio 2015 or above
 * Qt 5.12.8
 * Qt Creator
 
-# Installing Qt 5.12.8 (open source version):
+#### Installing Qt 5.12.8 (open source version):
 
 Download Qt online installer from [here](https://www.qt.io/download-open-source?hsCtaTracking=9f6a2170-a938-42df-a8e2-a9f0b1d6cdce%7C6cb0de4f-9bb5-4778-ab02-bfb62735f3e5)
 
@@ -48,7 +47,7 @@ Download Qt online installer from [here](https://www.qt.io/download-open-source?
 * Go back (at top left). It will generate the available Qt versions
 * Select 5.12.8 and install
 
-##### Preparation (Using Qt Creator):
+#### Preparation (Using Qt Creator):
 
 1. Prepare Qt Creator to use the Visual Studio 2015 or 2017 toolchain and Qt 5.12.8 - 32 bits
 2. Clone or download this repo
@@ -70,7 +69,7 @@ to generate translation files. Alternatively, you can add it as a custom step in
 
 It's recommended to go to `Project -> Run` in Qt Creator and disable the option `Run in terminal`
 
-##### Preparation (Using CMake):
+#### Preparation (Using CMake):
 
 1. Download and install CMake from https://cmake.org/download/. Mininimum required version is 3.15
 2. Create cmake-build-x64 inside cmake (folder names matching pattern cmake-build-* in contrib/cmake are ignored by git)
@@ -130,13 +129,15 @@ It's recommended to go to `Project -> Run` in Qt Creator and disable the option 
 ```
 12. Enjoy!
 
-# OS X compilation
+----------
 
-##### Requirements:
+### OS X compilation
+
+#### Requirements:
 * Xcode 10
 * Qt 5.9.9
 
-##### Preparation:
+#### Preparation:
 1. Install Xcode in your system
 2. Clone or download this repo
 3. Download the required third party libraries and configuration file (`config.h`) from this link:
@@ -145,7 +146,9 @@ https://mega.nz/file/c1pRDaiA#VQ9yr09wQ_DAJLPFtBolS4AbbxItF21UVxXZ-WWTx0w
 5. Run the script `installer_mac.sh` to build the project and generate the application bundle for MEGAsync. If you want to generate an Apple disk image (DMG file), add the flag `--create-dmg`. Build directory is `Release_x64`
 6. Enjoy!
 
-## Linux compilation
+----------
+
+### Linux compilation
 
 #### Requirements:
 
