@@ -22,7 +22,7 @@ private:
     MacXPlatform() {}
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
-    static QPointer<MacXExtServerService> extServer; //Set to NULL upon deletion
+    static QPointer<MacXExtServerService> extService; //Set to NULL upon deletion
 
 public:
     static void initialize(int argc, char *argv[]);
@@ -67,10 +67,6 @@ public:
 private:
     static void disableSignalHandler();
 
-signals:
-    void syncAdd();
-    void syncDel();
-    void notifyAllClients();
 };
 
 #endif // MACXPLATFORM_H

@@ -5,7 +5,7 @@ using namespace std;
 
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
-QPointer<MacXExtServerService> MacXPlatform::extServer;
+QPointer<MacXExtServerService> MacXPlatform::extService;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
@@ -179,9 +179,9 @@ void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
         systemServiceTask = new MacXSystemServiceTask(receiver);
     }
 
-    if (!extServer)
+    if (!extService)
     {
-        extServer = new MacXExtServerService(receiver);
+        extService = new MacXExtServerService(receiver);
     }
 }
 
@@ -193,17 +193,17 @@ void MacXPlatform::stopShellDispatcher()
         systemServiceTask = NULL;
     }
 
-    if (extServer)
+    if (extService)
     {
-        delete extServer;
+        delete extService;
     }
 }
 
 void MacXPlatform::notifyItemChange(string *localPath, int newState)
 {
-    if (extServer && localPath && localPath->size())
+    if (extService && localPath && localPath->size())
     {
-        emit extServer->itemChange(QString::fromStdString(*localPath), newState);
+        emit extService->itemChange(QString::fromStdString(*localPath), newState);
     }
 }
 
@@ -212,9 +212,9 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString s
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
 
-    if (extServer)
+    if (extService)
     {
-        emit extServer->syncAdd(syncPath, syncName);
+        emit extService->syncAdd(syncPath, syncName);
     }
 }
 
@@ -223,9 +223,9 @@ void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
 
-    if (extServer)
+    if (extService)
     {
-        emit extServer->syncDel(syncPath, syncName);
+        emit extService->syncDel(syncPath, syncName);
     }
 }
 
@@ -237,17 +237,17 @@ void MacXPlatform::notifyRestartSyncFolders()
 
 void MacXPlatform::notifyAllSyncFoldersAdded()
 {
-    if (extServer)
+    if (extService)
     {
-        emit extServer->allClients(MacXExtServer::NOTIFY_ADD_SYNCS);
+        emit extService->allClients(MacXExtServer::NOTIFY_ADD_SYNCS);
     }
 }
 
 void MacXPlatform::notifyAllSyncFoldersRemoved()
 {
-    if (extServer)
+    if (extService)
     {
-        emit extServer->allClients(MacXExtServer::NOTIFY_DEL_SYNCS);
+        emit extService->allClients(MacXExtServer::NOTIFY_DEL_SYNCS);
     }
 }
 

@@ -5,6 +5,12 @@
 #include <QPointer>
 #include "platform/macx/MacXExtServer.h"
 
+/**
+ * @brief Service instance to manage communications with extension
+ *
+ * Class that registers a MacXExtServer instance and offers some public signals that will be connected to worker object (MacXExtServer),
+ * letting us use singal + slots across threads to improve performance.
+ */
 class MacXExtServerService : public QObject
 {
     Q_OBJECT
@@ -19,8 +25,8 @@ signals:
     void itemChange(QString localPath, int newState);
 
 private:
-    QThread threadExtServer;
-    QPointer<MacXExtServer> extServer;
+    QThread mThreadExtServer;
+    QPointer<MacXExtServer> mExtServer;
 };
 
 #endif // MACXEXTSERVERSERVICE_H
