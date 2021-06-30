@@ -1,4 +1,4 @@
-MEGAsync and MEGAShellExtNautilus projects OBS files.
+# MEGAsync and MEGAShellExtNautilus projects OBS files.
 
 Supported distributives and versions (i586 and x86_64 platforms):
 * Ubuntu 12.04 - 15.10
@@ -33,23 +33,30 @@ Subprojects:
         * http://pkgs.repoforge.org/cryptopp/cryptopp-5.5.2-1.rf.src.rpm
 
 
-opensuse-commander (osc) tool installation and configuration.
+## opensuse-commander (osc) tool installation and configuration
 
 * Ubuntu:
+```
 apt-get install osc
+```
 
 To prepare for use with MEGA OBS instance edit ~/.oscrc file:
 
+```
 [general]
 apiurl = https://build.developers.mega.co.nz
 do_package_tracking = 1
+```
 
+```
 [https://build.developers.mega.co.nz]
 user = XXX
 pass = YYY
-
+```
 
 To get the initial copy of OBS repository:
 osc co MEGAsync
 
+```
 osc documentation: http://en.opensuse.org/Build_Service/CLI
+```
