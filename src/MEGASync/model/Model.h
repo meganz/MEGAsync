@@ -54,7 +54,8 @@ protected:
     QMutex syncMutex;
 
     ///////////////// SYNCS ///////////////////////
-    QList<mega::MegaHandle> configuredSyncs; //Tags of configured syncs
+//    QList<mega::MegaHandle> configuredSyncs; //Tags of configured syncs
+    QMap<mega::MegaSync::SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
 
@@ -88,16 +89,16 @@ public:
     void pickInfoFromOldSync(const SyncData &osd, mega::MegaHandle backupId, bool loadedFromPreviousSessions);
 
     // remove syncs from model
-    void removeSyncedFolder(int num);
+    void removeSyncedFolder(int num, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void removeSyncedFolderByBackupId(mega::MegaHandle backupId);
     void removeAllFolders();
 
     // Getters
-    std::shared_ptr<SyncSetting> getSyncSetting(int num);
-    std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle num);
+    std::shared_ptr<SyncSetting> getSyncSetting(int num, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle tag);
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> getCopyOfSettings();
 
-    int getNumSyncedFolders();
+    int getNumSyncedFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
 
     //unattended disabled syncs
     bool hasUnattendedDisabledSyncs() const;
@@ -106,11 +107,11 @@ public:
     void setUnattendedDisabledSyncs(QSet<mega::MegaHandle> tags);
     void dismissUnattendedDisabledSyncs();
 
-    QStringList getSyncNames();
-    QStringList getSyncIDs();
-    QStringList getMegaFolders();
-    QStringList getLocalFolders();
-    QList<mega::MegaHandle> getMegaFolderHandles();
+    QStringList getSyncNames(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    QStringList getSyncIDs(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    QStringList getMegaFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    QStringList getLocalFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    QList<mega::MegaHandle> getMegaFolderHandles(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
 
     ///////////// END OF SYNCS ////////////////////
 

@@ -30,7 +30,9 @@ class Controller
 {
 public:
 
-    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle, QString syncName = QString(), ActionProgress *progress = nullptr);
+    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
+                 QString syncName = QString(), ActionProgress *progress = nullptr,
+                 mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);

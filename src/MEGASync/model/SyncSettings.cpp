@@ -206,3 +206,8 @@ void SyncSetting::setBackupId(MegaHandle backupId)
 {
     mBackupId = backupId;
 }
+
+MegaSync::SyncType SyncSetting::getType()
+{
+    return static_cast<MegaSync::SyncType>(mSync->getType());
+}

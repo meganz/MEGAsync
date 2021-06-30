@@ -398,6 +398,7 @@ protected:
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
+    std::unique_ptr<QMenu> backupsMenu;
     QSignalMapper *menuSignalMapper;
 
     MenuItemAction *exitAction;
@@ -408,6 +409,7 @@ protected:
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
     MenuItemAction *addSyncAction;
+    MenuItemAction *addBackupAction;
 
     MenuItemAction *updateAction;
     QAction *showStatusAction;

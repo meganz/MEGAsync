@@ -33,11 +33,11 @@ bool Model::hasUnattendedDisabledSyncs() const
     return unattendedDisabledSyncs.size();
 }
 
-void Model::removeSyncedFolder(int num)
+void Model::removeSyncedFolder(int num, mega::MegaSync::SyncType type)
 {
-    assert(num <= configuredSyncs.size() && configuredSyncsMap.contains(configuredSyncs.at(num)));
+    assert(num <= configuredSyncs[type].size() && configuredSyncsMap.contains(configuredSyncs[type].at(num)));
     QMutexLocker qm(&syncMutex);
-    auto cs = configuredSyncsMap[configuredSyncs.at(num)];
+    auto cs = configuredSyncsMap[configuredSyncs[type].at(num)];
     if (cs->isActive())
     {
         deactivateSync(cs);
@@ -47,8 +47,8 @@ void Model::removeSyncedFolder(int num)
 
     assert(preferences->logged());
     preferences->removeSyncSetting(cs);
-    configuredSyncsMap.remove(configuredSyncs.at(num));
-    configuredSyncs.removeAt(num);
+    configuredSyncsMap.remove(configuredSyncs[type].at(num));
+    configuredSyncs[type].removeAt(num);
 
     removeUnattendedDisabledSync(backupId);
 
@@ -75,12 +75,14 @@ void Model::removeSyncedFolderByBackupId(MegaHandle backupId)
     preferences->removeSyncSetting(cs);
     configuredSyncsMap.remove(backupId);
 
-    auto it = configuredSyncs.begin();
-    while (it != configuredSyncs.end())
+    auto type (cs->getType());
+
+    auto it = configuredSyncs[type].begin();
+    while (it != configuredSyncs[type].end())
     {
         if ((*it) == backupId)
         {
-            it = configuredSyncs.erase(it);
+            it = configuredSyncs[type].erase(it);
         }
         else
         {
@@ -203,7 +205,7 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
         //move into the configuredSyncsMap
         configuredSyncsMap.insert(sync->getBackupId(), cs);
-        configuredSyncs.append(sync->getBackupId());
+        configuredSyncs[cs->getType()].append(sync->getBackupId());
 
         // remove from picked
         syncsSettingPickedFromOldConfig.erase(oldcsitr);
@@ -235,7 +237,7 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
             cs = configuredSyncsMap[sync->getBackupId()] = std::make_shared<SyncSetting>(sync);
         }
 
-        configuredSyncs.append(sync->getBackupId());
+        configuredSyncs[static_cast<MegaSync::SyncType>(sync->getType())].append(sync->getBackupId());
     }
 
     //queue an update of the sync remote node
@@ -289,7 +291,8 @@ void Model::rewriteSyncSettings()
 {
     preferences->removeAllSyncSettings();
     QMutexLocker qm(&syncMutex);
-    for (auto &cs : configuredSyncs)
+    for (auto cs : configuredSyncs[mega::MegaSync::TYPE_TWOWAY]
+         + configuredSyncs[mega::MegaSync::TYPE_BACKUP])
     {
         preferences->writeSyncSetting(configuredSyncsMap[cs]); // we store MEGAsync specific fields into cache
     }
@@ -320,71 +323,71 @@ void Model::reset()
     isFirstSyncDone = false;
 }
 
-int Model::getNumSyncedFolders()
+int Model::getNumSyncedFolders(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
-    return  configuredSyncs.size();
+    return configuredSyncs[type].size();
 }
 
-QStringList Model::getSyncNames()
+QStringList Model::getSyncNames(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
-    for (auto &cs : configuredSyncs)
+    for (auto &cs : configuredSyncs[type])
     {
         value.append(configuredSyncsMap[cs]->name());
     }
     return value;
 }
 
-QStringList Model::getSyncIDs()
+QStringList Model::getSyncIDs(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
-    for (auto &cs : configuredSyncs)
+    for (auto &cs : configuredSyncs[type])
     {
         value.append(QString::number(configuredSyncsMap[cs]->backupId()));
     }
     return value;
 }
 
-QStringList Model::getMegaFolders()
+QStringList Model::getMegaFolders(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
-    for (auto &cs : configuredSyncs)
+    for (auto &cs : configuredSyncs[type])
     {
         value.append(configuredSyncsMap[cs]->getMegaFolder());
     }
     return value;
 }
 
-QStringList Model::getLocalFolders()
+QStringList Model::getLocalFolders(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
     QStringList value;
-    for (auto &cs : configuredSyncs)
+    for (auto &cs : configuredSyncs[type])
     {
         value.append(configuredSyncsMap[cs]->getLocalFolder());
     }
     return value;
 }
 
-QList<MegaHandle> Model::getMegaFolderHandles()
+QList<MegaHandle> Model::getMegaFolderHandles(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
     QList<MegaHandle> value;
-    for (auto &cs : configuredSyncs)
+    for (auto &cs : configuredSyncs[type])
     {
         value.append(configuredSyncsMap[cs]->getMegaHandle());
     }
     return value;
 }
 
-std::shared_ptr<SyncSetting> Model::getSyncSetting(int num)
+std::shared_ptr<SyncSetting> Model::getSyncSetting(int num, mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
-    return configuredSyncsMap[configuredSyncs.at(num)];
+    return configuredSyncsMap[configuredSyncs[type].at(num)];
 }
 
 QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> Model::getCopyOfSettings()
@@ -392,6 +395,7 @@ QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> Model::getCopyOfSettings()
     QMutexLocker qm(&syncMutex);
     return configuredSyncsMap;
 }
+
 
 std::shared_ptr<SyncSetting> Model::getSyncSettingByTag(MegaHandle tag)
 {

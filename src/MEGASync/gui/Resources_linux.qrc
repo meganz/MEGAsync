@@ -882,5 +882,8 @@
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
         <file>images/show_in_folder_ico@3x.png</file>
+        <file>images/backup.png</file>
+        <file>images/backup@2x.png</file>
+        <file>images/backup@3x.png</file>
     </qresource>
 </RCC>

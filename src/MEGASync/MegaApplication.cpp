@@ -293,6 +293,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     streamAction = NULL;
     myCloudAction = NULL;
     addSyncAction = NULL;
+    addBackupAction = NULL;
     waiting = false;
     updated = false;
     syncing = false;
@@ -2295,6 +2296,7 @@ void MegaApplication::cleanAll()
     periodicTasksTimer->stop();
     stopUpdateTask();
     Platform::stopShellDispatcher();
+    // TODO : replace with getSettings and iterator
     for (int i = 0; i < model->getNumSyncedFolders(); i++)
     {
         auto syncSetting = model->getSyncSetting(i);
@@ -6330,13 +6332,8 @@ void MegaApplication::createInfoDialogMenus()
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromUtf8("://images/ico_add_sync_folder.png")), true);
 
-#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
         connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
                 QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
-#else
-        connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
-#endif
-
     }
     else
     {
@@ -6391,12 +6388,8 @@ void MegaApplication::createInfoDialogMenus()
         if (!activeFolders)
         {
             addSyncAction->setLabelText(tr("Add Sync"));
-#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
             connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
                     QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
-#else
-            connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
-#endif
         }
         else
         {
@@ -6407,13 +6400,8 @@ void MegaApplication::createInfoDialogMenus()
                 if ((num > 1) || !fullSync)
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
-#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
                     connect(addAction, &MenuItemAction::triggered, infoDialog,
                             QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
-#else
-                    connect(addAction, &MenuItemAction::triggered, infoDialog,
-                            static_cast<void(InfoDialog::*)()>(&InfoDialog::addSync), Qt::QueuedConnection);
-#endif
 
                     if (activeFolders)
                     {
@@ -6424,6 +6412,98 @@ void MegaApplication::createInfoDialogMenus()
             }
 
             addSyncAction->setMenu(syncsMenu.get());
+        }
+    }
+
+    if (addBackupAction)
+    {
+        addBackupAction->deleteLater();
+        addBackupAction = NULL;
+    }
+
+    int numBackups = (megaApi && preferences->logged()) ? model->getNumSyncedFolders(MegaSync::TYPE_BACKUP) : 0;
+    if (numBackups == 0)
+    {
+        addBackupAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/backup.png")), true);
+
+        connect(addBackupAction, &MenuItemAction::triggered, infoDialog,
+                QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
+    }
+    else
+    {
+        addBackupAction = new MenuItemAction(tr("Backups"), QIcon(QString::fromUtf8("://images/backup.png")), true);
+        if (backupsMenu)
+        {
+            for (QAction *a: backupsMenu->actions())
+            {
+                a->deleteLater();
+            }
+
+            backupsMenu->deleteLater();
+            backupsMenu.release();
+        }
+
+        backupsMenu.reset(new QMenu());
+
+#ifdef __APPLE__
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#else
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#endif
+
+
+        if (menuSignalMapper)
+        {
+            menuSignalMapper->deleteLater();
+            menuSignalMapper = NULL;
+        }
+
+        menuSignalMapper = new QSignalMapper();
+        connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
+
+        int activeFolders = 0;
+        for (int i = 0; i < numBackups; i++)
+        {
+            auto backupSetting = model->getSyncSetting(i, MegaSync::TYPE_BACKUP);
+
+            if (!backupSetting->isActive())
+            {
+                continue;
+            }
+
+            activeFolders++;
+            MenuItemAction *action = new MenuItemAction(backupSetting->name(), QIcon(QString::fromUtf8("://images/small_folder.png")), true);
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
+
+            backupsMenu->addAction(action);
+            menuSignalMapper->setMapping(action, backupSetting->getLocalFolder());
+        }
+
+        if (!activeFolders)
+        {
+            addSyncAction->setLabelText(tr("Add Backup"));
+            connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+                    QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
+        }
+        else
+        {
+            // Get device name and display
+            auto rootNode = getRootNode();
+            if (rootNode)
+            {
+                bool fullSync = num == 1 && model->getSyncSetting(0, MegaSync::TYPE_BACKUP)->getMegaHandle() == rootNode->getHandle();
+                if ((numBackups > 1) || !fullSync)
+                {
+                    MenuItemAction *addAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
+                    connect(addAction, &MenuItemAction::triggered, infoDialog,
+                            QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
+
+                    backupsMenu->addSeparator();
+                    backupsMenu->addAction(addAction);
+                }
+            }
+
+            addBackupAction->setMenu(backupsMenu.get());
         }
     }
 
@@ -6483,6 +6563,7 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(addSyncAction);
+    infoDialogMenu->addAction(addBackupAction);
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);

@@ -7,7 +7,23 @@
 
 #include "megaapi.h"
 
-struct SyncData;
+struct SyncData
+{
+    SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
+                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID,
+                int type);
+    QString mName;
+    QString mLocalFolder;
+    long long mMegaHandle;
+    QString mMegaFolder;
+    long long mLocalfp;
+    bool mEnabled;
+    bool mTemporarilyDisabled;
+    int mPos;
+    QString mSyncID;
+    mega::MegaSync::SyncType mType;
+};
+
 class SyncSetting
 {
 private:
@@ -18,10 +34,13 @@ private:
     bool mEnabled = false;
     bool mActive = false;
 
+    mega::MegaSync::SyncType mType;
+
     QString mMegaFolder; //cached (in memory) value of the remote path
 
     static constexpr int CACHE_VERSION = 1;
 public:
+
     SyncSetting();
     SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions);
     SyncSetting(QString initializer);
@@ -57,21 +76,10 @@ public:
     QString getSyncID() const;
     void setSyncID(const QString &syncID);
     void setMegaFolder(const QString &megaFolder);
+
+    mega::MegaSync::SyncType getType();
 };
 
 Q_DECLARE_METATYPE(SyncSetting);
 
-struct SyncData
-{
-    SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
-                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
-    QString mName;
-    QString mLocalFolder;
-    long long mMegaHandle;
-    QString mMegaFolder;
-    long long mLocalfp;
-    bool mEnabled;
-    bool mTemporarilyDisabled;
-    int mPos;
-    QString mSyncID;
-};
+

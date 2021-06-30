@@ -70,6 +70,7 @@ public:
     void setAccountType(int accType);
     void setDisabledSyncTags(QSet<int> tags);
     void addSync(mega::MegaHandle h);
+    void addBackup();
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
@@ -121,7 +122,8 @@ public slots:
     void dlAreaHovered(QMouseEvent *event);
     void upAreaHovered(QMouseEvent *event);
 
-   void addSync();
+    void addSync();
+    void onAddBackup();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
@@ -139,6 +141,7 @@ private slots:
     void onOverlayClicked();
     void on_bTransferManager_clicked();
     void on_bAddSync_clicked();
+    void on_bAddBackup_clicked();
     void on_bUpload_clicked();
     void on_bDownload_clicked();
     void onUserAction(int action);
@@ -239,7 +242,9 @@ private:
     void showBlockedError();
 
     std::unique_ptr<QMenu> syncsMenu;
+    std::unique_ptr<QMenu> backupsMenu;
     MenuItemAction *addSyncAction;
+    MenuItemAction *addBackupAction;
     MenuItemAction *lastHovered;
 
 protected:
