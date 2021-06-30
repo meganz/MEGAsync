@@ -81,7 +81,7 @@ cd MEGASync/mega
 ./contrib/build_sdk.sh \
     $FLAG_CRYPTOPP \
     -o $archives \
-    -f $FLAG_CARES $FLAG_CURL $FLAG_LIBMEDIA $FLAG_DISABLE_ZLIB $FLAG_RAW \
+    $FLAG_CARES $FLAG_CURL $FLAG_LIBMEDIA $FLAG_DISABLE_ZLIB $FLAG_RAW \
     -l \
     -n \
     -N \
