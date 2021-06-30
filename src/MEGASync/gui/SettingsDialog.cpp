@@ -135,7 +135,14 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
     if (hMod)
     {
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning( disable : 4191 ) // 'type cast': unsafe conversion from 'FARPROC' to 'RtlGetVersionPtr'
+#endif
         RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
         if (RtlGetVersion)
         {
             RtlGetVersion(&version);
