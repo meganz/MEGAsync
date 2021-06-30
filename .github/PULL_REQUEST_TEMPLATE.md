@@ -1,18 +1,17 @@
-Description
------------
+## Description
 
 
-SDK Submodule build
--------------------
+## SDK Submodule build
+
 #You can change submodule branch here. Default develop.
 SDK_SUBMODULE_TEST=develop
 
 
-Risk area(s)
-------------
+## Risk area(s)
 
 
-Tested in
----------
+
+## Tested in
+
 Win | Linux | macOS
 
