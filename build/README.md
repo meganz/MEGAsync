@@ -1,4 +1,4 @@
-# MEGAsync and MEGAShellExtNautilus projects OBS files.
+# MEGAsync and MEGAShellExtNautilus projects OBS files
 
 Supported distributives and versions (i586 and x86_64 platforms):
 * Ubuntu 12.04 - 15.10
