@@ -6461,6 +6461,14 @@ void MegaApplication::createInfoDialogMenus()
         menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
+        // Display device name before folders (click opens backup wizard)
+        QString deviceName (model->getDeviceName());
+        MenuItemAction *devNameAction = new MenuItemAction(deviceName, QIcon(QString::fromUtf8("://images/backup.png")), true);
+        connect(devNameAction, &MenuItemAction::triggered,
+                infoDialog, &InfoDialog::onAddBackup, Qt::QueuedConnection);
+        backupsMenu->addAction(devNameAction);
+
+
         int activeFolders = 0;
         for (int i = 0; i < numBackups; i++)
         {
@@ -6472,7 +6480,7 @@ void MegaApplication::createInfoDialogMenus()
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(backupSetting->name(), QIcon(QString::fromUtf8("://images/small_folder.png")), true);
+            MenuItemAction *action = new MenuItemAction(backupSetting->name(), QIcon(QString::fromUtf8("://images/small_folder.png")), true, 1);
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             backupsMenu->addAction(action);
@@ -6491,12 +6499,11 @@ void MegaApplication::createInfoDialogMenus()
             auto rootNode = getRootNode();
             if (rootNode)
             {
-                bool fullSync = num == 1 && model->getSyncSetting(0, MegaSync::TYPE_BACKUP)->getMegaHandle() == rootNode->getHandle();
-                if ((numBackups > 1) || !fullSync)
+                if (numBackups > 1)
                 {
-                    MenuItemAction *addAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
+                    MenuItemAction* addAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
                     connect(addAction, &MenuItemAction::triggered, infoDialog,
-                            QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
+                           &InfoDialog::onAddBackup, Qt::QueuedConnection);
 
                     backupsMenu->addSeparator();
                     backupsMenu->addAction(addAction);
@@ -7050,7 +7057,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->disableFileVersioning(request->getFlag());
             }
         }
-
+        else if (request->getParamType() == MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
+        {
+            if (e->getErrorCode() == MegaError::API_OK)
+            {
+                // TODO : set my backups folder name In Preferences? Model?
+            }
+        }
+        else if (request->getParamType() == MegaApi::USER_ATTR_DEVICE_NAMES)
+        {
+            if (e->getErrorCode() == MegaError::API_OK)
+            {
+                // TODO : set devies In Preferences? Model?
+                model->setDeviceName(QString::fromUtf8(request->getName()));
+            }
+        }
         break;
     }
     case MegaRequest::TYPE_LOGIN:

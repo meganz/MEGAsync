@@ -23,9 +23,10 @@ Model *Model::instance()
     return Model::model.get();
 }
 
-Model::Model() : QObject(), syncMutex(QMutex::Recursive)
+Model::Model() : QObject(), syncMutex (QMutex::Recursive),
+    preferences (Preferences::instance()),
+    mDeviceName()
 {
-    preferences = Preferences::instance();
 }
 
 bool Model::hasUnattendedDisabledSyncs() const
@@ -192,6 +193,8 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     }
 
     QMutexLocker qm(&syncMutex);
+
+    MegaSyncApp->getMegaApi()->getDeviceName();
 
     std::shared_ptr<SyncSetting> cs;
     bool wasActive = false;
@@ -442,4 +445,14 @@ void Model::dismissUnattendedDisabledSyncs()
     unattendedDisabledSyncs.clear();
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
+}
+
+void Model::setDeviceName(const QString& name)
+{
+    mDeviceName = name;
+}
+
+const QString& Model::getDeviceName() const
+{
+    return mDeviceName;
 }

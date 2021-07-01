@@ -46,6 +46,7 @@ private:
     ///////////////// SYNCS ///////////////////////
     Preferences *preferences;
     bool isFirstSyncDone = false;
+    QString mDeviceName;
     ///////////// END OF SYNCS ////////////////////
 
     void saveUnattendedDisabledSyncs();
@@ -54,7 +55,6 @@ protected:
     QMutex syncMutex;
 
     ///////////////// SYNCS ///////////////////////
-//    QList<mega::MegaHandle> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaSync::SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
@@ -112,6 +112,9 @@ public:
     QStringList getMegaFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     QStringList getLocalFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     QList<mega::MegaHandle> getMegaFolderHandles(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+
+    void setDeviceName(const QString& name);
+    const QString& getDeviceName() const;
 
     ///////////// END OF SYNCS ////////////////////
 

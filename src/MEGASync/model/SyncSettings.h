@@ -34,8 +34,6 @@ private:
     bool mEnabled = false;
     bool mActive = false;
 
-    mega::MegaSync::SyncType mType;
-
     QString mMegaFolder; //cached (in memory) value of the remote path
 
     static constexpr int CACHE_VERSION = 1;
@@ -81,5 +79,3 @@ public:
 };
 
 Q_DECLARE_METATYPE(SyncSetting);
-
-

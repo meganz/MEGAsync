@@ -1455,6 +1455,13 @@ void InfoDialog::on_bAddBackup_clicked()
         QSignalMapper *menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
+        // Display device name before folders (click opens backup wizard)
+        QString deviceName (model->getDeviceName());
+        MenuItemAction *devNameAction = new MenuItemAction(deviceName, QIcon(QString::fromUtf8("://images/backup.png")), true);
+        connect(devNameAction, &MenuItemAction::triggered,
+                this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
+        backupsMenu->addAction(devNameAction);
+
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
@@ -1466,7 +1473,7 @@ void InfoDialog::on_bAddBackup_clicked()
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(backupSetting->name(), QIcon(QString::fromAscii("://images/small_folder.png")), true);
+            MenuItemAction *action = new MenuItemAction(QString::fromUtf8("") + backupSetting->name(), QIcon(QString::fromAscii("://images/small_folder.png")), true, 1);
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             backupsMenu->addAction(action);
@@ -1483,10 +1490,9 @@ void InfoDialog::on_bAddBackup_clicked()
             auto rootNode = MegaSyncApp->getRootNode();
             if (rootNode)
             {
-                bool fullSync = num == 1 && model->getSyncSetting(0, mega::MegaSync::TYPE_BACKUP)->getMegaHandle() == rootNode->getHandle();
-                if ((num > 1) || !fullSync)
+                if (num > 1)
                 {
-                    MenuItemAction *addAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
+                    MenuItemAction* addAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
                     connect(addAction, &MenuItemAction::triggered,
                             this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
                     if (activeFolders)
