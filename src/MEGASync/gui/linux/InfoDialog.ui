@@ -327,7 +327,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_win.qrc">
-                   <normaloff>:/images/backup.png</normaloff>:/images/backup.png</iconset>
+                   <normaloff>:/images/Backup.png</normaloff>:/images/Backup.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>

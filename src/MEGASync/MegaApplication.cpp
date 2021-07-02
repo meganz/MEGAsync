@@ -6424,14 +6424,14 @@ void MegaApplication::createInfoDialogMenus()
     int numBackups = (megaApi && preferences->logged()) ? model->getNumSyncedFolders(MegaSync::TYPE_BACKUP) : 0;
     if (numBackups == 0)
     {
-        addBackupAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/backup.png")), true);
+        addBackupAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/Backup.png")), true);
 
         connect(addBackupAction, &MenuItemAction::triggered, infoDialog,
                 QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
     }
     else
     {
-        addBackupAction = new MenuItemAction(tr("Backups"), QIcon(QString::fromUtf8("://images/backup.png")), true);
+        addBackupAction = new MenuItemAction(tr("Backups"), QIcon(QString::fromUtf8("://images/Backup.png")), true);
         if (backupsMenu)
         {
             for (QAction *a: backupsMenu->actions())
@@ -6463,8 +6463,16 @@ void MegaApplication::createInfoDialogMenus()
 
         // Display device name before folders (click opens backup wizard)
         QString deviceName (model->getDeviceName());
-        MenuItemAction *devNameAction = new MenuItemAction(deviceName, QIcon(QString::fromUtf8("://images/backup.png")), true);
-        connect(devNameAction, &MenuItemAction::triggered,
+#ifdef WIN32
+    QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
+#elif __APPLE__
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-mac.png"));
+#elif Q_OS_LINUX
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-linux.png"));
+#else
+        QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
+#endif
+        MenuItemAction *devNameAction = new MenuItemAction(deviceName, devIcon, true);        connect(devNameAction, &MenuItemAction::triggered,
                 infoDialog, &InfoDialog::onAddBackup, Qt::QueuedConnection);
         backupsMenu->addAction(devNameAction);
 

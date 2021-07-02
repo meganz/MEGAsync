@@ -897,8 +897,20 @@
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
         <file>images/show_in_folder_ico@3x.png</file>
-        <file>images/backup.png</file>
-        <file>images/backup@2x.png</file>
-        <file>images/backup@3x.png</file>
+        <file>images/Backup.png</file>
+        <file>images/Backup@2x.png</file>
+        <file>images/Backup@3x.png</file>
+        <file>images/small-pc.png</file>
+        <file>images/small-pc@2x.png</file>
+        <file>images/small-pc@3x.png</file>
+        <file>images/small-pc-linux.png</file>
+        <file>images/small-pc-linux@2x.png</file>
+        <file>images/small-pc-linux@3x.png</file>
+        <file>images/small-pc-mac.png</file>
+        <file>images/small-pc-mac@2x.png</file>
+        <file>images/small-pc-mac@3x.png</file>
+        <file>images/small-pc-win.png</file>
+        <file>images/small-pc-win@2x.png</file>
+        <file>images/small-pc-win@3x.png</file>
     </qresource>
 </RCC>
