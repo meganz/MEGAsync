@@ -399,7 +399,6 @@ protected:
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
     std::unique_ptr<QMenu> backupsMenu;
-    QSignalMapper *menuSignalMapper;
 
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;

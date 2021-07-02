@@ -218,7 +218,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoDialogMenu = NULL;
     guestMenu = NULL;
     syncsMenu = NULL;
-    menuSignalMapper = NULL;
     megaApi = NULL;
     megaApiFolders = NULL;
     delegateListener = NULL;
@@ -6270,7 +6269,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (infoDialogMenu)
     {
-        QList<QAction *> actions = infoDialogMenu->actions();
+        QList<QAction*> actions = infoDialogMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
             infoDialogMenu->removeAction(actions[i]);
@@ -6357,14 +6356,7 @@ void MegaApplication::createInfoDialogMenus()
         syncsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
 
-
-        if (menuSignalMapper)
-        {
-            menuSignalMapper->deleteLater();
-            menuSignalMapper = NULL;
-        }
-
-        menuSignalMapper = new QSignalMapper();
+        QSignalMapper* menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         int activeFolders = 0;
@@ -6434,7 +6426,7 @@ void MegaApplication::createInfoDialogMenus()
         addBackupAction = new MenuItemAction(tr("Backups"), QIcon(QString::fromUtf8("://images/Backup.png")), true);
         if (backupsMenu)
         {
-            for (QAction *a: backupsMenu->actions())
+            for (QAction* a: backupsMenu->actions())
             {
                 a->deleteLater();
             }
@@ -6450,15 +6442,7 @@ void MegaApplication::createInfoDialogMenus()
 #else
         backupsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
-
-
-        if (menuSignalMapper)
-        {
-            menuSignalMapper->deleteLater();
-            menuSignalMapper = NULL;
-        }
-
-        menuSignalMapper = new QSignalMapper();
+        QSignalMapper* menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         // Display device name before folders (click opens backup wizard)

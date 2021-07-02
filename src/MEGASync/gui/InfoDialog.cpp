@@ -1428,7 +1428,7 @@ void InfoDialog::on_bAddBackup_clicked()
         addBackupAction = new MenuItemAction(tr("Backups"), QIcon(QString::fromAscii("://images/Backup.png")), true);
         if (backupsMenu)
         {
-            for (QAction *a: backupsMenu->actions())
+            for (QAction* a: backupsMenu->actions())
             {
                 a->deleteLater();
             }
@@ -1452,7 +1452,7 @@ void InfoDialog::on_bAddBackup_clicked()
         //Hide highlighted menu entry when mouse over
         backupsMenu->installEventFilter(this);
 
-        QSignalMapper *menuSignalMapper = new QSignalMapper();
+        QSignalMapper* menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         // Display device name before folders (click opens backup wizard)
@@ -1466,7 +1466,7 @@ void InfoDialog::on_bAddBackup_clicked()
 #else
         QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
 #endif
-        MenuItemAction *devNameAction = new MenuItemAction(deviceName, devIcon, true);
+        MenuItemAction* devNameAction = new MenuItemAction(deviceName, devIcon, true);
         connect(devNameAction, &MenuItemAction::triggered,
                 this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
         backupsMenu->addAction(devNameAction);
@@ -1482,7 +1482,7 @@ void InfoDialog::on_bAddBackup_clicked()
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(QString::fromUtf8("") + backupSetting->name(), QIcon(QString::fromAscii("://images/small_folder.png")), true, 1);
+            MenuItemAction* action = new MenuItemAction(QString::fromUtf8("") + backupSetting->name(), QIcon(QString::fromAscii("://images/small_folder.png")), true, 1);
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             backupsMenu->addAction(action);
