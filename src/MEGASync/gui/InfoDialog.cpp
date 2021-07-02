@@ -1410,29 +1410,34 @@ void InfoDialog::on_bAddBackup_clicked()
         return;
     }
 
-    lastHovered = NULL;
+    lastHovered = nullptr;
 
     if (addBackupAction)
     {
         addBackupAction->deleteLater();
-        addBackupAction = NULL;
+        addBackupAction = nullptr;
     }
 
-    int num = (megaApi && preferences->logged()) ? model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP) : 0;
+    // Get number of backups. Show only "Add Backup" wizard if no backups, and whole menu otherwise.
+    int num = (megaApi && preferences->logged()) ?
+                  model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP)
+                : 0;
     if (num == 0)
     {
         addBackup();
     }
     else
     {
-        addBackupAction = new MenuItemAction(tr("Backups"), QIcon(QString::fromAscii("://images/Backup.png")), true);
+        addBackupAction =
+                new MenuItemAction(tr("Backups"),
+                                   QIcon(QString::fromUtf8("://images/Backup.png")),
+                                   true);
         if (backupsMenu)
         {
-            for (QAction* a: backupsMenu->actions())
+            for (QAction* a : backupsMenu->actions())
             {
                 a->deleteLater();
             }
-
             backupsMenu->deleteLater();
             backupsMenu.release();
         }
@@ -1440,20 +1445,27 @@ void InfoDialog::on_bAddBackup_clicked()
         backupsMenu.reset(new QMenu());
 
 #ifdef __APPLE__
-        backupsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff;"
+                                                            "padding-top: 8px; "
+                                                            "padding-bottom: 8px;}"));
 #else
-        backupsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"
-                                                    "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"));
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {border: 1px solid #B8B8B8;"
+                                                            "border-radius: 5px;"
+                                                            "background: #ffffff;"
+                                                            "padding-top: 8px;"
+                                                            "padding-bottom: 8px;}"));
 #endif
 
         //Highlight menu entry on mouse over
-        connect(backupsMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+        connect(backupsMenu.get(), SIGNAL(hovered(QAction*)),
+                this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
 
         //Hide highlighted menu entry when mouse over
         backupsMenu->installEventFilter(this);
 
         QSignalMapper* menuSignalMapper = new QSignalMapper();
-        connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)), Qt::QueuedConnection);
+        connect(menuSignalMapper, SIGNAL(mapped(QString)),
+                this, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         // Display device name before folders (click opens backup wizard)
         QString deviceName (model->getDeviceName());
@@ -1482,8 +1494,12 @@ void InfoDialog::on_bAddBackup_clicked()
             }
 
             activeFolders++;
-            MenuItemAction* action = new MenuItemAction(QString::fromUtf8("") + backupSetting->name(), QIcon(QString::fromAscii("://images/small_folder.png")), true, 1);
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
+            MenuItemAction* action =
+                    new MenuItemAction(backupSetting->name(),
+                                       QIcon(QString::fromUtf8("://images/small_folder.png")),
+                                       true, 1);
+            connect(action, SIGNAL(triggered()),
+                    menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             backupsMenu->addAction(action);
             menuSignalMapper->setMapping(action, backupSetting->getLocalFolder());
@@ -1496,27 +1512,23 @@ void InfoDialog::on_bAddBackup_clicked()
         }
         else
         {
-            auto rootNode = MegaSyncApp->getRootNode();
-            if (rootNode)
+            if (num > 1)
             {
-                if (num > 1)
-                {
-                    MenuItemAction* addAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
-                    connect(addAction, &MenuItemAction::triggered,
-                            this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
-                    if (activeFolders)
-                    {
-                        backupsMenu->addSeparator();
-                    }
-                    backupsMenu->addAction(addAction);
-                }
+                MenuItemAction* addAction =
+                        new MenuItemAction(tr("Add Backup"),
+                                           QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")),
+                                           true);
+                connect(addAction, &MenuItemAction::triggered,
+                        this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
+                backupsMenu->addSeparator();
+                backupsMenu->addAction(addAction);
             }
-
             addBackupAction->setMenu(backupsMenu.get());
         }
 
 #ifdef __APPLE__
-        QPoint p = ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100, ui->bAddBackup->height() + 3));
+        QPoint p = ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100,
+                                                      ui->bAddBackup->height() + 3));
         backupsMenu->exec(p);
 
         if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
@@ -1524,7 +1536,8 @@ void InfoDialog::on_bAddBackup_clicked()
             this->hide();
         }
 #else
-        backupsMenu->popup(ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100, ui->bAddBackup->height() + 3)));
+        backupsMenu->popup(ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100,
+                                                              ui->bAddBackup->height() + 3)));
 #endif
     }
 }

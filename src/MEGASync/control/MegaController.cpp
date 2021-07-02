@@ -22,24 +22,6 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
 
-//    if (type == mega::MegaSync::TYPE_BACKUP)
-//    {
-//        // Ensure user has a remote backup folder
-//        // TODO: put in add backup wizard
-//        api->createFolder("My Backups", api->getRootNode());
-//        MegaNode* n (api->getNodeByPath("/My Backups"));
-//        if (n)
-//        {
-//            api->setMyBackupsFolder(n->getHandle());
-
-//            api->createFolder("Backup Test", n);
-
-//            api->setDeviceName("Backup Test");
-
-//            delete n;
-//        }
-//    }
-
     api->syncFolder(type, localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle, nullptr,
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////

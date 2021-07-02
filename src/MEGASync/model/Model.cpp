@@ -36,7 +36,8 @@ bool Model::hasUnattendedDisabledSyncs() const
 
 void Model::removeSyncedFolder(int num, mega::MegaSync::SyncType type)
 {
-    assert(num <= configuredSyncs[type].size() && configuredSyncsMap.contains(configuredSyncs[type].at(num)));
+    assert(num <= configuredSyncs[type].size()
+           && configuredSyncsMap.contains(configuredSyncs[type].at(num)));
     QMutexLocker qm(&syncMutex);
     auto cs = configuredSyncsMap[configuredSyncs[type].at(num)];
     if (cs->isActive())
@@ -52,7 +53,6 @@ void Model::removeSyncedFolder(int num, mega::MegaSync::SyncType type)
     configuredSyncs[type].removeAt(num);
 
     removeUnattendedDisabledSync(backupId);
-
 
     emit syncRemoved(cs);
 }
@@ -294,8 +294,13 @@ void Model::rewriteSyncSettings()
 {
     preferences->removeAllSyncSettings();
     QMutexLocker qm(&syncMutex);
-    for (auto cs : configuredSyncs[mega::MegaSync::TYPE_TWOWAY]
-         + configuredSyncs[mega::MegaSync::TYPE_BACKUP])
+
+    // Get all settings
+    const auto listAllSyncs (configuredSyncs.values());
+    const auto settings (std::accumulate(listAllSyncs.begin(),
+                                         listAllSyncs.end(),
+                                         QList<mega::MegaHandle>()));
+    for (auto cs : settings)
     {
         preferences->writeSyncSetting(configuredSyncsMap[cs]); // we store MEGAsync specific fields into cache
     }

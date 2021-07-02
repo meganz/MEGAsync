@@ -6320,6 +6320,7 @@ void MegaApplication::createInfoDialogMenus()
     myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromUtf8("://images/ico_cloud_drive.png")), true);
     connect(myCloudAction, SIGNAL(triggered()), this, SLOT(goToMyCloud()), Qt::QueuedConnection);
 
+    // Syncs menu
     if (addSyncAction)
     {
         addSyncAction->deleteLater();
@@ -6407,30 +6408,36 @@ void MegaApplication::createInfoDialogMenus()
         }
     }
 
+    // Backups menu/button
     if (addBackupAction)
     {
         addBackupAction->deleteLater();
-        addBackupAction = NULL;
+        addBackupAction = nullptr;
     }
 
-    int numBackups = (megaApi && preferences->logged()) ? model->getNumSyncedFolders(MegaSync::TYPE_BACKUP) : 0;
+    // Get number of backups. Show only "Add Backup" button if no backups, and whole menu otherwise.
+    int numBackups = (megaApi && preferences->logged()) ?
+                         model->getNumSyncedFolders(MegaSync::TYPE_BACKUP)
+                       : 0;
     if (numBackups == 0)
     {
-        addBackupAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/Backup.png")), true);
-
+        addBackupAction = new MenuItemAction(tr("Add Backup"),
+                                             QIcon(QString::fromUtf8("://images/Backup.png")),
+                                             true);
         connect(addBackupAction, &MenuItemAction::triggered, infoDialog,
                 QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
     }
     else
     {
-        addBackupAction = new MenuItemAction(tr("Backups"), QIcon(QString::fromUtf8("://images/Backup.png")), true);
+        addBackupAction = new MenuItemAction(tr("Backups"),
+                                             QIcon(QString::fromUtf8("://images/Backup.png")),
+                                             true);
         if (backupsMenu)
         {
-            for (QAction* a: backupsMenu->actions())
+            for (QAction* a : backupsMenu->actions())
             {
                 a->deleteLater();
             }
-
             backupsMenu->deleteLater();
             backupsMenu.release();
         }
@@ -6438,17 +6445,23 @@ void MegaApplication::createInfoDialogMenus()
         backupsMenu.reset(new QMenu());
 
 #ifdef __APPLE__
-        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff;"
+                                                            "padding-top: 8px; "
+                                                            "padding-bottom: 8px;}"));
 #else
-        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {border: 1px solid #B8B8B8;"
+                                                            "border-radius: 5px;"
+                                                            "background: #ffffff;"
+                                                            "padding-top: 8px;"
+                                                            "padding-bottom: 8px;}"));
 #endif
         QSignalMapper* menuSignalMapper = new QSignalMapper();
-        connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
+        connect(menuSignalMapper, SIGNAL(mapped(QString)),
+                infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
-        // Display device name before folders (click opens backup wizard)
-        QString deviceName (model->getDeviceName());
+        // Display device name before folders (click opens backups wizard)
 #ifdef WIN32
-    QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
 #elif __APPLE__
         QIcon devIcon (QString::fromUtf8("://images/small-pc-mac.png"));
 #elif Q_OS_LINUX
@@ -6456,10 +6469,11 @@ void MegaApplication::createInfoDialogMenus()
 #else
         QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
 #endif
-        MenuItemAction *devNameAction = new MenuItemAction(deviceName, devIcon, true);        connect(devNameAction, &MenuItemAction::triggered,
+        QString deviceName (model->getDeviceName());
+        MenuItemAction *devNameAction = new MenuItemAction(deviceName, devIcon, true);
+        connect(devNameAction, &MenuItemAction::triggered,
                 infoDialog, &InfoDialog::onAddBackup, Qt::QueuedConnection);
         backupsMenu->addAction(devNameAction);
-
 
         int activeFolders = 0;
         for (int i = 0; i < numBackups; i++)
@@ -6472,8 +6486,12 @@ void MegaApplication::createInfoDialogMenus()
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(backupSetting->name(), QIcon(QString::fromUtf8("://images/small_folder.png")), true, 1);
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
+            MenuItemAction *action =
+                    new MenuItemAction(backupSetting->name(),
+                                       QIcon(QString::fromUtf8("://images/small_folder.png")),
+                                       true, 1);
+            connect(action, SIGNAL(triggered()),
+                    menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             backupsMenu->addAction(action);
             menuSignalMapper->setMapping(action, backupSetting->getLocalFolder());
@@ -6493,19 +6511,22 @@ void MegaApplication::createInfoDialogMenus()
             {
                 if (numBackups > 1)
                 {
-                    MenuItemAction* addAction = new MenuItemAction(tr("Add Backup"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
-                    connect(addAction, &MenuItemAction::triggered, infoDialog,
-                           &InfoDialog::onAddBackup, Qt::QueuedConnection);
+                    MenuItemAction* addAction =
+                            new MenuItemAction(tr("Add Backup"),
+                                               QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")),
+                                               true);
+                    connect(addAction, &MenuItemAction::triggered,
+                            infoDialog, &InfoDialog::onAddBackup, Qt::QueuedConnection);
 
                     backupsMenu->addSeparator();
                     backupsMenu->addAction(addAction);
                 }
             }
-
             addBackupAction->setMenu(backupsMenu.get());
         }
     }
 
+    // Import links
     if (importLinksAction)
     {
         importLinksAction->deleteLater();
