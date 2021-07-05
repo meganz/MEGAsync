@@ -6462,9 +6462,9 @@ void MegaApplication::createInfoDialogMenus()
         // Display device name before folders (click opens backups wizard)
 #ifdef WIN32
         QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
-#elif __APPLE__
+#elif defined(__APPLE__)
         QIcon devIcon (QString::fromUtf8("://images/small-pc-mac.png"));
-#elif Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
         QIcon devIcon (QString::fromUtf8("://images/small-pc-linux.png"));
 #else
         QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
