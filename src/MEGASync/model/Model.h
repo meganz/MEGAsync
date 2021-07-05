@@ -47,6 +47,7 @@ private:
     Preferences *preferences;
     bool isFirstSyncDone = false;
     QString mDeviceName;
+    QString mBackupsDirName;
     ///////////// END OF SYNCS ////////////////////
 
     void saveUnattendedDisabledSyncs();
@@ -114,6 +115,9 @@ public:
 
     void setDeviceName(const QString& name);
     const QString& getDeviceName() const;
+
+    void setBackupsDirName(const QString& name);
+    const QString& getBackupsDirName() const;
 
     ///////////// END OF SYNCS ////////////////////
 

@@ -23,9 +23,11 @@ Model *Model::instance()
     return Model::model.get();
 }
 
-Model::Model() : QObject(), syncMutex (QMutex::Recursive),
+Model::Model() : QObject(),
     preferences (Preferences::instance()),
-    mDeviceName()
+    mDeviceName(),
+    mBackupsDirName(),
+    syncMutex (QMutex::Recursive)
 {
 }
 
@@ -452,6 +454,8 @@ void Model::dismissUnattendedDisabledSyncs()
     emit syncDisabledListUpdated();
 }
 
+
+
 void Model::setDeviceName(const QString& name)
 {
     mDeviceName = name;
@@ -460,4 +464,14 @@ void Model::setDeviceName(const QString& name)
 const QString& Model::getDeviceName() const
 {
     return mDeviceName;
+}
+
+void Model::setBackupsDirName(const QString& name)
+{
+    mBackupsDirName = name;
+}
+
+const QString& Model::getBackupsDirName() const
+{
+    return mBackupsDirName;
 }
