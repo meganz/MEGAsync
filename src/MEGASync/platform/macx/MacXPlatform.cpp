@@ -6,7 +6,6 @@ using namespace std;
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 MacXExtServer *MacXPlatform::extServer = NULL;
-std::unique_ptr<QThread> MacXPlatform::threadExtServer;
 
 static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
@@ -190,10 +189,7 @@ void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
 
     if (!extServer)
     {
-        threadExtServer.reset(new QThread());
         extServer = new MacXExtServer(receiver);
-        extServer->moveToThread(threadExtServer.get());
-        threadExtServer->start();
     }
 }
 
@@ -207,7 +203,6 @@ void MacXPlatform::stopShellDispatcher()
 
     if (extServer)
     {
-        threadExtServer->quit();
         delete extServer;
         extServer = NULL;
     }
