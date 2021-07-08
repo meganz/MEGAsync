@@ -13,7 +13,6 @@
 #include <QThread>
 #include <QDir>
 #include <QProcess>
-#include <QThread>
 
 class MacXPlatform
 {

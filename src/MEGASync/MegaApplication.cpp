@@ -2431,7 +2431,7 @@ void MegaApplication::repositionInfoDialog()
     infoDialog->ensurePolished();
     auto initialDialogWidth  = infoDialog->width();
     auto initialDialogHeight = infoDialog->height();
-    QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
+    QTimer::singleShot(1, infoDialog, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
         if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
