@@ -115,7 +115,7 @@ Jjiho4rUEW8c1EUPvK8v1jRGwjYED3ihJ6510eblYFPl+6k91OWlScnxuVVAmSn4
 -----END PGP PUBLIC KEY BLOCK-----
 KEY
 
-sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf || true
+sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf || true
 
 /bin/touch --no-create /usr/share/icons/hicolor &>/dev/null || true
 /bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null || true
