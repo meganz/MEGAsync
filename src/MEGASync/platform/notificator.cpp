@@ -365,10 +365,11 @@ void Notificator::notifySystray(MegaNotification *notification)
 
     notification->setId(WinToast::instance()->showToast(templ, std::shared_ptr<IWinToastHandler>(new WinToastNotification(notification))));
     return;
-#endif
+#else
 
     notifySystray((Notificator::Class)notification->getType(), notification->getText(),
                   notification->getSource(), notification->getImage(), notification->getExpirationTime());
+#endif
 }
 
 void Notificator::onModernNotificationFailed()

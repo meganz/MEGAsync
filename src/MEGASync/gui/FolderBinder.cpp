@@ -2,6 +2,7 @@
 #include "ui_FolderBinder.h"
 
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "control/Utilities.h"
 
 using namespace mega;
@@ -21,7 +22,7 @@ FolderBinder::~FolderBinder()
     delete ui;
 }
 
-long long FolderBinder::selectedMegaFolder()
+MegaHandle FolderBinder::selectedMegaFolder()
 {
     return selectedMegaFolderHandle;
 }

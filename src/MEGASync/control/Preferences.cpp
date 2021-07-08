@@ -375,6 +375,7 @@ const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPu
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
+const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
@@ -416,6 +417,8 @@ const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
 const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
 const bool  Preferences::defaultNeedsFetchNodes   = false;
+
+const bool  Preferences::defaultNeverCreateLink   = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -1944,6 +1947,16 @@ void Preferences::setImportFolder(long long value)
     setValueAndSyncConcurrent(importFolderKey, value);
 }
 
+bool Preferences::neverCreateLink()
+{
+    return getValueConcurrent<bool>(neverCreateLinkKey, defaultNeverCreateLink);
+}
+
+void Preferences::setNeverCreateLink(bool value)
+{
+    setValueAndSyncConcurrent(neverCreateLinkKey, value);
+}
+
 
 /////////   Sync related stuff /////////////////////
 
@@ -2783,7 +2796,8 @@ void Preferences::loadExcludedSyncNames()
     if (getValue<int>(lastVersionKey) < 3400)
     {
         excludedSyncNames.append(QString::fromUtf8("*~.*"));
-        excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
+        // Avoid trigraph replacement by some pre-processors by splitting the string.("??-" --> "~").
+        excludedSyncNames.append(QString::fromUtf8("*.sb-????????""-??????"));
         excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 

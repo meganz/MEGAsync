@@ -2,10 +2,13 @@
 #include "ui_GuestWidget.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
-#include <QDesktopServices>
-#include <QUrl>
+#include "QMegaMessageBox.h"
+
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
+
+#include <QDesktopServices>
+#include <QUrl>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>

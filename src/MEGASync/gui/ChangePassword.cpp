@@ -1,43 +1,43 @@
 #include "ChangePassword.h"
-#include <QMessageBox>
 #include "ui_ChangePassword.h"
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "gui/Login2FA.h"
 
 using namespace mega;
 
-ChangePassword::ChangePassword(QWidget *parent) :
+ChangePassword::ChangePassword(QWidget* parent) :
     QDialog(parent),
-    ui(new Ui::ChangePassword)
+    mUi(new Ui::ChangePassword),
+    mMegaApi (((MegaApplication*)qApp)->getMegaApi()),
+    mDelegateListener (new QTMegaRequestListener(mMegaApi, this))
 {
-    ui->setupUi(this);
+    mUi->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    ui->bOk->setDefault(true);
-
-    megaApi = ((MegaApplication *)qApp)->getMegaApi();
-    delegateListener = new QTMegaRequestListener(megaApi, this);
+    mUi->bOk->setDefault(true);
 }
 
 QString ChangePassword::newPassword()
 {
-    return ui->lNewPassword->text();
+    return mUi->lNewPassword->text();
 }
 
 QString ChangePassword::confirmNewPassword()
 {
-    return ui->lConfirmNewPassword->text();
+    return mUi->lConfirmNewPassword->text();
 }
 
-void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
+void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e)
 {
-    switch(request->getType())
+    Q_UNUSED (api)
+    switch(req->getType())
     {
         case MegaRequest::TYPE_MULTI_FACTOR_AUTH_CHECK:
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                if (request->getFlag()) //2FA enabled
+                if (req->getFlag()) //2FA enabled
                 {
                     QPointer<ChangePassword> dialog = this;
                     QPointer<Login2FA> verification = new Login2FA(this);
@@ -46,7 +46,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                     {
                         if (dialog)
                         {
-                            ui->bOk->setEnabled(true);
+                            mUi->bOk->setEnabled(true);
                         }
                         delete verification;
                         return;
@@ -55,16 +55,23 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                     QString pin = verification->pinCode();
                     delete verification;
 
-                    megaApi->multiFactorAuthChangePassword(NULL, newPassword().toUtf8().constData(), pin.toUtf8().constData(), delegateListener);
+                    mMegaApi->multiFactorAuthChangePassword(nullptr,
+                                                            newPassword().toUtf8().constData(),
+                                                            pin.toUtf8().constData(),
+                                                            mDelegateListener);
                 }
                 else
                 {
-                    megaApi->changePassword(NULL, newPassword().toUtf8().constData(), delegateListener);
+                    mMegaApi->changePassword(nullptr,
+                                             newPassword().toUtf8().constData(),
+                                             mDelegateListener);
                 }
             }
             else
             {
-                QMegaMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
+                QMegaMessageBox::critical(this, tr("Error"),
+                                          QCoreApplication::translate("MegaError",
+                                                                      e->getErrorString()));
             }
             break;
         }
@@ -72,10 +79,11 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                ui->bOk->setEnabled(true);
+                mUi->bOk->setEnabled(true);
                 accept();
             }
-            else if (e->getErrorCode() == MegaError::API_EFAILED || e->getErrorCode() == MegaError::API_EEXPIRED)
+            else if (e->getErrorCode() == MegaError::API_EFAILED
+                     || e->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 QPointer<ChangePassword> dialog = this;
                 QPointer<Login2FA> verification = new Login2FA(this);
@@ -85,7 +93,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                 {
                     if (dialog)
                     {
-                        ui->bOk->setEnabled(true);
+                        mUi->bOk->setEnabled(true);
                     }
                     delete verification;
                     return;
@@ -94,19 +102,24 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                 QString pin = verification->pinCode();
                 delete verification;
 
-                megaApi->multiFactorAuthChangePassword(NULL, newPassword().toUtf8().constData(), pin.toUtf8().constData(), delegateListener);
+                mMegaApi->multiFactorAuthChangePassword(nullptr,
+                                                        newPassword().toUtf8().constData(),
+                                                        pin.toUtf8().constData(),
+                                                        mDelegateListener);
             }
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
-                ui->bOk->setEnabled(true);
-                QMegaMessageBox::critical(nullptr, tr("Error"), tr("Too many requests. Please wait."));
+                mUi->bOk->setEnabled(true);
+                QMegaMessageBox::critical(nullptr, tr("Error"),
+                                          tr("Too many requests. Please wait."));
             }
             else
             {
-                ui->bOk->setEnabled(true);
-                QMegaMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
+                mUi->bOk->setEnabled(true);
+                QMegaMessageBox::critical(this, tr("Error"),
+                                          QCoreApplication::translate("MegaError",
+                                                                      e->getErrorString()));
             }
-
             break;
         }
     }
@@ -114,16 +127,17 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
 
 ChangePassword::~ChangePassword()
 {
-    delete ui;
-    delete delegateListener;
+    delete mUi;
+    delete mDelegateListener;
 }
 
 void ChangePassword::on_bOk_clicked()
 {
     const bool fieldIsEmpty{newPassword().isEmpty() || confirmNewPassword().isEmpty()};
     const bool passwordsAreEqual{!newPassword().compare(confirmNewPassword())};
-    const bool newAndOldPasswordsAreTheSame{megaApi->checkPassword(newPassword().toUtf8())};
-    const bool passwordIsWeak{megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
+    const bool newAndOldPasswordsAreTheSame{mMegaApi->checkPassword(newPassword().toUtf8())};
+    const bool passwordIsWeak{mMegaApi->getPasswordStrength(newPassword().toUtf8().constData())
+                == MegaApi::PASSWORD_STRENGTH_VERYWEAK};
 
     if (fieldIsEmpty)
     {
@@ -137,7 +151,8 @@ void ChangePassword::on_bOk_clicked()
     }
     else if (newAndOldPasswordsAreTheSame)
     {
-        QMegaMessageBox::warning(this, tr("Error"), tr("You have entered your current password, please enter a new password."));
+        QMegaMessageBox::warning(this, tr("Error"), tr("You have entered your current password,"
+                                                       " please enter a new password."));
         return;
     }
     else if (passwordIsWeak)
@@ -146,17 +161,18 @@ void ChangePassword::on_bOk_clicked()
         return;
     }
 
-    ui->bOk->setEnabled(false);
+    mUi->bOk->setEnabled(false);
 
-    char *email = megaApi->getMyEmail();
+    char* email = mMegaApi->getMyEmail();
     if (email)
     {
-        megaApi->multiFactorAuthCheck(email, delegateListener);
+        mMegaApi->multiFactorAuthCheck(email, mDelegateListener);
         delete [] email;
     }
     else
     {
-        megaApi->multiFactorAuthCheck(Preferences::instance()->email().toUtf8().constData(), delegateListener);
+        mMegaApi->multiFactorAuthCheck(Preferences::instance()->email().toUtf8().constData(),
+                                       mDelegateListener);
     }
 }
 
@@ -164,7 +180,7 @@ void ChangePassword::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
-        ui->retranslateUi(this);
+        mUi->retranslateUi(this);
     }
     QDialog::changeEvent(event);
 }

@@ -92,7 +92,6 @@ void LinuxSignalHandler(int signum)
 
 #endif
 
-#if QT_VERSION >= 0x050000
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
     {
         switch (type) {
@@ -134,7 +133,6 @@ void LinuxSignalHandler(int signum)
             break;
         }
     }
-#endif
 
 void removeSyncData(const QString &localFolder, const QString & name, const QString &syncID)
 {
@@ -143,7 +141,7 @@ void removeSyncData(const QString &localFolder, const QString & name, const QStr
     #ifdef WIN32
     // unhide debris folder
     QString debrisPath = QDir::toNativeSeparators(localFolder +
-            QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+            QDir::separator() + QString::fromUtf8(MEGA_DEBRIS_FOLDER));
 
     WIN32_FILE_ATTRIBUTE_DATA fad;
     if (GetFileAttributesExW((LPCWSTR)debrisPath.utf16(), GetFileExInfoStandard, &fad))
@@ -167,9 +165,9 @@ void removeSyncData(const QString &localFolder, const QString & name, const QStr
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setOrganizationName(QString::fromAscii("Mega Limited"));
-    QCoreApplication::setOrganizationDomain(QString::fromAscii("mega.co.nz"));
-    QCoreApplication::setApplicationName(QString::fromAscii("MEGAsync"));
+    QCoreApplication::setOrganizationName(QString::fromUtf8("Mega Limited"));
+    QCoreApplication::setOrganizationDomain(QString::fromUtf8("mega.co.nz"));
+    QCoreApplication::setApplicationName(QString::fromUtf8("MEGAsync"));
 
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
@@ -190,7 +188,7 @@ int main(int argc, char *argv[])
                 QList<SyncData> syncData = preferences->readOldCachedSyncs();
                 foreach(SyncData osd, syncData)
                 {
-                    removeSyncData(osd.mLocalFolder, osd.mName.remove(QChar::fromAscii(':')), osd.mSyncID);
+                    removeSyncData(osd.mLocalFolder, osd.mName.remove(QLatin1Char(':')), osd.mSyncID);
                 }
 
                 // now for the new syncs cached configurations
@@ -425,9 +423,7 @@ int main(int argc, char *argv[])
 #endif
 
     qInstallMsgHandler(msgHandler);
-#if QT_VERSION >= 0x050000
     qInstallMessageHandler(messageHandler);
-#endif
 
     app.setStyle(new MegaProxyStyle());
 
@@ -456,20 +452,20 @@ int main(int argc, char *argv[])
 #endif
 
     QDir dataDir(app.applicationDataPath());
-    QString crashPath = dataDir.filePath(QString::fromAscii("crashDumps"));
-    QString avatarPath = dataDir.filePath(QString::fromAscii("avatars"));
-    QString appLockPath = dataDir.filePath(QString::fromAscii("megasync.lock"));
-    QString appShowPath = dataDir.filePath(QString::fromAscii("megasync.show"));
+    QString crashPath = dataDir.filePath(QString::fromUtf8("crashDumps"));
+    QString avatarPath = dataDir.filePath(QString::fromUtf8("avatars"));
+    QString appLockPath = dataDir.filePath(QString::fromUtf8("megasync.lock"));
+    QString appShowPath = dataDir.filePath(QString::fromUtf8("megasync.show"));
     QDir crashDir(crashPath);
     if (!crashDir.exists())
     {
-        crashDir.mkpath(QString::fromAscii("."));
+        crashDir.mkpath(QString::fromUtf8("."));
     }
 
     QDir avatarsDir(avatarPath);
     if (!avatarsDir.exists())
     {
-        avatarsDir.mkpath(QString::fromAscii("."));
+        avatarsDir.mkpath(QString::fromUtf8("."));
     }
 
 #ifndef DEBUG
@@ -514,7 +510,7 @@ int main(int argc, char *argv[])
 #ifdef __APPLE__
         else if (i == 5)
         {
-            QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+            QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
             QFile fappVersionPath(appVersionPath);
             if (!fappVersionPath.exists())
             {
@@ -530,7 +526,7 @@ int main(int argc, char *argv[])
         #endif
     }
 
-    QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+    QString appVersionPath = dataDir.filePath(QString::fromUtf8("megasync.version"));
     QFile fappVersionPath(appVersionPath);
     if (fappVersionPath.open(QIODevice::WriteOnly))
     {
@@ -546,21 +542,21 @@ int main(int argc, char *argv[])
     Platform::initialize(argc, argv);
 
 #if !defined(__APPLE__) && !defined (_WIN32)
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Semibold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/OpenSans-Semibold.ttf"));
 
-    QFont font(QString::fromAscii("Open Sans"), 8);
+    QFont font(QString::fromUtf8("Open Sans"), 8);
     app.setFont(font);
 #endif
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Light.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Bold.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Semibold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/SourceSansPro-Semibold.ttf"));
 
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Light.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Bold.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Regular.ttf"));
-    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Semibold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromUtf8("://fonts/Lato-Semibold.ttf"));
 
     app.initialize();
     app.start();
