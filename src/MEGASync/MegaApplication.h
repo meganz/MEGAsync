@@ -532,7 +532,6 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
     bool networkConnectivity;

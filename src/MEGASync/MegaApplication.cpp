@@ -318,7 +318,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     pricing = NULL;
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
-    noKeyDetected = 0;
     isFirstFileSynced = false;
     transferManager = NULL;
     cleaningSchedulerExecution = 0;
