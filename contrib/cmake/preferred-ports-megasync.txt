@@ -17,7 +17,8 @@ libmediainfo/19.09
 libzen/0.4.37
 
 # ffmpeg (video preview/thumbnail generation)
-ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
+vcpkg-pkgconfig-get-modules/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5
+ffmpeg/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5 osx:ffmpeg-use-yasm.patch
 
 # freeimage and its dependencies (image preview/thumbnail generation)
 freeimage/c303dd024e2dc03a0665ddffbb12a1077933e649:freeimage-bool-typedef-and-xbm-msvc-compiler-bug.patch
@@ -42,7 +43,7 @@ pdfium/3710
 pdfium-freetype/2-8-73
 
 # dependencies of pdfium
-icu/c303dd024e2dc03a0665ddffbb12a1077933e649
+icu/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5 osx:icu-enable-aarch64-osx.patch
 lcms/c303dd024e2dc03a0665ddffbb12a1077933e649
 libjpeg-turbo/c303dd024e2dc03a0665ddffbb12a1077933e649
 openjpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
