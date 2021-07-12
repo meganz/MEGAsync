@@ -33,7 +33,7 @@ openexr/c303dd024e2dc03a0665ddffbb12a1077933e649 all:openexr-no-python.patch
 jasper/c303dd024e2dc03a0665ddffbb12a1077933e649 all:jasper-no-freeglut.patch
 liblzma/c303dd024e2dc03a0665ddffbb12a1077933e649
 #python3 not needed; it only provides python bindings to use openexr from python
-libffi/c303dd024e2dc03a0665ddffbb12a1077933e649
+libffi/7179350f94ed5cafaf7c0ed9cffdca6adb6407a5
 opengl/c303dd024e2dc03a0665ddffbb12a1077933e649
 
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
