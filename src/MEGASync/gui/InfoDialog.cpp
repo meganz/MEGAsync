@@ -1557,11 +1557,6 @@ void InfoDialog::on_bUpload_clicked()
     app->uploadActionClicked();
 }
 
-void InfoDialog::on_bDownload_clicked()
-{
-    app->downloadActionClicked();
-}
-
 void InfoDialog::clearUserAttributes()
 {
     ui->bAvatar->clearData();
