@@ -1,6 +1,12 @@
 #[[
     Run this file from its current folder in script mode, with triplet as a defined parameter:
-        cmake -DTRIPLET=<triplet> [-DTARGET=<target>[;<targets>...] ] -P build_from_scratch.cmake
+
+        cmake -DTRIPLET=<triplet> [-DEXTRA_ARGS=<-DVAR=VALUE>[;<-DVAR=VALUE...>] ] [-DTARGET=<target>[;<targets>...] ] -P build_from_scratch.cmake
+		
+	eg, for getting started on windows (comment out the pdfium lines in preferred-ports-megasync.txt first):
+	
+		cmake -DTRIPLET=x64-windows-mega -DEXTRA_ARGS="-DUSE_PDFIUM=0" -P build_from_scratch.cmake
+		
     It will set up and build 3rdparty in a folder next to the SDK repo, and also
     build the SDK against those 3rd party libraries.
     pdfium must be supplied manually, or it can be commented out in preferred-ports-megasync.txt
@@ -28,6 +34,12 @@ endif()
 
 if(NOT TRIPLET)
     usage_exit("Triplet was not provided")
+endif()
+
+if(NOT EXTRA_ARGS)
+    set(_extra_cmake_args "")
+else()
+    set(_extra_cmake_args ${EXTRA_ARGS})
 endif()
 
 set(_triplet ${TRIPLET})
@@ -145,7 +157,7 @@ endif()
 
 if(WIN32)
     if(_triplet MATCHES "staticdev$")
-        set(_extra_cmake_args -DMEGA_LINK_DYNAMIC_CRT=0 -DUNCHECKED_ITERATORS=1)
+        list(APPEND _extra_cmake_args -DMEGA_LINK_DYNAMIC_CRT=0 -DUNCHECKED_ITERATORS=1)
     endif()
 
     if(VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")
@@ -188,6 +200,7 @@ else()
                 ${_common_cmake_args}
                 -B ${_build_dir}
                 "-DCMAKE_BUILD_TYPE=${_config}"
+                ${_extra_cmake_args}
         )
 
         execute_checked_command(
