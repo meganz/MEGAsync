@@ -3252,6 +3252,7 @@ void MegaApplication::unlink(bool keepLogs)
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
     megaApi->logout(true, nullptr);
+    megaApiFolders->setAccountAuth(nullptr);
     Platform::notifyAllSyncFoldersRemoved();
 
     for (unsigned i = 3; i--; )
