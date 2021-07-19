@@ -205,6 +205,11 @@ void LinkProcessor::requestLinkInfo()
     if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!"))
             || link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/folder/")))
     {
+        std::unique_ptr<char []> authToken(megaApi->getAccountAuth());
+        if (authToken)
+        {
+            megaApiFolders->setAccountAuth(authToken.get());
+        }
         megaApiFolders->loginToFolder(link.toUtf8().constData(), delegateListener);
     }
     else
