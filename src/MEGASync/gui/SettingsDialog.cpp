@@ -40,12 +40,11 @@ using namespace mega;
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
-constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS{260};
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
 constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{513};
 // FIXME: Re-evaluate sizes for Network tab
-constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{190};
-constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{400};
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{196};
+constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
 #endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
@@ -100,13 +99,21 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    connect(mUi->wStack, &QStackedWidget::currentChanged,
-            mUi->wStackFooter, &QStackedWidget::setCurrentIndex);
     mUi->wStack->setCurrentWidget(mUi->pGeneral); // override whatever might be set in .ui
+
 
 #ifndef Q_OS_MACOS
     mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
     mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+#else
+    connect(mUi->wStack, &QStackedWidget::currentChanged, [=](const int &newValue){
+        //Setting new index in the stack widget cause the focus to be set to footer button
+        //avoid it, setting to main wStack to ease tab navigation among different controls.
+          mUi->wStackFooter->setCurrentIndex(newValue);
+          mUi->wStack->setFocus();
+    });
+
+    mUi->wStack->setFocus();
 #endif
 
     setProxyOnly(proxyOnly);
@@ -155,7 +162,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #endif
 
 #ifdef Q_OS_MACOS
-    this->setWindowTitle(tr("Preferences - MEGAsync"));
+    this->setWindowTitle(tr("Preferences"));
     mUi->tSyncs->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
     mUi->cStartOnStartup->setText(tr("Open at login"));
     mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
@@ -187,6 +194,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
         setMaximumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
         mUi->pNetwork->hide();
     }
+
+    macOSretainSizeWhenHidden();
 #endif
 
     mUi->bRestart->hide();
@@ -713,6 +722,21 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
     mMaxHeightAnimation->setDuration(duration);
     mAnimationGroup->start();
 }
+
+void SettingsDialog::macOSretainSizeWhenHidden()
+{
+    QSizePolicy spExcludedFiles = mUi->gExcludedFilesInfo->sizePolicy();
+    spExcludedFiles.setRetainSizeWhenHidden(true);
+    mUi->gExcludedFilesInfo->setSizePolicy(spExcludedFiles);
+
+    QSizePolicy spStorageQuota = mUi->pStorageQuota->sizePolicy();
+    spStorageQuota.setRetainSizeWhenHidden(true);
+    mUi->pStorageQuota->setSizePolicy(spStorageQuota);
+
+    QSizePolicy spTransferQuota = mUi->pTransferQuota->sizePolicy();
+    spTransferQuota.setRetainSizeWhenHidden(true);
+    mUi->pTransferQuota->setSizePolicy(spTransferQuota);
+}
 #endif
 
 void SettingsDialog::changeEvent(QEvent* event)
@@ -1214,16 +1238,8 @@ void SettingsDialog::on_bAccount_clicked()
     mUi->wStack->setCurrentWidget(mUi->pAccount);
 
 #ifdef Q_OS_MACOS
-
     mUi->pAccount->hide();
-    if (mPreferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT_BUSINESS, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
-    else
-    {
-        animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-    }
+    animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
