@@ -281,8 +281,8 @@ void SettingsDialog::openSettingsTab(int tab)
 #ifndef Q_OS_MACOS
         mUi->bImports->click();
 #else
-        mToolBar->setSelectedItem(bImports.get());
-        emit bImports.get()->activated();
+        mToolBar->setSelectedItem(bFolders.get());
+        emit bFolders.get()->activated();
 #endif
         break;
 
@@ -368,7 +368,7 @@ void SettingsDialog::initializeNativeUIComponents()
     QString account(QString::fromUtf8("settings-account"));
     QString syncs(QString::fromUtf8("settings-syncs"));
     QString security(QString::fromUtf8("settings-security"));
-    QString imports(QString::fromUtf8("settings-imports"));
+    QString folders(QString::fromUtf8("settings-folders"));
     QString network(QString::fromUtf8("settings-network"));
 
     // add Items
@@ -382,7 +382,7 @@ void SettingsDialog::initializeNativeUIComponents()
     connect(bAccount.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bAccount_clicked);
 
-    bSyncs.reset(mToolBar->addItem(QIcon(), tr("Syncs")));
+    bSyncs.reset(mToolBar->addItem(QIcon(), tr("Sync")));
     mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSyncs_clicked);
@@ -392,9 +392,9 @@ void SettingsDialog::initializeNativeUIComponents()
     connect(bSecurity.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSecurity_clicked);
 
-    bImports.reset(mToolBar->addItem(QIcon(), tr("Imports")));
-    mToolBar->customizeIconToolBarItem(bImports.get(), imports);
-    connect(bImports.get(), &QMacToolBarItem::activated,
+    bFolders.reset(mToolBar->addItem(QIcon(), tr("Folders")));
+    mToolBar->customizeIconToolBarItem(bFolders.get(), folders);
+    connect(bFolders.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bImports_clicked);
 
     bNetwork.reset(mToolBar->addItem(QIcon(), tr("Network")));
@@ -622,11 +622,11 @@ void SettingsDialog::setUpdateAvailable(bool updateAvailable)
 {
     if (updateAvailable)
     {
-        mUi->bUpdate->setText(tr("Install update"));
+        mUi->bUpdate->setText(tr("Install Update"));
     }
     else
     {
-        mUi->bUpdate->setText(tr("Check for updates"));
+        mUi->bUpdate->setText(tr("Check for Updates"));
     }
 }
 
@@ -2526,7 +2526,7 @@ void SettingsDialog::updateNetworkTab()
     }
     else
     {
-        mUi->lUploadRateLimit->setText(tr("Don't limit"));
+        mUi->lUploadRateLimit->setText(tr("No limit"));
     }
 
     int downloadLimitKB = mPreferences->downloadLimitKB();
@@ -2536,7 +2536,7 @@ void SettingsDialog::updateNetworkTab()
     }
     else
     {
-        mUi->lDownloadRateLimit->setText(tr("Don't limit"));
+        mUi->lDownloadRateLimit->setText(tr("No limit"));
     }
 
     switch (mPreferences->proxyType())

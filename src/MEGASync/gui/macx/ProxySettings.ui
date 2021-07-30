@@ -351,7 +351,7 @@ margin-left: 20px;
             <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
-            <string>No proxy</string>
+            <string>No Proxy</string>
            </property>
           </widget>
          </item>
@@ -401,7 +401,7 @@ margin-left: 20px;
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Proxy</string>
+            <string>Manual</string>
            </property>
           </widget>
          </item>
@@ -448,7 +448,7 @@ margin-left: 20px;
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>Proxy Settings:</string>
+            <string>Proxy settings:</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
