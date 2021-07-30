@@ -341,3 +341,4 @@ void MacXPlatform::disableSignalHandler()
 // Platform-specific strings
 const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
 const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};
+const char* MacXPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Finder")};
