@@ -333,6 +333,7 @@ else()
         ${MEGAsyncDir}/platform/macx/ClientSide.h
         ${MEGAsyncDir}/platform/macx/ServerSide.h
         ${MEGAsyncDir}/platform/macx/MacXExtServer.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServerService.h
         ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
@@ -557,6 +558,7 @@ else()
         ${MEGAsyncDir}/platform/macx/ClientSide.h
         ${MEGAsyncDir}/platform/macx/ServerSide.h
         ${MEGAsyncDir}/platform/macx/MacXExtServer.h
+        ${MEGAsyncDir}/platform/macx/MacXExtServerService.h
         ${MEGAsyncDir}/platform/macx/MacXLocalServer.h
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.h
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.h
@@ -575,6 +577,7 @@ else()
         ${MEGAsyncDir}/platform/macx/ClientSide.mm
         ${MEGAsyncDir}/platform/macx/ServerSide.mm
         ${MEGAsyncDir}/platform/macx/MacXExtServer.mm
+        ${MEGAsyncDir}/platform/macx/MacXExtServerService.cpp
         ${MEGAsyncDir}/platform/macx/MacXLocalServer.mm
         ${MEGAsyncDir}/platform/macx/MacXLocalServerPrivate.mm
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.mm
