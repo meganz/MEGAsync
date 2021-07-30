@@ -3011,31 +3011,6 @@ color: #0078D7;
    <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>bSyncs</tabstop>
-  <tabstop>bAccount</tabstop>
-  <tabstop>bNetwork</tabstop>
-  <tabstop>pStorageQuota</tabstop>
-  <tabstop>lStorage</tabstop>
-  <tabstop>bStorageDetails</tabstop>
-  <tabstop>cShowNotifications</tabstop>
-  <tabstop>cStartOnStartup</tabstop>
-  <tabstop>cAutoUpdate</tabstop>
-  <tabstop>bUpdate</tabstop>
-  <tabstop>tSyncs</tabstop>
-  <tabstop>bDelete</tabstop>
-  <tabstop>bAdd</tabstop>
-  <tabstop>lUploadFolder</tabstop>
-  <tabstop>eUploadFolder</tabstop>
-  <tabstop>bUploadFolder</tabstop>
-  <tabstop>lDownloadFolder</tabstop>
-  <tabstop>eDownloadFolder</tabstop>
-  <tabstop>bDownloadFolder</tabstop>
-  <tabstop>lExcludedNames</tabstop>
-  <tabstop>bAddName</tabstop>
-  <tabstop>bDeleteName</tabstop>
-  <tabstop>bHelp</tabstop>
- </tabstops>
  <resources>
   <include location="../Resources_linux.qrc"/>
  </resources>
