@@ -514,7 +514,7 @@ font-weight: bold;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
@@ -734,7 +734,7 @@ font-weight: bold;
                 <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
-                <string>Install update</string>
+                <string>Check for Updates</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -798,7 +798,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lCacheSizeStatic">
             <property name="text">
-             <string>Used space:</string>
+             <string>Space used:</string>
             </property>
            </widget>
           </item>
@@ -917,7 +917,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lRemoteCacheSizeStatic">
             <property name="text">
-             <string>Used space:</string>
+             <string>Space used:</string>
             </property>
            </widget>
           </item>
@@ -981,7 +981,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lFileVersionsSizeStatic">
             <property name="text">
-             <string>Used space:</string>
+             <string>Space used:</string>
             </property>
            </widget>
           </item>
@@ -1078,7 +1078,7 @@ font-weight: bold;
           <item alignment="Qt::AlignRight">
            <widget class="QPushButton" name="bSendBug">
             <property name="text">
-             <string>Report a bug</string>
+             <string>Report Issue</string>
             </property>
            </widget>
           </item>
@@ -1681,7 +1681,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lOQWarning">
             <property name="text">
-             <string>Your MEGA account is full. All uploads are disabled, which may affect your synced folders.</string>
+             <string>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -1691,7 +1691,7 @@ font-weight: bold;
           <item alignment="Qt::AlignLeft">
            <widget class="QPushButton" name="bBuyMoreSpace">
             <property name="text">
-             <string>Buy more space</string>
+             <string>Purchase more storage</string>
             </property>
            </widget>
           </item>
@@ -1867,7 +1867,7 @@ font-weight: bold;
                  <item>
                   <widget class="QLabel" name="lDisabledSyncs">
                    <property name="text">
-                    <string>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</string>
+                    <string>Some folders have not synchronised. For more information please hover over the yellow warning icon.</string>
                    </property>
                    <property name="wordWrap">
                     <bool>true</bool>
@@ -1920,7 +1920,7 @@ font-weight: bold;
        <item>
         <widget class="QGroupBox" name="gRecoveryKey">
          <property name="title">
-          <string>Recovery key</string>
+          <string>Recovery Key</string>
          </property>
          <layout class="QHBoxLayout" name="gRecoveryKeyLayout">
           <property name="spacing">
@@ -1991,7 +1991,7 @@ font-weight: bold;
             <item alignment="Qt::AlignLeft">
              <widget class="QPushButton" name="bExportMasterKey">
               <property name="text">
-               <string>Backup Key</string>
+               <string>Download Key</string>
               </property>
               <property name="flat">
                <bool>false</bool>
@@ -2006,7 +2006,7 @@ font-weight: bold;
        <item>
         <widget class="QGroupBox" name="gChangePassword">
          <property name="title">
-          <string>Change password</string>
+          <string>Password</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -2070,7 +2070,7 @@ font-weight: bold;
                </size>
               </property>
               <property name="text">
-               <string>Your account’s security depends on the strenght of your password. Passwords that are too short, too simple or consist of dictionary words are easily guessed.</string>
+               <string>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
@@ -2207,7 +2207,7 @@ font-weight: bold;
              <item>
               <widget class="QPushButton" name="bUploadFolder">
                <property name="text">
-                <string>Choose</string>
+                <string>Move...</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -2281,7 +2281,7 @@ font-weight: bold;
              <item>
               <widget class="QPushButton" name="bDownloadFolder">
                <property name="text">
-                <string>Choose</string>
+                <string>Move...</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -2324,7 +2324,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lChooseText">
             <property name="text">
-             <string>Choose which files or folders you want to exclude from the synchronization</string>
+             <string>Choose which files or folders you want to exclude from the synchronisation</string>
             </property>
            </widget>
           </item>
@@ -2579,7 +2579,7 @@ font-weight: bold;
              </sizepolicy>
             </property>
             <property name="text">
-             <string>New exclusions will only be applied after you restart the application.</string>
+             <string>Restart MEGA Desktop Application to apply changes.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -2678,14 +2678,14 @@ font-weight: bold;
             <item row="0" column="0">
              <widget class="QLabel" name="lUploadRateLimitText">
               <property name="text">
-               <string>Upload Rate Limit:</string>
+               <string>Upload rate limit:</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="lDownloadRateLimitText">
               <property name="text">
-               <string>Download Rate Limit:</string>
+               <string>Download rate limit:</string>
               </property>
              </widget>
             </item>
@@ -2784,7 +2784,7 @@ font-weight: bold;
             <item row="0" column="0">
              <widget class="QLabel" name="lProxySettingsText">
               <property name="text">
-               <string>Proxy Settings:</string>
+               <string>Proxy settings:</string>
               </property>
              </widget>
             </item>
@@ -2927,7 +2927,7 @@ color: #0078D7;
           <item>
            <widget class="QPushButton" name="bFullCheck">
             <property name="text">
-             <string>Force a full scan</string>
+             <string>Force a Full Scan</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>

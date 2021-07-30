@@ -74,40 +74,6 @@
       <property name="bottomMargin">
        <number>10</number>
       </property>
-      <item row="0" column="0" colspan="2">
-       <widget class="QRadioButton" name="rUploadAutoLimit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>Auto (about 90% of the available bandwidth)</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QRadioButton" name="rUploadNoLimit">
         <property name="sizePolicy">
@@ -132,7 +98,7 @@
          <enum>Qt::StrongFocus</enum>
         </property>
         <property name="text">
-         <string>Don't limit</string>
+         <string>No limit</string>
         </property>
         <property name="checked">
          <bool>false</bool>
@@ -235,6 +201,47 @@
         </layout>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="rUploadAutoLimit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Auto</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>(Max. 90% of available bandwidth)</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -301,7 +308,7 @@
          <enum>Qt::StrongFocus</enum>
         </property>
         <property name="text">
-         <string>Don't limit</string>
+         <string>No limit</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -410,7 +417,7 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Number of parallel TCP connections per transfer</string>
+      <string>Number of connections per transfer</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <property name="fieldGrowthPolicy">
@@ -552,7 +559,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
+         <string>Enable this option only if your transfers don't start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -622,7 +629,7 @@
       <item>
        <widget class="QPushButton" name="bUpdate">
         <property name="text">
-         <string>Update</string>
+         <string>Apply</string>
         </property>
         <property name="default">
          <bool>true</bool>

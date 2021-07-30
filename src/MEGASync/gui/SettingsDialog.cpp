@@ -1588,7 +1588,7 @@ void SettingsDialog::onCellClicked(int row, int column)
 #endif
 
     // Show in explorer action
-    auto showLocalAction (new MenuItemAction(tr("Show Folder"),
+    auto showLocalAction (new MenuItemAction(tr("Show in %1").arg(QCoreApplication::translate("Platform", Platform::fileExplorerString)),
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
     connect(showLocalAction, &MenuItemAction::triggered,
             this, &SettingsDialog::showInFolderClicked);
@@ -2542,7 +2542,7 @@ void SettingsDialog::updateNetworkTab()
     switch (mPreferences->proxyType())
     {
         case Preferences::PROXY_TYPE_NONE:
-            mUi->lProxySettings->setText(tr("No proxy"));
+            mUi->lProxySettings->setText(tr("No Proxy"));
             break;
         case Preferences::PROXY_TYPE_AUTO:
             mUi->lProxySettings->setText(tr("Auto"));

@@ -504,3 +504,4 @@ std::string getProperty(xcb_connection_t * const connection,
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
+const char* LinuxPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "folder")};
