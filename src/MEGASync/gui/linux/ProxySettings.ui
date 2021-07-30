@@ -88,9 +88,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Proxy Settings:</string>
         </property>
@@ -161,9 +158,6 @@
       </item>
       <item row="12" column="0">
        <widget class="QLabel" name="lProxyUsername">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Username:</string>
         </property>
@@ -174,9 +168,6 @@
       </item>
       <item row="10" column="0">
        <widget class="QLabel" name="lProxyServer">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Server:</string>
         </property>
@@ -321,9 +312,6 @@
       </item>
       <item row="9" column="0">
        <widget class="QLabel" name="lProxyType">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Proxy type:</string>
         </property>
@@ -436,9 +424,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Password:</string>
         </property>
@@ -460,7 +445,7 @@
      </property>
      <layout class="QHBoxLayout" name="buttonBoxLayout">
       <property name="spacing">
-       <number>8</number>
+       <number>10</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -509,6 +494,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>rNoProxy</tabstop>
+  <tabstop>rProxyManual</tabstop>
+  <tabstop>cProxyType</tabstop>
+  <tabstop>eProxyServer</tabstop>
+  <tabstop>eProxyPort</tabstop>
+  <tabstop>cProxyRequiresPassword</tabstop>
+  <tabstop>eProxyUsername</tabstop>
+  <tabstop>eProxyPassword</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bUpdate</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

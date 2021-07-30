@@ -17,12 +17,7 @@
    <string>Folder Selection</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-font-size: 11px;
-}
-
-QCheckBox::indicator {
+   <string notr="true">QCheckBox::indicator {
      width: 16px;
      height: 16px;
  }
@@ -34,17 +29,6 @@ QRadioButton::indicator {
 
 QScrollBar:horizontal {
 height: 16px;
-}
-
-QPushButton
-{
-    min-height: 14px;
-	height: 14px;
-}
-
-#NodeSelector
-{
-	background-color: #f1f1f1;
 }
 
 #cbAlwaysUploadToLocation
@@ -62,9 +46,7 @@ QPushButton
    <item>
     <widget class="QLabel" name="label">
      <property name="font">
-      <font>
-       <pointsize>-1</pointsize>
-      </font>
+      <font/>
      </property>
      <property name="text">
       <string>Select a MEGA folder:</string>
@@ -106,7 +88,16 @@ QPushButton
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>

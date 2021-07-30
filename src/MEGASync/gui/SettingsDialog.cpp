@@ -565,7 +565,7 @@ void SettingsDialog::loadSettings()
     for (auto cb : {mUi->cbExcludeUpperUnit, mUi->cbExcludeLowerUnit})
     {
         cb->clear();
-        cb->addItem(tr("Bytes"));
+        cb->addItem(tr("B"));
         cb->addItem(tr("KB"));
         cb->addItem(tr("MB"));
         cb->addItem(tr("GB"));
@@ -672,13 +672,6 @@ void SettingsDialog::on_bHelp_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
-#ifndef Q_OS_MACOS
-void SettingsDialog::on_bHelpIco_clicked()
-{
-    on_bHelp_clicked();
-}
-#endif
-
 #ifdef Q_OS_MACOS
 void SettingsDialog::onAnimationFinished()
 {
@@ -721,6 +714,12 @@ void SettingsDialog::animateSettingPage(int endValue, int duration)
     mMinHeightAnimation->setDuration(duration);
     mMaxHeightAnimation->setDuration(duration);
     mAnimationGroup->start();
+}
+
+void SettingsDialog::closeEvent(QCloseEvent *event)
+{
+    emit closeMenus();
+    QDialog::closeEvent(event);
 }
 
 void SettingsDialog::macOSretainSizeWhenHidden()
@@ -772,6 +771,7 @@ void SettingsDialog::on_bGeneral_clicked()
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
 
 #ifdef Q_OS_MACOS
+    emit closeMenus();
     onCacheSizeAvailable();
 
     mUi->pGeneral->hide();
@@ -1238,6 +1238,7 @@ void SettingsDialog::on_bAccount_clicked()
     mUi->wStack->setCurrentWidget(mUi->pAccount);
 
 #ifdef Q_OS_MACOS
+    emit closeMenus();
     mUi->pAccount->hide();
     animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1521,6 +1522,7 @@ void SettingsDialog::on_bSyncs_clicked()
     mUi->tSyncs->horizontalHeader()->setVisible(true);
 
 #ifdef Q_OS_MACOS
+    emit closeMenus();
     mUi->pSyncs->hide();
     animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -1572,40 +1574,48 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex& index)
 
 void SettingsDialog::onCellClicked(int row, int column)
 {
-    if (column == SYNC_COL_MENU)
-    {
-        mSelectedSyncRow = row;
+    if (column != SYNC_COL_MENU)
+        return;
 
-        QMenu menu(mUi->tSyncs);
+    mSelectedSyncRow = row;
 
-        // Show in explorer action
-        auto showLocalAction (new MenuItemAction(tr("Show folder"),
-                 QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
-        connect(showLocalAction, &MenuItemAction::triggered,
-                this, &SettingsDialog::showInFolderClicked);
+    QMenu *menu(new QMenu(mUi->tSyncs));
+    menu->setAttribute(Qt::WA_TranslucentBackground);
 
-        // Show in Mega action
-        auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
-                                                  QIcon(QString::fromUtf8("://images/"
-                                                                          "ico_open_MEGA.png"))));
-        connect(showRemoteAction, &MenuItemAction::triggered,
-                this, &SettingsDialog::showInMegaClicked);
-        // Delete Sync action
-        auto delAction (new MenuItemAction(tr("Remove Sync"),
-                                           QIcon(QString::fromUtf8("://images/"
-                                                                   "ico_Delete.png"))));
-        connect(delAction, &MenuItemAction::triggered,
-                this, &SettingsDialog::onDeleteSync, Qt::QueuedConnection);
+#ifdef Q_OS_MACOS
+    connect(this, &SettingsDialog::closeMenus,
+            menu, &SettingsDialog::close);
+#endif
 
+    // Show in explorer action
+    auto showLocalAction (new MenuItemAction(tr("Show Folder"),
+                                             QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
+    connect(showLocalAction, &MenuItemAction::triggered,
+            this, &SettingsDialog::showInFolderClicked);
 
-        menu.addAction(showLocalAction);
-        menu.addAction(showRemoteAction);
-        menu.addSeparator();
-        menu.addAction(delAction);
+    // Show in Mega action
+    auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
+                                              QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
+    connect(showRemoteAction, &MenuItemAction::triggered,
+            this, &SettingsDialog::showInMegaClicked);
+    // Delete Sync action
+    auto delAction (new MenuItemAction(tr("Remove synced folder"),
+                                       QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
+    delAction->setAccent(true);
+    connect(delAction, &MenuItemAction::triggered,
+            this, &SettingsDialog::onDeleteSync, Qt::QueuedConnection);
 
-        QWidget* w (mUi->tSyncs->cellWidget(row, column));
-        menu.exec(w->mapToGlobal(w->rect().center()));
-    }
+    showLocalAction->setParent(menu);
+    showRemoteAction->setParent(menu);
+    delAction->setParent(menu);
+
+    menu->addAction(showLocalAction);
+    menu->addAction(showRemoteAction);
+    menu->addSeparator();
+    menu->addAction(delAction);
+
+    QWidget* w (mUi->tSyncs->cellWidget(row, column));
+    menu->exec(w->mapToGlobal(w->rect().center()));
 }
 
 void SettingsDialog::showInFolderClicked()
@@ -2054,6 +2064,7 @@ void SettingsDialog::on_bSecurity_clicked()
     mUi->wStack->setCurrentWidget(mUi->pSecurity);
 
 #ifdef Q_OS_MACOS
+    emit closeMenus();
     mUi->pSecurity->hide();
     animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -2172,6 +2183,7 @@ void SettingsDialog::on_bImports_clicked()
     mUi->wStack->setCurrentWidget(mUi->pImports);
 
 #ifdef Q_OS_MACOS
+    emit closeMenus();
     mUi->pImports->hide();
     animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
@@ -2462,6 +2474,7 @@ void SettingsDialog::on_bNetwork_clicked()
     mUi->wStack->setCurrentWidget(mUi->pNetwork);
 
 #ifdef Q_OS_MACOS
+    emit closeMenus();
     mUi->pNetwork->hide();
     animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
