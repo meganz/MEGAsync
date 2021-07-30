@@ -1581,10 +1581,10 @@ void SettingsDialog::onCellClicked(int row, int column)
 
     QMenu *menu(new QMenu(mUi->tSyncs));
     menu->setAttribute(Qt::WA_TranslucentBackground);
-
-#ifdef Q_OS_MACOS
-    connect(this, &SettingsDialog::closeMenus,
-            menu, &SettingsDialog::close);
+#ifdef Q_OS_WINDOWS
+    menu->setWindowFlags(menu->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
+#elif  Q_OS_MACOS
+    connect(this, &SettingsDialog::closeMenus, menu, &SettingsDialog::close);
 #endif
 
     // Show in explorer action
@@ -1615,7 +1615,7 @@ void SettingsDialog::onCellClicked(int row, int column)
     menu->addAction(delAction);
 
     QWidget* w (mUi->tSyncs->cellWidget(row, column));
-    menu->exec(w->mapToGlobal(w->rect().center()));
+    menu->popup(w->mapToGlobal(w->rect().center()));
 }
 
 void SettingsDialog::showInFolderClicked()
