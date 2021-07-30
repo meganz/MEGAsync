@@ -546,7 +546,7 @@ margin-right: 5px;
                       <enum>Qt::StrongFocus</enum>
                      </property>
                      <property name="text">
-                      <string>Check for updates</string>
+                      <string>Check for Updates</string>
                      </property>
                      <property name="autoDefault">
                       <bool>false</bool>
@@ -950,7 +950,7 @@ margin-right: 32px;</string>
                <item>
                 <widget class="QCheckBox" name="cCacheSchedulerEnabled">
                  <property name="text">
-                  <string>Supprimer les fichiers de plus de</string>
+                  <string>Remove files older than</string>
                  </property>
                 </widget>
                </item>
@@ -974,18 +974,21 @@ margin-right: 32px;</string>
                 <widget class="QSpinBox" name="sCacheSchedulerDays">
                  <property name="minimumSize">
                   <size>
-                   <width>60</width>
+                   <width>45</width>
                    <height>0</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>60</width>
+                   <width>45</width>
                    <height>16777215</height>
                   </size>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="buttonSymbols">
+                  <enum>QAbstractSpinBox::NoButtons</enum>
                  </property>
                  <property name="minimum">
                   <number>1</number>
@@ -1531,7 +1534,7 @@ margin-right: 32px;</string>
                <item>
                 <widget class="QLabel" name="lBugReport">
                  <property name="text">
-                  <string>Bug report:</string>
+                  <string>Issue report:</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -1562,7 +1565,7 @@ margin-right: 32px;</string>
                   <string notr="true">margin-right: 1px;</string>
                  </property>
                  <property name="text">
-                  <string>If you run into a bug we would appreciate hearing about it so that we can fix it - the more details you can provide, the better.</string>
+                  <string>Please let us know if you encountered any issues. Help us by providing as much detail as possible.</string>
                  </property>
                  <property name="wordWrap">
                   <bool>true</bool>
@@ -1600,7 +1603,7 @@ margin-right: 32px;</string>
                   <item>
                    <widget class="QPushButton" name="bSendBug">
                     <property name="text">
-                     <string>Bug report</string>
+                     <string>Report Issue</string>
                     </property>
                     <property name="autoDefault">
                      <bool>false</bool>
@@ -2360,7 +2363,7 @@ margin-right: 7px;
              <item>
               <widget class="QLabel" name="lSyncs">
                <property name="text">
-                <string>Syncs</string>
+                <string>Synced folders</string>
                </property>
                <property name="indent">
                 <number>0</number>
@@ -2678,7 +2681,7 @@ margin-right: 7px;
                    <item>
                     <widget class="QLabel" name="lOQWarning">
                      <property name="text">
-                      <string>Your MEGA account is full. All uploads are disabled, which may affect your synced folders.</string>
+                      <string>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</string>
                      </property>
                      <property name="wordWrap">
                       <bool>true</bool>
@@ -2705,7 +2708,7 @@ margin-right: 7px;
                   <item>
                    <widget class="QPushButton" name="bBuyMoreSpace">
                     <property name="text">
-                     <string>Buy more space</string>
+                     <string>Purchase more storage</string>
                     </property>
                     <property name="autoDefault">
                      <bool>false</bool>
@@ -2968,7 +2971,7 @@ margin-right: 7px;
                        <string notr="true"/>
                       </property>
                       <property name="text">
-                       <string>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</string>
+                       <string>Some folders have not synchronised. For more information please hover over the yellow warning icon. </string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -3041,7 +3044,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3085,7 +3088,7 @@ margin-right: 7px;
                </size>
               </property>
               <property name="text">
-               <string>Your password is not stored by MEGA so we cannot recover it for you. For reliable access to your account we recommend that you download and save your Recovery Key in a secure place.</string>
+               <string>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
@@ -3101,7 +3104,7 @@ margin-right: 7px;
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Backup Key</string>
+               <string>Download Key</string>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -3152,7 +3155,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3193,7 +3196,7 @@ margin-right: 7px;
                </size>
               </property>
               <property name="text">
-               <string>Your account’s security depends on the strenght of your password. Passwords that are too short, too simple or consist of dictionary words are easily guessed.</string>
+               <string>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
@@ -3280,7 +3283,7 @@ margin-right: 7px;
              </size>
             </property>
             <property name="text">
-             <string>Default folders:</string>
+             <string>Default folders</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -3794,18 +3797,21 @@ margin-right: 7px;
                     </property>
                     <property name="minimumSize">
                      <size>
-                      <width>44</width>
+                      <width>45</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>16777215</width>
+                      <width>45</width>
                       <height>16777215</height>
                      </size>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="buttonSymbols">
+                     <enum>QAbstractSpinBox::NoButtons</enum>
                     </property>
                     <property name="minimum">
                      <number>1</number>
@@ -3894,18 +3900,21 @@ margin-right: 7px;
                    <widget class="QSpinBox" name="eLowerThan">
                     <property name="minimumSize">
                      <size>
-                      <width>44</width>
+                      <width>45</width>
                       <height>0</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>16777215</width>
+                      <width>45</width>
                       <height>16777215</height>
                      </size>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                    <property name="buttonSymbols">
+                     <enum>QAbstractSpinBox::NoButtons</enum>
                     </property>
                     <property name="minimum">
                      <number>1</number>
@@ -4014,7 +4023,7 @@ margin-right: 7px;
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_macx.qrc">
                     <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -4046,7 +4055,7 @@ margin-right: 7px;
                    </size>
                   </property>
                   <property name="text">
-                   <string>New exclusions will only be applied after you restart the application.</string>
+                   <string>Restart MEGA Desktop Application to apply changes.</string>
                   </property>
                   <property name="wordWrap">
                    <bool>true</bool>
@@ -4148,7 +4157,7 @@ margin-right: 7px;
             <item row="1" column="0">
              <widget class="QLabel" name="lDownloadRateLimitDesc">
               <property name="text">
-               <string>Download Rate Limit:</string>
+               <string>Download rate limit:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4161,7 +4170,7 @@ margin-right: 7px;
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>Upload Rate Limit:</string>
+               <string>Upload rate limit:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4294,7 +4303,7 @@ margin-right: 8px;
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>Proxy Settings:</string>
+               <string>Proxy settings:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -4498,7 +4507,7 @@ margin-right: 32px;</string>
                <enum>Qt::RightToLeft</enum>
               </property>
               <property name="text">
-               <string>Force a full scan</string>
+               <string>Force a Full Scan</string>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
@@ -4650,15 +4659,15 @@ margin-right: 32px;</string>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QMacSpinningProgressIndicator</class>
-   <extends>QWidget</extends>
-   <header location="global">QMacSpinningProgressIndicator.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header>AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QMacSpinningProgressIndicator</class>
+   <extends>QWidget</extends>
+   <header location="global">QMacSpinningProgressIndicator.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -4706,7 +4715,7 @@ margin-right: 32px;</string>
   <tabstop>bRestart</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

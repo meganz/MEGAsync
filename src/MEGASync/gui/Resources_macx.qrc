@@ -559,8 +559,6 @@
         <file>images/new_contact@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
-        <file>images/settings-imports-macx.png</file>
-        <file>images/settings-imports-macx@2x.png</file>
         <file>images/Bin_24_ico.png</file>
         <file>images/Bin_24_ico@2x.png</file>
         <file>images/Cloud_Drive_24_ico.png</file>
@@ -602,5 +600,7 @@
         <file>images/Item_options_press@2x.png</file>
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
+        <file>images/settings-folders-macx.png</file>
+        <file>images/settings-folders-macx@2x.png</file>
     </qresource>
 </RCC>
