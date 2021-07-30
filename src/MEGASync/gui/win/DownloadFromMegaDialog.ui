@@ -25,35 +25,6 @@
   <property name="windowTitle">
    <string>Download from MEGA</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QWidget
-{
-font-size: 11px;
-}
-
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QScrollBar:horizontal {
-height: 16px;
-}
-
-QPushButton
-{
-    min-height: 14px;
-	height: 14px;
-	padding-right: 12px;
-	padding-left: 12px;
-}
-</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -141,7 +112,7 @@ QPushButton
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>22</height>
+          <height>0</height>
          </size>
         </property>
         <property name="text">
@@ -213,7 +184,7 @@ QPushButton
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>22</height>
+          <height>0</height>
          </size>
         </property>
         <property name="text">
@@ -226,7 +197,7 @@ QPushButton
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>22</height>
+          <height>0</height>
          </size>
         </property>
         <property name="text">

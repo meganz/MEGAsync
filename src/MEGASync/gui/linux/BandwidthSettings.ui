@@ -9,15 +9,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>405</height>
+    <width>454</width>
+    <height>466</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Bandwidth</string>
@@ -51,12 +45,6 @@
    </property>
    <item>
     <widget class="QGroupBox" name="gBandwidth">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
      </property>
@@ -117,9 +105,6 @@
           <height>16777215</height>
          </size>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -150,9 +135,6 @@
           <width>16777215</width>
           <height>16777215</height>
          </size>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
         </property>
         <property name="text">
          <string>Don't limit</string>
@@ -202,9 +184,6 @@
              <width>0</width>
              <height>24</height>
             </size>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
             <string>Limit to:</string>
@@ -259,9 +238,6 @@
              <height>24</height>
             </size>
            </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
            <property name="text">
             <string>KB/s</string>
            </property>
@@ -275,12 +251,6 @@
    </item>
    <item>
     <widget class="QGroupBox" name="gDownloadBandwidth">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="title">
       <string>Download rate limit</string>
      </property>
@@ -335,9 +305,6 @@
           <height>16777215</height>
          </size>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Don't limit</string>
         </property>
@@ -368,9 +335,6 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::TabFocus</enum>
            </property>
            <property name="text">
             <string>Limit to:</string>
@@ -425,9 +389,6 @@
              <height>0</height>
             </size>
            </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
            <property name="text">
             <string>KB/s</string>
            </property>
@@ -441,12 +402,6 @@
    </item>
    <item>
     <widget class="QGroupBox" name="wTransferConnections">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="title">
       <string>Number of parallel TCP connections per transfer</string>
      </property>
@@ -477,7 +432,7 @@
         <item>
          <widget class="QLabel" name="lDownloadConnections">
           <property name="text">
-           <string>Downloads</string>
+           <string>Downloads:</string>
           </property>
          </widget>
         </item>
@@ -519,7 +474,7 @@
         <item>
          <widget class="QLabel" name="lUploadConnections">
           <property name="text">
-           <string>Uploads</string>
+           <string>Uploads:</string>
           </property>
          </widget>
         </item>
@@ -558,18 +513,9 @@
    </item>
    <item>
     <widget class="QGroupBox" name="gUseHttps">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <layout class="QVBoxLayout" name="gUseHttpsLayout">
       <property name="spacing">
-       <number>2</number>
-      </property>
-      <property name="sizeConstraint">
-       <enum>QLayout::SetMinAndMaxSize</enum>
+       <number>10</number>
       </property>
       <property name="leftMargin">
        <number>10</number>
@@ -585,18 +531,6 @@
       </property>
       <item>
        <widget class="QCheckBox" name="cbUseHttps">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>24</height>
-         </size>
-        </property>
         <property name="text">
          <string>Don't use HTTP</string>
         </property>
@@ -605,16 +539,10 @@
       <item>
        <widget class="QLabel" name="lUseHttps">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>40</height>
-         </size>
         </property>
         <property name="text">
          <string>Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
@@ -626,6 +554,19 @@
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QWidget" name="buttonBox" native="true">
@@ -686,6 +627,22 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>rUploadAutoLimit</tabstop>
+  <tabstop>rUploadNoLimit</tabstop>
+  <tabstop>rUploadLimit</tabstop>
+  <tabstop>eUploadLimit</tabstop>
+  <tabstop>lUploadLimit</tabstop>
+  <tabstop>rDownloadNoLimit</tabstop>
+  <tabstop>rDownloadLimit</tabstop>
+  <tabstop>eDownloadLimit</tabstop>
+  <tabstop>lDownloadLimit</tabstop>
+  <tabstop>eMaxDownloadConnections</tabstop>
+  <tabstop>eMaxUploadConnections</tabstop>
+  <tabstop>cbUseHttps</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bUpdate</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

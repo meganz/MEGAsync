@@ -9,15 +9,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>440</height>
+    <width>498</width>
+    <height>519</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Bandwidth</string>
@@ -27,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="BandwidthSettingsLayout">
    <property name="spacing">
-    <number>16</number>
+    <number>14</number>
    </property>
    <property name="leftMargin">
     <number>20</number>
@@ -39,16 +33,10 @@
     <number>20</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>20</number>
    </property>
    <item>
     <widget class="QGroupBox" name="gBandwidth">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
      </property>
@@ -58,9 +46,6 @@
      <layout class="QFormLayout" name="gBandwidthLayout">
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
-      </property>
-      <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::FieldsStayAtSizeHint</enum>
       </property>
       <property name="rowWrapPolicy">
        <enum>QFormLayout::DontWrapRows</enum>
@@ -75,13 +60,13 @@
        <number>30</number>
       </property>
       <property name="verticalSpacing">
-       <number>8</number>
+       <number>10</number>
       </property>
       <property name="leftMargin">
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>16</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -265,9 +250,6 @@
       <string>Download rate limit</string>
      </property>
      <layout class="QFormLayout" name="gDownloadBandwidthLayout">
-      <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-      </property>
       <property name="rowWrapPolicy">
        <enum>QFormLayout::DontWrapRows</enum>
       </property>
@@ -287,7 +269,7 @@
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>16</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -441,7 +423,7 @@
        <number>10</number>
       </property>
       <property name="topMargin">
-       <number>16</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
        <number>10</number>
@@ -457,7 +439,7 @@
         <item>
          <widget class="QLabel" name="lDownloadConnections">
           <property name="text">
-           <string>Downloads</string>
+           <string>Downloads:</string>
           </property>
          </widget>
         </item>
@@ -499,7 +481,7 @@
         <item>
          <widget class="QLabel" name="lUploadConnections">
           <property name="text">
-           <string>Uploads</string>
+           <string>Uploads:</string>
           </property>
          </widget>
         </item>
@@ -538,16 +520,7 @@
    </item>
    <item>
     <widget class="QGroupBox" name="gUseHttps">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <layout class="QVBoxLayout" name="gUseHttpsLayout">
-      <property name="spacing">
-       <number>2</number>
-      </property>
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
@@ -565,18 +538,6 @@
       </property>
       <item>
        <widget class="QCheckBox" name="cbUseHttps">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>24</height>
-         </size>
-        </property>
         <property name="text">
          <string>Don't use HTTP</string>
         </property>
@@ -585,7 +546,7 @@
       <item>
        <widget class="QLabel" name="lUseHttps">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -600,6 +561,19 @@
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QWidget" name="buttonBox" native="true">
@@ -660,6 +634,22 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>rUploadAutoLimit</tabstop>
+  <tabstop>rUploadNoLimit</tabstop>
+  <tabstop>rUploadLimit</tabstop>
+  <tabstop>eUploadLimit</tabstop>
+  <tabstop>lUploadLimit</tabstop>
+  <tabstop>rDownloadNoLimit</tabstop>
+  <tabstop>rDownloadLimit</tabstop>
+  <tabstop>eDownloadLimit</tabstop>
+  <tabstop>lDownloadLimit</tabstop>
+  <tabstop>eMaxDownloadConnections</tabstop>
+  <tabstop>eMaxUploadConnections</tabstop>
+  <tabstop>cbUseHttps</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bUpdate</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

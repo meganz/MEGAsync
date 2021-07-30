@@ -843,9 +843,6 @@
         <file>images/warning-disabled-syncs.png</file>
         <file>images/warning-disabled-syncs@2x.png</file>
         <file>images/warning-disabled-syncs@3x.png</file>
-        <file>images/Icon_Win_Imports.png</file>
-        <file>images/Icon_Win_Imports@2x.png</file>
-        <file>images/Icon_Win_Imports@3x.png</file>
         <file>images/Icon_Win_Network.png</file>
         <file>images/Icon_Win_Network@2x.png</file>
         <file>images/Icon_Win_Network@3x.png</file>
@@ -897,5 +894,8 @@
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
         <file>images/show_in_folder_ico@3x.png</file>
+        <file>images/settings-folders.png</file>
+        <file>images/settings-folders@3x.png</file>
+        <file>images/settings-folders@2x.png</file>
     </qresource>
 </RCC>
