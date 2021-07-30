@@ -1581,9 +1581,9 @@ void SettingsDialog::onCellClicked(int row, int column)
 
     QMenu *menu(new QMenu(mUi->tSyncs));
     menu->setAttribute(Qt::WA_TranslucentBackground);
-#ifdef Q_OS_WINDOWS
+#if defined(Q_OS_WINDOWS)
     menu->setWindowFlags(menu->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
-#elif  Q_OS_MACOS
+#elif defined(Q_OS_MACOS)
     connect(this, &SettingsDialog::closeMenus, menu, &SettingsDialog::close);
 #endif
 
