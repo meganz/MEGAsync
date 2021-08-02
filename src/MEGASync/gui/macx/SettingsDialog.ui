@@ -3239,7 +3239,7 @@ margin-right: 7px;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pImports">
+     <widget class="QWidget" name="pFolders">
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <property name="spacing">
         <number>0</number>
@@ -4608,7 +4608,7 @@ margin-right: 32px;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="wImportsFooter">
+          <widget class="QWidget" name="wFoldersFooter">
            <property name="layoutDirection">
             <enum>Qt::RightToLeft</enum>
            </property>
