@@ -39,7 +39,7 @@ public:
         ACCOUNT_TAB  = 1,
         SYNCS_TAB    = 2,
         SECURITY_TAB = 3,
-        IMPORTS_TAB  = 4,
+        FOLDERS_TAB  = 4,
         NETWORK_TAB  = 5,
         };
 
@@ -63,7 +63,7 @@ public:
     void loadSyncSettings();
     void addSyncFolder(mega::MegaHandle megaFolderHandle);
 
-    // Imports
+    // Folders
     void updateUploadFolder();
     void updateDownloadFolder();
 
@@ -152,8 +152,8 @@ private slots:
     void on_bChangePassword_clicked();
     void on_bSessionHistory_clicked();
 
-    // Imports
-    void on_bImports_clicked();
+    // Folders
+    void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
     void on_eUploadFolder_textChanged(const QString &text);
