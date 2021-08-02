@@ -99,21 +99,22 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    mUi->wStack->setCurrentWidget(mUi->pGeneral); // override whatever might be set in .ui
+    // override whatever indexes might be set in .ui files (frequently checked in by mistake)
+    mUi->wStack->setCurrentWidget(mUi->pGeneral);
+    mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
 
-
-#ifndef Q_OS_MACOS
-    mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
-    mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
-#else
     connect(mUi->wStack, &QStackedWidget::currentChanged, [=](const int &newValue){
-        //Setting new index in the stack widget cause the focus to be set to footer button
-        //avoid it, setting to main wStack to ease tab navigation among different controls.
           mUi->wStackFooter->setCurrentIndex(newValue);
+          //Setting new index in the stack widget cause the focus to be set to footer button
+          //avoid it, setting to main wStack to ease tab navigation among different controls.
           mUi->wStack->setFocus();
     });
 
+#ifdef Q_OS_MACOS
     mUi->wStack->setFocus();
+#else
+    mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
+    mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #endif
 
     setProxyOnly(proxyOnly);
