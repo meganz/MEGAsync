@@ -436,7 +436,7 @@ margin: 0px;
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="bImports">
+       <widget class="QToolButton" name="bFolders">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -2102,7 +2102,7 @@ margin: 0px;
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="pImports">
+     <widget class="QWidget" name="pFolders">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">
         <number>5</number>
@@ -2962,7 +2962,7 @@ color: #0078D7;
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="wImportsFooter">
+        <widget class="QWidget" name="wFoldersFooter">
          <layout class="QVBoxLayout" name="verticalLayout_18">
           <property name="spacing">
            <number>0</number>

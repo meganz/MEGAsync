@@ -41,7 +41,7 @@ constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
-constexpr auto SETTING_ANIMATION_IMPORTS_TAB_HEIGHT{513};
+constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
 // FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{196};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
@@ -277,9 +277,9 @@ void SettingsDialog::openSettingsTab(int tab)
 #endif
         break;
 
-    case IMPORTS_TAB:
+    case FOLDERS_TAB:
 #ifndef Q_OS_MACOS
-        mUi->bImports->click();
+        mUi->bFolders->click();
 #else
         mToolBar->setSelectedItem(bFolders.get());
         emit bFolders.get()->activated();
@@ -309,7 +309,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     mUi->bAccount->setEnabled(!proxyOnly);
     mUi->bSyncs->setEnabled(!proxyOnly);
     mUi->bSecurity->setEnabled(!proxyOnly);
-    mUi->bImports->setEnabled(!proxyOnly);
+    mUi->bFolders->setEnabled(!proxyOnly);
 #endif
 
     if (proxyOnly)
@@ -395,7 +395,7 @@ void SettingsDialog::initializeNativeUIComponents()
     bFolders.reset(mToolBar->addItem(QIcon(), tr("Folders")));
     mToolBar->customizeIconToolBarItem(bFolders.get(), folders);
     connect(bFolders.get(), &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bImports_clicked);
+            this, &SettingsDialog::on_bFolders_clicked);
 
     bNetwork.reset(mToolBar->addItem(QIcon(), tr("Network")));
     mToolBar->customizeIconToolBarItem(bNetwork.get(), network);
@@ -548,7 +548,7 @@ void SettingsDialog::loadSettings()
 
     updateNetworkTab();
 
-    // Imports tab
+    // Folders tab
     mUi->lExcludedNames->clear();
     QStringList excludedNames = mPreferences->getExcludedSyncNames();
     for (int i = 0; i < excludedNames.size(); i++)
@@ -687,9 +687,9 @@ void SettingsDialog::onAnimationFinished()
     {
         mUi->pSyncs->show();
     }
-    else if (mUi->wStack->currentWidget() == mUi->pImports)
+    else if (mUi->wStack->currentWidget() == mUi->pFolders)
     {
-        mUi->pImports->show();
+        mUi->pFolders->show();
     }
     else if (mUi->wStack->currentWidget() == mUi->pNetwork)
     {
@@ -1913,7 +1913,7 @@ void SettingsDialog::savingSyncs(bool completed, QObject* item)
     mUi->bSyncs->setEnabled(completed);
     mUi->bNetwork->setEnabled(completed);
     mUi->bSecurity->setEnabled(completed);
-    mUi->bImports->setEnabled(completed);
+    mUi->bFolders->setEnabled(completed);
 #else
     mToolBar->setEnableToolbarItems(completed);
 #endif
@@ -2133,7 +2133,7 @@ void SettingsDialog::on_bSessionHistory_clicked()
                       QUrl(QString::fromUtf8("mega://#fm/account/security")));
 }
 
-// Imports -----------------------------------------------------------------------------------------
+// Folders -----------------------------------------------------------------------------------------
 void SettingsDialog::updateUploadFolder()
 {
     MegaNode* node (mMegaApi->getNodeByHandle(static_cast<uint64_t>(mPreferences->uploadFolder())));
@@ -2172,20 +2172,20 @@ void SettingsDialog::updateDownloadFolder()
     mHasDefaultDownloadOption = mPreferences->hasDefaultDownloadFolder();
 }
 
-void SettingsDialog::on_bImports_clicked()
+void SettingsDialog::on_bFolders_clicked()
 {
     emit userActivity();
 
-    if (mUi->wStack->currentWidget() == mUi->pImports)
+    if (mUi->wStack->currentWidget() == mUi->pFolders)
     {
         return;
     }
-    mUi->wStack->setCurrentWidget(mUi->pImports);
+    mUi->wStack->setCurrentWidget(mUi->pFolders);
 
 #ifdef Q_OS_MACOS
     emit closeMenus();
-    mUi->pImports->hide();
-    animateSettingPage(SETTING_ANIMATION_IMPORTS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+    mUi->pFolders->hide();
+    animateSettingPage(SETTING_ANIMATION_FOLDERS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
 #endif
 }
 
