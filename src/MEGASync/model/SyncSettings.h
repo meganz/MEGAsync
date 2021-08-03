@@ -10,8 +10,7 @@
 struct SyncData
 {
     SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
-                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID,
-                int type);
+                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
     QString mName;
     QString mLocalFolder;
     long long mMegaHandle;
@@ -21,7 +20,6 @@ struct SyncData
     bool mTemporarilyDisabled;
     int mPos;
     QString mSyncID;
-    mega::MegaSync::SyncType mType;
 };
 
 class SyncSetting

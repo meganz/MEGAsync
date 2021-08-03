@@ -323,7 +323,6 @@ const QString Preferences::proxyPasswordKey         = QString::fromAscii("proxyP
 const QString Preferences::configuredSyncsKey       = QString::fromAscii("configuredSyncs");
 const QString Preferences::syncNameKey              = QString::fromAscii("syncName");
 const QString Preferences::syncIdKey                = QString::fromAscii("syncId");
-const QString Preferences::syncTypeKey              = QString::fromAscii("syncType");
 const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
 const QString Preferences::megaFolderKey            = QString::fromAscii("megaFolder");
 const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
@@ -2857,9 +2856,9 @@ void Preferences::readFolders()
 }
 
 
-SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID, int type)
+SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID)
     : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mMegaFolder(megaFolder), mLocalfp(localfp),
-      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID), mType(static_cast<MegaSync::SyncType>(type))
+      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID)
 {
 
 }
@@ -2954,8 +2953,7 @@ QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *c
                                     enabled,
                                     settings->value(temporaryInactiveKey, false).toBool(),
                                      i,
-                                    settings->value(syncIdKey, true).toString(),
-                                    settings->value(syncTypeKey).toInt()
+                                    settings->value(syncIdKey, true).toString()
                                     ));
 
         settings->endGroup();
@@ -2996,7 +2994,6 @@ void Preferences::saveOldCachedSyncs()
         settings->setValue(megaFolderKey, osd.mMegaFolder);
         settings->setValue(folderActiveKey, osd.mEnabled);
         settings->setValue(syncIdKey, osd.mSyncID);
-        settings->setValue(syncTypeKey, osd.mType);
 
         settings->endGroup();
     }

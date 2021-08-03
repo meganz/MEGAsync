@@ -614,7 +614,6 @@ protected:
     static const QString configuredSyncsKey;
     static const QString syncNameKey;
     static const QString syncIdKey;
-    static const QString syncTypeKey;
     static const QString localFolderKey;
     static const QString megaFolderKey;
     static const QString megaFolderHandleKey;
