@@ -1,8 +1,9 @@
-
 #include "Model.h"
 #include "platform/Platform.h"
 #include "control/AppStatsEvents.h"
+
 #include "QMegaMessageBox.h"
+#include <QHostInfo>
 
 #include <assert.h>
 
@@ -27,6 +28,7 @@ Model::Model() : QObject(),
     preferences (Preferences::instance()),
     mDeviceName(),
     mBackupsDirName(),
+    mBackupsDirHandle(mega::INVALID_HANDLE),
     syncMutex (QMutex::Recursive)
 {
 }
@@ -196,6 +198,7 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
     QMutexLocker qm(&syncMutex);
 
+    MegaSyncApp->getMegaApi()->getMyBackupsFolder();
     MegaSyncApp->getMegaApi()->getDeviceName();
 
     std::shared_ptr<SyncSetting> cs;
@@ -454,24 +457,86 @@ void Model::dismissUnattendedDisabledSyncs()
     emit syncDisabledListUpdated();
 }
 
-
-
 void Model::setDeviceName(const QString& name)
 {
     mDeviceName = name;
+    MegaSyncApp->createAppMenus();
 }
 
-const QString& Model::getDeviceName() const
+const QString& Model::getDeviceName()
 {
+    // If we don't have a device name, try to get it
+    if (mDeviceName.isEmpty())
+    {
+        mega::SynchronousRequestListener synchro;
+        auto api (MegaSyncApp->getMegaApi());
+        api->getDeviceName(&synchro);
+        synchro.wait();
+
+        if (synchro.getError()->getErrorCode() == mega::MegaError::API_OK)
+        {
+            // The remote dir shoud exist, get name.
+            setDeviceName(QString::fromUtf8(synchro.getRequest()->getName()));
+        }
+        else
+        {
+            QString name;
+
+            // If we still don't have one, use hostname from the OS
+            name = QHostInfo::localHostName();
+
+            // If nothing, use generic one.
+            if (name.isNull())
+            {
+                name = tr("Your computer");
+            }
+            setDeviceName(name);
+        }
+    }
+
     return mDeviceName;
 }
 
-void Model::setBackupsDirName(const QString& name)
+void Model::setBackupsDirHandle(mega::MegaHandle handle)
 {
-    mBackupsDirName = name;
+    mBackupsDirHandle = handle;
 }
 
-const QString& Model::getBackupsDirName() const
+const mega::MegaHandle Model::getBackupsDirHandle()
 {
-    return mBackupsDirName;
+    auto api (MegaSyncApp->getMegaApi());
+    mega::MegaHandle handle (mBackupsDirHandle);
+
+    // If not set, try to get (synchronously)
+    if (handle == mega::INVALID_HANDLE)
+    {
+        mega::SynchronousRequestListener synchro;
+        MegaSyncApp->getMegaApi()->getMyBackupsFolder(&synchro);
+        synchro.wait();
+
+        if (synchro.getError()->getErrorCode() == mega::MegaError::API_OK)
+        {
+            // The remote dir shoud exist, get handle.
+            handle = synchro.getRequest()->getNodeHandle();
+        }
+    }
+
+    // We know the target dir: check existence and if it has not been put in the rubbish bin.
+    if (handle != mega::INVALID_HANDLE)
+    {
+        mega::MegaNode* backupsDirNode (api->getNodeByHandle(mBackupsDirHandle));
+        if (!backupsDirNode || backupsDirNode->getRestoreHandle() != mega::INVALID_HANDLE)
+        {
+            // Dir does not exist or has been put in RubbishBin
+            handle = mega::INVALID_HANDLE;
+        }
+        if (backupsDirNode) delete backupsDirNode;
+    }
+
+    // Update member if needed
+    if (handle != mBackupsDirHandle)
+    {
+        setBackupsDirHandle(handle);
+    }
+    return mBackupsDirHandle;
 }

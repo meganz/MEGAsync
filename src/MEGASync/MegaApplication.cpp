@@ -6460,6 +6460,7 @@ void MegaApplication::createInfoDialogMenus()
                 infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         // Display device name before folders (click opens backups wizard)
+        QString deviceName (model->getDeviceName());
 #ifdef WIN32
         QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
 #elif defined(__APPLE__)
@@ -6469,7 +6470,7 @@ void MegaApplication::createInfoDialogMenus()
 #else
         QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
 #endif
-        QString deviceName (model->getDeviceName());
+
         MenuItemAction *devNameAction = new MenuItemAction(deviceName, devIcon, true);
         connect(devNameAction, &MenuItemAction::triggered,
                 infoDialog, &InfoDialog::onAddBackup, Qt::QueuedConnection);
@@ -6499,8 +6500,8 @@ void MegaApplication::createInfoDialogMenus()
 
         if (!activeFolders)
         {
-            addSyncAction->setLabelText(tr("Add Backup"));
-            connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
+            addBackupAction->setLabelText(tr("Add Backup"));
+            connect(addBackupAction, &MenuItemAction::triggered, infoDialog,
                     QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
         }
         else
@@ -7074,15 +7075,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                // TODO : set my backups folder name In Preferences? Model?
+                // We get the node handle,
+                MegaHandle handle (request->getNodeHandle());
+                model->setBackupsDirHandle(handle);
             }
         }
         else if (request->getParamType() == MegaApi::USER_ATTR_DEVICE_NAMES)
         {
-            if (e->getErrorCode() == MegaError::API_OK)
-            {
-                // TODO : set devies In Preferences? Model?
+            int errorCode (e->getErrorCode());
+            if (errorCode == MegaError::API_OK)
+            {                
                 model->setDeviceName(QString::fromUtf8(request->getName()));
+            }
+            else //if (errorCode == MegaError::API_ENOENT)
+            {
+                model->setDeviceName(QString::fromUtf8(""));
             }
         }
         break;

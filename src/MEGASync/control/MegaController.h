@@ -32,10 +32,14 @@ public:
 
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
                  QString syncName = QString(), ActionProgress *progress = nullptr,
-                 mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
+                 mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY, bool wait = false);
+    void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr,
+                    mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
+
+    void createMyBackupsDir(QString& name, ActionProgress* progress = nullptr);
+    void setDeviceDir(QString& name, bool reUseDir = false, ActionProgress* progress = nullptr);
 
     static Controller *instance();
     void setApi(mega::MegaApi *value);
