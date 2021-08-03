@@ -11,8 +11,7 @@ using namespace mega;
 Controller *Controller::controller = NULL;
 
 void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle,
-                         QString syncName, ActionProgress *progress, mega::MegaSync::SyncType type,
-                         bool wait)
+                         QString syncName, ActionProgress *progress, mega::MegaSync::SyncType type)
 {
     assert(api);
 
@@ -27,35 +26,13 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
     MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                  QString::fromUtf8("Adding sync %1").arg(localFolder).toUtf8().constData());
 
-    if (!wait)
-    {
         api->syncFolder(type, localFolder.toUtf8().constData(),
                         syncName.toUtf8().constData(), remoteHandle, nullptr,
                         new ProgressFuncExecuterListener(progress,  true,
                                                          [](MegaApi *api, MegaRequest *request,
                                                          MegaError *e){
                             ///// onRequestFinish Management: ////
-                        }));
-    }
-    else
-    {
-        mega::SynchronousRequestListener synchro;
-        api->syncFolder(type, localFolder.toUtf8().constData(),
-                        syncName.toUtf8().constData(), remoteHandle, nullptr, &synchro);
-        synchro.wait();
-        if (progress)
-        {
-            if (synchro.getError()->getErrorCode() != mega::MegaError::API_OK)
-            {
-                progress->setFailed(synchro.getError()->getErrorCode(),
-                                    synchro.getRequest(), synchro.getError());
-            }
-            else
-            {
-                progress->setComplete();
-            }
-        }
-    }
+                        }));   
 }
 
 void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress,

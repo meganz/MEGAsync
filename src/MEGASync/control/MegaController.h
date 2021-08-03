@@ -32,7 +32,7 @@ public:
 
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
                  QString syncName = QString(), ActionProgress *progress = nullptr,
-                 mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY, bool wait = false);
+                 mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr,
                     mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
