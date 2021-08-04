@@ -1079,32 +1079,12 @@ margin: 0px;
             </property>
            </widget>
           </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_12">
-            <property name="spacing">
-             <number>0</number>
+          <item alignment="Qt::AlignRight">
+           <widget class="QPushButton" name="bSendBug">
+            <property name="text">
+             <string>Report Issue</string>
             </property>
-            <item>
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="bSendBug">
-              <property name="text">
-               <string>Report Issue</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1808,7 +1788,7 @@ margin: 0px;
            <item>
             <widget class="QLabel" name="lSavingSyncs">
              <property name="text">
-              <string>Saving syncs...</string>
+              <string>Saving sync...</string>
              </property>
             </widget>
            </item>
