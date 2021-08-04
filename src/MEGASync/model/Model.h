@@ -118,7 +118,7 @@ public:
     const QString& getDeviceName();
 
     void setBackupsDirHandle(mega::MegaHandle handle);
-    const mega::MegaHandle getBackupsDirHandle();
+    mega::MegaHandle getBackupsDirHandle();
 
     ///////////// END OF SYNCS ////////////////////
 

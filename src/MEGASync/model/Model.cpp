@@ -198,9 +198,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
     QMutexLocker qm(&syncMutex);
 
-    MegaSyncApp->getMegaApi()->getMyBackupsFolder();
-    MegaSyncApp->getMegaApi()->getDeviceName();
-
     std::shared_ptr<SyncSetting> cs;
     bool wasActive = false;
     bool wasInactive = false;
@@ -480,10 +477,8 @@ const QString& Model::getDeviceName()
         }
         else
         {
-            QString name;
-
             // If we still don't have one, use hostname from the OS
-            name = QHostInfo::localHostName();
+            QString name = QHostInfo::localHostName();
 
             // If nothing, use generic one.
             if (name.isNull())
@@ -502,7 +497,7 @@ void Model::setBackupsDirHandle(mega::MegaHandle handle)
     mBackupsDirHandle = handle;
 }
 
-const mega::MegaHandle Model::getBackupsDirHandle()
+mega::MegaHandle Model::getBackupsDirHandle()
 {
     auto api (MegaSyncApp->getMegaApi());
     mega::MegaHandle handle (mBackupsDirHandle);
@@ -524,7 +519,7 @@ const mega::MegaHandle Model::getBackupsDirHandle()
     // We know the target dir: check existence and if it has not been put in the rubbish bin.
     if (handle != mega::INVALID_HANDLE)
     {
-        mega::MegaNode* backupsDirNode (api->getNodeByHandle(mBackupsDirHandle));
+        mega::MegaNode* backupsDirNode (api->getNodeByHandle(handle));
         if (!backupsDirNode || backupsDirNode->getRestoreHandle() != mega::INVALID_HANDLE)
         {
             // Dir does not exist or has been put in RubbishBin
@@ -538,5 +533,6 @@ const mega::MegaHandle Model::getBackupsDirHandle()
     {
         setBackupsDirHandle(handle);
     }
+
     return mBackupsDirHandle;
 }
