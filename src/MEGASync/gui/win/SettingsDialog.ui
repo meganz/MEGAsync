@@ -1051,7 +1051,7 @@ font-weight: bold;
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
-           <number>0</number>
+           <number>10</number>
           </property>
           <property name="leftMargin">
            <number>10</number>
@@ -1405,7 +1405,7 @@ font-weight: bold;
      <widget class="QWidget" name="pSyncs">
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="spacing">
-        <number>0</number>
+        <number>8</number>
        </property>
        <property name="leftMargin">
         <number>20</number>
@@ -1825,7 +1825,7 @@ font-weight: bold;
               <item>
                <widget class="QLabel" name="lSavingSyncs">
                 <property name="text">
-                 <string>Saving syncs...</string>
+                 <string>Saving sync...</string>
                 </property>
                </widget>
               </item>
@@ -1905,6 +1905,9 @@ font-weight: bold;
      </widget>
      <widget class="QWidget" name="pSecurity">
       <layout class="QVBoxLayout" name="verticalLayout_20">
+       <property name="spacing">
+        <number>8</number>
+       </property>
        <property name="leftMargin">
         <number>20</number>
        </property>
@@ -1981,7 +1984,7 @@ font-weight: bold;
                </size>
               </property>
               <property name="text">
-               <string>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing account access if you forget your password, save your Recovery Key to a safe location.</string>
+               <string>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
