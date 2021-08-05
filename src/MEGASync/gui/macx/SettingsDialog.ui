@@ -922,7 +922,7 @@ margin-right: 32px;</string>
                <string notr="true">margin-top: 2px;</string>
               </property>
               <property name="text">
-               <string> %1</string>
+               <string notr="true"> %1</string>
               </property>
               <property name="indent">
                <number>0</number>
@@ -1185,7 +1185,7 @@ margin-right: 32px;</string>
                <string>Folder in MEGA with a backup of files deleted in the local computer</string>
               </property>
               <property name="text">
-               <string>%1</string>
+               <string notr="true">%1</string>
               </property>
               <property name="margin">
                <number>0</number>
@@ -1387,7 +1387,7 @@ margin-right: 32px;</string>
                <string notr="true"/>
               </property>
               <property name="text">
-               <string>%1</string>
+               <string notr="true">%1</string>
               </property>
               <property name="margin">
                <number>0</number>

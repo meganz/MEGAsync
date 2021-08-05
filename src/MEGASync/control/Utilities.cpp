@@ -906,7 +906,7 @@ QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
 {
     if (!pricing)
     {
-        return QString::fromUtf8("PRO");
+        return QString::fromUtf8("Pro");
     }
 
     int planNeeded = -1;
@@ -960,20 +960,20 @@ QString Utilities::getReadablePROplanFromId(int identifier)
     switch (identifier)
     {
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QString::fromUtf8("PRO LITE");
+            return QString::fromUtf8("Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QString::fromUtf8("PRO I");
+            return QString::fromUtf8("Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QString::fromUtf8("PRO II");
+            return QString::fromUtf8("Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QString::fromUtf8("PRO III");
+            return QString::fromUtf8("Pro III");
             break;
     }
 
-    return QString::fromUtf8("PRO");
+    return QString::fromUtf8("Pro");
 }
 
 void Utilities::animateFadein(QWidget *object, int msecs)
