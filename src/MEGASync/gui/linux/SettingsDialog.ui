@@ -17,7 +17,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>MEGA Preferences</string>
+   <string>Settings</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -818,7 +818,7 @@ margin: 0px;
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -937,7 +937,7 @@ margin: 0px;
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -998,7 +998,7 @@ margin: 0px;
              </size>
             </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>

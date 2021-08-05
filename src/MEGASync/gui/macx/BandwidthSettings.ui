@@ -938,7 +938,7 @@ margin-bottom: 8px;
                   <string notr="true">margin-bottom: 5px;</string>
                  </property>
                  <property name="text">
-                  <string>Downloads</string>
+                  <string>Downloads:</string>
                  </property>
                 </widget>
                </item>
@@ -991,7 +991,7 @@ margin-bottom: 8px;
                   <string notr="true">margin-bottom: 5px;</string>
                  </property>
                  <property name="text">
-                  <string>Uploads</string>
+                  <string>Uploads:</string>
                  </property>
                 </widget>
                </item>

@@ -1545,4 +1545,4 @@ void ShellNotifier::notify(const std::string& path) const
 // Platform-specific strings
 const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
-const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Explorer")};
+const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};
