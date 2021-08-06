@@ -967,7 +967,7 @@ margin: 0px;
        <item>
         <widget class="QGroupBox" name="gFileVersions">
          <property name="title">
-          <string>File Versions</string>
+          <string>File versions</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <property name="leftMargin">
@@ -1051,7 +1051,7 @@ margin: 0px;
        <item>
         <widget class="QGroupBox" name="gBugReport">
          <property name="title">
-          <string>Bug Report</string>
+          <string>Issue report</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
@@ -1565,7 +1565,7 @@ margin: 0px;
                </column>
                <column>
                 <property name="text">
-                 <string>MEGA folder</string>
+                 <string>MEGA Folder</string>
                 </property>
                </column>
                <column>
@@ -2308,7 +2308,7 @@ margin: 0px;
           <item>
            <widget class="QLabel" name="lChooseText">
             <property name="text">
-             <string>Choose which files or folders you want to exclude from the synchronisation</string>
+             <string>Choose which files or folders you want to exclude from synchronisation.</string>
             </property>
            </widget>
           </item>
@@ -2636,14 +2636,14 @@ margin: 0px;
             <item row="0" column="0">
              <widget class="QLabel" name="lUploadRateLimitText">
               <property name="text">
-               <string>Upload Rate Limit:</string>
+               <string>Upload rate limit:</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="lDownloadRateLimitText">
               <property name="text">
-               <string>Download Rate Limit:</string>
+               <string>Download rate limit:</string>
               </property>
              </widget>
             </item>
@@ -2726,7 +2726,7 @@ margin: 0px;
             <item row="0" column="0">
              <widget class="QLabel" name="lProxySettingsText">
               <property name="text">
-               <string>Proxy Settings:</string>
+               <string>Proxy settings:</string>
               </property>
              </widget>
             </item>
