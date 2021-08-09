@@ -813,6 +813,9 @@ font-weight: bold;
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Local folder with a backup of files deleted in MEGA</string>
+            </property>
             <property name="text">
              <string notr="true">%1</string>
             </property>
@@ -931,6 +934,9 @@ font-weight: bold;
             </property>
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="toolTip">
+             <string>Folder in MEGA with a backup of files deleted in the local computer</string>
             </property>
             <property name="text">
              <string notr="true">%1</string>

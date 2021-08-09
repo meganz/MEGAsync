@@ -449,7 +449,7 @@
     </message>
     <message>
         <source>No limit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No limit</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -501,11 +501,11 @@
     </message>
     <message>
         <source>Upload rate limit:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Upload rate limit:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Download rate limit:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
@@ -3425,11 +3425,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Pro Lite</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pro Lite</translation>
     </message>
     <message>
         <source>Business</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Business</translation>
     </message>
 </context>
 <context>
@@ -3493,7 +3493,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>ProxySettings</name>
     <message>
         <source>Proxies</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxies</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -3501,7 +3501,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Proxy settings:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Proxy settings:</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -3533,11 +3533,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>No Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No Proxy</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Manual</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3996,7 +3996,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Help</source>
-        <translatorcomment>Button label for Help.</translatorcomment>
+        <translatorcomment>Button label for Help in the lower left section of the dialog.</translatorcomment>
         <translation>Help</translation>
     </message>
     <message>
@@ -4016,17 +4016,17 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Language</source>
-        <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
+        <translatorcomment>Label to let the user select the desired language for the application using a dropdown menu.</translatorcomment>
         <translation>Language</translation>
     </message>
     <message>
         <source>Details</source>
-        <translatorcomment>Button label to show the account usage details for the current user of the application. Strins as short as possible.</translatorcomment>
+        <translatorcomment>Button label to show the account usage details for the current user of the application. String as short as possible.</translatorcomment>
         <translation>Details</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
+        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
         <translation>Logout</translation>
     </message>
     <message>
@@ -4036,22 +4036,22 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Button label to delete a synchronization. String as short as possible.</translatorcomment>
         <translation>Delete</translation>
     </message>
     <message>
         <source>Add</source>
-        <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
         <translation>Add</translation>
     </message>
     <message>
         <source>Local Folder</source>
-        <translatorcomment>Label to indicate the local folder for a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
         <translation>Local Folder</translation>
     </message>
     <message>
         <source>MEGA folder</source>
-        <translatorcomment>Label to indicate the MEGA folder for a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
         <translation>MEGA folder</translation>
     </message>
     <message>
@@ -4066,37 +4066,27 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
         <translation>%1 (%2%) of %3 used</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
         <translation>Warning</translation>
     </message>
     <message>
-        <source>Synchronization will stop working.</source>
-        <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
-        <translation>Synchronization will stop working.</translation>
-    </message>
-    <message>
-        <source>Are you sure?</source>
-        <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Are you sure?</translation>
-    </message>
-    <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
         <translation>Error</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
+        <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Clear</translation>
     </message>
     <message>
         <source>Full scan</source>
-        <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
+        <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>Full scan</translation>
     </message>
     <message>
@@ -4108,7 +4098,7 @@ Do you want to delete it anyway?</translation>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
+        <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
         <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
@@ -4118,23 +4108,23 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path for Uploads and Downloads.</translatorcomment>
+        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
         <translation>Default folders</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
+        <translatorcomment>Label to indicate the default folder for uploads.</translatorcomment>
         <translation>Uploads:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translatorcomment>Label to indicate the default folder for downloads. String as short as possible</translatorcomment>
+        <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
         <translation>Downloads:</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Enable/disable</translation>
+        <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
+        <translation>Enable / disable</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4148,7 +4138,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Unable to write file</source>
-        <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
+        <translatorcomment>Title for message box displayed when an error occurs exporting the master key to a file.</translatorcomment>
         <translation>Unable to write file</translation>
     </message>
     <message>
@@ -4163,26 +4153,27 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Exclude by size</source>
-        <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
+        <translatorcomment>Section title for controls to let the user exclude files from being synced by size.</translatorcomment>
         <translation>Exclude by size</translation>
     </message>
     <message>
         <source>Excluded file and folder names</source>
-        <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
+        <translatorcomment>Section title for controls to indicate the file and folder names excluded from synchronization.</translatorcomment>
         <translation>Excluded file and folder names</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
-        <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
+        <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
         <translation>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please check your backup folders to see if you need to rescue something before continuing:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
-        <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
+        <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
         <translation>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
+        <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
         <translation>Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
@@ -4192,258 +4183,278 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Clear local backup</source>
+        <translatorcomment>Title label for the warning to the user before clearing the local backup cache. Keep as short as possible.</translatorcomment>
         <translation>Clear local backup</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
+        <translatorcomment>Confirmation prompt for the local sync cache clear action message box.</translatorcomment>
         <translation>Do you want to delete your local backups now?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
+        <translatorcomment>Title label for the warning to the user before clearing the remote sync cache. Keep as short as possible.</translatorcomment>
         <translation>Clear remote backup</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
+        <translatorcomment>Confirmation prompt for the remote sync cache clear action message box.</translatorcomment>
         <translation>Do you want to delete your remote backup now?</translation>
     </message>
     <message>
         <source>Restart</source>
-        <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
+        <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>Restart</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
         <translation>Disable file versioning</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
-        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>A local folder with a backup of files deleted in MEGA</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
-        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
         <translation>A folder in MEGA with a backup of files deleted in the local computer</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
-        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceeding.</translatorcomment>
         <translation>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
-        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>You are about to permanently remove all file versions. Would you like to proceed?</translation>
     </message>
     <message>
         <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
         <translation>%1 used</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
-        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
         <translation>MEGA-RECOVERYKEY</translation>
     </message>
     <message>
         <source>Unexpected error disabling sync %1</source>
-        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1</translatorcomment>
+        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1.</translatorcomment>
         <translation>Unexpected error disabling sync %1</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
-        <translatorcomment>Error message shown when an error occurs while trying to enable a sync.</translatorcomment>
+        <translatorcomment>Title error message shown when an error occurs while trying to enable a sync.</translatorcomment>
         <translation>Error enabling sync</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error message shown when an error occurs trying to enabling a sync. %1 name of sync, %2 reason of error.</translatorcomment>
+        <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
         <translation>Your sync “%1” can’t be enabled. Reason: %2</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for the Settings -&gt; General pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>General</translation>
     </message>
     <message>
         <source>Sync</source>
-        <translation type="unfinished">Sync</translation>
+        <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Sync</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for the Settings -&gt; Security pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Security</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation type="unfinished">Folders</translation>
+        <translatorcomment>Title for the Settings -&gt; Folders pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Folders</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for the Settings -&gt; Network pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Network</translation>
     </message>
     <message>
         <source>Enable overlay icons</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
+        <translation>Enable overlay icons</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
+        <translation>Check for Updates</translation>
     </message>
     <message>
         <source>%1 (local cache)</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
+        <translation>%1 (local cache)</translation>
     </message>
     <message>
         <source>Space used:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label used to indicate ammount of space in byte denominations for local, remote cache and file versions.</translatorcomment>
+        <translation>Space used:</translation>
     </message>
     <message>
         <source>Remove files older than</source>
-        <translation type="unfinished">Remove files older than</translation>
+        <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
+        <translation>Remove files older than</translation>
     </message>
     <message>
         <source>days</source>
-        <translation type="unfinished">days</translation>
+        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
+        <translation>days</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File Versions</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
+        <translation>SyncDebris (remote cache)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bug Report</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for checkbox to enable / disable file versioning.</translatorcomment>
+        <translation>Enable file versioning</translation>
     </message>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
+        <translation>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</translation>
     </message>
     <message>
         <source>Report Issue</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
+        <translation>Report Issue</translation>
     </message>
     <message>
         <source>My Account</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label used to open MEGA web app account overview section for current account. Keep as short as possible.</translatorcomment>
+        <translation>My Account</translation>
     </message>
     <message>
         <source>Storage Space</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title for account storage details.</translatorcomment>
+        <translation>Storage Space</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title for account transfer quota details.</translatorcomment>
+        <translation>Transfer Quota</translation>
     </message>
     <message>
         <source>Synced folders</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
+        <translation>Synced folders</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
+        <translation>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
+        <translation>Purchase more storage</translation>
     </message>
     <message>
         <source>Saving sync...</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders. Keep the 3 suspense periods, indicating to the user that action is in in progress.</translatorcomment>
+        <translation>Saving sync...</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
+        <translation>Some folders have not synchronised. For more information please hover over the yellow warning icon.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
+        <translation>Recovery Key</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
+        <translation>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</translation>
     </message>
     <message>
         <source>Download Key</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label text for key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
+        <translation>Download Key</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">Password</translation>
+        <translatorcomment>Section title for Password change in Security pane.</translatorcomment>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password generator.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
+        <translation>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password generator.</translation>
     </message>
     <message>
         <source>Change Password</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
+        <translation>Change Password</translation>
     </message>
     <message>
         <source>Default Folders</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
+        <translation>Default Folders</translation>
     </message>
     <message>
         <source>Move...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from the synchronisation</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
+        <translation>Move...</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
-        <translation type="unfinished">Exclude files smaller than</translation>
+        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, smaller than the specified size.</translatorcomment>
+        <translation>Exclude files smaller than</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
-        <translation type="unfinished">Exclude files bigger than</translation>
+        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, bigger than the specified size.</translatorcomment>
+        <translation>Exclude files bigger than</translation>
     </message>
     <message>
         <source>Restart MEGA Desktop Application to apply changes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Upload Rate Limit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Download Rate Limit:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
+        <translation>Restart MEGA Desktop Application to apply changes.</translation>
     </message>
     <message>
         <source>Change Settings...</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
+        <translation>Change Settings...</translation>
     </message>
     <message>
         <source>Proxies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proxy Settings:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
+        <translation>Proxies</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
+        <translation>Force a Full Scan</translation>
     </message>
     <message>
         <source>Session history</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
+        <translation>Session history</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">Preferences</translation>
+        <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
+        <translation>Preferences</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
+        <translation>Language:</translation>
     </message>
     <message>
         <source>%1 (local cache):</source>
@@ -4495,87 +4506,133 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Download rate limit:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
+        <translation>Download rate limit:</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
+        <translation>Upload rate limit:</translation>
     </message>
     <message>
         <source>Proxy settings:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
+        <translation>Proxy settings:</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
+        <translation>Enable Windows Explorer integration</translation>
     </message>
     <message>
         <source>B</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>B</translation>
     </message>
     <message>
         <source>KB</source>
-        <translation type="unfinished">KB</translation>
+        <translatorcomment>Kilo-Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>KB</translation>
     </message>
     <message>
         <source>MB</source>
-        <translation type="unfinished">MB</translation>
+        <translatorcomment>Mega-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>MB</translation>
     </message>
     <message>
         <source>GB</source>
-        <translation type="unfinished">GB</translation>
+        <translatorcomment>Giga-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>GB</translation>
     </message>
     <message>
         <source>Install Update</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
+        <translation>Install Update</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
+        <translation>Used quota for the last %1 hours:</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Pro Lite</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Business</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Business</translation>
+    </message>
+    <message>
+        <source>Synchronization will stop working. Are you sure?</source>
+        <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
+        <translation>Synchronization will stop working. Are you sure?</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
+        <translation>Open in MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
+        <translation>Remove synced folder</translation>
     </message>
     <message>
         <source>Saving Sync settings</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
+        <translation>Saving Sync settings</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
+        <translation>Restart MEGAsync</translation>
     </message>
     <message>
         <source>No limit</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
+        <translation>No limit</translation>
     </message>
     <message>
         <source>No Proxy</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label shown when there is no Proxy set in Network pane.</translatorcomment>
+        <translation>No Proxy</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text label shown when there is a Proxy set in Network pane.</translatorcomment>
+        <translation>Manual</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Settings</translation>
+        <translatorcomment>Dialog window title for Settings on Windows &amp; Linux. Keep as short as possible.</translatorcomment>
+        <translation>Settings</translation>
+    </message>
+    <message>
+        <source>File versions</source>
+        <translatorcomment>Section title label for File versions settings in General pane.</translatorcomment>
+        <translation>File versions</translation>
+    </message>
+    <message>
+        <source>Issue report</source>
+        <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
+        <translation>Issue report</translation>
+    </message>
+    <message>
+        <source>MEGA Folder</source>
+        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
+        <translation>MEGA Folder</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from synchronisation.</source>
+        <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
+        <translation>Choose which files or folders you want to exclude from synchronisation.</translation>
     </message>
 </context>
 <context>

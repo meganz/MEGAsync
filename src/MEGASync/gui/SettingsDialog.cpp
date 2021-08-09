@@ -1291,8 +1291,7 @@ void SettingsDialog::on_bLogout_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
     if (QMegaMessageBox::question(nullptr, tr("Logout"),
-                                  tr("Synchronization will stop working.") + QString::fromUtf8(" ")
-                                  + tr("Are you sure?"),
+                                  tr("Synchronization will stop working. Are you sure?"),
                                   QMessageBox::Yes|QMessageBox::No)
             == QMessageBox::Yes)
     {
