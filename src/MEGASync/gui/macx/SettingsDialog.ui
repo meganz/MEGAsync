@@ -2902,7 +2902,7 @@ margin-right: 7px;
                        </size>
                       </property>
                       <property name="text">
-                       <string>Saving sync...</string>
+                       <string>Saving synchronised folders...</string>
                       </property>
                      </widget>
                     </item>

@@ -4362,11 +4362,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Purchase more storage</translation>
     </message>
     <message>
-        <source>Saving sync...</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders. Keep the 3 suspense periods, indicating to the user that action is in in progress.</translatorcomment>
-        <translation>Saving sync...</translation>
-    </message>
-    <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
         <translation>Some folders have not synchronised. For more information please hover over the yellow warning icon.</translation>
@@ -4633,6 +4628,16 @@ Do you want to restart MEGAsync now?</source>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
         <translation>Choose which files or folders you want to exclude from synchronisation.</translation>
+    </message>
+    <message>
+        <source>Saving synchronised folders…</source>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
+        <translation>Saving synchronised folders…</translation>
+    </message>
+    <message>
+        <source>Saving synchronised folders...</source>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
+        <translation>Saving synchronised folders...</translation>
     </message>
 </context>
 <context>

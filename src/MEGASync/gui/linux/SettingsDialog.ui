@@ -1794,7 +1794,7 @@ margin: 0px;
            <item>
             <widget class="QLabel" name="lSavingSyncs">
              <property name="text">
-              <string>Saving sync...</string>
+              <string>Saving synchronised folders…</string>
              </property>
             </widget>
            </item>
