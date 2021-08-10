@@ -1687,7 +1687,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lOQWarning">
             <property name="text">
-             <string>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</string>
+             <string>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
