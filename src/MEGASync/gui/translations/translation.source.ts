@@ -25,19 +25,23 @@
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Storage</translation>
+        <translatorcomment>Label to indicate the section of used storage of the current account.</translatorcomment>
+        <translation>Storage</translation>
     </message>
     <message>
         <source>Transfer</source>
-        <translation type="unfinished">Transfer</translation>
+        <translatorcomment>Label to indicate the section of transfer used of the current account.</translatorcomment>
+        <translation>Transfer</translation>
     </message>
     <message>
         <source>Bin</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
+        <translation>Bin</translation>
     </message>
     <message>
         <source>Of that, size taken up by file versions:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
+        <translation>Of that, size taken up by file versions:</translation>
     </message>
 </context>
 <context>
@@ -441,79 +445,98 @@
     <name>BandwidthSettings</name>
     <message>
         <source>Bandwidth</source>
-        <translation type="unfinished">Bandwidth</translation>
+        <translatorcomment>Title of the dialog to manage Bandwidth settings/preferences.</translatorcomment>
+        <translation>Bandwidth</translation>
     </message>
     <message>
         <source>Upload rate limit</source>
-        <translation type="unfinished">Upload rate limit</translation>
+        <translatorcomment>Section title for upload rate limit details.</translatorcomment>
+        <translation>Upload rate limit</translation>
     </message>
     <message>
         <source>No limit</source>
-        <translation type="unfinished">No limit</translation>
+        <translatorcomment>Radio button text to indicate no limit for transfer rate.</translatorcomment>
+        <translation>No limit</translation>
     </message>
     <message>
         <source>Limit to:</source>
-        <translation type="unfinished">Limit to:</translation>
+        <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
+        <translation>Limit to:</translation>
     </message>
     <message>
         <source>KB/s</source>
-        <translation type="unfinished">KB/s</translation>
+        <translatorcomment>Rate unit of Kilo bytes per second.</translatorcomment>
+        <translation>KB/s</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation type="unfinished">Auto</translation>
+        <translatorcomment>Radio button text to indicate automatic rate limit.</translatorcomment>
+        <translation>Auto</translation>
     </message>
     <message>
         <source>(Max. 90% of available bandwidth)</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
+        <translation>(Max. 90% of available bandwidth)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
-        <translation type="unfinished">Download rate limit</translation>
+        <translatorcomment>Section title for download rate limit details.</translatorcomment>
+        <translation>Download rate limit</translation>
     </message>
     <message>
         <source>Number of connections per transfer</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
+        <translation>Number of connections per transfer</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translation type="unfinished">Downloads:</translation>
+        <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
+        <translation>Downloads:</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translation type="unfinished">Uploads:</translation>
+        <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
+        <translation>Uploads:</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
-        <translation type="unfinished">Don’t use HTTP</translation>
+        <translatorcomment>Checkbox label to set the option to not use http for connections.</translatorcomment>
+        <translation>Don’t use HTTP</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
+        <translation>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translatorcomment>Button label for cancel dialog.</translatorcomment>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Apply</translation>
+        <translatorcomment>Button label for apply and confirm the bandwidth changes (Windows and Linux)</translatorcomment>
+        <translation>Apply</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
-        <translation type="unfinished">Upload rate limit:</translation>
+        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
+        <translation>Upload rate limit:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
-        <translation type="unfinished">Download rate limit:</translation>
+        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
+        <translation>Download rate limit:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
+        <translation>Number of connections per transfer:</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
+        <translation>Update</translation>
     </message>
 </context>
 <context>
@@ -561,19 +584,23 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>Add folder</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
+        <translation>Add folder</translation>
     </message>
     <message>
         <source>Add synchronised folder</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
+        <translation>Add synchronised folder</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Add</translation>
+        <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
+        <translation>Add</translation>
     </message>
     <message>
         <source>Add synchronised folder:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
+        <translation>Add synchronised folder:</translation>
     </message>
 </context>
 <context>
@@ -1307,7 +1334,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>Choose</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
+        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (macOS)</translatorcomment>
         <translation>Choose</translation>
     </message>
     <message>
@@ -1348,7 +1375,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
+        <translation>Select</translation>
     </message>
 </context>
 <context>
@@ -3073,16 +3101,20 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>NewFolderDialog</name>
     <message>
         <source>New folder</source>
-        <translation type="unfinished">New folder</translation>
+        <translatorcomment>Title of the dialog to create a folder in your cloud drive.</translatorcomment>
+        <translation>New folder</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
-        <translation type="unfinished">Enter the new folder name:</translation>
+        <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
+        <translation>Enter the new folder name:</translation>
     </message>
     <message>
         <source>The following characters are not allowed:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Warning error shown when a user is trying to create a folder with a name that contains not allowed characters. %1 placeholder will be replaced by the list of forbidden charset.</translatorcomment>
+        <translation>The following characters are not allowed:
+%1</translation>
     </message>
 </context>
 <context>
@@ -3425,11 +3457,28 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Pro Lite</source>
-        <translation type="unfinished">Pro Lite</translation>
+        <translatorcomment>Label to refer Pro lite plan</translatorcomment>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Business</source>
-        <translation type="unfinished">Business</translation>
+        <translatorcomment>Label to refer Business plan</translatorcomment>
+        <translation>Business</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I plan</translatorcomment>
+        <translation>Pro I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II plan</translatorcomment>
+        <translation>Pro II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III plan</translatorcomment>
+        <translation>Pro III</translation>
     </message>
 </context>
 <context>
@@ -3456,15 +3505,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Show in folder</source>
-        <translation type="unfinished">Show in folder</translation>
+        <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
+        <translation>Show in folder</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
+        <translation>Show in Explorer</translation>
     </message>
     <message>
         <source>Show in Finder</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
+        <translation>Show in Finder</translation>
     </message>
 </context>
 <context>
@@ -3493,83 +3545,93 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>ProxySettings</name>
     <message>
         <source>Proxies</source>
-        <translation type="unfinished">Proxies</translation>
+        <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
+        <translation>Proxies</translation>
     </message>
     <message>
         <source>Proxy</source>
-        <translation type="unfinished">Proxy</translation>
+        <translatorcomment>Section title for Proxy settings.</translatorcomment>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Proxy settings:</source>
-        <translation type="unfinished">Proxy settings:</translation>
+        <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
+        <translation>Proxy settings:</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translatorcomment>HTTP proxy type</translatorcomment>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>SOCK5H</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>SOCK5H proxy type</translatorcomment>
+        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
-        <translation type="unfinished">Proxy server requires a password</translation>
+        <translatorcomment>Checkbox to indicate if the proxy needs authentication (username and password)</translatorcomment>
+        <translation>Proxy server requires a password</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation type="unfinished">Username:</translation>
+        <translatorcomment>Label to indicate the username of the proxy that is being configured.</translatorcomment>
+        <translation>Username:</translation>
     </message>
     <message>
         <source>Server:</source>
-        <translation type="unfinished">Server:</translation>
+        <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
+        <translation>Server:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished">Password:</translation>
+        <translatorcomment>Label to indicate the password of the proxy that is being configured.</translatorcomment>
+        <translation>Password:</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Proxy type:</translation>
+        <translatorcomment>Label to indicate the type of proxy that is being configured.</translatorcomment>
+        <translation>Proxy type:</translation>
     </message>
     <message>
         <source>No Proxy</source>
-        <translation type="unfinished">No Proxy</translation>
+        <translatorcomment>Radio button text to not select any proxy.</translatorcomment>
+        <translation>No Proxy</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Manual</translation>
+        <translatorcomment>Radio button to select manual proxy configuration.</translatorcomment>
+        <translation>Manual</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translatorcomment>Button text for cancel option.</translatorcomment>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Apply</translation>
-    </message>
-    <message>
-        <source>Bandwidth</source>
-        <translation type="unfinished">Bandwidth</translation>
+        <translatorcomment>Button text for Apply option.(Linux and Windows)</translatorcomment>
+        <translation>Apply</translation>
     </message>
     <message>
         <source>Auto-detect</source>
-        <translation type="unfinished">Auto-detect</translation>
+        <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
+        <translation>Auto-detect</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No proxy</source>
-        <translation type="unfinished">No proxy</translation>
+        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
+        <translation>Update</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translation type="unfinished">Your proxy settings are invalid or the proxy doesn’t respond</translation>
+        <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
+        <translation>Your proxy settings are invalid or the proxy doesn’t respond</translation>
     </message>
 </context>
 <context>
@@ -4352,11 +4414,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Synced folders</translation>
     </message>
     <message>
-        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</source>
-        <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</translation>
-    </message>
-    <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
         <translation>Purchase more storage</translation>
@@ -4385,11 +4442,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Password</source>
         <translatorcomment>Section title for Password change in Security pane.</translatorcomment>
         <translation>Password</translation>
-    </message>
-    <message>
-        <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password generator.</source>
-        <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
-        <translation>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password generator.</translation>
     </message>
     <message>
         <source>Change Password</source>
@@ -4453,51 +4505,53 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>%1 (local cache):</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
+        <translation>%1 (local cache):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
+        <translation>SyncDebris (remote cache):</translation>
     </message>
     <message>
         <source>File versions:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
+        <translation>File versions:</translation>
     </message>
     <message>
         <source>Issue report:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
+        <translation>Issue report:</translation>
     </message>
     <message>
-        <source>Please let us know if you encountered any issues. Help us by providing as much detail as possible.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Storage quota:</source>
-        <translation type="unfinished"></translation>
+        <source>Storage space:</source>
+        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
+        <translation>Storage space:</translation>
     </message>
     <message>
         <source>Transfer quota:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
+        <translation>Transfer quota:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Some folders have not synchronised. For more information please hover over the yellow warning icon. </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
+        <translation>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
+        <translation>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</translation>
     </message>
     <message>
         <source>Excluded file and folder names:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
+        <translation>Excluded file and folder names:</translation>
     </message>
     <message>
         <source>Exclude by size:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
+        <translation>Exclude by size:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
@@ -4638,6 +4692,21 @@ Do you want to restart MEGAsync now?</source>
         <source>Saving synchronised folders...</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
         <translation>Saving synchronised folders...</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro III</translation>
     </message>
 </context>
 <context>
@@ -5578,6 +5647,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>Bytes</translation>
     </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
+        <translation>Pro Lite</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I tier</translatorcomment>
+        <translation>Pro I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier</translatorcomment>
+        <translation>Pro II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier</translatorcomment>
+        <translation>Pro III</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -5638,19 +5727,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
 
 Do you want to create one?</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Warning message shown when there is no valid link in Windows Start Menu. Explain the causes of not having it and let the user to recreate it.</translatorcomment>
+        <translation>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</translation>
     </message>
     <message>
         <source>Yes (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button text for to confirm the creation of link at Start Menu (Windows only)</translatorcomment>
+        <translation>Yes (recommended)</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">No</translation>
+        <translatorcomment>Button text to not discard warning message.</translatorcomment>
+        <translation>No</translation>
     </message>
     <message>
         <source>No (never ask again)</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Button text to discard the option and never ask again if the problem is detected in the future.</translatorcomment>
+        <translation>No (never ask again)</translation>
     </message>
 </context>
 <context>
