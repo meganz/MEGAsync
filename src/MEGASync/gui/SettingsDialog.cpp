@@ -1173,21 +1173,21 @@ void SettingsDialog::updateAccountElements()
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
-            mUi->lAccountType->setText(QString::fromUtf8("Pro I"));
+            mUi->lAccountType->setText(tr("Pro I"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_II.png"));
-            mUi->lAccountType->setText(QString::fromUtf8("Pro II"));
+            mUi->lAccountType->setText(tr("Pro II"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_III.png"));
-            mUi->lAccountType->setText(QString::fromUtf8("Pro III"));
+            mUi->lAccountType->setText(tr("Pro III"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();

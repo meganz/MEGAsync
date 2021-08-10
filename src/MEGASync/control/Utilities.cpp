@@ -960,16 +960,16 @@ QString Utilities::getReadablePROplanFromId(int identifier)
     switch (identifier)
     {
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QString::fromUtf8("Pro Lite");
+            return QCoreApplication::translate("Utilities","Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QString::fromUtf8("Pro I");
+            return QCoreApplication::translate("Utilities","Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QString::fromUtf8("Pro II");
+            return QCoreApplication::translate("Utilities","Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QString::fromUtf8("Pro III");
+            return QCoreApplication::translate("Utilities","Pro III");
             break;
     }
 

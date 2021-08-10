@@ -84,15 +84,15 @@ void PlanWidget::updatePlanInfo()
             colorPrice = QString::fromUtf8("color: #ffa500;");
             break;
         case PRO_I:
-            ui->lProPlan->setText(QString::fromUtf8("Pro I"));
+            ui->lProPlan->setText(tr("Pro I"));
             colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case PRO_II:
-            ui->lProPlan->setText(QString::fromUtf8("Pro II"));
+            ui->lProPlan->setText(tr("Pro II"));
             colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case PRO_III:
-            ui->lProPlan->setText(QString::fromUtf8("Pro III"));
+            ui->lProPlan->setText(tr("Pro III"));
             colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case BUSINESS:
