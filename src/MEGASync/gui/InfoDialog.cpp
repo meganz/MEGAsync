@@ -1341,7 +1341,7 @@ void InfoDialog::on_bAddSync_clicked()
         //Hide highlighted menu entry when mouse over
         syncsMenu->installEventFilter(this);
 
-        QSignalMapper *menuSignalMapper = new QSignalMapper();
+        QSignalMapper *menuSignalMapper = new QSignalMapper(syncsMenu.get());
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         int activeFolders = 0;
@@ -1463,7 +1463,7 @@ void InfoDialog::on_bAddBackup_clicked()
         //Hide highlighted menu entry when mouse over
         backupsMenu->installEventFilter(this);
 
-        QSignalMapper* menuSignalMapper = new QSignalMapper();
+        QSignalMapper* menuSignalMapper = new QSignalMapper(backupsMenu.get());
         connect(menuSignalMapper, SIGNAL(mapped(QString)),
                 this, SLOT(openFolder(QString)), Qt::QueuedConnection);
 

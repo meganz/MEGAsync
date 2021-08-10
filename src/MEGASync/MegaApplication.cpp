@@ -6357,7 +6357,7 @@ void MegaApplication::createInfoDialogMenus()
         syncsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
 
-        QSignalMapper* menuSignalMapper = new QSignalMapper();
+        QSignalMapper* menuSignalMapper = new QSignalMapper(syncsMenu.get());
         connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         int activeFolders = 0;
@@ -6455,7 +6455,7 @@ void MegaApplication::createInfoDialogMenus()
                                                             "padding-top: 8px;"
                                                             "padding-bottom: 8px;}"));
 #endif
-        QSignalMapper* menuSignalMapper = new QSignalMapper();
+        QSignalMapper* menuSignalMapper = new QSignalMapper(backupsMenu.get());
         connect(menuSignalMapper, SIGNAL(mapped(QString)),
                 infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
