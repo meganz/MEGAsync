@@ -6,7 +6,7 @@
 class QMegaMessageBox : QMessageBox
 {
 public:
-    explicit QMegaMessageBox(QWidget *parent = 0) {};
+    explicit QMegaMessageBox(QWidget *parent = 0) : QMessageBox(parent) {};
 
     static QMessageBox::StandardButton information(QWidget *parent, const QString &title,
          const QString &text, QMessageBox::StandardButtons buttons = Ok,

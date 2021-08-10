@@ -318,7 +318,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     pricing = NULL;
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
-    noKeyDetected = 0;
     isFirstFileSynced = false;
     transferManager = NULL;
     cleaningSchedulerExecution = 0;
@@ -2432,7 +2431,7 @@ void MegaApplication::repositionInfoDialog()
     infoDialog->ensurePolished();
     auto initialDialogWidth  = infoDialog->width();
     auto initialDialogHeight = infoDialog->height();
-    QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
+    QTimer::singleShot(1, infoDialog, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
         if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -3254,6 +3253,7 @@ void MegaApplication::unlink(bool keepLogs)
     mQueringWhyAmIBlocked = false;
     whyamiblockedPeriodicPetition = false;
     megaApi->logout(true, nullptr);
+    megaApiFolders->setAccountAuth(nullptr);
     Platform::notifyAllSyncFoldersRemoved();
 
     for (unsigned i = 3; i--; )
@@ -8331,29 +8331,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         if (node->getChanges() & MegaNode::CHANGE_TYPE_ATTRIBUTES)
         {
             emit nodeAttributesChanged(node->getHandle());
-        }
-
-        if (!node->isRemoved() && node->getTag()
-                && !node->isSyncDeleted()
-                && (node->getType() == MegaNode::TYPE_FILE)
-                && node->getAttrString()->size())
-        {
-            //NO_KEY node created by this client detected
-            if (!noKeyDetected)
-            {
-                if (megaApi->isLoggedIn())
-                {
-                    fetchNodes();
-                }
-            }
-            else if (noKeyDetected > 20)
-            {
-                QMegaMessageBox::critical(nullptr, QString::fromUtf8("MEGAsync"),
-                    QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"));
-                preferences->setCrashed(true);
-                rebootApplication(false);
-            }
-            noKeyDetected++;
         }
     }
 }

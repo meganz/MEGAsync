@@ -26,17 +26,17 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
     MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                  QString::fromUtf8("Adding sync %1").arg(localFolder).toUtf8().constData());
 
-        api->syncFolder(type, localFolder.toUtf8().constData(),
-                        syncName.toUtf8().constData(), remoteHandle, nullptr,
-                        new ProgressFuncExecuterListener(progress,  true,
-                                                         [](MegaApi *api, MegaRequest *request,
-                                                         MegaError *e){
-                            ///// onRequestFinish Management: ////
-                        }));   
+
+    api->syncFolder(type, localFolder.toUtf8().constData(),
+                    syncName.toUtf8().constData(), remoteHandle, nullptr,
+                    new ProgressFuncExecuterListener(progress,  true,
+                                                     [](MegaApi *api, MegaRequest *request,
+                                                     MegaError *e){
+                        ///// onRequestFinish Management: ////
+                    }));
 }
 
-void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress,
-                            mega::MegaSync::SyncType type)
+void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
 {
     assert(api);
     if (!syncSetting)
@@ -46,31 +46,12 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
         return;
     }
 
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync").toUtf8().constData());
 
-    switch (type)
-    {
-        case mega::MegaSync::TYPE_BACKUP:
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing backup").toUtf8().constData());
-
-            api->removeBackup(syncSetting->backupId(),
-                              new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
-                                  ///// onRequestFinish Management: ////
-                              }));
-            break;
-        }
-        case mega::MegaSync::TYPE_TWOWAY:
-        default:
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync").toUtf8().constData());
-
-            api->removeSync(syncSetting->backupId(),
-                            new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
-                                ///// onRequestFinish Management: ////
-                            }));
-            break;
-        }
-    }
+    api->removeSync(syncSetting->backupId(),
+                    new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+                        ///// onRequestFinish Management: ////
+                    }));
 }
 
 void Controller::enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
@@ -121,21 +102,22 @@ void Controller::createMyBackupsDir(QString& name, ActionProgress* progress)
     }
     else
     {
+        assert(api);
         // Check for name collision
-        mega::MegaNode* rootNode (api->getRootNode());
-        mega::MegaNode* backupsDirNode (api->getChildNode(rootNode, name.toUtf8()));
+        auto  rootNode (MegaSyncApp->getRootNode());
+        std::unique_ptr<mega::MegaNode> backupsDirNode (api->getChildNode(rootNode.get(), name.toUtf8()));
 
-        if (backupsDirNode != nullptr)
+        if (backupsDirNode)
         {
             // Folder exists, report error
-            if (progress) progress->setFailed(MegaError::API_EARGS);
+            if (progress) progress->setFailed(MegaError::API_EEXIST);
         }
         else
         {            
             mega::SynchronousRequestListener synchro;
 
             // Create folder
-            api->createFolder(name.toUtf8(), rootNode, &synchro);
+            api->createFolder(name.toUtf8(), rootNode.get(), &synchro);
             synchro.wait();
 
             if (synchro.getError()->getErrorCode() != mega::MegaError::API_OK)
@@ -148,7 +130,7 @@ void Controller::createMyBackupsDir(QString& name, ActionProgress* progress)
             {
                 // Set the folder as MyBackups root folder
                 mega::MegaHandle handle (synchro.getRequest()->getNodeHandle());
-                backupsDirNode = api->getNodeByHandle(handle);
+                backupsDirNode.reset(api->getNodeByHandle(handle));
                 api->setMyBackupsFolder(backupsDirNode->getHandle(), &synchro);
                 synchro.wait();
 
@@ -166,9 +148,6 @@ void Controller::createMyBackupsDir(QString& name, ActionProgress* progress)
                 }
             }
         }
-
-        if (backupsDirNode) delete backupsDirNode;
-        if (rootNode) delete rootNode;
     }
 }
 
@@ -182,14 +161,15 @@ void Controller::setDeviceDir(QString& name, bool reUseDir, ActionProgress* prog
     }
     else
     {
+        assert(api);
         // Check if folder exists
-        mega::MegaNode* backupsDirNode (api->getNodeByHandle(Model::instance()->getBackupsDirHandle()));
-        mega::MegaNode* deviceDirNode = api->getChildNode(backupsDirNode, name.toUtf8());
+        std::unique_ptr<mega::MegaNode> backupsDirNode (api->getNodeByHandle(Model::instance()->getBackupsDirHandle()));
+        std::unique_ptr<mega::MegaNode> deviceDirNode (api->getChildNode(backupsDirNode.get(), name.toUtf8()));
 
-        if (deviceDirNode != nullptr && !reUseDir)
+        if (deviceDirNode && !reUseDir)
         {
             // Folder exists, report error
-            if (progress) progress->setFailed(MegaError::API_EARGS);
+            if (progress) progress->setFailed(MegaError::API_EEXIST);
         }
         else
         {
@@ -212,8 +192,6 @@ void Controller::setDeviceDir(QString& name, bool reUseDir, ActionProgress* prog
                 progress->setComplete();
             }
         }
-        if (backupsDirNode) delete backupsDirNode;
-        if (deviceDirNode) delete deviceDirNode;
     }
 }
 

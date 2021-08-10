@@ -17,7 +17,7 @@ class ProxySettings : public QDialog
     Q_OBJECT
 
 public:
-    explicit ProxySettings(MegaApplication *app, QWidget *parent = nullptr);
+    explicit ProxySettings(MegaApplication* app, QWidget* parent = nullptr);
     ~ProxySettings();
 
 private slots:
@@ -31,11 +31,11 @@ private:
     void initialize();
     void setManualMode(bool enabled);
 
-    Ui::ProxySettings *mUi;
-    MegaApplication   *mApp;
-    Preferences       *mPreferences;
-    ConnectivityChecker      *mConnectivityChecker;
-    MegaProgressCustomDialog *mProgressDialog;
+    Ui::ProxySettings* mUi;
+    MegaApplication* mApp;
+    Preferences* mPreferences;
+    ConnectivityChecker* mConnectivityChecker;
+    MegaProgressCustomDialog* mProgressDialog;
 };
 
 #endif // PROXYSETTINGS_H

@@ -42,7 +42,7 @@ KEY
 
 pacman-key --lsign-key 8F208FBF12FEE766AA32AEAF03C3AD3A7F068E5D
 
-sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 
 /bin/touch --no-create /usr/share/icons/hicolor &>/dev/null
 /bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null
@@ -62,7 +62,7 @@ sed -n '1h;1!H;${g;s/###REPO for MEGA###\n.*###END REPO for MEGA###//;p;}' -i /e
 }
 
 post_upgrade() {
-sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 
 /bin/touch --no-create /usr/share/icons/hicolor &>/dev/null
 /bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null

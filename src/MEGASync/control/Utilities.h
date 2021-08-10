@@ -263,6 +263,7 @@ class Utilities
 {
 public:
     static QString getSizeString(unsigned long long bytes);
+    static QString getSizeString(long long bytes);
     static QString getTimeString(long long secs, bool secondPrecision = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
