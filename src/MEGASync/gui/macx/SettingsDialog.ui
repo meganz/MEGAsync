@@ -1565,7 +1565,7 @@ margin-right: 32px;</string>
                   <string notr="true">margin-right: 1px;</string>
                  </property>
                  <property name="text">
-                  <string>Please let us know if you encountered any issues. Help us by providing as much detail as possible.</string>
+                  <string>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</string>
                  </property>
                  <property name="wordWrap">
                   <bool>true</bool>
@@ -2083,7 +2083,7 @@ margin-right: 7px;
                    <string notr="true"/>
                   </property>
                   <property name="text">
-                   <string>Storage quota:</string>
+                   <string>Storage space:</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2902,7 +2902,7 @@ margin-right: 7px;
                        </size>
                       </property>
                       <property name="text">
-                       <string>Saving sync...</string>
+                       <string>Saving synchronised folders...</string>
                       </property>
                      </widget>
                     </item>
@@ -2971,7 +2971,7 @@ margin-right: 7px;
                        <string notr="true"/>
                       </property>
                       <property name="text">
-                       <string>Some folders have not synchronised. For more information please hover over the yellow warning icon. </string>
+                       <string>Some folders have not synchronised. For more information please hover over the yellow warning icon.</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

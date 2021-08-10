@@ -371,7 +371,7 @@
             <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
-            <string>No proxy</string>
+            <string>No Proxy</string>
            </property>
           </widget>
          </item>

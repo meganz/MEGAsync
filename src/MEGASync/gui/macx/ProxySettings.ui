@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Bandwidth</string>
+   <string>Proxies</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#wSeparatorBottom
