@@ -33,7 +33,7 @@
   padding: 0px 4px 0px 16px;
 }
 
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload
 {
 	border: none;
 }
@@ -344,6 +344,10 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                    <height>24</height>
                   </size>
                  </property>
+
+                 <property name="toolTip">
+                  <string>Add Backups</string>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
@@ -358,7 +362,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   </size>
                  </property>
                  <property name="flat">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -378,13 +382,6 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="toolTip">
                   <string>Add Sync</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bAddSync
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -417,13 +414,6 @@ border: none;
                  </property>
                  <property name="toolTip">
                   <string>Upload</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bUpload
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -465,13 +455,6 @@ border: none;
                  </property>
                  <property name="toolTip">
                   <string>Show MEGAsync options</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bSettings
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>

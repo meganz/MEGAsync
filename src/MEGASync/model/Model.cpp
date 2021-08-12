@@ -519,13 +519,12 @@ mega::MegaHandle Model::getBackupsDirHandle()
     // We know the target dir: check existence and if it has not been put in the rubbish bin.
     if (handle != mega::INVALID_HANDLE)
     {
-        mega::MegaNode* backupsDirNode (api->getNodeByHandle(handle));
+        std::unique_ptr<mega::MegaNode> backupsDirNode (api->getNodeByHandle(handle));
         if (!backupsDirNode || backupsDirNode->getRestoreHandle() != mega::INVALID_HANDLE)
         {
             // Dir does not exist or has been put in RubbishBin
             handle = mega::INVALID_HANDLE;
         }
-        if (backupsDirNode) delete backupsDirNode;
     }
 
     // Update member if needed

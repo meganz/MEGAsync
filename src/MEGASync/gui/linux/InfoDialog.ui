@@ -41,7 +41,7 @@
   padding: 0px 4px 0px 16px;
 }
 
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload
 {
 	border: none;
 }
@@ -322,11 +322,17 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                    <height>24</height>
                   </size>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="toolTip">
+                  <string>Add Backups</string>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/Backup.png</normaloff>:/images/Backup.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -336,7 +342,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   </size>
                  </property>
                  <property name="flat">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -359,13 +365,6 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="toolTip">
                   <string>Add Sync</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bAddSync
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -401,13 +400,6 @@ border: none;
                  </property>
                  <property name="toolTip">
                   <string>Upload</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bUpload
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -449,13 +441,6 @@ border: none;
                  </property>
                  <property name="toolTip">
                   <string>Show MEGAsync options</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bSettings
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -861,7 +846,7 @@ margin-right: 4px;
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
                   <property name="sizePolicy">
@@ -1376,7 +1361,7 @@ background-color: transparent;
 }</string>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>4</number>
                         </property>
                         <widget class="QWidget" name="pUpdated">
                          <property name="sizePolicy">
