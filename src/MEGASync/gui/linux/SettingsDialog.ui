@@ -17,7 +17,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>MEGA Preferences</string>
+   <string>Settings</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -817,8 +817,11 @@ margin: 0px;
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Local folder with a backup of files deleted in MEGA</string>
+            </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -936,8 +939,11 @@ margin: 0px;
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Folder in MEGA with a backup of files deleted in the local computer</string>
+            </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -967,7 +973,7 @@ margin: 0px;
        <item>
         <widget class="QGroupBox" name="gFileVersions">
          <property name="title">
-          <string>File Versions</string>
+          <string>File versions</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <property name="leftMargin">
@@ -998,7 +1004,7 @@ margin: 0px;
              </size>
             </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -1051,7 +1057,7 @@ margin: 0px;
        <item>
         <widget class="QGroupBox" name="gBugReport">
          <property name="title">
-          <string>Bug Report</string>
+          <string>Issue report</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
@@ -1079,32 +1085,12 @@ margin: 0px;
             </property>
            </widget>
           </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_12">
-            <property name="spacing">
-             <number>0</number>
+          <item alignment="Qt::AlignRight">
+           <widget class="QPushButton" name="bSendBug">
+            <property name="text">
+             <string>Report Issue</string>
             </property>
-            <item>
-             <spacer name="horizontalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>1</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="bSendBug">
-              <property name="text">
-               <string>Report Issue</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1585,7 +1571,7 @@ margin: 0px;
                </column>
                <column>
                 <property name="text">
-                 <string>MEGA folder</string>
+                 <string>MEGA Folder</string>
                 </property>
                </column>
                <column>
@@ -1679,7 +1665,7 @@ margin: 0px;
           <item>
            <widget class="QLabel" name="lOQWarning">
             <property name="text">
-             <string>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</string>
+             <string>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -1808,7 +1794,7 @@ margin: 0px;
            <item>
             <widget class="QLabel" name="lSavingSyncs">
              <property name="text">
-              <string>Saving syncs...</string>
+              <string>Saving synchronised folders…</string>
              </property>
             </widget>
            </item>
@@ -2062,7 +2048,7 @@ margin: 0px;
                </size>
               </property>
               <property name="text">
-               <string>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password generator.</string>
+               <string>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
@@ -2328,7 +2314,7 @@ margin: 0px;
           <item>
            <widget class="QLabel" name="lChooseText">
             <property name="text">
-             <string>Choose which files or folders you want to exclude from the synchronisation</string>
+             <string>Choose which files or folders you want to exclude from synchronisation.</string>
             </property>
            </widget>
           </item>
@@ -2656,14 +2642,14 @@ margin: 0px;
             <item row="0" column="0">
              <widget class="QLabel" name="lUploadRateLimitText">
               <property name="text">
-               <string>Upload Rate Limit:</string>
+               <string>Upload rate limit:</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="lDownloadRateLimitText">
               <property name="text">
-               <string>Download Rate Limit:</string>
+               <string>Download rate limit:</string>
               </property>
              </widget>
             </item>
@@ -2746,7 +2732,7 @@ margin: 0px;
             <item row="0" column="0">
              <widget class="QLabel" name="lProxySettingsText">
               <property name="text">
-               <string>Proxy Settings:</string>
+               <string>Proxy settings:</string>
               </property>
              </widget>
             </item>

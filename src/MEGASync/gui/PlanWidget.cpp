@@ -80,28 +80,28 @@ void PlanWidget::updatePlanInfo()
     switch (details.level)
     {
         case PRO_LITE:
-            ui->lProPlan->setText(QString::fromUtf8("PRO LITE"));
+            ui->lProPlan->setText(tr("Pro Lite"));
             colorPrice = QString::fromUtf8("color: #ffa500;");
             break;
         case PRO_I:
-            ui->lProPlan->setText(QString::fromUtf8("PRO I"));
+            ui->lProPlan->setText(tr("Pro I"));
             colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case PRO_II:
-            ui->lProPlan->setText(QString::fromUtf8("PRO II"));
+            ui->lProPlan->setText(tr("Pro II"));
             colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case PRO_III:
-            ui->lProPlan->setText(QString::fromUtf8("PRO III"));
+            ui->lProPlan->setText(tr("Pro III"));
             colorPrice = QString::fromUtf8("color: #ff333a;");
             break;
         case BUSINESS:
-            ui->lProPlan->setText(QString::fromUtf8("BUSINESS"));
+            ui->lProPlan->setText(tr("Business"));
             colorPrice = QString::fromUtf8("color: #2BA6DE;");
             ui->lPeriod->setText(tr("per user %1").arg(ui->lPeriod->text()));
             break;
         default:
-            ui->lProPlan->setText(QString::fromUtf8("PRO"));
+            ui->lProPlan->setText(QString::fromUtf8("Pro"));
             colorPrice = QString::fromUtf8("color: #2BA6DE;");
             break;
     }

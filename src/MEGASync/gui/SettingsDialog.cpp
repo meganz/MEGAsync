@@ -1026,7 +1026,7 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
 
 void SettingsDialog::on_bUpdate_clicked()
 {
-    if (mUi->bUpdate->text() == tr("Check for updates"))
+    if (mUi->bUpdate->text() == tr("Check for Updates"))
     {
         mApp->checkForUpdates();
     }
@@ -1291,8 +1291,7 @@ void SettingsDialog::on_bLogout_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
     if (QMegaMessageBox::question(nullptr, tr("Logout"),
-                                  tr("Synchronization will stop working.") + QString::fromUtf8(" ")
-                                  + tr("Are you sure?"),
+                                  tr("Synchronization will stop working. Are you sure?"),
                                   QMessageBox::Yes|QMessageBox::No)
             == QMessageBox::Yes)
     {
@@ -1589,7 +1588,7 @@ void SettingsDialog::onCellClicked(int row, int column)
 #endif
 
     // Show in explorer action
-    auto showLocalAction (new MenuItemAction(tr("Show in %1").arg(QCoreApplication::translate("Platform", Platform::fileExplorerString)),
+    auto showLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
     connect(showLocalAction, &MenuItemAction::triggered,
             this, &SettingsDialog::showInFolderClicked);

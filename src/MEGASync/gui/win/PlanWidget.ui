@@ -130,7 +130,7 @@ QPushButton
          <string notr="true">margin-top: -10px;</string>
         </property>
         <property name="text">
-         <string notr="true">PRO LITE</string>
+         <string notr="true">Pro Lite</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

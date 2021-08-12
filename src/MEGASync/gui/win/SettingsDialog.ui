@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Preferences</string>
+   <string>Settings</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -813,8 +813,11 @@ font-weight: bold;
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Local folder with a backup of files deleted in MEGA</string>
+            </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -932,8 +935,11 @@ font-weight: bold;
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
+            <property name="toolTip">
+             <string>Folder in MEGA with a backup of files deleted in the local computer</string>
+            </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -963,7 +969,7 @@ font-weight: bold;
        <item>
         <widget class="QGroupBox" name="gFileVersions">
          <property name="title">
-          <string>File Versions</string>
+          <string>File versions</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <property name="leftMargin">
@@ -994,7 +1000,7 @@ font-weight: bold;
              </size>
             </property>
             <property name="text">
-             <string>%1</string>
+             <string notr="true">%1</string>
             </property>
            </widget>
           </item>
@@ -1047,11 +1053,11 @@ font-weight: bold;
        <item>
         <widget class="QGroupBox" name="gBugReport">
          <property name="title">
-          <string>Bug Report</string>
+          <string>Issue report</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
-           <number>0</number>
+           <number>10</number>
           </property>
           <property name="leftMargin">
            <number>10</number>
@@ -1405,7 +1411,7 @@ font-weight: bold;
      <widget class="QWidget" name="pSyncs">
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="spacing">
-        <number>0</number>
+        <number>8</number>
        </property>
        <property name="leftMargin">
         <number>20</number>
@@ -1567,7 +1573,7 @@ font-weight: bold;
                </column>
                <column>
                 <property name="text">
-                 <string>MEGA folder</string>
+                 <string>MEGA Folder</string>
                 </property>
                </column>
                <column>
@@ -1681,7 +1687,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lOQWarning">
             <property name="text">
-             <string>Your MEGA account is full. Uploads are disabled and folder synchronisation paused.</string>
+             <string>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -1825,7 +1831,7 @@ font-weight: bold;
               <item>
                <widget class="QLabel" name="lSavingSyncs">
                 <property name="text">
-                 <string>Saving syncs...</string>
+                 <string>Saving synchronised folders...</string>
                 </property>
                </widget>
               </item>
@@ -1905,6 +1911,9 @@ font-weight: bold;
      </widget>
      <widget class="QWidget" name="pSecurity">
       <layout class="QVBoxLayout" name="verticalLayout_20">
+       <property name="spacing">
+        <number>8</number>
+       </property>
        <property name="leftMargin">
         <number>20</number>
        </property>
@@ -1981,7 +1990,7 @@ font-weight: bold;
                </size>
               </property>
               <property name="text">
-               <string>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing account access if you forget your password, save your Recovery Key to a safe location.</string>
+               <string>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
@@ -2324,7 +2333,7 @@ font-weight: bold;
           <item>
            <widget class="QLabel" name="lChooseText">
             <property name="text">
-             <string>Choose which files or folders you want to exclude from the synchronisation</string>
+             <string>Choose which files or folders you want to exclude from synchronisation.</string>
             </property>
            </widget>
           </item>
