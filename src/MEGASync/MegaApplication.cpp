@@ -1059,7 +1059,8 @@ void MegaApplication::start()
     applyProxySettings();
     Platform::startShellDispatcher(this);
 #ifdef Q_OS_MACX
-    if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_9) //FinderSync API support from 10.10+
+    auto current = QOperatingSystemVersion::current();
+    if (current > QOperatingSystemVersion::OSXMavericks) //FinderSync API support from 10.10+
     {
         if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT))
         {
@@ -4637,28 +4638,25 @@ void MegaApplication::uploadActionClicked()
     }
 
     #ifdef __APPLE__
-         if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_7)
-         {
-                infoDialog->hide();
-                QApplication::processEvents();
-                if (appfinished)
-                {
-                    return;
-                }
+        infoDialog->hide();
+        QApplication::processEvents();
+        if (appfinished)
+        {
+            return;
+        }
 
-                QStringList files = MacXPlatform::multipleUpload(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
-                if (files.size())
-                {
-                    QQueue<QString> qFiles;
-                    foreach(QString file, files)
-                    {
-                        qFiles.append(file);
-                    }
+        QStringList files = MacXPlatform::multipleUpload(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
+        if (files.size())
+        {
+            QQueue<QString> qFiles;
+            foreach(QString file, files)
+            {
+                qFiles.append(file);
+            }
 
-                    shellUpload(qFiles);
-                }
-         return;
-         }
+            shellUpload(qFiles);
+        }
+        return;
     #endif
 
     if (multiUploadFileDialog)

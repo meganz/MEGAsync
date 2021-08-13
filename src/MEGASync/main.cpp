@@ -429,7 +429,10 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_MACX
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running on macOS version: %1").arg(QString::number(QSysInfo::MacintoshVersion)).toUtf8().constData());
+    auto current = QOperatingSystemVersion::current();
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running on macOS version: %1.%2.%3")
+                 .arg(current.majorVersion()).arg(current.minorVersion()).arg(current.microVersion())
+                 .toUtf8().constData());
 
     if (!harfbuzzEnabled)
     {
