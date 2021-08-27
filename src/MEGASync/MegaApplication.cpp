@@ -2650,7 +2650,6 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     }
 
     #ifdef __APPLE__
-
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
                      .arg(QString::fromUtf8("[%1,%2]").arg(positionTrayIcon.x()).arg(positionTrayIcon.y()))
                      .toUtf8().constData());
@@ -2669,7 +2668,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         {
             *posx = screenGeometry.right() - dialog->width() - 1;
         }
-        *posy = screenIndex ? screenGeometry.top() + 22: screenGeometry.top();
+        *posy = screenGeometry.top();
 
         if (*posy == 0)
         {
@@ -4327,6 +4326,8 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
             QPoint p = point ? (*point) - QPoint(infoDialogMenu->sizeHint().width(), 0)
                                      : cursorPos;
+
+
             infoDialogMenu->update();
             infoDialogMenu->popup(p);
             displayedMenu = infoDialogMenu.get();
@@ -6489,10 +6490,16 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(exitAction);
 #ifdef _WIN32
+    // Disable drop shadow (appears squared in Windows)
+    infoDialogMenu->setAttribute(Qt::WA_TranslucentBackground);
+    infoDialogMenu->setWindowFlags(infoDialogMenu->windowFlags()
+                                   | Qt::FramelessWindowHint
+                                   | Qt::NoDropShadowWindowHint);
     //The following should not be required, but
     //prevents it from being truncated on the first display
     infoDialogMenu->show();
     infoDialogMenu->hide();
+
 #endif
 }
 
@@ -6566,6 +6573,11 @@ void MegaApplication::createGuestMenu()
     guestMenu->addAction(exitActionGuest);
 
 #ifdef _WIN32
+    // Disable drop shadow (appears squared in Windows)
+    guestMenu->setAttribute(Qt::WA_TranslucentBackground);
+    guestMenu->setWindowFlags(guestMenu->windowFlags()
+                                   | Qt::FramelessWindowHint
+                                   | Qt::NoDropShadowWindowHint);
     //The following should not be required, but
     //prevents it from being truncated on the first display
     guestMenu->show();

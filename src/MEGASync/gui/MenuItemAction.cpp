@@ -111,7 +111,8 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
 {
     container->setMinimumHeight(32);
     container->setMaximumHeight(32);
-    container->setStyleSheet(QString::fromAscii("#wContainer { margin-left: 20px; padding: 0px; } QLabel {font-family: Lato; font-size: 14px;}"));
+    container->setStyleSheet(QString::fromAscii("#wContainer { margin-left: 20px; padding: 0px; } QLabel {font-family: Lato; font-size: 14px;}"
+                                                "QPushButton { border: none; }"));
 
     iconButton = new QPushButton();
     iconButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
@@ -124,7 +125,6 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
         iconButton->setIconSize(sizes.at(0));
     }
     iconButton->setIcon(*icon);
-    iconButton->setFlat(true);
 
     title->setParent(container);
     title->setStyleSheet(QString::fromAscii("color: %1;").arg(getColor()));
