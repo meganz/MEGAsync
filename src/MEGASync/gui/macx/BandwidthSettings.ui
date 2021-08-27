@@ -1097,6 +1097,12 @@ margin-bottom: 8px;
       </item>
       <item>
        <widget class="QLabel" name="lUseHttps">
+        <property name="maximumSize">
+         <size>
+          <width>350</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
