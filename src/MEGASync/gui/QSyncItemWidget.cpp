@@ -84,18 +84,18 @@ void QSyncItemWidget::configureSyncTypeUI(int type) const
 {
     switch (type)
     {
-    case LOCAL_FOLDER:
-    {
-        mUi->bSyncState->show();
+        case LOCAL_FOLDER:
+        {
+            mUi->bSyncState->show();
         }
-        break;
+            break;
         case REMOTE_FOLDER:
         {
             mUi->bSyncState->hide();
         }
-        break;
+            break;
         default:
-        break;
+            break;
     }
 }
 

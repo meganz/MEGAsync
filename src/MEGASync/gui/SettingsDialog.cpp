@@ -38,10 +38,10 @@ using namespace mega;
 #ifdef Q_OS_MACOS
 //Const values used for macOS Settings dialog resize animation
 constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{590};
+constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{583};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
-constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
+constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{525};
 // FIXME: Re-evaluate sizes for Network tab
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{196};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
@@ -1976,10 +1976,12 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
     QHBoxLayout* hl = new QHBoxLayout();
     QCheckBox* c = new QCheckBox();
 
-    hl->setContentsMargins(0, 0, 0, 0);
 #ifdef Q_OS_MACOS
     //Set fixed size to avoid misplaced of checkbox for sync row items
+    hl->setContentsMargins(0, 0, 11, 0);
     c->setFixedSize(16, 16);
+#else
+    hl->setContentsMargins(0, 0, 0, 0);
 #endif
 
     w->setLayout(hl);
