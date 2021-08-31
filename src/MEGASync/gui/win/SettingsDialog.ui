@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>592</width>
-    <height>691</height>
+    <width>595</width>
+    <height>733</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -531,7 +531,7 @@ font-weight: bold;
         <number>20</number>
        </property>
        <property name="bottomMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="gGeneral">
@@ -811,7 +811,7 @@ font-weight: bold;
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="toolTip">
              <string>Local folder with a backup of files deleted in MEGA</string>
@@ -933,7 +933,7 @@ font-weight: bold;
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="toolTip">
              <string>Folder in MEGA with a backup of files deleted in the local computer</string>
@@ -947,6 +947,9 @@ font-weight: bold;
            <widget class="QPushButton" name="bClearRemoteCache">
             <property name="text">
              <string>Clear</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1008,6 +1011,9 @@ font-weight: bold;
            <widget class="QPushButton" name="bClearFileVersions">
             <property name="text">
              <string>Clear</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1086,6 +1092,9 @@ font-weight: bold;
             <property name="text">
              <string>Report Issue</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -1127,7 +1136,7 @@ font-weight: bold;
         <number>20</number>
        </property>
        <property name="bottomMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="gAccountDetails">
@@ -1242,6 +1251,9 @@ font-weight: bold;
                <property name="text">
                 <string>My Account</string>
                </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
               </widget>
              </item>
              <item row="1" column="0" colspan="3">
@@ -1292,6 +1304,18 @@ font-weight: bold;
           </item>
           <item>
            <layout class="QHBoxLayout" name="storageSpaceTextLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QLabel" name="lStorage">
               <property name="focusPolicy">
@@ -1421,6 +1445,9 @@ font-weight: bold;
        </property>
        <property name="rightMargin">
         <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="gSyncs">
@@ -1699,6 +1726,9 @@ font-weight: bold;
             <property name="text">
              <string>Purchase more storage</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -1933,40 +1963,41 @@ font-weight: bold;
          </property>
          <layout class="QHBoxLayout" name="gRecoveryKeyLayout">
           <property name="spacing">
-           <number>20</number>
+           <number>32</number>
           </property>
           <property name="leftMargin">
-           <number>20</number>
+           <number>32</number>
           </property>
           <property name="topMargin">
            <number>10</number>
           </property>
           <property name="rightMargin">
-           <number>20</number>
+           <number>10</number>
           </property>
           <property name="bottomMargin">
            <number>10</number>
           </property>
           <item>
-           <widget class="QPushButton" name="bRecoveryKeyPic">
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+           <widget class="QLabel" name="lRecoveryKeyPic">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
-            </property>
-            <property name="iconSize">
+            <property name="minimumSize">
              <size>
               <width>72</width>
               <height>72</height>
              </size>
             </property>
-            <property name="flat">
-             <bool>true</bool>
+            <property name="styleSheet">
+             <string notr="true">QLabel
+{
+border-image: url(&quot;:/images/key_big.png&quot;);
+min-width: 72px;
+min-height: 72px;
+}</string>
             </property>
            </widget>
           </item>
@@ -1983,12 +2014,6 @@ font-weight: bold;
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>388</width>
-                <height>0</height>
-               </size>
-              </property>
               <property name="text">
                <string>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</string>
               </property>
@@ -2001,6 +2026,9 @@ font-weight: bold;
              <widget class="QPushButton" name="bExportMasterKey">
               <property name="text">
                <string>Download Key</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
               <property name="flat">
                <bool>false</bool>
@@ -2025,45 +2053,49 @@ font-weight: bold;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <property name="spacing">
-           <number>20</number>
+           <number>32</number>
           </property>
           <property name="leftMargin">
-           <number>20</number>
+           <number>32</number>
           </property>
           <property name="topMargin">
            <number>10</number>
           </property>
           <property name="rightMargin">
-           <number>20</number>
+           <number>10</number>
           </property>
           <property name="bottomMargin">
            <number>10</number>
           </property>
           <item>
-           <widget class="QPushButton" name="bChangePasswordPic">
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+           <widget class="QLabel" name="lChangePasswordPic">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../Resources_win.qrc">
-              <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
-            </property>
-            <property name="iconSize">
+            <property name="minimumSize">
              <size>
               <width>72</width>
               <height>72</height>
              </size>
             </property>
-            <property name="flat">
-             <bool>true</bool>
+            <property name="styleSheet">
+             <string notr="true">QLabel
+{
+border-image: url(&quot;:/images/lock_big.png&quot;);
+min-width: 72px;
+min-height: 72px;
+}</string>
             </property>
            </widget>
           </item>
           <item>
            <layout class="QVBoxLayout" name="gChangePasswordRightLayout">
+            <property name="spacing">
+             <number>10</number>
+            </property>
             <item>
              <widget class="QLabel" name="lChangePassword">
               <property name="sizePolicy">
@@ -2071,12 +2103,6 @@ font-weight: bold;
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>388</width>
-                <height>0</height>
-               </size>
               </property>
               <property name="text">
                <string>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</string>
@@ -2090,6 +2116,9 @@ font-weight: bold;
              <widget class="QPushButton" name="bChangePassword">
               <property name="text">
                <string>Change Password</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -2631,7 +2660,7 @@ font-weight: bold;
         <number>20</number>
        </property>
        <property name="bottomMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="gBandwidthSettings">
@@ -2649,13 +2678,13 @@ font-weight: bold;
            <number>10</number>
           </property>
           <property name="topMargin">
-           <number>10</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>10</number>
           </property>
           <property name="bottomMargin">
-           <number>10</number>
+           <number>8</number>
           </property>
           <item>
            <spacer name="horizontalSpacer_17">
@@ -2679,10 +2708,10 @@ font-weight: bold;
              <set>Qt::AlignCenter</set>
             </property>
             <property name="horizontalSpacing">
-             <number>4</number>
+             <number>10</number>
             </property>
             <property name="verticalSpacing">
-             <number>8</number>
+             <number>10</number>
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="lUploadRateLimitText">
@@ -2725,14 +2754,17 @@ font-weight: bold;
           </item>
           <item>
            <widget class="QPushButton" name="bOpenBandwidthSettings">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>24</height>
+             </size>
             </property>
             <property name="text">
              <string>Change Settings...</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -2744,7 +2776,7 @@ font-weight: bold;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>64</height>
+           <height>74</height>
           </size>
          </property>
          <property name="title">
@@ -2755,13 +2787,13 @@ font-weight: bold;
            <number>10</number>
           </property>
           <property name="topMargin">
-           <number>10</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>10</number>
           </property>
           <property name="bottomMargin">
-           <number>10</number>
+           <number>8</number>
           </property>
           <item>
            <spacer name="horizontalSpacer_7">
@@ -2785,10 +2817,10 @@ font-weight: bold;
              <set>Qt::AlignCenter</set>
             </property>
             <property name="horizontalSpacing">
-             <number>4</number>
+             <number>10</number>
             </property>
             <property name="verticalSpacing">
-             <number>8</number>
+             <number>10</number>
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="lProxySettingsText">
@@ -2821,14 +2853,11 @@ font-weight: bold;
           </item>
           <item>
            <widget class="QPushButton" name="bOpenProxySettings">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
             <property name="text">
              <string>Change Settings...</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -2862,7 +2891,7 @@ font-weight: bold;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">
-       <number>20</number>
+       <number>8</number>
       </property>
       <property name="topMargin">
        <number>20</number>
@@ -2892,6 +2921,9 @@ color: #0078D7;
           <width>24</width>
           <height>24</height>
          </size>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -2967,6 +2999,9 @@ color: #0078D7;
             <property name="text">
              <string>Logout</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -3009,6 +3044,9 @@ color: #0078D7;
             <property name="text">
              <string>Session history</string>
             </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -3034,6 +3072,9 @@ color: #0078D7;
            <widget class="QPushButton" name="bRestart">
             <property name="text">
              <string>Restart</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
