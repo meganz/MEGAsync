@@ -244,5 +244,6 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
+    void setShortCutsForToolBarItems();
 };
 #endif // SETTINGSDIALOG_H
