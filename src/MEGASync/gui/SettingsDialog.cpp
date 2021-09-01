@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include <QButtonGroup>
 #include <QtConcurrent/QtConcurrent>
+#include <QShortcut>
 
 #include <assert.h>
 
@@ -102,6 +103,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
+    // Add Ctrl+index keyboard shortcut for Settings tabs
+    setShortCutsForToolBarItems();
+
 
     connect(mUi->wStack, &QStackedWidget::currentChanged, [=](const int &newValue){
           mUi->wStackFooter->setCurrentIndex(newValue);
@@ -413,7 +417,7 @@ void SettingsDialog::initializeNativeUIComponents()
     this->window()->winId(); // create window->windowhandle()
     mToolBar->attachToWindowWithStyle(window()->windowHandle(), QCustomMacToolbar::StylePreference);
 
-    //Configure segmented control for +/- syncs
+    // Configure segmented control for +/- syncs
     mUi->wSyncsSegmentedControl->configureTableSegment();
     connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::addButtonClicked,
             this, &SettingsDialog::on_bAdd_clicked);
@@ -1363,7 +1367,6 @@ void SettingsDialog::loadSyncSettings()
                    syncSetting->getError(), syncSetting->getMegaHandle(),
                    syncSetting->backupId(), syncSetting);
     }
-
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 }
 
@@ -2554,5 +2557,16 @@ void SettingsDialog::updateNetworkTab()
         case Preferences::PROXY_TYPE_CUSTOM:
             mUi->lProxySettings->setText(tr("Manual"));
             break;
+    }
+}
+
+void SettingsDialog::setShortCutsForToolBarItems()
+{
+    // Provide quick access shortcuts for Settings panes via Ctrl+1,2,3..
+    // Ctrl is automagically translated to CMD key by Qt on macOS
+    for (int i = 0; i < mUi->wStack->count(); ++i)
+    {
+        QShortcut *scGeneral = new QShortcut(QKeySequence(QString::fromLatin1("Ctrl+%1").arg(i+1)), this);
+        QObject::connect(scGeneral, &QShortcut::activated, this, [=](){ openSettingsTab(i); });
     }
 }
