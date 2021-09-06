@@ -57,6 +57,7 @@ public:
     static bool shouldRunHttpsServer();
     static bool isUserActive();
     static double getUpTime();
+    static QString getDeviceName();
 
     static int fd;
 

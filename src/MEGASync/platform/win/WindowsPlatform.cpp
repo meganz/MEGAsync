@@ -1469,6 +1469,33 @@ bool WindowsPlatform::isUserActive()
     return true;
 }
 
+QString WindowsPlatform::getDeviceName()
+{
+    // First, try to read maker and model
+    QSettings settings (QLatin1Literal("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
+                        QSettings::NativeFormat);
+    QString vendor (settings.value(QLatin1Literal("BaseBoardManufacturer"),
+                                   QLatin1Literal("0")).toString());
+    QString model (settings.value(QLatin1String("SystemProductName"),
+                                  QLatin1Literal("0")).toString());
+    QString deviceName;
+    // If failure or empty strings, give hostname
+    if (vendor.isEmpty() && model.isEmpty())
+    {
+        deviceName = QSysInfo::machineHostName();
+        deviceName.remove(QLatin1Literal(".local"));
+    }
+    else
+    {
+        deviceName = vendor + QLatin1Literal(" ") + model;
+    }
+
+    return deviceName;
+}
+
+// Platform-specific strings
+const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
+const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
 
 
 ShellNotifier::~ShellNotifier()
@@ -1541,7 +1568,3 @@ void ShellNotifier::notify(const std::string& path) const
     // same as in WindowsPlatform::notifyItemChange()
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
 }
-
-// Platform-specific strings
-const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
-const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};

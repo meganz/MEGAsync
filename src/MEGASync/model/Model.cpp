@@ -1,9 +1,7 @@
 #include "Model.h"
 #include "platform/Platform.h"
 #include "control/AppStatsEvents.h"
-
 #include "QMegaMessageBox.h"
-#include <QHostInfo>
 
 #include <assert.h>
 
@@ -497,8 +495,8 @@ const QString& Model::getDeviceName()
         }
         else
         {
-            // If we still don't have one, use hostname from the OS
-            QString name = QHostInfo::localHostName();
+            // If we still don't have one, get it from the Platform
+            QString name = Platform::getDeviceName();
 
             // If nothing, use generic one.
             if (name.isNull())

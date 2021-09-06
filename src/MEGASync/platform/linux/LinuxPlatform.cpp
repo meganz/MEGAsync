@@ -501,6 +501,40 @@ std::string getProperty(xcb_connection_t * const connection,
     return std::string(buffer);
 }
 
+QString LinuxPlatform::getDeviceName()
+{
+    // First, try to read maker and model
+    QString vendor;
+    QFile vendorFile(QLatin1Literal("/sys/devices/virtual/dmi/id/board_vendor"));
+    if (vendorFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+            vendor = QString::fromUtf8(vendorFile.readLine()).trimmed();
+    }
+    vendorFile.close();
+
+    QString model;
+    QFile modelFile(QLatin1Literal("/sys/devices/virtual/dmi/id/product_name"));
+    if (modelFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+            model = QString::fromUtf8(modelFile.readLine()).trimmed();
+    }
+    modelFile.close();
+
+    QString deviceName;
+    // If failure or empty strings, give hostname
+    if (vendor.isEmpty() && model.isEmpty())
+    {
+        deviceName = QSysInfo::machineHostName();
+        deviceName.remove(QLatin1Literal(".local"));
+    }
+    else
+    {
+        deviceName = vendor + QLatin1Literal(" ") + model;
+    }
+
+    return deviceName;
+}
+
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
