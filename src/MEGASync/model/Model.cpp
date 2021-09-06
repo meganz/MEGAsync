@@ -197,6 +197,9 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
     QMutexLocker qm(&syncMutex);
 
+    // Ensure the device name is set
+    getDeviceName();
+
     std::shared_ptr<SyncSetting> cs;
     bool wasActive = false;
     bool wasInactive = false;

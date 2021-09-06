@@ -1159,7 +1159,6 @@ void MegaApplication::requestUserData()
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
-    model->getDeviceName();
 
     mThreadPool->push([=]()
     {//thread pool function
