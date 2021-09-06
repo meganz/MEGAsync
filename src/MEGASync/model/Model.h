@@ -47,7 +47,6 @@ private:
     Preferences *preferences;
     bool isFirstSyncDone = false;
     QString mDeviceName;
-    QString mBackupsDirName;
     mega::MegaHandle mBackupsDirHandle;
     ///////////// END OF SYNCS ////////////////////
 
@@ -114,7 +113,7 @@ public:
     QStringList getLocalFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     QList<mega::MegaHandle> getMegaFolderHandles(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
 
-    void setDeviceName(const QString& name);
+    void setDeviceName(const QString& name, bool setRemote = false);
     const QString& getDeviceName();
 
     void setBackupsDirHandle(mega::MegaHandle handle);

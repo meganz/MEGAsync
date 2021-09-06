@@ -27,7 +27,6 @@ Model *Model::instance()
 Model::Model() : QObject(),
     preferences (Preferences::instance()),
     mDeviceName(),
-    mBackupsDirName(),
     mBackupsDirHandle(mega::INVALID_HANDLE),
     syncMutex (QMutex::Recursive)
 {
@@ -330,6 +329,8 @@ void Model::reset()
     configuredSyncsMap.clear();
     syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
+    mDeviceName = QString();
+    mBackupsDirHandle = mega::INVALID_HANDLE;
     isFirstSyncDone = false;
 }
 
@@ -454,10 +455,24 @@ void Model::dismissUnattendedDisabledSyncs()
     emit syncDisabledListUpdated();
 }
 
-void Model::setDeviceName(const QString& name)
+void Model::setDeviceName(const QString& name, bool setRemote)
 {
-    mDeviceName = name;
-    MegaSyncApp->createAppMenus();
+    if (name != mDeviceName)
+    {
+        mDeviceName = name;
+
+        if (setRemote)
+        {
+            auto api (MegaSyncApp->getMegaApi());
+            assert(preferences->logged() && api);
+
+            mega::SynchronousRequestListener synchro;
+            api->setDeviceName(mDeviceName.toUtf8().constData(), &synchro);
+            synchro.wait();
+        }
+
+        MegaSyncApp->createAppMenus();
+    }
 }
 
 const QString& Model::getDeviceName()
@@ -465,8 +480,10 @@ const QString& Model::getDeviceName()
     // If we don't have a device name, try to get it
     if (mDeviceName.isEmpty())
     {
-        mega::SynchronousRequestListener synchro;
         auto api (MegaSyncApp->getMegaApi());
+        assert(preferences->logged() && api);
+
+        mega::SynchronousRequestListener synchro;
         api->getDeviceName(&synchro);
         synchro.wait();
 
@@ -485,7 +502,7 @@ const QString& Model::getDeviceName()
             {
                 name = tr("Your computer");
             }
-            setDeviceName(name);
+            setDeviceName(name, true);
         }
     }
 
