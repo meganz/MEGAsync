@@ -2022,7 +2022,7 @@ min-height: 72px;
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Download Key</string>
+               <string>Export Key</string>
               </property>
               <property name="autoDefault">
                <bool>false</bool>

@@ -170,7 +170,6 @@ set (FORMS
 # added per platform    ${MEGAsyncDir}/gui/${UiDir}/LockedPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/VerifyLockMessage.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaInfoMessage.ui
-    ${MEGAsyncDir}/gui/${UiDir}/DynamicTransferQuotaPopOver.ui
     ${MEGAsyncDir}/gui/${UiDir}/OverQuotaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
@@ -281,7 +280,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/VerifyLockMessage.h
     ${MEGAsyncDir}/gui/MegaInfoMessage.h
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.h
-#    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.h
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
@@ -340,7 +338,6 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
-        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
         )
 endif()
 
@@ -423,7 +420,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/VerifyLockMessage.cpp
     ${MEGAsyncDir}/gui/MegaInfoMessage.cpp
     ${MEGAsyncDir}/gui/WaitingSpinnerWidget.cpp
-#    ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
@@ -463,7 +459,6 @@ set (SRCS
 if (NOT CMAKE_HOST_APPLE)
    set (SRCS ${SRCS}
         ${MEGAsyncDir}/gui/LockedPopOver.cpp
-        ${MEGAsyncDir}/gui/DynamicTransferQuotaPopOver.cpp
        )
 endif (NOT CMAKE_HOST_APPLE)
 
@@ -565,7 +560,6 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.h
         ${MEGAsyncDir}/platform/macx/LockedPopOver.h
         ${MEGAsyncDir}/platform/macx/Protocol.h
-        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.h
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.h
 
         ${MEGAsyncDir}/platform/macx/MacXPlatform.cpp
@@ -583,7 +577,6 @@ else()
         ${MEGAsyncDir}/platform/macx/MacXLocalSocket.mm
         ${MEGAsyncDir}/platform/macx/MacXLocalSocketPrivate.mm
         ${MEGAsyncDir}/platform/macx/LockedPopOver.mm
-        ${MEGAsyncDir}/platform/macx/DynamicTransferQuotaPopOver.mm
         ${MEGAsyncDir}/platform/macx/QCustomMacToolbar.mm
 
         )

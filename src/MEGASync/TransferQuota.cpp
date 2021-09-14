@@ -74,7 +74,7 @@ void TransferQuota::checkExecuteDialog()
                             EVENT_MESSAGE_TRANSFER_OVER_QUOTA_DIALOG);
         if (!mUpgradeDialog)
         {
-            mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing);
+            mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
             QObject::connect(mUpgradeDialog, &UpgradeDialog::finished, this, &TransferQuota::upgradeDialogFinished);
             Platform::activateBackgroundWindow(mUpgradeDialog);
             mUpgradeDialog->show();
@@ -88,7 +88,6 @@ void TransferQuota::checkExecuteDialog()
         const auto endWaitTimeSinceEpoch = mWaitTimeUntil.time_since_epoch();
         const auto endWaitTimeSinceEpochSeconds = std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count();
         mUpgradeDialog->setTimestamp(endWaitTimeSinceEpochSeconds);
-        mUpgradeDialog->refreshAccountDetails();
     }
 }
 
@@ -187,16 +186,17 @@ void TransferQuota::refreshOverQuotaDialogDetails()
 {
     if(mUpgradeDialog)
     {
-        mUpgradeDialog->refreshAccountDetails();
     }
 }
 
-void TransferQuota::setOverQuotaDialogPricing(mega::MegaPricing *pricing)
+void TransferQuota::setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency)
 {
     mPricing = pricing;
+    mCurrency = currency;
+
     if(mUpgradeDialog)
     {
-        mUpgradeDialog->setPricing(pricing);
+        mUpgradeDialog->setPricing(pricing, currency);
     }
 }
 

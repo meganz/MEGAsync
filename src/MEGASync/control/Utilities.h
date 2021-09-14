@@ -29,11 +29,22 @@
 
 struct PlanInfo
 {
-    int amount;
-    QString currency;
     long long gbStorage;
     long long gbTransfer;
+    unsigned int minUsers;
     int level;
+    int gbPerStorage;
+    int gbPerTransfer;
+    unsigned int pricePerUserBilling;
+    unsigned int pricePerUserLocal;
+    unsigned int pricePerStorageBilling;
+    unsigned int pricePerStorageLocal;
+    unsigned int pricePerTransferBilling;
+    unsigned int pricePerTransferLocal;
+    QString billingCurrencySymbol;
+    QString billingCurrencyName;
+    QString localCurrencySymbol;
+    QString localCurrencyName;
 };
 
 struct PSA_info
@@ -264,7 +275,7 @@ class Utilities
 public:
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
-    static QString getTimeString(long long secs, bool secondPrecision = true);
+    static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
     static bool verifySyncedFolderLimits(QString path);
@@ -275,7 +286,7 @@ public:
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget *what);
-    static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
+    static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
     static QString getReadablePROplanFromId(int identifier);
     static void animateFadeout(QWidget *object, int msecs = 700);

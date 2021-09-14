@@ -315,7 +315,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     exitDialog = NULL;
     sslKeyPinningError = NULL;
     downloadNodeSelector = NULL;
-    pricing = NULL;
+    mPricing.reset();
+    mCurrency.reset();
     storageOverquotaDialog = NULL;
     infoWizard = NULL;
     isFirstFileSynced = false;
@@ -362,8 +363,6 @@ MegaApplication::~MegaApplication()
     {
         mMutexStealerThread->join();
     }
-
-    delete pricing;
 }
 
 void MegaApplication::showInterface(QString)
@@ -2076,7 +2075,7 @@ void MegaApplication::checkOverStorageStates()
                                "Overstorage dialog shown");
             if (!storageOverquotaDialog)
             {
-                storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
+                storageOverquotaDialog = new UpgradeOverStorage(megaApi, mPricing, mCurrency);
                 connect(storageOverquotaDialog, SIGNAL(finished(int)), this, SLOT(storageOverquotaDialogFinished(int)));
                 storageOverquotaDialog->show();
             }
@@ -2321,8 +2320,8 @@ void MegaApplication::cleanAll()
     downloader = NULL;
     delete delegateListener;
     delegateListener = NULL;
-    delete pricing;
-    pricing = NULL;
+    mPricing.reset();
+    mCurrency.reset();
 
     // Delete notifications stuff
     delete notificationsModel;
@@ -2892,9 +2891,9 @@ bool MegaApplication::isAppliedStorageOverquota() const
     return appliedStorageState == MegaApi::STORAGE_STATE_RED || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
 }
 
-MegaPricing *MegaApplication::getPricing() const
+std::shared_ptr<MegaPricing> MegaApplication::getPricing() const
 {
-    return pricing;
+    return mPricing;
 }
 
 int MegaApplication::getBlockState() const
@@ -6598,7 +6597,7 @@ void MegaApplication::refreshStorageUIs()
 
     if (storageOverquotaDialog)
     {
-        storageOverquotaDialog->refreshUsedStorage();
+        storageOverquotaDialog->refreshStorageDetails();
     }
 }
 
@@ -6887,17 +6886,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_PRICING:
     {
         if (e->getErrorCode() == MegaError::API_OK)
-        {
-            if (pricing)
-            {
-                delete pricing;
-            }
-            pricing = request->getPricing();
-            transferQuota->setOverQuotaDialogPricing(pricing);
+        {       
+            MegaPricing* pricing (request->getPricing());
+            MegaCurrency* currency (request->getCurrency());
 
-            if (storageOverquotaDialog)
+            if (pricing && currency)
             {
-                storageOverquotaDialog->setPricing(pricing);
+                mPricing.reset(pricing);
+                mCurrency.reset(currency);
+
+                transferQuota->setOverQuotaDialogPricing(mPricing, mCurrency);
+
+                if (storageOverquotaDialog)
+                {
+                    storageOverquotaDialog->setPricing(mPricing, mCurrency);
+                }
             }
         }
         break;
@@ -7463,7 +7466,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (storageOverquotaDialog)
         {
-            storageOverquotaDialog->refreshUsedStorage();
+            storageOverquotaDialog->refreshStorageDetails();
         }
 
         });//end of queued function
