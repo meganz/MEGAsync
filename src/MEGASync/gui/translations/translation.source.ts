@@ -5514,8 +5514,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You are using over 100% of the %1 available on your account.</source>
-        <translatorcomment>Informative message shown while over storage  to inform user that he is over 100% of his current plan. %1 will be replaced with the storage amount of his actual plan.</translatorcomment>
+        <source>100% of the %1 available used on your account.</source>
+        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
