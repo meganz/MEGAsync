@@ -1,6 +1,7 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
+    $$PWD/BalloonToolTip.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/SetupWizard.cpp \
@@ -72,6 +73,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BandwidthSettings.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/BalloonToolTip.h \
     $$PWD/InfoDialog.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/SetupWizard.h \
@@ -196,7 +198,6 @@ win32 {
                 $$PWD/win/LockedPopOver.ui \
                 $$PWD/win/VerifyLockMessage.ui \
                 $$PWD/win/MegaInfoMessage.ui \
-                $$PWD/win/DynamicTransferQuotaPopOver.ui \
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
@@ -253,7 +254,6 @@ macx {
                 $$PWD/macx/LockedPopOver.ui \
                 $$PWD/macx/VerifyLockMessage.ui \
                 $$PWD/macx/MegaInfoMessage.ui \
-                $$PWD/macx/DynamicTransferQuotaPopOver.ui \
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
@@ -278,10 +278,8 @@ macx {
                $$PWD/PermissionsWidget.cpp
 }
  else {
-    HEADERS += $$PWD/LockedPopOver.h \
-               $$PWD/DynamicTransferQuotaPopOver.h
-    SOURCES += $$PWD/LockedPopOver.cpp \
-               $$PWD/DynamicTransferQuotaPopOver.cpp
+    HEADERS += $$PWD/LockedPopOver.h
+    SOURCES += $$PWD/LockedPopOver.cpp
 }
 
 unix:!macx {
@@ -334,7 +332,6 @@ unix:!macx {
                 $$PWD/linux/LockedPopOver.ui \
                 $$PWD/linux/VerifyLockMessage.ui \
                 $$PWD/linux/MegaInfoMessage.ui \
-                $$PWD/linux/DynamicTransferQuotaPopOver.ui \
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \

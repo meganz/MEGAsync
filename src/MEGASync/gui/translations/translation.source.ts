@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>Of that, size taken up by file versions:</translation>
+        <translation>Size taken up by file version</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation>Remaining Downloads</translation>
+        <translation>Remaining downloads</translation>
     </message>
     <message>
         <source>download speed</source>
@@ -69,7 +69,7 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation>Remaining Uploads</translation>
+        <translation>Remaining uploads</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -94,12 +94,12 @@
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation>Remaining Download</translation>
+        <translation>Remaining download</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation>Remaining Upload</translation>
+        <translation>Remaining upload</translation>
     </message>
 </context>
 <context>
@@ -208,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation>Payment</translation>
+        <translation>Payments</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -859,8 +859,8 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Attach diagnostic log files to assist with debugging
-(in some cases it may contain details about your data, such as file or folder names)</translation>
+        <translation>Attach diagnostic log files to assist with debugging.
+In some cases they may contain details about your data, such as file or folder names.</translation>
     </message>
 </context>
 <context>
@@ -1151,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Please resolve your payment issue to avoid suspension of your business account.</translation>
+        <translation>Please resolve your payment issue as soon as possible to avoid any suspension of your business account</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1230,19 +1230,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>You don’t have write permissions in this local folder.</translation>
-    </message>
-</context>
-<context>
-    <name>DynamicTransferQuotaPopOver</name>
-    <message>
-        <source>Dynamic transfer quota</source>
-        <translatorcomment>Title label to indicate about the dynamic transfer quota used by current account.</translatorcomment>
-        <translation>Dynamic transfer quota</translation>
-    </message>
-    <message>
-        <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
-        <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over your current limit. To remove this limit, you can upgrade to Pro, which will give you your own transfer quota package and also ample extra storage space.[/A]</translation>
     </message>
 </context>
 <context>
@@ -1384,7 +1371,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Login</translation>
+        <translation>Log in</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -3432,53 +3419,69 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>month</translation>
     </message>
     <message>
-        <source>Storage</source>
-        <translation>Storage</translation>
+        <source>Great Value</source>
+        <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>UNLIMITED</source>
-        <translatorcomment>Label to indicate that business pro plan has unlimited storage and transfers quota.</translatorcomment>
-        <translation>UNLIMITED</translation>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Transfer</source>
-        <translatorcomment>Label to indicate transfer quota.</translatorcomment>
-        <translation>Transfer</translation>
+        <source>%1 per user</source>
+        <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>per user %1</source>
-        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation>per user %1</translation>
+        <source>minimum %1 users</source>
+        <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SCALABLE</source>
-        <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
-        <translation>SCALABLE</translation>
+        <source>storage</source>
+        <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Label to refer Pro lite plan</translatorcomment>
-        <translation>Pro Lite</translation>
+        <source>transfer</source>
+        <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Business</source>
-        <translatorcomment>Label to refer Business plan</translatorcomment>
-        <translation>Business</translation>
+        <source>Great value for secure cloud storage, sharing and communication.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pro I</source>
-        <translatorcomment>Label to refer Pro I plan</translatorcomment>
-        <translation>Pro I</translation>
+        <source>Rest easy knowing you have plenty of secure cloud storage.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pro II</source>
-        <translatorcomment>Label to refer Pro II plan</translatorcomment>
-        <translation>Pro II</translation>
+        <source>Store even more with our premium secure cloud storage offering.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pro III</source>
-        <translatorcomment>Label to refer Pro III plan</translatorcomment>
-        <translation>Pro III</translation>
+        <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Get started with secure file storage.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro Lite plan.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Additional storage charged at %1 per %2TB.</source>
+        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Additional transfer quota charged at %1 per %2TB.</source>
+        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4434,11 +4437,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</translation>
     </message>
     <message>
-        <source>Download Key</source>
-        <translatorcomment>Button label text for key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation>Download Key</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translatorcomment>Section title for Password change in Security pane.</translatorcomment>
         <translation>Password</translation>
@@ -4486,7 +4484,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Force a Full Scan</source>
         <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Force a Full Scan</translation>
+        <translation>Force a full scan</translation>
     </message>
     <message>
         <source>Session history</source>
@@ -4596,7 +4594,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Install Update</source>
         <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
-        <translation>Install Update</translation>
+        <translation>Install update</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours:</source>
@@ -4681,7 +4679,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>Choose which files or folders you want to exclude from synchronisation.</translation>
+        <translation>Choose folders or files you wish to exclude from synchronisation</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -4707,6 +4705,11 @@ Do you want to restart MEGAsync now?</source>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro III</translation>
+    </message>
+    <message>
+        <source>Export Key</source>
+        <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5443,23 +5446,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>UpgradeDialog</name>
     <message>
-        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translatorcomment>Label to indicate that current account has reached transfer limit and need to wait %1 time or upgrade the account to continue.</translatorcomment>
-        <translation>Please upgrade your account to continue immediately, or wait %1 to continue for free.</translation>
-    </message>
-    <message>
-        <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
-        <translation>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade your account[/A], which will give you your own transfer quota package and also ample extra storage space.</translation>
-    </message>
-    <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
         <translation>Depleted transfer quota</translation>
+    </message>
+    <message>
+        <source>Transfer Quota exhausted</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
+        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
+        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Receive two months free when you purchase a one-year Pro plan.</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
+        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5475,24 +5494,29 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Please upgrade your account to enjoy more storage space (your uploads will automatically resume).</translation>
     </message>
     <message>
-        <source>Earn more storage quota with [A]Achievements[/A].</source>
-        <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
-        <translation>Earn more storage quota with [A]Achievements[/A].</translation>
-    </message>
-    <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
         <translation>Your MEGA account is full.</translation>
     </message>
     <message>
-        <source>%1 of %2</source>
-        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
-        <translation>%1 of %2</translation>
+        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
+        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>USED STORAGE %1</source>
-        <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
-        <translation>USED STORAGE %1</translation>
+        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
+        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Receive two months free when you purchase a one-year Pro plan.</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using over 100% of the %1 available on your account.</source>
+        <translatorcomment>Informative message shown while over storage  to inform user that he is over 100% of his current plan. %1 will be replaced with the storage amount of his actual plan.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -220,7 +220,7 @@ public:
 
     void updateTrayIconMenu();
 
-    mega::MegaPricing *getPricing() const;
+    std::shared_ptr<mega::MegaPricing> getPricing() const;
 
     QuotaState getTransferQuotaState() const;
     int getAppliedStorageState() const;
@@ -478,7 +478,8 @@ protected:
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
-    mega::MegaPricing *pricing;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
     UpgradeOverStorage *storageOverquotaDialog;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
