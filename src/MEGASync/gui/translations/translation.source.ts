@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>Size taken up by file version</translation>
+        <translation type="unfinished">Size taken up by file versions</translation>
     </message>
 </context>
 <context>
