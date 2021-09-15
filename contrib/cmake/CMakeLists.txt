@@ -10,7 +10,7 @@ FILE(GLOB_RECURSE ui_files "${RepoDir}/src/MEGASync/gui/*.h" "${RepoDir}/src/MEG
 add_custom_target(ui_assets SOURCES ${ui_files})
 
 if(CMAKE_HOST_APPLE)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment version")
 endif()
 
 PROJECT(${MEGA_PROJECT_NAME})
