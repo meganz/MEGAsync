@@ -12,19 +12,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.5.3.0";
-const int Preferences::VERSION_CODE = 4503;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.6.0.0";
+const int Preferences::VERSION_CODE = 4600;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.5.3");
-QString Preferences::SDK_ID = QString::fromAscii("7c8db8f");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.0");
+QString Preferences::SDK_ID = QString::fromAscii("25b4e23");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- New improvements for the management of the syncs.\n"
-    "- Improved user experience when syncs are disabled.\n"
-    "- Enhanced system notifications to notify various account events.\n"
-    "- Improved user experience while working with huge number of transfers and syncs.\n"
-    "- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.\n"
-    "- Fixed detected crashes on Windows and Linux.\n"
+    "- Full redesign of settings with a new look and feel.\n"
+    "- Drop support for old macOS versions below 10.12.\n"
+    "- Add multicurrency support for upgrade options.\n"
+    "- Updated of third party libs and dependencies.\n"
+    "- Improved High DPI support for Windows platform.\n"
+    "- Fixed detected crashes on Windows, Linux and macOS.\n"
     "- Other performance improvements and adjustments.\n"
     "- Other UI fixes and adjustments."));
 
