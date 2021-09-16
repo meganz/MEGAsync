@@ -20,11 +20,10 @@ const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.0");
 QString Preferences::SDK_ID = QString::fromAscii("25b4e23");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Full redesign of settings with a new look and feel.\n"
-    "- Drop support for old macOS versions below 10.12.\n"
-    "- Add multicurrency support for upgrade options.\n"
-    "- Updated of third party libs and dependencies.\n"
-    "- Improved High DPI support for Windows platform.\n"
-    "- Fixed detected crashes on Windows, Linux and macOS.\n"
+    "- No longer supporting macOS versions below 10.12.\n"
+    "- Multi-currency support added for upgrade options.\n"
+    "- High DPI support for Windows platform improved.\n"
+    "- Crashes previously detected on Windows, Linux and macOS now fixed.\n"
     "- Other performance improvements and adjustments.\n"
     "- Other UI fixes and adjustments."));
 
