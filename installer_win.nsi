@@ -45,9 +45,9 @@ VIAddVersionKey "ProductVersion" "4.6.0.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH "C:\QtOnline\5.12.8\msvc2017_64"
+!define QT_PATH "C:\Qt\5.12.11\msvc2017_64"
 !else
-!define QT_PATH "C:\QtOnline\5.12.8\msvc2017"
+!define QT_PATH "C:\Qt\5.12.11\msvc2017"
 !endif
 
 !define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_8_MSVC2017_64bit-Release"
@@ -370,13 +370,13 @@ modeselected:
   SetOutPath "$INSTDIR"
 
   !ifdef BUILD_X64_VERSION
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
@@ -419,13 +419,13 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   !else
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
