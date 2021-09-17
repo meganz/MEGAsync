@@ -4,6 +4,7 @@
 #include "DesktopNotifications.h"
 #include <memory>
 #include "UpgradeDialog.h"
+#include "UpgradeOverStorage.h"
 #include <QObject>
 
 // Events messages strings
@@ -34,7 +35,7 @@ public:
     bool isQuotaWarning() const;
     void setUserProUsages(long long usedBytes, long long totalBytes);
     void refreshOverQuotaDialogDetails();
-    void setOverQuotaDialogPricing(mega::MegaPricing *mPricing);
+    void setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency);
     void closeDialogs();
     void checkQuotaAndAlerts();
     bool checkImportLinksAlertDismissed();
@@ -44,7 +45,8 @@ public:
 
 private:
     mega::MegaApi* mMegaApi;
-    mega::MegaPricing* mPricing;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
     Preferences* mPreferences;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     UpgradeDialog* mUpgradeDialog;

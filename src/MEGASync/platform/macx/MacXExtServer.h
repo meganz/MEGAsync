@@ -12,6 +12,7 @@ typedef enum {
    STRING_SEND = 3
 } StringID;
 
+
 class MacXExtServer : public QObject
 {
     Q_OBJECT
@@ -25,10 +26,6 @@ public:
 
     MacXExtServer(MegaApplication *app);
     virtual ~MacXExtServer();
-    void notifyItemChange(std::string *localPath, int newState);
-    void notifySyncAdd(QString path, QString syncName);
-    void notifySyncDel(QString path, QString syncName);
-    void notifyAllClients(int op);
 
 protected:
     MacXLocalServer *m_localServer;
@@ -41,6 +38,11 @@ public slots:
    void onClientDisconnected();
 
    void doSendToAll(QByteArray str);
+
+   void notifyItemChange(QString localPath, int newState);
+   void notifySyncAdd(QString path, QString syncName);
+   void notifySyncDel(QString path, QString syncName);
+   void notifyAllClients(int op);
 
 private:
    QString sockPath;

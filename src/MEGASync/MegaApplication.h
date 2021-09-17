@@ -39,7 +39,7 @@
 #include "model/Model.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
-#include "QFilterAlertsModel.h"
+#include "gui/QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
@@ -220,7 +220,7 @@ public:
 
     void updateTrayIconMenu();
 
-    mega::MegaPricing *getPricing() const;
+    std::shared_ptr<mega::MegaPricing> getPricing() const;
 
     QuotaState getTransferQuotaState() const;
     int getAppliedStorageState() const;
@@ -244,6 +244,7 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
+    void avatarReady();
     void pauseStateChanged();
 
 public slots:
@@ -478,7 +479,8 @@ protected:
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
-    mega::MegaPricing *pricing;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
     UpgradeOverStorage *storageOverquotaDialog;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
@@ -532,7 +534,6 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
     bool networkConnectivity;

@@ -4,11 +4,29 @@
 EncryptedSettings::EncryptedSettings(QString file) :
     QSettings(file, QSettings::IniFormat)
 {
+#ifdef _WIN32
+    // On Win, LocalStorageKey can change after an OS update, so don't fetch it every time from the OS.
+    // Use the cached one if available, and only get it from the OS if not.
+    QString keyTag = QString::fromUtf8("LocalStorageKey");
+    encryptionKey = QByteArray::fromHex(value(keyTag).toByteArray());
+    if (!encryptionKey.isEmpty())
+        return;
+#endif
+
+    // Get LocalStorageKey from the OS
     QByteArray fixedSeed("$JY/X?o=h·&%v/M(");
     QByteArray localKey = Platform::getLocalStorageKey();
     QByteArray xLocalKey = XOR(fixedSeed, localKey);
     QByteArray hLocalKey = QCryptographicHash::hash(xLocalKey, QCryptographicHash::Sha1);
     encryptionKey = hLocalKey;
+
+#ifdef _WIN32
+    // Cache LocalStorageKey
+    auto bkp = encryptionKey;
+    encryptionKey.clear(); // switch to no key internally when caching the OS one
+    setValue(keyTag, bkp.toHex());
+    encryptionKey = bkp; // switch back to the real encryptionKey
+#endif
 }
 
 void EncryptedSettings::setValue(const QString &key, const QVariant &value)

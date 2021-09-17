@@ -424,16 +424,16 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
             {
                 loadIconResourceUp = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_upload_item_ico.png")
                                                            : QString::fromUtf8(":/images/cloud_upload_item_ico@2x.png"));
-                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
-                                                 : QString::fromUtf8(":/images/uploading@2x.gif"));
+                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/uploading.gif")
+                                                 : QString::fromUtf8(":/animations/uploading@2x.gif"));
                 ui->bUpCancel->show();
             }
             else
             {
                 loadIconResourceUp = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
-                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
-                                                 : QString::fromUtf8(":/images/synching@2x.gif"));
+                animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/synching.gif")
+                                                 : QString::fromUtf8(":/animations/synching@2x.gif"));
                 ui->bUpCancel->hide();
             }
             break;
@@ -444,8 +444,8 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
             {
                 loadIconResourceDown = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_download_item_ico.png")
                                                            : QString::fromUtf8(":/images/cloud_download_item_ico@2x.png"));
-                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
-                                                 : QString::fromUtf8(":/images/downloading@2x.gif"));
+                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/downloading.gif")
+                                                 : QString::fromUtf8(":/animations/downloading@2x.gif"));
                 ui->bDownCancel->show();
 
             }
@@ -453,8 +453,8 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
             {
                 loadIconResourceDown = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
-                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
-                                                 : QString::fromUtf8(":/images/synching@2x.gif"));
+                animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/animations/synching.gif")
+                                                 : QString::fromUtf8(":/animations/synching@2x.gif"));
                 ui->bDownCancel->hide();
 
             }

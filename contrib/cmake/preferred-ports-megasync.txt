@@ -2,7 +2,7 @@
 # direct core dependencies of the SDK
 c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
 cryptopp/c303dd024e2dc03a0665ddffbb12a1077933e649
-curl/c303dd024e2dc03a0665ddffbb12a1077933e649:curl-empty-bindir.patch
+curl/c303dd024e2dc03a0665ddffbb12a1077933e649 all:curl-empty-bindir.patch
 libsodium/c303dd024e2dc03a0665ddffbb12a1077933e649
 openssl/c303dd024e2dc03a0665ddffbb12a1077933e649
 openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649
@@ -19,11 +19,21 @@ libzen/0.4.37
 # ffmpeg (video preview/thumbnail generation)
 ffmpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
 
-# image analysis: qt + libraw (image preview/thumbnail generation)
+# freeimage and its dependencies (image preview/thumbnail generation)
+freeimage/c303dd024e2dc03a0665ddffbb12a1077933e649 all:freeimage-bool-typedef-and-xbm-msvc-compiler-bug.patch
+libpng/c303dd024e2dc03a0665ddffbb12a1077933e649
+libjpeg-turbo/c303dd024e2dc03a0665ddffbb12a1077933e649
+tiff/c303dd024e2dc03a0665ddffbb12a1077933e649
+openjpeg/c303dd024e2dc03a0665ddffbb12a1077933e649
+libwebp/c303dd024e2dc03a0665ddffbb12a1077933e649
 libraw/c303dd024e2dc03a0665ddffbb12a1077933e649
-jasper/c303dd024e2dc03a0665ddffbb12a1077933e649:jasper-no-freeglut.patch
+jxrlib/c303dd024e2dc03a0665ddffbb12a1077933e649
+openexr/c303dd024e2dc03a0665ddffbb12a1077933e649 all:openexr-no-python.patch
+jasper/c303dd024e2dc03a0665ddffbb12a1077933e649 all:jasper-no-freeglut.patch
+liblzma/c303dd024e2dc03a0665ddffbb12a1077933e649
+#python3 not needed; it only provides python bindings to use openexr from python
+libffi/c303dd024e2dc03a0665ddffbb12a1077933e649
 opengl/c303dd024e2dc03a0665ddffbb12a1077933e649
-#freeglut (cross platform window manager) not needed; problematic on some platforms, pulling in many, many dependencies
 
 # pdfium libraries, specific version for build stability  (preview/thumbnail generation for pdfs)
 # (see 3rdParty_deps.txt on instructions on how to get source)
@@ -41,7 +51,7 @@ bzip2/c303dd024e2dc03a0665ddffbb12a1077933e649
 
 # for the tests, just to get the build through
 gtest/c303dd024e2dc03a0665ddffbb12a1077933e649
-readline/8.0 osx
+readline/8.0 all:off osx:on
 
 # cryptopp with static CRT, for fully-static updater
-cryptopp-staticcrt/8.2.0 windows
+cryptopp-staticcrt/8.2.0 all:off windows:on

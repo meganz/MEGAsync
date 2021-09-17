@@ -3,6 +3,7 @@
 #include "ui_StreamingFromMegaDialog.h"
 #include "NodeSelector.h"
 
+#include "QMegaMessageBox.h"
 #include "platform/Platform.h"
 #include "control/Utilities.h"
 #include "HighDpiResize.h"
@@ -330,8 +331,8 @@ void StreamingFromMegaDialog::requestPublicNodeInfo()
 void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status)
 {
     ui->lFileName->ensurePolished();
-    ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lFileName->maximumWidth()));
-    ui->lFileSize->setText(Utilities::getSizeString(selectedMegaNode->getSize()));
+    ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName,Qt::ElideMiddle,ui->lFileName->maximumWidth()));
+    ui->lFileSize->setText(Utilities::getSizeString(static_cast<unsigned long long>(selectedMegaNode->getSize())));
 
     QIcon typeIcon = Utilities::getExtensionPixmapMedium(fileName);
 
