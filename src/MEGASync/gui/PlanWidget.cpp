@@ -90,7 +90,7 @@ void PlanWidget::updatePlanInfo()
     // If text does not fit, use a smaller font size
     QFont font (mUi->lPrice->font());
     auto fontSize (font.pixelSize());
-    while (QFontMetrics(font).horizontalAdvance(localPriceString) > mUi->lPrice->width()
+    while (QFontMetrics(font).boundingRect(localPriceString).width() > mUi->lPrice->width()
            && fontSize > 1)
     {
         fontSize -= 1;
