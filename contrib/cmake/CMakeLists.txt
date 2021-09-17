@@ -242,6 +242,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/HighDpiResize.h
     ${MEGAsyncDir}/gui/ImportListWidgetItem.h
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.h
+    ${MEGAsyncDir}/gui/BalloonToolTip.h
     ${MEGAsyncDir}/gui/InfoDialog.h
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/gui/InfoWizard.h
@@ -364,6 +365,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/gui/SettingsDialog.cpp
+    ${MEGAsyncDir}/gui/BalloonToolTip.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/NodeSelector.cpp
