@@ -376,7 +376,7 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_atomic_wait.dll" "$INSTDIR\msvcp140_atomic_wait.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140__codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
@@ -838,9 +838,12 @@ Section Uninstall
 
   ;VC++ Redistributable
   Delete "$INSTDIR\vcruntime140.dll"
+  Delete "$INSTDIR\vcruntime140_1.dll"
   Delete "$INSTDIR\msvcp140.dll"
   Delete "$INSTDIR\msvcp140_1.dll"
   Delete "$INSTDIR\msvcp140_2.dll"
+  Delete "$INSTDIR\msvcp140_codecvt_ids.dll"
+  Delete "$INSTDIR\msvcp140_atomic_wait.dll"
   Delete "$INSTDIR\concrt140.dll"
   Delete "$INSTDIR\vccorlib140.dll"
   Delete "$INSTDIR\vcomp140.dll"
