@@ -481,6 +481,8 @@ if (CMAKE_HOST_WIN32)
         ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
         ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
         ${MEGAsyncDir}/platform/win/wintoastlib.cpp
+
+        ${MEGAsyncDir}/icon.rc
         )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     set (SRCS ${SRCS}
