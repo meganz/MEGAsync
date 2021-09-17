@@ -230,9 +230,9 @@ bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
         }
         else if (event->type() == QEvent::ToolTip)
         {
-            auto hoverHelpIcon {obj == mUi->lHelp};
-            auto hoverStorageInfo {obj == mUi->lBusinessStorageIcon};
-            auto hoverTransferInfo {obj == mUi->lBusinessTransferIcon};
+            bool hoverHelpIcon {obj == mUi->lHelp};
+            bool hoverStorageInfo {obj == mUi->lBusinessStorageIcon};
+            bool hoverTransferInfo {obj == mUi->lBusinessTransferIcon};
 
             if (hoverHelpIcon || hoverStorageInfo || hoverTransferInfo)
             {
