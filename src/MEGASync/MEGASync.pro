@@ -119,6 +119,7 @@ unix:!macx {
     GCC_VERSION = $$system("g++ -dumpversion")
     lessThan(GCC_VERSION, 5) {
         LIBS -= -lstdc++fs
+	QMAKE_CFLAGS += -std=c99
     }
 }
 
