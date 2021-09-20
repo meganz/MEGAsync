@@ -219,7 +219,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=31 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150000 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=32 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150000 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}
