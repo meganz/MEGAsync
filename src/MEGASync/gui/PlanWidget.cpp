@@ -10,8 +10,8 @@
 #include <QDesktopServices>
 #include <QGraphicsOpacityEffect>
 
-constexpr unsigned int NB_B_IN_1GB (1024 * 1024 * 1024);
-constexpr unsigned int NB_GB_IN_1TB (1024);
+constexpr int NB_B_IN_1GB (1024 * 1024 * 1024);
+constexpr int NB_GB_IN_1TB (1024);
 
 PlanWidget::PlanWidget(const PlanInfo& data, const QString& userAgent, QWidget* parent) :
     QWidget (parent),
@@ -319,7 +319,9 @@ QString PlanWidget::getTooltipMsg(HelpButton hoverOver)
             QString price (toPrice(mDetails.pricePerTransferLocal / 100.,
                                    mDetails.localCurrencySymbol));
             msg = tr("Additional storage charged at %1 per %2TB.")
-                  .arg(price, tbPerTransfer > 1 ? QString::number(tbPerTransfer) : QString());
+                  .arg(price, tbPerTransfer > 1 ?
+                           QLocale::system().toString(tbPerTransfer) + QChar(QChar::Nbsp)
+                         : QString());
             break;
         }
         case BANDWIDTH:
@@ -328,7 +330,9 @@ QString PlanWidget::getTooltipMsg(HelpButton hoverOver)
             QString price (toPrice(mDetails.pricePerStorageLocal / 100.,
                                    mDetails.localCurrencySymbol));
             msg = tr("Additional transfer quota charged at %1 per %2TB.")
-                  .arg(price, tbPerStorage > 1 ? QString::number(tbPerStorage) : QString());
+                  .arg(price, tbPerStorage > 1 ?
+                           QLocale::system().toString(tbPerStorage) + QChar(QChar::Nbsp)
+                         : QString());
             break;
         }
     }
