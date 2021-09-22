@@ -320,7 +320,7 @@ QString PlanWidget::getTooltipMsg(HelpButton hoverOver)
                                    mDetails.localCurrencySymbol));
             msg = tr("Additional storage charged at %1 per %2TB.")
                   .arg(price, tbPerTransfer > 1 ?
-                           QLocale::system().toString(tbPerTransfer) + QChar(160)
+                           QLocale::system().toString(tbPerTransfer) + QChar(QChar::Nbsp)
                          : QString());
             break;
         }
@@ -331,7 +331,7 @@ QString PlanWidget::getTooltipMsg(HelpButton hoverOver)
                                    mDetails.localCurrencySymbol));
             msg = tr("Additional transfer quota charged at %1 per %2TB.")
                   .arg(price, tbPerStorage > 1 ?
-                           QLocale::system().toString(tbPerStorage) + QChar(160)
+                           QLocale::system().toString(tbPerStorage) + QChar(QChar::Nbsp)
                          : QString());
             break;
         }
