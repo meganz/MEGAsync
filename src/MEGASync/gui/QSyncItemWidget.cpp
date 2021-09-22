@@ -21,7 +21,7 @@ QSyncItemWidget::QSyncItemWidget(int itemType, QWidget* parent) :
     installEventFilter(this);
     configureSyncTypeUI(itemType);
 
-    connect(Model::instance(), &Model::syncStateChanged,
+    connect(SyncModel::instance(), &SyncModel::syncStateChanged,
             this, &QSyncItemWidget::onSyncStateChanged);
 
     connect(MegaSyncApp, &MegaApplication::nodeMoved,
@@ -137,7 +137,7 @@ void QSyncItemWidget::enterEvent(QEvent* event)
             auto megaApi (MegaSyncApp->getMegaApi());
             std::unique_ptr<char[]> np (megaApi->getNodePathByNodeHandle(
                                             mSyncSetting->getMegaHandle()));
-            Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
+            SyncModel::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
                                                    : QString(),
                                                 mSyncSetting);
         });// end of thread pool function

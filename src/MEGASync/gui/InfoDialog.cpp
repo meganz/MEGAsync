@@ -210,7 +210,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
-    model = Model::instance();
+    model = SyncModel::instance();
     controller = Controller::instance();
 
     actualAccountType = -1;

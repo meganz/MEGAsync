@@ -9,7 +9,7 @@
 #include <QDataStream>
 
 #include "control/EncryptedSettings.h"
-#include "model/Model.h"
+#include "model/SyncModel.h"
 #include <assert.h>
 #include <memory>
 #include "megaapi.h"

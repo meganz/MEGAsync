@@ -36,7 +36,7 @@
 #include "control/ThreadPool.h"
 #include "control/MegaController.h"
 #include "control/Utilities.h"
-#include "model/Model.h"
+#include "model/SyncModel.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "gui/QFilterAlertsModel.h"
@@ -430,7 +430,7 @@ protected:
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
     Preferences *preferences;
-    Model *model;
+    SyncModel *model;
     Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;

@@ -54,7 +54,7 @@ static constexpr int NETWORK_LIMITS_MAX {9999};
 
 long long calculateCacheSize()
 {
-    Model* mModel = Model::instance();
+    SyncModel* mModel = SyncModel::instance();
     long long cacheSize = 0;
     for (int i = 0; i < mModel->getNumSyncedFolders(); i++)
     {
@@ -83,7 +83,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mApp (app),
     mPreferences (Preferences::instance()),
     mController (Controller::instance()),
-    mModel (Model::instance()),
+    mSyncController (SyncController::instance()),
+    mModel (SyncModel::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),
     mReloadUIpage (false),
@@ -218,8 +219,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     connect(mApp, &MegaApplication::storageStateChanged, this, &SettingsDialog::storageStateChanged);
     storageStateChanged(app->getAppliedStorageState());
 
-    connect(mModel, &Model::syncStateChanged, this, &SettingsDialog::onSyncStateChanged);
-    connect(mModel, &Model::syncRemoved, this, &SettingsDialog::onSyncStateChanged);
+    connect(mModel, &SyncModel::syncStateChanged, this, &SettingsDialog::onSyncStateChanged);
+    connect(mModel, &SyncModel::syncRemoved, this, &SettingsDialog::onSyncStateChanged);
 
     connect(mUi->tSyncs, &QTableWidget::cellClicked,
             this, &SettingsDialog::onCellClicked);
@@ -1632,7 +1633,7 @@ void SettingsDialog::showInFolderClicked()
 
 void SettingsDialog::showInMegaClicked()
 {
-    auto syncSetting = Model::instance()->getSyncSetting(mSelectedSyncRow);
+    auto syncSetting = SyncModel::instance()->getSyncSetting(mSelectedSyncRow);
 
     std::unique_ptr<char[]> np (MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(
                                     syncSetting->getMegaHandle()));
@@ -1648,7 +1649,7 @@ void SettingsDialog::showInMegaClicked()
             delete node;
         }
     }
-    Model::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
+    SyncModel::instance()->updateMegaFolder(np ? QString::fromUtf8(np.get())
                                            : QString(),
                                         syncSetting);
 }

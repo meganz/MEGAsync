@@ -1,8 +1,10 @@
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 
-SOURCES += $$PWD/Model.cpp \
+SOURCES += \
+           $$PWD/SyncModel.cpp \
            $$PWD/SyncSettings.cpp
 
-HEADERS  +=  $$PWD/Model.h \
+HEADERS  +=  \
+           $$PWD/SyncModel.h \
            $$PWD/SyncSettings.h

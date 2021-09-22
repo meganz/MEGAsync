@@ -55,7 +55,7 @@ void NotifyServer::acceptConnection()
 
         // send the list of current synced folders to the new client
         int localFolders = 0;
-        Model *model = Model::instance();
+        SyncModel *model = SyncModel::instance();
         for (int i = 0; i < model->getNumSyncedFolders(); i++)
         {
             auto syncSetting = model->getSyncSetting(i);

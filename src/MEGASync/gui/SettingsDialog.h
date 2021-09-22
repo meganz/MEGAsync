@@ -6,11 +6,13 @@
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
-#include "MegaController.h"
-#include "../model/Model.h"
-#include "megaapi.h"
 #include "HighDpiResize.h"
 #include "control/Utilities.h"
+
+#include "MegaController.h"
+#include "SyncController.h"
+#include "../model/SyncModel.h"
+#include "megaapi.h"
 
 #include <QDialog>
 #include <QFuture>
@@ -190,6 +192,7 @@ private:
                     mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
     void saveExcludeSyncNames();
     void updateNetworkTab();
+    void setShortCutsForToolBarItems();
 
     enum
     {
@@ -222,7 +225,8 @@ private:
     MegaApplication* mApp;
     Preferences* mPreferences;
     Controller* mController;
-    Model* mModel;
+    SyncController& mSyncController;
+    SyncModel* mModel;
     mega::MegaApi* mMegaApi;
     HighDpiResize mHighDpiResize;
     bool mProxyOnly;
@@ -244,6 +248,5 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
-    void setShortCutsForToolBarItems();
 };
 #endif // SETTINGSDIALOG_H

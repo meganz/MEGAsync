@@ -1,4 +1,4 @@
-#include "model/Model.h"
+#include "model/SyncModel.h"
 #include "Preferences.h"
 #include "platform/Platform.h"
 

@@ -15,22 +15,21 @@
 class Preferences;
 
 /**
- * @brief The Model class
+ * @brief The Sync Model class
  *
- * The idea of this class is to hold any state variable data.
- * and proceed to persist that data when required.
- * It intends to alliviate Preferences from that burden.
+ * The idea of this class is to hold any state variable data and proceed to persist that
+ * data when required. It is intended to alleviate Preferences from that burden.
  *
- * The Model would cover the funcionality related with with
- * updating of the data it manages (e.g: when a SyncConfiguration is updated,
- * it will call platform specific callbacks that deal with that)
+ * The SyncModel covers the functionality related with updating the data it manages
+ * (e.g: when a SyncConfiguration is updated, it will call platform specific callbacks that
+ *  deal with that)
  *
- *
- * The model will be updated when required and trigger events
- * when changes occur that should be noted by UI classes.
+ * The model will be updated when required and trigger events when changes occur that should
+ * be noted by UI classes.
  *
  */
-class Model : public QObject
+
+class SyncModel : public QObject
 {
     Q_OBJECT
 
@@ -40,33 +39,27 @@ signals:
     void syncDisabledListUpdated();
 
 private:
-    static std::unique_ptr<Model> model;
-    Model();
+    static std::unique_ptr<SyncModel> model;
+    SyncModel();
 
-    ///////////////// SYNCS ///////////////////////
     Preferences *preferences;
     bool isFirstSyncDone = false;
-    ///////////// END OF SYNCS ////////////////////
 
     void saveUnattendedDisabledSyncs();
 
 protected:
     QMutex syncMutex;
 
-    ///////////////// SYNCS ///////////////////////
     QList<mega::MegaHandle> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
 
     QSet<mega::MegaHandle> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
-    ///////////// END OF SYNCS ////////////////////
 
 
 public:
     void reset();
-    static Model *instance();
-
-    ///////////////// SYNCS ///////////////////////
+    static SyncModel *instance();
 
     /**
      * @brief Updates sync model
@@ -99,20 +92,19 @@ public:
 
     int getNumSyncedFolders();
 
-    //unattended disabled syncs
+    // FIXME: Remove unattended disabled syncs
     bool hasUnattendedDisabledSyncs() const;
     void addUnattendedDisabledSync(mega::MegaHandle tag);
     void removeUnattendedDisabledSync(mega::MegaHandle tag);
     void setUnattendedDisabledSyncs(QSet<mega::MegaHandle> tags);
     void dismissUnattendedDisabledSyncs();
+    // --
 
     QStringList getSyncNames();
     QStringList getSyncIDs();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
     QList<mega::MegaHandle> getMegaFolderHandles();
-
-    ///////////// END OF SYNCS ////////////////////
 
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSetting> cs);
 };

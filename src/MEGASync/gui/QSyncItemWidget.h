@@ -6,7 +6,7 @@
 #include "gui/MenuItemAction.h"
 #include <megaapi.h>
 
-#include "model/Model.h"
+#include "model/SyncModel.h"
 
 namespace Ui {
 class QSyncItemWidget;

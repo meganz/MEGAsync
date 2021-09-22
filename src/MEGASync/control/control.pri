@@ -16,6 +16,7 @@ SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/ThreadPool.cpp \
     $$PWD/MegaDownloader.cpp \
     $$PWD/MegaController.cpp \
+    $$PWD/SyncController.cpp \
     $$PWD/MegaSyncLogger.cpp \
     $$PWD/ConnectivityChecker.cpp \
     $$PWD/qrcodegen.c
@@ -34,6 +35,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/ThreadPool.h \
     $$PWD/MegaDownloader.h \
     $$PWD/MegaController.h \
+    $$PWD/SyncController.h \
     $$PWD/MegaSyncLogger.h \
     $$PWD/ConnectivityChecker.h \
     $$PWD/qrcodegen.h \

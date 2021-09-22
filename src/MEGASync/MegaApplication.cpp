@@ -8,6 +8,7 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
+#include "control/SyncController.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
@@ -437,7 +438,7 @@ void MegaApplication::initialize()
     connect(preferences, SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
     preferences->initialize(dataPath);
 
-    model = Model::instance();
+    model = SyncModel::instance();
 
     connect(model, SIGNAL(syncStateChanged(std::shared_ptr<SyncSetting>)),
             this, SLOT(onSyncStateChanged(std::shared_ptr<SyncSetting>)));
@@ -490,6 +491,8 @@ void MegaApplication::initialize()
     controller = Controller::instance();
     controller->setApi(this->megaApi);
 
+    SyncController::instance().setApi(megaApi);
+    SyncController::instance().setModel(model);
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);

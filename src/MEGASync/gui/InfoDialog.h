@@ -11,7 +11,7 @@
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
 #include "control/MegaController.h"
-#include "model/Model.h"
+#include "model/SyncModel.h"
 #include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
@@ -257,7 +257,7 @@ protected:
     QTimer transfersFinishedTimer;
     MegaApplication *app;
     Preferences *preferences;
-    Model *model;
+    SyncModel *model;
     Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
