@@ -760,6 +760,9 @@ void SettingsDialog::changeEvent(QEvent* event)
         onCacheSizeAvailable();
 
         updateNetworkTab();
+        updateStorageElements();
+        updateBandwidthElements();
+        updateAccountElements();
     }
     QDialog::changeEvent(event);
 }
