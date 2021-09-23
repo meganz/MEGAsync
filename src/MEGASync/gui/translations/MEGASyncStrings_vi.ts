@@ -3523,23 +3523,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
+        <source>- Full redesign of settings with a new look and feel.
+- No longer supporting macOS versions below 10.12.
+- Multi-currency support added for upgrade options.
+- High DPI support for Windows platform improved.
+- Crashes previously detected on Windows, Linux and macOS now fixed.
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation>- Các cải tiến mới cho việc quản lý các phiên đồng bộ.
-- Cải thiện trải nghiệm sử dụng khi phiên đồng bộ bị vô hiệu.
-- Hoạt động tốt hơn với hệ thống thông báo về các vấn đề liên quan tới tài khoản.
-- Cải thiện trải nghiệm sử dụng khi làm việc với số lượng lớn phiên đồng bộ.
-- Sửa lỗi về mức sử dụng CPU cao của gnome-shell trên hệ thống Ubuntu.
-- Sửa lỗi treo máy đã báo cáo trên Windows và Linux.
-- Một số cải tiến và điều chỉnh hiệu suất khác.
-- Sửa lỗi và một số điều chỉnh giao diện người dùng khác.</translation>
+        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

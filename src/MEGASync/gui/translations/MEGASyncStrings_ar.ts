@@ -3524,23 +3524,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
+        <source>- Full redesign of settings with a new look and feel.
+- No longer supporting macOS versions below 10.12.
+- Multi-currency support added for upgrade options.
+- High DPI support for Windows platform improved.
+- Crashes previously detected on Windows, Linux and macOS now fixed.
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation>- تحسينات جديدة لإدارة عمليات المزامنة.
-- تحسين تجربة المستخدم عند تعطيل المزامنة.
-- إخطارات النظام المحسنة لإعلام المستخدمين بأحداث الحساب المختلفة.
-- تحسين تجربة المستخدم أثناء العمل مع عدد كبير من عمليات تراسل المعطيات والمزامنة.
-- تم إصلاح مشكلات الاستخدام العالي لوحدة المعالجة المركزية CPU لصدفة جنوم gnome-shell عند التشغيل على أوبونتوUbuntu. 
-- إصلاح الأعطال المكتشفة على نظامي التشغيل ويندوز Windows و لينوكس Linux. 
-- تحسينات وتعديلات أخرى في الأداء. 
-- إصلاحات وتعديلات أخرى في واجهة المستخدم UI.</translation>
+        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4693,17 +4685,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>برو I</translation>
+        <translation>برو Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>برو II</translation>
+        <translation>برو Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>برو III</translation>
+        <translation>برو Pro III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -5678,17 +5670,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>برو I</translation>
+        <translation>برو Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>برو II</translation>
+        <translation>برو Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>برو III</translation>
+        <translation>برو  Pro III</translation>
     </message>
 </context>
 <context>

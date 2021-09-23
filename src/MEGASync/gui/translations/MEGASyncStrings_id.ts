@@ -36,12 +36,12 @@
     <message>
         <source>Bin</source>
         <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sampah</translation>
     </message>
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ukuran diambil oleh versi file</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unduhan yang tersisa</translation>
     </message>
     <message>
         <source>download speed</source>
@@ -69,7 +69,7 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unggahan yang tersisa</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -94,12 +94,12 @@
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unduhan yang tersisa</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unggahan yang tersisa</translation>
     </message>
 </context>
 <context>
@@ -208,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pembayaran</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -456,7 +456,7 @@
     <message>
         <source>No limit</source>
         <translatorcomment>Radio button text to indicate no limit for transfer rate.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak terbatas</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -476,7 +476,7 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>(Maks. 90% dari bandwidth yang tersedia)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -486,7 +486,7 @@
     <message>
         <source>Number of connections per transfer</source>
         <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jumlah koneksi per transfer</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -506,7 +506,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktifkan opsi ini hanya jika transfer anda tidak dimulai. Dalam keadaan normal, HTTP sudah cukup karena semua transfer sudah dienkripsi oleh MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -521,17 +521,17 @@
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batas kecepatan unggah:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batas kecepatan unduh:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
         <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jumlah koneksi per transfer:</translation>
     </message>
     <message>
         <source>Update</source>
@@ -585,12 +585,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add folder</source>
         <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tambah Folder</translation>
     </message>
     <message>
         <source>Add synchronised folder</source>
         <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tambah folder yang disinkronkan</translation>
     </message>
     <message>
         <source>Add</source>
@@ -600,7 +600,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tambah folder yang disinkronkan:</translation>
     </message>
 </context>
 <context>
@@ -859,7 +859,8 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lampirkan file log diagnostik untuk membantu debugging.
+Dalam beberapa kasus, mereka mungkin berisi detail tentang data anda, seperti nama file atau folder.</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Harap selesaikan masalah pembayaran anda sesegera mungkin untuk menghindari penangguhan akun bisnis anda</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -3099,7 +3100,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Warning error shown when a user is trying to create a folder with a name that contains not allowed characters. %1 placeholder will be replaced by the list of forbidden charset.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Karakter berikut tidak diperbolehkan:
+%1</translation>
     </message>
 </context>
 <context>
@@ -3429,22 +3431,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 per pengguna </translation>
     </message>
     <message>
         <source>minimum %1 users</source>
         <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>minimum %1 pengguna</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>penyimpanan</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>transfer</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
@@ -3459,7 +3461,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Simpan lebih banyak lagi dengan penawaran penyimpanan premium cloud kami yang aman.</translation>
     </message>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
@@ -3474,12 +3476,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Penyimpanan tambahan dikenakan biaya sebesar %1 per %2TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tambahan kuota transfer dikenakan biaya sebesar %1 per %2TB.</translation>
     </message>
 </context>
 <context>
@@ -3512,32 +3514,30 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di Penjelajah</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan di Finder</translation>
     </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
+        <source>- Full redesign of settings with a new look and feel.
+- No longer supporting macOS versions below 10.12.
+- Multi-currency support added for upgrade options.
+- High DPI support for Windows platform improved.
+- Crashes previously detected on Windows, Linux and macOS now fixed.
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation>- Perbaikan baru untuk pengelolaan sinkronisasi.
-- Pengalaman pengguna yang lebih baik saat sinkronisasi dinonaktifkan.
-- Pemberitahuan sistem yang ditingkatkan untuk memberi tahu pengguna tentang berbagai peristiwa akun.
-- Pengalaman pengguna yang lebih baik saat bekerja dengan sejumlah besar transfer dan sinkronisasi.
-- Memperbaiki masalah penggunaan CPU yang tinggi dari gnome-shell saat menjalankan Ubuntu.
-- Memperbaiki kerusakan yang terdeteksi pada Windows dan Linux.
+        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
+        <translation>- Desain ulang penuh pengaturan dengan tampilan dan nuansa baru.
+- Tidak lagi mendukung versi macOS di bawah 10.12.
+- Dukungan multi-mata uang ditambahkan untuk opsi peningkatan.
+- Dukungan DPI tinggi untuk platform Windows ditingkatkan.
+- Kerusakan yang sebelumnya terdeteksi di Windows, Linux, dan macOS sekarang diperbaiki.
 - Peningkatan dan penyesuaian kinerja lainnya.
 - Perbaikan dan penyesuaian UI lainnya.</translation>
     </message>
@@ -3547,7 +3547,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Proksi</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -3557,7 +3557,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pengaturan proxy:</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -3567,7 +3567,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>SOCK5H</source>
         <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -3597,12 +3597,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>No Proxy</source>
         <translatorcomment>Radio button text to not select any proxy.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak Ada Proksi</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Radio button to select manual proxy configuration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Manual</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4187,7 +4187,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktifkan / nonaktifkan</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4342,27 +4342,27 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Network</source>
         <translatorcomment>Title for the Settings -&gt; Network pane tab button. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Jaringan</translation>
     </message>
     <message>
         <source>Enable overlay icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktifkan ikon hamparan</translation>
     </message>
     <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cek Pembaruan</translation>
     </message>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1(cache lokal) </translation>
     </message>
     <message>
         <source>Space used:</source>
         <translatorcomment>Label used to indicate ammount of space in byte denominations for local, remote cache and file versions.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ruang digunakan:</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -4377,7 +4377,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (cache terpencil)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -4387,12 +4387,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Harap beri tahu kami jika anda mengalami masalah apa pun. Bantu kami dengan memberikan sedetail mungkin.</translation>
     </message>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Laporkan Masalah</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -4402,7 +4402,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Storage Space</source>
         <translatorcomment>Section title for account storage details.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ruang Penyimpanan</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
@@ -4412,17 +4412,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synced folders</source>
         <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder disinkronkan</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Beli lebih banyak penyimpanan</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Beberapa folder belum disinkronkan. Untuk informasi lebih lanjut, silakan arahkan kursor ke ikon peringatan kuning.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -4432,7 +4432,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kata sandi anda tidak disimpan oleh MEGA dan kami tidak dapat memulihkannya untuk anda. Untuk menghindari kehilangan akses ke akun anda, simpan Kunci Pemulihan anda di tempat yang aman.</translation>
     </message>
     <message>
         <source>Password</source>
@@ -4447,12 +4447,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder Bawaan</translation>
     </message>
     <message>
         <source>Move...</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pindahkan...</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4467,17 +4467,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop Application to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mulai ulang Aplikasi Desktop MEGA untuk menerapkan perubahan.</translation>
     </message>
     <message>
         <source>Change Settings...</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ubah Pengaturan...</translation>
     </message>
     <message>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Proksi</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>
@@ -4487,7 +4487,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Session history</source>
         <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sejarah sesi</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -4497,77 +4497,77 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Language:</source>
         <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bahasa:</translation>
     </message>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (cache local):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SyncDebris (cache terpencil):</translation>
     </message>
     <message>
         <source>File versions:</source>
         <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Versi file:</translation>
     </message>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Laporan masalah:</translation>
     </message>
     <message>
         <source>Storage space:</source>
         <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ruang penyimpanan:</translation>
     </message>
     <message>
         <source>Transfer quota:</source>
         <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kuota transfer:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Akun MEGA anda penuh. Unggahan dinonaktifkan dan sinkronisasi folder dijeda.</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Keamanan akun anda bergantung pada kekuatan kata sandi anda. Kata sandi harus unik dan tidak mungkin ditebak. Kami merekomendasikan menggunakan pengelola kata sandi.</translation>
     </message>
     <message>
         <source>Excluded file and folder names:</source>
         <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nama file dan folder yang dikecualikan:</translation>
     </message>
     <message>
         <source>Exclude by size:</source>
         <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kecualikan menurut ukuran:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batas kecepatan unduh:</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Batas kecepatan unggah:</translation>
     </message>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pengaturan proxy:</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktifkan integrasi Windows Explorer</translation>
     </message>
     <message>
         <source>B</source>
@@ -4597,7 +4597,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Used quota for the last %1 hours:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kuota yang digunakan untuk yang terakhir %1 jam:</translation>
     </message>
     <message>
         <source>Free</source>
@@ -4617,42 +4617,42 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sinkronisasi akan berhenti bekerja. Apa kamu yakin?</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Buka di MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hapus folder yang disinkronkan</translation>
     </message>
     <message>
         <source>Saving Sync settings</source>
         <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menyimpan pengaturan Sinkronisasi</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mulai ulang MEGAsync</translation>
     </message>
     <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak terbatas</translation>
     </message>
     <message>
         <source>No Proxy</source>
         <translatorcomment>Text label shown when there is no Proxy set in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak Ada Proksi</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Text label shown when there is a Proxy set in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Manual</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4667,27 +4667,27 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Laporan masalah</translation>
     </message>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder MEGA</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pilih folder atau file yang ingin anda kecualikan dari sinkronisasi</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menyimpan folder yang disinkronkan…</translation>
     </message>
     <message>
         <source>Saving synchronised folders...</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Menyimpan folder yang disinkronkan...</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -4707,7 +4707,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ekspor Kunci</translation>
     </message>
 </context>
 <context>
@@ -5451,7 +5451,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer Quota exhausted</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kuota Transfer habis</translation>
     </message>
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -5461,22 +5461,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Harap tingkatkan ke Pro untuk segera melanjutkan, atau tunggu %1 untuk melanjutkan secara gratis </translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Harga mata uang lokal hanya perkiraan. Semua transaksi yang ditampilkan dibebankan dalam Euro.</translation>
     </message>
     <message>
         <source>Receive two months free when you purchase a one-year Pro plan.</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dapatkan gratis dua bulan saat anda membeli paket Pro satu tahun.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unduhan anda tidak dapat dilanjutkan karena melebihi jatah transfer gratis anda.</translation>
     </message>
 </context>
 <context>
@@ -5499,22 +5499,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Untuk meningkatkan batas ini, anda dapat mrningkatkan akun anda, yang akan memberi anda ruang penyimpanan ekstra yang cukup.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Harga mata uang lokal hanya perkiraan. Semua transaksi yang ditampilkan dibebankan dalam Euro.</translation>
     </message>
     <message>
         <source>Receive two months free when you purchase a one-year Pro plan.</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dapatkan gratis dua bulan saat anda membeli paket Pro satu tahun.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>100% dari %1 tersedia digunakan di akun anda. </translation>
     </message>
 </context>
 <context>
@@ -5750,12 +5750,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 
 Do you want to create one?</source>
         <translatorcomment>Warning message shown when there is no valid link in Windows Start Menu. Explain the causes of not having it and let the user to recreate it.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1tidak menemukan tautan yang valid di Start Menu. Tidak memiliki tautan dapat mencegah berfungsinya pemberitahuan desktop dengan benar.
+
+Apakah anda ingin membuatnya?</translation>
     </message>
     <message>
         <source>Yes (recommended)</source>
         <translatorcomment>Button text for to confirm the creation of link at Start Menu (Windows only)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ya (disarankan)</translation>
     </message>
     <message>
         <source>No</source>
@@ -5765,7 +5767,7 @@ Do you want to create one?</source>
     <message>
         <source>No (never ask again)</source>
         <translatorcomment>Button text to discard the option and never ask again if the problem is detected in the future.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tidak (jangan tanya lagi)</translation>
     </message>
 </context>
 <context>

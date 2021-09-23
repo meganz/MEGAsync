@@ -1695,12 +1695,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upload</source>
         <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Încărcare</translation>
+        <translation>Încarcă</translation>
     </message>
     <message>
         <source>Download</source>
         <translatorcomment>Label to indicate a download.</translatorcomment>
-        <translation>Descărcare</translation>
+        <translation>Descarcă</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -1720,7 +1720,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate the transfer quota section of current account</translatorcomment>
-        <translation>Transferuri</translation>
+        <translation>Transfer</translation>
     </message>
     <message>
         <source>Open notification settings</source>
@@ -2293,12 +2293,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation>Încărcare</translation>
+        <translation>Încarcă</translation>
     </message>
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation>Descărcare</translation>
+        <translation>Descarcă</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
@@ -3523,23 +3523,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
+        <source>- Full redesign of settings with a new look and feel.
+- No longer supporting macOS versions below 10.12.
+- Multi-currency support added for upgrade options.
+- High DPI support for Windows platform improved.
+- Crashes previously detected on Windows, Linux and macOS now fixed.
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation>- Noi îmbunătățiri pentru gestionarea sincronizărilor.
-- A fost îmbunătățită experiența utilizatorului când sincronizările sunt dezactivate.
-- Au fost îmbunătățite notificările de sistem pentru a notifica utilizatorii despre diferite evenimente privind contul.
-- A fost îmbunătățită experiența utilizatorului în timp ce se lucrează cu un număr mare de transferuri și sincronizări.
-- Au fost remediate probleme privind utilizarea CPU-ului ridicată a gnome-shell atunci când rulează pe Ubuntu.
-- Au fost remediate defecțiuni detectate pe Windows și Linux.
-- Alte îmbunătățiri și ajustări ale performanței.
-- Alte remedieri și ajustări ale interfeței utilizatorului.</translation>
+        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5355,11 +5347,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation>Încărcare</translation>
+        <translation>Încarcă</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation>Descărcare</translation>
+        <translation>Descarcă</translation>
     </message>
     <message>
         <source>Open links</source>

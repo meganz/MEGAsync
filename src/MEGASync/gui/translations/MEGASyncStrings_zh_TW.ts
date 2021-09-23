@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation>檔案版本佔用的大小</translation>
+        <translation>檔案版本佔用大小</translation>
     </message>
 </context>
 <context>
@@ -3525,23 +3525,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
+        <source>- Full redesign of settings with a new look and feel.
+- No longer supporting macOS versions below 10.12.
+- Multi-currency support added for upgrade options.
+- High DPI support for Windows platform improved.
+- Crashes previously detected on Windows, Linux and macOS now fixed.
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation>- 同步管理新的改進。
-- 改善當同步停用時的使用者體驗。
-- 增強的系統通知功能，可提供用戶各種帳戶事件的通知。
-- 改善處理大量傳輸和同步時的使用者體驗。
-- 修正在Ubuntu上運行時，gnome-shell的CPU使用率過高的問題。
-- 修正在Windows和Linux上偵測到的當機問題。
-- 其它性能改進和調整。
-- 其它用戶界面修正和調整。</translation>
+        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
+        <translation>- 全新設計的設定介面。
+- 不再支援macOS 10.12以前版本。
+- 升級選項加入多種貨幣支援。
+- 改善對Windows平台的高解析度支援。
+- 修復先前在Windows、Linux、及macOS檢測到當機問題。
+- 其他性能改進和調整。
+- 其他介面修復和調整。</translation>
     </message>
 </context>
 <context>
@@ -5501,7 +5499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>為了提升上限，您可以升級您的帳戶來獲得充足額外的儲存空間。</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -5516,7 +5514,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>您帳戶%1可用空間已經使用100%。</translation>
     </message>
 </context>
 <context>
