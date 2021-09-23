@@ -743,6 +743,16 @@ void SettingsDialog::macOSretainSizeWhenHidden()
     spTransferQuota.setRetainSizeWhenHidden(true);
     mUi->pTransferQuota->setSizePolicy(spTransferQuota);
 }
+
+void SettingsDialog::reloadToolBarItemNames()
+{
+    bGeneral.get()->setText(tr("General"));
+    bAccount.get()->setText(tr("Account"));
+    bSyncs.get()->setText(tr("Sync"));
+    bSecurity.get()->setText(tr("Security"));
+    bFolders.get()->setText(tr("Folders"));
+    bNetwork.get()->setText(tr("Network"));
+}
 #endif
 
 void SettingsDialog::changeEvent(QEvent* event)
@@ -752,8 +762,7 @@ void SettingsDialog::changeEvent(QEvent* event)
         mUi->retranslateUi(this);
 
 #ifdef Q_OS_MACOS
-        // FIXME: Do we need to do the same for the other buttons?
-        bAccount.get()->setText(tr("Account"));
+        reloadToolBarItemNames();
         //review and check
         mUi->cStartOnStartup->setText(tr("Open at login"));
 #endif

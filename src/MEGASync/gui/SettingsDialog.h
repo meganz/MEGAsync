@@ -204,6 +204,7 @@ private:
     };
 
 #ifdef Q_OS_MACOS
+    void reloadToolBarItemNames();
     void macOSretainSizeWhenHidden();
     void animateSettingPage(int endValue, int duration = 150);
     QPropertyAnimation* mMinHeightAnimation;
