@@ -363,13 +363,13 @@ void SettingsDialog::showGuestMode()
 #ifdef Q_OS_MACOS
 void SettingsDialog::initializeNativeUIComponents()
 {
-    CocoaHelpButton* helpButton = new CocoaHelpButton(this);
+    CocoaHelpButton* helpButton = new CocoaHelpButton();
     mUi->layoutBottom->insertWidget(0, helpButton);
     connect(helpButton, &CocoaHelpButton::clicked,
             this, &SettingsDialog::on_bHelp_clicked);
 
     // Set native NSToolBar for settings.
-    mToolBar = ::mega::make_unique<QCustomMacToolbar>(this);
+    mToolBar = ::mega::make_unique<QCustomMacToolbar>();
 
     QString general(QString::fromUtf8("settings-general"));
     QString account(QString::fromUtf8("settings-account"));
