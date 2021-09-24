@@ -228,7 +228,6 @@ private:
     HighDpiResize mHighDpiResize;
     bool mProxyOnly;
     int mLoadingSettings;
-    bool mReloadUIpage;
     ThreadPool* mThreadPool;
     QStringList mLanguageCodes;
     QFutureWatcher<long long> mCacheSizeWatcher;
