@@ -1502,7 +1502,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                 if (settingsDialog)
                 {
                     delete settingsDialog;
-                    settingsDialog = NULL;
+                    settingsDialog = nullptr;
                 }
             }
             else if (storageState == MegaApi::STORAGE_STATE_PAYWALL)
@@ -1647,7 +1647,7 @@ void MegaApplication::closeDialogs(bool bwoverquota)
     setupWizard = NULL;
 
     delete settingsDialog;
-    settingsDialog = NULL;
+    settingsDialog = nullptr;
 
     delete streamSelector;
     streamSelector = NULL;
@@ -1714,11 +1714,6 @@ void MegaApplication::rebootApplication(bool update)
     trayIcon->hide();
     closeDialogs();
 
-#ifdef __APPLE__
-    cleanAll();
-    ::exit(0);
-#endif
-
     QApplication::exit();
 }
 
@@ -1738,10 +1733,6 @@ void MegaApplication::exitApplication(bool force)
         reboot = false;
         trayIcon->hide();
         closeDialogs();
-        #ifdef __APPLE__
-            cleanAll();
-            ::exit(0);
-        #endif
 
         QApplication::exit();
         return;
@@ -1767,11 +1758,6 @@ void MegaApplication::exitApplication(bool force)
             reboot = false;
             trayIcon->hide();
             closeDialogs();
-
-            #ifdef __APPLE__
-                cleanAll();
-                ::exit(0);
-            #endif
 
             QApplication::exit();
         }
@@ -6038,7 +6024,7 @@ void MegaApplication::openSettings(int tab)
 
         //Otherwise, delete it
         delete settingsDialog;
-        settingsDialog = NULL;
+        settingsDialog = nullptr;
     }
 
     //Show a new settings dialog
