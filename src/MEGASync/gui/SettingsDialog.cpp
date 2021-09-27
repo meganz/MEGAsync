@@ -2149,7 +2149,7 @@ void SettingsDialog::on_bChangePassword_clicked()
 void SettingsDialog::on_bSessionHistory_clicked()
 {
     QtConcurrent::run(QDesktopServices::openUrl,
-                      QUrl(QString::fromUtf8("mega://#fm/account/security")));
+                      QUrl(QString::fromUtf8("mega://#fm/account/history")));
 }
 
 // Folders -----------------------------------------------------------------------------------------
