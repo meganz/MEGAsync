@@ -2547,7 +2547,7 @@ margin-right: 7px;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>576</width>
+                 <width>0</width>
                  <height>20</height>
                 </size>
                </property>
@@ -3690,13 +3690,13 @@ margin-right: 7px;
                        </property>
                        <property name="minimumSize">
                         <size>
-                         <width>375</width>
+                         <width>0</width>
                          <height>20</height>
                         </size>
                        </property>
                        <property name="maximumSize">
                         <size>
-                         <width>375</width>
+                         <width>16777215</width>
                          <height>20</height>
                         </size>
                        </property>
