@@ -1066,7 +1066,7 @@ void SettingsDialog::on_bFullCheck_clicked()
     {
         if (currentDialog)
         {
-            on_bRestart_clicked();
+            restartApp();
         }
     }
 }
@@ -2458,6 +2458,18 @@ void SettingsDialog::saveExcludeSyncNames()
     mUi->bRestart->show();
 }
 
+void SettingsDialog::restartApp()
+{
+    // Restart MEGAsync
+#if defined(Q_OS_MACX)
+    mApp->rebootApplication(false);
+#else
+    //we enqueue this call, so as not to close before properly
+    // handling the exit of Settings Dialog
+    QTimer::singleShot(0, [] () {MegaSyncApp->rebootApplication(false);});
+#endif
+}
+
 void SettingsDialog::on_bRestart_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
@@ -2468,14 +2480,7 @@ void SettingsDialog::on_bRestart_clicked()
     {
         if (currentDialog)
         {
-            // Restart MEGAsync
-#if defined(Q_OS_MACX)
-            mApp->rebootApplication(false);
-#else
-            //we enqueue this call, so as not to close before properly
-            // handling the exit of Settings Dialog
-            QTimer::singleShot(0, [] () {MegaSyncApp->rebootApplication(false);});
-#endif
+            restartApp();
         }
     }
 }
