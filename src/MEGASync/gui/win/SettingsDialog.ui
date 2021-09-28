@@ -56,7 +56,7 @@ background-color: #FFFFFF;
 border-bottom: 3px solid #0078D7;
 }
 
-#bHelpIco, #bHelp, #bChangePasswordPic, #bRecoveryKeyPic
+#bChangePasswordPic, #bRecoveryKeyPic
 {
 border: none;
 }
@@ -2903,9 +2903,10 @@ min-height: 72px;
        <number>20</number>
       </property>
       <item>
-       <widget class="QPushButton" name="bHelpIco">
+       <widget class="QPushButton" name="bHelp">
         <property name="styleSheet">
          <string notr="true">QPushButton {
+border: none;
 color: #0078D7;
 }</string>
         </property>
