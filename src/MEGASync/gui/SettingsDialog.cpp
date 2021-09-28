@@ -86,7 +86,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mModel (Model::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),
-    mReloadUIpage (false),
     mThreadPool (ThreadPoolSingleton::getInstance()),
     mAccountDetailsDialog (nullptr),
     mCacheSize (-1),
@@ -247,7 +246,6 @@ void SettingsDialog::openSettingsTab(int tab)
     switch (tab)
     {
     case GENERAL_TAB:
-        mReloadUIpage = true;
 #ifndef Q_OS_MACOS
         mUi->bGeneral->click();
 #else
@@ -257,7 +255,6 @@ void SettingsDialog::openSettingsTab(int tab)
         break;
 
     case ACCOUNT_TAB:
-        mReloadUIpage = true;
 #ifndef Q_OS_MACOS
         mUi->bAccount->click();
 #else
@@ -780,12 +777,10 @@ void SettingsDialog::on_bGeneral_clicked()
 {
     emit userActivity();
 
-    if ((mUi->wStack->currentWidget() == mUi->pGeneral) && !mReloadUIpage)
+    if ((mUi->wStack->currentWidget() == mUi->pGeneral))
     {
         return;
     }
-
-    mReloadUIpage = false;
 
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
 
@@ -1247,12 +1242,10 @@ void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
 
-    if ((mUi->wStack->currentWidget() == mUi->pAccount) && !mReloadUIpage)
+    if ((mUi->wStack->currentWidget() == mUi->pAccount))
     {
         return;
     }
-
-    mReloadUIpage = false;
 
     mUi->wStack->setCurrentWidget(mUi->pAccount);
 
