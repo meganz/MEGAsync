@@ -7131,26 +7131,35 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
         model->reset();
+        periodicTasks();
 
-        if (preferences)
+        // Queue processing of logout cleanup to avoid race conditions
+        // due to threadifing processing.
+        // Eg: transfers added to data model after a logout
+        mThreadPool->push([this]()
         {
-            if (preferences->logged())
-            {
-                clearUserAttributes();
-                preferences->unlink();
-                removeAllFinishedTransfers();
-                clearViewedTransfers();
-                preferences->setFirstStartDone();
-            }
-            else
-            {
-                preferences->resetGlobalSettings();
-            }
+             Utilities::queueFunctionInAppThread([this]()
+             {
+                 if (preferences)
+                 {
+                     if (preferences->logged())
+                     {
+                         clearUserAttributes();
+                         preferences->unlink();
+                         removeAllFinishedTransfers();
+                         clearViewedTransfers();
+                         preferences->setFirstStartDone();
+                     }
+                     else
+                     {
+                         preferences->resetGlobalSettings();
+                     }
 
-            closeDialogs();
-            start();
-            periodicTasks();
-        }
+                     closeDialogs();
+                     start();                    
+                 }
+             });
+        });
         break;
     }
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
