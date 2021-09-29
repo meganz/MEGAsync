@@ -2881,7 +2881,7 @@ min-height: 72px;
      </widget>
     </widget>
    </item>
-   <item>
+   <item alignment="Qt::AlignBottom">
     <widget class="QWidget" name="wBottom" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
