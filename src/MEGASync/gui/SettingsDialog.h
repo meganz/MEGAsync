@@ -179,6 +179,8 @@ protected:
     void closeEvent(QCloseEvent * event);
 #endif
 
+    void restartApp();
+
 private:
     void loadSettings();
     void onCacheSizeAvailable();
