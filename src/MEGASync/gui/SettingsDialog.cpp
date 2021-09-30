@@ -2231,20 +2231,17 @@ void SettingsDialog::on_bUploadFolder_clicked()
     }
 
     const char* nPath = mMegaApi->getNodePath(node);
-    if (!nPath)
+    if (!nPath || !std::strlen(nPath))
     {
         delete nodeSelector;
         delete node;
         return;
     }
 
-    QString newPath = QString::fromUtf8(nPath);
-    if (newPath.compare(mUi->eUploadFolder->text())
-            || mHasDefaultUploadOption != nodeSelector->getDefaultUploadOption())
-    {
-        mHasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
-        mUi->eUploadFolder->setText(newPath);
-    }
+    mHasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
+    mUi->eUploadFolder->setText(QString::fromUtf8(nPath));
+    mPreferences->setHasDefaultUploadFolder(mHasDefaultUploadOption);
+    mPreferences->setUploadFolder(static_cast<long long>(node->getHandle()));
 
     delete nodeSelector;
     delete [] nPath;
@@ -2265,8 +2262,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
     }
 
     QString fPath = dialog->getPath();
-    if (fPath.size() && (fPath.compare(mUi->eDownloadFolder->text())
-                         || (mHasDefaultDownloadOption != dialog->isDefaultDownloadOption())))
+    if (!fPath.isEmpty())
     {
         QTemporaryFile test(fPath + QDir::separator());
         if (!test.open())
@@ -2279,40 +2275,11 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 
         mHasDefaultDownloadOption = dialog->isDefaultDownloadOption();
         mUi->eDownloadFolder->setText(fPath);
+        mPreferences->setDownloadFolder(fPath);
+        mPreferences->setHasDefaultDownloadFolder(mHasDefaultDownloadOption);
     }
 
     delete dialog;
-}
-
-void SettingsDialog::on_eUploadFolder_textChanged(const QString &text)
-{
-    if (mLoadingSettings) return;
-    MegaNode* node = mMegaApi->getNodeByPath(text.toUtf8().constData());
-    if (node)
-    {
-        mPreferences->setHasDefaultUploadFolder(mHasDefaultUploadOption);
-        mPreferences->setUploadFolder(static_cast<long long>(node->getHandle()));
-    }
-    else
-    {
-        mPreferences->setHasDefaultUploadFolder(false);
-        mPreferences->setUploadFolder(static_cast<long long>(mega::INVALID_HANDLE));
-    }
-    delete node;
-}
-
-void SettingsDialog::on_eDownloadFolder_textChanged(const QString &text)
-{
-    if (mLoadingSettings) return;
-    QString defaultDownloadPath = Utilities::getDefaultBasePath()
-                                  + QString::fromUtf8("/MEGAsync Downloads");
-    if (text.compare(QDir::toNativeSeparators(defaultDownloadPath))
-        || mPreferences->downloadFolder().size())
-    {
-        mPreferences->setDownloadFolder(text);
-    }
-
-    mPreferences->setHasDefaultDownloadFolder(mHasDefaultDownloadOption);
 }
 
 void SettingsDialog::on_bAddName_clicked()
