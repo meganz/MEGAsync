@@ -1213,7 +1213,7 @@ void SettingsDialog::updateAccountElements()
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
-            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/business.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Business.png"));
             mUi->lAccountType->setText(tr("Business"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
