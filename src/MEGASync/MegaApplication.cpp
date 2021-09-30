@@ -7131,7 +7131,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
         model->reset();
-        periodicTasks();
+
 
         // Queue processing of logout cleanup to avoid race conditions
         // due to threadifing processing.
@@ -7156,7 +7156,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                      }
 
                      closeDialogs();
-                     start();                    
+                     start();
+                     periodicTasks();
                  }
              });
         });
