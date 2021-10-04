@@ -21,7 +21,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation>Caricamento...</translation>
+        <translation>Caricamento…</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -873,7 +873,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation>inizio...</translation>
+        <translation>inizio…</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -888,12 +888,12 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation>riprovo...</translation>
+        <translation>riprovo…</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation>completo...</translation>
+        <translation>completo…</translation>
     </message>
     <message>
         <source>Added [A]</source>
@@ -1406,17 +1406,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation>Impostando il tuo account...</translation>
+        <translation>Impostando il tuo account…</translation>
     </message>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
-        <translation>Effettuando l&apos;accesso...</translation>
+        <translation>Effettuando il login…</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
-        <translation>Recupero lista file...</translation>
+        <translation>Recupero lista file…</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1461,7 +1461,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
-        <translation>Effettuando l&apos;uscita...</translation>
+        <translation>Effettuando l&apos;uscita…</translation>
     </message>
     <message>
         <source>Locked Account</source>
@@ -1491,7 +1491,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Creating account...</source>
         <translatorcomment>Informative label during creation of an account using MEGAsync</translatorcomment>
-        <translation>Creando l&apos;account...</translation>
+        <translation>Creando l&apos;account…</translation>
     </message>
     <message>
         <source>Why am I seeing this?</source>
@@ -1547,7 +1547,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation>Attendere...</translation>
+        <translation>Attendere…</translation>
     </message>
 </context>
 <context>
@@ -1982,7 +1982,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Accedendo...</translation>
+        <translation>Accedendo…</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -2012,7 +2012,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Effettuando l&apos;accesso...</translation>
+        <translation>Effettuando l&apos;accesso…</translation>
     </message>
     <message>
         <source>About</source>
@@ -2062,12 +2062,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>Installazione aggiornamento...</translation>
+        <translation>Installazione aggiornamento…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Controllo aggiornamenti...</translation>
+        <translation>Controllo aggiornamenti…</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2093,7 +2093,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Aggiornamento disponibile. In download...</translation>
+        <translation>Aggiornamento disponibile. In download…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -2243,7 +2243,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation>Recupero lista file...</translation>
+        <translation>Recupero lista file…</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -2803,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
-        <translation>Attendere...</translation>
+        <translation>Attendere…</translation>
     </message>
 </context>
 <context>
@@ -4296,7 +4296,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
-        <translation>MEGA-RECOVERYKEY</translation>
+        <translation>MEGA-CHIAVEDIRECUPERO</translation>
     </message>
     <message>
         <source>Unexpected error disabling sync %1</source>
@@ -4446,7 +4446,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Move...</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation>Sposta...</translation>
+        <translation>Sposta…</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4466,7 +4466,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings...</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation>Cambia le impostazioni...</translation>
+        <translation>Cambia le impostazioni…</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -4676,12 +4676,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Salvataggio delle cartelle sincronizzate...</translation>
+        <translation>Salvataggio delle cartelle sincronizzate…</translation>
     </message>
     <message>
         <source>Saving synchronised folders...</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Salvataggio delle cartelle sincronizzate...</translation>
+        <translation>Salvataggio delle cartelle sincronizzate…</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -4744,7 +4744,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Connessione...</translation>
+        <translation>Connessione…</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -4804,7 +4804,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Recupero lista file...</translation>
+        <translation>Recupero lista file…</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -4859,7 +4859,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Creando l&apos;account...</translation>
+        <translation>Creando l&apos;account…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4884,7 +4884,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Effettuando l&apos;accesso...</translation>
+        <translation>Effettuando l&apos;accesso…</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -4951,12 +4951,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation>Creando la cartella...</translation>
+        <translation>Creando la cartella…</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation>Effettuando l&apos;uscita...</translation>
+        <translation>Effettuando l&apos;uscita…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -5193,7 +5193,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>Seleziona media da...</translation>
+        <translation>Seleziona media da…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -5296,7 +5296,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation>Aggiungi...</translation>
+        <translation>Aggiungi…</translation>
     </message>
     <message>
         <source>Downloads</source>

@@ -3432,7 +3432,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation>%1 por cada usuario</translation>
+        <translation>%1 por usuario</translation>
     </message>
     <message>
         <source>minimum %1 users</source>
@@ -3515,7 +3515,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar en el Explorador</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -4188,7 +4188,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Activar/desactivar</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4423,7 +4423,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Algunas carpetas no se han sincronizado correctamente. Coloca el cursor sobre el ícono de advertencia amarillo para obtener más información.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -4448,7 +4448,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Carpetas predeterminadas</translation>
     </message>
     <message>
         <source>Move...</source>
@@ -4568,7 +4568,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Activar la integración del Explorador de Windows</translation>
     </message>
     <message>
         <source>B</source>
@@ -4638,7 +4638,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reiniciar MEGAsync</translation>
     </message>
     <message>
         <source>No limit</source>

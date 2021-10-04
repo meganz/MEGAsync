@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Espaço ocupado por versões de arquivos</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Downloads restantes</translation>
     </message>
     <message>
         <source>download speed</source>
@@ -69,7 +69,7 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uploads restantes</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -94,12 +94,12 @@
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Download restante</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Upload restante</translation>
     </message>
 </context>
 <context>
@@ -208,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pagamentos</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -859,7 +859,8 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Anexar arquivos de log de diagnóstico para ajudar na depuração.
+Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos ou pastas.</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, solucione o problema de pagamento o mais breve possível para evitar que a sua conta Business seja bloqueada.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -3430,22 +3431,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 por usuário</translation>
     </message>
     <message>
         <source>minimum %1 users</source>
         <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>mínimo de %1 usuários</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>de espaço de armazenamento</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>de cota transferência</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
@@ -3460,7 +3461,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Guarde uma maior quantidade de dados com a nossa oferta premium de armazenamento seguro em nuvem.</translation>
     </message>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
@@ -3475,12 +3476,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>O espaço de armazenamento adicional terá um custo de %1 por %2 TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A cota de transferência adicional terá um custo de %1 por %2 TB.</translation>
     </message>
 </context>
 <context>
@@ -3532,7 +3533,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Novo design das Configurações, com uma nova aparência.
+- Fim da compatibilidade com versões de macOS inferiores a 10.12.
+- Visualização do valor em outras moedas nas opções de upgrade.
+- Melhor suporte de DPI para dispositivos com Windows.
+- Correção de falhas detectadas anteriormente em Windows, Linux e macOS.
+- Outras melhorias e ajustes de desempenho.
+- Correções e ajustes na interface do usuário.</translation>
     </message>
 </context>
 <context>
@@ -4670,7 +4677,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Escolha quais pastas ou quais arquivos você quer excluir da sincronização</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -4700,7 +4707,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Exportar a chave</translation>
     </message>
 </context>
 <context>
@@ -5444,7 +5451,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer Quota exhausted</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Cota de transferência excedida</translation>
     </message>
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -5454,22 +5461,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, faça o upgrade a um plano Pro para continuar imediatamente, ou aguarde %1 para continuar de forma gratuita</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* O preço na sua moeda local é apenas uma estimativa. Em todas as transações, será cobrado o preço indicado em euros.</translation>
     </message>
     <message>
         <source>Receive two months free when you purchase a one-year Pro plan.</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ganhe 2 meses grátis ao comprar um plano Pro anual.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível dar continuidade ao download porque excederia a sua cota de transferência gratuita.</translation>
     </message>
 </context>
 <context>
@@ -5492,22 +5499,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Para aumentar esta cota, você pode fazer o upgrade da sua conta, o que proporcionará um amplo espaço de armazenamento adicional.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* O preço na sua moeda local é apenas uma estimativa. Em todas as transações, será cobrado o preço indicado em euros.</translation>
     </message>
     <message>
         <source>Receive two months free when you purchase a one-year Pro plan.</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ganhe 2 meses grátis ao comprar um plano Pro anual.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>100% dos %1 disponíveis para a sua conta foram usados.</translation>
     </message>
 </context>
 <context>

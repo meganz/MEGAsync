@@ -456,7 +456,7 @@
     <message>
         <source>No limit</source>
         <translatorcomment>Radio button text to indicate no limit for transfer rate.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nicio limită</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -585,12 +585,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add folder</source>
         <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Adaugă un folder</translation>
     </message>
     <message>
         <source>Add synchronised folder</source>
         <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Adaugă un folder sincronizat</translation>
     </message>
     <message>
         <source>Add</source>
@@ -600,7 +600,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Adaugă un folder sincronizat:</translation>
     </message>
 </context>
 <context>
@@ -1218,7 +1218,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the download folder.</translatorcomment>
-        <translation>Selectează folderul local</translation>
+        <translation>Selectează un folder local</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1316,7 +1316,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>Selectează folderul local</translation>
+        <translation>Selectează un folder local</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -1331,7 +1331,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync nu va fi capabil să descarce ceva aici.</translation>
+        <translation>MEGAsync nu va putea descărca nimic aici.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -1574,7 +1574,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
-        <translation>Selectează folderul local</translation>
+        <translation>Selectează un folder local</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -1851,7 +1851,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Login</source>
-        <translation>Autentificare</translation>
+        <translation>Autentifică-te</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -1860,7 +1860,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGA Desktop app</source>
         <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
-        <translation>Aplicația desktop MEGA</translation>
+        <translation>Aplicație desktop MEGA</translation>
     </message>
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
@@ -1981,7 +1981,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Autentificare</translation>
+        <translation>Se autentifică</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -2021,7 +2021,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Up to date</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
-        <translation>Actualizat</translation>
+        <translation>La zi</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -3512,12 +3512,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Arată în Explorer</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Arată în Finder</translation>
     </message>
 </context>
 <context>
@@ -3531,7 +3531,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Reproiectare completă a setărilor cu un aspect și stil noi.
+- Nu mai există suport pentru versiunile macOS mai mici de 10.12.
+- A fost adăugat suport la mai multe valute pentru opțiunile de upgrade.
+- A fost îmbunătățit suportul în cazul DPI-urilor mari pentru platforma Windows.
+- Defecțiunile detectate anterior pe Windows, Linux și macOS sunt acum remediate.
+- Alte îmbunătățiri de performanță și ajustări.
+- Alte remedieri ale interfeței utilizatorului și ajustări.</translation>
     </message>
 </context>
 <context>
@@ -3539,7 +3545,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Proxy-uri</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -3549,7 +3555,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Setări pentru proxy</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -3559,12 +3565,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>SOCK5H</source>
         <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Checkbox to indicate if the proxy needs authentication (username and password)</translatorcomment>
-        <translation>Serverul de proxy necesită o parolă</translation>
+        <translation>Serverul proxy necesită o parolă</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -3589,12 +3595,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>No Proxy</source>
         <translatorcomment>Radio button text to not select any proxy.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Niciun proxy</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Radio button to select manual proxy configuration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Manuale</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4015,7 +4021,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
         <translatorcomment>Alert message when file name is incorrect</translatorcomment>
-        <translation>&lt;b&gt;Numele &apos;%1&apos; nu poate fi folosit.&lt;/b&gt;&lt;p&gt;Încearcă să folosești un alt nume, cu mai puține caractere sau fără semne de punctuație.</translation>
+        <translation>&lt;b&gt;Numele „%1” nu poate fi folosit.&lt;/b&gt;&lt;p&gt;Încearcă să folosești un alt nume, cu mai puține caractere sau fără semne de punctuație.</translation>
     </message>
 </context>
 <context>
@@ -4179,7 +4185,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Activează / dezactivează</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4199,7 +4205,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation>Exportarea cheii de recuperare și păstrarea ei într-o locație sigură îți dă posibilitatea să setezi o parolă nouă fără pierderea datelor.</translation>
+        <translation>Exportarea cheii de recuperare și păstrarea ei într-o locație securizată îți dă posibilitatea să setezi o parolă nouă fără pierderea datelor.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -4469,7 +4475,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Proxy-uri</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>
@@ -4554,7 +4560,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Setări pentru proxy</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
@@ -4614,7 +4620,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Deschide în MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
@@ -4634,17 +4640,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nicio limită</translation>
     </message>
     <message>
         <source>No Proxy</source>
         <translatorcomment>Text label shown when there is no Proxy set in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Niciun proxy</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Text label shown when there is a Proxy set in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Manuale</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4659,12 +4665,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Raportare de probleme</translation>
     </message>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Folder MEGA</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -4674,12 +4680,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Se salvează folderele sincronizate…</translation>
     </message>
     <message>
         <source>Saving synchronised folders...</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Se salvează folderele sincronizate...</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -4699,7 +4705,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Exportă cheia</translation>
     </message>
 </context>
 <context>
@@ -4727,7 +4733,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Sunt de acord cu &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Termenii de utilizare a serviciului&lt;/a&gt; MEGA</translation>
+        <translation>Sunt de acord cu &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Termenii de utilizare a serviciului&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -4807,7 +4813,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>E-mail și/sau parolă nevalide.</translation>
+        <translation>E-mail și/sau parolă incorecte.</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -4877,7 +4883,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Select local folder</source>
         <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Selectează folderul local</translation>
+        <translation>Selectează un folder local</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -4992,7 +4998,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation>Când închei acest asistent, vei putea să sincronizezi foldere adiționale folosind caseta de dialog pentru setări</translation>
+        <translation>Când închei acest asistent, vei putea să sincronizezi foldere suplimentare folosind caseta de dialog pentru setări</translation>
     </message>
     <message>
         <source>First name:</source>
@@ -5042,7 +5048,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select Local folder:</source>
         <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
-        <translation>Selectează folderul local</translation>
+        <translation>Selectează un folder local</translation>
     </message>
     <message>
         <source>Setup full sync</source>
@@ -5067,7 +5073,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation>Autentificare</translation>
+        <translation>Autentifică-te</translation>
     </message>
 </context>
 <context>
@@ -5090,7 +5096,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Send to a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to send a public link of a file/folder to a user. String as short as possible.</translatorcomment>
-        <translation>Trimite la un utilizator MEGA</translation>
+        <translation>Trimite unui utilizator MEGA</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -5163,7 +5169,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Up to date</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
-        <translation>Actualizat</translation>
+        <translation>La zi</translation>
     </message>
     <message>
         <source>Scanning</source>

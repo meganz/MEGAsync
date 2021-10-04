@@ -3475,7 +3475,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительный объём по %1 за %2ТБ.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>

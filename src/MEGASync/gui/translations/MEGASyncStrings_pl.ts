@@ -4302,7 +4302,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
-        <translation>MEGA-RECOVERYKEY</translation>
+        <translation>MEGA-KLUCZODZYSKIWANIA</translation>
     </message>
     <message>
         <source>Unexpected error disabling sync %1</source>

@@ -36,7 +36,7 @@
     <message>
         <source>Bin</source>
         <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rác</translation>
     </message>
     <message>
         <source>Of that, size taken up by file versions:</source>
@@ -456,7 +456,7 @@
     <message>
         <source>No limit</source>
         <translatorcomment>Radio button text to indicate no limit for transfer rate.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không giới hạn</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -585,7 +585,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add folder</source>
         <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thêm thư mục</translation>
     </message>
     <message>
         <source>Add synchronised folder</source>
@@ -3439,12 +3439,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>storage</source>
         <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>lưu trữ</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>truyền tải</translation>
     </message>
     <message>
         <source>Great value for secure cloud storage, sharing and communication.</source>
@@ -3559,7 +3559,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>SOCK5H</source>
         <translatorcomment>SOCK5H proxy type</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>SOCK5H</translation>
     </message>
     <message>
         <source>Proxy server requires a password</source>
@@ -3589,12 +3589,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>No Proxy</source>
         <translatorcomment>Radio button text to not select any proxy.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không dùng Proxy</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Radio button to select manual proxy configuration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thủ công</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4349,7 +4349,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>%1 (local cache)</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (nhớ tạm nội bộ)</translation>
     </message>
     <message>
         <source>Space used:</source>
@@ -4369,7 +4369,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rác thải đồng bộ (nhớ tạm trên mạng)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -4479,7 +4479,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Session history</source>
         <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lịch sử phiên hoạt động</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -4489,37 +4489,37 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Language:</source>
         <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ngôn ngữ:</translation>
     </message>
     <message>
         <source>%1 (local cache):</source>
         <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (nhớ tạm nội bộ):</translation>
     </message>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rác thải đồng bộ (nhớ tạm trên mạng)</translation>
     </message>
     <message>
         <source>File versions:</source>
         <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên bản lưu tệp tin:</translation>
     </message>
     <message>
         <source>Issue report:</source>
         <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Khai báo lỗi:</translation>
     </message>
     <message>
         <source>Storage space:</source>
         <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không gian lưu trữ:</translation>
     </message>
     <message>
         <source>Transfer quota:</source>
         <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Băng thông truyền tải:</translation>
     </message>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
@@ -4534,12 +4534,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Excluded file and folder names:</source>
         <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Dạng tên tệp và thư mục bị khai trừ:</translation>
     </message>
     <message>
         <source>Exclude by size:</source>
         <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lọc theo kích thước:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
@@ -4564,7 +4564,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>B</source>
         <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>B</translation>
     </message>
     <message>
         <source>KB</source>
@@ -4614,37 +4614,37 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mở trên MEGA</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gỡ thư mục đồng bộ</translation>
     </message>
     <message>
         <source>Saving Sync settings</source>
         <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang lưu lại các thiết đặt cho Đồng Bộ</translation>
     </message>
     <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Khởi động lại MEGAsync</translation>
     </message>
     <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không giới hạn</translation>
     </message>
     <message>
         <source>No Proxy</source>
         <translatorcomment>Text label shown when there is no Proxy set in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không dùng Proxy</translation>
     </message>
     <message>
         <source>Manual</source>
         <translatorcomment>Text label shown when there is a Proxy set in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thủ công</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -4699,7 +4699,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xuất Chìa Khóa</translation>
     </message>
 </context>
 <context>
@@ -5757,7 +5757,7 @@ Do you want to create one?</source>
     <message>
         <source>No (never ask again)</source>
         <translatorcomment>Button text to discard the option and never ask again if the problem is detected in the future.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không (đừng hỏi lại nữa)</translation>
     </message>
 </context>
 <context>

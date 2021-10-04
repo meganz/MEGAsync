@@ -554,7 +554,7 @@
     <message>
         <source>A synced folder cannot be inside another synced folder</source>
         <translatorcomment>Message displayed when an user is adding nested local folders for synchronization.</translatorcomment>
-        <translation>Un dossier synchronisé ne peut pas se trouver dans un autre dossier synchronisé.</translation>
+        <translation>Un dossier synchronisé ne peut pas se trouver dans un autre dossier synchronisé</translation>
     </message>
     <message>
         <source>The selected MEGA folder is already synced</source>
@@ -1151,7 +1151,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Veuillez résoudre votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte d’entreprise.</translation>
+        <translation>Veuillez résoudre votre problème de paiement dès que possible afin d’éviter toute désactivation de votre compte d’entreprise</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1446,12 +1446,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
-        <translation>Veuillez saisir votre adresse courriel.</translation>
+        <translation>Veuillez saisir votre adresse courriel</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
-        <translation>Veuillez saisir une adresse courriel valide.</translation>
+        <translation>Veuillez saisir une adresse courriel valide</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -2057,7 +2057,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Une mise à jour sera appliquée lors du prochain démarrage.</translation>
+        <translation>Une mise à jour sera appliquée lors du prochain démarrage</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -2088,7 +2088,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Thank you for your collaboration!</source>
         <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Nous vous remercions de votre collaboration.</translation>
+        <translation>Nous vous remercions de votre collaboration</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -2139,7 +2139,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Votre configuration est corrompue, veuillez recommencer.</translation>
+        <translation>Votre configuration est corrompue, veuillez recommencer</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2533,7 +2533,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled</source>
         <translatorcomment>Tooltip to indicate that some syncs have been disable due to some error.</translatorcomment>
-        <translation>Un problème est survenu en tentant de synchroniser vos dossiers.</translation>
+        <translation>Une ou plusieurs synchronisations ont été désactivées</translation>
     </message>
     <message>
         <source>Your syncs have been enabled</source>
@@ -2563,7 +2563,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been enabled</source>
         <translatorcomment>Notificaton message shown when %1 sync has been enable. %1 will be replaced with sync name at runtime.</translatorcomment>
-        <translation>Votre synchronisation « %1 » a été activée.</translation>
+        <translation>Votre synchronisation « %1 » a été activée</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
@@ -2744,7 +2744,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>N’est pas accessible en raison du non-respect des CGU/PUA.</translation>
+        <translation>N’est pas accessible en raison du non-respect des CGU/PUA</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -4350,7 +4350,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
-        <translation>Vérifier les  de mises à jour</translation>
+        <translation>Vérifier les mises à jour</translation>
     </message>
     <message>
         <source>%1 (local cache)</source>
@@ -4605,7 +4605,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro léger</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -4675,7 +4675,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation>Choisissez quels fichiers ou dossiers vous voulez exclure de la synchronisation.</translation>
+        <translation>Choisissez quels fichiers ou dossiers vous voulez exclure de la synchronisation</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -4828,12 +4828,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Veuillez saisir votre adresse courriel.</translation>
+        <translation>Veuillez saisir votre adresse courriel</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Veuillez saisir une adresse courriel valide.</translation>
+        <translation>Veuillez saisir une adresse courriel valide</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -5459,7 +5459,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Veuillez passer à un compte Pro afin de poursuivre immédiatement ou patienter %1 pour poursuivre gratuitement.</translation>
+        <translation>Veuillez passer à un compte Pro afin de poursuivre immédiatement ou patienter %1 pour poursuivre gratuitement</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -5670,7 +5670,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro léger</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
