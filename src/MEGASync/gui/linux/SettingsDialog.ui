@@ -2808,7 +2808,7 @@ min-height: 72px;
      </widget>
     </widget>
    </item>
-   <item>
+   <item alignment="Qt::AlignBottom">
     <widget class="QWidget" name="wBottom" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">

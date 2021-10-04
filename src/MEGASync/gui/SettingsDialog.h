@@ -156,8 +156,6 @@ private slots:
     void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
-    void on_eUploadFolder_textChanged(const QString &text);
-    void on_eDownloadFolder_textChanged(const QString &text);
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
     void on_cExcludeUpperThan_clicked();
