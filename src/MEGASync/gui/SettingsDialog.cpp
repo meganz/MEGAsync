@@ -765,9 +765,11 @@ void SettingsDialog::changeEvent(QEvent* event)
         reloadToolBarItemNames();
         //review and check
         mUi->cStartOnStartup->setText(tr("Open at login"));
-#endif
-        onCacheSizeAvailable();
 
+#endif
+        mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+
+        onCacheSizeAvailable();
         updateNetworkTab();
         updateStorageElements();
         updateBandwidthElements();
