@@ -762,9 +762,13 @@ void SettingsDialog::changeEvent(QEvent* event)
         reloadToolBarItemNames();
         //review and check
         mUi->cStartOnStartup->setText(tr("Open at login"));
-#endif
-        onCacheSizeAvailable();
 
+        mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+#else
+        mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+#endif
+
+        onCacheSizeAvailable();
         updateNetworkTab();
         updateStorageElements();
         updateBandwidthElements();
@@ -1167,7 +1171,7 @@ void SettingsDialog::updateBandwidthElements()
             mUi->lBandwidth->setText(tr("%1 (%2%) of %3 used").arg(
                                         Utilities::getSizeString(usedBandwidth),
                                         QString::number(std::min(percentage, 100)),
-                                        Utilities::getSizeString(usedBandwidth)));
+                                        Utilities::getSizeString(totalBandwidth)));
         }
     }
 }
