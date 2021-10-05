@@ -16,49 +16,84 @@ TransferQuota::TransferQuota(mega::MegaApi* megaApi,
       overQuotaAlertVisible{false},
       almostQuotaAlertVisible{false}
 {
+    updateQuotaState();
 }
 
 void TransferQuota::setOverQuota(std::chrono::milliseconds waitTime)
 {
-    mWaitTimeUntil = std::chrono::system_clock::now()+waitTime;
-    mQuotaState = QuotaState::FULL;
-    emit sendState(QuotaState::FULL);
+    mWaitTimeUntil = std::chrono::system_clock::now() + waitTime;
+    mQuotaState = QuotaState::OVERQUOTA;
+    emit sendState(QuotaState::OVERQUOTA);
     checkExecuteAlerts();
 }
 
 bool TransferQuota::isOverQuota()
 {    
-    bool isOverQuota{mQuotaState == QuotaState::FULL};
-    if(isOverQuota)
+    updateQuotaState();
+    return (mQuotaState == QuotaState::OVERQUOTA);
+}
+
+bool TransferQuota::isQuotaWarning()
+{
+    updateQuotaState();
+    return (mQuotaState == QuotaState::WARNING);
+}
+
+bool TransferQuota::isQuotaFull()
+{
+    updateQuotaState();
+    return (mQuotaState == QuotaState::FULL);
+}
+
+void TransferQuota::updateQuotaState()
+{
+    if (mPreferences->logged())
     {
-        const bool waitTimeIsOver{std::chrono::system_clock::now() >= mWaitTimeUntil};
-        if(waitTimeIsOver)
+        auto newState (mQuotaState);
+
+        if (newState == QuotaState::OVERQUOTA && std::chrono::system_clock::now() >= mWaitTimeUntil)
         {
-            isOverQuota = false;
-            setQuotaOk();            
+            newState = QuotaState::OK;
+            mWaitTimeUntil = std::chrono::system_clock::time_point();
+            mPreferences->clearTemporalBandwidth();
+            emit waitTimeIsOver();
         }
-    }
-    return isOverQuota;
-}
 
-bool TransferQuota::isQuotaWarning() const
-{
-    return mQuotaState == QuotaState::WARNING;
-}
-
-void TransferQuota::setQuotaOk()
-{
-    if(mQuotaState != QuotaState::OK)
-    {
-        mWaitTimeUntil = std::chrono::system_clock::time_point();
-        mQuotaState = QuotaState::OK;
-        mPreferences->clearTemporalBandwidth();
-        emit sendState(QuotaState::OK);
-        emit waitTimeIsOver();
-
-        if (mUpgradeDialog)
+        if (newState != QuotaState::OVERQUOTA)
         {
-            mUpgradeDialog->close();
+            const auto usedBytes (mPreferences->usedBandwidth());
+            const auto totalBytes (mPreferences->totalBandwidth());
+            const auto usagePercent (Utilities::partPer(usedBytes, totalBytes, 100));
+
+            if (usagePercent >= FULL_QUOTA_PER_CENT)
+            {
+                newState = QuotaState::FULL;
+            }
+            else if (usagePercent >= ALMOST_OVER_QUOTA_PER_CENT)
+            {
+                newState = QuotaState::WARNING;
+            }
+            else
+            {
+                newState = QuotaState::OK;
+            }
+        }
+
+        if (newState != mQuotaState)
+        {
+            mQuotaState = newState;
+            emit sendState(mQuotaState);
+            if (newState == QuotaState::OK)
+            {
+                if (mUpgradeDialog)
+                {
+                    mUpgradeDialog->close();
+                }
+            }
+            else
+            {
+                checkExecuteAlerts();
+            }
         }
     }
 }
@@ -168,17 +203,6 @@ void TransferQuota::checkExecuteAlerts()
             checkExecuteWarningOsNotification();
             checkExecuteWarningUiMessage();
         }
-    }
-}
-
-void TransferQuota::setUserProUsages(long long usedBytes, long long totalBytes)
-{
-    const auto usagePercent = std::floor(100.0 * usedBytes / totalBytes);
-    if(usagePercent >= ALMOST_OVER_QUOTA_PER_CENT)
-    {
-        mQuotaState = QuotaState::WARNING;
-        emit sendState(QuotaState::WARNING);
-        checkExecuteAlerts();
     }
 }
 
