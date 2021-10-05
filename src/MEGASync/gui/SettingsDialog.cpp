@@ -766,8 +766,10 @@ void SettingsDialog::changeEvent(QEvent* event)
         //review and check
         mUi->cStartOnStartup->setText(tr("Open at login"));
 
-#endif
         mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+#else
+        mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+#endif
 
         onCacheSizeAvailable();
         updateNetworkTab();
