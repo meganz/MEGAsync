@@ -2858,9 +2858,13 @@ QuotaState MegaApplication::getTransferQuotaState() const
      {
          quotaState = QuotaState::WARNING;
      }
-     else if (transferQuota->isOverQuota())
+     else if (transferQuota->isQuotaFull())
      {
          quotaState = QuotaState::FULL;
+     }
+     else if (transferQuota->isOverQuota())
+     {
+         quotaState = QuotaState::OVERQUOTA;
      }
 
      return quotaState;
@@ -7424,33 +7428,29 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             notifyStorageObservers();
         }
 
-        const bool proUserIsNotOverquota{!megaApi->getBandwidthOverquotaDelay() &&
-                    preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE};
-        if (proUserIsNotOverquota)
+        const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
+                    preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
+        if (proUserIsOverquota)
         {
-            transferQuota->setQuotaOk();
+            transferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
         }
 
-        if (transfer)
+        preferences->setTotalBandwidth(details->getTransferMax());
+        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+        preferences->setUsedBandwidth(details->getTransferUsed());
+
+        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+
+        notifyBandwidthObservers();
+
+        if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
         {
-            preferences->setTotalBandwidth(details->getTransferMax());
-            preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-            preferences->setUsedBandwidth(details->getTransferUsed());
-
-            preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
-            preferences->setTemporalBandwidth(details->getTemporalBandwidth());
-            preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
-
-            notifyBandwidthObservers();
-
-            const bool userIsPro{preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE};
-            if(userIsPro)
-            {
-                transferQuota->setUserProUsages(preferences->usedBandwidth(), preferences->totalBandwidth());
-            }
+            transferQuota->updateQuotaState();
         }
 
-        preferences->sync();
+        preferences->sync();        
 
         if (infoDialog)
         {
