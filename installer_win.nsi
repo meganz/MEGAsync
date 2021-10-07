@@ -423,7 +423,6 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   !else
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vcruntime140_1.dll" "$INSTDIR\vcruntime140_1.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
