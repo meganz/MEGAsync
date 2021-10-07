@@ -219,7 +219,7 @@ ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGAS
 ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
 
 # Fedora uses system Crypto++ header files
-%if 0%{?fedora} < 33
+%if 0%{?fedora_version} < 33
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
