@@ -71,10 +71,14 @@ BuildRequires: ffmpeg-mega
 
 #Fedora specific
 %if 0%{?fedora}
-    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, cryptopp-devel
+    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel
     BuildRequires: desktop-file-utils
     BuildRequires: bzip2-devel
     BuildRequires: systemd-devel
+
+    %if 0%{?fedora_version} < 33
+        BuildRequires: cryptopp-devel
+    %endif
 
     %if 0%{?fedora_version} >= 26
         Requires: cryptopp >= 5.6.5
@@ -147,7 +151,7 @@ BuildRequires: ffmpeg-mega
 #Build cryptopp?
 %define flag_cryptopp %{nil}
 
-%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} ||  0%{?suse_version} > 1320
+%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || 0%{?suse_version} > 1320 || 0%{?fedora_version} >= 33
     %define flag_cryptopp -q
 %endif
 
@@ -215,7 +219,7 @@ ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGAS
 ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
 
 # Fedora uses system Crypto++ header files
-%if 0%{?fedora}
+%if 0%{?fedora_version} < 33
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
