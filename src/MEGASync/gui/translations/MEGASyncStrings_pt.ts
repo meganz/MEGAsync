@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Não foi possível notificar o problema - tente novamente mais tarde. Se o problema persistir, entre em contato com a nossa equipe de suporte em [A]support@mega.nz[/A].</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4130,7 +4130,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
-        <translation>%1 (%2%%) de %3 utilizado</translation>
+        <translation>%1 (%2%) de %3 utilizado</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4682,11 +4682,6 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Salvando as pastas sincronizadas…</translation>
-    </message>
-    <message>
-        <source>Saving synchronised folders...</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
         <translation>Salvando as pastas sincronizadas…</translation>
     </message>
     <message>
@@ -5469,14 +5464,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>* O preço na sua moeda local é apenas uma estimativa. Em todas as transações, será cobrado o preço indicado em euros.</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>Ganhe 2 meses grátis ao comprar um plano Pro anual.</translation>
-    </message>
-    <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
         <translation>Não é possível dar continuidade ao download porque excederia a sua cota de transferência gratuita.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5507,14 +5502,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>* O preço na sua moeda local é apenas uma estimativa. Em todas as transações, será cobrado o preço indicado em euros.</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>Ganhe 2 meses grátis ao comprar um plano Pro anual.</translation>
-    </message>
-    <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
         <translation>100% dos %1 disponíveis para a sua conta foram usados.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

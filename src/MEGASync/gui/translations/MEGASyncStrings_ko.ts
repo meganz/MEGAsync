@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>오류로 인해 문제를 업로드할 수 없습니다. 문제가 지속될 경우 다시 시도하거나 [A]support@mega.nz[/A]를 통해 지원 팀에 연락하세요.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4686,11 +4686,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>동기화 폴더 저장 중...</translation>
     </message>
     <message>
-        <source>Saving synchronised folders...</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>동기화 폴더 저장 중...</translation>
-    </message>
-    <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro I</translation>
@@ -5471,14 +5466,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>* 현지 통화 가격은 예측치입니다. 모든 거래는 유로화로 청구됩니다.</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>1년 Pro 요금제를 결제하면 2개월을 무료로 받습니다.</translation>
-    </message>
-    <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
         <translation>당신의 무료 전송 허용량을 초과하여 다운로드를 진행할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5509,14 +5504,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>* 현지 통화 가격은 예측치입니다. 모든 거래는 유로화로 청구됩니다.</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>1년 Pro 요금제를 결제하면 2개월을 무료로 받습니다.</translation>
-    </message>
-    <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
         <translation>계정에 이용 가능한 %1 중 100%가 사용되었습니다.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

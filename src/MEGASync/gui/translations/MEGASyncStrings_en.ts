@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Your issue cannot be uploaded due to an error. Please try again or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+        <translation>Your issue cannot be uploaded due to an error. Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4685,11 +4685,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Saving synchronised folders…</translation>
     </message>
     <message>
-        <source>Saving synchronised folders...</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>Saving synchronised folders...</translation>
-    </message>
-    <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro I</translation>
@@ -5469,14 +5464,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>* The local currency price is an estimate only. All transactions shown charged in Euros.</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>Receive two months free when you purchase a one-year Pro plan.</translation>
-    </message>
-    <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
         <translation>Your download could not proceed because it exceeds your free transfer allowance.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation>Choose annual billing and get 12 months for the price of 10</translation>
     </message>
 </context>
 <context>
@@ -5507,14 +5502,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>* The local currency price is an estimate only. All transactions shown charged in Euros.</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>Receive two months free when you purchase a one-year Pro plan.</translation>
-    </message>
-    <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
         <translation>100% of the %1 available used on your account.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation>Choose annual billing and get 12 months for the price of 10</translation>
     </message>
 </context>
 <context>

@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Your issue cannot be uploaded due to an error. Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+        <translation>Your issue cannot be uploaded due to an error. Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5471,7 +5471,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Choose annual billing and get 12 months for the price of 10</translation>
     </message>
 </context>
 <context>
@@ -5509,7 +5509,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Choose annual billing and get 12 months for the price of 10</translation>
     </message>
 </context>
 <context>

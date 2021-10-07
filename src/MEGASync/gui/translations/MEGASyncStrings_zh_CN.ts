@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>您的问题由于错误无法被上传。请再试一次。如果问题仍然存在，请联系我们的支持团队[A]support@mega.nz[/A]获取帮助。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4685,11 +4685,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>正在保存同步文件夹……</translation>
     </message>
     <message>
-        <source>Saving synchronised folders...</source>
-        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on macOS. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation>正在保存同步文件夹……</translation>
-    </message>
-    <message>
         <source>Pro I</source>
         <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Pro I</translation>
@@ -5469,14 +5464,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>*本地货币价格仅为估值。所有交易均以欧元收费。</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>购买年度Pro会员即可获得两个月免费。</translation>
-    </message>
-    <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
         <translation>由于已超出免费传输流量上限，您的下载无法继续。</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5507,14 +5502,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>*本地货币价格仅为估值。所有交易均以欧元收费。</translation>
     </message>
     <message>
-        <source>Receive two months free when you purchase a one-year Pro plan.</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation>购买年度Pro会员即可获得两个月免费。</translation>
-    </message>
-    <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
         <translation>您已用完全部%1的可用存储空间。</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
