@@ -71,10 +71,14 @@ BuildRequires: ffmpeg-mega
 
 #Fedora specific
 %if 0%{?fedora}
-    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, cryptopp-devel
+    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel
     BuildRequires: desktop-file-utils
     BuildRequires: bzip2-devel
     BuildRequires: systemd-devel
+
+    %if 0%{?fedora_version} < 33
+        BuildRequires: cryptopp-devel
+    %endif
 
     %if 0%{?fedora_version} >= 26
         Requires: cryptopp >= 5.6.5
