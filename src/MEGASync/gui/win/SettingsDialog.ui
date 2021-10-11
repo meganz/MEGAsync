@@ -559,18 +559,6 @@ font-weight: bold;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
             <property name="text">
              <string>Show notifications</string>
             </property>
@@ -587,18 +575,6 @@ font-weight: bold;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
             <property name="text">
              <string>Open at login</string>
             </property>
@@ -612,18 +588,6 @@ font-weight: bold;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
             <property name="text">
              <string>Enable Windows Explorer integration</string>
             </property>
@@ -636,18 +600,6 @@ font-weight: bold;
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
             </property>
             <property name="text">
              <string>Enable overlay icons</string>
@@ -679,12 +631,6 @@ font-weight: bold;
                  <horstretch>0</horstretch>
                  <verstretch>24</verstretch>
                 </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>24</height>
-                </size>
                </property>
                <property name="text">
                 <string>Update automatically</string>
@@ -2730,12 +2676,6 @@ min-height: 72px;
           </item>
           <item>
            <widget class="QPushButton" name="bOpenBandwidthSettings">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
             <property name="text">
              <string>Change Settings...</string>
             </property>
