@@ -536,7 +536,7 @@
     <message>
         <source>Update</source>
         <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Memperbarui</translation>
+        <translation>Perbarui</translation>
     </message>
 </context>
 <context>
@@ -3466,7 +3466,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
-        <translation>Dengan enkripsi ujung-ke-ujung kami, cara kerja tim anda tidak pernah seaman dan sepribadi ini.</translation>
+        <translation>Dengan enkripsi menyeluruh kami, cara kerja tim anda tidak pernah seaman dan sepribadi ini.</translation>
     </message>
     <message>
         <source>Get started with secure file storage.</source>
@@ -3622,7 +3622,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Update</source>
         <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Memperbarui</translation>
+        <translation>Perbarui</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4427,7 +4427,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Recovery Key</translation>
+        <translation>Kunci Pemulihan</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
@@ -4442,7 +4442,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Password</source>
         <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
-        <translation>Ganti kata sandi</translation>
+        <translation>Ganti Kata Sandi</translation>
     </message>
     <message>
         <source>Default Folders</source>
@@ -5444,11 +5444,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Kuota transfer habis</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Kuota Transfer habis</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Pembatasan ini dinamis dan tergantung dari jumlah bandwidth tak terpakai yang kami punya.</translation>
@@ -5470,8 +5465,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Kuota transfer telah terlewati</translation>
     </message>
 </context>
 <context>
@@ -5508,7 +5508,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Twoja sprawa nie może zostać załadowana z powodu błędu. Spróbuj ponownie później lub skontaktuj się z naszym zespołem pomocy technicznej poprzez [A]support@mega.nz[/A], jeśli problem nadal występuje.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5444,11 +5444,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Wyczerpany limit transferu</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Limit transferu wyczerpany</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Limit transferu jest dynamiczny i uzależniony od dostępnych przepustowości.</translation>
@@ -5470,8 +5465,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Wybierz rozliczenie roczne, a otrzymasz 12 miesięcy w cenie 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Transfer przekroczony</translation>
     </message>
 </context>
 <context>
@@ -5508,8 +5508,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Wybierz rozliczenie roczne, a otrzymasz 12 miesięcy w cenie 10</translation>
     </message>
 </context>
 <context>

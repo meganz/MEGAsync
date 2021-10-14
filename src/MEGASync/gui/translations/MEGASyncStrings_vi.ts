@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không gian sử dụng cho lịch sử phiên bản tệp tin</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các phiên tải xuống còn lại</translation>
     </message>
     <message>
         <source>download speed</source>
@@ -69,7 +69,7 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các phiên tải lên còn lại</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -94,12 +94,12 @@
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên tải xuống còn lại</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên tải lên còn lại</translation>
     </message>
 </context>
 <context>
@@ -451,7 +451,7 @@
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Section title for upload rate limit details.</translatorcomment>
-        <translation>Giới hạn tải lên</translation>
+        <translation>Giới hạn tốc độ tải lên</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -466,7 +466,7 @@
     <message>
         <source>KB/s</source>
         <translatorcomment>Rate unit of Kilo bytes per second.</translatorcomment>
-        <translation>KB/s</translation>
+        <translation>KB/giây</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -476,17 +476,17 @@
     <message>
         <source>(Max. 90% of available bandwidth)</source>
         <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>(Tối đa 90% tổng lượng băng thông)</translation>
     </message>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>Mức giới hạn tải xuống</translation>
+        <translation>Giới hạn tốc độ tải xuống</translation>
     </message>
     <message>
         <source>Number of connections per transfer</source>
         <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Số lượng đường truyền kết nối cho mỗi tryền tải</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -521,17 +521,17 @@
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giới hạn tốc độ tải lên:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giới hạn tốc độ tải xuống:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
         <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Số lượng đường truyền kết nối cho mỗi tryền tải:</translation>
     </message>
     <message>
         <source>Update</source>
@@ -590,7 +590,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add synchronised folder</source>
         <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thêm thư mục đồng bộ hóa</translation>
     </message>
     <message>
         <source>Add</source>
@@ -600,7 +600,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Add synchronised folder:</source>
         <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thêm thư mục đồng bộ hóa:</translation>
     </message>
 </context>
 <context>
@@ -3429,12 +3429,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 per user</source>
         <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 mỗi nhân viên</translation>
     </message>
     <message>
         <source>minimum %1 users</source>
         <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>tối thiểu là %1 người</translation>
     </message>
     <message>
         <source>storage</source>
@@ -3512,12 +3512,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiện trong Explorer</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiện trong Finder</translation>
     </message>
 </context>
 <context>
@@ -3539,7 +3539,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxies</source>
         <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Proxies</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -3549,7 +3549,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thiết đặt proxy</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -4179,7 +4179,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bật / tắt</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4344,7 +4344,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kiểm tra bản cập nhật mới</translation>
     </message>
     <message>
         <source>%1 (local cache)</source>
@@ -4354,7 +4354,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Space used:</source>
         <translatorcomment>Label used to indicate ammount of space in byte denominations for local, remote cache and file versions.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang dùng:</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -4384,7 +4384,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Báo cáo lỗi</translation>
     </message>
     <message>
         <source>My Account</source>
@@ -4394,7 +4394,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Storage Space</source>
         <translatorcomment>Section title for account storage details.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Không Gian Lưu Trữ</translation>
     </message>
     <message>
         <source>Transfer Quota</source>
@@ -4404,12 +4404,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synced folders</source>
         <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thư mục được đồng bộ</translation>
     </message>
     <message>
         <source>Purchase more storage</source>
         <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mua thêm không gian</translation>
     </message>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
@@ -4439,12 +4439,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư Mục Mặc Định</translation>
     </message>
     <message>
         <source>Move...</source>
         <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đổi chỗ...</translation>
     </message>
     <message>
         <source>Exclude files smaller than</source>
@@ -4464,12 +4464,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Change Settings...</source>
         <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thay Đổi Thiết Đặt...</translation>
     </message>
     <message>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Proxies</translation>
     </message>
     <message>
         <source>Force a Full Scan</source>
@@ -4544,17 +4544,17 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giới hạn tốc độ tải xuống:</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Giới hạn tốc độ tải lên:</translation>
     </message>
     <message>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các thiết đặt proxy:</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
@@ -4664,7 +4664,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>MEGA Folder</source>
         <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thư mục trên MEGA</translation>
     </message>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
@@ -5436,11 +5436,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Băng thông truyền tải cạn kiệt</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Giới hạn này không cố định, tùy thuộc vào số lượng băng thông không sử dụng chúng tôi có.</translation>
@@ -5462,8 +5457,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Quá hạn mức truyền tải</translation>
     </message>
 </context>
 <context>
@@ -5500,7 +5500,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

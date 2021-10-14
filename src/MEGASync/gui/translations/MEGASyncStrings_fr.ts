@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Votre problème ne peut pas être téléversé à cause d’une erreur. Veuillez réessayer ultérieurement ou contacter notre équipe d’assistance par courriel [A]support@mega.nz[/A] si le problème persiste.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2573,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>One or more syncs have been disabled. Go to preferences to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again (macOS)</translatorcomment>
-        <translation>Une ou plusieurs synchronisations ont été désactivées. Allez dans les préférences pour les réactiver.</translation>
+        <translation>Une ou plusieurs synchronisations ont été désactivées. Accédez aux Préférences pour les réactiver.</translation>
     </message>
     <message>
         <source>Open Preferences</source>
@@ -3489,7 +3489,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Preferences</source>
         <translatorcomment>Label to indicate the Preferences option for the application (MacOS)</translatorcomment>
-        <translation>Réglages</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -4490,7 +4490,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Preferences</source>
         <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Réglages</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -5442,11 +5442,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Le quota de transfert est épuisé</translation>
     </message>
     <message>
-        <source>Transfer Quota exhausted</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Le quota de transfert est épuisé</translation>
-    </message>
-    <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
         <translation>Cette limite est dynamique et dépend de la quantité de bande passante inutilisée dont nous disposons.</translation>
@@ -5468,8 +5463,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Choisissez la facturation annuelle et obtenez 12 mois pour le prix de 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Le quota de transfert a été dépassé</translation>
     </message>
 </context>
 <context>
@@ -5506,8 +5506,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Choisissez la facturation annuelle et obtenez 12 mois pour le prix de 10</translation>
     </message>
 </context>
 <context>
