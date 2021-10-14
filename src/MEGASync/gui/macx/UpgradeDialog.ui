@@ -286,7 +286,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Transfer Quota exhausted</string>
+            <string>Transfer quota exceeded</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
