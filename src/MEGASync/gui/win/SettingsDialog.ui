@@ -1560,12 +1560,6 @@ font-weight: bold;
              </property>
              <item>
               <widget class="QPushButton" name="bDelete">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
@@ -1579,12 +1573,6 @@ font-weight: bold;
              </item>
              <item>
               <widget class="QPushButton" name="bAdd">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
