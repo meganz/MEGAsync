@@ -1258,7 +1258,7 @@ void InfoDialog::on_bRemoveBackups_clicked()
     MegaHandle h (synchro.getRequest()->getNodeHandle());
 
     std::unique_ptr<mega::MegaNode> myBackups (megaApi->getNodeByHandle(h));
-    std::unique_ptr<mega::MegaNode> deviceFolder (nullptr);
+    mega::MegaNode* deviceFolder (nullptr);
 
     megaApi->getDeviceName(&synchro);
     synchro.wait();
@@ -1274,7 +1274,7 @@ void InfoDialog::on_bRemoveBackups_clicked()
         currChild = children->get(idx);
         if (QString::fromUtf8(currChild->getDeviceId()) == devId)
         {
-            deviceFolder.reset(currChild);
+            deviceFolder = currChild;
             deviceFolderName = QString::fromUtf8(deviceFolder->getName());
         }
         idx++;
@@ -1306,7 +1306,7 @@ void InfoDialog::on_bRemoveBackups_clicked()
         // Delete device folder
         if (deviceFolder)
         {
-            megaApi->remove(deviceFolder.get(), &synchro);
+            megaApi->remove(deviceFolder, &synchro);
             synchro.wait();
             if (synchro.getError()->getErrorCode() == MegaError::API_OK)
             {

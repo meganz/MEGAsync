@@ -388,8 +388,8 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
     // First check existing syncs
     auto lf (localFolders.cbegin());
     while (message.isEmpty() && lf != localFolders.cend())
-    {
-        QString c = QDir::cleanPath(QDir(*lf).canonicalPath());
+    {        
+        QString c = QDir::cleanPath(*lf);
 
         if (cleanInputPath.startsWith(c)
                 && (c.size() == cleanInputPath.size()
@@ -398,14 +398,12 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
             message = tr("The selected local folder is already synced");
         }
         else if (c.startsWith(cleanInputPath)
-                 && c[cleanInputPath.size()] == QDir::separator())
+                 && (c[cleanInputPath.size()] == QDir::separator()
+                 || cleanInputPath == QDir(*lf).rootPath()))
         {
             message = tr("A synced folder cannot be inside a backup folder");
         }
-        else
-        {
-            lf++;
-        }
+        lf++;
     }
 
     // Then check current list
@@ -417,27 +415,27 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
 
         while (message.isEmpty() && idx < nbBackups)
         {
-            auto currItem (mStep1FoldersModel->itemData(mStep1FoldersModel->index(idx, 0)));
-            QString c = QDir::cleanPath(QDir(currItem[Qt::UserRole].toString()).canonicalPath());
-
+            QString c (QDir::cleanPath(mStep1FoldersModel->item(idx)->data(Qt::UserRole).toString()));
             bool sameSize (cleanInputPath.size() == c.size());
 
-            // Handle same path another way later: by selecting the row in the view.
-            if (cleanInputPath.startsWith(c) && !sameSize
-                    && (c.size() == cleanInputPath.size()
-                        || cleanInputPath[c.size()] == QDir::separator()))
+            // Do not consider unchecked items
+            if (mStep1FoldersModel->item(idx)->checkState() == Qt::Checked)
             {
-                message = tr("The selected local folder is already backed up");
+                // Handle same path another way later: by selecting the row in the view.
+                if (cleanInputPath.startsWith(c) && !sameSize
+                        && (c.size() == cleanInputPath.size()
+                            || cleanInputPath[c.size()] == QDir::separator()))
+                {
+                    message = tr("The selected local folder is already backed up");
+                }
+                else if (c.startsWith(cleanInputPath) && !sameSize
+                         && (c[cleanInputPath.size()] == QDir::separator()
+                             || cleanInputPath == QDir(*lf).rootPath()))
+                {
+                    message = tr("A backed up folder cannot be inside a backup folder");
+                }
             }
-            else if (c.startsWith(cleanInputPath) && !sameSize
-                     && c[cleanInputPath.size()] == QDir::separator())
-            {
-                message = tr("A backed up folder cannot be inside a backup folder");
-            }
-            else
-            {
-                idx++;
-            }
+            idx++;
         }
     }
 
@@ -564,12 +562,13 @@ void BackupsWizard::on_bCancel_clicked()
 void BackupsWizard::on_bMoreFolders_clicked()
 {
     const auto homePaths (QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
-    QDir dir (QFileDialog::getExistingDirectory(this,
-                                                tr("Choose Directory"),
-                                                homePaths.first(),
-                                                QFileDialog::ShowDirsOnly
-                                                | QFileDialog::DontResolveSymlinks));
-    if (dir.exists() && !isFolderAlreadySynced(dir.canonicalPath(), true))
+    QString d (QFileDialog::getExistingDirectory(this,
+                                                 tr("Choose Directory"),
+                                                 homePaths.first(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks));
+    QDir dir (d);
+    if (!d.isEmpty() && dir.exists() && !isFolderAlreadySynced(dir.canonicalPath(), true))
     {
         QString path (QDir::toNativeSeparators(dir.canonicalPath()));
         QStandardItem* existingBackup (nullptr);
