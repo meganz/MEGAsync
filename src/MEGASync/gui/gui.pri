@@ -10,6 +10,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
     $$PWD/BindFolderDialog.cpp \
+    $$PWD/SyncsMenu.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
     $$PWD/ImportMegaLinksDialog.cpp \
@@ -84,6 +85,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
     $$PWD/BindFolderDialog.h \
+    $$PWD/SyncsMenu.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
     $$PWD/ImportMegaLinksDialog.h \

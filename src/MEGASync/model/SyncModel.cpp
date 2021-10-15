@@ -25,8 +25,6 @@ SyncModel *SyncModel::instance()
 
 SyncModel::SyncModel() : QObject(),
     preferences (Preferences::instance()),
-    mDeviceName(),
-    mBackupsDirHandle(mega::INVALID_HANDLE),
     syncMutex (QMutex::Recursive)
 {
 }
@@ -328,8 +326,6 @@ void SyncModel::reset()
     configuredSyncsMap.clear();
     syncsSettingPickedFromOldConfig.clear();
     unattendedDisabledSyncs.clear();
-    mDeviceName = QString();
-    mBackupsDirHandle = mega::INVALID_HANDLE;
     isFirstSyncDone = false;
 }
 

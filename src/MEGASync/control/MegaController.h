@@ -30,15 +30,10 @@ class Controller
 {
 public:
 
-    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
-                 QString syncName = QString(), ActionProgress *progress = nullptr,
-                 mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle, QString syncName = QString(), ActionProgress *progress = nullptr);
     void removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress = nullptr);
-
-    void createMyBackupsDir(QString& name, ActionProgress* progress = nullptr);
-    void setDeviceDir(QString& name, bool reUseDir = false, ActionProgress* progress = nullptr);
 
     static Controller *instance();
     void setApi(mega::MegaApi *value);
