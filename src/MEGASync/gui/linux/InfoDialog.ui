@@ -41,7 +41,7 @@
   padding: 0px 4px 0px 16px;
 }
 
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload
 {
 	border: none;
 }
@@ -309,6 +309,76 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                 </spacer>
                </item>
                <item>
+                <widget class="QPushButton" name="bRemoveBackups">
+                 <property name="minimumSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string notr="true">Remove all backups and remove remote device folder.</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_win.qrc">
+                   <normaloff>:/images/remove-backups.png</normaloff>:/images/remove-backups.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="bAddBackup">
+                 <property name="minimumSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="toolTip">
+                  <string>Add Backups</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_linux.qrc">
+                   <normaloff>:/images/Backup.png</normaloff>:/images/Backup.png</iconset>
+                 </property>
+                 <property name="iconSize">
+                  <size>
+                   <width>24</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="flat">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QPushButton" name="bAddSync">
                  <property name="minimumSize">
                   <size>
@@ -327,13 +397,6 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="toolTip">
                   <string>Add Sync</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bAddSync
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -370,61 +433,12 @@ border: none;
                  <property name="toolTip">
                   <string>Upload</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bUpload
-{
-border: none;
-}
-</string>
-                 </property>
                  <property name="text">
                   <string/>
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="bDownload">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="toolTip">
-                  <string>Download</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bDownload
-{
-border: none;
-}
-</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
-                   <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -459,13 +473,6 @@ border: none;
                  </property>
                  <property name="toolTip">
                   <string>Show MEGAsync options</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">#bSettings
-{
-border: none;
-}
-</string>
                  </property>
                  <property name="text">
                   <string/>
@@ -871,7 +878,7 @@ margin-right: 4px;
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
                   <property name="sizePolicy">
@@ -1386,7 +1393,7 @@ background-color: transparent;
 }</string>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>4</number>
                         </property>
                         <widget class="QWidget" name="pUpdated">
                          <property name="sizePolicy">

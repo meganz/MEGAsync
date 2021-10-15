@@ -53,11 +53,7 @@ HTTPServer::~HTTPServer()
 
 }
 
-#if QT_VERSION >= 0x050000
 void HTTPServer::incomingConnection(qintptr socket)
-#else
-void HTTPServer::incomingConnection(int socket)
-#endif
 {
     if (disabled)
     {
@@ -99,7 +95,6 @@ void HTTPServer::incomingConnection(int socket)
             return;
         }
 
-#if QT_VERSION >= 0x050100
         QList<QSslCertificate> certificates;
         certificates.append(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
         QStringList intermediates = preferences->getHttpsCertIntermediate().split(QString::fromUtf8(";"), QString::SkipEmptyParts);
@@ -108,9 +103,6 @@ void HTTPServer::incomingConnection(int socket)
             certificates.append(QSslCertificate(intermediates.at(i).toUtf8(), QSsl::Pem));
         }
         sslSocket->setLocalCertificateChain(certificates);
-#else
-        sslSocket->setLocalCertificate(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
-#endif
         sslSocket->setPrivateKey(key);
         sslSocket->startServerEncryption();
     }
@@ -357,22 +349,24 @@ void HTTPServer::rejectRequest(QAbstractSocket *socket, QString response)
 void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 {
     QString response;
-    QString openLinkRequestStart(QString::fromUtf8("{\"a\":\"l\","));
-    QString externalDownloadRequestStart   = QString::fromUtf8("{\"a\":\"d\",");
-    QString externalFileUploadRequestStart = QString::fromUtf8("{\"a\":\"ufi\",");
-    QString externalFolderUploadRequestStart = QString::fromUtf8("{\"a\":\"ufo\",");
-    QString externalFolderSyncRequestStart = QString::fromUtf8("{\"a\":\"s\",");
-    QString externalFolderSyncCheckStart   = QString::fromUtf8("{\"a\":\"sp\",");
-    QString externalOpenTransferManagerStart   = QString::fromUtf8("{\"a\":\"tm\",");
-    QString externalUploadSelectionStatusStart = QString::fromUtf8("{\"a\":\"uss\",");
-    QString externalTransferQueryProgressStart = QString::fromUtf8("{\"a\":\"t\",");
-    QString externalShowInFolder = QString::fromUtf8("{\"a\":\"sf\",");
+    static const QString versionRequest = QLatin1String("{\"a\":\"v\"}");
+    static const QString openLinkRequestStart(QLatin1String("{\"a\":\"l\","));
+    static const QString externalDownloadRequestStart   = QLatin1String("{\"a\":\"d\",");
+    static const QString externalFileUploadRequestStart = QLatin1String("{\"a\":\"ufi\",");
+    static const QString externalFolderUploadRequestStart = QLatin1String("{\"a\":\"ufo\",");
+    static const QString externalFolderSyncRequestStart = QLatin1String("{\"a\":\"s\",");
+    static const QString externalFolderSyncCheckStart   = QLatin1String("{\"a\":\"sp\",");
+    static const QString externalOpenTransferManagerStart   = QLatin1String("{\"a\":\"tm\",");
+    static const QString externalUploadSelectionStatusStart = QLatin1String("{\"a\":\"uss\",");
+    static const QString externalTransferQueryProgressStart = QLatin1String("{\"a\":\"t\",");
+    static const QString externalShowInFolder = QLatin1String("{\"a\":\"sf\",");
+    static const QString externalAddBackup = QLatin1String("{\"a\":\"ab\"}");
 
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Webclient request received: %1").arg(request.data).toUtf8().constData());
-    if (request.data == QString::fromUtf8("{\"a\":\"v\"}"))
+    if (request.data == versionRequest)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
         char *myHandle = megaApi->getMyUserHandle();
@@ -821,6 +815,13 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             }
         }
     }
+    else if (request.data == externalAddBackup)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient");
+        emit onExternalAddBackup();
+        response = QString::number(MegaError::API_OK);
+    }
+
 
     if (!response.size())
     {

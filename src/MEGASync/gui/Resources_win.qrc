@@ -915,5 +915,15 @@
         <file>animations/downloading@3x.gif</file>
         <file>animations/downloading@2x.gif</file>
         <file>animations/downloading.gif</file>
+        <file>images/Backup.png</file>
+        <file>images/Backup@2x.png</file>
+        <file>images/Backup@3x.png</file>
+        <file>images/PC_win_ico_rest.png</file>
+        <file>images/PC_win_ico_rest@2x.png</file>
+        <file>images/PC_win_ico_rest@3x.png</file>
+        <file>images/remove-backups.png</file>
+        <file>images/folder_icon.png</file>
+        <file>images/folder_icon@2x.png</file>
+        <file>images/folder_icon@3x.png</file>
     </qresource>
 </RCC>

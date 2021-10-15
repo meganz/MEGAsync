@@ -2789,12 +2789,13 @@ void MegaApplication::startHttpServer()
         httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
         connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
         connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
-        connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
-        connect(httpServer, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
+        connect(httpServer, &HTTPServer::onExternalDownloadRequestFinished, this, &MegaApplication::processDownloads, Qt::QueuedConnection);
+        connect(httpServer, &HTTPServer::onExternalFileUploadRequested, this, &MegaApplication::externalFileUpload, Qt::QueuedConnection);
+        connect(httpServer, &HTTPServer::onExternalFolderUploadRequested, this, &MegaApplication::externalFolderUpload, Qt::QueuedConnection);
+        connect(httpServer, &HTTPServer::onExternalFolderSyncRequested, this, &MegaApplication::externalFolderSync, Qt::QueuedConnection);
+        connect(httpServer, &HTTPServer::onExternalOpenTransferManagerRequested, this, &MegaApplication::externalOpenTransferManager, Qt::QueuedConnection);
+        connect(httpServer, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
+        connect(httpServer, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
     }
@@ -2808,13 +2809,14 @@ void MegaApplication::startHttpsServer()
         httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
         connect(httpsServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<WrappedNode *>)), this, SLOT(externalDownload(QQueue<WrappedNode *>)));
-        connect(httpsServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
-        connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(onHttpServerConnectionError()), Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onExternalDownloadRequestFinished, this, &MegaApplication::processDownloads, Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onExternalFileUploadRequested, this, &MegaApplication::externalFileUpload, Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onExternalFolderUploadRequested, this, &MegaApplication::externalFolderUpload, Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onExternalFolderSyncRequested, this, &MegaApplication::externalFolderSync, Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onExternalOpenTransferManagerRequested, this, &MegaApplication::externalOpenTransferManager, Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onExternalShowInFolderRequested, this, &MegaApplication::openFolderPath, Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onConnectionError, this, &MegaApplication::onHttpServerConnectionError, Qt::QueuedConnection);
+        connect(httpsServer, &HTTPServer::onExternalAddBackup, this, &MegaApplication::externalAddBackup, Qt::QueuedConnection);
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
     }
@@ -2865,6 +2867,7 @@ void MegaApplication::createInfoDialog()
     connect(transferQuota.get(), &TransferQuota::sendState, infoDialog, &InfoDialog::setBandwidthOverquotaState);
     connect(transferQuota.get(), &TransferQuota::overQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferOverquotaAlert);
     connect(transferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog, &InfoDialog::enableTransferAlmostOverquotaAlert);
+    connect(this, &MegaApplication::addBackup, infoDialog, &InfoDialog::onAddBackup);
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
@@ -5606,6 +5609,22 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
     }
 }
 
+void MegaApplication::externalAddBackup()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (!preferences->logged())
+    {
+        openInfoWizard();
+        return;
+    }
+
+    emit addBackup();
+}
+
 void MegaApplication::externalOpenTransferManager(int tab)
 {
     if (appfinished)
@@ -6269,7 +6288,7 @@ void MegaApplication::createInfoDialogMenus()
 
     if (infoDialogMenu)
     {
-        QList<QAction *> actions = infoDialogMenu->actions();
+        QList<QAction*> actions = infoDialogMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
             infoDialogMenu->removeAction(actions[i]);
@@ -6320,6 +6339,7 @@ void MegaApplication::createInfoDialogMenus()
     myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromUtf8("://images/ico_cloud_drive.png")), true);
     connect(myCloudAction, SIGNAL(triggered()), this, SLOT(goToMyCloud()), Qt::QueuedConnection);
 
+    // Syncs menu
     if (addSyncAction)
     {
         addSyncAction->deleteLater();
@@ -6331,13 +6351,8 @@ void MegaApplication::createInfoDialogMenus()
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromUtf8("://images/ico_add_sync_folder.png")), true);
 
-#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
         connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
                 QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
-#else
-        connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
-#endif
-
     }
     else
     {
@@ -6361,14 +6376,7 @@ void MegaApplication::createInfoDialogMenus()
         syncsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
 
-
-        if (menuSignalMapper)
-        {
-            menuSignalMapper->deleteLater();
-            menuSignalMapper = NULL;
-        }
-
-        menuSignalMapper = new QSignalMapper();
+        QSignalMapper* menuSignalMapper = new QSignalMapper(syncsMenu.get());
         connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         int activeFolders = 0;
@@ -6392,12 +6400,8 @@ void MegaApplication::createInfoDialogMenus()
         if (!activeFolders)
         {
             addSyncAction->setLabelText(tr("Add Sync"));
-#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
             connect(addSyncAction, &MenuItemAction::triggered, infoDialog,
                     QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
-#else
-            connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
-#endif
         }
         else
         {
@@ -6408,13 +6412,8 @@ void MegaApplication::createInfoDialogMenus()
                 if ((num > 1) || !fullSync)
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")), true);
-#if QT_VERSION > QT_VERSION_CHECK(5, 7, 0)
                     connect(addAction, &MenuItemAction::triggered, infoDialog,
                             QOverload<>::of(&InfoDialog::addSync), Qt::QueuedConnection);
-#else
-                    connect(addAction, &MenuItemAction::triggered, infoDialog,
-                            static_cast<void(InfoDialog::*)()>(&InfoDialog::addSync), Qt::QueuedConnection);
-#endif
 
                     if (activeFolders)
                     {
@@ -6428,6 +6427,126 @@ void MegaApplication::createInfoDialogMenus()
         }
     }
 
+    // Backups menu/button
+    if (addBackupAction)
+    {
+        addBackupAction->deleteLater();
+        addBackupAction = nullptr;
+    }
+
+    // Get number of backups. Show only "Add Backup" button if no backups, and whole menu otherwise.
+    int numBackups = (megaApi && preferences->logged()) ?
+                         model->getNumSyncedFolders(MegaSync::TYPE_BACKUP)
+                       : 0;
+    if (numBackups == 0)
+    {
+        addBackupAction = new MenuItemAction(tr("Add Backup"),
+                                             QIcon(QString::fromUtf8("://images/Backup.png")),
+                                             true);
+        connect(addBackupAction, &MenuItemAction::triggered, infoDialog,
+                QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
+    }
+    else
+    {
+        addBackupAction = new MenuItemAction(tr("Backups"),
+                                             QIcon(QString::fromUtf8("://images/Backup.png")),
+                                             true);
+        if (backupsMenu)
+        {
+            for (QAction* a : backupsMenu->actions())
+            {
+                a->deleteLater();
+            }
+            backupsMenu->deleteLater();
+            backupsMenu.release();
+        }
+
+        backupsMenu.reset(new QMenu());
+
+#ifdef __APPLE__
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff;"
+                                                            "padding-top: 8px; "
+                                                            "padding-bottom: 8px;}"));
+#else
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {border: 1px solid #B8B8B8;"
+                                                            "border-radius: 5px;"
+                                                            "background: #ffffff;"
+                                                            "padding-top: 8px;"
+                                                            "padding-bottom: 8px;}"));
+#endif
+        QSignalMapper* menuSignalMapper = new QSignalMapper(backupsMenu.get());
+        connect(menuSignalMapper, SIGNAL(mapped(QString)),
+                infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
+
+        // Display device name before folders (click opens backups wizard)
+        QString deviceName (model->getDeviceName());
+#ifdef WIN32
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
+#elif defined(__APPLE__)
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-mac.png"));
+#elif defined(Q_OS_LINUX)
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-linux.png"));
+#else
+        QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
+#endif
+
+        MenuItemAction *devNameAction = new MenuItemAction(deviceName, devIcon, true);
+        connect(devNameAction, &MenuItemAction::triggered,
+                infoDialog, &InfoDialog::onAddBackup, Qt::QueuedConnection);
+        backupsMenu->addAction(devNameAction);
+
+        int activeFolders = 0;
+        for (int i = 0; i < numBackups; i++)
+        {
+            auto backupSetting = model->getSyncSetting(i, MegaSync::TYPE_BACKUP);
+
+            if (!backupSetting->isActive())
+            {
+                continue;
+            }
+
+            activeFolders++;
+            MenuItemAction *action =
+                    new MenuItemAction(backupSetting->name(),
+                                       QIcon(QString::fromUtf8("://images/small_folder.png")),
+                                       true, 1);
+            connect(action, SIGNAL(triggered()),
+                    menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
+
+            backupsMenu->addAction(action);
+            menuSignalMapper->setMapping(action, backupSetting->getLocalFolder());
+        }
+
+        if (!activeFolders)
+        {
+            addBackupAction->setLabelText(tr("Add Backup"));
+            connect(addBackupAction, &MenuItemAction::triggered, infoDialog,
+                    QOverload<>::of(&InfoDialog::onAddBackup), Qt::QueuedConnection);
+        }
+        else
+        {
+            // Get device name and display
+            auto rootNode = getRootNode();
+            if (rootNode)
+            {
+                if (numBackups > 1)
+                {
+                    MenuItemAction* addAction =
+                            new MenuItemAction(tr("Add Backup"),
+                                               QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")),
+                                               true);
+                    connect(addAction, &MenuItemAction::triggered,
+                            infoDialog, &InfoDialog::onAddBackup, Qt::QueuedConnection);
+
+                    backupsMenu->addSeparator();
+                    backupsMenu->addAction(addAction);
+                }
+            }
+            addBackupAction->setMenu(backupsMenu.get());
+        }
+    }
+
+    // Import links
     if (importLinksAction)
     {
         importLinksAction->deleteLater();
@@ -6484,6 +6603,7 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(myCloudAction);
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(addSyncAction);
+    infoDialogMenu->addAction(addBackupAction);
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);

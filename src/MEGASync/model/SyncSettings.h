@@ -36,6 +36,7 @@ private:
 
     static constexpr int CACHE_VERSION = 1;
 public:
+
     SyncSetting();
     SyncSetting(const SyncData &osd, bool loadedFromPreviousSessions);
     SyncSetting(QString initializer);
