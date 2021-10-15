@@ -6984,8 +6984,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 // API_ENOENT is expected when the user has never disabled versioning
                 preferences->disableFileVersioning(request->getFlag());
             }
-        }
-
+        }       
         break;
     }
     case MegaRequest::TYPE_LOGIN:

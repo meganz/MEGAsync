@@ -7,7 +7,21 @@
 
 #include "megaapi.h"
 
-struct SyncData;
+struct SyncData
+{
+    SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
+                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
+    QString mName;
+    QString mLocalFolder;
+    long long mMegaHandle;
+    QString mMegaFolder;
+    long long mLocalfp;
+    bool mEnabled;
+    bool mTemporarilyDisabled;
+    int mPos;
+    QString mSyncID;
+};
+
 class SyncSetting
 {
 private:
@@ -57,21 +71,8 @@ public:
     QString getSyncID() const;
     void setSyncID(const QString &syncID);
     void setMegaFolder(const QString &megaFolder);
+
+    mega::MegaSync::SyncType getType();
 };
 
 Q_DECLARE_METATYPE(SyncSetting);
-
-struct SyncData
-{
-    SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
-                long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
-    QString mName;
-    QString mLocalFolder;
-    long long mMegaHandle;
-    QString mMegaFolder;
-    long long mLocalfp;
-    bool mEnabled;
-    bool mTemporarilyDisabled;
-    int mPos;
-    QString mSyncID;
-};
