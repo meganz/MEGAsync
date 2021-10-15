@@ -58,7 +58,6 @@ protected:
 
     QSet<mega::MegaHandle> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
 
-
 public:
     void reset();
     static SyncModel *instance();

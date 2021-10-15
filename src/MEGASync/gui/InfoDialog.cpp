@@ -17,6 +17,10 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
+#include "BackupsWizard.h"
+
+// TODO: remove
+#include "control/MegaController.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -161,7 +165,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     animation = NULL;
     accountDetailsDialog = NULL;
     syncsMenu = NULL;
+    backupsMenu = NULL;
     addSyncAction = NULL;
+    addBackupAction = NULL;
     lastHovered = NULL;
 
     actualAccountType = -1;
@@ -889,6 +895,16 @@ void InfoDialog::addSync()
     }
 }
 
+void InfoDialog::onAddBackup()
+{
+    const bool upgradingDissmised{app->showSyncOverquotaDialog()};
+    if(upgradingDissmised)
+    {
+        addBackup();
+        app->createAppMenus();
+    }
+}
+
 void InfoDialog::onAllUploadsFinished()
 {
     remainingUploads = megaApi->getNumPendingUploads();
@@ -1194,6 +1210,86 @@ void InfoDialog::addSync(MegaHandle h)
    controller->addSync(localFolderPath, handle, syncName, addSyncStep);
 }
 
+void InfoDialog::addBackup()
+{
+    static QPointer<BackupsWizard> dialog = nullptr;
+    if (dialog)
+    {
+        dialog->activateWindow();
+        dialog->raise();
+        dialog->setFocus();
+        return;
+    }
+
+    dialog = new BackupsWizard();
+
+
+    Platform::execBackgroundWindow(dialog);
+    if (!dialog)
+    {
+        return;
+    }
+
+    delete dialog;
+}
+
+// TODO: remove (test)
+void InfoDialog::on_bRemoveBackups_clicked()
+{
+    int num = (megaApi && preferences->logged()) ?
+                  model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP)
+                : 0;
+
+    std::unique_ptr<mega::MegaNode> myBackups (megaApi->getNodeByHandle(model->getBackupsDirHandle()));
+    std::unique_ptr<mega::MegaNode> deviceFolder;
+    QString devName (model->getDeviceName());
+    if (!devName.isEmpty())
+    {
+        deviceFolder.reset(megaApi->getChildNode(myBackups.get(), devName.toUtf8()));
+    }
+
+    if (num > 0 || deviceFolder)
+    {
+        QString report;
+
+        num--;
+        while (num >= 0)
+        {
+            auto backupSetting = model->getSyncSetting(num, mega::MegaSync::TYPE_BACKUP);
+            report += QString::fromUtf8("Backup \"%1\" removed.\n").arg(backupSetting->name());
+            Controller::instance()->removeSync(backupSetting);
+            num--;
+        }
+
+        // Wait
+        do
+        {
+            num = model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP);
+            MegaSyncApp->processEvents();
+        }
+        while (num != 0);
+
+        report += QString::fromUtf8("Backups remaining: %1.\n").arg(num);
+
+        // Delete device folder
+        if (deviceFolder)
+        {
+            megaApi->remove(deviceFolder.get());
+            report += QString::fromUtf8("Remote device folder (%1) removed.").arg(devName);
+        }
+
+        QMessageBox::information(this, QString::fromLatin1("Backups removed"),
+                                 report,
+                                 QMessageBox::Ok, QMessageBox::Ok);
+    }
+    else
+    {
+        QMessageBox::information(this, QString::fromLatin1("Backups removed"),
+                                 QString::fromLatin1("Nothing to do."),
+                                 QMessageBox::Ok, QMessageBox::Ok);
+    }
+}
+
 #ifdef __APPLE__
 void InfoDialog::moveArrow(QPoint p)
 {
@@ -1262,7 +1358,7 @@ void InfoDialog::on_bAddSync_clicked()
         //Hide highlighted menu entry when mouse over
         syncsMenu->installEventFilter(this);
 
-        QSignalMapper *menuSignalMapper = new QSignalMapper();
+        QSignalMapper *menuSignalMapper = new QSignalMapper(syncsMenu.get());
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         int activeFolders = 0;
@@ -1324,6 +1420,145 @@ void InfoDialog::on_bAddSync_clicked()
     }
 }
 
+void InfoDialog::on_bAddBackup_clicked()
+{
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    lastHovered = nullptr;
+
+    if (addBackupAction)
+    {
+        addBackupAction->deleteLater();
+        addBackupAction = nullptr;
+    }
+
+    // Get number of backups. Show only "Add Backup" wizard if no backups, and whole menu otherwise.
+    int num = (megaApi && preferences->logged()) ?
+                  model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP)
+                : 0;
+    if (num == 0)
+    {
+        addBackup();
+    }
+    else
+    {
+        addBackupAction =
+                new MenuItemAction(tr("Backups"),
+                                   QIcon(QString::fromUtf8("://images/Backup.png")),
+                                   true);
+        if (backupsMenu)
+        {
+            for (QAction* a : backupsMenu->actions())
+            {
+                a->deleteLater();
+            }
+            backupsMenu->deleteLater();
+            backupsMenu.release();
+        }
+
+        backupsMenu.reset(new QMenu());
+
+#ifdef __APPLE__
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff;"
+                                                            "padding-top: 8px; "
+                                                            "padding-bottom: 8px;}"));
+#else
+        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {border: 1px solid #B8B8B8;"
+                                                            "border-radius: 5px;"
+                                                            "background: #ffffff;"
+                                                            "padding-top: 8px;"
+                                                            "padding-bottom: 8px;}"));
+#endif
+
+        //Highlight menu entry on mouse over
+        connect(backupsMenu.get(), SIGNAL(hovered(QAction*)),
+                this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+
+        //Hide highlighted menu entry when mouse over
+        backupsMenu->installEventFilter(this);
+
+        QSignalMapper* menuSignalMapper = new QSignalMapper(backupsMenu.get());
+        connect(menuSignalMapper, SIGNAL(mapped(QString)),
+                this, SLOT(openFolder(QString)), Qt::QueuedConnection);
+
+        // Display device name before folders (click opens backup wizard)
+        QString deviceName (model->getDeviceName());
+#ifdef WIN32
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
+#elif defined(__APPLE__)
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-mac.png"));
+#elif defined(Q_OS_LINUX)
+        QIcon devIcon (QString::fromUtf8("://images/small-pc-linux.png"));
+#else
+        QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
+#endif
+        MenuItemAction* devNameAction = new MenuItemAction(deviceName, devIcon, true);
+        connect(devNameAction, &MenuItemAction::triggered,
+                this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
+        backupsMenu->addAction(devNameAction);
+
+        int activeFolders = 0;
+        for (int i = 0; i < num; i++)
+        {
+            auto backupSetting = model->getSyncSetting(i, mega::MegaSync::TYPE_BACKUP);
+
+            if (!backupSetting->isActive())
+            {
+                continue;
+            }
+
+            activeFolders++;
+            MenuItemAction* action =
+                    new MenuItemAction(backupSetting->name(),
+                                       QIcon(QString::fromUtf8("://images/small_folder.png")),
+                                       true, 1);
+            connect(action, SIGNAL(triggered()),
+                    menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
+
+            backupsMenu->addAction(action);
+            menuSignalMapper->setMapping(action, backupSetting->getLocalFolder());
+        }
+
+        if (!activeFolders)
+        {
+            addBackup();
+            return;
+        }
+        else
+        {
+            if (num > 1)
+            {
+                MenuItemAction* addAction =
+                        new MenuItemAction(tr("Add Backup"),
+                                           QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")),
+                                           true);
+                connect(addAction, &MenuItemAction::triggered,
+                        this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
+                backupsMenu->addSeparator();
+                backupsMenu->addAction(addAction);
+            }
+            addBackupAction->setMenu(backupsMenu.get());
+        }
+
+#ifdef __APPLE__
+        QPoint p = ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100,
+                                                      ui->bAddBackup->height() + 3));
+        backupsMenu->exec(p);
+
+        if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        {
+            this->hide();
+        }
+#else
+        backupsMenu->popup(ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100,
+                                                              ui->bAddBackup->height() + 3)));
+#endif
+    }
+}
+
 void InfoDialog::closeSyncsMenu()
 {
 #ifdef __APPLE__
@@ -1337,11 +1572,6 @@ void InfoDialog::closeSyncsMenu()
 void InfoDialog::on_bUpload_clicked()
 {
     app->uploadActionClicked();
-}
-
-void InfoDialog::on_bDownload_clicked()
-{
-    app->downloadActionClicked();
 }
 
 void InfoDialog::clearUserAttributes()

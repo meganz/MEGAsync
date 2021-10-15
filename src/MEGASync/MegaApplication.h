@@ -245,6 +245,7 @@ signals:
     void blocked();
     void storageStateChanged(int);
     void avatarReady();
+    void addBackup();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -279,6 +280,7 @@ public slots:
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
     void externalFolderSync(qlonglong targetFolder);
+    void externalAddBackup();
     void externalOpenTransferManager(int tab);
     void internalDownload(long long handle);
     void onLinkImportFinished();
@@ -398,7 +400,7 @@ protected:
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
-    QSignalMapper *menuSignalMapper;
+    std::unique_ptr<QMenu> backupsMenu;
 
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
@@ -408,6 +410,7 @@ protected:
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
     MenuItemAction *addSyncAction;
+    MenuItemAction *addBackupAction;
 
     MenuItemAction *updateAction;
     QAction *showStatusAction;

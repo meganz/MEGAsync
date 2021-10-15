@@ -2,8 +2,10 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/BackupsWizard.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/OverQuotaDialog.cpp \
+    $$PWD/RenameTargetFolderDialog.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -74,8 +76,10 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/BackupsWizard.h \
     $$PWD/InfoDialog.h \
     $$PWD/OverQuotaDialog.h \
+    $$PWD/RenameTargetFolderDialog.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -201,6 +205,8 @@ win32 {
                 $$PWD/win/OverQuotaDialog.ui \
                 $$PWD/win/ProxySettings.ui \
                 $$PWD/win/BandwidthSettings.ui \
+                $$PWD/win/BackupsWizard.ui \
+                $$PWD/win/RenameTargetFolderDialog.ui \
                 $$PWD/win/NewFolderDialog.ui
 }
 
@@ -257,6 +263,8 @@ macx {
                 $$PWD/macx/OverQuotaDialog.ui \
                 $$PWD/macx/ProxySettings.ui \
                 $$PWD/macx/BandwidthSettings.ui \
+                $$PWD/macx/BackupsWizard.ui \
+                $$PWD/macx/RenameTargetFolderDialog.ui \
                 $$PWD/macx/NewFolderDialog.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -290,6 +298,7 @@ unix:!macx {
                 $$PWD/linux/NodeSelector.ui \
                 $$PWD/linux/FolderBinder.ui \
                 $$PWD/linux/BindFolderDialog.ui \
+                $$PWD/linux/BackupsWizard.ui \
                 $$PWD/linux/UploadToMegaDialog.ui \
                 $$PWD/linux/PasteMegaLinksDialog.ui \
                 $$PWD/linux/ImportMegaLinksDialog.ui \
@@ -335,6 +344,7 @@ unix:!macx {
                 $$PWD/linux/OverQuotaDialog.ui \
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
+                $$PWD/linux/RenameTargetFolderDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \

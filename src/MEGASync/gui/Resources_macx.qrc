@@ -615,5 +615,10 @@
         <file>animations/full-storage@2x.gif</file>
         <file>animations/full-transfer@2x.gif</file>
         <file>animations/full-transfer.gif</file>
+ 	<file>images/Backup.png</file>
+        <file>images/Backup@2x.png</file>
+        <file>images/PC_mac_ico_rest.png</file>
+        <file>images/PC_mac_ico_rest@2x.png</file>
+        <file>images/remove-backups.png</file>
     </qresource>
 </RCC>

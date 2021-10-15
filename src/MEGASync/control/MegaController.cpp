@@ -1,6 +1,8 @@
 #include "MegaController.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "model/Model.h"
+
 #include <QDateTime>
 #include <QPointer>
 #include <QDebug>
@@ -8,23 +10,30 @@ using namespace mega;
 
 Controller *Controller::controller = NULL;
 
-void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle, QString syncName, ActionProgress *progress)
+void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHandle,
+                         QString syncName, ActionProgress *progress, mega::MegaSync::SyncType type)
 {
     assert(api);
 
     if (!localFolder.size())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Adding invalid sync %1").arg(localFolder).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Adding invalid sync %1").arg(localFolder).toUtf8().constData());
         if (progress) progress->setFailed(MegaError::API_EARGS);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync %1").arg(localFolder).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromUtf8("Adding sync %1").arg(localFolder).toUtf8().constData());
 
-    api->syncFolder(MegaSync::TYPE_TWOWAY, localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
-        nullptr, new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+
+    api->syncFolder(type, localFolder.toUtf8().constData(),
+                    syncName.toUtf8().constData(), remoteHandle, nullptr,
+                    new ProgressFuncExecuterListener(progress,  true,
+                                                     [](MegaApi *api, MegaRequest *request,
+                                                     MegaError *e){
                         ///// onRequestFinish Management: ////
-    }));
+                    }));
 }
 
 void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)
@@ -32,15 +41,15 @@ void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProg
     assert(api);
     if (!syncSetting)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Removing invalid sync").toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Removing invalid sync").toUtf8().constData());
         if (progress) progress->setFailed(MegaError::API_EARGS);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync").toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync").toUtf8().constData());
 
     api->removeSync(syncSetting->backupId(),
-        new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
+                    new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));
 }
@@ -81,6 +90,109 @@ void Controller::disableSync(std::shared_ptr<SyncSetting> syncSetting, ActionPro
         new ProgressFuncExecuterListener(progress,  true, [](MegaApi *api, MegaRequest *request, MegaError *e){
                         ///// onRequestFinish Management: ////
                     }));
+}
+
+void Controller::createMyBackupsDir(QString& name, ActionProgress* progress)
+{
+    // Check that name is not empty
+    if (name.isEmpty())
+    {
+        // Name empty, report error
+        if (progress) progress->setFailed(MegaError::API_EARGS);
+    }
+    else
+    {
+        assert(api);
+        // Check for name collision
+        auto  rootNode (MegaSyncApp->getRootNode());
+        std::unique_ptr<mega::MegaNode> backupsDirNode (api->getChildNode(rootNode.get(), name.toUtf8()));
+
+        if (backupsDirNode)
+        {
+            // Folder exists, report error
+            if (progress) progress->setFailed(MegaError::API_EEXIST);
+        }
+        else
+        {            
+            mega::SynchronousRequestListener synchro;
+
+            // Create folder
+            api->createFolder(name.toUtf8(), rootNode.get(), &synchro);
+            synchro.wait();
+
+            if (synchro.getError()->getErrorCode() != mega::MegaError::API_OK)
+            {
+                // Creation failed, pass error to caller
+                if (progress)   progress->setFailed(synchro.getError()->getErrorCode(),
+                                                    synchro.getRequest(), synchro.getError());
+            }
+            else
+            {
+                // Set the folder as MyBackups root folder
+                mega::MegaHandle handle (synchro.getRequest()->getNodeHandle());
+                backupsDirNode.reset(api->getNodeByHandle(handle));
+                api->setMyBackupsFolder(backupsDirNode->getHandle(), &synchro);
+                synchro.wait();
+
+                if (synchro.getError()->getErrorCode() != mega::MegaError::API_OK)
+                {
+                    // Setting failed, pass error to caller
+                    if (progress)   progress->setFailed(synchro.getError()->getErrorCode(),
+                                                        synchro.getRequest(), synchro.getError());
+                }
+                else
+                {
+                    // Everything went well, update Model
+                    Model::instance()->setBackupsDirHandle(handle);
+                    progress->setComplete();
+                }
+            }
+        }
+    }
+}
+
+void Controller::setDeviceDir(QString& name, bool reUseDir, ActionProgress* progress)
+{
+    // Check that name is not empty
+    if (name.isEmpty())
+    {
+        // Name empty, report error
+        if (progress) progress->setFailed(MegaError::API_EARGS);
+    }
+    else
+    {
+        assert(api);
+        // Check if folder exists
+        std::unique_ptr<mega::MegaNode> backupsDirNode (api->getNodeByHandle(Model::instance()->getBackupsDirHandle()));
+        std::unique_ptr<mega::MegaNode> deviceDirNode (api->getChildNode(backupsDirNode.get(), name.toUtf8()));
+
+        if (deviceDirNode && !reUseDir)
+        {
+            // Folder exists, report error
+            if (progress) progress->setFailed(MegaError::API_EEXIST);
+        }
+        else
+        {
+            mega::SynchronousRequestListener synchro;
+
+            // Set device name
+            api->setDeviceName(name.toUtf8(), &synchro);
+            synchro.wait();
+
+            if (synchro.getError()->getErrorCode() != mega::MegaError::API_OK)
+            {
+                // Setting failed, pass error to caller
+                if (progress)   progress->setFailed(synchro.getError()->getErrorCode(),
+                                                    synchro.getRequest(), synchro.getError());
+            }
+            else
+            {
+                // Everything went well, update the Model
+                Model::instance()->setDeviceName(name);
+                progress->setComplete();
+            }
+        }
+    }
 }
 
 Controller *Controller::instance()
