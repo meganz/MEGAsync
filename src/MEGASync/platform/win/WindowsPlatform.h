@@ -57,6 +57,7 @@ public:
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
     static bool isUserActive();
+    static QString getDeviceName();
 
     static const char* settingsString;
     static const char* exitString;
