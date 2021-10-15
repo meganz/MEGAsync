@@ -148,7 +148,6 @@ public:
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
 
-
     /**
      * @brief Migrate sync configuration to sdk cache
      * @param email of sync configuration to migrate from previous sessions
@@ -399,8 +398,6 @@ protected:
     std::unique_ptr<QMenu> infoDialogMenu;
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
-    std::unique_ptr<QMenu> syncsMenu;
-    std::unique_ptr<QMenu> backupsMenu;
 
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
@@ -409,9 +406,6 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
-    MenuItemAction *addSyncAction;
-    MenuItemAction *addBackupAction;
-
     MenuItemAction *updateAction;
     QAction *showStatusAction;
 

@@ -44,8 +44,6 @@ private:
 
     Preferences *preferences;
     bool isFirstSyncDone = false;
-    QString mDeviceName;
-    mega::MegaHandle mBackupsDirHandle;
 
     void saveUnattendedDisabledSyncs();
 
