@@ -6,9 +6,9 @@
 
 #include <QStandardPaths>
 
-constexpr int HEIGHT_S1 (412);
-constexpr int HEIGHT_MIN_S2 (296);
-constexpr int HEIGHT_MAX_S2 (465);
+//constexpr int HEIGHT_S1 (412);
+//constexpr int HEIGHT_MIN_S2 (296);
+//constexpr int HEIGHT_MAX_S2 (465);
 
 BackupsWizard::BackupsWizard(QWidget* parent) :
     QDialog(parent),
@@ -92,7 +92,7 @@ void BackupsWizard::refreshNextButtonState()
 
 void BackupsWizard::setupStep1()
 {
-    setFixedHeight(HEIGHT_S1);
+//    setFixedHeight(HEIGHT_S1);
 
     refreshNextButtonState();
     mUi->sSteps->setCurrentWidget(mUi->pStep1);
@@ -100,53 +100,67 @@ void BackupsWizard::setupStep1()
     mUi->bNext->setText(tr("Next"));
     mUi->bBack->hide();
 
+    // Get device name
+    mHaveDeviceName = false;
+    mSyncController.getDeviceName();
+
+
     bool isRemoteRootSynced(mSyncsModel->isRemoteRootSynced());
     if (isRemoteRootSynced)
     {
         mUi->sMoreFolders->setCurrentWidget(mUi->pAllFoldersSynced);
         mUi->sFolders->setCurrentWidget(mUi->pNoFolders);
-        auto h (mUi->pNoFolders->sizeHint().height());
-        mUi->sFolders->setFixedHeight(h);
+        // Remove this, otherwise the height doens't go below 8x px??
+        mUi->sFolders->removeWidget(mUi->pFolders);
+        mUi->sMoreFolders->removeWidget(mUi->pMoreFolders);
+        mUi->pFolders->setSizePolicy(mUi->pFolders->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+        mUi->fFoldersS1->setSizePolicy(mUi->fFoldersS1->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+        mUi->sFolders->setSizePolicy(mUi->sFolders->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+        mUi->pStep1->setSizePolicy(mUi->pStep1->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+        mUi->sSteps->setSizePolicy(mUi->sSteps->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
+        setSizePolicy(sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
     }
     else
     {
         mUi->sMoreFolders->setCurrentWidget(mUi->pMoreFolders);
         mUi->sFolders->setCurrentWidget(mUi->pFolders);
-    }
 
-    // Get device name
-    mHaveDeviceName = false;
-    mSyncController.getDeviceName();
-
-    // Check if we need to refresh the lists
-    if (mStep1FoldersModel->rowCount() == 0 && !isRemoteRootSynced)
-    {
-        QIcon folderIcon (QIcon(QLatin1String("://images/folder_icon.png")));
-
-        for (auto type : {
-             QStandardPaths::DocumentsLocation,
-             //QStandardPaths::MusicLocation,
-             QStandardPaths::MoviesLocation,
-             QStandardPaths::PicturesLocation,
-             //QStandardPaths::DownloadLocation,
-    })
+        // Check if we need to refresh the lists
+        if (mStep1FoldersModel->rowCount() == 0)
         {
-            const auto standardPaths (QStandardPaths::standardLocations(type));
-            QDir dir (standardPaths.first());
-            if (dir.exists() && dir != QDir::home() && !isFolderAlreadySynced(dir.canonicalPath()))
+            QIcon folderIcon (QIcon(QLatin1String("://images/folder_icon.png")));
+
+            for (auto type : {
+                 QStandardPaths::DocumentsLocation,
+                 //QStandardPaths::MusicLocation,
+                 QStandardPaths::MoviesLocation,
+                 QStandardPaths::PicturesLocation,
+                 //QStandardPaths::DownloadLocation,
+        })
             {
-                QStandardItem* item (new QStandardItem(dir.dirName()));
-                item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-                item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::ToolTipRole);
-                item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::UserRole);
-                item->setData(folderIcon, Qt::DecorationRole);
-                item->setData(Qt::Unchecked, Qt::CheckStateRole);
-                mStep1FoldersModel->appendRow(item);
+                const auto standardPaths (QStandardPaths::standardLocations(type));
+                QDir dir (standardPaths.first());
+                if (dir.exists() && dir != QDir::home() && !isFolderAlreadySynced(dir.canonicalPath()))
+                {
+                    QStandardItem* item (new QStandardItem(dir.dirName()));
+                    item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+                    item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::ToolTipRole);
+                    item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::UserRole);
+                    item->setData(folderIcon, Qt::DecorationRole);
+                    item->setData(Qt::Unchecked, Qt::CheckStateRole);
+//                    item->setData(QSize(-1, 40), Qt::SizeHintRole);
+
+                    mStep1FoldersModel->appendRow(item);
+                }
             }
+            // Snapshot original state
+            mOriginalState = getCurrentState();
         }
-        // Snapshot original state
-        mOriginalState = getCurrentState();
+        mUi->lvFoldersS1->style()->polish(mUi->lvFoldersS1);
+        mUi->lvFoldersS1->adjustSize();
     }
+
+    adjustSize();
 
     mCurrentStep = Steps::STEP_1;
 }
@@ -176,6 +190,7 @@ void BackupsWizard::setupStep2()
         itemS2->setData(Qt::ToolTipRole, item[Qt::ToolTipRole]);
         itemS2->setData(Qt::UserRole, item[Qt::UserRole]);
         itemS2->setData(Qt::DecorationRole, item[Qt::DecorationRole]);
+//        itemS2->setData(Qt::SizeHintRole, QSize(-1, 32));
         mUi->lvFoldersS2->addItem(itemS2);
 
         // Hide unchecked items and count selected ones
@@ -201,8 +216,12 @@ void BackupsWizard::setupStep2()
         setProperty("S2OneItem", false);
     }
 
-    setFixedHeight(std::min(HEIGHT_MAX_S2, HEIGHT_MIN_S2 + nbSelectedFolders * 32));
+//    setFixedHeight(std::min(HEIGHT_MAX_S2, HEIGHT_MIN_S2 + nbSelectedFolders * 32));
     mUi->lvFoldersS2->style()->polish(mUi->lvFoldersS2);
+    mUi->lvFoldersS2->adjustSize();
+    mUi->fFoldersS2->adjustSize();
+    mUi->pStep2->adjustSize();
+    adjustSize();
 
     mCurrentStep = Steps::STEP_2;
 }
