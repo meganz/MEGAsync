@@ -171,6 +171,7 @@ void SyncsMenu::refresh()
             {
                 // Display device name before folders (click opens backups wizard)
                 mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON), true));
+                mMenu->insertAction(firstBackup, mDevNameAction.get());
                 // Insert the action in the menu to make sure it is here when the
                 // set device name slot is called.
                 connect(mDevNameAction.get(), &MenuItemAction::triggered,
