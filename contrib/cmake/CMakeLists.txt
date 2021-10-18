@@ -174,6 +174,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ProxySettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/BandwidthSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BackupsWizard.ui
+    ${MEGAsyncDir}/gui/${UiDir}/RenameTargetFolderDialog.ui
     )
 
 
@@ -285,6 +287,9 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
+    ${MEGAsyncDir}/gui/BackupsWizard.h
+    ${MEGAsyncDir}/gui/RenameTargetFolderDialog.h
+    ${MEGAsyncDir}/gui/SyncsMenu.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -426,6 +431,9 @@ set (SRCS
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
+    ${MEGAsyncDir}/gui/BackupsWizard.cpp
+    ${MEGAsyncDir}/gui/RenameTargetFolderDialog.cpp
+    ${MEGAsyncDir}/gui/SyncsMenu.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp

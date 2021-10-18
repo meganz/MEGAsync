@@ -2,11 +2,11 @@
 
 #include <QString>
 
-#include "SyncSettings.h"
-#include "SyncModel.h"
-#include "megaapi.h"
+#include "model/SyncSettings.h"
+#include "model/SyncModel.h"
 #include "QTMegaRequestListener.h"
 
+#include "megaapi.h"
 
 /**
  * @brief Sync Controller class
