@@ -229,6 +229,13 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     %define extraqmake %{nil}
 %endif
 
+%if 0%{?fedora_version} >= 35
+    %define extraconfig CONFIG+=FFMPEG_WITH_LZMA
+%else
+    %define extraconfig %{nil}
+%endif
+
+
 %if 0%{?suse_version} != 1230
     %define fullreqs "CONFIG += FULLREQUIREMENTS"
 %else
@@ -239,18 +246,18 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
 
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
     %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
-        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt5  MEGASync/MEGASync.pro
     %else
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt4  MEGASync/MEGASync.pro
     %endif
 %else
     %if 0%{?rhel_version} || 0%{?scientificlinux_version}
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt4  MEGASync/MEGASync.pro
     %else
-        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease MEGASync/MEGASync.pro
     %endif
 %endif
