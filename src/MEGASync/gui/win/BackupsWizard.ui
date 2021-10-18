@@ -62,7 +62,7 @@ color: #999999;
 font-size: 13px;
 border-radius: 4px;
 background-color: #FAFAFA;
-border: 1px solid rgba(0,0,0,0.1);
+border: 1px solid #e5e5e5;
 padding-left: 7px;
 }
 
@@ -84,7 +84,7 @@ margin-right: 18px;
 #fFoldersS1, #fFoldersS2
 {
 margin-left: 20px;
-border: 1px solid rgba(0,0,0,0.1);
+border: 1px solid #e5e5e5;
 border-radius: 6px;
 background: solid white;
 }
@@ -139,7 +139,7 @@ padding-right: 16px;
 
 #lvFoldersS1::item
 {
-border-bottom: 1px solid rgba(0,0,0,0.1);
+border-bottom: 1px solid #e5e5e5;
 }
 
 #lvFoldersS1::item
@@ -193,7 +193,7 @@ left: 7px;
 color: #004038;
 font-family: Lato;
 font-size: 12px;
-border: 1px solid rgba(0,191,165,0.5);
+border: 1px solid #7fdfd2;
 border-radius: 2px;
 background-color: rgba(0,191,165,0.1);
 }
@@ -215,7 +215,6 @@ background: transparent;
 width: 12px;
 border: none;
 border-bottom-right-radius: 6px;
-
 }
 
 QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
@@ -239,7 +238,7 @@ border-bottom: none;
 
 #BackupsWizard[S2OneItem=false] #lvFoldersS2::item
 {
-border-bottom: 1px solid rgba(0,0,0,0.1);
+border-bottom: 1px solid #e5e5e5;
 }</string>
   </property>
   <property name="modal">
@@ -485,7 +484,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
              </size>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="pFolders">
              <property name="sizePolicy">
@@ -546,7 +545,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
                  <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="sizeAdjustPolicy">
-                 <enum>QAbstractScrollArea::AdjustIgnored</enum>
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
                 </property>
                 <property name="editTriggers">
                  <set>QAbstractItemView::NoEditTriggers</set>
@@ -573,7 +572,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
                  <enum>QAbstractItemView::ScrollPerPixel</enum>
                 </property>
                 <property name="resizeMode">
-                 <enum>QListView::Fixed</enum>
+                 <enum>QListView::Adjust</enum>
                 </property>
                 <property name="layoutMode">
                  <enum>QListView::Batched</enum>
@@ -1105,7 +1104,6 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
  </widget>
  <resources>
   <include location="../Resources_win.qrc"/>
-  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

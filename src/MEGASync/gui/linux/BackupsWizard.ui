@@ -42,7 +42,6 @@
    <string notr="true">*
 {
 font-family: Lato;
-font-size: 13pt;
 }
 
 #BackupsWizard, #sSteps &gt; QWidget
@@ -63,7 +62,7 @@ color: #999999;
 font-size: 13px;
 border-radius: 4px;
 background-color: #FAFAFA;
-border: 1px solid rgba(0,0,0,0.1);
+border: 1px solid #e5e5e5;
 padding-left: 7px;
 }
 
@@ -71,6 +70,9 @@ padding-left: 7px;
 {
 margin-left: 20px;
 margin-right: 20px;
+margin-top: 11px;
+margin-bottom: 32px;
+color: #666666;
 }
 
 #lBackupFolders
@@ -79,20 +81,12 @@ margin-left: 18px;
 margin-right: 18px;
 }
 
-#lSubtitleS1
-{
-margin-top: 11px;
-margin-bottom: 32px;
-color: #666666;
-font-size: 12px;
-}
-
 #fFoldersS1, #fFoldersS2
 {
 margin-left: 20px;
-border: 1px solid rgba(0,0,0,0.1);
+border: 1px solid #e5e5e5;
 border-radius: 6px;
-background: solid #FAFAFA;
+background: solid white;
 }
 
 #fFoldersS1
@@ -110,10 +104,23 @@ margin-right: 24px;
 margin-bottom: 28px;
 }
 
+#wDeviceNameS1, #wDeviceNameAndNbFolders
+{
+border-top-right-radius: 6px;
+border-top-left-radius: 6px;
+background: solid #FAFAFA;
+}
+
+#lDeviceIconS1
+{
+border: 0px;
+}
+
 #lDeviceIconS2
 {
 border: 0px;
 margin-left: 13px;
+background: solid #FAFAFA;
 }
 
 #lDeviceNameS1, #lDeviceNameS2
@@ -132,7 +139,7 @@ padding-right: 16px;
 
 #lvFoldersS1::item
 {
-border-bottom: 1px solid rgba(0,0,0,0.1);
+border-bottom: 1px solid #e5e5e5;
 }
 
 #lvFoldersS1::item
@@ -144,7 +151,7 @@ max-height: 39 px;
 
 #lvFoldersS1, #lvFoldersS2
 {
-background: white;
+background: transparent;
 border-bottom-right-radius: 6px;
 border-bottom-left-radius: 6px;
 }
@@ -186,7 +193,7 @@ left: 7px;
 color: #004038;
 font-family: Lato;
 font-size: 12px;
-border: 1px solid rgba(0,191,165,0.5);
+border: 1px solid #7fdfd2;
 border-radius: 2px;
 background-color: rgba(0,191,165,0.1);
 }
@@ -204,9 +211,10 @@ border-bottom-left-radius: 6px;
 
 QScrollBar:vertical
 {
-background: #f6f6f6;
-width: 15px;
-border-left: 1px solid #E4E4E4;
+background: transparent;
+width: 12px;
+border: none;
+border-bottom-right-radius: 6px;
 }
 
 QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical
@@ -217,10 +225,10 @@ background: none;
 
 QScrollBar::handle:vertical
 {
-background: #c0c0c0;
-min-height: 20px;
-border-radius: 4px;
-margin: 3px 4px 3px 2px;
+background: #D8D8D8;
+min-height: 0px;
+border-radius: 2px;
+margin: 4px;
 }
 
 #BackupsWizard[S2OneItem=true] #lvFoldersS2::item
@@ -230,7 +238,7 @@ border-bottom: none;
 
 #BackupsWizard[S2OneItem=false] #lvFoldersS2::item
 {
-border-bottom: 1px solid rgba(0,0,0,0.1);
+border-bottom: 1px solid #e5e5e5;
 }</string>
   </property>
   <property name="modal">
@@ -327,7 +335,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
        <item>
         <widget class="QFrame" name="fFoldersS1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -435,6 +443,18 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
              </item>
              <item alignment="Qt::AlignVCenter">
               <widget class="QLabel" name="lDeviceNameS1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="text">
                 <string notr="true"/>
                </property>
@@ -446,20 +466,44 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
           <item>
            <widget class="QStackedWidget" name="sFolders">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>47</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>122</height>
+             </size>
             </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
             <widget class="QWidget" name="pFolders">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>122</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>122</height>
+              </size>
              </property>
              <layout class="QVBoxLayout" name="pFoldersLayout">
               <property name="spacing">
@@ -480,15 +524,21 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
               <item>
                <widget class="QListView" name="lvFoldersS1">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
                 <property name="minimumSize">
                  <size>
-                  <width>39</width>
-                  <height>0</height>
+                  <width>0</width>
+                  <height>122</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>122</height>
                  </size>
                 </property>
                 <property name="frameShape">
@@ -542,15 +592,21 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
             </widget>
             <widget class="QWidget" name="pNoFolders">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>47</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>16777215</height>
+               <height>47</height>
               </size>
              </property>
              <layout class="QVBoxLayout" name="pFoldersLayout">
@@ -572,7 +628,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
               <item>
                <widget class="QLabel" name="lNoAvailableFolder">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -580,13 +636,13 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>0</height>
+                  <height>47</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>16777215</height>
+                  <height>47</height>
                  </size>
                 </property>
                 <property name="text">
@@ -671,6 +727,19 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
           </layout>
          </widget>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
