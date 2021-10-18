@@ -94,6 +94,7 @@ void SyncsMenu::refresh()
 {
     Preferences* preferences (Preferences::instance());
     SyncModel* model (SyncModel::instance());
+    MenuItemAction* firstBackup (nullptr);
 
     // Reset menu (leave mAddAction only)
     const auto actions (mMenu->actions());
@@ -108,6 +109,10 @@ void SyncsMenu::refresh()
     if (mDevNameAction)
     {
         mMenu->removeAction(mDevNameAction.get());
+    }
+    if (mAddAction)
+    {
+        mMenu->removeAction(mAddAction.get());
     }
 
     int activeFolders (0);
@@ -138,26 +143,23 @@ void SyncsMenu::refresh()
                 }, Qt::QueuedConnection);
 
                 mMenu->addAction(action);
+                if (!firstBackup)
+                {
+                    firstBackup = action;
+                }
             }
         }
 
         // Display "Add <type>" only if the whole remote / is not synced...
-        if (activeFolders
-                && !(model->getNumSyncedFolders(mega::MegaSync::TYPE_TWOWAY) == 1
-                  && model->getSyncSetting(0, mega::MegaSync::TYPE_TWOWAY)->getMegaFolder() == QLatin1String("/")))
+        if (activeFolders && !model->isRemoteRootSynced())
         {
             mMenu->addSeparator();
             mMenu->addAction(mAddAction.get());
-        }
-        else
-        {
-            mMenu->removeAction(mAddAction.get());
         }
     }
 
     if (!numItems || !activeFolders)
     {
-        mMenu->removeAction(mAddAction.get());
         mMenuAction->setMenu(nullptr);
     }
     else
@@ -169,11 +171,16 @@ void SyncsMenu::refresh()
             {
                 // Display device name before folders (click opens backups wizard)
                 mDevNameAction.reset(new MenuItemAction(QString(), QIcon(DEVICE_ICON), true));
+                // Insert the action in the menu to make sure it is here when the
+                // set device name slot is called.
                 connect(mDevNameAction.get(), &MenuItemAction::triggered,
                         this, &SyncsMenu::onAddSync, Qt::QueuedConnection);
                 SyncController::instance().getDeviceName();
             }
-            mMenu->insertAction(mMenu->actions().at(0), mDevNameAction.get());
+            else
+            {
+                mMenu->insertAction(firstBackup, mDevNameAction.get());
+            }
         }
         mMenuAction->setMenu(mMenu.get());
     }
@@ -190,7 +197,6 @@ std::shared_ptr<QMenu> SyncsMenu::getMenu()
     refresh();
     return mMenu->actions().isEmpty() ? nullptr : mMenu;
 }
-
 
 void SyncsMenu::callMenu(const QPoint& p)
 {
@@ -229,6 +235,15 @@ void SyncsMenu::onDeviceNameSet(QString name)
     if (mDevNameAction)
     {
         mDevNameAction->setLabelText(name);
+        // Get next action to refresh devicename
+        auto actions (mMenu->actions());
+        auto idx (actions.indexOf(mDevNameAction.get()));
+        auto idxNext (idx + 1);
+        if (idx >= 0 && idxNext < actions.size())
+        {
+            mMenu->removeAction(mDevNameAction.get());
+            mMenu->insertAction(actions.at(idxNext), mDevNameAction.get());
+        }
     }
 }
 
@@ -245,5 +260,3 @@ void SyncsMenu::highLightMenuEntry(QAction* action)
         mLastHovered = pAction;
     }
 }
-
-
