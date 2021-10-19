@@ -11,13 +11,14 @@
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
 #include "control/MegaController.h"
-#include "model/Model.h"
+#include "model/SyncModel.h"
 #include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"
 #include "FilterAlertWidget.h"
 #include "TransferQuota.h"
+#include "SyncsMenu.h"
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
@@ -98,7 +99,6 @@ public:
     void setUnseenNotifications(long long value);
     void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
     long long getUnseenNotifications() const;
-    void closeSyncsMenu();
     int getLoggedInMode() const;
     void showNotifications();
 
@@ -123,6 +123,7 @@ public slots:
     void upAreaHovered(QMouseEvent *event);
 
     void addSync();
+    void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void onAddBackup();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
@@ -134,6 +135,7 @@ public slots:
    void setBandwidthOverquotaState(QuotaState state);
 
 private slots:
+    void on_bRemoveBackups_clicked();
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
     void on_bUpgradeOverDiskQuota_clicked();
@@ -159,8 +161,6 @@ private slots:
     void onAnimationFinishedBlockedError();
 
     void sTabsChanged(int tab);
-
-    void highLightMenuEntry(QAction* action);
 
     void on_bDismissSyncSettings_clicked();
     void on_bOpenSyncSettings_clicked();
@@ -206,6 +206,7 @@ private:
     unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
     int uploadActiveTransferTag, downloadActiveTransferTag;
     int uploadActiveTransferState, downloadActiveTransferState;
+    void showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type);
 
     bool indexing; //scanning
     bool waiting;
@@ -239,12 +240,7 @@ private:
     QParallelAnimationGroup animationGroupBlockedError;
     void hideBlockedError(bool animated = false);
     void showBlockedError();
-
-    std::unique_ptr<QMenu> syncsMenu;
-    std::unique_ptr<QMenu> backupsMenu;
-    MenuItemAction *addSyncAction;
-    MenuItemAction *addBackupAction;
-    MenuItemAction *lastHovered;
+    QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
 
 protected:
     void setBlockedStateLabel(QString state);
@@ -261,7 +257,7 @@ protected:
     QTimer transfersFinishedTimer;
     MegaApplication *app;
     Preferences *preferences;
-    Model *model;
+    SyncModel *model;
     Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;

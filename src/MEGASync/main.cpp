@@ -429,7 +429,10 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_MACX
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running on macOS version: %1").arg(QString::number(QSysInfo::MacintoshVersion)).toUtf8().constData());
+    auto current = QOperatingSystemVersion::current();
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running on macOS version: %1.%2.%3")
+                 .arg(current.majorVersion()).arg(current.minorVersion()).arg(current.microVersion())
+                 .toUtf8().constData());
 
     if (!harfbuzzEnabled)
     {
@@ -439,13 +442,6 @@ int main(int argc, char *argv[])
     if (!useSSLtemporaryKeychain)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_SSL_USE_TEMPORARY_KEYCHAIN vble");
-    }
-
-    if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_8)
-    {
-        // fix Mac OS X 10.9 (mavericks) font issue
-        // https://bugreports.qt-project.org/browse/QTBUG-32789
-        QFont::insertSubstitution(QString::fromUtf8(".Lucida Grande UI"), QString::fromUtf8("Lucida Grande"));
     }
 
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);

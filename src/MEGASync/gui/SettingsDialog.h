@@ -6,11 +6,13 @@
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
 #include "Preferences.h"
-#include "MegaController.h"
-#include "../model/Model.h"
-#include "megaapi.h"
 #include "HighDpiResize.h"
 #include "control/Utilities.h"
+
+#include "MegaController.h"
+#include "SyncController.h"
+#include "../model/SyncModel.h"
+#include "megaapi.h"
 
 #include <QDialog>
 #include <QFuture>
@@ -39,7 +41,7 @@ public:
         ACCOUNT_TAB  = 1,
         SYNCS_TAB    = 2,
         SECURITY_TAB = 3,
-        IMPORTS_TAB  = 4,
+        FOLDERS_TAB  = 4,
         NETWORK_TAB  = 5,
         };
 
@@ -63,12 +65,18 @@ public:
     void loadSyncSettings();
     void addSyncFolder(mega::MegaHandle megaFolderHandle);
 
-    // Imports
+    // Folders
     void updateUploadFolder();
     void updateDownloadFolder();
 
 signals:
     void userActivity();
+#ifdef Q_OS_MACOS
+    // Due to issues with QT and window manager on macOS, menus are not closing when
+    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
+    // and force to close the sync menu (if visible)
+    void closeMenus();
+#endif
 
 public slots:
     // Network
@@ -93,8 +101,6 @@ private slots:
 #ifdef Q_OS_MACOS
     void onAnimationFinished();
     void initializeNativeUIComponents();
-#else
-    void on_bHelpIco_clicked();
 #endif
 
     // General
@@ -148,8 +154,8 @@ private slots:
     void on_bChangePassword_clicked();
     void on_bSessionHistory_clicked();
 
-    // Imports
-    void on_bImports_clicked();
+    // Folders
+    void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
     void on_eUploadFolder_textChanged(const QString &text);
@@ -171,6 +177,9 @@ private slots:
 
 protected:
     void changeEvent(QEvent* event) override;
+#ifdef Q_OS_MACOS
+    void closeEvent(QCloseEvent * event);
+#endif
 
 private:
     void loadSettings();
@@ -183,6 +192,7 @@ private:
                     mega::MegaHandle tag, std::shared_ptr<SyncSetting> syncSetting = nullptr);
     void saveExcludeSyncNames();
     void updateNetworkTab();
+    void setShortCutsForToolBarItems();
 
     enum
     {
@@ -197,6 +207,7 @@ private:
     };
 
 #ifdef Q_OS_MACOS
+    void macOSretainSizeWhenHidden();
     void animateSettingPage(int endValue, int duration = 150);
     QPropertyAnimation* mMinHeightAnimation;
     QPropertyAnimation* mMaxHeightAnimation;
@@ -206,7 +217,7 @@ private:
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
     std::unique_ptr<QMacToolBarItem> bSecurity;
-    std::unique_ptr<QMacToolBarItem> bImports;
+    std::unique_ptr<QMacToolBarItem> bFolders;
     std::unique_ptr<QMacToolBarItem> bNetwork;
 #endif
 
@@ -214,7 +225,8 @@ private:
     MegaApplication* mApp;
     Preferences* mPreferences;
     Controller* mController;
-    Model* mModel;
+    SyncController& mSyncController;
+    SyncModel* mModel;
     mega::MegaApi* mMegaApi;
     HighDpiResize mHighDpiResize;
     bool mProxyOnly;

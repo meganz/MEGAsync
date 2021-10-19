@@ -88,11 +88,8 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
-         <string>Proxy Settings:</string>
+         <string>Proxy settings:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
@@ -161,9 +158,6 @@
       </item>
       <item row="12" column="0">
        <widget class="QLabel" name="lProxyUsername">
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Username:</string>
         </property>
@@ -174,9 +168,6 @@
       </item>
       <item row="10" column="0">
        <widget class="QLabel" name="lProxyServer">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Server:</string>
         </property>
@@ -321,9 +312,6 @@
       </item>
       <item row="9" column="0">
        <widget class="QLabel" name="lProxyType">
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
         <property name="text">
          <string>Proxy type:</string>
         </property>
@@ -371,7 +359,7 @@
             <enum>Qt::StrongFocus</enum>
            </property>
            <property name="text">
-            <string>No proxy</string>
+            <string>No Proxy</string>
            </property>
           </widget>
          </item>
@@ -396,7 +384,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Proxy</string>
+            <string>Manual</string>
            </property>
           </widget>
          </item>
@@ -436,9 +424,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="text">
          <string>Password:</string>
         </property>
@@ -460,7 +445,7 @@
      </property>
      <layout class="QHBoxLayout" name="buttonBoxLayout">
       <property name="spacing">
-       <number>8</number>
+       <number>10</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -497,7 +482,7 @@
       <item>
        <widget class="QPushButton" name="bUpdate">
         <property name="text">
-         <string>Update</string>
+         <string>Apply</string>
         </property>
         <property name="default">
          <bool>true</bool>
@@ -509,6 +494,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>rNoProxy</tabstop>
+  <tabstop>rProxyManual</tabstop>
+  <tabstop>cProxyType</tabstop>
+  <tabstop>eProxyServer</tabstop>
+  <tabstop>eProxyPort</tabstop>
+  <tabstop>cProxyRequiresPassword</tabstop>
+  <tabstop>eProxyUsername</tabstop>
+  <tabstop>eProxyPassword</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bUpdate</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

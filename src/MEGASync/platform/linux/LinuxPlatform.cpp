@@ -114,7 +114,12 @@ bool LinuxPlatform::isTilingWindowManager()
 void LinuxPlatform::showInFolder(QString pathIn)
 {
     QString filebrowser = getDefaultFileBrowserApp();
-    QProcess::startDetached(filebrowser + QString::fromAscii(" \"") + pathIn + QString::fromUtf8("\""));
+    // Nautilus on Gnome, does not open the directory if argument is given without surrounding double-quotes;
+    // Path is passed through QUrl which properly escapes special chars in native platform URIs
+    // which takes care of path names also containing double-quotes withing, which will stop
+    // Nautilus from parsing the argument string all-together
+    QProcess::startDetached(filebrowser + QString::fromLatin1(" \"")
+                            + QUrl::fromLocalFile(pathIn).toString() + QString::fromLatin1("\""));
 }
 
 void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
@@ -538,3 +543,4 @@ QString LinuxPlatform::getDeviceName()
 // Platform-specific strings
 const char* LinuxPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* LinuxPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
+const char* LinuxPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in folder")};

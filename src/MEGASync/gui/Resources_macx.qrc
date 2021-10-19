@@ -12,10 +12,6 @@
         <file>fonts/SourceSansPro-Semibold.ttf</file>
         <file>images/account_32.png</file>
         <file>images/account_32@2x.png</file>
-        <file>images/account_type_over.png</file>
-        <file>images/account_type_over@2x.png</file>
-        <file>images/account_type_press.png</file>
-        <file>images/account_type_press@2x.png</file>
         <file>images/achievements.png</file>
         <file>images/achievements@2x.png</file>
         <file>images/add_ico.png</file>
@@ -39,8 +35,6 @@
         <file>images/business@2x.png</file>
         <file>images/bwupgrade.png</file>
         <file>images/bwupgrade@2x.png</file>
-        <file>images/card_border.png</file>
-        <file>images/card_border@2x.png</file>
         <file>images/clear_ico.png</file>
         <file>images/clear_ico@2x.png</file>
         <file>images/clear_item_ico.png</file>
@@ -75,8 +69,6 @@
         <file>images/download_item_ico_white@2x.png</file>
         <file>images/downloaded_item_ico.png</file>
         <file>images/downloaded_item_ico@2x.png</file>
-        <file>images/downloading.gif</file>
-        <file>images/downloading@2x.gif</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_3D@2x.png</file>
         <file>images/drag_aftereffects.png</file>
@@ -475,8 +467,6 @@
         <file>images/success@2x.png</file>
         <file>images/sync_item_ico.png</file>
         <file>images/sync_item_ico@2x.png</file>
-        <file>images/synching.gif</file>
-        <file>images/synching@2x.gif</file>
         <file>images/takedown.png</file>
         <file>images/takedown@2x.png</file>
         <file>images/takedown_padding.png</file>
@@ -509,8 +499,6 @@
         <file>images/upload_to_mega@2x.png</file>
         <file>images/uploaded_item_ico.png</file>
         <file>images/uploaded_item_ico@2x.png</file>
-        <file>images/uploading.gif</file>
-        <file>images/uploading@2x.gif</file>
         <file>translations/MEGASyncStrings_ar.qm</file>
         <file>translations/MEGASyncStrings_de.qm</file>
         <file>translations/MEGASyncStrings_en.qm</file>
@@ -559,8 +547,6 @@
         <file>images/new_contact@3x.png</file>
         <file>images/ic_sync_warning.png</file>
         <file>images/ic_sync_warning@2x.png</file>
-        <file>images/settings-imports-macx.png</file>
-        <file>images/settings-imports-macx@2x.png</file>
         <file>images/Bin_24_ico.png</file>
         <file>images/Bin_24_ico@2x.png</file>
         <file>images/Cloud_Drive_24_ico.png</file>
@@ -602,15 +588,37 @@
         <file>images/Item_options_press@2x.png</file>
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
-        <file>images/Backup.png</file>
+        <file>images/settings-folders-macx.png</file>
+        <file>images/settings-folders-macx@2x.png</file>
+        <file>images/ico_dialog_check.png</file>
+        <file>images/ico_dialog_check@2x.png</file>
+        <file>images/ico_dialog_check@3x.png</file>
+        <file>images/ico_dialog_check_green.png</file>
+        <file>images/ico_dialog_check_green@2x.png</file>
+        <file>images/ico_info_rest.png</file>
+        <file>images/ico_info_rest@2x.png</file>
+        <file>images/ico_info_hover.png</file>
+        <file>images/ico_info_hover@2x.png</file>
+        <file>images/ico_question_hover.png</file>
+        <file>images/ico_question_hover@2x.png</file>
+        <file>images/ico_question_rest.png</file>
+        <file>images/ico_question_rest@2x.png</file>
+        <file>images/icon_storage_warning.png</file>
+        <file>images/icon_storage_warning@2x.png</file>
+        <file>animations/downloading.gif</file>
+        <file>animations/downloading@2x.gif</file>
+        <file>animations/synching.gif</file>
+        <file>animations/synching@2x.gif</file>
+        <file>animations/uploading.gif</file>
+        <file>animations/uploading@2x.gif</file>
+        <file>animations/full-storage.gif</file>
+        <file>animations/full-storage@2x.gif</file>
+        <file>animations/full-transfer@2x.gif</file>
+        <file>animations/full-transfer.gif</file>
+ 	<file>images/Backup.png</file>
         <file>images/Backup@2x.png</file>
-        <file>images/small-pc.png</file>
-        <file>images/small-pc@2x.png</file>
-        <file>images/small-pc-linux.png</file>
-        <file>images/small-pc-linux@2x.png</file>
-        <file>images/small-pc-mac.png</file>
-        <file>images/small-pc-mac@2x.png</file>
-        <file>images/small-pc-win.png</file>
-        <file>images/small-pc-win@2x.png</file>
+        <file>images/PC_mac_ico_rest.png</file>
+        <file>images/PC_mac_ico_rest@2x.png</file>
+        <file>images/remove-backups.png</file>
     </qresource>
 </RCC>

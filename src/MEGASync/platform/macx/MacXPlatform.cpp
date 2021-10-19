@@ -162,6 +162,10 @@ void MacXPlatform::enableFinderExtension(bool value)
 
 void MacXPlatform::showInFolder(QString pathIn)
 {
+
+    //Escape possible double quotes from osascript command to avoid syntax errors and stop parsing arguments
+    pathIn.replace(QString::fromLatin1("\""), QString::fromLatin1("\\\""));
+
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-e")
                << QString::fromUtf8("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(pathIn);
@@ -362,3 +366,4 @@ QString MacXPlatform::getDeviceName()
 // Platform-specific strings
 const char* MacXPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Preferences")};
 const char* MacXPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Quit")};
+const char* MacXPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform","Show in Finder")};

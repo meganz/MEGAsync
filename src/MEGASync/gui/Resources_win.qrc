@@ -13,12 +13,6 @@
         <file>images/account_32.png</file>
         <file>images/account_32@2x.png</file>
         <file>images/account_32@3x.png</file>
-        <file>images/account_type_over.png</file>
-        <file>images/account_type_over@2x.png</file>
-        <file>images/account_type_over@3x.png</file>
-        <file>images/account_type_press.png</file>
-        <file>images/account_type_press@2x.png</file>
-        <file>images/account_type_press@3x.png</file>
         <file>images/achievements.png</file>
         <file>images/achievements@2x.png</file>
         <file>images/achievements@3x.png</file>
@@ -54,9 +48,6 @@
         <file>images/bwupgrade.png</file>
         <file>images/bwupgrade@2x.png</file>
         <file>images/bwupgrade@3x.png</file>
-        <file>images/card_border.png</file>
-        <file>images/card_border@2x.png</file>
-        <file>images/card_border@3x.png</file>
         <file>images/cb_checked.svg</file>
         <file>images/cb_checked_disabled.svg</file>
         <file>images/cb_checked_hover.svg</file>
@@ -119,9 +110,6 @@
         <file>images/downloaded_item_ico.png</file>
         <file>images/downloaded_item_ico@2x.png</file>
         <file>images/downloaded_item_ico@3x.png</file>
-        <file>images/downloading.gif</file>
-        <file>images/downloading@2x.gif</file>
-        <file>images/downloading@3x.gif</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_3D@2x.png</file>
         <file>images/drag_3D@3x.png</file>
@@ -730,9 +718,6 @@
         <file>images/sync_item_ico.png</file>
         <file>images/sync_item_ico@2x.png</file>
         <file>images/sync_item_ico@3x.png</file>
-        <file>images/synching.gif</file>
-        <file>images/synching@2x.gif</file>
-        <file>images/synching@3x.gif</file>
         <file>images/takedown.png</file>
         <file>images/takedown@2x.png</file>
         <file>images/takedown@3x.png</file>
@@ -779,9 +764,6 @@
         <file>images/uploaded_item_ico.png</file>
         <file>images/uploaded_item_ico@2x.png</file>
         <file>images/uploaded_item_ico@3x.png</file>
-        <file>images/uploading.gif</file>
-        <file>images/uploading@2x.gif</file>
-        <file>images/uploading@3x.gif</file>
         <file>images/warning_ico.ico</file>
         <file>translations/MEGASyncStrings_ar.qm</file>
         <file>translations/MEGASyncStrings_de.qm</file>
@@ -843,9 +825,6 @@
         <file>images/warning-disabled-syncs.png</file>
         <file>images/warning-disabled-syncs@2x.png</file>
         <file>images/warning-disabled-syncs@3x.png</file>
-        <file>images/Icon_Win_Imports.png</file>
-        <file>images/Icon_Win_Imports@2x.png</file>
-        <file>images/Icon_Win_Imports@3x.png</file>
         <file>images/Icon_Win_Network.png</file>
         <file>images/Icon_Win_Network@2x.png</file>
         <file>images/Icon_Win_Network@3x.png</file>
@@ -897,20 +876,54 @@
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
         <file>images/show_in_folder_ico@3x.png</file>
+        <file>images/settings-folders.png</file>
+        <file>images/settings-folders@3x.png</file>
+        <file>images/settings-folders@2x.png</file>
+        <file>images/ico_dialog_check.png</file>
+        <file>images/ico_dialog_check@2x.png</file>
+        <file>images/ico_dialog_check@3x.png</file>
+        <file>images/ico_dialog_check_green.png</file>
+        <file>images/ico_dialog_check_green@2x.png</file>
+        <file>images/ico_dialog_check_green@3x.png</file>
+        <file>images/ico_info_rest.png</file>
+        <file>images/ico_info_rest@2x.png</file>
+        <file>images/ico_info_rest@3x.png</file>
+        <file>images/ico_info_hover.png</file>
+        <file>images/ico_info_hover@2x.png</file>
+        <file>images/ico_info_hover@3x.png</file>
+        <file>images/ico_question_hover.png</file>
+        <file>images/ico_question_hover@2x.png</file>
+        <file>images/ico_question_hover@3x.png</file>
+        <file>images/ico_question_rest.png</file>
+        <file>images/ico_question_rest@2x.png</file>
+        <file>images/ico_question_rest@3x.png</file>
+        <file>images/icon_storage_warning.png</file>
+        <file>images/icon_storage_warning@2x.png</file>
+        <file>images/icon_storage_warning@3x.png</file>
+        <file>animations/full-transfer.gif</file>
+        <file>animations/full-transfer@2x.gif</file>
+        <file>animations/full-transfer@3x.gif</file>
+        <file>animations/full-storage@3x.gif</file>
+        <file>animations/full-storage@2x.gif</file>
+        <file>animations/full-storage.gif</file>
+        <file>animations/uploading@3x.gif</file>
+        <file>animations/uploading@2x.gif</file>
+        <file>animations/uploading.gif</file>
+        <file>animations/synching@3x.gif</file>
+        <file>animations/synching@2x.gif</file>
+        <file>animations/synching.gif</file>
+        <file>animations/downloading@3x.gif</file>
+        <file>animations/downloading@2x.gif</file>
+        <file>animations/downloading.gif</file>
         <file>images/Backup.png</file>
         <file>images/Backup@2x.png</file>
         <file>images/Backup@3x.png</file>
-        <file>images/small-pc.png</file>
-        <file>images/small-pc@2x.png</file>
-        <file>images/small-pc@3x.png</file>
-        <file>images/small-pc-linux.png</file>
-        <file>images/small-pc-linux@2x.png</file>
-        <file>images/small-pc-linux@3x.png</file>
-        <file>images/small-pc-mac.png</file>
-        <file>images/small-pc-mac@2x.png</file>
-        <file>images/small-pc-mac@3x.png</file>
-        <file>images/small-pc-win.png</file>
-        <file>images/small-pc-win@2x.png</file>
-        <file>images/small-pc-win@3x.png</file>
+        <file>images/PC_win_ico_rest.png</file>
+        <file>images/PC_win_ico_rest@2x.png</file>
+        <file>images/PC_win_ico_rest@3x.png</file>
+        <file>images/remove-backups.png</file>
+        <file>images/folder_icon.png</file>
+        <file>images/folder_icon@2x.png</file>
+        <file>images/folder_icon@3x.png</file>
     </qresource>
 </RCC>

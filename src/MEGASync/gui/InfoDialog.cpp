@@ -17,6 +17,10 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 #include "assert.h"
+#include "BackupsWizard.h"
+
+// TODO: remove
+#include "control/MegaController.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -160,11 +164,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     opacityEffect = NULL;
     animation = NULL;
     accountDetailsDialog = NULL;
-    syncsMenu = NULL;
-    backupsMenu = NULL;
-    addSyncAction = NULL;
-    addBackupAction = NULL;
-    lastHovered = NULL;
 
     actualAccountType = -1;
 
@@ -192,7 +191,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->wCircularQuota->setProgressBarGradient(QColor("#60D1FE"), QColor("#58B9F3"));
 
 #ifdef __APPLE__
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    auto current = QOperatingSystemVersion::current();
+    if (current <= QOperatingSystemVersion::OSXMavericks) //Issues with mavericks and popup management
     {
         installEventFilter(this);
     }
@@ -211,7 +211,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
-    model = Model::instance();
+    model = SyncModel::instance();
     controller = Controller::instance();
 
     actualAccountType = -1;
@@ -303,17 +303,6 @@ InfoDialog::~InfoDialog()
     delete activeUpload;
     delete animation;
     delete filterMenu;
-
-    if (syncsMenu)
-    {
-        for (QAction *a: syncsMenu->actions())
-        {
-            a->deleteLater();
-        }
-
-        syncsMenu->deleteLater();
-        syncsMenu.release();
-    }
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -890,6 +879,32 @@ void InfoDialog::addSync()
     }
 }
 
+void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
+{
+    const bool upgradingDissmised{app->showSyncOverquotaDialog()};
+    if(upgradingDissmised)
+    {
+        switch (type)
+        {
+            case mega::MegaSync::TYPE_TWOWAY:
+            {
+                addSync(INVALID_HANDLE);
+                break;
+            }
+            case mega::MegaSync::TYPE_BACKUP:
+            {
+                addBackup();
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        app->createAppMenus();
+    }
+}
+
 void InfoDialog::onAddBackup()
 {
     const bool upgradingDissmised{app->showSyncOverquotaDialog()};
@@ -951,7 +966,7 @@ void InfoDialog::updateDialogState()
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
                 .replace(QString::fromUtf8("[C]"), QString::number(numFiles))
                 .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(preferences->usedStorage()))
-                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(static_cast<MegaApplication *>(qApp)->getPricing(), preferences->usedStorage()))
+                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), preferences->usedStorage()))
                 + QString::fromUtf8("</p>");
         ui->lOverDiskQuotaLabel->setText(overDiskText);
 
@@ -1207,18 +1222,16 @@ void InfoDialog::addSync(MegaHandle h)
 
 void InfoDialog::addBackup()
 {
-    // TODO : use add backup wizard instead of BindFolderDialog
-    static QPointer<BindFolderDialog> dialog = NULL;
+    static QPointer<BackupsWizard> dialog = nullptr;
     if (dialog)
     {
-
         dialog->activateWindow();
         dialog->raise();
         dialog->setFocus();
         return;
     }
 
-    dialog = new BindFolderDialog(app);
+    dialog = new BackupsWizard();
 
 
     Platform::execBackgroundWindow(dialog);
@@ -1227,51 +1240,97 @@ void InfoDialog::addBackup()
         return;
     }
 
-    if (dialog->result() != QDialog::Accepted)
-    {
-        delete dialog;
-        dialog = NULL;
-        return;
-    }
-
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    QString syncName = dialog->getSyncName();
-
     delete dialog;
-    dialog = NULL;
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding backup %1 from addBackup: ").arg(localFolderPath).toUtf8().constData());
-
-    ActionProgress *addSyncStep = new ActionProgress(true, QString::fromUtf8("Adding backup: %1")
-                                                     .arg(localFolderPath));
-
-    //Connect failing signals
-    connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
-    {
-        static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
-    }, Qt::QueuedConnection);
-    connect(addSyncStep, &ActionProgress::failedRequest, this, [this, localFolderPath](MegaRequest *request, MegaError *error)
-    {
-        if (error->getErrorCode())
-        {
-            auto reqCopy = request->copy();
-            auto errCopy = error->copy();
-
-            QObject temporary;
-            QObject::connect(&temporary, &QObject::destroyed, this, [reqCopy, errCopy, localFolderPath](){
-
-                // we might want to handle this separately (i.e: indicate errors in SyncSettings engine)
-                static_cast<MegaApplication *>(qApp)->showAddSyncError(reqCopy, errCopy, localFolderPath);
-
-                delete reqCopy;
-                delete errCopy;
-                //(syncSettings might have some old values), that's why we don't use syncSetting->getError.
-            }, Qt::QueuedConnection);
-        }
-    }, Qt::DirectConnection); //Note, we need direct connection to use request & error
-
-    controller->addSync(localFolderPath,  mega::INVALID_HANDLE, syncName, addSyncStep, mega::MegaSync::TYPE_BACKUP);
 }
 
+// TODO: remove (test)
+void InfoDialog::on_bRemoveBackups_clicked()
+{
+    int num = (megaApi && preferences->logged()) ?
+                  model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP)
+                : 0;
+
+    SynchronousRequestListener synchro;
+
+    megaApi->getMyBackupsFolder(&synchro);
+    synchro.wait();
+
+    MegaHandle h (synchro.getRequest()->getNodeHandle());
+
+    std::unique_ptr<mega::MegaNode> myBackups (megaApi->getNodeByHandle(h));
+    mega::MegaNode* deviceFolder (nullptr);
+
+    megaApi->getDeviceName(&synchro);
+    synchro.wait();
+
+    QString deviceFolderName;
+
+    std::unique_ptr<MegaNodeList> children (megaApi->getChildren(myBackups.get()));
+    QString devId (QString::fromUtf8(megaApi->getDeviceId()));
+    MegaNode* currChild (nullptr);
+    int idx (0);
+    while (idx < children->size() && !deviceFolder)
+    {
+        currChild = children->get(idx);
+        if (QString::fromUtf8(currChild->getDeviceId()) == devId)
+        {
+            deviceFolder = currChild;
+            deviceFolderName = QString::fromUtf8(deviceFolder->getName());
+        }
+        idx++;
+    }
+
+    if (num > 0 || deviceFolder)
+    {
+        QString report;
+
+        num--;
+        while (num >= 0)
+        {
+            auto backupSetting = model->getSyncSetting(num, mega::MegaSync::TYPE_BACKUP);
+            report += QString::fromUtf8("Backup \"%1\" removed.\n").arg(backupSetting->name());
+            Controller::instance()->removeSync(backupSetting);
+            num--;
+        }
+
+        // Wait
+        do
+        {
+            num = model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP);
+            MegaSyncApp->processEvents();
+        }
+        while (num != 0);
+
+        report += QString::fromUtf8("Backups remaining: %1.\n").arg(num);
+
+        // Delete device folder
+        if (deviceFolder)
+        {
+            megaApi->remove(deviceFolder, &synchro);
+            synchro.wait();
+            if (synchro.getError()->getErrorCode() == MegaError::API_OK)
+            {
+                report += QString::fromUtf8("Remote device folder (%1) removed.").arg(deviceFolderName);
+            }
+            else
+            {
+                report += QString::fromUtf8("Failed to remove device folder (%1): %2").arg(
+                              deviceFolderName,
+                              tr(MegaError::getErrorString(synchro.getError()->getErrorCode())));
+            }
+        }
+
+        QMessageBox::information(this, QString::fromLatin1("Backups removed"),
+                                 report,
+                                 QMessageBox::Ok, QMessageBox::Ok);
+    }
+    else
+    {
+        QMessageBox::information(this, QString::fromLatin1("Backups removed"),
+                                 QString::fromLatin1("Nothing to do."),
+                                 QMessageBox::Ok, QMessageBox::Ok);
+    }
+}
 
 #ifdef __APPLE__
 void InfoDialog::moveArrow(QPoint p)
@@ -1294,262 +1353,27 @@ void InfoDialog::on_bTransferManager_clicked()
 
 void InfoDialog::on_bAddSync_clicked()
 {
-    if (!preferences->logged())
-    {
-        return;
-    }
-
-    lastHovered = NULL;
-
-    if (addSyncAction)
-    {
-        addSyncAction->deleteLater();
-        addSyncAction = NULL;
-    }
-
-    int num = (megaApi && preferences->logged()) ? model->getNumSyncedFolders() : 0;
-    if (num == 0)
-    {
-        addSync();
-    }
-    else
-    {
-        addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_add_sync_folder.png")), true);
-        if (syncsMenu)
-        {
-            for (QAction *a: syncsMenu->actions())
-            {
-                a->deleteLater();
-            }
-
-            syncsMenu->deleteLater();
-            syncsMenu.release();
-        }
-
-        syncsMenu.reset(new QMenu());
-
-#ifdef __APPLE__
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"
-                                                    "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"));
-#endif
-
-        //Highlight menu entry on mouse over
-        connect(syncsMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
-
-        //Hide highlighted menu entry when mouse over
-        syncsMenu->installEventFilter(this);
-
-        QSignalMapper *menuSignalMapper = new QSignalMapper(syncsMenu.get());
-        connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)), Qt::QueuedConnection);
-
-        int activeFolders = 0;
-        for (int i = 0; i < num; i++)
-        {
-            auto syncSetting = model->getSyncSetting(i);
-
-            if (!syncSetting->isActive())
-            {
-                continue;
-            }
-
-            activeFolders++;
-            MenuItemAction *action = new MenuItemAction(syncSetting->name(), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
-
-            syncsMenu->addAction(action);
-            menuSignalMapper->setMapping(action, syncSetting->getLocalFolder());
-        }
-
-        if (!activeFolders)
-        {
-            addSync();
-            return;
-        }
-        else
-        {
-            auto rootNode = ((MegaApplication*)qApp)->getRootNode();
-            if (rootNode)
-            {
-                bool fullSync = num == 1 && model->getSyncSetting(0)->getMegaHandle() == rootNode->getHandle();
-                if ((num > 1) || !fullSync)
-                {
-                    MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
-                    connect(addAction, SIGNAL(triggered()), this, SLOT(addSync()), Qt::QueuedConnection);
-
-                    if (activeFolders)
-                    {
-                        syncsMenu->addSeparator();
-                    }
-                    syncsMenu->addAction(addAction);
-                }
-            }
-
-            addSyncAction->setMenu(syncsMenu.get());
-        }
-
-#ifdef __APPLE__
-        QPoint p = ui->bAddSync->mapToGlobal(QPoint(ui->bAddSync->width() - 100, ui->bAddSync->height() + 3));
-        syncsMenu->exec(p);
-
-        if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
-        {
-            this->hide();
-        }
-#else
-        syncsMenu->popup(ui->bAddSync->mapToGlobal(QPoint(ui->bAddSync->width() - 100, ui->bAddSync->height() + 3)));
-#endif
-    }
+    showSyncsMenu(ui->bAddSync, MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bAddBackup_clicked()
 {
-    if (!preferences->logged())
-    {
-        return;
-    }
-
-    lastHovered = nullptr;
-
-    if (addBackupAction)
-    {
-        addBackupAction->deleteLater();
-        addBackupAction = nullptr;
-    }
-
-    // Get number of backups. Show only "Add Backup" wizard if no backups, and whole menu otherwise.
-    int num = (megaApi && preferences->logged()) ?
-                  model->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP)
-                : 0;
-    if (num == 0)
-    {
-        addBackup();
-    }
-    else
-    {
-        addBackupAction =
-                new MenuItemAction(tr("Backups"),
-                                   QIcon(QString::fromUtf8("://images/Backup.png")),
-                                   true);
-        if (backupsMenu)
-        {
-            for (QAction* a : backupsMenu->actions())
-            {
-                a->deleteLater();
-            }
-            backupsMenu->deleteLater();
-            backupsMenu.release();
-        }
-
-        backupsMenu.reset(new QMenu());
-
-#ifdef __APPLE__
-        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff;"
-                                                            "padding-top: 8px; "
-                                                            "padding-bottom: 8px;}"));
-#else
-        backupsMenu->setStyleSheet(QString::fromUtf8("QMenu {border: 1px solid #B8B8B8;"
-                                                            "border-radius: 5px;"
-                                                            "background: #ffffff;"
-                                                            "padding-top: 8px;"
-                                                            "padding-bottom: 8px;}"));
-#endif
-
-        //Highlight menu entry on mouse over
-        connect(backupsMenu.get(), SIGNAL(hovered(QAction*)),
-                this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
-
-        //Hide highlighted menu entry when mouse over
-        backupsMenu->installEventFilter(this);
-
-        QSignalMapper* menuSignalMapper = new QSignalMapper(backupsMenu.get());
-        connect(menuSignalMapper, SIGNAL(mapped(QString)),
-                this, SLOT(openFolder(QString)), Qt::QueuedConnection);
-
-        // Display device name before folders (click opens backup wizard)
-        QString deviceName (model->getDeviceName());
-#ifdef WIN32
-        QIcon devIcon (QString::fromUtf8("://images/small-pc-win.png"));
-#elif defined(__APPLE__)
-        QIcon devIcon (QString::fromUtf8("://images/small-pc-mac.png"));
-#elif defined(Q_OS_LINUX)
-        QIcon devIcon (QString::fromUtf8("://images/small-pc-linux.png"));
-#else
-        QIcon devIcon (QString::fromUtf8("://images/small-pc.png"));
-#endif
-        MenuItemAction* devNameAction = new MenuItemAction(deviceName, devIcon, true);
-        connect(devNameAction, &MenuItemAction::triggered,
-                this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
-        backupsMenu->addAction(devNameAction);
-
-        int activeFolders = 0;
-        for (int i = 0; i < num; i++)
-        {
-            auto backupSetting = model->getSyncSetting(i, mega::MegaSync::TYPE_BACKUP);
-
-            if (!backupSetting->isActive())
-            {
-                continue;
-            }
-
-            activeFolders++;
-            MenuItemAction* action =
-                    new MenuItemAction(backupSetting->name(),
-                                       QIcon(QString::fromUtf8("://images/small_folder.png")),
-                                       true, 1);
-            connect(action, SIGNAL(triggered()),
-                    menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
-
-            backupsMenu->addAction(action);
-            menuSignalMapper->setMapping(action, backupSetting->getLocalFolder());
-        }
-
-        if (!activeFolders)
-        {
-            addBackup();
-            return;
-        }
-        else
-        {
-            if (num > 1)
-            {
-                MenuItemAction* addAction =
-                        new MenuItemAction(tr("Add Backup"),
-                                           QIcon(QString::fromUtf8("://images/ico_drop_add_sync.png")),
-                                           true);
-                connect(addAction, &MenuItemAction::triggered,
-                        this, &InfoDialog::onAddBackup, Qt::QueuedConnection);
-                backupsMenu->addSeparator();
-                backupsMenu->addAction(addAction);
-            }
-            addBackupAction->setMenu(backupsMenu.get());
-        }
-
-#ifdef __APPLE__
-        QPoint p = ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100,
-                                                      ui->bAddBackup->height() + 3));
-        backupsMenu->exec(p);
-
-        if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
-        {
-            this->hide();
-        }
-#else
-        backupsMenu->popup(ui->bAddBackup->mapToGlobal(QPoint(ui->bAddBackup->width() - 100,
-                                                              ui->bAddBackup->height() + 3)));
-#endif
-    }
+    showSyncsMenu(ui->bAddBackup, MegaSync::TYPE_BACKUP);
 }
 
-void InfoDialog::closeSyncsMenu()
+void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
 {
-#ifdef __APPLE__
-    if (syncsMenu && syncsMenu->isVisible())
+    if (preferences->logged())
     {
-        syncsMenu->close();
+        auto menu (mSyncsMenus[b]);
+        if (!menu)
+        {
+            menu = new SyncsMenu(type, this);
+            connect(menu, &SyncsMenu::addSync, this, &InfoDialog::onAddSync);
+            mSyncsMenus[b] = menu;
+        }
+        menu->callMenu(b->mapToGlobal(QPoint(b->width() - 100, b->height() + 3)));
     }
-#endif
 }
 
 void InfoDialog::on_bUpload_clicked()
@@ -1782,18 +1606,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         return true;
     }
 
-    if (obj == syncsMenu.get())
-    {
-        if (e->type() == QEvent::Leave)
-        {
-            if (lastHovered)
-            {
-                lastHovered->setHighlight(false);
-                lastHovered = NULL;
-            }
-        }
-    }
-
 #ifdef Q_OS_LINUX
     static bool firstime = true;
     if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
@@ -1832,7 +1644,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 #endif
 #ifdef __APPLE__
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
+    auto current = QOperatingSystemVersion::current();
+    if (current <= QOperatingSystemVersion::OSXMavericks) //manage spontaneus mouse press events
     {
         if (obj == this && e->type() == QEvent::MouseButtonPress && e->spontaneous())
         {
@@ -2254,21 +2067,7 @@ void InfoDialog::onAnimationFinishedBlockedError()
     ui->wBlocked->setVisible(shownBlockedError);
 }
 
-void InfoDialog::highLightMenuEntry(QAction *action)
-{
-    if (!action)
-    {
-        return;
-    }
-    
-    MenuItemAction* pAction = (MenuItemAction*)action;
-    if (lastHovered)
-    {
-        lastHovered->setHighlight(false);
-    }
-    pAction->setHighlight(true);
-    lastHovered = pAction;
-}
+
 
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {

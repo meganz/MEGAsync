@@ -5,7 +5,7 @@
 #include <QString>
 #include <QList>
 
-#include "model/Model.h"
+#include "model/SyncModel.h"
 #include "megaapi.h"
 
 

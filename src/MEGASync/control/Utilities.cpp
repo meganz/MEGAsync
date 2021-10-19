@@ -417,12 +417,14 @@ void replaceLeadingZeroCharacterWithSpace(QString& string)
     }
 }
 
-QString Utilities::getTimeString(long long secs, bool secondPrecision)
+QString Utilities::getTimeString(long long secs, bool secondPrecision, bool color)
 {
     int seconds = (int) secs % 60;
     int minutes = (int) ((secs / 60) % 60);
     int hours   = (int) (secs / (60 * 60)) % 24;
     int days = (int)(secs / (60 * 60 * 24));
+    QString colorString (color ? QLatin1String("color:#777777;") : QString());
+
 
     int items = 0;
     QString time;
@@ -430,13 +432,15 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (days)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(days, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">d</span>").arg(colorString));
     }
 
     if (items || hours)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(hours, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">h</span>").arg(colorString));
     }
 
     if (items == 2)
@@ -449,7 +453,8 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (items || minutes)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(minutes, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">m</span>").arg(colorString));
     }
 
     if (items == 2)
@@ -461,7 +466,8 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
 
     if (secondPrecision)
     {
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(seconds, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">s</span>").arg(colorString));
     }
     time = time.trimmed();
     replaceLeadingZeroCharacterWithSpace(time);
@@ -902,11 +908,11 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
     }
 }
 
-QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
+QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long long usedStorage)
 {
     if (!pricing)
     {
-        return QString::fromUtf8("PRO");
+        return QString::fromUtf8("Pro");
     }
 
     int planNeeded = -1;
@@ -960,20 +966,20 @@ QString Utilities::getReadablePROplanFromId(int identifier)
     switch (identifier)
     {
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QString::fromUtf8("PRO LITE");
+            return QCoreApplication::translate("Utilities","Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QString::fromUtf8("PRO I");
+            return QCoreApplication::translate("Utilities","Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QString::fromUtf8("PRO II");
+            return QCoreApplication::translate("Utilities","Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QString::fromUtf8("PRO III");
+            return QCoreApplication::translate("Utilities","Pro III");
             break;
     }
 
-    return QString::fromUtf8("PRO");
+    return QString::fromUtf8("Pro");
 }
 
 void Utilities::animateFadein(QWidget *object, int msecs)

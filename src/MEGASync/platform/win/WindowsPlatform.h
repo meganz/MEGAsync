@@ -61,6 +61,7 @@ public:
 
     static const char* settingsString;
     static const char* exitString;
+    static const char* fileExplorerString;
 };
 
 

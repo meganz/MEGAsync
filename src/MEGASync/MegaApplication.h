@@ -36,7 +36,7 @@
 #include "control/ThreadPool.h"
 #include "control/MegaController.h"
 #include "control/Utilities.h"
-#include "model/Model.h"
+#include "model/SyncModel.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "gui/QFilterAlertsModel.h"
@@ -148,7 +148,6 @@ public:
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
 
-
     /**
      * @brief Migrate sync configuration to sdk cache
      * @param email of sync configuration to migrate from previous sessions
@@ -220,7 +219,7 @@ public:
 
     void updateTrayIconMenu();
 
-    mega::MegaPricing *getPricing() const;
+    std::shared_ptr<mega::MegaPricing> getPricing() const;
 
     QuotaState getTransferQuotaState() const;
     int getAppliedStorageState() const;
@@ -245,6 +244,7 @@ signals:
     void blocked();
     void storageStateChanged(int);
     void avatarReady();
+    void addBackup();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -279,6 +279,7 @@ public slots:
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
     void externalFolderSync(qlonglong targetFolder);
+    void externalAddBackup();
     void externalOpenTransferManager(int tab);
     void internalDownload(long long handle);
     void onLinkImportFinished();
@@ -397,8 +398,6 @@ protected:
     std::unique_ptr<QMenu> infoDialogMenu;
     std::unique_ptr<QMenu> guestMenu;
     QMenu emptyMenu;
-    std::unique_ptr<QMenu> syncsMenu;
-    std::unique_ptr<QMenu> backupsMenu;
 
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
@@ -407,9 +406,6 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
-    MenuItemAction *addSyncAction;
-    MenuItemAction *addBackupAction;
-
     MenuItemAction *updateAction;
     QAction *showStatusAction;
 
@@ -431,7 +427,7 @@ protected:
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
     Preferences *preferences;
-    Model *model;
+    SyncModel *model;
     Controller *controller;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
@@ -479,7 +475,8 @@ protected:
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
-    mega::MegaPricing *pricing;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
     UpgradeOverStorage *storageOverquotaDialog;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;

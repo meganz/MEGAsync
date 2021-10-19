@@ -107,7 +107,7 @@ void WindowsPlatform::prepareForSync()
                         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
                                     .arg(networkName).arg(driveName).toUtf8().constData());
 
-                        QStringList localFolders = Model::instance()->getLocalFolders();
+                        QStringList localFolders = SyncModel::instance()->getLocalFolders();
                         for (int i = 0; i < localFolders.size(); i++)
                         {
                             QString localFolder = localFolders.at(i);
@@ -1496,7 +1496,7 @@ QString WindowsPlatform::getDeviceName()
 // Platform-specific strings
 const char* WindowsPlatform::settingsString {QT_TRANSLATE_NOOP("Platform", "Settings")};
 const char* WindowsPlatform::exitString {QT_TRANSLATE_NOOP("Platform", "Exit")};
-
+const char* WindowsPlatform::fileExplorerString {QT_TRANSLATE_NOOP("Platform", "Show in Explorer")};
 
 ShellNotifier::~ShellNotifier()
 {

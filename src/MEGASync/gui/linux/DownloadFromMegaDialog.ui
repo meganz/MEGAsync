@@ -26,12 +26,7 @@
    <string>Download from MEGA</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-font-size: 11px;
-}
-
-QCheckBox::indicator {
+   <string notr="true">QCheckBox::indicator {
      width: 16px;
      height: 16px;
  }
@@ -44,17 +39,7 @@ QRadioButton::indicator {
 QScrollBar:horizontal {
 height: 16px;
 }
-
-QPushButton
-{
-    min-height: 14px;
-	height: 14px;
-}
-
-#DownloadFromMegaDialog
-{
-	background-color: #f1f1f1;
-}</string>
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">

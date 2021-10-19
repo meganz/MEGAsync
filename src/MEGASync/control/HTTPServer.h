@@ -62,11 +62,8 @@ class HTTPServer: public QTcpServer
 
         HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
         ~HTTPServer();
-#if QT_VERSION >= 0x050000
+
         void incomingConnection(qintptr socket);
-#else
-        void incomingConnection(int socket);
-#endif
         void pause();
         void resume();
 
@@ -84,6 +81,7 @@ class HTTPServer: public QTcpServer
         void onExternalFolderSyncRequested(qlonglong targetHandle);
         void onExternalOpenTransferManagerRequested(int tab);
         void onExternalShowInFolderRequested(QString path);
+        void onExternalAddBackup();
         void onConnectionError();
 
     public slots:
