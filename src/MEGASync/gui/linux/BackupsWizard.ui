@@ -42,6 +42,7 @@
    <string notr="true">*
 {
 font-family: Lato;
+font-size: 13px;
 }
 
 #BackupsWizard, #sSteps &gt; QWidget
@@ -151,7 +152,7 @@ max-height: 39 px;
 
 #lvFoldersS1, #lvFoldersS2
 {
-background: transparent;
+background: solid white;
 border-bottom-right-radius: 6px;
 border-bottom-left-radius: 6px;
 }
