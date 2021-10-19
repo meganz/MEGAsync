@@ -16,6 +16,7 @@ QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
     mRequiredRights (mega::MegaShare::ACCESS_READ),
     mDisplayFiles (false),
     mDisableFolders (false),
+    mDisableBackups (false),
     mMyBackupsRootDirHandle (mega::INVALID_HANDLE),
     mDeviceId (QString::fromUtf8(mMegaApi->getDeviceId()))
 {
@@ -60,7 +61,7 @@ QVariant QMegaModel::data(const QModelIndex& index, int role) const
     {
         case Qt::DecorationRole:
         {
-            std::shared_ptr<mega::MegaNode> node (item->getNode());
+            auto node (item->getNode());
             if (node->getType() >= mega::MegaNode::TYPE_FOLDER)
             {
                 if (node->isInShare())
@@ -118,8 +119,12 @@ static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/PC_linux_ico_r
         }
         case Qt::ForegroundRole:
         {
-            int access = mMegaApi->getAccess(item->getNode().get());
-            if (access < mRequiredRights || (mDisableFolders && item->getNode()->isFolder()))
+            auto node (item->getNode());
+            QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
+            int access = mMegaApi->getAccess(node.get());
+            if (access < mRequiredRights || (mDisableFolders && node->isFolder())
+                    || (mDisableBackups && (!nodeDeviceId.isEmpty()
+                                            || node->getHandle() == mMyBackupsRootDirHandle)))
             {
                 static const QBrush disabledBrush (QBrush(QColor(170, 170, 170, 127)));
                 return QVariant(disabledBrush);
@@ -142,6 +147,19 @@ static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/PC_linux_ico_r
             return QVariant(QString::fromUtf8("%1 (%2)").arg(
                                 QString::fromUtf8(mInshareItems.at(inshareIndex)->getNode()->getName()),
                                 mInshareOwners.at(inshareIndex)));
+        }
+        case Qt::UserRole:
+        {
+            auto node (item->getNode());
+            QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
+            int access = mMegaApi->getAccess(node.get());
+            if (access < mRequiredRights || (mDisableFolders && node->isFolder())
+                    || (mDisableBackups && (!nodeDeviceId.isEmpty()
+                                            || node->getHandle() == mMyBackupsRootDirHandle)))
+            {
+                return false;
+            }
+            return true;
         }
         default:
         {
@@ -232,6 +250,11 @@ void QMegaModel::setRequiredRights(int requiredRights)
 void QMegaModel::setDisableFolders(bool option)
 {
     mDisableFolders = option;
+}
+
+void QMegaModel::setDisableBackups(bool option)
+{
+    mDisableBackups = option;
 }
 
 void QMegaModel::showFiles(bool show)

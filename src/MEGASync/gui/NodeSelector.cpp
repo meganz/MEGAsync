@@ -5,6 +5,7 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
+#include "control/SyncController.h"
 
 #include <QMessageBox>
 #include <QPointer>
@@ -27,7 +28,8 @@ NodeSelector::NodeSelector(mega::MegaApi*megaApi, SelectMode selectMode, QWidget
     mSelectedFolder (mega::INVALID_HANDLE),
     mSelectedItemIndex (QModelIndex()),
     mSelectMode (selectMode),
-    mRemoteTreeModel (nullptr)
+    mRemoteTreeModel (nullptr),
+    mMyBackupsRootDirHandle (mega::INVALID_HANDLE)
 {
     mNodeSelectorUi->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -53,6 +55,10 @@ NodeSelector::NodeSelector(mega::MegaApi*megaApi, SelectMode selectMode, QWidget
     connect(mNodeSelectorUi->tMegaFolders, &QTreeView::customContextMenuRequested,
             this, &NodeSelector::onCustomContextMenu);
 
+    connect(&SyncController::instance(), &SyncController::backupsRootDirHandle,
+            this, &NodeSelector::onMyBackupsRootDir);
+    SyncController::instance().getBackupsRootDirHandle();
+
     setupNewFolderDialog();
 }
 
@@ -75,6 +81,7 @@ void NodeSelector::nodesReady()
     auto accessRights (mega::MegaShare::ACCESS_UNKNOWN);
     bool showFiles (false);
     bool setDisableFolders (false);
+    bool setDisableBackups (false);
 
     switch (mSelectMode)
     {
@@ -83,6 +90,7 @@ void NodeSelector::nodesReady()
             accessRights = mega::MegaShare::ACCESS_READWRITE;
             showFiles = false;
             setDisableFolders = false;
+            setDisableBackups = true;
             break;
         }
         case SelectMode::SYNC_SELECT:
@@ -90,6 +98,7 @@ void NodeSelector::nodesReady()
             accessRights = mega::MegaShare::ACCESS_FULL;
             showFiles = false;
             setDisableFolders = false;
+            setDisableBackups = true;
             break;
         }
         case SelectMode::DOWNLOAD_SELECT:
@@ -97,6 +106,7 @@ void NodeSelector::nodesReady()
             accessRights = mega::MegaShare::ACCESS_READ;
             showFiles = true;
             setDisableFolders = false;
+            setDisableBackups = false;
             break;
         }
         case SelectMode::STREAM_SELECT:
@@ -104,6 +114,7 @@ void NodeSelector::nodesReady()
             accessRights = mega::MegaShare::ACCESS_READ;
             showFiles = true;
             setDisableFolders = false;
+            setDisableBackups = false;
             break;
         }
     }
@@ -112,6 +123,7 @@ void NodeSelector::nodesReady()
     mRemoteTreeModel->setRequiredRights(accessRights);
     mRemoteTreeModel->showFiles(showFiles);
     mRemoteTreeModel->setDisableFolders(setDisableFolders);
+    mRemoteTreeModel->setDisableBackups(setDisableBackups);
     mNodeSelectorUi->tMegaFolders->setModel(mRemoteTreeModel.get());
 
     QItemSelectionModel* selectionModel (mNodeSelectorUi->tMegaFolders->selectionModel());
@@ -280,7 +292,9 @@ void NodeSelector::onCustomContextMenu(const QPoint& point)
     std::unique_ptr<mega::MegaNode> node (mMegaApi->getNodeByHandle(mSelectedFolder));
     std::unique_ptr<mega::MegaNode> parent (mMegaApi->getParentNode(node.get()));
 
-    if (parent && node)
+    if (parent && node
+            && QString::fromUtf8(node->getDeviceId()).isEmpty()
+            && node->getHandle() != mMyBackupsRootDirHandle)
     {        
         int access = mMegaApi->getAccess(node.get());
 
@@ -364,12 +378,11 @@ void NodeSelector::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
+void NodeSelector::onSelectionChanged(QItemSelection selectedIndexes, QItemSelection)
 {
-    auto selectedIndexes (mNodeSelectorUi->tMegaFolders->selectionModel()->selectedIndexes());
     if (!selectedIndexes.isEmpty())
     {
-        mSelectedItemIndex = selectedIndexes.at(0);
+        mSelectedItemIndex = selectedIndexes.indexes().at(0);
         auto node (mRemoteTreeModel->getNode(mSelectedItemIndex));
         if (node)
         {
@@ -379,6 +392,8 @@ void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
         {
             mSelectedFolder = mega::INVALID_HANDLE;
         }
+        // Enable or disable folder creation button
+        mNodeSelectorUi->bNewFolder->setEnabled(mSelectedItemIndex.data(Qt::UserRole).toBool());
     }
     else
     {
@@ -558,4 +573,9 @@ void NodeSelector::setupNewFolderDialog()
 bool NodeSelector::getDefaultUploadOption()
 {
    return mNodeSelectorUi->cbAlwaysUploadToLocation->isChecked();
+}
+
+void NodeSelector::onMyBackupsRootDir(mega::MegaHandle handle)
+{
+    mMyBackupsRootDirHandle = handle;
 }

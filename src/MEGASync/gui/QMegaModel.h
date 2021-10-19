@@ -23,6 +23,7 @@ public:
 
     void setRequiredRights(int requiredRights);
     void setDisableFolders(bool option);
+    void setDisableBackups(bool option);
     void showFiles(bool show);
     QModelIndex insertNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
     void removeNode(QModelIndex& item);
@@ -41,6 +42,7 @@ protected:
     int mRequiredRights;
     bool mDisplayFiles;
     bool mDisableFolders;
+    bool mDisableBackups;
     mega::MegaHandle mMyBackupsRootDirHandle;
     QString mDeviceId;
 

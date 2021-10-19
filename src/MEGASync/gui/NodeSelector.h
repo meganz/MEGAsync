@@ -52,9 +52,10 @@ protected:
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
 private slots:
-    void onSelectionChanged(QItemSelection, QItemSelection);
+    void onSelectionChanged(QItemSelection selectedIndexes, QItemSelection);
     void on_bNewFolder_clicked();
     void on_bOk_clicked();
+    void onMyBackupsRootDir(mega::MegaHandle handle);
 
 private:
     Ui::NodeSelector* mNodeSelectorUi;
@@ -67,6 +68,7 @@ private:
     QModelIndex mSelectedItemIndex;
     SelectMode mSelectMode;
     std::shared_ptr<QMegaModel> mRemoteTreeModel;
+    mega::MegaHandle mMyBackupsRootDirHandle;
 
     void setupNewFolderDialog();
 };
