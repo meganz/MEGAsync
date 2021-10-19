@@ -24,10 +24,10 @@ public:
     void setRequiredRights(int requiredRights);
     void setDisableFolders(bool option);
     void showFiles(bool show);
-    QModelIndex insertNode(mega::MegaNode* node, const QModelIndex& parent);
+    QModelIndex insertNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
     void removeNode(QModelIndex& item);
 
-    mega::MegaNode* getNode(const QModelIndex& index);
+    std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);
 
     virtual ~QMegaModel();
 
@@ -37,7 +37,7 @@ protected:
     std::unique_ptr<MegaItem> mRootItem;
     QList<MegaItem*> mInshareItems;
     QStringList mInshareOwners;
-    QList<mega::MegaNode*> mOwnNodes;
+    QList<std::shared_ptr<mega::MegaNode>> mOwnNodes;
     int mRequiredRights;
     bool mDisplayFiles;
     bool mDisableFolders;

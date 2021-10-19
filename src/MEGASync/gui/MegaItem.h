@@ -4,13 +4,16 @@
 #include <QList>
 #include <megaapi.h>
 
+#include <memory>
+
 class MegaItem
 {
 public:
-    MegaItem(mega::MegaNode *node, MegaItem *parentItem = 0, bool showFiles = false);
+    MegaItem(std::shared_ptr<mega::MegaNode> node, MegaItem* parentItem = nullptr,
+             bool showFiles = false);
 
-    mega::MegaNode *getNode();
-    void setChildren(mega::MegaNodeList *children);
+    std::shared_ptr<mega::MegaNode> getNode();
+    void setChildren(std::shared_ptr<mega::MegaNodeList> children);
 
     bool areChildrenSet();
     MegaItem *getParent();
@@ -18,20 +21,20 @@ public:
     int getNumChildren();
     int indexOf(MegaItem *item);
 
-    int insertPosition(mega::MegaNode *node);
-    void insertNode(mega::MegaNode *node, int index);
-    void removeNode(mega::MegaNode *node);
+    int insertPosition(std::shared_ptr<mega::MegaNode> node);
+    void insertNode(std::shared_ptr<mega::MegaNode> node, int index);
+    void removeNode(std::shared_ptr<mega::MegaNode> node);
     void displayFiles(bool enable);
 
     ~MegaItem();
 
 protected:
-    bool showFiles;
-    MegaItem *parent;
-    mega::MegaNode *node;
-    mega::MegaNodeList *children;
-    QList<MegaItem *> childItems;
-    QList<mega::MegaNode *> insertedNodes;
+    bool mShowFiles;
+    MegaItem* mParentItem;
+    std::shared_ptr<mega::MegaNode> mNode;
+    bool mAreChildrenSet;
+    QList<MegaItem*> mChildItems;
+    QList<std::shared_ptr<mega::MegaNode>> mInsertedNodes;
 };
 
 #endif // MEGAITEM_H

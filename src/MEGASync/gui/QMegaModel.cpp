@@ -6,11 +6,13 @@
 #include <QBrush>
 #include <QApplication>
 
+#include <memory>
+
 QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
     QAbstractItemModel(parent),
     mMegaApi (megaApi),
     mRootNode (MegaSyncApp->getRootNode()),
-    mRootItem (new MegaItem(mRootNode.get())),
+    mRootItem (new MegaItem(mRootNode)),
     mRequiredRights (mega::MegaShare::ACCESS_READ),
     mDisplayFiles (false),
     mDisableFolders (false),
@@ -24,7 +26,7 @@ QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
         std::unique_ptr<mega::MegaNodeList> folders (megaApi->getInShares(contact));
         for (int j = 0; j < folders->size(); j++)
         {
-            mega::MegaNode* folder (folders->get(j)->copy());
+            std::shared_ptr<mega::MegaNode> folder (folders->get(j)->copy());
             mOwnNodes.append(folder);
             mInshareItems.append(new MegaItem(folder));
             mInshareOwners.append(QString::fromUtf8(contact->getEmail()));
@@ -58,7 +60,7 @@ QVariant QMegaModel::data(const QModelIndex& index, int role) const
     {
         case Qt::DecorationRole:
         {
-            mega::MegaNode* node (item->getNode());
+            std::shared_ptr<mega::MegaNode> node (item->getNode());
             if (node->getType() >= mega::MegaNode::TYPE_FOLDER)
             {
                 if (node->isInShare())
@@ -116,7 +118,7 @@ static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/PC_linux_ico_r
         }
         case Qt::ForegroundRole:
         {
-            int access = mMegaApi->getAccess(item->getNode());
+            int access = mMegaApi->getAccess(item->getNode().get());
             if (access < mRequiredRights || (mDisableFolders && item->getNode()->isFolder()))
             {
                 static const QBrush disabledBrush (QBrush(QColor(170, 170, 170, 127)));
@@ -164,7 +166,7 @@ QModelIndex QMegaModel::index(int row, int column, const QModelIndex& parent) co
 
         if (!item->areChildrenSet())
         {
-            item->setChildren(mMegaApi->getChildren(item->getNode()));
+            item->setChildren(std::shared_ptr<mega::MegaNodeList>(mMegaApi->getChildren(item->getNode().get())));
         }
 
         return createIndex(row, column, item->getChild(row));
@@ -210,10 +212,10 @@ int QMegaModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
     {
-        MegaItem*item = static_cast<MegaItem*>(parent.internalPointer());
+        MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            item->setChildren(mMegaApi->getChildren(item->getNode()));
+            item->setChildren(std::shared_ptr<mega::MegaNodeList>(mMegaApi->getChildren(item->getNode().get())));
         }
 
         return item->getNumChildren();
@@ -242,7 +244,7 @@ void QMegaModel::showFiles(bool show)
     }
 }
 
-QModelIndex QMegaModel::insertNode(mega::MegaNode* node, const QModelIndex& parent)
+QModelIndex QMegaModel::insertNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent)
 {
     MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
     int idx = item->insertPosition(node);
@@ -256,7 +258,7 @@ QModelIndex QMegaModel::insertNode(mega::MegaNode* node, const QModelIndex& pare
 
 void QMegaModel::removeNode(QModelIndex& item)
 {
-    mega::MegaNode* node = (static_cast<MegaItem*>(item.internalPointer()))->getNode();
+    auto node = (static_cast<MegaItem*>(item.internalPointer()))->getNode();
     MegaItem* parent = static_cast<MegaItem*>(item.parent().internalPointer());
     if (!node || !parent)
     {
@@ -269,7 +271,7 @@ void QMegaModel::removeNode(QModelIndex& item)
     endRemoveRows();
 }
 
-mega::MegaNode* QMegaModel::getNode(const QModelIndex& index)
+std::shared_ptr<mega::MegaNode> QMegaModel::getNode(const QModelIndex& index)
 {
     MegaItem* item = static_cast<MegaItem*>(index.internalPointer());
     if (!item)
@@ -281,7 +283,6 @@ mega::MegaNode* QMegaModel::getNode(const QModelIndex& index)
 
 QMegaModel::~QMegaModel()
 {
-    qDeleteAll(mOwnNodes);
     qDeleteAll(mInshareItems);
 }
 
