@@ -619,6 +619,8 @@
         <file>images/Backup@2x.png</file>
         <file>images/PC_mac_ico_rest.png</file>
         <file>images/PC_mac_ico_rest@2x.png</file>
+        <file>images/PC_ico_rest.png</file>
+        <file>images/PC_ico_rest@2x.png</file>
         <file>images/remove-backups.png</file>
     </qresource>
 </RCC>

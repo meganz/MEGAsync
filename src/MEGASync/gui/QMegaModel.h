@@ -1,11 +1,12 @@
 #ifndef QMEGAMODEL_H
 #define QMEGAMODEL_H
 
-#include <QAbstractItemModel>
-#include <QList>
-#include <QIcon>
 #include "MegaItem.h"
 #include <megaapi.h>
+
+#include <QAbstractItemModel>
+#include <QList>
+
 #include <memory>
 
 class QMegaModel : public QAbstractItemModel
@@ -37,10 +38,14 @@ protected:
     QList<MegaItem*> mInshareItems;
     QStringList mInshareOwners;
     QList<mega::MegaNode*> mOwnNodes;
-    QIcon mFolderIcon;
     int mRequiredRights;
     bool mDisplayFiles;
     bool mDisableFolders;
+    mega::MegaHandle mMyBackupsRootDirHandle;
+    QString mDeviceId;
+
+private slots:
+    void onMyBackupsRootDir(mega::MegaHandle handle);
 };
 
 #endif // QMEGAMODEL_H
