@@ -140,10 +140,6 @@ padding-right: 16px;
 #lvFoldersS1::item
 {
 border-bottom: 1px solid #e5e5e5;
-}
-
-#lvFoldersS1::item
-{
 height: 39 px;
 min-height: 39 px;
 max-height: 39 px;
@@ -151,7 +147,7 @@ max-height: 39 px;
 
 #lvFoldersS1, #lvFoldersS2
 {
-background: transparent;
+background: solid white;
 border-bottom-right-radius: 6px;
 border-bottom-left-radius: 6px;
 }
@@ -460,7 +456,7 @@ border-bottom: 1px solid #e5e5e5;
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="pFolders">
              <property name="sizePolicy">
@@ -513,7 +509,7 @@ border-bottom: 1px solid #e5e5e5;
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>14</width>
+                  <width>24</width>
                   <height>24</height>
                  </size>
                 </property>
@@ -889,7 +885,7 @@ border-bottom: 1px solid #e5e5e5;
             <property name="iconSize">
              <size>
               <width>24</width>
-              <height>11</height>
+              <height>24</height>
              </size>
             </property>
             <property name="verticalScrollMode">

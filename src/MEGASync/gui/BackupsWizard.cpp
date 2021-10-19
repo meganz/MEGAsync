@@ -817,7 +817,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
         {
             mError = true;
             QString name (itemL1->data(Qt::DisplayRole).toString());
-            QIcon   warnIcon (QIcon(QLatin1String("://images/ic_sync_warning.png")));
+            QIcon   warnIcon (QIcon(QLatin1String("://images/folder with warning.png")));
             QString tooltipMsg (itemL2->data(Qt::UserRole).toString()
                                 + QLatin1String("\nError: ") + errorMsg);
             itemL2->setData(Qt::DecorationRole, warnIcon);
@@ -825,7 +825,8 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
             itemL1->setData(warnIcon, Qt::DecorationRole);
             itemL1->setData(tooltipMsg, Qt::ToolTipRole);
 
-            displayError(tr("Adding backup \"%1\" failed.\nReason: %2")
+            displayError(tr("Adding backup \"%1\" failed.\n"
+                            "Reason: %2")
                          .arg(name, errorMsg));
         }
         itemL1->setData(Qt::Unchecked, Qt::CheckStateRole);

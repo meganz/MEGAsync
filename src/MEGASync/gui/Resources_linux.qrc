@@ -910,5 +910,8 @@
         <file>images/folder_icon.png</file>
         <file>images/folder_icon@2x.png</file>
         <file>images/folder_icon@3x.png</file>
+        <file>images/folder with warning.png</file>
+        <file>images/folder with warning@2x.png</file>
+        <file>images/folder with warning@3x.png</file>
     </qresource>
 </RCC>
