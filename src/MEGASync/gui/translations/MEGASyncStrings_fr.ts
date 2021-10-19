@@ -2641,7 +2641,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>Expiré</translation>
+        <translation>Expirée</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -3535,9 +3535,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
         <translation>– Refonte complète des paramètres avec un nouvel aspect et une nouvelle convivialité.
 – Les versions de macOS antérieures à 10.12 ne sont plus prises en charge.
-– Les options de surclassement sont maintenant proposées en plusieurs devises.
+– Les options de surclassement sont maintenant proposées en plusieurs monnaies.
 – La prise en charge pour les écrans à résolution points par pouce élevée a été améliorée pour la plateforme Windows.
-– Autres améliorations des performances et mises au point. – Autres correctifs de l’IU et mises au point.</translation>
+– Autres améliorations des performances et mises au point.
+– Autres correctifs de l’IU et mises au point.</translation>
     </message>
 </context>
 <context>
@@ -3846,7 +3847,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>File Folder</source>
         <translatorcomment>Label to desing a folder matching Windows Explorer case</translatorcomment>
-        <translation>Dossier de fichiers</translation>
+        <translation>Dossier</translation>
     </message>
     <message>
         <source>Folder</source>

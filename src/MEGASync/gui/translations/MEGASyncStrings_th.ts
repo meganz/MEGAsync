@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถอัปโหลดปัญหาของคุณได้เนื่องจากข้อผิดพลาด กรุณาลองอีกครั้งในภายหลังหรือติดต่อทีมสนับสนุนของเราหากยังพบปัญหาอยู่ผ่านทาง [A]support@mega.nz[/A] </translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5456,7 +5456,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาในสกุลเงินท้องถิ่นเป็นเพียงการประมาณการเท่านั้น ประวัติการทำธุรกรรมทั้งหมดจะแสดงเป็นสกุลเงินยูโร</translation>
+        <translation>* ราคาที่แสดงเป็นสกุลเงินบาทเป็นเพียงการประมาณการเท่านั้น ประวัติการทำธุรกรรมทั้งหมดจะแสดงเป็นสกุลเงินยูโร</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -5466,7 +5466,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคา 10</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5509,7 +5509,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>เลือกการเรียกเก็บเงินรายปีและรับ 12 เดือนในราคา 10</translation>
     </message>
 </context>
 <context>

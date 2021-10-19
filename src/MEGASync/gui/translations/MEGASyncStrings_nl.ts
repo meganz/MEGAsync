@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Uw probleem kan niet worden geüpload vanwege een fout. Probeer het later opnieuw of neem contact op met ons ondersteuningsteam via [A]support@mega.nz[/A] als het probleem aanhoudt.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3515,7 +3515,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>Weergeven in Explorer</translation>
+        <translation>Weergeven in Verkenner</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5468,7 +5468,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kies voor jaarlijkse facturering en krijg 12 maanden voor de prijs van 10</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5511,7 +5511,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Kies voor jaarlijkse facturering en krijg 12 maanden voor de prijs van 10</translation>
     </message>
 </context>
 <context>

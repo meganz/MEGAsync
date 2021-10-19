@@ -5458,7 +5458,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* El precio indicado en moneda local es solo una estimación. Todas las transacciones se cobrarán en Euros.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -5501,7 +5501,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* El precio indicado en moneda local es solo una estimación. Todas las transacciones se cobrarán en Euros.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>

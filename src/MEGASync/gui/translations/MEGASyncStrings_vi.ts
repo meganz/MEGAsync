@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Báo cáo lỗi đã không thể gửi đi được do xảy ra trục trặc. Xin thử lại sau hoặc liên hệ với đội trợ giúp qua email [A]support@mega.nz[/A]nếu vấn đề tiếp tục tiếp diễn.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1130,7 +1130,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Your data is at risk</source>
         <translatorcomment>System notification title to indicate that your data is at risk due to the current account is in over quota storage state for long time without fixing the situation.</translatorcomment>
-        <translation>Dữ liệu sắp bị mất</translation>
+        <translation>Dữ liệu đang gặp rủi ro</translation>
     </message>
     <message>
         <source>You have [A] days left to save your data</source>
@@ -5458,7 +5458,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chọn thanh toán thường niên để có 12 tháng và chỉ phải trả với giá mua 10 tháng</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5501,7 +5501,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chọn thanh toán thường niên để có 12 tháng và chỉ phải trả với giá mua 10 tháng</translation>
     </message>
 </context>
 <context>

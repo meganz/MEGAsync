@@ -5473,7 +5473,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>전송 할당량 초과</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -521,12 +521,12 @@
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de încărcare:</translation>
     </message>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de descărcare:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Problema ta nu poate fi încărcată din cauza unei erori. Te rugăm să încerci din nou mai târziu sau să contactezi echipa noastră de asistență via [A]support@mega.nz[/A] dacă problema persistă.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4550,12 +4550,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de descărcare:</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
         <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Limita ratei de încărcare:</translation>
     </message>
     <message>
         <source>Proxy settings:</source>
@@ -5464,7 +5464,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alege facturarea anuală și obține 12 luni la preț de 10</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5507,7 +5507,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Alege facturarea anuală și obține 12 luni la preț de 10</translation>
     </message>
 </context>
 <context>

@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Masalah Anda tidak dapat diunggah karena terjadi kesalahan. Silakan coba lagi nanti atau hubungi tim dukungan kami melalui [A]support@mega.nz[/A] jika masalah terus berlanjut .</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -5466,7 +5466,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pilih tagihan tahunan dan dapatkan 12 bulan dengan harga 10</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5509,7 +5509,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Pilih tagihan tahunan dan dapatkan 12 bulan dengan harga 10</translation>
     </message>
 </context>
 <context>

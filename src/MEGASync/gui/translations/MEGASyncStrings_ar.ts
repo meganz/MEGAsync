@@ -3514,7 +3514,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
-        <translation>عرض في المتصفح</translation>
+        <translation>عرض في المستكشف</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -3582,7 +3582,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
-        <translation>المخادم:</translation>
+        <translation>المخدم:</translation>
     </message>
     <message>
         <source>Password:</source>
