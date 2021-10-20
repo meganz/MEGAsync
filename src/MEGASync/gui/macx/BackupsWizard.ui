@@ -886,7 +886,7 @@ border-bottom: 1px solid #e5e5e5;
             <property name="iconSize">
              <size>
               <width>24</width>
-              <height>11</height>
+              <height>24</height>
              </size>
             </property>
             <property name="verticalScrollMode">

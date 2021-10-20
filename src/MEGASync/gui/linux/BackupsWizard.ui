@@ -161,17 +161,17 @@ padding-left: 22px;
 
 #lvFoldersS2
 {
-padding-left: 15px;
+padding-left: 11px;
 }
 
 #lvFoldersS1::icon
 {
-left: 25px;
+left: 22px;
 }
 
 #lvFoldersS1::text
 {
-left: 28px;
+left: 22px;
 }
 
 #lvFoldersS2::item
@@ -183,7 +183,7 @@ max-height: 31 px;
 
 #lvFoldersS2::text
 {
-left: 7px;
+left: 3px;
 }
 
 #lAllFoldersSynced
@@ -887,7 +887,7 @@ border-bottom: 1px solid #e5e5e5;
             <property name="iconSize">
              <size>
               <width>24</width>
-              <height>11</height>
+              <height>24</height>
              </size>
             </property>
             <property name="verticalScrollMode">
