@@ -552,7 +552,6 @@
         <file>images/Cloud_Drive_24_ico@2x.png</file>
         <file>images/Inbox_24_ico.png</file>
         <file>images/Inbox_24_ico@2x.png</file>
-        <file>images/Inbox_24_ico@3x.png</file>
         <file>images/key_big.png</file>
         <file>images/key_big@2x.png</file>
         <file>images/lock_big.png</file>
@@ -591,7 +590,6 @@
         <file>images/settings-folders-macx@2x.png</file>
         <file>images/ico_dialog_check.png</file>
         <file>images/ico_dialog_check@2x.png</file>
-        <file>images/ico_dialog_check@3x.png</file>
         <file>images/ico_dialog_check_green.png</file>
         <file>images/ico_dialog_check_green@2x.png</file>
         <file>images/ico_info_rest.png</file>
@@ -614,7 +612,7 @@
         <file>animations/full-storage@2x.gif</file>
         <file>animations/full-transfer@2x.gif</file>
         <file>animations/full-transfer.gif</file>
- 	<file>images/Backup.png</file>
+        <file>images/Backup.png</file>
         <file>images/Backup@2x.png</file>
         <file>images/PC_mac_ico_rest.png</file>
         <file>images/PC_mac_ico_rest@2x.png</file>
@@ -623,5 +621,15 @@
         <file>images/folder_icon@2x.png</file>
         <file>images/folder with warning.png</file>
         <file>images/folder with warning@2x.png</file>
+        <file>images/icons/pc/PC_warning_ico_rest.png</file>
+        <file>images/icons/pc/PC_warning_ico_rest@2x.png</file>
+        <file>images/icons/pc/PC_warning_ico_hover.png</file>
+        <file>images/icons/pc/PC_warning_ico_hover@2x.png</file>
+        <file>images/icons/pc/PC_ico_rest.png</file>
+        <file>images/icons/pc/PC_ico_rest@2x.png</file>
+        <file>images/icons/pc/PC_ico_hover.png</file>
+        <file>images/icons/pc/PC_ico_hover@2x.png</file>
+        <file>images/settings-backup-macx.png</file>
+        <file>images/settings-backup-macx@2x.png</file>
     </qresource>
 </RCC>

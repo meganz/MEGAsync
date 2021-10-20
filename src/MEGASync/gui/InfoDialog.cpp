@@ -1610,7 +1610,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     static bool firstime = true;
     if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Minimizing info dialog ...").arg(e->type()).toUtf8().constData());
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Minimizing info dialog (reason: %1)...").arg(e->type()).toUtf8().constData());
         showMinimized();
         firstime = false;
     }

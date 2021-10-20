@@ -10,6 +10,7 @@
 #include "gui/QSyncItemWidget.h"
 #include "gui/ProxySettings.h"
 #include "gui/BandwidthSettings.h"
+#include "gui/BackupsWizard.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -42,10 +43,11 @@ constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
 constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{583};
 constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{529};
-constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{525};
-// FIXME: Re-evaluate sizes for Network tab
-constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{196};
+// FIXME: Re-evaluate size for Backup tab
+constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{400};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
+constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
+constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{196};
 #endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
@@ -95,7 +97,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mDebugCounter (0),
     mAreSyncsDisabled (false),
     mIsSavingSyncsOnGoing (false),
-    mSelectedSyncRow(-1)
+    mSelectedSyncRow(-1),
+    mBackupRootHandle(mega::INVALID_HANDLE)
 {
     mUi->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -229,6 +232,24 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             this, &SettingsDialog::onSyncSelected);
     mUi->tSyncs->setMouseTracking(true);
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
+
+    connectBackupHandlers();
+
+    QHeaderView *header = mUi->backupTableWidget->horizontalHeader();
+    header->setSortIndicator(-1, Qt::AscendingOrder);
+    header->resizeSection(BackupItemColumn::ENABLED, 32);
+    header->resizeSection(BackupItemColumn::MENU, 32);
+    header->setDefaultAlignment(Qt::AlignLeft);
+    header->setSectionResizeMode(BackupItemColumn::ENABLED, QHeaderView::Fixed);
+    header->setSectionResizeMode(BackupItemColumn::LNAME,QHeaderView::Stretch);
+    header->setSectionResizeMode(BackupItemColumn::MENU, QHeaderView::Fixed);
+    // Hijack the sorting on the dots MENU column and hide the sort indicator,
+    // instead of showing a bogus sort on that column;
+    connect(header, &QHeaderView::sortIndicatorChanged, this, [header](int index, Qt::SortOrder order)
+    {
+        if (index == BackupItemColumn::MENU)
+            header->setSortIndicator(-1, order);
+    });
 }
 
 SettingsDialog::~SettingsDialog()
@@ -276,6 +297,15 @@ void SettingsDialog::openSettingsTab(int tab)
 #endif
         break;
 
+    case BACKUP_TAB:
+#ifndef Q_OS_MACOS
+        mUi->bBackup->click();
+#else
+        mToolBar->setSelectedItem(bBackup.get());
+        emit bBackup.get()->activated();
+#endif
+        break;
+
     case SECURITY_TAB:
 #ifndef Q_OS_MACOS
         mUi->bSecurity->click();
@@ -316,6 +346,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     mUi->bGeneral->setEnabled(!proxyOnly);
     mUi->bAccount->setEnabled(!proxyOnly);
     mUi->bSyncs->setEnabled(!proxyOnly);
+    mUi->bBackup->setEnabled(!proxyOnly);
     mUi->bSecurity->setEnabled(!proxyOnly);
     mUi->bFolders->setEnabled(!proxyOnly);
 #endif
@@ -375,6 +406,7 @@ void SettingsDialog::initializeNativeUIComponents()
     QString general(QString::fromUtf8("settings-general"));
     QString account(QString::fromUtf8("settings-account"));
     QString syncs(QString::fromUtf8("settings-syncs"));
+    QString backup(QString::fromUtf8("settings-backup"));
     QString security(QString::fromUtf8("settings-security"));
     QString folders(QString::fromUtf8("settings-folders"));
     QString network(QString::fromUtf8("settings-network"));
@@ -394,6 +426,11 @@ void SettingsDialog::initializeNativeUIComponents()
     mToolBar->customizeIconToolBarItem(bSyncs.get(), syncs);
     connect(bSyncs.get(), &QMacToolBarItem::activated,
             this, &SettingsDialog::on_bSyncs_clicked);
+
+    bBackup.reset(mToolBar->addItem(QIcon(), tr("Backup")));
+    mToolBar->customizeIconToolBarItem(bBackup.get(), backup);
+    connect(bBackup.get(), &QMacToolBarItem::activated,
+            this, &SettingsDialog::on_bBackup_clicked);
 
     bSecurity.reset(mToolBar->addItem(QIcon(), tr("Security")));
     mToolBar->customizeIconToolBarItem(bSecurity.get(), security);
@@ -424,6 +461,12 @@ void SettingsDialog::initializeNativeUIComponents()
             this, &SettingsDialog::on_bAdd_clicked);
     connect(mUi->wSyncsSegmentedControl, &QSegmentedControl::removeButtonClicked,
             this, &SettingsDialog::on_bDelete_clicked);
+
+    mUi->wBackupSegmentedControl->configureTableSegment();
+    connect(mUi->wBackupSegmentedControl, &QSegmentedControl::addButtonClicked,
+            this, &SettingsDialog::on_bAddBackup_clicked);
+    connect(mUi->wBackupSegmentedControl, &QSegmentedControl::removeButtonClicked,
+            this, &SettingsDialog::on_bDeleteBackup_clicked);
 
     mUi->wExclusionsSegmentedControl->configureTableSegment();
     connect(mUi->wExclusionsSegmentedControl, &QSegmentedControl::addButtonClicked,
@@ -549,6 +592,9 @@ void SettingsDialog::loadSettings()
 
     //Syncs
     loadSyncSettings();
+
+    //Backup
+    loadBackupSettings();
 
 #ifdef Q_OS_WINDOWS
     mUi->cFinderIcons->setChecked(!mPreferences->leftPaneIconsDisabled());
@@ -695,6 +741,14 @@ void SettingsDialog::onAnimationFinished()
     {
         mUi->pSyncs->show();
     }
+    else if (mUi->wStack->currentWidget() == mUi->pBackup)
+    {
+        mUi->pBackup->show();
+    }
+    else if (mUi->wStack->currentWidget() == mUi->pSecurity)
+    {
+        mUi->pSecurity->show();
+    }
     else if (mUi->wStack->currentWidget() == mUi->pFolders)
     {
         mUi->pFolders->show();
@@ -702,10 +756,6 @@ void SettingsDialog::onAnimationFinished()
     else if (mUi->wStack->currentWidget() == mUi->pNetwork)
     {
         mUi->pNetwork->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pSecurity)
-    {
-        mUi->pSecurity->show();
     }
 }
 
@@ -1917,9 +1967,10 @@ void SettingsDialog::savingSyncs(bool completed, QObject* item)
     mUi->bGeneral->setEnabled(completed);
     mUi->bAccount->setEnabled(completed);
     mUi->bSyncs->setEnabled(completed);
-    mUi->bNetwork->setEnabled(completed);
+    mUi->bBackup->setEnabled(completed);
     mUi->bSecurity->setEnabled(completed);
     mUi->bFolders->setEnabled(completed);
+    mUi->bNetwork->setEnabled(completed);
 #else
     mToolBar->setEnableToolbarItems(completed);
 #endif
@@ -2057,6 +2108,117 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
     mUi->tSyncs->setCellWidget(row, SYNC_COL_NAME, lName);
 
     mSyncNames.append(name);
+}
+
+// Backup ----------------------------------------------------------------------------------------
+void SettingsDialog::connectBackupHandlers()
+{
+
+    connect(&mSyncController, &SyncController::backupsRootDirHandle, this, [this](mega::MegaHandle backupRootHandle)
+    {
+        if(backupRootHandle == mega::INVALID_HANDLE)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "My Backups directory not set");
+            return;
+        }
+        mBackupRootHandle = backupRootHandle;
+        mUi->lBackupFolder->setText(QString::fromUtf8(mMegaApi->getNodePathByNodeHandle(mBackupRootHandle)));
+    });
+
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
+    {
+        if (errorCode != MegaError::API_OK)
+            QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
+    });
+
+    connect(&mSyncController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error removing backup"),
+                                  tr("Your backup \"%1\" can't be removed. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    });
+
+    connect(&mSyncController, &SyncController::syncEnableError, this, [](std::shared_ptr<SyncSetting> sync)
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error enabling backup"),
+                                  tr("Your backup \"%1\" can't be enabled. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    });
+
+    connect(&mSyncController, &SyncController::syncDisableError, this, [](std::shared_ptr<SyncSetting> sync)
+    {
+        QMegaMessageBox::critical(nullptr, tr("Error disabling backup"),
+                                  tr("Your sync \"%1\" can't be disabled. Reason: %2")
+                                  .arg(sync->name())
+                                  .arg(tr(MegaSync::getMegaSyncErrorCode(sync->getError()))));
+    });
+}
+
+
+void SettingsDialog::loadBackupSettings()
+{
+    mUi->backupTableWidget->setModel(new BackupItemModel(mUi->backupTableWidget));
+    mSyncController.getBackupsRootDirHandle();
+}
+
+void SettingsDialog::on_bBackup_clicked()
+{
+    emit userActivity();
+
+    if (mUi->wStack->currentWidget() == mUi->pBackup)
+    {
+        return;
+    }
+
+    mUi->wStack->setCurrentWidget(mUi->pBackup);
+
+#ifdef Q_OS_MACOS
+    mUi->pBackup->hide();
+    animateSettingPage(SETTING_ANIMATION_BACKUP_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
+#endif
+}
+
+void SettingsDialog::on_bAddBackup_clicked()
+{
+//    mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName());
+
+    BackupsWizard *wizard = new BackupsWizard(this);
+    wizard->setAttribute(Qt::WA_DeleteOnClose);
+    wizard->setWindowModality(Qt::WindowModal);
+    wizard->open();
+}
+
+void SettingsDialog::on_bDeleteBackup_clicked()
+{
+    if(mUi->backupTableWidget->selectionModel()->hasSelection())
+    {
+        QModelIndex index = mUi->backupTableWidget->selectionModel()->selectedRows().first();
+        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
+    }
+}
+
+void SettingsDialog::on_bOpenBackupFolder_clicked()
+{
+    MegaNode* node = mMegaApi->getNodeByHandle(mBackupRootHandle);
+    if (node)
+    {
+        const char *handle = node->getBase64Handle();
+        if(handle)
+        {
+            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+            delete [] handle;
+        }
+        delete node;
+    }
+}
+
+
+void SettingsDialog::on_bBackupCenter_clicked()
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
 }
 
 // Security ----------------------------------------------------------------------------------------
