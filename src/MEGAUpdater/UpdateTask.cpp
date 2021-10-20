@@ -808,16 +808,8 @@ void UpdateTask::emptydirlocal(string* name, dev_t basedev)
         return;
     }
 
-#ifdef WINDOWS_PHONE
-    CREATEFILE2_EXTENDED_PARAMETERS ex = { 0 };
-    ex.dwSize = sizeof(ex);
-    ex.dwFileFlags = FILE_FLAG_BACKUP_SEMANTICS;
-    hDirectory = CreateFile2((LPCWSTR)name->data(), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ,
-                        OPEN_EXISTING, &ex);
-#else
     hDirectory = CreateFileW((LPCWSTR)name->data(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,
                              NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
-#endif
     name->resize(name->size() - added - 1);
     if (hDirectory == INVALID_HANDLE_VALUE)
     {
@@ -825,23 +817,14 @@ void UpdateTask::emptydirlocal(string* name, dev_t basedev)
         return;
     }
 
-#ifdef WINDOWS_PHONE
-    FILE_ID_INFO fi = { 0 };
-    if(!GetFileInformationByHandleEx(hDirectory, FileIdInfo, &fi, sizeof(fi)))
-#else
     BY_HANDLE_FILE_INFORMATION fi;
     if (!GetFileInformationByHandle(hDirectory, &fi))
-#endif
     {
         currentdev = 0;
     }
     else
     {
-    #ifdef WINDOWS_PHONE
-        currentdev = fi.VolumeSerialNumber + 1;
-    #else
         currentdev = fi.dwVolumeSerialNumber + 1;
-    #endif
     }
     CloseHandle(hDirectory);
     if (basedev && currentdev != basedev)
@@ -857,11 +840,7 @@ void UpdateTask::emptydirlocal(string* name, dev_t basedev)
         removed = false;
         name->append((char*)(void*)L"\\*", 5);
         WIN32_FIND_DATAW ffd;
-    #ifdef WINDOWS_PHONE
-        hFind = FindFirstFileExW((LPCWSTR)name->data(), FindExInfoBasic, &ffd, FindExSearchNameMatch, NULL, 0);
-    #else
         hFind = FindFirstFileW((LPCWSTR)name->data(), &ffd);
-    #endif
         name->resize(name->size() - 5);
         if (hFind == INVALID_HANDLE_VALUE)
         {
