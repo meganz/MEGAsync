@@ -8,6 +8,7 @@
 #include "Preferences.h"
 #include "HighDpiResize.h"
 #include "control/Utilities.h"
+#include "BackupItemModel.h"
 
 #include "MegaController.h"
 #include "SyncController.h"
@@ -40,9 +41,10 @@ public:
         GENERAL_TAB  = 0,
         ACCOUNT_TAB  = 1,
         SYNCS_TAB    = 2,
-        SECURITY_TAB = 3,
-        FOLDERS_TAB  = 4,
-        NETWORK_TAB  = 5,
+        BACKUP_TAB    = 3,
+        SECURITY_TAB = 4,
+        FOLDERS_TAB  = 5,
+        NETWORK_TAB  = 6,
         };
 
     explicit SettingsDialog(MegaApplication* app, bool proxyOnly = false, QWidget* parent = nullptr);
@@ -148,6 +150,13 @@ private slots:
     void on_bPermissions_clicked();
 #endif
 
+    // Backup
+    void on_bBackup_clicked();
+    void on_bAddBackup_clicked();
+    void on_bDeleteBackup_clicked();
+    void on_bOpenBackupFolder_clicked();
+    void on_bBackupCenter_clicked();
+
     // Security
     void on_bSecurity_clicked();
     void on_bExportMasterKey_clicked();
@@ -182,6 +191,9 @@ protected:
 #endif
 
 private:
+    void connectBackupHandlers();
+    void loadBackupSettings();
+
     void loadSettings();
     void onCacheSizeAvailable();
     void saveSyncSettings();
@@ -216,6 +228,7 @@ private:
     std::unique_ptr<QMacToolBarItem> bGeneral;
     std::unique_ptr<QMacToolBarItem> bAccount;
     std::unique_ptr<QMacToolBarItem> bSyncs;
+    std::unique_ptr<QMacToolBarItem> bBackup;
     std::unique_ptr<QMacToolBarItem> bSecurity;
     std::unique_ptr<QMacToolBarItem> bFolders;
     std::unique_ptr<QMacToolBarItem> bNetwork;
@@ -248,5 +261,6 @@ private:
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
+    mega::MegaHandle mBackupRootHandle;
 };
 #endif // SETTINGSDIALOG_H

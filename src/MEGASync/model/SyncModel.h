@@ -54,6 +54,7 @@ protected:
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
 
+    // FIXME: Investigate and remove
     QSet<mega::MegaHandle> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
 
 public:
@@ -87,7 +88,7 @@ public:
     // Getters
     std::shared_ptr<SyncSetting> getSyncSetting(int num, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     std::shared_ptr<SyncSetting> getSyncSettingByTag(mega::MegaHandle tag);
-    QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> getCopyOfSettings();
+    QList<std::shared_ptr<SyncSetting>> getSyncsByType(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
 
     int getNumSyncedFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
 
