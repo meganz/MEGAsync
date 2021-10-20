@@ -825,9 +825,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
             itemL1->setData(warnIcon, Qt::DecorationRole);
             itemL1->setData(tooltipMsg, Qt::ToolTipRole);
 
-            displayError(tr("Adding backup \"%1\" failed.\n"
-                            "Reason: %2")
-                         .arg(name, errorMsg));
+            displayError(errorMsg);
         }
         itemL1->setData(Qt::Unchecked, Qt::CheckStateRole);
 

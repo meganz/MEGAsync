@@ -2125,11 +2125,13 @@ void SettingsDialog::connectBackupHandlers()
         mUi->lBackupFolder->setText(QString::fromUtf8(mMegaApi->getNodePathByNodeHandle(mBackupRootHandle)));
     });
 
-    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
-    {
-        if (errorCode != MegaError::API_OK)
-            QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
-    });
+    // TODO: Re-enable when we have the add backup dialog (not wizard)
+    // Only enable before calling the dialog, disable after? Or enable when we have backups, disable otherwise?
+//    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
+//    {
+//        if (errorCode != MegaError::API_OK)
+//            QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
+//    });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
     {
