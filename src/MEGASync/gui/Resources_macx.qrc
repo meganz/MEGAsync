@@ -622,5 +622,7 @@
         <file>images/PC_ico_rest.png</file>
         <file>images/PC_ico_rest@2x.png</file>
         <file>images/remove-backups.png</file>
+        <file>images/backup_mono.png</file>
+        <file>images/backup_mono@2x.png</file>
     </qresource>
 </RCC>
