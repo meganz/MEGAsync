@@ -37,12 +37,14 @@ NodeSelector::NodeSelector(mega::MegaApi*megaApi, SelectMode selectMode, QWidget
 
     mNodeSelectorUi->cbAlwaysUploadToLocation->hide();
     mNodeSelectorUi->bOk->setDefault(true);
+    mNodeSelectorUi->bOk->setEnabled(false);
 
     if (selectMode == SelectMode::STREAM_SELECT)
     {
         setWindowTitle(tr("Select items"));
         mNodeSelectorUi->label->setText(tr("Select just one file."));
         mNodeSelectorUi->bNewFolder->setVisible(false);
+        mNodeSelectorUi->bNewFolder->setEnabled(false);
     }
     else if (selectMode == SelectMode::DOWNLOAD_SELECT)
     {
@@ -393,7 +395,9 @@ void NodeSelector::onSelectionChanged(QItemSelection selectedIndexes, QItemSelec
             mSelectedFolder = mega::INVALID_HANDLE;
         }
         // Enable or disable folder creation button
-        mNodeSelectorUi->bNewFolder->setEnabled(mSelectedItemIndex.data(Qt::UserRole).toBool());
+        bool allow (mSelectedItemIndex.data(Qt::UserRole).toBool());
+        mNodeSelectorUi->bNewFolder->setEnabled(allow);
+        mNodeSelectorUi->bOk->setEnabled(allow);
     }
     else
     {

@@ -76,7 +76,7 @@ QVariant QMegaModel::data(const QModelIndex& index, int role) const
                 }
                 else if (node->getHandle() == mMyBackupsRootDirHandle)
                 {
-                    static const QIcon myBackupsRootIcon (QIcon(QLatin1String("://images/Backup.png")));
+                    static const QIcon myBackupsRootIcon (QIcon(QLatin1String("://images/backup_mono.png")));
                     return myBackupsRootIcon;
                 }
                 else
