@@ -817,7 +817,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
         {
             mError = true;
             QString name (itemL1->data(Qt::DisplayRole).toString());
-            QIcon   warnIcon (QIcon(QLatin1String("://images/folder with warning.png")));
+            QIcon   warnIcon (QIcon(QLatin1String("://images/folder with warning/folder with warning.png")));
             QString tooltipMsg (itemL2->data(Qt::UserRole).toString()
                                 + QLatin1String("\nError: ") + errorMsg);
             itemL2->setData(Qt::DecorationRole, warnIcon);

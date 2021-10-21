@@ -614,13 +614,15 @@
         <file>animations/full-transfer.gif</file>
         <file>images/Backup.png</file>
         <file>images/Backup@2x.png</file>
-        <file>images/PC_mac_ico_rest.png</file>
-        <file>images/PC_mac_ico_rest@2x.png</file>
+        <file>images/mimes/devices - mono/device-small/pc-mac.png</file>
+        <file>images/mimes/devices - mono/device-small/pc-mac@2x.png</file>
+        <file>images/mimes/devices - mono/devices-medium/pc-mac.png</file>
+        <file>images/mimes/devices - mono/devices-medium/pc-mac@2x.png</file>
         <file>images/remove-backups.png</file>
         <file>images/folder_icon.png</file>
         <file>images/folder_icon@2x.png</file>
-        <file>images/folder with warning.png</file>
-        <file>images/folder with warning@2x.png</file>
+        <file>images/mimes/folder with warning/folder with warning.png</file>
+        <file>images/mimes/folder with warning/folder with warning@2x.png</file>
         <file>images/icons/pc/PC_warning_ico_rest.png</file>
         <file>images/icons/pc/PC_warning_ico_rest@2x.png</file>
         <file>images/icons/pc/PC_warning_ico_hover.png</file>
