@@ -42,6 +42,10 @@ else()
     set(_extra_cmake_args ${EXTRA_ARGS})
 endif()
 
+if(NOT MEGA_QT_VERSION)
+    set(MEGA_QT_VERSION 5.12.11)
+endif()
+
 set(_triplet ${TRIPLET})
 set(_app_dir "${_script_cwd}/../..")
 set(_sdk_dir "${_app_dir}/src/MEGASync/mega")
@@ -148,6 +152,7 @@ set(_common_cmake_args
     "-DMega3rdPartyDir=${_3rdparty_dir}"
     "-DVCPKG_TRIPLET=${_triplet}"
     -DUSE_THIRDPARTY_FROM_VCPKG=1
+    -DMEGA_QT_VERSION=${MEGA_QT_VERSION}
     -S ${_script_cwd}
 )
 
