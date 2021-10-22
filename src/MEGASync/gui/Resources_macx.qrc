@@ -633,5 +633,7 @@
         <file>images/icons/pc/PC_ico_hover@2x.png</file>
         <file>images/settings-backup-macx.png</file>
         <file>images/settings-backup-macx@2x.png</file>
+        <file>images/Illustration/rewind/Rewind.png</file>
+        <file>images/Illustration/rewind/Rewind@2x.png</file>
     </qresource>
 </RCC>

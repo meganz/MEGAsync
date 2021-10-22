@@ -215,6 +215,7 @@ win32 {
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/BackupsWizard.ui \
                 $$PWD/win/RenameTargetFolderDialog.ui \
+                $$PWD/win/BackupSetupSuccessDialog.ui \
                 $$PWD/win/NewFolderDialog.ui
 }
 
@@ -273,6 +274,7 @@ macx {
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/BackupsWizard.ui \
                 $$PWD/macx/RenameTargetFolderDialog.ui \
+                $$PWD/macx/BackupSetupSuccessDialog.ui \
                 $$PWD/macx/NewFolderDialog.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -353,6 +355,7 @@ unix:!macx {
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/RenameTargetFolderDialog.ui \
+                $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
@@ -360,3 +363,4 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
+

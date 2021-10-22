@@ -1,11 +1,12 @@
 #include "BackupsWizard.h"
 #include "ui_BackupsWizard.h"
+#include "ui_BackupSetupSuccess.h"
 #include "MegaApplication.h"
 #include "megaapi.h"
 #include "QMegaMessageBox.h"
 
 #include <QStandardPaths>
-
+#include <QtConcurrent/QtConcurrent>
 //constexpr int HEIGHT_S1 (412);
 //constexpr int HEIGHT_MIN_S2 (296);
 //constexpr int HEIGHT_MAX_S2 (465);
@@ -25,7 +26,9 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mError (false),
     mUserCancelled (false),
     mStep1FoldersModel (new QStandardItemModel()),
-    mCurrentSyncIdx(0)
+    mCurrentSyncIdx (0),
+    mSuccessDialog (nullptr),
+    mSuccessDialogUi (nullptr)
 {
     mUi->setupUi(this);
     mHighDpiResize.init(this);
@@ -699,20 +702,28 @@ void BackupsWizard::setupComplete()
 {
     if (!mError)
     {
-        // No error: show success message!
-        QString title (tr("Backup set"));
-        QString content (tr("You backup is all set!"));
-        QMessageBox::information(this, title, content, QMessageBox::Ok, QMessageBox::Ok);
-
         // We are now done, exit
         mCurrentStep = Steps::EXIT;
+
+        // No error: show success message!
+        mSuccessDialog.reset(new QDialog(this));
+        mSuccessDialogUi.reset(new Ui::BackupSetupSuccess);
+
+        mSuccessDialogUi->setupUi(mSuccessDialog.get());
+
+        connect(mSuccessDialog.get(), &QDialog::rejected,
+                this, &BackupsWizard::onNextStep);
+        connect(mSuccessDialog.get(), &QDialog::accepted,
+                this, &BackupsWizard::onSuccessDialogAccepted);
+
+        mSuccessDialog->exec();
     }
     else
     {
         // Error: go back to Step 1 :(
         mCurrentStep = Steps::STEP_1_INIT;
+        emit nextStep();
     }
-    emit nextStep();
 }
 
 void BackupsWizard::onDeviceNameSet(QString deviceName)
@@ -817,7 +828,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
         {
             mError = true;
             QString name (itemL1->data(Qt::DisplayRole).toString());
-            QIcon   warnIcon (QIcon(QLatin1String("://images/folder with warning/folder with warning.png")));
+            QIcon   warnIcon (QIcon(QLatin1String("://images/mimes/folder with warning/folder with warning.png")));
             QString tooltipMsg (itemL2->data(Qt::UserRole).toString()
                                 + QLatin1String("\nError: ") + errorMsg);
             itemL2->setData(Qt::DecorationRole, warnIcon);
@@ -833,4 +844,12 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
         mCurrentSyncIdx++;
         setupBackups();
     }
+}
+
+void BackupsWizard::onSuccessDialogAccepted()
+{
+//    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/fm/backups")));
+
+    emit nextStep();
 }

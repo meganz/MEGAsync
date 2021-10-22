@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BackupSetupSuccess</class>
+ <widget class="QDialog" name="BackupSetupSuccess">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>540</width>
+    <height>276</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#lAllSet
+{
+color: #333333;
+font-family: &quot;SF UI Text&quot;;
+font-size: 20px;
+}
+
+#BackupSetupSuccess  QPushButton
+{
+border-radius: 3px;
+font-family: Lato;
+font-size: 14px;
+padding-left: 16px;
+padding: 16px;
+}
+
+#bDismiss
+{
+border: 1px solid #e5e5e5;
+background: #FEFEFE;
+color: #333333;
+}
+
+#bOpenBackupCenter
+{
+border: 1px solid #00AC94;
+background-color: #00BFA5;
+color: #FFFFFF;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>35</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>28</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>28</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="lAllSet">
+     <property name="text">
+      <string>Your backup is all set!</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lRewind">
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../Resources_macx.qrc">:/images/Illustration/rewind/Rewind.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonsLayout">
+     <property name="spacing">
+      <number>14</number>
+     </property>
+     <property name="leftMargin">
+      <number>131</number>
+     </property>
+     <property name="rightMargin">
+      <number>131</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="bDismiss">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Dismiss</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bOpenBackupCenter">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>48</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>View in backup center</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../Resources_linux.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>bDismiss</sender>
+   <signal>clicked()</signal>
+   <receiver>BackupSetupSuccess</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bOpenBackupCenter</sender>
+   <signal>clicked()</signal>
+   <receiver>BackupSetupSuccess</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>319</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

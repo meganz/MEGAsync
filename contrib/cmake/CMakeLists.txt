@@ -176,6 +176,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/NewFolderDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/BackupsWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/RenameTargetFolderDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/BackupSetupSuccessDialog.ui
     )
 
 
