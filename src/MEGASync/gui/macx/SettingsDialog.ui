@@ -5018,6 +5018,6 @@ margin-right: 32px;</string>
   <tabstop>bSessionHistory</tabstop>
   <tabstop>bRestart</tabstop>
  </tabstops>
- <resources />
+ <resources/>
  <connections/>
 </ui>
