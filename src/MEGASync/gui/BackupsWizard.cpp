@@ -848,7 +848,8 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
 
 void BackupsWizard::onSuccessDialogAccepted()
 {
-//    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
+// FIXME: Revert to live url when feature is merged
+//  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/fm/backups")));
 
     emit nextStep();
