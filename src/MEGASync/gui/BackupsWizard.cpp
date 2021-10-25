@@ -1,6 +1,6 @@
 #include "BackupsWizard.h"
 #include "ui_BackupsWizard.h"
-#include "ui_BackupSetupSuccess.h"
+#include "ui_BackupSetupSuccessDialog.h"
 #include "MegaApplication.h"
 #include "megaapi.h"
 #include "QMegaMessageBox.h"
@@ -707,7 +707,7 @@ void BackupsWizard::setupComplete()
 
         // No error: show success message!
         mSuccessDialog.reset(new QDialog(this));
-        mSuccessDialogUi.reset(new Ui::BackupSetupSuccess);
+        mSuccessDialogUi.reset(new Ui::BackupSetupSuccessDialog);
 
         mSuccessDialogUi->setupUi(mSuccessDialog.get());
 

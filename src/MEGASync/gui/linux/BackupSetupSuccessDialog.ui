@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BackupSetupSuccess</class>
- <widget class="QDialog" name="BackupSetupSuccess">
+ <class>BackupSetupSuccessDialog</class>
+ <widget class="QDialog" name="BackupSetupSuccessDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,7 +21,7 @@ font-family: &quot;SF UI Text&quot;;
 font-size: 20px;
 }
 
-#BackupSetupSuccess  QPushButton
+#BackupSetupSuccessDialog  QPushButton
 {
 border-radius: 3px;
 font-family: Lato;
@@ -143,7 +143,7 @@ color: #FFFFFF;
   <connection>
    <sender>bDismiss</sender>
    <signal>clicked()</signal>
-   <receiver>BackupSetupSuccess</receiver>
+   <receiver>BackupSetupSuccessDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -159,7 +159,7 @@ color: #FFFFFF;
   <connection>
    <sender>bOpenBackupCenter</sender>
    <signal>clicked()</signal>
-   <receiver>BackupSetupSuccess</receiver>
+   <receiver>BackupSetupSuccessDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">

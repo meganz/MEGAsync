@@ -16,7 +16,7 @@
 
 namespace Ui {
 class BackupsWizard;
-class BackupSetupSuccess;
+class BackupSetupSuccessDialog;
 }
 
 class BackupsWizard : public QDialog
@@ -75,7 +75,7 @@ class BackupsWizard : public QDialog
         QStandardItemModel* mStep1FoldersModel;
         int mCurrentSyncIdx;
         std::unique_ptr<QDialog> mSuccessDialog;
-        std::unique_ptr<Ui::BackupSetupSuccess> mSuccessDialogUi;
+        std::unique_ptr<Ui::BackupSetupSuccessDialog> mSuccessDialogUi;
 
     signals:
         void nextStep();

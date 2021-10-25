@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BackupSetupSuccess</class>
- <widget class="QDialog" name="BackupSetupSuccess">
+ <class>BackupSetupSuccessDialog</class>
+ <widget class="QDialog" name="BackupSetupSuccessDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,7 +21,7 @@ font-family: &quot;SF UI Text&quot;;
 font-size: 20px;
 }
 
-#BackupSetupSuccess  QPushButton
+#BackupSetupSuccessDialog  QPushButton
 {
 border-radius: 3px;
 font-family: Lato;
@@ -76,7 +76,7 @@ color: #FFFFFF;
       <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../Resources_win.qrc">:/images/Illustration/rewind/Rewind.png</pixmap>
+      <pixmap resource="../Resources_linux.qrc">:/images/Illustration/rewind/Rewind.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -138,12 +138,13 @@ color: #FFFFFF;
  </widget>
  <resources>
   <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections>
   <connection>
    <sender>bDismiss</sender>
    <signal>clicked()</signal>
-   <receiver>BackupSetupSuccess</receiver>
+   <receiver>BackupSetupSuccessDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -159,7 +160,7 @@ color: #FFFFFF;
   <connection>
    <sender>bOpenBackupCenter</sender>
    <signal>clicked()</signal>
-   <receiver>BackupSetupSuccess</receiver>
+   <receiver>BackupSetupSuccessDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
