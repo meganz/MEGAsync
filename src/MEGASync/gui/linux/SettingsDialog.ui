@@ -290,7 +290,7 @@ margin: 0px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
         </property>
         <property name="iconSize">
@@ -339,7 +339,7 @@ margin: 0px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
         </property>
         <property name="iconSize">
@@ -385,7 +385,7 @@ margin: 0px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
         </property>
         <property name="iconSize">
@@ -431,7 +431,7 @@ margin: 0px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
         </property>
         <property name="iconSize">
@@ -477,7 +477,7 @@ margin: 0px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
         </property>
         <property name="iconSize">
@@ -523,7 +523,7 @@ margin: 0px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
         </property>
         <property name="iconSize">
@@ -569,7 +569,7 @@ margin: 0px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
         </property>
         <property name="iconSize">
@@ -1301,7 +1301,7 @@ margin: 0px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset>
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2803,7 +2803,7 @@ min-height: 72px;
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset>
               <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
             </property>
             <property name="iconSize">
@@ -3099,7 +3099,7 @@ color: #0078D7;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset>
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -3307,8 +3307,6 @@ color: #0078D7;
    <header location="global">BackupTableWidget.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
