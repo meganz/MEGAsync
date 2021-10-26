@@ -75,6 +75,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
     mMenuAction->setParent(this);
 
     mMenu->setStyleSheet(MENU_STYLESHEET);
+    mMenu->setToolTipsVisible(true);
 
     // Do not display broken menu shadow in windows
 #ifdef _WIN32
