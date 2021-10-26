@@ -903,12 +903,9 @@
         <file>images/Backup.png</file>
         <file>images/Backup@2x.png</file>
         <file>images/Backup@3x.png</file>
-        <file>images/mimes/devices - mono/device-small/pc-linux.png</file>
-        <file>images/mimes/devices - mono/device-small/pc-linux@2x.png</file>
-        <file>images/mimes/devices - mono/device-small/pc-linux@3x.png</file>
-        <file>images/mimes/devices - mono/devices-medium/pc-linux.png</file>
-        <file>images/mimes/devices - mono/devices-medium/pc-linux@2x.png</file>
-        <file>images/mimes/devices - mono/devices-medium/pc-linux@3x.png</file>
+        <file>images/icons/pc/pc-linux_24.png</file>
+        <file>images/icons/pc/pc-linux_24@2x.png</file>
+        <file>images/icons/pc/pc-linux_24@3x.png</file>
         <file>images/remove-backups.png</file>
         <file>images/folder_icon.png</file>
         <file>images/folder_icon@2x.png</file>
@@ -931,6 +928,9 @@
         <file>images/icons/pc/PC_ico_hover.png</file>
         <file>images/icons/pc/PC_ico_hover@3x.png</file>
         <file>images/icons/pc/PC_ico_hover@2x.png</file>
+        <file>images/icons/pc/pc_24.png</file>
+        <file>images/icons/pc/pc_24@2x.png</file>
+        <file>images/icons/pc/pc_24@3x.png</file>
         <file>images/Illustration/rewind/Rewind.png</file>
         <file>images/Illustration/rewind/Rewind@2x.png</file>
         <file>images/Illustration/rewind/Rewind@3x.png</file>

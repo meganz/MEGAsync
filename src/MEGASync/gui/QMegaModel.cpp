@@ -93,18 +93,18 @@ QVariant QMegaModel::data(const QModelIndex& index, int role) const
                                 // TODO, future: choose icon according to host OS
                                 if (nodeDeviceId == mDeviceId)
                                 {
-#ifdef WIN32
-static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/PC_win_ico_rest.png")));
-#elif defined(__APPLE__)
-static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/PC_mac_ico_rest.png")));
+#ifdef Q_OS_WINDOWS
+static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc-win_24.png")));
+#elif defined(Q_OS_MACOS)
+static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc-mac_24.png")));
 #elif defined(Q_OS_LINUX)
-static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/PC_linux_ico_rest.png")));
+static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc-linux_24.png")));
 #endif
                                     return thisDeviceIcon;
                                 }
                                 else
                                 {
-                                    static const QIcon otherDeviceIcon (QIcon(QLatin1String("://images/PC_ico_rest.png")));
+                                    static const QIcon otherDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc_24.png")));
                                     return otherDeviceIcon;
                                 }
                             }
