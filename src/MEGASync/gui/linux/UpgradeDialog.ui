@@ -286,7 +286,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Transfer Quota exhausted</string>
+            <string>Transfer quota exceeded</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -490,7 +490,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Receive two months free when you purchase a one-year Pro plan.</string>
+      <string>Choose annual billing and get 12 months for the price of 10</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

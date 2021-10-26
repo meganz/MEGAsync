@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>608</width>
-    <height>422</height>
+    <width>658</width>
+    <height>463</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -128,7 +128,7 @@ margin-bottom: 8px;
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_32">
             <property name="leftMargin">
-             <number>0</number>
+             <number>32</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -177,7 +177,7 @@ margin-bottom: 8px;
              <number>0</number>
             </property>
             <property name="rightMargin">
-             <number>0</number>
+             <number>32</number>
             </property>
             <property name="bottomMargin">
              <number>0</number>
@@ -203,6 +203,9 @@ margin-bottom: 8px;
                <string notr="true"/>
               </property>
               <layout class="QFormLayout" name="formLayout">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetDefaultConstraint</enum>
+               </property>
                <property name="fieldGrowthPolicy">
                 <enum>QFormLayout::FieldsStayAtSizeHint</enum>
                </property>
@@ -243,7 +246,7 @@ margin-bottom: 8px;
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -300,7 +303,7 @@ margin-bottom: 8px;
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                  <property name="wordWrap">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
                  <property name="indent">
                   <number>-1</number>
@@ -317,7 +320,7 @@ margin-bottom: 8px;
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>90</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -614,7 +617,7 @@ margin-bottom: 8px;
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>90</width>
+                   <width>100</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -1071,7 +1074,7 @@ margin-bottom: 8px;
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>32</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -1097,9 +1100,15 @@ margin-bottom: 8px;
       </item>
       <item>
        <widget class="QLabel" name="lUseHttps">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>350</width>
+          <width>16777215</width>
           <height>16777215</height>
          </size>
         </property>

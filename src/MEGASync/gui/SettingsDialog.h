@@ -167,8 +167,6 @@ private slots:
     void on_bFolders_clicked();
     void on_bUploadFolder_clicked();
     void on_bDownloadFolder_clicked();
-    void on_eUploadFolder_textChanged(const QString &text);
-    void on_eDownloadFolder_textChanged(const QString &text);
     void on_bAddName_clicked();
     void on_bDeleteName_clicked();
     void on_cExcludeUpperThan_clicked();
@@ -189,6 +187,8 @@ protected:
 #ifdef Q_OS_MACOS
     void closeEvent(QCloseEvent * event);
 #endif
+
+    void restartApp();
 
 private:
     void connectBackupHandlers();
@@ -219,6 +219,7 @@ private:
     };
 
 #ifdef Q_OS_MACOS
+    void reloadToolBarItemNames();
     void macOSretainSizeWhenHidden();
     void animateSettingPage(int endValue, int duration = 150);
     QPropertyAnimation* mMinHeightAnimation;
@@ -244,7 +245,6 @@ private:
     HighDpiResize mHighDpiResize;
     bool mProxyOnly;
     int mLoadingSettings;
-    bool mReloadUIpage;
     ThreadPool* mThreadPool;
     QStringList mLanguageCodes;
     QFutureWatcher<long long> mCacheSizeWatcher;

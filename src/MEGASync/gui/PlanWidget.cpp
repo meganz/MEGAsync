@@ -10,8 +10,8 @@
 #include <QDesktopServices>
 #include <QGraphicsOpacityEffect>
 
-constexpr unsigned int NB_B_IN_1GB (1024 * 1024 * 1024);
-constexpr unsigned int NB_GB_IN_1TB (1024);
+constexpr int NB_B_IN_1GB (1024 * 1024 * 1024);
+constexpr int NB_GB_IN_1TB (1024);
 
 PlanWidget::PlanWidget(const PlanInfo& data, const QString& userAgent, QWidget* parent) :
     QWidget (parent),
@@ -90,7 +90,7 @@ void PlanWidget::updatePlanInfo()
     // If text does not fit, use a smaller font size
     QFont font (mUi->lPrice->font());
     auto fontSize (font.pixelSize());
-    while (QFontMetrics(font).horizontalAdvance(localPriceString) > mUi->lPrice->width()
+    while (QFontMetrics(font).boundingRect(localPriceString).width() > mUi->lPrice->width()
            && fontSize > 1)
     {
         fontSize -= 1;
@@ -230,9 +230,9 @@ bool PlanWidget::eventFilter(QObject* obj, QEvent* event)
         }
         else if (event->type() == QEvent::ToolTip)
         {
-            auto hoverHelpIcon {obj == mUi->lHelp};
-            auto hoverStorageInfo {obj == mUi->lBusinessStorageIcon};
-            auto hoverTransferInfo {obj == mUi->lBusinessTransferIcon};
+            bool hoverHelpIcon {obj == mUi->lHelp};
+            bool hoverStorageInfo {obj == mUi->lBusinessStorageIcon};
+            bool hoverTransferInfo {obj == mUi->lBusinessTransferIcon};
 
             if (hoverHelpIcon || hoverStorageInfo || hoverTransferInfo)
             {
@@ -319,7 +319,9 @@ QString PlanWidget::getTooltipMsg(HelpButton hoverOver)
             QString price (toPrice(mDetails.pricePerTransferLocal / 100.,
                                    mDetails.localCurrencySymbol));
             msg = tr("Additional storage charged at %1 per %2TB.")
-                  .arg(price, tbPerTransfer > 1 ? QString::number(tbPerTransfer) : QString());
+                  .arg(price, tbPerTransfer > 1 ?
+                           QLocale::system().toString(tbPerTransfer) + QChar(QChar::Nbsp)
+                         : QString());
             break;
         }
         case BANDWIDTH:
@@ -328,7 +330,9 @@ QString PlanWidget::getTooltipMsg(HelpButton hoverOver)
             QString price (toPrice(mDetails.pricePerStorageLocal / 100.,
                                    mDetails.localCurrencySymbol));
             msg = tr("Additional transfer quota charged at %1 per %2TB.")
-                  .arg(price, tbPerStorage > 1 ? QString::number(tbPerStorage) : QString());
+                  .arg(price, tbPerStorage > 1 ?
+                           QLocale::system().toString(tbPerStorage) + QChar(QChar::Nbsp)
+                         : QString());
             break;
         }
     }

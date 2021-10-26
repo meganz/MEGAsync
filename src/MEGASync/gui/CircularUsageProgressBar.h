@@ -26,8 +26,7 @@ public:
 
     void setValue(int value);
     void setState(STATE state);
-    void setEmptyBarTotalValueUnknown();
-    void setFullBarTotalValueUnkown();
+    void setTotalValueUnknown(bool isEmptyBar = true);
     void setProgressBarGradient(QColor light, QColor dark);
 
 protected:

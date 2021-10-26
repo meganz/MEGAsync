@@ -27,10 +27,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2021"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "4.5.3.0"
-VIAddVersionKey "FileVersion" "4.5.3.0"
-VIAddVersionKey "ProductVersion" "4.5.3.0"
-!define PRODUCT_VERSION "4.5.3"
+VIProductVersion "4.6.0.0"
+VIAddVersionKey "FileVersion" "4.6.0.0"
+VIAddVersionKey "ProductVersion" "4.6.0.0"
+!define PRODUCT_VERSION "4.6.0"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -45,9 +45,9 @@ VIAddVersionKey "ProductVersion" "4.5.3.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH "C:\QtOnline\5.12.8\msvc2017_64"
+!define QT_PATH "C:\Qt\5.12.11\msvc2017_64"
 !else
-!define QT_PATH "C:\QtOnline\5.12.8\msvc2017"
+!define QT_PATH "C:\Qt\5.12.11\msvc2017"
 !endif
 
 !define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_12_8_MSVC2017_64bit-Release"
@@ -214,7 +214,7 @@ OutFile "UninstallerGenerator.exe"
 !else
 !ifdef BUILD_X64_VERSION
 OutFile "MEGAsyncSetup64.exe"
-!else 
+!else
 OutFile "MEGAsyncSetup32.exe"
 !endif
 !endif
@@ -240,12 +240,12 @@ FunctionEnd
 Function .onInit
   !insertmacro MULTIUSER_INIT
   StrCpy $APP_NAME "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-  
+
   !ifdef BUILD_UNINSTALLER
          WriteUninstaller "$EXEDIR\${UNINSTALLER_NAME}"
          Quit
   !endif
-  
+
   ;${GetTime} "" "L" $0 $1 $2 $3 $4 $5 $6
   ;strCpy $INSTALLDAY "$2$1$0"
   ;strCpy $EXPIRATIONDAY "20140121"
@@ -271,22 +271,22 @@ Function .onInit
     MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "This installer requires Administrator privileges. Error $0"
     Quit
   ${EndSwitch}
-  
+
   ;MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "CAUTION: This is a private BETA version and will expire on Jan 20, 2014, 23:59. If you encounter a bug, malfunction or design flaw, please let us know by sending an e-mail to beta@mega.co.nz.$\r$\n$\r$\nIn this version, the scope of the sync engine is limited. Please bear in mind that:$\r$\n$\r$\n1. Deletions are only executed on the other side if they occur while the sync is live. Do not delete items from synced folders while this app is not running!$\r$\n2. Windows filenames are case insensitive. Do not place items a MEGA folder whose names would clash on the client. Loss of data would occur.$\r$\n3. Local filesystem items must not be exposed to the sync subsystem more than once. Any dupes, whether by nesting syncs or through filesystem links, will lead to unexpected results and loss of data.$\r$\n$\r$\nLimitiations in the current version that will be rectified in the future:$\r$\n$\r$\n1. No locking: Concurrent creation of identically named files and folders on different clients can result in server-side dupes and unexpected results.$\r$\n2. No in-place versioning: Deleted remote files can be found in the MEGA rubbish bin (SyncDebris folder), deleted local files in your computer's recycle bin.$\r$\n3. No delta writes: Changed files are always overwritten as a whole, which means that it is not a good idea to sync e.g. live database files.$\r$\n4. No direct peer-to-peer syncing: Even two machines in the same local subnet will still sync via the remote MEGA infrastructure.$\r$\n$\r$\nThank you for betatesting MEGAsync. We appreciate your pioneering spirit!"
   ;!insertmacro MUI_UNGETLANGUAGE
   !insertmacro MUI_LANGDLL_DISPLAY
-  
+
 FunctionEnd
 
 Function GetPaths
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
   strCpy $ALL_USERS_INSTDIR $1
-  
+
   System::Call "advapi32::GetUserName(t .r0, *i ${NSIS_MAX_STRLEN} r1) i.r2"
   strCpy $USERNAME $0
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_LOCALAPPDATA}, i0)i.r0'
   strCpy $CURRENT_USER_INSTDIR $1
-  
+
   ClearErrors
   FileOpen $0 "$ALL_USERS_INSTDIR\megatmp.M1.txt" w
   IfErrors done
@@ -324,7 +324,7 @@ ${EndIf}
   !insertmacro DEBUG_MSG "Getting needed information"
   System::Call 'shell32::SHGetSpecialFolderPath(i $HWNDPARENT, t .r1, i ${CSIDL_COMMON_APPDATA}, i0)i.r0'
   strCpy $ALL_USERS_INSTDIR $1
-  
+
   ${UAC.CallFunctionAsUser} GetPaths
 
 readpaths:
@@ -370,13 +370,16 @@ modeselected:
   SetOutPath "$INSTDIR"
 
   !ifdef BUILD_X64_VERSION
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x64\Microsoft.VC141.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\vcruntime140_1.dll" "$INSTDIR\vcruntime140_1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_atomic_wait.dll" "$INSTDIR\msvcp140_atomic_wait.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x64\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
@@ -419,13 +422,15 @@ modeselected:
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x64\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   !else
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Redist\MSVC\14.16.27012\x86\Microsoft.VC141.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140.dll" "$INSTDIR\msvcp140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_1.dll" "$INSTDIR\msvcp140_1.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_2.dll" "$INSTDIR\msvcp140_2.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_atomic_wait.dll" "$INSTDIR\msvcp140_atomic_wait.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\concrt140.dll"  "$INSTDIR\concrt140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.CRT\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
+    !insertmacro Install3264DLL "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133\x86\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
@@ -479,7 +484,7 @@ modeselected:
   File "${QT_PATH}\bin\Qt5Gui.dll"
   AccessControl::SetFileOwner "$INSTDIR\Qt5Gui.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\Qt5Gui.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\bin\Qt5Widgets.dll"
   AccessControl::SetFileOwner "$INSTDIR\Qt5Widgets.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\Qt5Widgets.dll" "$USERNAME" "GenericRead + GenericWrite"
@@ -499,7 +504,7 @@ modeselected:
   File "${QT_PATH}\bin\Qt5Concurrent.dll"
   AccessControl::SetFileOwner "$INSTDIR\Qt5Concurrent.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\Qt5Concurrent.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   SetOutPath "$INSTDIR\imageformats"
   File "${QT_PATH}\plugins\imageformats\qgif.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
@@ -510,11 +515,11 @@ modeselected:
   File "${QT_PATH}\plugins\imageformats\qicns.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qicns.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qicns.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\plugins\imageformats\qico.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qico.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qico.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\plugins\imageformats\qjpeg.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME" "GenericRead + GenericWrite"
@@ -534,7 +539,7 @@ modeselected:
   File "${QT_PATH}\plugins\imageformats\qwbmp.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qwbmp.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qwbmp.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${QT_PATH}\plugins\imageformats\qwebp.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qwebp.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qwebp.dll" "$USERNAME" "GenericRead + GenericWrite"
@@ -545,14 +550,14 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\iconengines" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\iconengines\qsvgicon.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\iconengines\qsvgicon.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   SetOutPath "$INSTDIR\platforms"
   File "${QT_PATH}\plugins\platforms\qwindows.dll"
   AccessControl::SetFileOwner "$INSTDIR\platforms" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\platforms" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   SetOutPath "$INSTDIR\styles"
   File "${QT_PATH}\plugins\styles\qwindowsvistastyle.dll"
   AccessControl::SetFileOwner "$INSTDIR\styles" "$USERNAME"
@@ -563,24 +568,24 @@ modeselected:
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
 
-          
+
   SetOutPath "$INSTDIR"
   SetOverwrite on
   AllowSkipFiles off
   File "${SRCDIR_MEGASYNC}\MEGAsync.exe"
   AccessControl::SetFileOwner "$INSTDIR\MEGAsync.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAsync.exe" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${SRCDIR_UPDATER}\MEGAupdater.exe"
   AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
 !ifdef BUILD_X64_VERSION
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1-x64.dll"  "$INSTDIR\libcrypto-1_1-x64.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll" 
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1-x64.dll"  "$INSTDIR\libssl-1_1-x64.dll"
 !else
   !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-1_1.dll"  "$INSTDIR\libcrypto-1_1.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1.dll"  "$INSTDIR\libssl-1_1.dll" 
+  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-1_1.dll"  "$INSTDIR\libssl-1_1.dll"
 !endif
 
   File "${SRCDIR_MEGASYNC}\libcurl.dll"
@@ -598,19 +603,19 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\avcodec-58.dll"
   AccessControl::SetFileOwner "$INSTDIR\avcodec-58.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\avcodec-58.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${SRCDIR_MEGASYNC}\avformat-58.dll"
   AccessControl::SetFileOwner "$INSTDIR\avformat-58.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\avformat-58.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${SRCDIR_MEGASYNC}\avutil-56.dll"
   AccessControl::SetFileOwner "$INSTDIR\avutil-56.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\avutil-56.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${SRCDIR_MEGASYNC}\swscale-5.dll"
   AccessControl::SetFileOwner "$INSTDIR\swscale-5.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swscale-5.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   File "${SRCDIR_MEGASYNC}\swresample-3.dll"
   AccessControl::SetFileOwner "$INSTDIR\swresample-3.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-3.dll" "$USERNAME" "GenericRead + GenericWrite"
@@ -640,7 +645,7 @@ modeselected:
   new_installation_x32:
 
   !insertmacro DEBUG_MSG "Registering DLLs"
-  
+
   !ifndef BUILD_X64_VERSION
         ; Register shell extension 1 (x86_32)
         !define LIBRARY_COM
@@ -660,7 +665,7 @@ modeselected:
                 Rename "$INSTDIR\ShellExtX64.dll" $0
                 Delete /REBOOTOK $0
         new_installation_x64:
-  
+
         ; Register shell extension 1 (x86_64)
         !define LIBRARY_X64
         !define LIBRARY_COM
@@ -669,13 +674,13 @@ modeselected:
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
-        
+
         AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
         AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
   ${EndIf}
 
   ${UAC.CallFunctionAsUser} RunExplorer
-   
+
 #  !insertmacro DEBUG_MSG "Adding firewall rule"
 #  liteFirewall::RemoveRule "$INSTDIR\MEGAsync.exe" "MEGAsync"
 #  Pop $0
@@ -726,10 +731,10 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" ""
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
-  
+
   AccessControl::SetFileOwner "$INSTDIR\MEGA Website.url" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGA Website.url" "$USERNAME" "GenericRead + GenericWrite"
-  
+
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 SectionEnd
 
@@ -795,7 +800,7 @@ Section Uninstall
   Delete "$INSTDIR\imageformats\qsvg4.dll"
   Delete "$INSTDIR\imageformats\qtga4.dll"
   Delete "$INSTDIR\imageformats\qtiff4.dll"
-  
+
   ;QT5 files
   Delete "$INSTDIR\Qt5Core.dll"
   Delete "$INSTDIR\Qt5Gui.dll"
@@ -832,9 +837,12 @@ Section Uninstall
 
   ;VC++ Redistributable
   Delete "$INSTDIR\vcruntime140.dll"
+  Delete "$INSTDIR\vcruntime140_1.dll"
   Delete "$INSTDIR\msvcp140.dll"
   Delete "$INSTDIR\msvcp140_1.dll"
   Delete "$INSTDIR\msvcp140_2.dll"
+  Delete "$INSTDIR\msvcp140_codecvt_ids.dll"
+  Delete "$INSTDIR\msvcp140_atomic_wait.dll"
   Delete "$INSTDIR\concrt140.dll"
   Delete "$INSTDIR\vccorlib140.dll"
   Delete "$INSTDIR\vcomp140.dll"
@@ -879,7 +887,7 @@ Section Uninstall
   Delete "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
   Delete "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
   Delete "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
-  
+
   ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAupdater.exe"
@@ -914,12 +922,12 @@ Section Uninstall
   !insertmacro UnInstallLib REGDLL NOTSHARED NOREMOVE "$INSTDIR\ShellExtX32.dll"
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
-  
+
   GetTempFileName $0
   Delete $0
   Rename "$INSTDIR\ShellExtX32.dll" $0
   Delete /REBOOTOK $0
-  
+
   ${If} ${RunningX64}
         !define LIBRARY_X64
         !define LIBRARY_COM
@@ -934,7 +942,7 @@ Section Uninstall
         Rename "$INSTDIR\ShellExtX64.dll" $0
         Delete /REBOOTOK $0
   ${EndIf}
-  
+
   SetShellVarContext current
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk"
@@ -950,7 +958,7 @@ Section Uninstall
   RMDir "$INSTDIR\bearer"
   RMDir "$INSTDIR\styles"
   RMDir "$INSTDIR"
-  
+
   SetShellVarContext all
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"
   Delete "$SMPROGRAMS\$ICONS_GROUP\MEGA Website.lnk"

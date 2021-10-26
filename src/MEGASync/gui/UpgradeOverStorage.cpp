@@ -167,7 +167,7 @@ void UpgradeOverStorage::clearPlans()
 void UpgradeOverStorage::configureAnimation()
 {
 
-    auto ratio{Utilities::getDevicePixelRatio()};
+    auto ratio = Utilities::getDevicePixelRatio();
     mAnimation.reset(new QMovie(ratio < 2 ? QLatin1String(":/animations/full-storage.gif")
                                           : QLatin1String(":/animations/full-storage@2x.gif")));
 

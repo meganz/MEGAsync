@@ -1503,7 +1503,7 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
                 if (settingsDialog)
                 {
                     delete settingsDialog;
-                    settingsDialog = NULL;
+                    settingsDialog = nullptr;
                 }
             }
             else if (storageState == MegaApi::STORAGE_STATE_PAYWALL)
@@ -1648,7 +1648,7 @@ void MegaApplication::closeDialogs(bool bwoverquota)
     setupWizard = NULL;
 
     delete settingsDialog;
-    settingsDialog = NULL;
+    settingsDialog = nullptr;
 
     delete streamSelector;
     streamSelector = NULL;
@@ -1715,11 +1715,6 @@ void MegaApplication::rebootApplication(bool update)
     trayIcon->hide();
     closeDialogs();
 
-#ifdef __APPLE__
-    cleanAll();
-    ::exit(0);
-#endif
-
     QApplication::exit();
 }
 
@@ -1739,10 +1734,6 @@ void MegaApplication::exitApplication(bool force)
         reboot = false;
         trayIcon->hide();
         closeDialogs();
-        #ifdef __APPLE__
-            cleanAll();
-            ::exit(0);
-        #endif
 
         QApplication::exit();
         return;
@@ -1768,11 +1759,6 @@ void MegaApplication::exitApplication(bool force)
             reboot = false;
             trayIcon->hide();
             closeDialogs();
-
-            #ifdef __APPLE__
-                cleanAll();
-                ::exit(0);
-            #endif
 
             QApplication::exit();
         }
@@ -2875,9 +2861,13 @@ QuotaState MegaApplication::getTransferQuotaState() const
      {
          quotaState = QuotaState::WARNING;
      }
-     else if (transferQuota->isOverQuota())
+     else if (transferQuota->isQuotaFull())
      {
          quotaState = QuotaState::FULL;
+     }
+     else if (transferQuota->isOverQuota())
+     {
+         quotaState = QuotaState::OVERQUOTA;
      }
 
      return quotaState;
@@ -6057,7 +6047,7 @@ void MegaApplication::openSettings(int tab)
 
         //Otherwise, delete it
         delete settingsDialog;
-        settingsDialog = NULL;
+        settingsDialog = nullptr;
     }
 
     //Show a new settings dialog
@@ -7076,25 +7066,35 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
         model->reset();
 
-        if (preferences)
-        {
-            if (preferences->logged())
-            {
-                clearUserAttributes();
-                preferences->unlink();
-                removeAllFinishedTransfers();
-                clearViewedTransfers();
-                preferences->setFirstStartDone();
-            }
-            else
-            {
-                preferences->resetGlobalSettings();
-            }
 
-            closeDialogs();
-            start();
-            periodicTasks();
-        }
+        // Queue processing of logout cleanup to avoid race conditions
+        // due to threadifing processing.
+        // Eg: transfers added to data model after a logout
+        mThreadPool->push([this]()
+        {
+             Utilities::queueFunctionInAppThread([this]()
+             {
+                 if (preferences)
+                 {
+                     if (preferences->logged())
+                     {
+                         clearUserAttributes();
+                         preferences->unlink();
+                         removeAllFinishedTransfers();
+                         clearViewedTransfers();
+                         preferences->setFirstStartDone();
+                     }
+                     else
+                     {
+                         preferences->resetGlobalSettings();
+                     }
+
+                     closeDialogs();
+                     start();
+                     periodicTasks();
+                 }
+             });
+        });
         break;
     }
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
@@ -7358,33 +7358,29 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             notifyStorageObservers();
         }
 
-        const bool proUserIsNotOverquota{!megaApi->getBandwidthOverquotaDelay() &&
-                    preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE};
-        if (proUserIsNotOverquota)
+        const bool proUserIsOverquota (megaApi->getBandwidthOverquotaDelay() &&
+                    preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE);
+        if (proUserIsOverquota)
         {
-            transferQuota->setQuotaOk();
+            transferQuota->setOverQuota(std::chrono::seconds(megaApi->getBandwidthOverquotaDelay()));
         }
 
-        if (transfer)
+        preferences->setTotalBandwidth(details->getTransferMax());
+        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+        preferences->setUsedBandwidth(details->getTransferUsed());
+
+        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+
+        notifyBandwidthObservers();
+
+        if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
         {
-            preferences->setTotalBandwidth(details->getTransferMax());
-            preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-            preferences->setUsedBandwidth(details->getTransferUsed());
-
-            preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
-            preferences->setTemporalBandwidth(details->getTemporalBandwidth());
-            preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
-
-            notifyBandwidthObservers();
-
-            const bool userIsPro{preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE};
-            if(userIsPro)
-            {
-                transferQuota->setUserProUsages(preferences->usedBandwidth(), preferences->totalBandwidth());
-            }
+            transferQuota->updateQuotaState();
         }
 
-        preferences->sync();
+        preferences->sync();        
 
         if (infoDialog)
         {
