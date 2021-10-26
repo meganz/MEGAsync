@@ -56,7 +56,7 @@ background-color: #FFFFFF;
 border-bottom: 3px solid #0078D7;
 }
 
-#bHelpIco, #bHelp, #bChangePasswordPic, #bRecoveryKeyPic
+#bChangePasswordPic, #bRecoveryKeyPic
 {
 border: none;
 }
@@ -656,24 +656,6 @@ font-weight: bold;
           </item>
           <item>
            <widget class="QWidget" name="wUpdateSection" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>24</height>
-             </size>
-            </property>
             <layout class="QHBoxLayout" name="lUpdateSection">
              <property name="leftMargin">
               <number>0</number>
@@ -724,12 +706,6 @@ font-weight: bold;
              </item>
              <item>
               <widget class="QPushButton" name="bUpdate">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
@@ -1619,19 +1595,7 @@ font-weight: bold;
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wSyncsButtons" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
+           <widget class="QWidget" name="wSyncsButtons" native="true">            
             <property name="layoutDirection">
              <enum>Qt::RightToLeft</enum>
             </property>
@@ -1861,7 +1825,7 @@ font-weight: bold;
               <item>
                <widget class="QLabel" name="lSavingSyncs">
                 <property name="text">
-                 <string>Saving synchronised folders...</string>
+                 <string>Saving synchronised folders…</string>
                 </property>
                </widget>
               </item>
@@ -2387,12 +2351,6 @@ min-height: 72px;
           </item>
           <item>
            <widget class="QWidget" name="excludeButtonsContainer" native="true">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>26</height>
-             </size>
-            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_10">
              <property name="leftMargin">
               <number>0</number>
@@ -2881,7 +2839,7 @@ min-height: 72px;
      </widget>
     </widget>
    </item>
-   <item>
+   <item alignment="Qt::AlignBottom">
     <widget class="QWidget" name="wBottom" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -2903,9 +2861,10 @@ min-height: 72px;
        <number>20</number>
       </property>
       <item>
-       <widget class="QPushButton" name="bHelpIco">
+       <widget class="QPushButton" name="bHelp">
         <property name="styleSheet">
          <string notr="true">QPushButton {
+border: none;
 color: #0078D7;
 }</string>
         </property>

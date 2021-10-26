@@ -43,24 +43,26 @@ QLabel
     min-width:440px;
 }
 
-#lCloudDrive, #lInbox, #lRubbish, #lStorage, #lTransfer
+#lCloudDrive, #lInbox, #lRubbish,  #lStorage, #lTransfer
 {
   color: #333333;
   font-size: 13px;
   font-weight: bold;
+}
+
+#lStorage, #lTransfer
+{
   qproperty-alignment: 'AlignLeft | AlignVCenter';
+}
+
+#lCloudDrive, #lInbox, #lRubbish
+{
+    qproperty-alignment: 'AlignLeft | AlignBottom';
 }
 
 #wCloudDrive, #wRubbish, #wInbox
 {
-    height: 32px;
-    max-height: 32px;
-    min-height: 32px;
-}
-
-#wCloudDrive, #wRubbish, #wInbox, QProgressBar, #lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions
-{
-    margin-right: 24px;
+    border: 0px;
 }
 
 #lStorage, #lTransfer, #lUsedStorage, #lUsedTransfer
@@ -71,17 +73,6 @@ QLabel
 #lStorage, #lTransfer
 {
     padding-bottom: 4px;
-}
-
-#lCloudDrive, #lInbox, #lRubbish
-{
-    margin-left: 10px;
-    qproperty-alignment: 'AlignLeft | AlignBottom';
-}
-
-QProgressBar
-{
-    margin-left: 12px;
 }
 
 #lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions
@@ -154,21 +145,8 @@ QProgressBar
 
 #wDetailedUsage QPushButton
 {
-    margin-left: 24px;
-/* Not respected in Windows ??
-    width: 32px;
-    min-width: 32px;
-    max-width: 32px;
-*/
-    width: 8px;
-    min-width: 8px;
-    max-width: 8px;
-    height: 32px;
-    min-height: 32px;
-    max-height: 32px;
     border-radius: 8px;
     background-color: #EEEEEE;
-    qproperty-iconSize: 24px;
 }
 
 #bCloudDrive
@@ -235,7 +213,7 @@ QProgressBar::chunk
     background-color: #F2F2F2;
     border-radius: 8px;
     margin-left: 24px;
-    margin-right: 24px;
+    margin-right: 23px;
     margin-bottom: 26px;
     height: 32px;
     max-height: 32px;
@@ -250,13 +228,7 @@ QProgressBar::chunk
 {
     color: #333333;
     font-size: 13px;
-    margin-left: 24px;
     padding-left: 8px;
-}
-
-#wSizeVersions QLabel
-{
-    margin-bottom: 26px;
 }
 
 #AccountDetailsDialog[loading=true]  #sHeader
@@ -726,22 +698,40 @@ QProgressBar::chunk
        <number>8</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>24</number>
       </property>
       <property name="topMargin">
        <number>24</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>24</number>
       </property>
       <property name="bottomMargin">
        <number>24</number>
       </property>
       <item>
        <widget class="QWidget" name="wCloudDrive" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
-          <number>0</number>
+          <number>12</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -756,7 +746,26 @@ QProgressBar::chunk
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="bCloudDrive"/>
+          <widget class="QPushButton" name="bCloudDrive">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -797,9 +806,27 @@ QProgressBar::chunk
       </item>
       <item>
        <widget class="QWidget" name="wInbox" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_21">
          <property name="spacing">
-          <number>0</number>
+          <number>12</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -814,7 +841,26 @@ QProgressBar::chunk
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="bInbox"/>
+          <widget class="QPushButton" name="bInbox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_20">
@@ -855,9 +901,27 @@ QProgressBar::chunk
       </item>
       <item>
        <widget class="QWidget" name="wRubbish" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <property name="spacing">
-          <number>0</number>
+          <number>12</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -872,7 +936,26 @@ QProgressBar::chunk
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="bRubbish"/>
+          <widget class="QPushButton" name="bRubbish">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -921,16 +1004,16 @@ QProgressBar::chunk
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>24</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>24</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>26</number>
       </property>
       <item>
        <widget class="QLabel" name="lVersions">
