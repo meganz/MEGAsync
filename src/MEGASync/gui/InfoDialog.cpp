@@ -1242,6 +1242,7 @@ void InfoDialog::on_bAddSync_clicked()
         }
 
         syncsMenu.reset(new QMenu());
+        syncsMenu->setToolTipsVisible(true);
 
 #ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
