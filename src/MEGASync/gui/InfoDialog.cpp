@@ -1256,7 +1256,7 @@ void InfoDialog::on_bAddSync_clicked()
                                                     "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"));
 #endif
 
-#if defined(_WIN32) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
         // Make widget transparent (otherwise it shows a white background in its corners)
         syncsMenu->setAttribute(Qt::WA_TranslucentBackground);
         // Disable drop shadow (does not take into account curved corners)
