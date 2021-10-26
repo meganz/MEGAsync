@@ -29,11 +29,22 @@
 
 struct PlanInfo
 {
-    int amount;
-    QString currency;
     long long gbStorage;
     long long gbTransfer;
+    unsigned int minUsers;
     int level;
+    int gbPerStorage;
+    int gbPerTransfer;
+    unsigned int pricePerUserBilling;
+    unsigned int pricePerUserLocal;
+    unsigned int pricePerStorageBilling;
+    unsigned int pricePerStorageLocal;
+    unsigned int pricePerTransferBilling;
+    unsigned int pricePerTransferLocal;
+    QString billingCurrencySymbol;
+    QString billingCurrencyName;
+    QString localCurrencySymbol;
+    QString localCurrencyName;
 };
 
 struct PSA_info
@@ -263,7 +274,8 @@ class Utilities
 {
 public:
     static QString getSizeString(unsigned long long bytes);
-    static QString getTimeString(long long secs, bool secondPrecision = true);
+    static QString getSizeString(long long bytes);
+    static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
     static QString getFinishedTimeString(long long secs);
     static bool verifySyncedFolderLimits(QString path);
@@ -274,9 +286,11 @@ public:
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
     static void adjustToScreenFunc(QPoint position, QWidget *what);
-    static QString minProPlanNeeded(mega::MegaPricing *pricing, long long usedStorage);
+    static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
     static QString getReadablePROplanFromId(int identifier);
+    static void animateFadeout(QWidget *object, int msecs = 700);
+    static void animateFadein(QWidget *object, int msecs = 700);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
     static void animatePartialFadein(QWidget *object, int msecs = 2000);
     static void animateProperty(QWidget *object, int msecs, const char *property, QVariant startValue, QVariant endValue, QEasingCurve curve = QEasingCurve::InOutQuad);
@@ -318,6 +332,55 @@ public:
     static long long getSystemsAvailableMemory();
 
     static void sleepMilliseconds(long long milliseconds);
+
+    // Compute the part per <ref> of <part> from <total>. Defaults to %
+    static int partPer(long long  part, long long total, uint ref = 100);
+};
+
+
+
+// This class encapsulates a MEGA node and adds useful information, like the origin
+// of the transfer.
+class WrappedNode
+{
+public:
+    // Enum used to record origin of trqnsfer
+    enum TransferOrigin {
+        FROM_UNKNOWN   = 0,
+        FROM_APP       = 1,
+        FROM_WEBSERVER = 2,
+    };
+
+    // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
+    WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
+                mega::MegaNode* node = nullptr)
+        : mTransfersFrom(from), mNode(node){}
+
+    // Destructor
+    ~WrappedNode()
+    {
+        // MEGA node should be deleted when this is deleted.
+        delete mNode;
+    }
+
+    // Get the transfer orgigin
+    WrappedNode::TransferOrigin getTransferOrigin()
+    {
+        return mTransfersFrom;
+    }
+
+    // Get the wrapped MEGA node pointer
+    mega::MegaNode* getMegaNode()
+    {
+        return mNode;
+    }
+
+private:
+    // Keep track of transfer origin
+    WrappedNode::TransferOrigin  mTransfersFrom;
+
+    // Wrapped MEGA node
+    mega::MegaNode* mNode;
 };
 
 #endif // UTILITIES_H

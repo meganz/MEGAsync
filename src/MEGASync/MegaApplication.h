@@ -10,7 +10,6 @@
 #include <QLocalSocket>
 #include <QDataStream>
 #include <QQueue>
-#include <QNetworkConfigurationManager>
 #include <QNetworkInterface>
 #include <memory>
 
@@ -36,10 +35,11 @@
 #include "control/MegaSyncLogger.h"
 #include "control/ThreadPool.h"
 #include "control/MegaController.h"
+#include "control/Utilities.h"
 #include "model/Model.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
-#include "QFilterAlertsModel.h"
+#include "gui/QFilterAlertsModel.h"
 #include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "DesktopNotifications.h"
@@ -61,7 +61,7 @@ public:
                     : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
                       localPath(path), totalFiles(0), totalFolders(0),
                       transfersFileOK(0), transfersFolderOK(0),
-                      transfersFailed(0), transfersCancelled(0) {}
+                      transfersFailed(0), transfersCancelled(0){}
 
     int totalTransfers;
     int pendingTransfers;
@@ -220,8 +220,9 @@ public:
 
     void updateTrayIconMenu();
 
-    mega::MegaPricing *getPricing() const;
+    std::shared_ptr<mega::MegaPricing> getPricing() const;
 
+    QuotaState getTransferQuotaState() const;
     int getAppliedStorageState() const;
     bool isAppliedStorageOverquota() const;
     void reloadSyncsInSettings();
@@ -243,6 +244,7 @@ signals:
     void nodeAttributesChanged(mega::MegaHandle handle);
     void blocked();
     void storageStateChanged(int);
+    void avatarReady();
 
 public slots:
     void unlink(bool keepLogs = false);
@@ -272,7 +274,7 @@ public slots:
     void shellViewOnMega(QByteArray localPath, bool versions);
     void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
-    void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
+    void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
     void externalFileUpload(qlonglong targetFolder);
     void externalFolderUpload(qlonglong targetFolder);
@@ -450,7 +452,7 @@ protected:
     QPointer<StreamingFromMegaDialog> streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
-    QQueue<mega::MegaNode *> downloadQueue;
+    QQueue<WrappedNode *> downloadQueue;
     ThreadPool* mThreadPool;
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mInboxNode;
@@ -476,7 +478,8 @@ protected:
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
-    mega::MegaPricing *pricing;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
     UpgradeOverStorage *storageOverquotaDialog;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
@@ -506,7 +509,6 @@ protected:
     QThread *updateThread;
     UpdateTask *updateTask;
     long long lastActiveTime;
-    QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
@@ -531,7 +533,6 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
     bool networkConnectivity;

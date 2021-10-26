@@ -6,24 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>201</width>
-    <height>31</height>
+    <width>506</width>
+    <height>26</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bWarning
+   <string notr="true">#bSyncState, #bWarning
 {
+    border: none;
+}
+
+#lSyncName
+{
+  color: #242424;
+  font-family: &quot;SF Pro Text&quot;;
+  font-size: 12px;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>3</number>
+    <number>12</number>
    </property>
    <property name="leftMargin">
-    <number>8</number>
+    <number>10</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -35,7 +43,13 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QPushButton" name="bWarning">
+    <widget class="QLabel" name="lSyncState">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>16</width>
@@ -48,37 +62,37 @@
        <height>16</height>
       </size>
      </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#bWarning
-{
-border: none;
-}</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normalon>:/images/ic_sync_warning.png</normalon>
-      </iconset>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
     </widget>
    </item>
    <item>
     <widget class="QLabel" name="lSyncName">
-     <property name="styleSheet">
-      <string notr="true">#lSyncName
-{
-	margin-bottom: 2px;
-}</string>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources_macx.qrc"/>
+ </resources>
  <connections/>
 </ui>

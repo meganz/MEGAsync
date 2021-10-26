@@ -1,9 +1,22 @@
 #include <catch.hpp>
 #include "ScaleFactorManager.h"
+#include <string>
 
 constexpr auto scaleEnvironmentVariableName{"QT_SCALE_FACTOR"};
 constexpr auto scaleScreensEnvironmentVariableName{"QT_SCREEN_SCALE_FACTORS"};
 constexpr auto autoScaleEnvironmentVariableName{"QT_AUTO_SCREEN_SCALE_FACTOR"};
+
+
+#ifdef WIN32
+void unsetenv(std::string name)
+{
+    _putenv((name + "=").c_str());
+}
+void setenv(std::string name, std::string value, int /*overwrite*/)
+{
+    _putenv((name + "=" + value).c_str());
+}
+#endif
 
 void unsetEnvironmentVariables()
 {

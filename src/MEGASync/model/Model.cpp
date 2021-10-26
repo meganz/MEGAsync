@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "platform/Platform.h"
 #include "control/AppStatsEvents.h"
+#include "QMegaMessageBox.h"
 
 #include <assert.h>
 
@@ -191,7 +192,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
     QMutexLocker qm(&syncMutex);
 
     std::shared_ptr<SyncSetting> cs;
-    bool wasEnabled = true;
     bool wasActive = false;
     bool wasInactive = false;
 
@@ -215,7 +215,6 @@ std::shared_ptr<SyncSetting> Model::updateSyncSettings(MegaSync *sync, int addin
 
     if (cs)
     {
-        wasEnabled = cs->isEnabled();
         wasActive = cs->isActive();
         wasInactive = !cs->isActive();
 

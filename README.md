@@ -70,6 +70,24 @@ to generate translation files. Alternatively, you can add it as a custom step in
 
 It's recommended to go to `Project -> Run` in Qt Creator and disable the option `Run in terminal`
 
+##### Preparation (Using `build-from-scratch.cmake`):
+
+Download and install latest CMake from https://cmake.org/download/. Mininimum required version is `3.15`  
+The following steps, if left unchanged, will attempt to build using VS 2019 Professional, for x64.  
+    To change the build, choose another Triplet, see ``<desktop (megasync)>\src\MEGASync\mega\contrib\cmake\vcpkg_extra_triplets\``.  
+    To change VS version, edit the Triplet file that you're going to pass to `-DTRIPLET`.
+
+1.  ``cd <desktop (megasync)>\contrib\cmake``
+2.  ``cmake -DTRIPLET=x64-windows-mega -P build_from_scratch.cmake``  
+Keep an eye on it because it will fail eventually.
+3.  Step 2 will fail after a while because it will not find `pdfium`. Download `pdfium` sources and copy them to  
+``cd .\..\..\..\3rdparty_desktop\vcpkg\``  
+so that in the end it will look something like ``<desktop (megasync)>\..\3rdparty_desktop\vcpkg\pdfium\pdfium\<many files>``.
+4.  ``cd <desktop (megasync)>\contrib\cmake``
+5.  ``cmake -DTRIPLET=x64-windows-mega -P build_from_scratch.cmake`` again
+6.  ``cd .\..\..\build-x64-windows-mega\``
+7.  Open `MEGAsync-desktop-64.sln` in VS 2019.
+
 ##### Preparation (Using CMake):
 
 1. Download and install CMake from https://cmake.org/download/. Mininimum required version is 3.15

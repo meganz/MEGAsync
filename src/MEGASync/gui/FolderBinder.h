@@ -23,7 +23,7 @@ public:
     explicit FolderBinder(QWidget *parent = 0);
     ~FolderBinder();
 
-    long long selectedMegaFolder();
+    mega::MegaHandle selectedMegaFolder();
     bool setSelectedMegaFolder(mega::MegaHandle handle);
     QString selectedLocalFolder();
 
@@ -39,7 +39,7 @@ private:
     Ui::FolderBinder *ui;
     MegaApplication *app;
     mega::MegaApi *megaApi;
-    long long selectedMegaFolderHandle;
+    mega::MegaHandle selectedMegaFolderHandle;
 
 };
 

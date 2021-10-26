@@ -40,6 +40,7 @@ void MegaSpeedGraph::init(MegaApi *megaApi, int type, int numPoints, int totalTi
         graphLineColor = QColor(QString::fromUtf8("#93CFEC"));
     }
 
+    // Init values buffer and graph
     clearValues();
 
     if (timer->isActive())
@@ -194,19 +195,11 @@ void MegaSpeedGraph::sample()
     }
 
     // Add the new value to the data vector
-    values.pop_front();
+    values.pop_front(); // This is possible because values is not empty.
     values.push_back(value);
 
     // Calculate max value (for autoscaling)
-    max = 0;
-    for (int i = 0; i< numPoints; i++)
-    {
-        long long val = values[i];
-        if (val > max)
-        {
-            max = val;
-        }
-    }
+    max = *(std::max_element(values.begin(), values.end()));
 
     // Force the calculation of graph points
     polygon.clear();

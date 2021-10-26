@@ -18,6 +18,7 @@ BuildRequires: ffmpeg-mega
 
     BuildRequires: libopenssl-devel, sqlite3-devel
     BuildRequires: libbz2-devel
+    BuildRequires: libudev-devel
 
     # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
     # plus it speeds up building process
@@ -70,9 +71,14 @@ BuildRequires: ffmpeg-mega
 
 #Fedora specific
 %if 0%{?fedora}
-    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, cryptopp-devel
+    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel
     BuildRequires: desktop-file-utils
     BuildRequires: bzip2-devel
+    BuildRequires: systemd-devel
+
+    %if 0%{?fedora_version} < 33
+        BuildRequires: cryptopp-devel
+    %endif
 
     %if 0%{?fedora_version} >= 26
         Requires: cryptopp >= 5.6.5
@@ -101,6 +107,7 @@ BuildRequires: ffmpeg-mega
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
     BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, bzip2-devel
     BuildRequires: desktop-file-utils
+    BuildRequires: systemd-devel
 
     %if 0%{?centos_version} >= 800
         BuildRequires: bzip2-devel
@@ -144,7 +151,7 @@ BuildRequires: ffmpeg-mega
 #Build cryptopp?
 %define flag_cryptopp %{nil}
 
-%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} ||  0%{?suse_version} > 1320
+%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || 0%{?suse_version} > 1320 || 0%{?fedora_version} >= 33
     %define flag_cryptopp -q
 %endif
 
@@ -207,16 +214,27 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
 ./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
 
+# Link dynamically with freeimage
+ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3
+ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
+
 # Fedora uses system Crypto++ header files
-%if 0%{?fedora}
+%if 0%{?fedora_version} < 33
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=31 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150000 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=32 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150000 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}
 %endif
+
+%if 0%{?fedora_version} >= 35
+    %define extraconfig CONFIG+=FFMPEG_WITH_LZMA
+%else
+    %define extraconfig %{nil}
+%endif
+
 
 %if 0%{?suse_version} != 1230
     %define fullreqs "CONFIG += FULLREQUIREMENTS"
@@ -228,18 +246,18 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
     %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
-        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt5  MEGASync/MEGASync.pro
     %else
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt4  MEGASync/MEGASync.pro
     %endif
 %else
     %if 0%{?rhel_version} || 0%{?scientificlinux_version}
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt4  MEGASync/MEGASync.pro
     %else
-        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease MEGASync/MEGASync.pro
     %endif
 %endif
@@ -289,11 +307,17 @@ make install DESTDIR=%{buildroot}%{_bindir}
     install -D /opt/mega/lib/libQt5VirtualKeyboard.so.*.*.* %{buildroot}/opt/mega/lib/libQt5VirtualKeyboard.so.5
     install -D /opt/mega/lib/libQt5Qml.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Qml.so.5
     install -D /opt/mega/lib/libQt5Quick.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Quick.so.5
+
 %endif
 
-mkdir -p  %{buildroot}/etc/sysctl.d/
-echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-megasync-inotify-limit.conf
+mkdir -p  %{buildroot}/opt/mega/lib
+install -D MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* %{buildroot}/opt/mega/lib
 
+mkdir -p  %{buildroot}/etc/sysctl.d/
+echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/99-megasync-inotify-limit.conf
+
+mkdir -p  %{buildroot}/etc/udev/rules.d/
+echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > %{buildroot}/etc/udev/rules.d/99-megasync-udev.rules
 
 %post
 %if 0%{?suse_version} >= 1140
@@ -464,7 +488,7 @@ KEY
     fi
 fi
 
-sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 
 ### END of POSTINST
 
@@ -513,9 +537,8 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_datadir}/icons/*/*/*/*
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
-/etc/sysctl.d/100-megasync-inotify-limit.conf
-%if 0%{?centos_version} && 0%{?centos_version} < 800
+/etc/sysctl.d/99-megasync-inotify-limit.conf
+/etc/udev/rules.d/99-megasync-udev.rules
 /opt/*
-%endif
 
 %changelog

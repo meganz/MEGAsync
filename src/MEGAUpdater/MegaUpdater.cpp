@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 {
     time_t currentTime = time(NULL);
     cout << "Process started at " << ctime(&currentTime);
-    srand(currentTime);
+    srand(unsigned(currentTime));
 
     UpdateTask updater;
     updater.checkForUpdates();

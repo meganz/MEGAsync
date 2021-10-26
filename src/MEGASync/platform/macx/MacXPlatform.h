@@ -3,7 +3,7 @@
 
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
-#include "MacXExtServer.h"
+#include "MacXExtServerService.h"
 
 #include <QApplication>
 #include <QString>
@@ -21,7 +21,7 @@ private:
     MacXPlatform() {}
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
-    static MacXExtServer *extServer;
+    static QPointer<MacXExtServerService> extService; //Set to NULL upon deletion
 
 public:
     static void initialize(int argc, char *argv[]);
@@ -62,9 +62,11 @@ public:
 
     static const char* settingsString;
     static const char* exitString;
+    static const char* fileExplorerString;
 
 private:
     static void disableSignalHandler();
+
 };
 
 #endif // MACXPLATFORM_H

@@ -43,7 +43,7 @@ cd $cwd
 archives=$cwd/archives
 rm -fr $archives
 mkdir $archives
-../src/MEGASync/mega/contrib/build_sdk.sh -q -n -e -f -g -w -s -v -u -W -o $archives
+../src/MEGASync/mega/contrib/build_sdk.sh -q -n -e -g -w -s -v -u -W -o $archives
 
 # get current version
 MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../src/MEGASync/control/Preferences.cpp`
@@ -58,7 +58,7 @@ rm -fr MEGAsync/MEGAsync/megasync*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec | sed "s#^ *##g" > MEGAsync/MEGAsync/megasync.spec
-for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{7,8,9,10}.0 Debian_testing; do
+for dist in xUbuntu_{1,2}{0,1,2,3,4,5,6,7,8,9}.{04,10} Debian_{7,8,9,10}.0 Debian_11 Debian_testing; do
 if [ -f templates/MEGAsync/megasync-$dist.dsc ]; then
 	sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync-$dist.dsc > MEGAsync/MEGAsync/megasync-$dist.dsc
 else

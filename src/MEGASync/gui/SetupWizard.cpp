@@ -2,6 +2,7 @@
 #include "ui_SetupWizard.h"
 
 #include "MegaApplication.h"
+#include "QMegaMessageBox.h"
 #include "control/Utilities.h"
 #include "control/AppStatsEvents.h"
 #include "gui/MultiQFileDialog.h"

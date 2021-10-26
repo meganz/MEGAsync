@@ -4,6 +4,7 @@
 #include "DesktopNotifications.h"
 #include <memory>
 #include "UpgradeDialog.h"
+#include "UpgradeOverStorage.h"
 #include <QObject>
 
 // Events messages strings
@@ -15,12 +16,14 @@ constexpr char EVENT_MESSAGE_TRANSFER_ALMOST_OVER_QUOTA_OS_NOTIFICATION[]{"Trans
 
 // % for almost over quota
 constexpr int ALMOST_OVER_QUOTA_PER_CENT{90};
+constexpr int FULL_QUOTA_PER_CENT{100};
 
 enum class QuotaState
 {
-    OK = 0,
-    WARNING,
-    FULL
+    OK        = 0,
+    WARNING   = 1,
+    FULL      = 2, // Account could reach full usage of quota but not enter in overquota situation yet.
+    OVERQUOTA = 3,
 };
 
 class TransferQuota: public QObject
@@ -29,12 +32,12 @@ class TransferQuota: public QObject
 public:
     TransferQuota(mega::MegaApi* megaApi, Preferences *preferences, std::shared_ptr<DesktopNotifications> desktopNotifications);
     void setOverQuota(std::chrono::milliseconds waitTime);
-    void setQuotaOk();
+    void updateQuotaState();
     bool isOverQuota();
-    bool isQuotaWarning() const;
-    void setUserProUsages(long long usedBytes, long long totalBytes);
+    bool isQuotaWarning();
+    bool isQuotaFull();
     void refreshOverQuotaDialogDetails();
-    void setOverQuotaDialogPricing(mega::MegaPricing *mPricing);
+    void setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency);
     void closeDialogs();
     void checkQuotaAndAlerts();
     bool checkImportLinksAlertDismissed();
@@ -44,7 +47,8 @@ public:
 
 private:
     mega::MegaApi* mMegaApi;
-    mega::MegaPricing* mPricing;
+    std::shared_ptr<mega::MegaPricing> mPricing;
+    std::shared_ptr<mega::MegaCurrency> mCurrency;
     Preferences* mPreferences;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
     UpgradeDialog* mUpgradeDialog;

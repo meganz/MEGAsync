@@ -12,19 +12,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.5.3.0";
-const int Preferences::VERSION_CODE = 4503;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.6.0.0";
+const int Preferences::VERSION_CODE = 4600;
+const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.5.3");
-QString Preferences::SDK_ID = QString::fromAscii("7c8db8f");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.0");
+QString Preferences::SDK_ID = QString::fromAscii("8b0f09e");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- New improvements for the management of the syncs.\n"
-    "- Improved user experience when syncs are disabled.\n"
-    "- Enhanced system notifications to notify various account events.\n"
-    "- Improved user experience while working with huge number of transfers and syncs.\n"
-    "- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.\n"
-    "- Fixed detected crashes on Windows and Linux.\n"
+    "- Full redesign of settings with a new look and feel.\n"
+    "- No longer supporting macOS versions below 10.12.\n"
+    "- Multi-currency support added for upgrade options.\n"
+    "- High DPI support for Windows platform improved.\n"
+    "- Crashes previously detected on Windows, Linux and macOS now fixed.\n"
     "- Other performance improvements and adjustments.\n"
     "- Other UI fixes and adjustments."));
 
@@ -375,6 +374,7 @@ const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPu
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 const QString Preferences::lastPublicHandleTypeKey = QString::fromAscii("lastPublicHandleType");
 const QString Preferences::disabledSyncsKey = QString::fromAscii("disabledSyncs");
+const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCreateLink");
 const QString Preferences::notifyDisabledSyncsKey = QString::fromAscii("notifyDisabledSyncs");
 
 const bool Preferences::defaultShowNotifications    = true;
@@ -416,6 +416,8 @@ const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
 
 const int  Preferences::defaultAccountStatus      = STATE_NOT_INITIATED;
 const bool  Preferences::defaultNeedsFetchNodes   = false;
+
+const bool  Preferences::defaultNeverCreateLink   = false;
 
 Preferences *Preferences::preferences = NULL;
 
@@ -1944,6 +1946,16 @@ void Preferences::setImportFolder(long long value)
     setValueAndSyncConcurrent(importFolderKey, value);
 }
 
+bool Preferences::neverCreateLink()
+{
+    return getValueConcurrent<bool>(neverCreateLinkKey, defaultNeverCreateLink);
+}
+
+void Preferences::setNeverCreateLink(bool value)
+{
+    setValueAndSyncConcurrent(neverCreateLinkKey, value);
+}
+
 
 /////////   Sync related stuff /////////////////////
 
@@ -2783,7 +2795,8 @@ void Preferences::loadExcludedSyncNames()
     if (getValue<int>(lastVersionKey) < 3400)
     {
         excludedSyncNames.append(QString::fromUtf8("*~.*"));
-        excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
+        // Avoid trigraph replacement by some pre-processors by splitting the string.("??-" --> "~").
+        excludedSyncNames.append(QString::fromUtf8("*.sb-????????""-??????"));
         excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 

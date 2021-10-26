@@ -217,7 +217,7 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("ko")] = QString::fromUtf8("한국어"); // korean
         languageNames[QString::fromAscii("nl")] = QString::fromUtf8("Nederlands");
         languageNames[QString::fromAscii("pl")] = QString::fromUtf8("Polski");
-        languageNames[QString::fromAscii("pt_BR")] = QString::fromUtf8("Português Brasil");
+        languageNames[QString::fromAscii("pt")] = QString::fromUtf8("Português");
         languageNames[QString::fromAscii("ro")] = QString::fromUtf8("Română");
         languageNames[QString::fromAscii("ru")] = QString::fromUtf8("Pусский");
         languageNames[QString::fromAscii("th")] = QString::fromUtf8("ภาษาไทย"); // thai
@@ -417,12 +417,14 @@ void replaceLeadingZeroCharacterWithSpace(QString& string)
     }
 }
 
-QString Utilities::getTimeString(long long secs, bool secondPrecision)
+QString Utilities::getTimeString(long long secs, bool secondPrecision, bool color)
 {
     int seconds = (int) secs % 60;
     int minutes = (int) ((secs / 60) % 60);
     int hours   = (int) (secs / (60 * 60)) % 24;
     int days = (int)(secs / (60 * 60 * 24));
+    QString colorString (color ? QLatin1String("color:#777777;") : QString());
+
 
     int items = 0;
     QString time;
@@ -430,13 +432,15 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (days)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(days, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">d</span>").arg(colorString));
     }
 
     if (items || hours)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(hours, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">h</span>").arg(colorString));
     }
 
     if (items == 2)
@@ -449,7 +453,8 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     if (items || minutes)
     {
         items++;
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(minutes, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">m</span>").arg(colorString));
     }
 
     if (items == 2)
@@ -461,7 +466,8 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
 
     if (secondPrecision)
     {
-        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8(" %1 ").arg(seconds, 2, 10, QLatin1Char('0')));
+        time.append(QString::fromUtf8("<span style=\"%1 text-decoration:none;\">s</span>").arg(colorString));
     }
     time = time.trimmed();
     replaceLeadingZeroCharacterWithSpace(time);
@@ -580,26 +586,44 @@ QString Utilities::getSizeString(unsigned long long bytes)
     QLocale locale(language);
     if (bytes >= TB)
     {
-        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
+        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
+        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
+        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
+        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ")
+                + QCoreApplication::translate("Utilities", "KB");
     }
 
-    return locale.toString(bytes) + QStringLiteral(" ") + QCoreApplication::translate("Utilities", "Bytes");
+    return locale.toString(bytes) + QStringLiteral(" ")
+            + QCoreApplication::translate("Utilities", "Bytes");
 }
+
+QString Utilities::getSizeString(long long bytes)
+{
+    if (bytes >= 0)
+    {
+        return getSizeString(static_cast<unsigned long long>(bytes));
+    }
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+    return locale.toString(bytes) + QStringLiteral(" ")
+            + QCoreApplication::translate("Utilities", "Bytes");
+}
+
 
 QString Utilities::extractJSONString(QString json, QString name)
 {
@@ -884,11 +908,11 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
     }
 }
 
-QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
+QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long long usedStorage)
 {
     if (!pricing)
     {
-        return QString::fromUtf8("PRO");
+        return QString::fromUtf8("Pro");
     }
 
     int planNeeded = -1;
@@ -899,7 +923,7 @@ QString Utilities::minProPlanNeeded(MegaPricing *pricing, long long usedStorage)
         //Skip business & non monthly plans to offer
         if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
         {
-            if (usedStorage < (pricing->getGBStorage(i) * GB))
+            if (usedStorage < (pricing->getGBStorage(i) * (long long)GB))
             {
                 int currentAmountMonth = pricing->getAmountMonth(i);
                 if (planNeeded == -1 || currentAmountMonth < amountPlanNeeded)
@@ -942,20 +966,30 @@ QString Utilities::getReadablePROplanFromId(int identifier)
     switch (identifier)
     {
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QString::fromUtf8("PRO LITE");
+            return QCoreApplication::translate("Utilities","Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QString::fromUtf8("PRO I");
+            return QCoreApplication::translate("Utilities","Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QString::fromUtf8("PRO II");
+            return QCoreApplication::translate("Utilities","Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QString::fromUtf8("PRO III");
+            return QCoreApplication::translate("Utilities","Pro III");
             break;
     }
 
-    return QString::fromUtf8("PRO");
+    return QString::fromUtf8("Pro");
+}
+
+void Utilities::animateFadein(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 0.0, 1.0);
+}
+
+void Utilities::animateFadeout(QWidget *object, int msecs)
+{
+    animateProperty(object, msecs, "opacity", 1.0, 0.0);
 }
 
 void Utilities::animatePartialFadein(QWidget *object, int msecs)
@@ -1062,6 +1096,17 @@ void Utilities::sleepMilliseconds(long long milliseconds)
 #else
     usleep(milliseconds * 1000);
 #endif
+}
+
+int Utilities::partPer(long long  part, long long total, uint ref)
+{
+    // Use maximum precision
+    long double partd(part);
+    long double totald(total);
+    long double refd(ref);
+
+    // We can safely cast because the result should reasonably fit in an int.
+    return (static_cast<int>((partd * refd) / totald));
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

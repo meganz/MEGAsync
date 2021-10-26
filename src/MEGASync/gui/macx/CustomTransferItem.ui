@@ -733,21 +733,21 @@ background-color: rgba(0, 0, 0, 8%);
                 <item>
                  <widget class="QPushButton" name="bClockDown">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>15</width>
-                    <height>15</height>
+                    <width>16</width>
+                    <height>16</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>15</width>
-                    <height>15</height>
+                    <width>16</width>
+                    <height>16</height>
                    </size>
                   </property>
                   <property name="focusPolicy">
