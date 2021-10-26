@@ -283,7 +283,7 @@ margin-right: 5px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -2997,6 +2997,267 @@ margin-right: 7px;
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="pBackup">
+      <layout class="QVBoxLayout" name="verticalLayout_44">
+       <property name="spacing">
+        <number>18</number>
+       </property>
+       <property name="leftMargin">
+        <number>25</number>
+       </property>
+       <property name="topMargin">
+        <number>12</number>
+       </property>
+       <property name="rightMargin">
+        <number>25</number>
+       </property>
+       <property name="bottomMargin">
+        <number>25</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="wBackupItems" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_48">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QWidget" name="wBackupLabel" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>25</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_46">
+             <property name="leftMargin">
+              <number>7</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>7</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Backups</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="wBackupTable" native="true">
+            <layout class="QVBoxLayout" name="verticalLayout_43">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>7</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>7</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="BackupTableWidget" name="backupTableWidget">
+               <property name="styleSheet">
+                <string notr="true">QTableView
+{
+background: white;
+outline: 0;
+}
+
+QHeaderView::section:horizontal
+{
+color: #4A607A;
+background: white;
+border:none;
+padding-left: 12px;
+}
+
+QTableView::item
+{
+border: none;
+padding-left: 10px;
+}
+
+QMenu
+{
+border: 1px solid #B8B8B8;
+border-radius: 8px;
+background: #ffffff;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QMenu::separator
+{
+height: 1px;
+margin: 0px 8px 0px 8px;
+background-color: rgba(0, 0, 0, 0.1);
+}
+
+QMenu::item
+{
+background-color: transparent;
+border-radius: 8px;
+}</string>
+               </property>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="textElideMode">
+                <enum>Qt::ElideMiddle</enum>
+               </property>
+               <property name="showGrid">
+                <bool>false</bool>
+               </property>
+               <property name="sortingEnabled">
+                <bool>true</bool>
+               </property>
+               <property name="cornerButtonEnabled">
+                <bool>false</bool>
+               </property>
+               <attribute name="verticalHeaderVisible">
+                <bool>false</bool>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSegmentedControl" name="wBackupSegmentedControl" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>576</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_2" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_47">
+          <property name="leftMargin">
+           <number>7</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>7</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QGroupBox" name="groupBox_3">
+            <layout class="QVBoxLayout" name="verticalLayout_42">
+             <property name="leftMargin">
+              <number>105</number>
+             </property>
+             <property name="topMargin">
+              <number>15</number>
+             </property>
+             <property name="rightMargin">
+              <number>15</number>
+             </property>
+             <property name="bottomMargin">
+              <number>15</number>
+             </property>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_18">
+               <item>
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Backup foder</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lBackupFolder">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="bOpenBackupFolder">
+                 <property name="text">
+                  <string>View in MEGA</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="pSecurity">
       <layout class="QVBoxLayout" name="verticalLayout_20">
        <property name="spacing">
@@ -3044,7 +3305,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+            <iconset>
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3155,7 +3416,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+            <iconset>
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -4044,7 +4305,7 @@ margin-right: 7px;
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_macx.qrc">
+                  <iconset>
                     <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -4485,7 +4746,7 @@ margin-right: 32px;</string>
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="wGeneralFooter">
            <layout class="QVBoxLayout" name="verticalLayout_32">
@@ -4597,6 +4858,23 @@ margin-right: 32px;</string>
             </property>
            </layout>
           </widget>
+          <widget class="QWidget" name="wBackupFooter">
+           <layout class="QVBoxLayout" name="verticalLayout_45">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bBackupCenter">
+              <property name="text">
+               <string>To Backup Center</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="wSecurityFooter">
            <layout class="QVBoxLayout" name="verticalLayout_34">
             <property name="leftMargin">
@@ -4697,6 +4975,11 @@ margin-right: 32px;</string>
    <header location="global">QSegmentedControl.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>BackupTableWidget</class>
+   <extends>QTableView</extends>
+   <header location="global">BackupTableWidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>cShowNotifications</tabstop>
@@ -4735,8 +5018,6 @@ margin-right: 32px;</string>
   <tabstop>bSessionHistory</tabstop>
   <tabstop>bRestart</tabstop>
  </tabstops>
- <resources>
-  <include location="../Resources_macx.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -175,13 +175,20 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         if (errorCode != MegaError::API_OK)
         {
             std::shared_ptr<MegaNode> remoteNode(api->getNodeByHandle(req->getNodeHandle()));
-            errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+
+            QString name (QString::fromUtf8(req->getName()));
+            errorMsg = QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(req->getNumDetails()));
+
             QString logMsg = QString::fromUtf8("Error adding sync %1 for %2 to %3 (request error): %4")
-                    .arg(QString::fromUtf8(req->getName()),
+                    .arg(name,
                          QString::fromUtf8(req->getFile()),
                          QString::fromUtf8(api->getNodePath(remoteNode.get())),
                          errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+
+            errorMsg = tr("Adding backup \"%1\" failed.\n"
+                          "Reason: %2")
+                       .arg(name, errorMsg);
         }
         emit syncAddStatus(errorCode, errorMsg);
         break;

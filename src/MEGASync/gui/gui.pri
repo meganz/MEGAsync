@@ -1,6 +1,8 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
+    $$PWD/BackupItemModel.cpp \
+    $$PWD/BackupTableWidget.cpp \
     $$PWD/BalloonToolTip.cpp \
     $$PWD/BackupsWizard.cpp \
     $$PWD/InfoDialog.cpp \
@@ -10,6 +12,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
     $$PWD/BindFolderDialog.cpp \
+    $$PWD/SyncTreeWidget.cpp \
     $$PWD/SyncsMenu.cpp \
     $$PWD/UploadToMegaDialog.cpp \
     $$PWD/PasteMegaLinksDialog.cpp \
@@ -76,6 +79,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BandwidthSettings.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/BackupItemModel.h \
+    $$PWD/BackupTableWidget.h \
     $$PWD/BalloonToolTip.h \
     $$PWD/BackupsWizard.h \
     $$PWD/InfoDialog.h \
@@ -85,6 +90,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
     $$PWD/BindFolderDialog.h \
+    $$PWD/SyncTreeWidget.h \
     $$PWD/SyncsMenu.h \
     $$PWD/UploadToMegaDialog.h \
     $$PWD/PasteMegaLinksDialog.h \
@@ -209,6 +215,7 @@ win32 {
                 $$PWD/win/BandwidthSettings.ui \
                 $$PWD/win/BackupsWizard.ui \
                 $$PWD/win/RenameTargetFolderDialog.ui \
+                $$PWD/win/BackupSetupSuccessDialog.ui \
                 $$PWD/win/NewFolderDialog.ui
 }
 
@@ -267,6 +274,7 @@ macx {
                 $$PWD/macx/BandwidthSettings.ui \
                 $$PWD/macx/BackupsWizard.ui \
                 $$PWD/macx/RenameTargetFolderDialog.ui \
+                $$PWD/macx/BackupSetupSuccessDialog.ui \
                 $$PWD/macx/NewFolderDialog.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
@@ -347,6 +355,7 @@ unix:!macx {
                 $$PWD/linux/ProxySettings.ui \
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/RenameTargetFolderDialog.ui \
+                $$PWD/linux/BackupSetupSuccessDialog.ui \
                 $$PWD/linux/NewFolderDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
@@ -354,3 +363,4 @@ unix:!macx {
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
+

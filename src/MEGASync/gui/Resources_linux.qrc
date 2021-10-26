@@ -903,16 +903,37 @@
         <file>images/Backup.png</file>
         <file>images/Backup@2x.png</file>
         <file>images/Backup@3x.png</file>
-        <file>images/PC_linux_ico_rest.png</file>
-        <file>images/PC_linux_ico_rest@2x.png</file>
-        <file>images/PC_linux_ico_rest@3x.png</file>
-        <file>images/PC_ico_rest.png</file>
-        <file>images/PC_ico_rest@2x.png</file>
-        <file>images/PC_ico_rest@3x.png</file>
+        <file>images/mimes/devices - mono/device-small/pc-linux.png</file>
+        <file>images/mimes/devices - mono/device-small/pc-linux@2x.png</file>
+        <file>images/mimes/devices - mono/device-small/pc-linux@3x.png</file>
+        <file>images/mimes/devices - mono/devices-medium/pc-linux.png</file>
+        <file>images/mimes/devices - mono/devices-medium/pc-linux@2x.png</file>
+        <file>images/mimes/devices - mono/devices-medium/pc-linux@3x.png</file>
         <file>images/remove-backups.png</file>
         <file>images/folder_icon.png</file>
         <file>images/folder_icon@2x.png</file>
         <file>images/folder_icon@3x.png</file>
+        <file>images/mimes/folder with warning/folder with warning.png</file>
+        <file>images/mimes/folder with warning/folder with warning@2x.png</file>
+        <file>images/mimes/folder with warning/folder with warning@3x.png</file>
+        <file>images/settings-backup.png</file>
+        <file>images/settings-backup@3x.png</file>
+        <file>images/settings-backup@2x.png</file>
+        <file>images/icons/pc/PC_warning_ico_rest.png</file>
+        <file>images/icons/pc/PC_warning_ico_rest@3x.png</file>
+        <file>images/icons/pc/PC_warning_ico_rest@2x.png</file>
+        <file>images/icons/pc/PC_warning_ico_hover.png</file>
+        <file>images/icons/pc/PC_warning_ico_hover@3x.png</file>
+        <file>images/icons/pc/PC_warning_ico_hover@2x.png</file>
+        <file>images/icons/pc/PC_ico_rest.png</file>
+        <file>images/icons/pc/PC_ico_rest@3x.png</file>
+        <file>images/icons/pc/PC_ico_rest@2x.png</file>
+        <file>images/icons/pc/PC_ico_hover.png</file>
+        <file>images/icons/pc/PC_ico_hover@3x.png</file>
+        <file>images/icons/pc/PC_ico_hover@2x.png</file>
+        <file>images/Illustration/rewind/Rewind.png</file>
+        <file>images/Illustration/rewind/Rewind@2x.png</file>
+        <file>images/Illustration/rewind/Rewind@3x.png</file>
         <file>images/backup_mono.png</file>
         <file>images/backup_mono@2x.png</file>
         <file>images/backup_mono@3x.png</file>

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>595</width>
-    <height>733</height>
+    <width>564</width>
+    <height>722</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -245,7 +245,7 @@ font-weight: bold;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset>
           <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
         </property>
         <property name="iconSize">
@@ -255,6 +255,9 @@ font-weight: bold;
          </size>
         </property>
         <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
          <bool>true</bool>
         </property>
         <property name="autoExclusive">
@@ -291,7 +294,7 @@ font-weight: bold;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset>
           <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
         </property>
         <property name="iconSize">
@@ -337,8 +340,52 @@ font-weight: bold;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset>
           <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="bBackup">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="font">
+         <font/>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Backup</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -383,7 +430,7 @@ font-weight: bold;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset>
           <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
         </property>
         <property name="iconSize">
@@ -429,7 +476,7 @@ font-weight: bold;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset>
           <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
         </property>
         <property name="iconSize">
@@ -475,7 +522,7 @@ font-weight: bold;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset>
           <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
         </property>
         <property name="iconSize">
@@ -1229,7 +1276,7 @@ font-weight: bold;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset>
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -1939,6 +1986,227 @@ font-weight: bold;
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="pBackup">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>8</number>
+       </property>
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>14</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Backups</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="BackupTableWidget" name="backupTableWidget">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>250</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QTableView
+{
+background: white;
+outline: 0;
+}
+
+QHeaderView::section:horizontal
+{
+color: #4A607A;
+background: white;
+border:none;
+padding-left: 12px;
+}
+
+QTableView::item
+{
+border: none;
+padding-left: 10px;
+}
+
+QTableView::item:selected
+{
+background-color: rgba(0,120,215,0.8);
+}
+
+QMenu
+{
+border: 1px solid #B8B8B8;
+border-radius: 8px;
+background: #ffffff;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QMenu::separator
+{
+height: 1px;
+margin: 0px 8px 0px 8px;
+background-color: rgba(0, 0, 0, 0.1);
+}
+
+QMenu::item
+{
+background-color: transparent;
+border-radius: 8px;
+}</string>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="textElideMode">
+             <enum>Qt::ElideMiddle</enum>
+            </property>
+            <property name="showGrid">
+             <bool>false</bool>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="cornerButtonEnabled">
+             <bool>false</bool>
+            </property>
+            <attribute name="horizontalHeaderHighlightSections">
+             <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <spacer name="horizontalSpacer_11">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bAddBackup">
+              <property name="text">
+               <string>Add</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bDeleteBackup">
+              <property name="text">
+               <string>Delete</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Backup Folder</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_14">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Uploads:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLineEdit" name="lBackupFolder">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bOpenBackupFolder">
+              <property name="text">
+               <string>View in MEGA</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>214</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="pSecurity">
       <layout class="QVBoxLayout" name="verticalLayout_20">
        <property name="spacing">
@@ -2591,7 +2859,7 @@ min-height: 72px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset>
               <normaloff>:/images/ic_sync_warning.png</normaloff>:/images/ic_sync_warning.png</iconset>
             </property>
             <property name="iconSize">
@@ -2902,7 +3170,7 @@ min-height: 72px;
       <property name="bottomMargin">
        <number>20</number>
       </property>
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QPushButton" name="bHelpIco">
         <property name="styleSheet">
          <string notr="true">QPushButton {
@@ -2913,7 +3181,7 @@ color: #0078D7;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset>
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -2930,20 +3198,7 @@ color: #0078D7;
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>400</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
+      <item alignment="Qt::AlignRight">
        <widget class="QStackedWidget" name="wStackFooter">
         <property name="currentIndex">
          <number>0</number>
@@ -3020,6 +3275,29 @@ color: #0078D7;
           <property name="bottomMargin">
            <number>0</number>
           </property>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="wBackupFooter">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bBackupCenter">
+            <property name="text">
+             <string>To Backup Center</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="wSecurityFooter">
@@ -3102,9 +3380,12 @@ color: #0078D7;
    <header>AvatarWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>BackupTableWidget</class>
+   <extends>QTableView</extends>
+   <header location="global">BackupTableWidget.h</header>
+  </customwidget>
  </customwidgets>
- <resources>
-  <include location="../Resources_win.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

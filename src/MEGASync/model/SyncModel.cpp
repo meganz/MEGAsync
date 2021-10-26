@@ -398,10 +398,15 @@ std::shared_ptr<SyncSetting> SyncModel::getSyncSetting(int num, mega::MegaSync::
     return configuredSyncsMap[configuredSyncs[type].at(num)];
 }
 
-QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> SyncModel::getCopyOfSettings()
+QList<std::shared_ptr<SyncSetting>> SyncModel::getSyncsByType(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
-    return configuredSyncsMap;
+    QList<std::shared_ptr<SyncSetting>> syncs;
+    for (auto &cs : configuredSyncs[type])
+    {
+        syncs.append(configuredSyncsMap[cs]);
+    }
+    return syncs;
 }
 
 std::shared_ptr<SyncSetting> SyncModel::getSyncSettingByTag(MegaHandle tag)

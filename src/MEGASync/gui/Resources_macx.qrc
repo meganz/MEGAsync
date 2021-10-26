@@ -541,7 +541,6 @@
         <file>images/ic_options_hover@2x.png</file>
         <file>images/Storage_Quota_full@3x.png</file>
         <file>images/Storage_Quota_almost_full@3x.png</file>
-        <file>images/Folder@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
         <file>images/Failed_to_download@3x.png</file>
         <file>images/new_contact@3x.png</file>
@@ -553,7 +552,6 @@
         <file>images/Cloud_Drive_24_ico@2x.png</file>
         <file>images/Inbox_24_ico.png</file>
         <file>images/Inbox_24_ico@2x.png</file>
-        <file>images/Inbox_24_ico@3x.png</file>
         <file>images/key_big.png</file>
         <file>images/key_big@2x.png</file>
         <file>images/lock_big.png</file>
@@ -592,7 +590,6 @@
         <file>images/settings-folders-macx@2x.png</file>
         <file>images/ico_dialog_check.png</file>
         <file>images/ico_dialog_check@2x.png</file>
-        <file>images/ico_dialog_check@3x.png</file>
         <file>images/ico_dialog_check_green.png</file>
         <file>images/ico_dialog_check_green@2x.png</file>
         <file>images/ico_info_rest.png</file>
@@ -615,13 +612,29 @@
         <file>animations/full-storage@2x.gif</file>
         <file>animations/full-transfer@2x.gif</file>
         <file>animations/full-transfer.gif</file>
- 	<file>images/Backup.png</file>
+        <file>images/Backup.png</file>
         <file>images/Backup@2x.png</file>
-        <file>images/PC_mac_ico_rest.png</file>
-        <file>images/PC_mac_ico_rest@2x.png</file>
-        <file>images/PC_ico_rest.png</file>
-        <file>images/PC_ico_rest@2x.png</file>
+        <file>images/mimes/devices - mono/device-small/pc-mac.png</file>
+        <file>images/mimes/devices - mono/device-small/pc-mac@2x.png</file>
+        <file>images/mimes/devices - mono/devices-medium/pc-mac.png</file>
+        <file>images/mimes/devices - mono/devices-medium/pc-mac@2x.png</file>
         <file>images/remove-backups.png</file>
+        <file>images/folder_icon.png</file>
+        <file>images/folder_icon@2x.png</file>
+        <file>images/mimes/folder with warning/folder with warning.png</file>
+        <file>images/mimes/folder with warning/folder with warning@2x.png</file>
+        <file>images/icons/pc/PC_warning_ico_rest.png</file>
+        <file>images/icons/pc/PC_warning_ico_rest@2x.png</file>
+        <file>images/icons/pc/PC_warning_ico_hover.png</file>
+        <file>images/icons/pc/PC_warning_ico_hover@2x.png</file>
+        <file>images/icons/pc/PC_ico_rest.png</file>
+        <file>images/icons/pc/PC_ico_rest@2x.png</file>
+        <file>images/icons/pc/PC_ico_hover.png</file>
+        <file>images/icons/pc/PC_ico_hover@2x.png</file>
+        <file>images/settings-backup-macx.png</file>
+        <file>images/settings-backup-macx@2x.png</file>
+        <file>images/Illustration/rewind/Rewind.png</file>
+        <file>images/Illustration/rewind/Rewind@2x.png</file>
         <file>images/backup_mono.png</file>
         <file>images/backup_mono@2x.png</file>
     </qresource>

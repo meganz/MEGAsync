@@ -16,6 +16,7 @@
 
 namespace Ui {
 class BackupsWizard;
+class BackupSetupSuccessDialog;
 }
 
 class BackupsWizard : public QDialog
@@ -73,6 +74,8 @@ class BackupsWizard : public QDialog
         bool mUserCancelled;
         QStandardItemModel* mStep1FoldersModel;
         int mCurrentSyncIdx;
+        std::unique_ptr<QDialog> mSuccessDialog;
+        std::unique_ptr<Ui::BackupSetupSuccessDialog> mSuccessDialogUi;
 
     signals:
         void nextStep();
@@ -89,6 +92,7 @@ class BackupsWizard : public QDialog
         void onSetMyBackupsDirRequestStatus(int errorCode, QString errorMsg);
         void onSetDeviceNameRequestStatus(int errorCode, QString errorMsg);
         void onSyncAddRequestStatus(int errorCode, QString errorMsg);
+        void onSuccessDialogAccepted();
 };
 
 #endif // BACKUPSWIZARD_H

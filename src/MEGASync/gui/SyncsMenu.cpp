@@ -19,11 +19,11 @@ const QLatin1String MENU_STYLESHEET ("QMenu {border: 1px solid #B8B8B8;"
 #endif
 
 #ifdef WIN32
-const QLatin1String DEVICE_ICON ("://images/PC_win_ico_rest.png");
+const QLatin1String DEVICE_ICON ("://images/mimes/devices - mono/device-small/pc-win.png");
 #elif defined(__APPLE__)
-const QLatin1String DEVICE_ICON ("://images/PC_mac_ico_rest.png");
+const QLatin1String DEVICE_ICON ("://images/mimes/devices - mono/device-small/pc-mac.png");
 #elif defined(Q_OS_LINUX)
-const QLatin1String DEVICE_ICON ("://images/PC_linux_ico_rest.png");
+const QLatin1String DEVICE_ICON ("://images/mimes/devices - mono/device-small/pc-linux.png");
 #endif
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(parent),

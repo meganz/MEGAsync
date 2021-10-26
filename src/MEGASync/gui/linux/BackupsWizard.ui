@@ -127,7 +127,7 @@ background: solid #FAFAFA;
 #lDeviceNameS1, #lDeviceNameS2
 {
 text-align: left;
-font-size: 14pt;
+font-size: 14px;
 border: none;
 }
 
@@ -141,10 +141,6 @@ padding-right: 16px;
 #lvFoldersS1::item
 {
 border-bottom: 1px solid #e5e5e5;
-}
-
-#lvFoldersS1::item
-{
 height: 39 px;
 min-height: 39 px;
 max-height: 39 px;
@@ -155,6 +151,7 @@ max-height: 39 px;
 background: solid white;
 border-bottom-right-radius: 6px;
 border-bottom-left-radius: 6px;
+outline: 0;
 }
 
 #lvFoldersS1
@@ -164,17 +161,17 @@ padding-left: 22px;
 
 #lvFoldersS2
 {
-padding-left: 15px;
+padding-left: 11px;
 }
 
 #lvFoldersS1::icon
 {
-left: 25px;
+left: 22px;
 }
 
 #lvFoldersS1::text
 {
-left: 28px;
+left: 22px;
 }
 
 #lvFoldersS2::item
@@ -186,7 +183,7 @@ max-height: 31 px;
 
 #lvFoldersS2::text
 {
-left: 7px;
+left: 3px;
 }
 
 #lAllFoldersSynced
@@ -273,7 +270,7 @@ border-bottom: 1px solid #e5e5e5;
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
@@ -307,7 +304,7 @@ border-bottom: 1px solid #e5e5e5;
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;1. &lt;/span&gt;&lt;span style=&quot; font-size:20pt; font-weight:600;&quot;&gt;Select&lt;/span&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt; folders you want to backup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20px;&quot;&gt;1. &lt;/span&gt;&lt;span style=&quot; font-size:20px; font-weight:600;&quot;&gt;Select&lt;/span&gt;&lt;span style=&quot; font-size:20px;&quot;&gt; folders to backup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -323,7 +320,7 @@ border-bottom: 1px solid #e5e5e5;
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;MEGA Backup ensures changes to your local folders and files are automatically uploaded and synchronised to the MEGA Cloud.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12px;&quot;&gt;MEGA Backup ensures changes to your local folders and files are automatically uploaded and synchronised to the MEGA Cloud.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -423,7 +420,7 @@ border-bottom: 1px solid #e5e5e5;
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Resources_linux.qrc">:/images/PC_linux_ico_rest@2x.png</pixmap>
+                <pixmap resource="../Resources_linux.qrc">:/images/mimes/devices - mono/devices-medium/pc-linux.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -514,7 +511,7 @@ border-bottom: 1px solid #e5e5e5;
                 </property>
                 <property name="iconSize">
                  <size>
-                  <width>14</width>
+                  <width>24</width>
                   <height>24</height>
                  </size>
                 </property>
@@ -706,7 +703,7 @@ border-bottom: 1px solid #e5e5e5;
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;2. &lt;/span&gt;&lt;span style=&quot; font-size:20pt; font-weight:600;&quot;&gt;Confirm&lt;/span&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt; backup settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20px;&quot;&gt;2. &lt;/span&gt;&lt;span style=&quot; font-size:20px; font-weight:600;&quot;&gt;Confirm&lt;/span&gt;&lt;span style=&quot; font-size:20px;&quot;&gt; backup settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -813,7 +810,7 @@ border-bottom: 1px solid #e5e5e5;
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Resources_linux.qrc">:/images/PC_linux_ico_rest.png</pixmap>
+                <pixmap resource="../Resources_linux.qrc">:/images/mimes/devices - mono/device-small/pc-linux.png</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -890,7 +887,7 @@ border-bottom: 1px solid #e5e5e5;
             <property name="iconSize">
              <size>
               <width>24</width>
-              <height>11</height>
+              <height>24</height>
              </size>
             </property>
             <property name="verticalScrollMode">
