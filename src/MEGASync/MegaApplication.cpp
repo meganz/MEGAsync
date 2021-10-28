@@ -6349,6 +6349,14 @@ void MegaApplication::createInfoDialogMenus()
         syncsMenu->setStyleSheet(QString::fromUtf8("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
 
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
+        // Make widget transparent (otherwise it shows a white background in its corners)
+        syncsMenu->setAttribute(Qt::WA_TranslucentBackground);
+        // Disable drop shadow (does not take into account curved corners)
+        syncsMenu->setWindowFlags(syncsMenu->windowFlags()
+                                  | Qt::FramelessWindowHint
+                                  | Qt::NoDropShadowWindowHint);
+#endif
 
         if (menuSignalMapper)
         {
@@ -6479,12 +6487,16 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(settingsAction);
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(exitAction);
-#ifdef _WIN32
-    // Disable drop shadow (appears squared in Windows)
+
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
+    // Make widget transparent (otherwise it shows a white background in its corners)
     infoDialogMenu->setAttribute(Qt::WA_TranslucentBackground);
+    // Disable drop shadow (does not take into account curved corners)
     infoDialogMenu->setWindowFlags(infoDialogMenu->windowFlags()
                                    | Qt::FramelessWindowHint
                                    | Qt::NoDropShadowWindowHint);
+#endif
+#ifdef Q_OS_WINDOWS
     //The following should not be required, but
     //prevents it from being truncated on the first display
     infoDialogMenu->show();
