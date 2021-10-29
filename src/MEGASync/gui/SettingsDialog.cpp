@@ -85,7 +85,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mApp (app),
     mPreferences (Preferences::instance()),
     mController (Controller::instance()),
-    mSyncController (SyncController::instance()),
+    mSyncController (),
     mModel (SyncModel::instance()),
     mMegaApi (app->getMegaApi()),
     mLoadingSettings (0),

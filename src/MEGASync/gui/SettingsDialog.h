@@ -239,7 +239,7 @@ private:
     MegaApplication* mApp;
     Preferences* mPreferences;
     Controller* mController;
-    SyncController& mSyncController;
+    SyncController mSyncController;
     SyncModel* mModel;
     mega::MegaApi* mMegaApi;
     HighDpiResize mHighDpiResize;

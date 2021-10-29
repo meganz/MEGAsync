@@ -2,6 +2,7 @@
 #define SYNCSMENU_H
 
 #include "MenuItemAction.h"
+#include "SyncController.h"
 
 #include "megaapi.h"
 
@@ -35,6 +36,7 @@ private:
     void refresh();
     void highLightMenuEntry(QAction *action);
 
+    SyncController mSyncController;
     mega::MegaSync::SyncType mType;
     std::shared_ptr<QMenu> mMenu;
     std::shared_ptr<MenuItemAction> mAddAction;

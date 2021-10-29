@@ -55,7 +55,7 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
             iconAdd = QIcon(QLatin1String("://images/Backup.png"));
             textMenu = tr("Backups");
             iconMenu = iconAdd;
-            connect(&SyncController::instance(), &SyncController::deviceName,
+            connect(&mSyncController, &SyncController::deviceName,
                     this, &SyncsMenu::onDeviceNameSet);
             break;
         }
@@ -177,7 +177,7 @@ void SyncsMenu::refresh()
                 // set device name slot is called.
                 connect(mDevNameAction.get(), &MenuItemAction::triggered,
                         this, &SyncsMenu::onAddSync, Qt::QueuedConnection);
-                SyncController::instance().getDeviceName();
+                mSyncController.getDeviceName();
             }
             else
             {

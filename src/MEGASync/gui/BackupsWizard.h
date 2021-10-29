@@ -62,7 +62,7 @@ class BackupsWizard : public QDialog
         HighDpiResize mHighDpiResize;
         Steps mCurrentStep;
         SyncModel* mSyncsModel;
-        SyncController& mSyncController;
+        SyncController mSyncController;
         bool mCreateBackupsDir;
         mega::MegaHandle mDeviceDirHandle;
         QString mBackupsDirName;

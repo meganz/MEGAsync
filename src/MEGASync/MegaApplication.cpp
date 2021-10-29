@@ -8,7 +8,6 @@
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
-#include "control/SyncController.h"
 #include "platform/Platform.h"
 #include "OverQuotaDialog.h"
 #include "ConnectivityChecker.h"
@@ -488,9 +487,6 @@ void MegaApplication::initialize()
 
     controller = Controller::instance();
     controller->setApi(this->megaApi);
-
-    SyncController::instance().setApi(megaApi);
-    SyncController::instance().setModel(model);
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -8404,8 +8400,6 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionStat
     }
 
     auto syncSetting = model->updateSyncSettings(sync, additionState);
-
-    SyncController::instance().ensureDeviceNameIsSetOnRemote();
 
     if (additionState == MegaSync::SyncAdded::FROM_CACHE_FAILED_TO_RESUME
             || additionState == MegaSync::SyncAdded::NEW_TEMP_DISABLED)

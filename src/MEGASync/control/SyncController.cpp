@@ -4,11 +4,29 @@
 
 using namespace mega;
 
+#define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
+
+SyncController::SyncController(QObject* parent)
+    : QObject(parent),
+      mApi(MegaSyncApp->getMegaApi()),
+      mDelegateListener (new QTMegaRequestListener(mApi, this)),
+      mSyncModel(SyncModel::instance()),
+      mIsDeviceNameSetOnRemote(false),
+      mForceSetDeviceName(false)
+{
+    // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
+    assert(mApi);
+    assert(mSyncModel);
+}
+
+SyncController::~SyncController()
+{
+    delete mDelegateListener;
+}
+
 void SyncController::addSync(const QString &localFolder, const MegaHandle &remoteHandle,
                              const QString& syncName, mega::MegaSync::SyncType type)
 {
-    assert(mApi);
-
     if (localFolder.isEmpty() && syncName.isEmpty())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Adding invalid sync %1")
@@ -25,8 +43,6 @@ void SyncController::addSync(const QString &localFolder, const MegaHandle &remot
 
 void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting)
 {
-    assert(mApi);
-
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Removing invalid sync").toUtf8().constData());
@@ -42,8 +58,6 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting)
 
 void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
 {
-    assert(mApi);
-
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -60,7 +74,6 @@ void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
 
 void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
 {
-    assert(mApi);
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -88,8 +101,6 @@ void SyncController::createMyBackupsDir(const QString& name)
     }
     else
     {
-        assert(mApi);
-        // Check for name collision
         auto  rootNode (MegaSyncApp->getRootNode());
         std::unique_ptr<mega::MegaNode> backupsDirNode (mApi->getChildNode(rootNode.get(), name.toUtf8().constData()));
 
@@ -114,7 +125,7 @@ void SyncController::setMyBackupsDir(mega::MegaHandle handle)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Setting MyBackups dir to handle %1")
                  .arg(handle).toUtf8().constData());
-    assert(Preferences::instance()->logged() && mApi);
+    assert(Preferences::instance()->logged());
     mApi->setMyBackupsFolder(handle, mDelegateListener);
 }
 
@@ -124,7 +135,7 @@ void SyncController::setDeviceName(const QString& name)
                  .arg(name).toUtf8().constData());
     if (!mIsDeviceNameSetOnRemote)
     {
-        assert(Preferences::instance()->logged() && mApi);
+        assert(Preferences::instance()->logged());
         mApi->setDeviceName(name.toUtf8().constData(), mDelegateListener);
     }
     else
@@ -136,7 +147,7 @@ void SyncController::setDeviceName(const QString& name)
 
 void SyncController::getDeviceName()
 {
-    assert(Preferences::instance()->logged() && mApi);
+    assert(Preferences::instance()->logged());
     mApi->getDeviceName(mDelegateListener);
 }
 
@@ -371,30 +382,4 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         break;
     }
     }
-}
-
-SyncController::SyncController(QObject* parent)
-    : QObject(parent),
-      mApi(nullptr),
-      mDelegateListener (new QTMegaRequestListener(mApi, this)),
-      mSyncModel(nullptr),
-      mIsDeviceNameSetOnRemote(false),
-      mForceSetDeviceName(false)
-{
-}
-
-SyncController& SyncController::instance()
-{
-    static SyncController instance;
-    return instance;
-}
-
-void SyncController::setApi(MegaApi* api)
-{
-    mApi = api;
-}
-
-void SyncController::setModel(SyncModel* model)
-{
-    mSyncModel = model;
 }

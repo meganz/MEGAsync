@@ -2,7 +2,6 @@
 
 #include "platform/Platform.h"
 #include "MenuItemAction.h"
-#include "SyncController.h"
 
 #include <QHeaderView>
 #include <QMenu>
@@ -91,10 +90,10 @@ void BackupTableWidget::showContextMenu(const QPoint &pos, const QModelIndex ind
     auto delAction (new MenuItemAction(tr("Remove backup"),
                                        QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
     delAction->setAccent(true);
-    connect(delAction, &MenuItemAction::triggered, this, [index]()
+    connect(delAction, &MenuItemAction::triggered, this, [this, index]()
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
-        SyncController::instance().removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
+        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
     });
 
 

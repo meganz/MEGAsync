@@ -16,7 +16,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi (new Ui::BackupsWizard),
     mCurrentStep (Steps::STEP_1_INIT),
     mSyncsModel (SyncModel::instance()),
-    mSyncController(SyncController::instance()),
+    mSyncController(),
     mCreateBackupsDir (false),
     mDeviceDirHandle (mega::INVALID_HANDLE),
     mBackupsDirName (),
@@ -105,8 +105,7 @@ void BackupsWizard::setupStep1()
 
     // Get device name
     mHaveDeviceName = false;
-    mSyncController.getDeviceName();
-
+    mSyncController.ensureDeviceNameIsSetOnRemote();
 
     bool isRemoteRootSynced(mSyncsModel->isRemoteRootSynced());
     if (isRemoteRootSynced)
@@ -295,7 +294,7 @@ void BackupsWizard::setupBackups()
                                     + mDeviceName + QLatin1Char('/')
                                     + currentBackupName).toUtf8().constData());
 
-            SyncController::instance().addSync(localFolderPath, mega::INVALID_HANDLE,
+            mSyncController.addSync(localFolderPath, mega::INVALID_HANDLE,
                                                currentBackupName, mega::MegaSync::TYPE_BACKUP);
         }
         else
