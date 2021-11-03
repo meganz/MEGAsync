@@ -4,8 +4,8 @@ c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
 cryptopp/c303dd024e2dc03a0665ddffbb12a1077933e649
 curl/c303dd024e2dc03a0665ddffbb12a1077933e649 all:curl-empty-bindir.patch
 libsodium/c303dd024e2dc03a0665ddffbb12a1077933e649
-openssl/c303dd024e2dc03a0665ddffbb12a1077933e649  osx:off
-openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649  all:off linux:on
+openssl/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
+openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
 openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
 pcre/c303dd024e2dc03a0665ddffbb12a1077933e649
 sqlite3/c303dd024e2dc03a0665ddffbb12a1077933e649
