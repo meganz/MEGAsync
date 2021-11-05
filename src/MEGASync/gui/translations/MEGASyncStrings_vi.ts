@@ -506,7 +506,7 @@
     <message>
         <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
         <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>hỉ nên bật tính năng này khi các phiên truyền tải không có hoạt động. Trong các trường hợp bình thường, giao thức HTTP là thích hợp nhất để truyền tải các nội dung mã hóa từ MEGA.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3099,7 +3099,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>The following characters are not allowed:
 %1</source>
         <translatorcomment>Warning error shown when a user is trying to create a folder with a name that contains not allowed characters. %1 placeholder will be replaced by the list of forbidden charset.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Các ký tự này không được phép sử dụng:
+%1</translation>
     </message>
 </context>
 <context>
@@ -3474,12 +3475,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mức lưu trữ tăng cường sẽ tính với giá %1 mỗi %2TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lượng băng thông tăng cường sẽ tính với giá %1 mỗi %2TB.</translation>
     </message>
 </context>
 <context>
@@ -3660,7 +3661,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Back</source>
         <translatorcomment>Button for going backwards in the navigating in the filesystem</translatorcomment>
-        <translation>Quay lại</translation>
+        <translation>Trở lại</translation>
     </message>
     <message>
         <source>Go back</source>
@@ -3675,7 +3676,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Chuyển tin nhắn</translation>
+        <translation>Tiến tới</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4339,7 +4340,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable overlay icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiện các biểu tượng nổi</translation>
     </message>
     <message>
         <source>Check for Updates</source>
@@ -4659,7 +4660,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Khai báo lỗi</translation>
     </message>
     <message>
         <source>MEGA Folder</source>
@@ -4674,7 +4675,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đang lưu lại các thư mục đồng bộ hóa…</translation>
     </message>
     <message>
         <source>Pro I</source>
@@ -5742,7 +5743,7 @@ Do you want to create one?</source>
     <message>
         <source>Yes (recommended)</source>
         <translatorcomment>Button text for to confirm the creation of link at Start Menu (Windows only)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Có (khuyên dùng)</translation>
     </message>
     <message>
         <source>No</source>

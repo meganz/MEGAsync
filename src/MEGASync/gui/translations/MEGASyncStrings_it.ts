@@ -41,7 +41,7 @@
     <message>
         <source>Of that, size taken up by file versions:</source>
         <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Spazio occupato dalle versioni dei file</translation>
     </message>
 </context>
 <context>
@@ -481,7 +481,7 @@
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Section title for download rate limit details.</translatorcomment>
-        <translation>Limite download</translation>
+        <translation>Limite velocità di download</translation>
     </message>
     <message>
         <source>Number of connections per transfer</source>
@@ -526,7 +526,7 @@
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Limite velocità di upload:</translation>
+        <translation>Limite velocità di download:</translation>
     </message>
     <message>
         <source>Number of connections per transfer:</source>
@@ -3533,7 +3533,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Redesign completo delle Impostazioni, con un nuovo look.
+- Nessun supporto alle versioni precedenti a macOS 10.12.
+- Aggiunto supporto per più valute nelle opzioni per effettuare l&apos;upgrade.
+- Migliorato il supporto degli schermi con DPI alti per Windows.
+- Sistemati crash su Windows, macOS e Linux.
+- Altri miglioramenti ed aggiustamenti della performance.
+- Altri miglioramenti ed aggiustamenti nella UI.</translation>
     </message>
 </context>
 <context>
@@ -4546,7 +4552,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Download rate limit:</source>
         <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
-        <translation>Limite velocità di upload:</translation>
+        <translation>Limite velocità di download:</translation>
     </message>
     <message>
         <source>Upload rate limit:</source>
