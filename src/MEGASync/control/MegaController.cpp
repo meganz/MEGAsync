@@ -24,7 +24,7 @@ void Controller::addSync(const QString &localFolder, const MegaHandle &remoteHan
     api->syncFolder(MegaSync::TYPE_TWOWAY, localFolder.toUtf8().constData(), syncName.toUtf8().constData(), remoteHandle,
         nullptr, new ProgressFuncExecuterListener(progress,  true, [](MegaApi*, MegaRequest*, MegaError*){
                         ///// onRequestFinish Management: ////
-    }));
+                    }));
 }
 
 void Controller::removeSync(std::shared_ptr<SyncSetting> syncSetting, ActionProgress *progress)

@@ -207,9 +207,9 @@ class ThreadPoolSingleton
 class MegaListenerFuncExecuter : public mega::MegaRequestListener
 {
 private:
-    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
     bool mAutoremove = true;
     bool mExecuteInAppThread = true;
+    std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> onRequestFinishCallback;
 
 public:
 
@@ -225,7 +225,7 @@ public:
     {
     }
 
-    void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
+    virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
     virtual void onRequestStart(mega::MegaApi*, mega::MegaRequest*) {}
     virtual void onRequestUpdate(mega::MegaApi*, mega::MegaRequest*) {}
     virtual void onRequestTemporaryError(mega::MegaApi*, mega::MegaRequest*, mega::MegaError*) {}
@@ -241,7 +241,6 @@ public:
     explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
         : QLabel(parent)
     {
-        Q_UNUSED(parent)
         Q_UNUSED(f)
 #ifndef __APPLE__
         setMouseTracking(true);
