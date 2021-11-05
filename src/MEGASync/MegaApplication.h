@@ -37,6 +37,7 @@
 #include "control/MegaController.h"
 #include "control/Utilities.h"
 #include "model/SyncModel.h"
+#include "control/SyncController.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "gui/QFilterAlertsModel.h"
@@ -429,6 +430,7 @@ protected:
     Preferences *preferences;
     SyncModel *model;
     Controller *controller;
+    std::unique_ptr<SyncController> mSyncController;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     QFilterAlertsModel *notificationsProxyModel;
