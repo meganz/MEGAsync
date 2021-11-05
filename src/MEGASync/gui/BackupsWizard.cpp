@@ -105,7 +105,7 @@ void BackupsWizard::setupStep1()
 
     // Get device name
     mHaveDeviceName = false;
-    mSyncController.ensureDeviceNameIsSetOnRemote();
+    mSyncController.getDeviceName();
 
     bool isRemoteRootSynced(mSyncsModel->isRemoteRootSynced());
     if (isRemoteRootSynced)
