@@ -4,9 +4,9 @@ c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
 cryptopp/c303dd024e2dc03a0665ddffbb12a1077933e649
 curl/7375bb408f2278d2f1875c259beef93332697ba7
 libsodium/c303dd024e2dc03a0665ddffbb12a1077933e649
-openssl/c303dd024e2dc03a0665ddffbb12a1077933e649
-openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 windows:off
-openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649
+openssl/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
+openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
+openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
 pcre/c303dd024e2dc03a0665ddffbb12a1077933e649
 sqlite3/c303dd024e2dc03a0665ddffbb12a1077933e649
 zlib/c303dd024e2dc03a0665ddffbb12a1077933e649
@@ -53,7 +53,7 @@ libpng/7375bb408f2278d2f1875c259beef93332697ba7
 bzip2/c303dd024e2dc03a0665ddffbb12a1077933e649
 
 # for the tests, just to get the build through
-gtest/c303dd024e2dc03a0665ddffbb12a1077933e649
+gtest/7375bb408f2278d2f1875c259beef93332697ba7
 readline/8.0 all:off osx:on
 
 # cryptopp with static CRT, for fully-static updater
