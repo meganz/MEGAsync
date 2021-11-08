@@ -668,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ваше сообщение не удаётся отправить из-за ошибки. Пожалуйста, попробуйте ещё раз позже или свяжитесь с нашей службой поддержки по адресу [A]support@mega.nz[/A], если проблема не устранена.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4148,7 +4148,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Open at login</source>
         <translatorcomment>Label to let the user start MEGAsync on login with a checkbox.</translatorcomment>
-        <translation>Открывать при входе</translation>
+        <translation>Запускать при включении компьютера</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
@@ -4315,7 +4315,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>General</source>
         <translatorcomment>Title for the Settings -&gt; General pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Общее</translation>
+        <translation>Общие</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -5459,7 +5459,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Выберите ежегодную оплату и получите 12 месяцев по цене 10</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
@@ -5502,7 +5502,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Выберите ежегодную оплату и получите 12 месяцев по цене 10</translation>
     </message>
 </context>
 <context>
