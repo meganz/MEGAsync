@@ -4347,7 +4347,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable overlay icons</source>
         <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
-        <translation>Attiva sovrapposizione delle icone</translation>
+        <translation>Attiva icone sovrapposte</translation>
     </message>
     <message>
         <source>Check for Updates</source>
