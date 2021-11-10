@@ -29,12 +29,12 @@ void SyncController::addSync(const QString &localFolder, const MegaHandle &remot
 {
     if (localFolder.isEmpty() && syncName.isEmpty())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Adding invalid sync %1")
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Adding invalid sync or backup \"%1\"")
                      .arg(localFolder).toUtf8().constData(), __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync %1 for path %2")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync or backup \"%1\" for path \"%2\"")
                  .arg(syncName, localFolder).toUtf8().constData(), __FILE__, __LINE__);
 
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
@@ -46,12 +46,12 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting)
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Removing invalid sync").toUtf8().constData(),
+                     QString::fromUtf8("Removing invalid sync or backup").toUtf8().constData(),
                      __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync %1")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync or backup \"%1\"")
                  .arg(syncSetting->name()).toUtf8().constData(), __FILE__, __LINE__);
 
     mApi->removeSync(syncSetting->backupId());
@@ -62,12 +62,12 @@ void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Trying to enable null sync").toUtf8().constData(),
+                     QString::fromUtf8("Trying to enable null sync or backup").toUtf8().constData(),
                      __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Enabling sync %1 to %2")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Enabling sync or backup \"%1\" to \"%2\"")
                  .arg(syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData(), __FILE__, __LINE__);
 
@@ -79,12 +79,12 @@ void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Trying to disable invalid sync").toUtf8().constData(),
+                     QString::fromUtf8("Trying to disable invalid sync or backup").toUtf8().constData(),
                      __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Disabling sync %1 to %2")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Disabling sync or backup \"%1\" to \"%2\"")
                  .arg(syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData(), __FILE__, __LINE__);
 
@@ -133,7 +133,7 @@ void SyncController::createMyBackupsDir(const QString& name)
 void SyncController::setMyBackupsDir(mega::MegaHandle handle)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Setting MyBackups dir to handle %1")
-                 .arg(handle).toUtf8().constData());
+                 .arg(handle).toUtf8().constData(), __FILE__, __LINE__);
     assert(Preferences::instance()->logged());
     mApi->setMyBackupsFolder(handle, mDelegateListener);
 }
@@ -151,8 +151,8 @@ void SyncController::setDeviceName(const QString& name)
     else
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO,
-                     QString::fromUtf8("Set device name on remote: already set").toUtf8().constData(),
-                     __FILE__, __LINE__);
+                     QString::fromUtf8("Set device name on remote: already set")
+                     .toUtf8().constData(), __FILE__, __LINE__);
         emit setDeviceDirStatus(MegaError::API_OK, QString());
     }
 }
@@ -204,7 +204,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             QString name (QString::fromUtf8(req->getName()));
             errorMsg = QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(req->getNumDetails()));
 
-            QString logMsg = QString::fromUtf8("Error adding sync %1 for %2 to %3 (request error): %4")
+            QString logMsg = QString::fromUtf8("Error adding sync \"%1\" for \"%2\" to \"%3\" (request error): %4")
                     .arg(name,
                          QString::fromUtf8(req->getFile()),
                          QString::fromUtf8(api->getNodePath(remoteNode.get())),
