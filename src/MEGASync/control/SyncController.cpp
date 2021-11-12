@@ -29,12 +29,12 @@ void SyncController::addSync(const QString &localFolder, const MegaHandle &remot
 {
     if (localFolder.isEmpty() && syncName.isEmpty())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Adding invalid sync or backup \"%1\"")
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Adding invalid sync \"%1\"")
                      .arg(localFolder).toUtf8().constData(), __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync or backup \"%1\" for path \"%2\"")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync \"%1\" for path \"%2\"")
                  .arg(syncName, localFolder).toUtf8().constData(), __FILE__, __LINE__);
 
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
@@ -46,12 +46,12 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting)
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Removing invalid sync or backup").toUtf8().constData(),
+                     QString::fromUtf8("Removing invalid sync").toUtf8().constData(),
                      __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync or backup \"%1\"")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync \"%1\"")
                  .arg(syncSetting->name()).toUtf8().constData(), __FILE__, __LINE__);
 
     mApi->removeSync(syncSetting->backupId());
@@ -62,12 +62,12 @@ void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Trying to enable null sync or backup").toUtf8().constData(),
+                     QString::fromUtf8("Trying to enable null sync").toUtf8().constData(),
                      __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Enabling sync or backup \"%1\" to \"%2\"")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Enabling sync \"%1\" to \"%2\"")
                  .arg(syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData(), __FILE__, __LINE__);
 
@@ -79,12 +79,12 @@ void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
     if (!syncSetting)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                     QString::fromUtf8("Trying to disable invalid sync or backup").toUtf8().constData(),
+                     QString::fromUtf8("Trying to disable invalid sync").toUtf8().constData(),
                      __FILE__, __LINE__);
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Disabling sync or backup \"%1\" to \"%2\"")
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Disabling sync \"%1\" to \"%2\"")
                  .arg(syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData(), __FILE__, __LINE__);
 
@@ -223,7 +223,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
         if (req->getNumDetails() && sync)
         {
-            QString errorMsg = QString::fromUtf8("Error removing sync %1 for %2 to %3: %4").arg(
+            QString errorMsg = QString::fromUtf8("Error removing sync \"%1\" for \"%2\" to \"%3\": %4").arg(
                         sync->name(),
                         sync->getLocalFolder(),
                         sync->getMegaFolder(),
@@ -245,7 +245,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
         if (req->getNumDetails() && sync)
         {
-            QString errorMsg = QString::fromUtf8("Error disabling sync %1 for %2 to %3: %4").arg(
+            QString errorMsg = QString::fromUtf8("Error disabling sync \"%1\" for \"%2\" to \"%3\": %4").arg(
                         sync->name(),
                         sync->getLocalFolder(),
                         sync->getMegaFolder(),
@@ -267,7 +267,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
         if (req->getNumDetails() && sync)
         {
-            QString errorMsg = QString::fromUtf8("Error enabling sync %1 for %2 to %3: %4").arg(
+            QString errorMsg = QString::fromUtf8("Error enabling sync \"%1\" for \"%2\" to \"%3\": %4").arg(
                         sync->name(),
                         sync->getLocalFolder(),
                         sync->getMegaFolder(),
@@ -302,7 +302,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             else
             {
                 errorMsg = QString::fromUtf8(e->getErrorString());
-                QString logMsg (QString::fromUtf8("Error setting MyBackups folder: %1").arg(errorMsg));
+                QString logMsg (QString::fromUtf8("Error setting MyBackups folder: \"%1\"").arg(errorMsg));
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData(), __FILE__, __LINE__);
                 errorMsg = QCoreApplication::translate("MegaError", errorMsg.toUtf8().constData());
             }
@@ -319,7 +319,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             else //if (errorCode == MegaError::API_ENOENT)
             {
                 errorMsg = QString::fromUtf8(e->getErrorString());
-                QString logMsg (QString::fromUtf8("Error setting device folder: %1").arg(errorMsg));
+                QString logMsg (QString::fromUtf8("Error setting device folder: \"%1\"").arg(errorMsg));
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData(), __FILE__, __LINE__);
                 errorMsg = QCoreApplication::translate("MegaError", errorMsg.toUtf8().constData());
             }
@@ -340,7 +340,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         else
         {
             errorMsg = QString::fromUtf8(e->getErrorString());
-            QString logMsg (QString::fromUtf8("Error creating MyBackups folder: %1").arg(errorMsg));
+            QString logMsg (QString::fromUtf8("Error creating MyBackups folder: \"%1\"").arg(errorMsg));
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData(), __FILE__, __LINE__);
             emit setMyBackupsDirStatus(errorCode, errorMsg);
             errorMsg = QCoreApplication::translate("MegaError", errorMsg.toUtf8().constData());
@@ -364,7 +364,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             else
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                             QString::fromUtf8("Error getting MyBackups folder: %1")
+                             QString::fromUtf8("Error getting MyBackups folder: \"%1\"")
                              .arg(QString::fromUtf8(e->getErrorString()))
                              .toUtf8().constData(), __FILE__, __LINE__);
                 setBackupsRootDirHandle(mega::INVALID_HANDLE);
@@ -383,7 +383,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             }
             else //if (errorCode == MegaError::API_ENOENT)
             {
-                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                              QString::fromUtf8("Error getting device name: %1")
                              .arg(QString::fromUtf8(e->getErrorString()))
                              .toUtf8().constData(), __FILE__, __LINE__);
@@ -404,7 +404,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             }
             if (mForceSetDeviceName)
             {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Force setting device name on remote",
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Force setting device name on remote",
                              __FILE__, __LINE__);
                 mForceSetDeviceName = false;
                 setDeviceName(devName);
