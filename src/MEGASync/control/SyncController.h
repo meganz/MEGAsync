@@ -35,7 +35,6 @@ public:
 
     void setDeviceName(const QString& name);
     void getDeviceName();
-    void ensureDeviceNameIsSetOnRemote();
 
     void setBackupsRootDirHandle(mega::MegaHandle handle);
     void getBackupsRootDirHandle();
@@ -52,12 +51,13 @@ signals:
     void setDeviceDirStatus(int errorCode, QString errorMsg);
     void deviceName(QString deviceName);
 
-
 protected:
     // override from MegaRequestListener
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e) override;
 
 private:
+    void ensureDeviceNameIsSetOnRemote();
+
     mega::MegaApi* mApi;
     mega::QTMegaRequestListener* mDelegateListener;
     SyncModel* mSyncModel;

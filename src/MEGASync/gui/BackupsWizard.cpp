@@ -818,17 +818,21 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, QString errorM
 
 void BackupsWizard::onSetDeviceNameRequestStatus(int errorCode, QString errorMsg)
 {
-    if (errorCode != mega::MegaError::API_OK)
+    // Only react when setting up device name.
+    if (mCurrentStep == Steps::SETUP_DEVICE_NAME)
     {
-        displayError(tr("Setting \"%1\" as device name failed.\nReason: %2")
-                     .arg(mDeviceName, errorMsg));
-        mCurrentStep = Steps::STEP_2;
+        if (errorCode != mega::MegaError::API_OK)
+        {
+            displayError(tr("Setting \"%1\" as device name failed.\nReason: %2")
+                         .arg(mDeviceName, errorMsg));
+            mCurrentStep = Steps::STEP_2;
+        }
+        else
+        {
+            mCurrentStep = Steps::SETUP_BACKUPS;
+        }
+        emit nextStep();
     }
-    else
-    {
-        mCurrentStep = Steps::SETUP_BACKUPS;
-    }
-    emit nextStep();
 }
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)

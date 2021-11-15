@@ -17,6 +17,9 @@ SyncController::SyncController(QObject* parent)
     // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
     assert(mApi);
     assert(mSyncModel);
+
+    // Make sure the device name is set, and set it if not
+    ensureDeviceNameIsSetOnRemote();
 }
 
 SyncController::~SyncController()
