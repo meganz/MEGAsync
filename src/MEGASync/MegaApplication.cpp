@@ -80,8 +80,7 @@ void MegaApplication::loadDataPath()
 }
 
 MegaApplication::MegaApplication(int &argc, char **argv) :
-    QApplication(argc, argv),
-    mSyncController (nullptr)
+    QApplication(argc, argv)
 {
     appfinished = false;
 
@@ -488,8 +487,6 @@ void MegaApplication::initialize()
 
     controller = Controller::instance();
     controller->setApi(this->megaApi);
-
-    mSyncController.reset(new SyncController());
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -2330,8 +2327,6 @@ void MegaApplication::cleanAll()
     // that may try to access megaApi after
     // their deletion
     QApplication::processEvents();
-
-    mSyncController.reset();
 
     delete megaApi;
     megaApi = NULL;
@@ -8415,11 +8410,6 @@ void MegaApplication::onSyncAdded(MegaApi *api, MegaSync *sync, int additionStat
     if (settingsDialog)
     {
         settingsDialog->loadSyncSettings();
-    }
-
-    if (mSyncController)
-    {
-        mSyncController->ensureDeviceNameIsSetOnRemote();
     }
 
     onGlobalSyncStateChanged(api);

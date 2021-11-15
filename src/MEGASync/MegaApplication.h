@@ -430,7 +430,6 @@ protected:
     Preferences *preferences;
     SyncModel *model;
     Controller *controller;
-    std::unique_ptr<SyncController> mSyncController;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     QFilterAlertsModel *notificationsProxyModel;
