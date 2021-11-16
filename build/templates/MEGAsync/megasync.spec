@@ -78,11 +78,9 @@ BuildRequires: ffmpeg-mega
 
     %if 0%{?fedora_version} < 33
         BuildRequires: cryptopp-devel
-    %endif
-
-    %if 0%{?fedora_version} >= 26
         Requires: cryptopp >= 5.6.5
     %endif
+
     %if 0%{?fedora_version}==25
         BuildRequires: lz4-libs
     %endif
