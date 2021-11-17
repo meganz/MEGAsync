@@ -91,6 +91,11 @@ BuildRequires: ffmpeg-mega
         BuildRequires: fontpackages-filesystem
     %endif
 
+    # allowing for rpaths (taken as invalid, as if they were not absolute paths when they are)
+    %if 0%{?fedora_version} >= 35
+        %define __brp_check_rpaths QA_RPATHS=0x0002 /usr/lib/rpm/check-rpaths
+    %endif
+
     %if 0%{?fedora_version} >= 23
         BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel, qt5-qtx11extras-devel
         Requires: qt5-qtbase >= 5.6, qt5-qtsvg
