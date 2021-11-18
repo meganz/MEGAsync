@@ -78,11 +78,9 @@ BuildRequires: ffmpeg-mega
 
     %if 0%{?fedora_version} < 33
         BuildRequires: cryptopp-devel
-    %endif
-
-    %if 0%{?fedora_version} >= 26
         Requires: cryptopp >= 5.6.5
     %endif
+
     %if 0%{?fedora_version}==25
         BuildRequires: lz4-libs
     %endif
@@ -91,6 +89,11 @@ BuildRequires: ffmpeg-mega
         BuildRequires: fonts-filesystem
     %else
         BuildRequires: fontpackages-filesystem
+    %endif
+
+    # allowing for rpaths (taken as invalid, as if they were not absolute paths when they are)
+    %if 0%{?fedora_version} >= 35
+        %define __brp_check_rpaths QA_RPATHS=0x0002 /usr/lib/rpm/check-rpaths
     %endif
 
     %if 0%{?fedora_version} >= 23
@@ -219,7 +222,7 @@ ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGAS
 ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
 
 # Fedora uses system Crypto++ header files
-%if 0%{?fedora_version} < 33
+%if 0%{?fedora_version} && 0%{?fedora_version} < 33
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
