@@ -1,3 +1,6 @@
+# cmake\vcpkg toolchain dependencies
+vcpkg-cmake-config/7375bb408f2278d2f1875c259beef93332697ba7
+vcpkg-cmake/7375bb408f2278d2f1875c259beef93332697ba7
 
 # direct core dependencies of the SDK
 c-ares/c303dd024e2dc03a0665ddffbb12a1077933e649
@@ -7,7 +10,7 @@ libsodium/c303dd024e2dc03a0665ddffbb12a1077933e649
 openssl/c303dd024e2dc03a0665ddffbb12a1077933e649 osx:off
 openssl-unix/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off linux:on
 openssl-windows/c303dd024e2dc03a0665ddffbb12a1077933e649 all:off windows:on
-pcre/c303dd024e2dc03a0665ddffbb12a1077933e649
+pcre/61b3046e513d189495ee37247e6cc550ee75e471
 sqlite3/c303dd024e2dc03a0665ddffbb12a1077933e649
 zlib/c303dd024e2dc03a0665ddffbb12a1077933e649
 libuv/c303dd024e2dc03a0665ddffbb12a1077933e649

@@ -1242,12 +1242,22 @@ void InfoDialog::on_bAddSync_clicked()
         }
 
         syncsMenu.reset(new QMenu());
+        syncsMenu->setToolTipsVisible(true);
 
 #ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"
                                                     "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"));
+#endif
+
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
+        // Make widget transparent (otherwise it shows a white background in its corners)
+        syncsMenu->setAttribute(Qt::WA_TranslucentBackground);
+        // Disable drop shadow (does not take into account curved corners)
+        syncsMenu->setWindowFlags(syncsMenu->windowFlags()
+                                  | Qt::FramelessWindowHint
+                                  | Qt::NoDropShadowWindowHint);
 #endif
 
         //Highlight menu entry on mouse over
