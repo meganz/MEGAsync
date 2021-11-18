@@ -3675,7 +3675,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>転送</translation>
+        <translation>進む</translation>
     </message>
     <message>
         <source>Go forward</source>

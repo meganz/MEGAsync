@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -1561,7 +1561,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importar a Mi nube</translation>
+        <translation>Importar a la Nube</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2444,7 +2444,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Error transferring folder: </source>
@@ -2791,7 +2791,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
 </context>
 <context>
@@ -4756,7 +4756,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sincroniza toda tu cuenta de MEGA</translation>
+        <translation>Sincroniza toda tu Nube</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4914,7 +4914,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Tu carpeta local y tu nube de MEGA se sincronizarán automaticamente.</translation>
+        <translation>Tu carpeta local y tu Nube de MEGA se sincronizarán automaticamente.</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -5017,7 +5017,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Sync specific folders in your cloud drive</source>
         <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
-        <translation>Sincroniza carpetas específicas</translation>
+        <translation>Sincroniza carpetas específicas de tu Nube</translation>
     </message>
     <message>
         <source>Selective sync:</source>
@@ -5062,7 +5062,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation>Tu nube será sincronizada con una carpeta local.</translation>
+        <translation>Toda tu Nube será sincronizada con una carpeta local.</translation>
     </message>
     <message>
         <source>We are all done!</source>
@@ -5201,7 +5201,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -5556,7 +5556,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation>Mi nube</translation>
+        <translation>Nube</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

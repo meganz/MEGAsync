@@ -1166,7 +1166,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Votre compte est expiré, en lecture seulement, jusqu’à ce que vous versiez les paiements requis.</translation>
+        <translation>Votre compte est expiré, en lecture seule, jusqu’à ce que vous versiez les paiements requis.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -3682,7 +3682,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Transférer</translation>
+        <translation>Avancer</translation>
     </message>
     <message>
         <source>Go forward</source>
