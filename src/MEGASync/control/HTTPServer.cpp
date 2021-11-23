@@ -830,12 +830,14 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         if (handle == ::mega::INVALID_HANDLE)
         {
             response = QString::number(MegaError::API_EARGS);
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient: invalid handle");
         }
         else
         {
             if (handle != megaApi->getMyUserHandleBinary())
             {
                 response = QString::number(MegaError::API_EACCESS);
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient: user mismatch");
             }
             else
             {
