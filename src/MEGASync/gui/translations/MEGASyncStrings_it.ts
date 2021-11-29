@@ -4270,11 +4270,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Riavvia</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Disattiva le versioni del file</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Una cartella locale con il backup dei file eliminati in MEGA</translation>
