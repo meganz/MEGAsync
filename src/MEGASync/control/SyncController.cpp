@@ -94,7 +94,7 @@ void SyncController::disableSync(std::shared_ptr<SyncSetting> syncSetting)
 void SyncController::createMyBackupsDir(const QString& name)
 {
     // Check that name is not empty
-    if (name.isEmpty())        
+    if (name.isEmpty())
     {
         int errorCode (MegaError::API_EARGS);
         QString errorMsg (QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode)));
@@ -195,26 +195,65 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     case MegaRequest::TYPE_ADD_SYNC:
     {
         int errorCode (e->getErrorCode());
+        int syncErrorCode (req->getNumDetails());
+
         QString errorMsg;
 
-        if (errorCode != MegaError::API_OK)
+        if (errorCode != MegaError::API_OK || syncErrorCode != MegaSync::NO_SYNC_ERROR)
         {
+            if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
+
+            {
+                errorMsg = QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
+            }
+            else
+            {
+                switch (errorCode)
+                {
+                    // FIXME: The following 5 strings need to be validated/reworded
+                    case MegaError::API_EARGS:
+                    {
+                        errorMsg = tr("Local folder not set");
+                        break;
+                    }
+                    case MegaError::API_EACCESS:
+                    {
+                        errorMsg = tr("Error with the folder set as root for the backups");
+                        break;
+                    }
+                    case MegaError::API_EINTERNAL:
+                    {
+                        errorMsg = tr("The user attribute for the backup root folder does not have a record containing the handle");
+                        break;
+                    }
+                    case MegaError::API_ENOENT:
+                    {
+                        errorMsg = tr("The handle of the backup root folder stored in the user attribute was invalid, or the node could not be found.");
+                        break;
+                    }
+                    case MegaError::API_EINCOMPLETE:
+                    {
+                        errorMsg = tr("Device id not set or invalid device name");
+                        break;
+                    }
+                    default:
+                    {
+                        errorMsg = QCoreApplication::translate("MegaError", e->getErrorString());
+                        break;
+                    }
+                }
+            }
+
             std::shared_ptr<MegaNode> remoteNode(api->getNodeByHandle(req->getNodeHandle()));
-
             QString name (QString::fromUtf8(req->getName()));
-            errorMsg = QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(req->getNumDetails()));
-
             QString logMsg = QString::fromUtf8("Error adding sync \"%1\" for \"%2\" to \"%3\" (request error): %4")
                     .arg(name,
                          QString::fromUtf8(req->getFile()),
                          QString::fromUtf8(api->getNodePath(remoteNode.get())),
                          errorMsg);
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
-
-            errorMsg = tr("Adding backup \"%1\" failed.\n"
-                          "Reason: %2")
-                       .arg(name, errorMsg);
         }
+
         emit syncAddStatus(errorCode, errorMsg);
         break;
     }
@@ -373,7 +412,7 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         {
             QString devName;
             if (errorCode == MegaError::API_OK)
-            {                
+            {
                 mIsDeviceNameSetOnRemote = true;
                 devName = QString::fromUtf8(req->getName());
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO,
