@@ -121,7 +121,7 @@ background-color: #FFFFFF;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
         </property>
         <property name="iconSize">
@@ -365,8 +365,8 @@ border-bottom: 1px solid #EFEFEC;
         </property>
         <property name="minimumSize">
          <size>
-          <width>16777215</width>
-          <height>16777215</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="text">
@@ -397,7 +397,7 @@ border-bottom: 1px solid #EFEFEC;
        <height>1651561</height>
       </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <layout class="QHBoxLayout" name="lgplLayout">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -440,7 +440,7 @@ border-bottom: 1px solid #EFEFEC;
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="footerLayout">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -531,7 +531,7 @@ border-bottom: 1px solid #EFEFEC;
   <tabstop>bPolicy</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

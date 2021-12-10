@@ -42,7 +42,7 @@ BugReportDialog::~BugReportDialog()
     delete delegateRequestListener;
 }
 
-void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 {
     if (!currentTransfer)
     {
@@ -68,7 +68,7 @@ void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     sendProgress->show();
 }
 
-void BugReportDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     transferredBytes = transfer->getTransferredBytes();
     int permil = (totalBytes > 0) ? ((1000 * transferredBytes) / totalBytes) : 0;
@@ -82,7 +82,7 @@ void BugReportDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
     }
 }
 
-void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *error)
+void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer*, MegaError* error)
 {
     sendProgress->reset();
     totalBytes = 0;
@@ -123,13 +123,13 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     logger.resumeAfterReporting();
 }
 
-void BugReportDialog::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
+void BugReportDialog::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaError *e)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Temporary error at report dialog: %1")
                  .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
 }
 
-void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
 {
     switch(request->getType())
     {

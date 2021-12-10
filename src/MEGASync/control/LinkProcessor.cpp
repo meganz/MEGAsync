@@ -63,7 +63,7 @@ int LinkProcessor::size() const
     return linkList.size();
 }
 
-void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
 {
     if (request->getType() == MegaRequest::TYPE_GET_PUBLIC_NODE)
     {
