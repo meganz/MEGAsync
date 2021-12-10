@@ -221,14 +221,14 @@ public:
     MegaListenerFuncExecuter(bool autoremove = false,
                              std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
                             )
-        : mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
+        : onRequestFinishCallback(std::move(func)), mAutoremove(autoremove)
     {
     }
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) {}
-    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
-    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+    virtual void onRequestStart(mega::MegaApi*, mega::MegaRequest*) {}
+    virtual void onRequestUpdate(mega::MegaApi*, mega::MegaRequest*) {}
+    virtual void onRequestTemporaryError(mega::MegaApi*, mega::MegaRequest*, mega::MegaError*) {}
 
     void setExecuteInAppThread(bool executeInAppThread);
 };
@@ -252,17 +252,17 @@ signals:
     void clicked();
 
 protected:
-    void mousePressEvent(QMouseEvent* event)
+    void mousePressEvent(QMouseEvent*)
     {
         emit clicked();
     }
 #ifndef __APPLE__
-    void enterEvent(QEvent *event)
+    void enterEvent(QEvent*)
     {
         setCursor(Qt::PointingHandCursor);
     }
 
-    void leaveEvent(QEvent *event)
+    void leaveEvent(QEvent*)
     {
         setCursor(Qt::ArrowCursor);
     }

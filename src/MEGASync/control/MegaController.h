@@ -71,14 +71,14 @@ public:
     ProgressFuncExecuterListener(ActionProgress *progressHepler, bool autoremove = false,
                                  std::function<void(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError *e)> func = nullptr
                                  )
-        : mProgressHelper(progressHepler), mAutoremove(autoremove), onRequestFinishCallback(std::move(func))
+        : mProgressHelper(progressHepler), onRequestFinishCallback(std::move(func)), mAutoremove(autoremove)
     {
     }
 
     void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
-    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
-    virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request) {}
-    virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e) {}
+    virtual void onRequestStart(mega::MegaApi*, mega::MegaRequest*);
+    virtual void onRequestUpdate(mega::MegaApi*, mega::MegaRequest*) {}
+    virtual void onRequestTemporaryError(mega::MegaApi*, mega::MegaRequest*, mega::MegaError*) {}
 };
 
 
