@@ -163,12 +163,12 @@ QModelIndex QAlertsModel::index(int row, int column, const QModelIndex &parent) 
     return createIndex(row, column, alertsMap.value(alertOrder[row]));
 }
 
-QModelIndex QAlertsModel::parent(const QModelIndex &index) const
+QModelIndex QAlertsModel::parent(const QModelIndex&) const
 {
     return QModelIndex();
 }
 
-int QAlertsModel::columnCount(const QModelIndex &parent) const
+int QAlertsModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }

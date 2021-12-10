@@ -126,7 +126,7 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
     }
 }
 
-void VerifyLockMessage::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
+void VerifyLockMessage::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
 {
     int error = e->getErrorCode();
 

@@ -76,7 +76,7 @@ void ActiveTransfersWidget::onTransferStart(mega::MegaApi *api, mega::MegaTransf
     updateTransferInfo(transfer);
 }
 
-void ActiveTransfersWidget::onTransferFinish(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *e)
+void ActiveTransfersWidget::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError*)
 {
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
@@ -107,7 +107,7 @@ void ActiveTransfersWidget::onTransferUpdate(mega::MegaApi *api, mega::MegaTrans
     updateTransferInfo(transfer);
 }
 
-void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *e)
+void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi*, mega::MegaTransfer*, mega::MegaError*)
 {
 
 }

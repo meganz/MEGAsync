@@ -90,7 +90,7 @@ SetupWizard::~SetupWizard()
     delete ui;
 }
 
-void SetupWizard::onRequestStart(MegaApi *api, MegaRequest *request)
+void SetupWizard::onRequestStart(MegaApi*, MegaRequest* request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
     {
@@ -1182,7 +1182,7 @@ void SetupWizard::lTermsLink_clicked()
     ui->cAgreeWithTerms->toggle();
 }
 
-void SetupWizard::on_lTermsLink_linkActivated(const QString &link)
+void SetupWizard::on_lTermsLink_linkActivated(const QString& /*link*/)
 {
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(Preferences::BASE_URL + QString::fromUtf8("/terms")));
 }
@@ -1237,7 +1237,7 @@ void SetupWizard::onPasswordTextChanged(QString text)
 }
 
 PreConfiguredSync::PreConfiguredSync(QString localFolder, MegaHandle megaFolderHandle, QString syncName):
-    mLocalFolder{localFolder}, mMegaFolderHandle{megaFolderHandle},mSyncName(syncName)
+    mMegaFolderHandle{megaFolderHandle}, mLocalFolder(localFolder), mSyncName(syncName)
 {
 
 }

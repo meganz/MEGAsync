@@ -241,6 +241,8 @@ public:
     explicit ClickableLabel(QWidget* parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags())
         : QLabel(parent)
     {
+        Q_UNUSED(parent)
+        Q_UNUSED(f)
 #ifndef __APPLE__
         setMouseTracking(true);
 #endif

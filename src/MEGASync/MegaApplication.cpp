@@ -1638,7 +1638,7 @@ void MegaApplication::unityFix()
     dummyMenu->exec();
 }
 
-void MegaApplication::closeDialogs(bool bwoverquota)
+void MegaApplication::closeDialogs(bool/* bwoverquota*/)
 {
     delete transferManager;
     transferManager = NULL;
@@ -4059,7 +4059,7 @@ void MegaApplication::migrateSyncConfToSdk(QString email)
         megaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
                                      osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
                                      osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                     new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi* api,  MegaRequest *request, MegaError *e)
+                                     new MegaListenerFuncExecuter(true, [this, osd, oldCacheSyncsCount, needsMigratingFromOldSession, email](MegaApi*,  MegaRequest* request, MegaError* e)
         {
 
             if (e->getErrorCode() == MegaError::API_OK)
@@ -4134,7 +4134,7 @@ void MegaApplication::fetchNodes(QString email)
     }
     else // we will ask the SDK the email
     {
-        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi* api,  MegaRequest *request, MegaError *e) {
+        megaApi->getUserEmail(megaApi->getMyUserHandleBinary(),new MegaListenerFuncExecuter(true, [loadMigrateAndFetchNodes](MegaApi*,  MegaRequest* request, MegaError* e) {
               QString email;
 
               if (e->getErrorCode() == API_OK)
@@ -4250,7 +4250,7 @@ void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, boo
     }
 }
 
-void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
+void MegaApplication::addRecentFile(QString/* fileName*/, long long/* fileHandle*/, QString/* localPath*/, QString/* nodeKey*/)
 {
     if (appfinished)
     {
@@ -4906,7 +4906,7 @@ void MegaApplication::changeState()
 }
 
 #ifdef _WIN32
-void MegaApplication::changeDisplay(QScreen *disp)
+void MegaApplication::changeDisplay(QScreen*)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("DISPLAY CHANGED").toUtf8().constData());
 
@@ -6709,7 +6709,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
     }
 }
 
-void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
+void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 {
     DeferPreferencesSyncForScope deferrer(this);
 
@@ -8436,7 +8436,7 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
     }
 }
 
-void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
+void MegaApplication::onSyncDisabled(MegaApi*, MegaSync* sync)
 {
     if (appfinished || !sync)
     {
@@ -8469,7 +8469,7 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
     model->removeUnattendedDisabledSync(syncSetting->backupId());
 }
 
-void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
+void MegaApplication::onSyncEnabled(MegaApi* , MegaSync* sync)
 {
     if (appfinished || !sync)
     {

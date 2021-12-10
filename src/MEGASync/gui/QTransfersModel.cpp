@@ -13,7 +13,7 @@ QTransfersModel::QTransfersModel(int type, QObject *parent) :
     mThreadPool = ThreadPoolSingleton::getInstance();
 }
 
-int QTransfersModel::columnCount(const QModelIndex &parent) const
+int QTransfersModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }

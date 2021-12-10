@@ -1477,7 +1477,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
     }
 }
 
-void InfoDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+void InfoDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 {
     updateTransfersCount();
     if (transfer)
@@ -1493,7 +1493,7 @@ void InfoDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     }
 }
 
-void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+void InfoDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     if (transfer)
     {
