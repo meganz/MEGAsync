@@ -365,7 +365,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_linux.qrc">
-                   <normaloff>:/images/ico_backup.png</normaloff>:/images/ico_backup.png</iconset>
+                   <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -403,7 +403,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_linux.qrc">
-                   <normaloff>:/images/icons/ico_add_sync_folder.png</normaloff>:/images/icons/ico_add_sync_folder.png</iconset>
+                   <normaloff>:/images/icons/ico_sync.png</normaloff>:/images/icons/ico_sync.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
