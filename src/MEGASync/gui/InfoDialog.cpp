@@ -1439,7 +1439,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 completedDownloadBytes -= transfer->getTransferredBytes();
                 if (circlesShowAllActiveTransfersProgress)
                 {
-                    ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                    ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / static_cast<double>(leftDownloadBytes));
                 }
             }
 
