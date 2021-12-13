@@ -348,7 +348,7 @@ margin-top: -1px;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wDesc" native="true">
+           <widget class="QWidget" name="wDescLogo" native="true">
             <property name="minimumSize">
              <size>
               <width>400</width>
@@ -454,7 +454,7 @@ image: none;</string>
                <property name="styleSheet">
                 <string notr="true">image: none;</string>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout">
+               <layout class="QVBoxLayout" name="formContainerLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -2209,7 +2209,7 @@ image: none;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QWidget" name="wDesc" native="true">
+           <widget class="QWidget" name="wDesc2FA" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <property name="spacing">
               <number>0</number>
@@ -2257,7 +2257,7 @@ image: none;</string>
           </item>
           <item>
            <widget class="QWidget" name="w2FACode" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout">
+            <layout class="QVBoxLayout" name="w2faLayout">
              <property name="spacing">
               <number>9</number>
              </property>

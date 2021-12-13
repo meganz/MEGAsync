@@ -85,7 +85,7 @@ std::pair<QString, QString> GuestWidget::getTexts()
     return std::make_pair(ui->lEmail->text(), ui->lPassword->text());
 }
 
-void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
+void GuestWidget::onRequestStart(MegaApi*, MegaRequest* request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
     {

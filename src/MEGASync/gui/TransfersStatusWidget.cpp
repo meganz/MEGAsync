@@ -60,7 +60,7 @@ TransfersStatusWidget::~TransfersStatusWidget()
     delete ui;
 }
 
-void TransfersStatusWidget::paintEvent(QPaintEvent *event)
+void TransfersStatusWidget::paintEvent(QPaintEvent*)
 {
     updateSizes();
     QPainter painter(this);

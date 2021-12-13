@@ -79,7 +79,7 @@ void TransfersSummaryWidget::setPaused(bool value)
     }
 }
 
-void TransfersSummaryWidget::paintEvent(QPaintEvent *event)
+void TransfersSummaryWidget::paintEvent(QPaintEvent*)
 {
     updateSizes();
     QPainter painter(this);
@@ -350,7 +350,7 @@ void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void TransfersSummaryWidget::mouseReleaseEvent(QMouseEvent *event)
+void TransfersSummaryWidget::mouseReleaseEvent(QMouseEvent*)
 {
     QPoint pos = this->mapFromGlobal(QCursor::pos());
 
@@ -651,7 +651,7 @@ void TransfersSummaryWidget::expand(bool noAnimate)
     return doResize(goalwidth, noAnimate);
 }
 
-void TransfersSummaryWidget::showEvent(QShowEvent *event)
+void TransfersSummaryWidget::showEvent(QShowEvent*)
 {
     expand(); //This will trigger an animation if size has changed
 }

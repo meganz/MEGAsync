@@ -328,7 +328,7 @@ bool TransferManagerItem::mouseHoverRetryingLabel(QPoint pos)
     return false;
 }
 
-void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
+void TransferManagerItem::mouseHoverTransfer(bool isHover, const QPoint&)
 {
     if (isHover)
     {
