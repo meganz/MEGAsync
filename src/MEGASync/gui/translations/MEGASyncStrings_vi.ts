@@ -208,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Thanh toán</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -859,7 +859,8 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Đính kèm tệp log chẩn đoán để hỗ trợ gỡ lỗi.
+Trong một số trường hợp, log có thể chứa thông tin chi tiết về dữ liệu của bạn, chẳng hạn như tên của tệp hoặc thư mục</translation>
     </message>
 </context>
 <context>
@@ -1150,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xin giải quyết vấn đề thanh toán ngay lúc sớm nhất để tránh tài khoản doanh nghiệp bị đình chỉ.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -3460,7 +3461,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Store even more with our premium secure cloud storage offering.</source>
         <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lưu trữ nhiều hơn nữa với mức giá ưu đãi để sử dụng dịch vụ.</translation>
     </message>
     <message>
         <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
@@ -3532,7 +3533,13 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
         <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Thiết kế lại toàn bộ phần thiết đặt với dáng vẻ mới.
+- KHông còn hỗ trợ macOS phiên bản dưới 10.12.
+- Hỗ trợ nhiều loại tiền tệ cho nhu cầu nâng cấp tài khoản.
+- Hỗ trợ cải thiện cho màn hình DPI cao trên nền tảng Windows.
+- Các lỗi đã báo làm treo máy trên Windows, Linux và macOS đã được sửa.
+- Thêm vài điều chỉnh để cải thiện hiệu xuất.
+- Vài sửa đổi nhỏ về giao diện sử dụng.</translation>
     </message>
 </context>
 <context>
@@ -4263,11 +4270,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Khởi động lại MEGAsync</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Tắt tính năng ghi nhớ phiên bản tệp tin</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Thư mục nội bộ chứa các bản sao lưu dự phòng của các tệp bị xoá từ trên MEGA</translation>
@@ -4335,7 +4337,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Network</source>
         <translatorcomment>Title for the Settings -&gt; Network pane tab button. Keep as short as possible.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mạng</translation>
     </message>
     <message>
         <source>Enable overlay icons</source>
@@ -4380,7 +4382,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Nếu có trục trặc gì xảy ra khi sử dụng, xin hãy cho chúng tôi biết càng nhiều chi tiết càng tốt.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -4415,7 +4417,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Một số thư mục chưa được đồng bộ hóa. Để biết thêm thông tin xin rê trỏ chuột lên biểu tượng chú ý màu vàng.</translation>
     </message>
     <message>
         <source>Recovery Key</source>
@@ -4425,7 +4427,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA không lưu trữ mật khẩu vì thế sẽ không có cách nào tra cứu và phục hồi lại. Để tránh mất khả năng truy cập vào tài khoản, nên tải và lưu lại Mã Phục Hồi ở nơi an toàn và dễ nhớ.</translation>
     </message>
     <message>
         <source>Password</source>
@@ -4460,7 +4462,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Restart MEGA Desktop Application to apply changes.</source>
         <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Khởi động lại Ứng Dụng MEGA cho Máy Tính để áp dụng các thay đổi.</translation>
     </message>
     <message>
         <source>Change Settings...</source>
@@ -4525,12 +4527,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Tài khoản MEGA của bạn đã đầy. Các phiên tải lên bị vô hiệu hóa và đồng bộ hóa thư mục bị ngừng.</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mức độ an ninh của tài khoản phụ thuộc vào độ phức tạp của mật khẩu bạn đặt ra. Mật khẩu cần phải độc đáo và khó đoán mò. Chúng tôi khuyên sử dụng một chương trình quản lý mật khẩu.</translation>
     </message>
     <message>
         <source>Excluded file and folder names:</source>
@@ -4560,7 +4562,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Bật tích hợp với Windows Explorer</translation>
     </message>
     <message>
         <source>B</source>
@@ -4590,7 +4592,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Used quota for the last %1 hours:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mức truyền tải đã dùng trong %1 giờ qua:</translation>
     </message>
     <message>
         <source>Free</source>
@@ -4610,7 +4612,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Synchronization will stop working. Are you sure?</source>
         <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Việc đồng bộ hóa sẽ dừng hoạt động. Bạn có chắc chắn không?</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -4670,7 +4672,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose which files or folders you want to exclude from synchronisation.</source>
         <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Chọn các thư mục hoặc tệp tin bạn muốn loại trừ khỏi việc đồng bộ hóa</translation>
     </message>
     <message>
         <source>Saving synchronised folders…</source>
@@ -5444,17 +5446,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Xin nâng cấp tài khoản lên Pro để tiếp tục sử dụng ngay, hoặc chờ %1 để tiếp tục sử dụng miễn phí</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Giá nội tệ dưới đây chỉ là ước tính. Tất cả các giao dịch sẽ được tính bằng Euro.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
         <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Phiên tải xuống không thể tiến hành được bởi vì phiên này sẽ tiêu dùng hết mức băng thông miễn phí được cấp cho tài khoản.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
@@ -5487,17 +5489,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Để tăng mức hạn này, bạn có thể nâng cấp tài khoản và mở rộng thêm không gian lưu trữ.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>* Giá nội tệ dưới đây chỉ là ước tính. Tất cả các giao dịch sẽ được tính bằng Euro.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Lượng sử dụng đạt 100% trong tổng %1có sẵn cho tài khoản.</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
@@ -5738,7 +5740,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 
 Do you want to create one?</source>
         <translatorcomment>Warning message shown when there is no valid link in Windows Start Menu. Explain the causes of not having it and let the user to recreate it.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 không tìm thấy đường liên kết hợp lệ trong Start Menu. Việc không có đường liên kết có thể sẽ làm ảnh hưởng khả năng tương tác với thông báo màn hình desktop.
+
+Bạn có muốn tạo đường liên kết không?</translation>
     </message>
     <message>
         <source>Yes (recommended)</source>
