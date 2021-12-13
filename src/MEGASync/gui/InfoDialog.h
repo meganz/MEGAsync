@@ -262,6 +262,9 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
+
+ private:
+    static double computePercent(const long long completed, const long long remaining);
 };
 
 #endif // INFODIALOG_H
