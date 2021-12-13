@@ -238,6 +238,11 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
                          .arg(QCoreApplication::translate("MegaError", e->getErrorString()))
                          .toUtf8().constData());
         }
+
+        if (!req->getNumDetails() && sync)
+        {
+            mSyncModel->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
+        }
         break;
     }
     case MegaRequest::TYPE_DISABLE_SYNC:
@@ -281,6 +286,11 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error enabling sync (request reason): %1")
                          .arg(QCoreApplication::translate("MegaError", e->getErrorString()))
                          .toUtf8().constData());
+        }
+
+        if (!req->getNumDetails() && sync)
+        {
+            mSyncModel->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
         }
         break;
     }
