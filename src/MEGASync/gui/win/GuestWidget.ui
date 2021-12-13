@@ -169,7 +169,7 @@ QPushButton
 	padding-left: 12px;
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="guestWidgetLayout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -226,7 +226,7 @@ QPushButton
         <property name="styleSheet">
          <string notr="true"/>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="guestWidgetInHeaderLayout">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -351,7 +351,7 @@ margin-top: -1px;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wDesc" native="true">
+           <widget class="QWidget" name="wLoginDesc" native="true">
             <property name="minimumSize">
              <size>
               <width>400</width>
@@ -367,7 +367,7 @@ margin-top: -1px;</string>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
+            <layout class="QVBoxLayout" name="loginDescLayout">
              <property name="spacing">
               <number>6</number>
              </property>
@@ -401,7 +401,7 @@ margin-top: -1px;</string>
                 <string notr="true">background: transparent;
 image: none;</string>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <layout class="QHBoxLayout" name="logoLoginLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -457,7 +457,7 @@ image: none;</string>
                <property name="styleSheet">
                 <string notr="true">image: none;</string>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout">
+               <layout class="QVBoxLayout" name="formContainerLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -2266,8 +2266,8 @@ background-color: #F0373A;
            </spacer>
           </item>
           <item>
-           <widget class="QWidget" name="wDesc" native="true">
-            <layout class="QHBoxLayout" name="descLayout">
+           <widget class="QWidget" name="wDesc2FA" native="true">
+            <layout class="QHBoxLayout" name="desc2faLayout">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -2447,7 +2447,7 @@ background-color: #F0373A;
                  <height>26</height>
                 </size>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <layout class="QHBoxLayout" name="errorLayout">
                 <property name="spacing">
                  <number>0</number>
                 </property>
