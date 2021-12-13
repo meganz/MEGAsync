@@ -6,17 +6,15 @@
 
 #include <QtConcurrent/QtConcurrent>
 
-#ifdef __APPLE__
-const QLatin1String MENU_STYLESHEET ("QMenu {background: #ffffff;"
-                                        "padding-top: 8px; "
-                                        "padding-bottom: 8px;}");
-#else
-const QLatin1String MENU_STYLESHEET ("QMenu {border: 1px solid #B8B8B8;"
-                                        "border-radius: 5px;"
-                                        "background: #ffffff;"
-                                        "padding-top: 8px;"
-                                        "padding-bottom: 8px;}");
-#endif
+const QLatin1String MENU_STYLESHEET ("QMenu {"
+                                     "border: 1px solid #B8B8B8;"
+                                     "border-radius: 5px;"
+                                     "background: #ffffff;"
+                                     "padding-top: 8px;"
+                                     "padding-bottom: 8px;}"
+                                     "QMenu::separator{"
+                                     "height: 1px;"
+                                     "background: rgba(0,0,0,0.1);}");
 
 #ifdef WIN32
 const QLatin1String DEVICE_ICON ("://images/mimes/devices - mono/device-small/pc-win.png");
@@ -36,7 +34,6 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
 {
     QString textAdd;
     QString textMenu;
-    QIcon iconAdd;
     QIcon iconMenu;
 
     switch (mType)
@@ -44,17 +41,15 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
         case mega::MegaSync::TYPE_TWOWAY:
         {
             textAdd = tr("Add Sync");
-            iconAdd = QIcon(QLatin1String("://images/ico_drop_add_sync.png"));
             textMenu = tr("Syncs");
-            iconMenu = QIcon(QLatin1String("://images/ico_add_sync_folder.png"));
+            iconMenu = QIcon(QLatin1String("://images/icons/ico_sync.png"));
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
         {
             textAdd = tr("Add Backups");
-            iconAdd = QIcon(QLatin1String("://images/Backup.png"));
             textMenu = tr("Backups");
-            iconMenu = iconAdd;
+            iconMenu = QIcon(QLatin1String("://images/icons/ico_backup.png"));
             connect(&mSyncController, &SyncController::deviceName,
                     this, &SyncsMenu::onDeviceNameSet);
             break;
@@ -65,7 +60,6 @@ SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(p
         }
     }
     mAddAction->setLabelText(textAdd);
-    mAddAction->setIcon(iconAdd);
     mAddAction->setParent(this);
     connect(mAddAction.get(), &MenuItemAction::triggered,
             this, &SyncsMenu::onAddSync, Qt::QueuedConnection);
@@ -154,6 +148,8 @@ void SyncsMenu::refresh()
         // Display "Add <type>" only if the whole remote / is not synced...
         if (activeFolders && !model->isRemoteRootSynced())
         {
+            static const QIcon iconAdd (QLatin1String("://images/icons/ico_add_sync.png"));
+            mAddAction->setIcon(iconAdd);
             mMenu->addSeparator();
             mMenu->addAction(mAddAction.get());
         }
@@ -162,6 +158,25 @@ void SyncsMenu::refresh()
     if (!numItems || !activeFolders)
     {
         mMenuAction->setMenu(nullptr);
+        switch (mType)
+        {
+            case mega::MegaSync::TYPE_TWOWAY:
+            {
+                static const QIcon iconAdd (QLatin1String("://images/icons/ico_sync.png"));
+                mAddAction->setIcon(iconAdd);
+                break;
+            }
+            case mega::MegaSync::TYPE_BACKUP:
+            {
+                static const QIcon iconAdd (QLatin1String("://images/icons/ico_backup.png"));
+                mAddAction->setIcon(iconAdd);
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
     }
     else
     {

@@ -238,15 +238,12 @@
         <file>images/ico_about_MEGA@3x.png</file>
         <file>images/ico_about_MEGA_out@3x.png</file>
         <file>images/ico_about_MEGA_over@3x.png</file>
-        <file>images/ico_add_sync.png</file>
-        <file>images/ico_add_sync@2x.png</file>
-        <file>images/ico_add_sync@3x.png</file>
-        <file>images/ico_add_sync_folder.png</file>
-        <file>images/ico_add_sync_folder.png</file>
-        <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@3x.png</file>
-        <file>images/ico_add_sync_folder@3x.png</file>
+        <file>images/icons/ico_sync.png</file>
+        <file>images/icons/ico_sync.png</file>
+        <file>images/icons/ico_sync@2x.png</file>
+        <file>images/icons/ico_sync@2x.png</file>
+        <file>images/icons/ico_sync@3x.png</file>
+        <file>images/icons/ico_sync@3x.png</file>
         <file>images/ico_cloud_drive.png</file>
         <file>images/ico_cloud_drive@2x.png</file>
         <file>images/ico_cloud_drive@3x.png</file>
@@ -255,10 +252,9 @@
         <file>images/ico_download@3x.png</file>
         <file>images/ico_download_out@3x.png</file>
         <file>images/ico_download_over@3x.png</file>
-        <file>images/ico_drop_add_sync.png</file>
-        <file>images/ico_drop_add_sync@2x.png</file>
-        <file>images/ico_drop_add_sync@3x.png</file>
-        <file>images/ico_drop_add_sync_over@3x.png</file>
+        <file>images/icons/ico_add_sync.png</file>
+        <file>images/icons/ico_add_sync@2x.png</file>
+        <file>images/icons/ico_add_sync@3x.png</file>
         <file>images/ico_drop_synched_folder.png</file>
         <file>images/ico_drop_synched_folder@2x.png</file>
         <file>images/ico_drop_synched_folder@3x.png</file>
@@ -900,9 +896,9 @@
         <file>animations/downloading@3x.gif</file>
         <file>animations/downloading@2x.gif</file>
         <file>animations/downloading.gif</file>
-        <file>images/Backup.png</file>
-        <file>images/Backup@2x.png</file>
-        <file>images/Backup@3x.png</file>
+        <file>images/icons/ico_backup.png</file>
+        <file>images/icons/ico_backup@2x.png</file>
+        <file>images/icons/ico_backup@3x.png</file>
         <file>images/mimes/devices - mono/device-small/pc-linux.png</file>
         <file>images/mimes/devices - mono/device-small/pc-linux@2x.png</file>
         <file>images/mimes/devices - mono/device-small/pc-linux@3x.png</file>

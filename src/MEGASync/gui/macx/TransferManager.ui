@@ -282,8 +282,8 @@
               </property>
               <property name="icon">
                <iconset resource="../Resources_macx.qrc">
-                <normaloff>:/images/ico_drop_add_sync.png</normaloff>
-                <normalon>:/images/ico_drop_add_sync.png</normalon>:/images/ico_drop_add_sync.png</iconset>
+                <normaloff>:/images/icons/ico_add_sync.png</normaloff>
+                <normalon>:/images/icons/ico_add_sync.png</normalon>:/images/icons/ico_add_sync.png</iconset>
               </property>
               <property name="iconSize">
                <size>

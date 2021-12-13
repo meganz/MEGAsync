@@ -36,7 +36,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../Resources_linux.qrc">
-    <normaloff>:/images/Backup.png</normaloff>:/images/Backup.png</iconset>
+    <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">*
