@@ -10,10 +10,10 @@ void TransfersStatusWidget::updateSizes()
     {
         int minwidthheight = qMin(this->width(), this->height());
         wpen = qFloor(minwidthheight/48.0*5);
-        spacing = minwidthheight/48.0*2;
+        spacing = static_cast<int>(minwidthheight/48.0*2);
         marginoutside = qRound(wpen/2.0);
         diamoutside = minwidthheight-marginoutside*2;
-        diaminside = diamoutside-wpen*2.0-spacing*2;
+        diaminside = static_cast<int>(diamoutside-wpen*2.0-spacing*2);
         margininside = qRound((diamoutside-diaminside)/2.0);
 
         residualin = 0;
@@ -114,6 +114,7 @@ qreal TransfersStatusWidget::getPercentOuterCircle() const
 void TransfersStatusWidget::setPercentOuterCircle(const qreal &value)
 {
     percentOuterCircle = value;
-    outpoint=360*16*percentOuterCircle>residualout?360*16*percentOuterCircle-residualout:360*16*percentOuterCircle;
+    const qreal tempOutpoint = 360 * 16 * percentOuterCircle;
+    outpoint = (tempOutpoint > residualout) ? tempOutpoint - residualout : tempOutpoint;
     update();
 }

@@ -346,8 +346,8 @@ void SetupWizard::onRequestUpdate(MegaApi *, MegaRequest *request)
     {
         if (request->getTotalBytes() > 0)
         {
-            ui->progressBar->setMaximum(request->getTotalBytes());
-            ui->progressBar->setValue(request->getTransferredBytes());
+            ui->progressBar->setMaximum(static_cast<int>(request->getTotalBytes()));
+            ui->progressBar->setValue(static_cast<int>(request->getTransferredBytes()));
         }
     }
 }

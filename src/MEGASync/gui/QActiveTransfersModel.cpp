@@ -100,7 +100,7 @@ QActiveTransfersModel::QActiveTransfersModel(int type, std::shared_ptr<MegaTrans
         }
     }
 
-    if (transferOrder.size() != transfers.size())
+    if (transferOrder.size() != static_cast<size_t>(transfers.size()))
     {
         assert(false);
         megaApi->sendEvent(AppStatsEvents::EVENT_DUP_ACTIVE_TRSF_DURING_INIT,
