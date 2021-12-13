@@ -1063,9 +1063,22 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (model->hasUnattendedDisabledSyncs())
+    else if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
+             || model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
     {
-        ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
+        if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
+            && model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        {
+            ui->sActiveTransfers->setCurrentWidget(ui->pAllSyncsDisabled);
+        }
+        else if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        {
+            ui->sActiveTransfers->setCurrentWidget(ui->pBackupsDisabled);
+        }
+        else
+        {
+            ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
+        }
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
@@ -2061,17 +2074,39 @@ void InfoDialog::onAnimationFinishedBlockedError()
     ui->wBlocked->setVisible(shownBlockedError);
 }
 
-
-
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {
-    model->dismissUnattendedDisabledSyncs();
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
-    ((MegaApplication *)qApp)->openSettings(SettingsDialog::SYNCS_TAB);
-    model->dismissUnattendedDisabledSyncs();
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+}
+
+void InfoDialog::on_bDismissBackupsSettings_clicked()
+{
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+}
+
+void InfoDialog::on_bOpenBackupsSettings_clicked()
+{
+    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+}
+
+void InfoDialog::on_bDismissAllSyncsSettings_clicked()
+{
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+}
+
+void InfoDialog::on_bOpenAllSyncsSettings_clicked()
+{
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 int InfoDialog::getLoggedInMode() const

@@ -554,8 +554,8 @@
         <file>images/key_big@2x.png</file>
         <file>images/lock_big.png</file>
         <file>images/lock_big@2x.png</file>
-        <file>images/warning-disabled-syncs.png</file>
-        <file>images/warning-disabled-syncs@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs@2x.png</file>
         <file>images/Small_Free.png</file>
         <file>images/Small_Free@2x.png</file>
         <file>images/Small_Lite.png</file>
@@ -635,5 +635,9 @@
         <file>images/settings-backup-macx@2x.png</file>
         <file>images/Illustration/rewind/Rewind.png</file>
         <file>images/Illustration/rewind/Rewind@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups@2x.png</file>
     </qresource>
 </RCC>

@@ -29,9 +29,9 @@ SyncModel::SyncModel() : QObject(),
 {
 }
 
-bool SyncModel::hasUnattendedDisabledSyncs() const
+bool SyncModel::hasUnattendedDisabledSyncs(mega::MegaSync::SyncType type) const
 {
-    return unattendedDisabledSyncs.size();
+    return unattendedDisabledSyncs[type].size();
 }
 
 void SyncModel::removeSyncedFolder(int num, mega::MegaSync::SyncType type)
@@ -421,35 +421,41 @@ void SyncModel::saveUnattendedDisabledSyncs()
 {
     if (preferences->logged())
     {
-        preferences->setDisabledSyncTags(unattendedDisabledSyncs);
+        const auto allTags (unattendedDisabledSyncs.values());
+        const auto tags (std::accumulate(allTags.begin(),
+                                             allTags.end(),
+                                             QSet<mega::MegaHandle>()));
+        preferences->setDisabledSyncTags(tags);
     }
 }
 
-void SyncModel::addUnattendedDisabledSync(MegaHandle tag)
+void SyncModel::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    unattendedDisabledSyncs.insert(tag);
+    unattendedDisabledSyncs[type].insert(tag);
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }
 
-void SyncModel::removeUnattendedDisabledSync(MegaHandle tag)
+void SyncModel::removeUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {
-    unattendedDisabledSyncs.remove(tag);
+    unattendedDisabledSyncs[type].remove(tag);
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }
 
 void SyncModel::setUnattendedDisabledSyncs(QSet<MegaHandle> tags)
 {
-    //REVIEW: If possible to get enable/disable callbacks before loading from settings.Merge both lists of tags.
-    unattendedDisabledSyncs = tags;
+    for (auto tag : tags)
+    {
+        unattendedDisabledSyncs[configuredSyncsMap[tag]->getType()].insert(tag);
+    }
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }
 
-void SyncModel::dismissUnattendedDisabledSyncs()
+void SyncModel::dismissUnattendedDisabledSyncs(mega::MegaSync::SyncType type)
 {
-    unattendedDisabledSyncs.clear();
+    unattendedDisabledSyncs[type].clear();
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
 }

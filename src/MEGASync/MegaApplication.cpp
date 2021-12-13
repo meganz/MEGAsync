@@ -813,9 +813,22 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
-    else if (model->hasUnattendedDisabledSyncs())
+    else if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
+             || model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
     {
-        tooltipState = tr("One or more syncs have been disabled");
+        if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY)
+            && model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        {
+            tooltipState = tr("Some syncs and backups have been disabled");
+        }
+        else if (model->hasUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP))
+        {
+            tooltipState = tr("One or more backups have been disabled");
+        }
+        else
+        {
+            tooltipState = tr("One or more syncs have been disabled");
+        }
 
         icon = icons["alert"];
 
@@ -8448,6 +8461,8 @@ void MegaApplication::onSyncDisabled(std::shared_ptr<SyncSetting> syncSetting)
 
 void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
 {
+    Q_UNUSED(api);
+
     if (appfinished || !sync)
     {
         return;
@@ -8455,7 +8470,8 @@ void MegaApplication::onSyncDisabled(MegaApi *api, MegaSync *sync)
 
     if (sync->getError())
     {
-        model->addUnattendedDisabledSync(sync->getBackupId());
+        model->addUnattendedDisabledSync(sync->getBackupId(),
+                                         static_cast<MegaSync::SyncType>(sync->getType()));
     }
 
     onSyncDisabled(model->getSyncSettingByTag(sync->getBackupId()));
@@ -8476,11 +8492,13 @@ void MegaApplication::onSyncEnabled(std::shared_ptr<SyncSetting> syncSetting)
     showErrorMessage(tr("Your sync \"%1\" has been enabled")
                      .arg(syncSetting->name()));
 
-    model->removeUnattendedDisabledSync(syncSetting->backupId());
+    model->removeUnattendedDisabledSync(syncSetting->backupId(), syncSetting->getType());
 }
 
 void MegaApplication::onSyncEnabled(MegaApi *api, MegaSync *sync)
 {
+    Q_UNUSED(api);
+
     if (appfinished || !sync)
     {
         return;
