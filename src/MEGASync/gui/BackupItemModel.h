@@ -53,7 +53,7 @@ private slots:
 
 private:
     SyncModel* mSyncModel;
-    SyncController& mSyncController;
+    SyncController mSyncController;
 
     QList<std::shared_ptr<SyncSetting>> mList;
     QList<std::shared_ptr<SyncSetting>> mOrderedList;

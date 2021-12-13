@@ -7,7 +7,7 @@
 BackupItemModel::BackupItemModel(QObject *parent)
     : QAbstractItemModel(parent),
     mSyncModel (SyncModel::instance()),
-    mSyncController(SyncController::instance()),
+    mSyncController(),
     mSortColumn(-1),
     mSortOrder(Qt::AscendingOrder)
 {

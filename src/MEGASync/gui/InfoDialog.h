@@ -164,6 +164,10 @@ private slots:
 
     void on_bDismissSyncSettings_clicked();
     void on_bOpenSyncSettings_clicked();
+    void on_bDismissBackupsSettings_clicked();
+    void on_bOpenBackupsSettings_clicked();
+    void on_bDismissAllSyncsSettings_clicked();
+    void on_bOpenAllSyncsSettings_clicked();
 
     void setAvatar();
 

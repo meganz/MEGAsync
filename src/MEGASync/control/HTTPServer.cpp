@@ -360,7 +360,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     static const QString externalUploadSelectionStatusStart = QLatin1String("{\"a\":\"uss\",");
     static const QString externalTransferQueryProgressStart = QLatin1String("{\"a\":\"t\",");
     static const QString externalShowInFolder = QLatin1String("{\"a\":\"sf\",");
-    static const QString externalAddBackup = QLatin1String("{\"a\":\"ab\"}");
+    static const QString externalAddBackup = QLatin1String("{\"a\":\"ab\",\"u\":\"");
 
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
@@ -815,13 +815,39 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             }
         }
     }
-    else if (request.data == externalAddBackup)
+    else if (request.data.startsWith(externalAddBackup))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient");
-        emit onExternalAddBackup();
-        response = QString::number(MegaError::API_OK);
-    }
 
+        QString userHandle(Utilities::extractJSONString(request.data, QString::fromUtf8("u")));
+        MegaHandle handle = INVALID_HANDLE;
+
+        if (userHandle.size())
+        {
+            handle = MegaApi::base64ToUserHandle(userHandle.toLatin1().constData());
+        }
+
+        if (handle == ::mega::INVALID_HANDLE)
+        {
+            response = QString::number(MegaError::API_EARGS);
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient: invalid handle");
+        }
+        else
+        {
+            MegaHandle appUser (megaApi->getMyUserHandleBinary());
+
+            if (handle != appUser && appUser != ::mega::INVALID_HANDLE)
+            {
+                response = QString::number(MegaError::API_EACCESS);
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Add backup command received from the webclient: user mismatch");
+            }
+            else
+            {
+                emit onExternalAddBackup();
+                response = QString::number(MegaError::API_OK);
+            }
+        }
+    }
 
     if (!response.size())
     {

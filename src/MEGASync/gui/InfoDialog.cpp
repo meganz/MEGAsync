@@ -33,6 +33,7 @@ using namespace std::chrono;
 
 using namespace mega;
 
+static constexpr int DEFAULT_MIN_PERCENTAGE{1};
 
 void InfoDialog::pauseResumeClicked()
 {
@@ -446,16 +447,19 @@ void InfoDialog::setUsage()
                         break;
                     }
                 }
-            ui->wCircularStorage->setValue(Utilities::partPer(usedStorage, totalStorage));
+            auto parts (usedStorage ?
+                            std::max(Utilities::partPer(usedStorage, totalStorage),
+                                     DEFAULT_MIN_PERCENTAGE)
+                          : 0);
+            ui->wCircularStorage->setValue(parts);
             usedStorageString = QString::fromUtf8("%1 /%2")
-                                .arg(QString::fromUtf8("<span style='color:%1;"
-                                                       "font-family: Lato;"
-                                                       "text-decoration:none;'>%2</span>")
-                                     .arg(usageColorS)
-                                     .arg(Utilities::getSizeString(usedStorage)))
-                                .arg(QString::fromUtf8("<span style=' font-family: Lato;"
-                                                       "text-decoration:none;'>&nbsp;%1</span>")
-                                     .arg(Utilities::getSizeString(totalStorage)));
+                    .arg(QString::fromUtf8("<span style='color:%1;"
+                                           "font-family: Lato;"
+                                           "text-decoration:none;'>%2</span>")
+                         .arg(usageColorS, Utilities::getSizeString(usedStorage)))
+                    .arg(QString::fromUtf8("<span style=' font-family: Lato;"
+                                           "text-decoration:none;'>&nbsp;%1</span>")
+                         .arg(Utilities::getSizeString(totalStorage)));
         }
     }
 
@@ -469,7 +473,7 @@ void InfoDialog::setUsage()
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
-        ui->wCircularStorage->setEmptyBarTotalValueUnknown();
+        ui->wCircularStorage->setTotalValueUnknown();
         usedTransferString = QString::fromUtf8("<span style='color: #333333;"
                                                     "font-size:20px; font-family: Lato;"
                                                     "text-decoration:none;'>%1</span>")
@@ -477,9 +481,12 @@ void InfoDialog::setUsage()
     }
     else
     {
+        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
+
         QString usageColor;
         // Set color according to state
-        switch (transferQuotaState) {
+        switch (transferQuotaState)
+        {
             case QuotaState::OK:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OK);
@@ -492,6 +499,8 @@ void InfoDialog::setUsage()
                 usageColor = QString::fromUtf8("#F98400");
                 break;
             }
+            case QuotaState::OVERQUOTA:
+            // Fallthrough
             case QuotaState::FULL:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
@@ -499,55 +508,40 @@ void InfoDialog::setUsage()
                 break;
             }
         }
-        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
         if (accType == Preferences::ACCOUNT_TYPE_FREE)
         {
 
-            // Set UI according to state
-            switch (transferQuotaState) {
-                case QuotaState::OK:
-                // Fallthrough
-                case QuotaState::WARNING:
-                {
-                    ui->wCircularQuota->setEmptyBarTotalValueUnknown();
-                    break;
-                }
-                case QuotaState::FULL:
-                {
-                    ui->wCircularQuota->setFullBarTotalValueUnkown();
-                    break;
-                }
-            }
-
+            ui->wCircularQuota->setTotalValueUnknown(transferQuotaState != QuotaState::FULL
+                                                        && transferQuotaState != QuotaState::OVERQUOTA);
             usedTransferString = tr("%1 used")
                                  .arg(QString::fromUtf8("<span style='color:%1;"
                                                         "font-family: Lato;"
                                                         "text-decoration:none;'>%2</span>")
-                                      .arg(usageColor)
-                                      .arg(Utilities::getSizeString(usedTransfer)));
+                                      .arg(usageColor, Utilities::getSizeString(usedTransfer)));
         }
         else
         {
-            if (preferences->totalBandwidth() == 0)
+            auto totalTransfer (preferences->totalBandwidth());
+            if (totalTransfer == 0)
             {
-                ui->wCircularQuota->setEmptyBarTotalValueUnknown();
+                ui->wCircularQuota->setTotalValueUnknown();
                 usedTransferString = Utilities::getSizeString(0ull);
             }
             else
             {
-                auto totalTransfer(preferences->totalBandwidth());
+                auto parts (usedTransfer ?
+                                std::max(Utilities::partPer(usedTransfer, totalTransfer),
+                                         DEFAULT_MIN_PERCENTAGE)
+                              : 0);
 
-                auto percentage = Utilities::partPer(usedTransfer, totalTransfer);
-                ui->wCircularQuota->setValue(percentage);
-
+                ui->wCircularQuota->setValue(parts);
                 usedTransferString = QString::fromUtf8("%1 /%2")
                                      .arg(QString::fromUtf8("<span style='color:%1;"
                                                             "font-family: Lato;"
                                                             "text-decoration:none;'>%2</span>")
-                                          .arg(usageColor)
-                                          .arg(Utilities::getSizeString(usedTransfer)))
-                                     .arg(QString::fromUtf8("<span style='font-family: Lato;"
+                                          .arg(usageColor, Utilities::getSizeString(usedTransfer)),
+                                          QString::fromUtf8("<span style='font-family: Lato;"
                                                             "text-decoration:none;"
                                                             "'>&nbsp;%1</span>")
                                           .arg(Utilities::getSizeString(totalTransfer)));
@@ -1069,9 +1063,22 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
-    else if (model->hasUnattendedDisabledSyncs())
+    else if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
+             || model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
     {
-        ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
+        if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY)
+            && model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        {
+            ui->sActiveTransfers->setCurrentWidget(ui->pAllSyncsDisabled);
+        }
+        else if (model->hasUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP))
+        {
+            ui->sActiveTransfers->setCurrentWidget(ui->pBackupsDisabled);
+        }
+        else
+        {
+            ui->sActiveTransfers->setCurrentWidget(ui->pSyncsDisabled);
+        }
         overlay->setVisible(false);
         ui->wPSA->hidePSA();
     }
@@ -2067,17 +2074,39 @@ void InfoDialog::onAnimationFinishedBlockedError()
     ui->wBlocked->setVisible(shownBlockedError);
 }
 
-
-
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {
-    model->dismissUnattendedDisabledSyncs();
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
-    ((MegaApplication *)qApp)->openSettings(SettingsDialog::SYNCS_TAB);
-    model->dismissUnattendedDisabledSyncs();
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+}
+
+void InfoDialog::on_bDismissBackupsSettings_clicked()
+{
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+}
+
+void InfoDialog::on_bOpenBackupsSettings_clicked()
+{
+    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+}
+
+void InfoDialog::on_bDismissAllSyncsSettings_clicked()
+{
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+}
+
+void InfoDialog::on_bOpenAllSyncsSettings_clicked()
+{
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    model->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 int InfoDialog::getLoggedInMode() const

@@ -37,6 +37,7 @@
 #include "control/MegaController.h"
 #include "control/Utilities.h"
 #include "model/SyncModel.h"
+#include "control/SyncController.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "gui/QFilterAlertsModel.h"

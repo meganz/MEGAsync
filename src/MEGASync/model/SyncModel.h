@@ -53,9 +53,7 @@ protected:
     QMap<mega::MegaSync::SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> configuredSyncsMap;
     QMap<mega::MegaHandle, std::shared_ptr<SyncSetting>> syncsSettingPickedFromOldConfig;
-
-    // FIXME: Investigate and remove
-    QSet<mega::MegaHandle> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
+    QMap<mega::MegaSync::SyncType, QSet<mega::MegaHandle>> unattendedDisabledSyncs; //Tags of syncs disabled due to errors since last dismissed
 
 public:
     void reset();
@@ -93,11 +91,11 @@ public:
     int getNumSyncedFolders(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
 
     // FIXME: Remove unattended disabled syncs
-    bool hasUnattendedDisabledSyncs() const;
-    void addUnattendedDisabledSync(mega::MegaHandle tag);
-    void removeUnattendedDisabledSync(mega::MegaHandle tag);
+    bool hasUnattendedDisabledSyncs(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY) const;
+    void addUnattendedDisabledSync(mega::MegaHandle tag, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    void removeUnattendedDisabledSync(mega::MegaHandle tag, mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void setUnattendedDisabledSyncs(QSet<mega::MegaHandle> tags);
-    void dismissUnattendedDisabledSyncs();
+    void dismissUnattendedDisabledSyncs(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     // --
 
     QStringList getSyncNames(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);

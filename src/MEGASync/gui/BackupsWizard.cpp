@@ -16,7 +16,7 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mUi (new Ui::BackupsWizard),
     mCurrentStep (Steps::STEP_1_INIT),
     mSyncsModel (SyncModel::instance()),
-    mSyncController(SyncController::instance()),
+    mSyncController(),
     mCreateBackupsDir (false),
     mDeviceDirHandle (mega::INVALID_HANDLE),
     mBackupsDirName (),
@@ -95,8 +95,8 @@ void BackupsWizard::refreshNextButtonState()
 
 void BackupsWizard::setupStep1()
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 1 Init", __FILE__, __LINE__);
 //    setFixedHeight(HEIGHT_S1);
-
     refreshNextButtonState();
     mUi->sSteps->setCurrentWidget(mUi->pStep1);
     mUi->bCancel->setEnabled(true);
@@ -106,7 +106,6 @@ void BackupsWizard::setupStep1()
     // Get device name
     mHaveDeviceName = false;
     mSyncController.getDeviceName();
-
 
     bool isRemoteRootSynced(mSyncsModel->isRemoteRootSynced());
     if (isRemoteRootSynced)
@@ -166,10 +165,12 @@ void BackupsWizard::setupStep1()
     adjustSize();
 
     mCurrentStep = Steps::STEP_1;
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 1");
 }
 
 void BackupsWizard::setupStep2()
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 2 Init");
     refreshNextButtonState();
     mUi->sSteps->setCurrentWidget(mUi->pStep2);
     mUi->bNext->setText(tr("Setup"));
@@ -227,10 +228,12 @@ void BackupsWizard::setupStep2()
     adjustSize();
 
     mCurrentStep = Steps::STEP_2;
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 2");
 }
 
 void BackupsWizard::setupFinalize()
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: finalize");
     refreshNextButtonState();
     mUi->bCancel->setEnabled(false);
     mUi->bBack->hide();
@@ -244,6 +247,7 @@ void BackupsWizard::setupFinalize()
 
 void BackupsWizard::setupMyBackupsDir(bool nameCollision)
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: setup MyBackups");
     // If the user cancels, exit wizard
     if (mBackupsDirName.isEmpty())
     {
@@ -269,6 +273,7 @@ void BackupsWizard::setupMyBackupsDir(bool nameCollision)
 
 void BackupsWizard::setupDeviceName()
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: setup device name");
     mSyncController.setDeviceName(mDeviceName);
 }
 
@@ -289,13 +294,13 @@ void BackupsWizard::setupBackups()
 
             // Create backup
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
-                               QString::fromUtf8("Adding backup %1 to %2 from BackupsWizard:")
+                               QString::fromUtf8("Backups Wizard: setup backup \"%1\" to \"%2\"")
                                .arg(localFolderPath,
                                     mBackupsDirName +  QLatin1Char('/')
                                     + mDeviceName + QLatin1Char('/')
                                     + currentBackupName).toUtf8().constData());
 
-            SyncController::instance().addSync(localFolderPath, mega::INVALID_HANDLE,
+            mSyncController.addSync(localFolderPath, mega::INVALID_HANDLE,
                                                currentBackupName, mega::MegaSync::TYPE_BACKUP);
         }
         else
@@ -490,6 +495,7 @@ QString BackupsWizard::remoteFolderExistsDialog(const QString& backupName,
 // State machine orchestrator
 void BackupsWizard::onNextStep()
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: next step");
     refreshNextButtonState();
     switch (mCurrentStep)
     {
@@ -530,6 +536,7 @@ void BackupsWizard::onNextStep()
         }
         case Steps::EXIT:
         {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: exit");
             mUserCancelled ? reject() : accept();
             break;
         }
@@ -541,6 +548,7 @@ void BackupsWizard::onNextStep()
 
 void BackupsWizard::on_bNext_clicked()
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: next clicked");
     switch (mCurrentStep)
     {
         case Steps::STEP_1:
@@ -575,6 +583,7 @@ void BackupsWizard::on_bCancel_clicked()
 
     if (userWantsToCancel == QMessageBox::Ok)
     {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: user cancel");
         mUserCancelled = true;
         mCurrentStep = Steps::EXIT;
         emit nextStep();
@@ -662,11 +671,15 @@ void BackupsWizard::on_bMoreFolders_clicked()
             mUi->lvFoldersS1->scrollTo(mStep1FoldersModel->indexFromItem(item));
         }
         refreshNextButtonState();
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
+                           QString::fromUtf8("Backups Wizard: add folder \"%1\"")
+                           .arg(path).toUtf8().constData());
     }
 }
 
 void BackupsWizard::on_bBack_clicked()
 {    
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: back");
     // The "Back" button only appears at STEP_2. Go back to STEP_1_INIT.
     mCurrentStep = Steps::STEP_1_INIT;
     emit nextStep();
@@ -702,6 +715,8 @@ void BackupsWizard::setupComplete()
 {
     if (!mError)
     {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
+                           "Backups Wizard: setup completed successfully");
         // We are now done, exit
         mCurrentStep = Steps::EXIT;
 
@@ -720,6 +735,8 @@ void BackupsWizard::setupComplete()
     }
     else
     {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
+                           "Backups Wizard: setup completed with error, go back to step 1");
         // Error: go back to Step 1 :(
         mCurrentStep = Steps::STEP_1_INIT;
         emit nextStep();
@@ -794,17 +811,21 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, QString errorM
 
 void BackupsWizard::onSetDeviceNameRequestStatus(int errorCode, QString errorMsg)
 {
-    if (errorCode != mega::MegaError::API_OK)
+    // Only react when setting up device name.
+    if (mCurrentStep == Steps::SETUP_DEVICE_NAME)
     {
-        displayError(tr("Setting \"%1\" as device name failed.\nReason: %2")
-                     .arg(mDeviceName, errorMsg));
-        mCurrentStep = Steps::STEP_2;
+        if (errorCode != mega::MegaError::API_OK)
+        {
+            displayError(tr("Setting \"%1\" as device name failed.\nReason: %2")
+                         .arg(mDeviceName, errorMsg));
+            mCurrentStep = Steps::STEP_2;
+        }
+        else
+        {
+            mCurrentStep = Steps::SETUP_BACKUPS;
+        }
+        emit nextStep();
     }
-    else
-    {
-        mCurrentStep = Steps::SETUP_BACKUPS;
-    }
-    emit nextStep();
 }
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
@@ -848,6 +869,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
 
 void BackupsWizard::onSuccessDialogAccepted()
 {
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: show Backup Center");
 // FIXME: Revert to live url when feature is merged
 //  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/fm/backups")));

@@ -1,9 +1,11 @@
 #include "MenuItemAction.h"
 #include <QKeyEvent>
+#include <QStyle>
 
 const QString MenuItemAction::Colors::Normal = QLatin1String("#777777");
 const QString MenuItemAction::Colors::Highlight = QLatin1String("#000000");
 const QString MenuItemAction::Colors::Accent = QLatin1String("#F46265");
+static constexpr int ENTRY_MAX_WIDTH_PX = 240;
 
 MenuItemAction::MenuItemAction(const QString& title, const QString& value,
                                const QIcon& icon, const QIcon& hoverIcon, bool manageHoverStates,
@@ -13,11 +15,12 @@ MenuItemAction::MenuItemAction(const QString& title, const QString& value,
       mContainer (new QWidget()),
       mIcon (icon),
       mHoverIcon (hoverIcon),
-      mTitle (new QLabel(title, mContainer)),
+      mTitle (new QLabel(mContainer)),
       mValue (value.isNull() ? nullptr : new QLabel(value, mContainer)),
       mTreeDepth (treeDepth),
       mIconButton (new QPushButton(mContainer))
 {
+    setLabelText(title);
     mContainer->setObjectName(QLatin1String("wContainer"));
     mContainer->installEventFilter(this);
 
@@ -50,7 +53,15 @@ MenuItemAction::MenuItemAction(const QString& title, const QIcon& icon, const QI
 
 void MenuItemAction::setLabelText(const QString& title)
 {
-    mTitle->setText(title);
+    // Force polish to update font Info with .ui StyleSheet
+    mTitle->ensurePolished();
+    auto f (mTitle->fontMetrics());
+    QString elidedTitle (f.elidedText(title, Qt::ElideMiddle, ENTRY_MAX_WIDTH_PX));
+    mTitle->setText(elidedTitle);
+    if (title != elidedTitle)
+    {
+        setToolTip(title);
+    }
 }
 
 void MenuItemAction::setIcon(const QIcon& icon)

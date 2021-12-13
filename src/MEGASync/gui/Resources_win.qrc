@@ -42,9 +42,6 @@
         <file>images/bug_report_success.png</file>
         <file>images/bug_report_success@2x.png</file>
         <file>images/bug_report_success@3x.png</file>
-        <file>images/business.png</file>
-        <file>images/business@2x.png</file>
-        <file>images/business@3x.png</file>
         <file>images/bwupgrade.png</file>
         <file>images/bwupgrade@2x.png</file>
         <file>images/bwupgrade@3x.png</file>
@@ -250,15 +247,12 @@
         <file>images/ico_about_MEGA@3x.png</file>
         <file>images/ico_about_MEGA_out@3x.png</file>
         <file>images/ico_about_MEGA_over@3x.png</file>
-        <file>images/ico_add_sync.png</file>
-        <file>images/ico_add_sync@2x.png</file>
-        <file>images/ico_add_sync@3x.png</file>
-        <file>images/ico_add_sync_folder.png</file>
-        <file>images/ico_add_sync_folder.png</file>
-        <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@3x.png</file>
-        <file>images/ico_add_sync_folder@3x.png</file>
+        <file>images/icons/ico_sync.png</file>
+        <file>images/icons/ico_sync.png</file>
+        <file>images/icons/ico_sync@2x.png</file>
+        <file>images/icons/ico_sync@2x.png</file>
+        <file>images/icons/ico_sync@3x.png</file>
+        <file>images/icons/ico_sync@3x.png</file>
         <file>images/ico_cloud_drive.png</file>
         <file>images/ico_cloud_drive@2x.png</file>
         <file>images/ico_cloud_drive@3x.png</file>
@@ -267,10 +261,9 @@
         <file>images/ico_download@3x.png</file>
         <file>images/ico_download_out@3x.png</file>
         <file>images/ico_download_over@3x.png</file>
-        <file>images/ico_drop_add_sync.png</file>
-        <file>images/ico_drop_add_sync@2x.png</file>
-        <file>images/ico_drop_add_sync@3x.png</file>
-        <file>images/ico_drop_add_sync_over@3x.png</file>
+        <file>images/icons/ico_add_sync.png</file>
+        <file>images/icons/ico_add_sync@2x.png</file>
+        <file>images/icons/ico_add_sync@3x.png</file>
         <file>images/ico_drop_synched_folder.png</file>
         <file>images/ico_drop_synched_folder@2x.png</file>
         <file>images/ico_drop_synched_folder@3x.png</file>
@@ -822,9 +815,9 @@
         <file>images/key_big@2x.png</file>
         <file>images/lock_big.png</file>
         <file>images/lock_big@2x.png</file>
-        <file>images/warning-disabled-syncs.png</file>
-        <file>images/warning-disabled-syncs@2x.png</file>
-        <file>images/warning-disabled-syncs@3x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs@3x.png</file>
         <file>images/Icon_Win_Network.png</file>
         <file>images/Icon_Win_Network@2x.png</file>
         <file>images/Icon_Win_Network@3x.png</file>
@@ -843,6 +836,9 @@
         <file>images/Small_Pro_III.png</file>
         <file>images/Small_Pro_III@2x.png</file>
         <file>images/Small_Pro_III@3x.png</file>
+        <file>images/Small_Business.png</file>
+        <file>images/Small_Business@2x.png</file>
+        <file>images/Small_Business@3x.png</file>
         <file>images/settings-syncs.png</file>
         <file>images/settings-syncs@2x.png</file>
         <file>images/settings-syncs@3x.png</file>
@@ -915,9 +911,9 @@
         <file>animations/downloading@3x.gif</file>
         <file>animations/downloading@2x.gif</file>
         <file>animations/downloading.gif</file>
-        <file>images/Backup.png</file>
-        <file>images/Backup@2x.png</file>
-        <file>images/Backup@3x.png</file>
+        <file>images/icons/ico_backup.png</file>
+        <file>images/icons/ico_backup@2x.png</file>
+        <file>images/icons/ico_backup@3x.png</file>
         <file>images/icons/pc/pc-win_24.png</file>
         <file>images/icons/pc/pc-win_24@2x.png</file>
         <file>images/icons/pc/pc-win_24@3x.png</file>
@@ -952,5 +948,11 @@
         <file>images/backup_mono.png</file>
         <file>images/backup_mono@2x.png</file>
         <file>images/backup_mono@3x.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-backups@3x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups@2x.png</file>
+        <file>images/icons/infodialog/warning-disabled-syncs-and-backups@3x.png</file>
     </qresource>
 </RCC>
