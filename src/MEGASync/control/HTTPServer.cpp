@@ -478,7 +478,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     QString file = request.data.mid(start, end - start);
                     start = end + 1;
 
-                    int type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
+                    const long long type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
                     if (type < 0)
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without type in webclient request");
@@ -730,14 +730,14 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     else if (request.data.startsWith(externalOpenTransferManagerStart))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Open Transfer Manager command received from the webclient");
-        int tab = Utilities::extractJSONNumber(request.data, QString::fromUtf8("t"));
+        const long long tab = Utilities::extractJSONNumber(request.data, QString::fromUtf8("t"));
         if (tab < 0 || tab > 3) //Not valid number tab (all, downloads, uploads, completed)
         {
             response = QString::number(MegaError::API_EARGS);
         }
         else
         {
-            emit onExternalOpenTransferManagerRequested(tab);
+            emit onExternalOpenTransferManagerRequested(static_cast<int>(tab));
             response = QString::number(MegaError::API_OK);
         }
     }

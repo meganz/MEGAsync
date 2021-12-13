@@ -90,7 +90,7 @@ background-color: #FFFFFF;
        <height>16777215</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <layout class="QVBoxLayout" name="logoLayout">
       <property name="spacing">
        <number>2</number>
       </property>
@@ -168,7 +168,7 @@ background-color: #FFFFFF;
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="versionSdkLayout">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -179,7 +179,7 @@ background-color: #FFFFFF;
        <number>16</number>
       </property>
       <item>
-       <spacer name="horizontalSpacer_3">
+       <spacer name="sdkLeftLayout">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -231,7 +231,7 @@ background-color: #FFFFFF;
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_4">
+       <spacer name="sdkRightLayout">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -295,7 +295,7 @@ border-bottom: 1px solid #EFEFEC;
    </item>
    <item>
     <widget class="QWidget" name="wLinks" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="linksLayout">
       <item>
        <widget class="ClickableLabel" name="bTerms">
         <property name="sizePolicy">
@@ -397,7 +397,7 @@ border-bottom: 1px solid #EFEFEC;
        <height>1651561</height>
       </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <layout class="QHBoxLayout" name="lgplLayout">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -440,7 +440,7 @@ border-bottom: 1px solid #EFEFEC;
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="changeLogLayout">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -498,7 +498,7 @@ border-bottom: 1px solid #EFEFEC;
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_6">
+      <spacer name="changeLogSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
