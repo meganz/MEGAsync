@@ -235,7 +235,7 @@ background-color: #F4F6F8;
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout">
                <property name="spacing">
-                <number>10</number>
+                <number>16</number>
                </property>
                <property name="leftMargin">
                 <number>15</number>
@@ -351,7 +351,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/remove-backups.png</normaloff>:/images/remove-backups.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -376,7 +376,6 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                    <height>24</height>
                   </size>
                  </property>
-
                  <property name="toolTip">
                   <string>Add Backups</string>
                  </property>
@@ -385,7 +384,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_macx.qrc">
-                   <normaloff>:/images/Backup.png</normaloff>:/images/Backup.png</iconset>
+                   <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -420,7 +419,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_macx.qrc">
-                   <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
+                   <normaloff>:/images/icons/ico_sync.png</normaloff>:/images/icons/ico_sync.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>

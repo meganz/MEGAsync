@@ -20,30 +20,30 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-#wInfoDialogIn
+   <string notr="true">#wInfoDialogIn
 {
- border-radius: 16px;
- border: 1px solid rgba(100, 100, 100);
- background-color:  #F4F6F8;
-
+border-radius: 16px;
+border: 1px solid rgba(100, 100, 100);
+background-color:  #F4F6F8;
 }
+
 #tTransfers, #tNotifications
 {
-  font-family: &quot;Lato&quot;;
-  font-size: 15px;
-  color: rgba(0, 0, 0, 40%);
-  padding: 0px 8px 0px 8px;
-  border: none;
+font-family: &quot;Lato&quot;;
+font-size: 15px;
+color: rgba(0, 0, 0, 40%);
+padding: 0px 8px 0px 8px;
+border: none;
 }
+
 #tNotifications
 {
-  padding: 0px 4px 0px 16px;
+padding: 0px 4px 0px 16px;
 }
 
 #bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage, #bSyncsDisabled, #bAddSync, #bAddBackup, #bSettings, #bUpload, #bBackupsDisabled, #bAllSyncsDisabled
 {
-	border: none;
+border: none;
 }
 
 #wSeparator, #wSeparatorStats, #wSeparatorNotificationsOpts
@@ -62,8 +62,8 @@ color: #333333;
 
 QPushButton
 {
-    padding-right: 12px;
-    padding-left: 12px;
+padding-right: 12px;
+padding-left: 12px;
 }
 </string>
   </property>
@@ -219,7 +219,7 @@ border: none;
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout">
                <property name="spacing">
-                <number>10</number>
+                <number>16</number>
                </property>
                <property name="leftMargin">
                 <number>15</number>
@@ -371,7 +371,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_win.qrc">
-                   <normaloff>:/images/Backup.png</normaloff>:/images/Backup.png</iconset>
+                   <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -409,7 +409,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_win.qrc">
-                   <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
+                   <normaloff>:/images/icons/ico_sync.png</normaloff>:/images/icons/ico_sync.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
