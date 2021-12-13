@@ -2,6 +2,7 @@
 #define QMEGAMODEL_H
 
 #include "MegaItem.h"
+#include "control/SyncController.h"
 #include <megaapi.h>
 
 #include <QAbstractItemModel>
@@ -45,6 +46,7 @@ protected:
     bool mDisableBackups;
     mega::MegaHandle mMyBackupsRootDirHandle;
     QString mDeviceId;
+    SyncController mSyncController;
 
 private slots:
     void onMyBackupsRootDir(mega::MegaHandle handle);

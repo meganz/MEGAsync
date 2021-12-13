@@ -5,7 +5,6 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "control/Utilities.h"
-#include "control/SyncController.h"
 
 #include <QMessageBox>
 #include <QPointer>
@@ -57,9 +56,9 @@ NodeSelector::NodeSelector(mega::MegaApi*megaApi, SelectMode selectMode, QWidget
     connect(mNodeSelectorUi->tMegaFolders, &QTreeView::customContextMenuRequested,
             this, &NodeSelector::onCustomContextMenu);
 
-    connect(&SyncController::instance(), &SyncController::backupsRootDirHandle,
+    connect(&mSyncController, &SyncController::backupsRootDirHandle,
             this, &NodeSelector::onMyBackupsRootDir);
-    SyncController::instance().getBackupsRootDirHandle();
+    mSyncController.getBackupsRootDirHandle();
 
     setupNewFolderDialog();
 }

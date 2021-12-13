@@ -34,9 +34,9 @@ QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
         }
     }
 
-    connect(&SyncController::instance(), &SyncController::backupsRootDirHandle,
+    connect(&mSyncController, &SyncController::backupsRootDirHandle,
             this, &QMegaModel::onMyBackupsRootDir);
-    SyncController::instance().getBackupsRootDirHandle();
+    mSyncController.getBackupsRootDirHandle();
 }
 
 int QMegaModel::columnCount(const QModelIndex&) const

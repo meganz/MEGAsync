@@ -10,6 +10,7 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "QMegaModel.h"
+#include "control/SyncController.h"
 
 namespace Ui {
 class NodeSelector;
@@ -69,6 +70,7 @@ private:
     SelectMode mSelectMode;
     std::shared_ptr<QMegaModel> mRemoteTreeModel;
     mega::MegaHandle mMyBackupsRootDirHandle;
+    SyncController mSyncController;
 
     void setupNewFolderDialog();
 };
