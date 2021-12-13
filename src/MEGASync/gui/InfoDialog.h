@@ -95,7 +95,7 @@ public:
 #endif
 
     void setUnseenNotifications(long long value);
-    void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
+    void setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment);
     long long getUnseenNotifications() const;
     void closeSyncsMenu();
     int getLoggedInMode() const;

@@ -739,7 +739,7 @@ void MegaSyncLogger::flushAndClose()
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << endl;
+        std::cerr << "Unhandle exception on flushAndClose: "<< e.what() << std::endl;
     }
     g_loggingThread->flushLog = true;
     g_loggingThread->closeLog = true;

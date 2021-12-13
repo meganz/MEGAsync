@@ -1434,7 +1434,7 @@ void MegaApplication::startSyncs(QList<PreConfiguredSync> syncs)
                                                          .arg(localFolderPath));
 
         //Connect failing signals
-        connect(addSyncStep, &ActionProgress::failed, this, [this, localFolderPath](int errorCode)
+        connect(addSyncStep, &ActionProgress::failed, this, [localFolderPath](int errorCode)
         {
             static_cast<MegaApplication *>(qApp)->showAddSyncError(errorCode, localFolderPath);
         }, Qt::QueuedConnection);
@@ -2018,7 +2018,7 @@ void MegaApplication::checkMemoryUsage()
                  QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N / %5 transfers")
                  .arg(procesUsage / (1024 * 1024))
                  .arg(numNodes).arg(numLocalNodes)
-                 .arg((float)procesUsage / totalNodes)
+                 .arg(static_cast<float>(procesUsage) / static_cast<float>(totalNodes))
                  .arg(totalTransfers).toUtf8().constData());
 
     if (procesUsage > maxMemoryUsage)
@@ -2435,7 +2435,7 @@ void MegaApplication::repositionInfoDialog()
                              .toUtf8().constData());
                 infoDialog->move(posx, posy);
 
-                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
+                QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
                     if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -2578,7 +2578,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
 
     int xSign = 1;
     int ySign = 1;
-    QPoint position, positionTrayIcon;
+    QPoint position;
     QRect screenGeometry;
 
     #ifdef __APPLE__
@@ -4011,12 +4011,12 @@ void MegaApplication::PSAseen(int id)
     }
 }
 
-void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSetting> syncSettings)
+void MegaApplication::onSyncStateChanged(std::shared_ptr<SyncSetting>)
 {
     createAppMenus();
 }
 
-void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting> syncSettings)
+void MegaApplication::onSyncDeleted(std::shared_ptr<SyncSetting>)
 {
     createAppMenus();
 }
@@ -8043,7 +8043,7 @@ void MegaApplication::showAddSyncError(MegaRequest *request, MegaError* e, QStri
     }
 }
 
-void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString remotePath)
+void MegaApplication::showAddSyncError(int errorCode, QString localpath, QString /*remotePath*/)
 {
     if (errorCode != MegaError::API_OK)
     {

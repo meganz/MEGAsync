@@ -2115,9 +2115,10 @@ void InfoDialog::setUnseenNotifications(long long value)
     ui->bNumberUnseenNotifications->show();
 }
 
-void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)
+void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment)
 {
-    filterMenu->setUnseenNotifications(all, contacts, shares, payment);
+    filterMenu->setUnseenNotifications(static_cast<int>(all), static_cast<int>(contacts),
+                                       static_cast<int>(shares), static_cast<int>(payment));
 }
 
 void InfoDialog::paintEvent(QPaintEvent * e)

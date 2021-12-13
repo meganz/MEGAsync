@@ -31,7 +31,8 @@ QVariant QTransfersModel::data(const QModelIndex &index, int role) const
     }
     else if (role == Qt::UserRole)
     {
-        return QVariant::fromValue(transfers.value(index.internalId()));
+        const int id = static_cast<int>(index.internalId());
+        return QVariant::fromValue(transfers.value(id));
     }
 
     return QVariant();
