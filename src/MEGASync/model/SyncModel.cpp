@@ -379,7 +379,6 @@ QStringList SyncModel::getLocalFolders(mega::MegaSync::SyncType type)
     return value;
 }
 
-
 QList<MegaHandle> SyncModel::getMegaFolderHandles(mega::MegaSync::SyncType type)
 {
     QMutexLocker qm(&syncMutex);
@@ -390,7 +389,6 @@ QList<MegaHandle> SyncModel::getMegaFolderHandles(mega::MegaSync::SyncType type)
     }
     return value;
 }
-
 
 std::shared_ptr<SyncSetting> SyncModel::getSyncSetting(int num, mega::MegaSync::SyncType type)
 {
