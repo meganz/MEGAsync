@@ -308,7 +308,7 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
         QModelIndex index = indexAt(event->pos());
         if (index.isValid())
         {
-            int tag = index.internalId();
+            const int tag = static_cast<int>(index.internalId());
             if (lastItemHoveredTag)
             {
                 TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
@@ -421,10 +421,11 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 lastIndex = indexes[i].row();
             }
 
-            transferTagSelected.append(indexes[i].internalId());
+            const int internalId = static_cast<int>(indexes[i].internalId());
+            transferTagSelected.append(internalId);
             if (!enablePause || !enableResume || !enableCancel)
             {
-                TransferItem *item = model->transferItems[indexes[i].internalId()];
+                TransferItem *item = model->transferItems[internalId];
                 if (!item)
                 {
                     enableResume = true;

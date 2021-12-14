@@ -158,7 +158,7 @@ void QFinishedTransfersModel::refreshTransferItem(int tag)
         ++row;
     }
 
-    auto rowAsSizeT = static_cast<size_t>(transferOrder.size());
+    auto rowAsSizeT = static_cast<size_t>(row);
     assert(rowAsSizeT < transferOrder.size());
     if (rowAsSizeT >= transferOrder.size())
     {

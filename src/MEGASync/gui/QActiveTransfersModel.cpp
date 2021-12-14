@@ -117,7 +117,7 @@ void QActiveTransfersModel::removeTransferByTag(int transferTag)
     }
 
     transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
-    int row = std::distance(transferOrder.begin(), it);
+    const int row = static_cast<int>(std::distance(transferOrder.begin(), it));
     assert(it != transferOrder.end() && (*it)->data.tag == transferTag);
     if (it == transferOrder.end() || (*it)->data.tag != transferTag)
     {
@@ -189,19 +189,20 @@ bool QActiveTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, 
     if (row != transferOrderSize)
     {
         item = transferOrder[row];
-        if (item->data.tag == static_cast<int>(selectedTags[0]))
+        const int firstSelectedTag = static_cast<int>(selectedTags[0]);
+        if (item->data.tag == firstSelectedTag)
         {
             return false;
         }
 
-        TransferItemData* itemData = transfers.value(selectedTags[0]);
+        TransferItemData* itemData = transfers.value(firstSelectedTag);
         if (!itemData)
         {
             return false;
         }
 
         std::deque<TransferItemData*>::iterator srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
-        int srcrow = std::distance(transferOrder.begin(), srcit);
+        const int srcrow = static_cast<int>(std::distance(transferOrder.begin(), srcit));
         if (srcrow + selectedTags.size() == row)
         {
             return false;
@@ -210,13 +211,14 @@ bool QActiveTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, 
 
     for (int i = 0; i< selectedTags.size(); i++)
     {
+        const int currentTag = static_cast<int>(selectedTags[i]);
         if (item)
         {
-            megaApi->moveTransferBeforeByTag(selectedTags[i], item->data.tag);
+            megaApi->moveTransferBeforeByTag(currentTag, item->data.tag);
         }
         else
         {
-            megaApi->moveTransferToLastByTag(selectedTags[i]);
+            megaApi->moveTransferToLastByTag(currentTag);
         }
     }
     return true;
@@ -234,7 +236,7 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
         TransferItemData *item = new TransferItemData(transfer);
 
         transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
-        int row = std::distance(transferOrder.begin(), it);
+        const int row = static_cast<int>(std::distance(transferOrder.begin(), it));
         if (transfers.count(item->data.tag))
         {
             assert(false);
@@ -335,7 +337,7 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
     {
         //Update modified item
         std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
-        int row = std::distance(transferOrder.begin(), it);
+        const int row = static_cast<int>(std::distance(transferOrder.begin(), it));
         assert(it != transferOrder.end() && (*it)->data.tag == itemData->data.tag);
         if (row >= static_cast<int>(transferOrder.size()))
         {
@@ -347,7 +349,7 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
     {
         //Move item to its new position
         std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
-        int row = std::distance(transferOrder.begin(), it);
+        const int row = static_cast<int>(std::distance(transferOrder.begin(), it));
         assert(it != transferOrder.end() && (*it)->data.tag == itemData->data.tag);
         if (it == transferOrder.end() || (*it)->data.tag != itemData->data.tag)
         {
@@ -358,7 +360,7 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         testItem.data.tag = itemData->data.tag;
         testItem.data.priority = newPriority;
         std::deque<TransferItemData*>::iterator newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
-        int newrow = std::distance(transferOrder.begin(), newit);
+        const int newrow = static_cast<int>(std::distance(transferOrder.begin(), newit));
 
         if (row == newrow || (row + 1) == newrow)
         {
@@ -387,7 +389,7 @@ void QActiveTransfersModel::refreshTransferItem(int tag)
     }
 
     std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
-    int row = std::distance(transferOrder.begin(), it);
+    const int row = static_cast<int>(std::distance(transferOrder.begin(), it));
     assert(it != transferOrder.end() && (*it)->data.tag == itemData->data.tag);
     if (row >= static_cast<int>(transferOrder.size()))
     {
