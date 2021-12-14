@@ -13,8 +13,8 @@
 using namespace mega;
 
 VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable, QWidget *parent) :
-    QDialog(parent), m_haveMainDialog(isMainDialogAvailable),
-    m_ui(new Ui::VerifyLockMessage)
+    QDialog(parent), m_ui(new Ui::VerifyLockMessage),
+    m_haveMainDialog(isMainDialogAvailable)
 {
     m_ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);

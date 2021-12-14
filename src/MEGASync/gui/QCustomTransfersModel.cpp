@@ -325,12 +325,12 @@ void QCustomTransfersModel::removeTransferByTag(int transferTag)
     beginRemoveRows(QModelIndex(), row, row);
     if (activeDownloadTag == transferTag)
     {
-        modelState &= ~DOWNLOAD;
+        modelState &= static_cast<unsigned char>(~DOWNLOAD);
         activeDownloadTag = -1;
     }
     else if (activeUploadTag == transferTag)
     {
-        modelState &= ~UPLOAD;
+        modelState &= static_cast<unsigned char>(~UPLOAD);
         activeUploadTag = -1;
     }
 

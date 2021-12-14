@@ -71,7 +71,7 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
     transferredBytes = transfer->getTransferredBytes();
-    int permil = (totalBytes > 0) ? ((1000 * transferredBytes) / totalBytes) : 0;
+    int permil = (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
     if (!warningShown)
     {
         if (permil != lastpermil)

@@ -114,8 +114,8 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     assert(orderIter != alertOrder.end() && (*orderIter) == alert->getId());
                     if (orderIter != alertOrder.end() && (*orderIter) == alert->getId())
                     {
-                        int row = std::distance(alertOrder.begin(),orderIter);
-                        if (row < (int)alertOrder.size())
+                        const int row = static_cast<int>(std::distance(alertOrder.begin(),orderIter));
+                        if (row < static_cast<int>(alertOrder.size()))
                         {
                             emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
                         }
@@ -274,8 +274,9 @@ void QAlertsModel::refreshAlertItem(unsigned id)
         ++row;
     }
 
-    assert(row < alertOrder.size());
-    if (row >= alertOrder.size())
+    const int alertOrderSize = static_cast<int>(alertOrder.size());
+    assert(row < alertOrderSize);
+    if (row >= alertOrderSize)
     {
         return;
     }

@@ -102,7 +102,7 @@ qreal TransfersStatusWidget::getPercentInnerCircle() const
 void TransfersStatusWidget::setPercentInnerCircle(const qreal &value)
 {
     percentInnerCircle = value;
-    inpoint=360*16*percentInnerCircle>residualin?360*16*percentInnerCircle-residualin:360*16*percentInnerCircle;
+    inpoint = computePercentCircle(percentInnerCircle, residualin);
     update();
 }
 
@@ -114,7 +114,13 @@ qreal TransfersStatusWidget::getPercentOuterCircle() const
 void TransfersStatusWidget::setPercentOuterCircle(const qreal &value)
 {
     percentOuterCircle = value;
-    const qreal tempOutpoint = 360 * 16 * percentOuterCircle;
-    outpoint = (tempOutpoint > residualout) ? tempOutpoint - residualout : tempOutpoint;
+    outpoint = computePercentCircle(percentOuterCircle, residualout);
     update();
+}
+
+int TransfersStatusWidget::computePercentCircle(const qreal percentCircle, const int residual)
+{
+    const qreal tempPoint = 360 * 16 * percentCircle;
+    const qreal point = (tempPoint > residual) ? tempPoint - residual : tempPoint;
+    return static_cast<int>(point);
 }

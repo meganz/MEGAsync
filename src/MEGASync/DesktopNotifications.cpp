@@ -251,7 +251,6 @@ void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
                 {
                     const QString message{tr("New shared folder from [X]")
                                 .replace(QString::fromUtf8("[X]"), QString::fromUtf8(alert->getEmail()))};
-                    const bool isNewShare{true};
                     notifySharedUpdate(alert, message, NEW_SHARE);
                 }
                 break;
