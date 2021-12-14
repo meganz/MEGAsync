@@ -560,6 +560,7 @@ private:
     std::shared_ptr<ShellNotifier> mShellNotifier;
 #endif
     void loadSyncExclusionRules(QString email = QString());
+    static long long computeExclusionSizeLimit(const long long sizeLimitValue);
 };
 
 class DeferPreferencesSyncForScope

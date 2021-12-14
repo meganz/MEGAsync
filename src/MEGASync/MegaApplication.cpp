@@ -3097,7 +3097,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->lowerSizeLimit())
     {
-        megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
+        megaApi->setExclusionLowerSizeLimit(computeExclusionSizeLimit(preferences->lowerSizeLimitValue()));
     }
     else
     {
@@ -3106,7 +3106,7 @@ void MegaApplication::loadSyncExclusionRules(QString email)
 
     if (preferences->upperSizeLimit())
     {
-        megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
+        megaApi->setExclusionUpperSizeLimit(computeExclusionSizeLimit(preferences->upperSizeLimitValue()));
     }
     else
     {
@@ -3119,6 +3119,12 @@ void MegaApplication::loadSyncExclusionRules(QString email)
         preferences->leaveUser();
     }
 
+}
+
+long long MegaApplication::computeExclusionSizeLimit(const long long sizeLimitValue)
+{
+    const double sizeLimitPower = pow(static_cast<double>(1024), static_cast<double>(sizeLimitValue));
+    return sizeLimitValue * static_cast<long long>(sizeLimitPower);
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -6702,7 +6708,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
             break;
     }
 
-    businessStatus = event;
+    businessStatus = static_cast<int>(event);
     if (preferences->logged())
     {
         preferences->setBusinessState(businessStatus);
@@ -6712,6 +6718,7 @@ void MegaApplication::manageBusinessStatus(int64_t event)
 void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
 {
     DeferPreferencesSyncForScope deferrer(this);
+    const int eventNumber = static_cast<int>(event->getNumber());
 
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
     {
@@ -6725,7 +6732,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     else if (event->getType() == MegaEvent::EVENT_SYNCS_DISABLED && event->getNumber() != MegaSync::Error::LOGGED_OUT)
     {
         showErrorMessage(tr("Your syncs have been disabled").append(QString::fromUtf8(": "))
-                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(event->getNumber()))));
+                         .append(QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(eventNumber))));
     }
     else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
     {
@@ -6734,7 +6741,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_EMAIL:
             case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
             {
-                blockState = event->getNumber();
+                blockState = eventNumber;
                 emit blocked();
                 blockStateSet = true;
                 if (preferences->logged())
@@ -6783,7 +6790,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     {
         if (preferences->logged())
         {
-            applyStorageState(event->getNumber());
+            applyStorageState(eventNumber);
         }
         else //event arrived too soon, we will apply it later
         {
@@ -7364,7 +7371,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 {
                     preferences->setProExpirityTime(details->getProExpiration());
                     proExpirityTimer.stop();
-                    proExpirityTimer.setInterval(qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch()));
+                    const long long interval = qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch());
+                    proExpirityTimer.setInterval(static_cast<int>(interval));
                     proExpirityTimer.start();
                 }
             }
@@ -7600,7 +7608,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (infoDialog)
             {
-                infoDialog->setPSAannouncement(request->getNumber(),
+                infoDialog->setPSAannouncement(static_cast<int>(request->getNumber()),
                                                QString::fromUtf8(request->getName() ? request->getName() : ""),
                                                QString::fromUtf8(request->getText() ? request->getText() : ""),
                                                QString::fromUtf8(request->getFile() ? request->getFile() : ""),
