@@ -242,10 +242,7 @@
         <file>images/ico_add_sync@2x.png</file>
         <file>images/ico_add_sync@3x.png</file>
         <file>images/ico_add_sync_folder.png</file>
-        <file>images/ico_add_sync_folder.png</file>
         <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@2x.png</file>
-        <file>images/ico_add_sync_folder@3x.png</file>
         <file>images/ico_add_sync_folder@3x.png</file>
         <file>images/ico_cloud_drive.png</file>
         <file>images/ico_cloud_drive@2x.png</file>
@@ -777,9 +774,6 @@
         <file>images/ic_options_hover.png</file>
         <file>images/ic_options_hover@3x.png</file>
         <file>images/ic_options_hover@2x.png</file>
-        <file>images/ic_sync_warning.png</file>
-        <file>images/ic_sync_warning@2x.png</file>
-        <file>images/ic_sync_warning@3x.png</file>
         <file>images/settings-security.png</file>
         <file>images/settings-security@2x.png</file>
         <file>images/settings-security@3x.png</file>
