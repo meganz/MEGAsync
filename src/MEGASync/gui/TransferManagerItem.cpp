@@ -248,7 +248,7 @@ void TransferManagerItem::updateTransfer()
     }
 
     // Update progress bar
-    unsigned int permil = (totalSize > 0) ? ((1000 * totalTransferredBytes) / totalSize) : 0;
+    const unsigned int permil = (totalSize > 0) ? static_cast<unsigned int>((1000 * totalTransferredBytes) / totalSize) : 0;
     ui->pbTransfer->setValue(permil);
 
     // Update transferred bytes

@@ -111,7 +111,7 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
             QPointF pt1 = polygon.at(i);
             QPointF pt2 = polygon.at(i + 1);
             QPointF pdist = pt2 - pt1;
-            float ratio = static_cast<float>(radius / sqrtf(pdist.x() * pdist.x() + pdist.y() * pdist.y()));
+            float ratio = static_cast<float>(radius / sqrtf(static_cast<float>(pdist.x() * pdist.x() + pdist.y() * pdist.y())));
             if (ratio > 0.5f)
             {
                 ratio = 0.5f;
@@ -155,7 +155,7 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
     linePen.setWidth(1);
     linePen.setColor(verticalLineColor);
     painter.setPen(linePen);
-    float lineStep = w / 9.0;
+    const float lineStep = static_cast<float>(w / 9.0);
     float lineX = 0;
     for (int i = 0; i < 10; i++)
     {

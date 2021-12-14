@@ -552,7 +552,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
     }
 
     // Update progress bar
-    unsigned int permil = (td->totalSize > 0) ? ((1000 * td->totalTransferredBytes) / td->totalSize) : 0;
+    unsigned int permil = (td->totalSize > 0) ? static_cast<unsigned int>((1000 * td->totalTransferredBytes) / td->totalSize) : 0;
     if (td->type == MegaTransfer::TYPE_DOWNLOAD)
     {
         ui->sDownloads->setCurrentWidget(ui->wActiveDownloads);
