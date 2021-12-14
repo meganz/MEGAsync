@@ -1,15 +1,15 @@
 
 
-win32:THIRDPARTY_VCPKG_BASE_PATH =  C:/Users/build/MEGA/build-MEGAsync/3rdParty_MSVC2017_20200529
-win32:contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
-win32:!contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
-
-macx {
-    isEmpty(THIRDPARTY_VCPKG_BASE_PATH){
-        THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty
-    }
-    VCPKG_TRIPLET = x64-osx-mega
+isEmpty(THIRDPARTY_VCPKG_BASE_PATH){
+    THIRDPARTY_VCPKG_BASE_PATH = $$PWD/../../../3rdParty_desktop
 }
+
+win32 {
+    contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x64-windows-mega
+    !contains(QMAKE_TARGET.arch, x86_64):VCPKG_TRIPLET = x86-windows-mega
+}
+macx:VCPKG_TRIPLET = x64-osx-mega
+unix:!macx:VCPKG_TRIPLET = x64-linux
 
 message("THIRDPARTY_VCPKG_BASE_PATH: $$THIRDPARTY_VCPKG_BASE_PATH")
 message("VCPKG_TRIPLET: $$VCPKG_TRIPLET")
