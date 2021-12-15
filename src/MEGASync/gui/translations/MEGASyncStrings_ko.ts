@@ -3684,7 +3684,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>전달</translation>
+        <translation>앞으로</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4269,11 +4269,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>재시작</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>파일 버전 관리 해제</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -5468,12 +5463,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>연간 결제를 선택하고 10개월 가격으로 12개월을 받으세요</translation>
+        <translation>연간 결제를 선택하고 10개월 가격으로 12개월을 이용하세요</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>전송 할당량 초과</translation>
     </message>
 </context>
 <context>
@@ -5511,7 +5506,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
         <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>연간 결제를 선택하고 10개월 가격으로 12개월을 받으세요</translation>
+        <translation>연간 결제를 선택하고 10개월 가격으로 12개월을 이용하세요</translation>
     </message>
 </context>
 <context>

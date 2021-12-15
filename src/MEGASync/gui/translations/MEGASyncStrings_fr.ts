@@ -1111,7 +1111,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation>Votre compte est presque plein.</translation>
+        <translation>Votre compte est presque saturé.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
@@ -1126,7 +1126,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation>Votre compte est plein.</translation>
+        <translation>Votre compte est saturé.</translation>
     </message>
     <message>
         <source>Your data is at risk</source>
@@ -1166,7 +1166,7 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation>Votre compte est expiré, en lecture seulement, jusqu’à ce que vous versiez les paiements requis.</translation>
+        <translation>Votre compte est expiré, en lecture seule, jusqu’à ce que vous versiez les paiements requis.</translation>
     </message>
     <message>
         <source>Account Suspended</source>
@@ -1676,12 +1676,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation>Surclassez votre compte maintenant avant que votre espace de stockage ne soit plein et que vos téléversements vers MEGA s’arrêtent.</translation>
+        <translation>Surclassez votre compte maintenant avant que votre espace de stockage ne soit saturé et que vos téléversements vers MEGA s’arrêtent.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>L’espace de stockage de votre compte MEGA est plein.</translation>
+        <translation>L’espace de stockage de votre compte MEGA est saturé.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -2498,7 +2498,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>Vos téléversements ne peuvent pas se poursuivre, car le compte de %1 est plein.</translation>
+        <translation>Vos téléversements ne peuvent pas se poursuivre, car le compte de %1 est saturé.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -3214,7 +3214,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate the full storage for the current account is full.</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>L’espace de stockage est saturé</translation>
     </message>
     <message>
         <source>You have exceeded the available storage space for your account. You can add syncs but they will remain disabled until there is enough space on your account.</source>
@@ -3292,7 +3292,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage full</source>
         <translatorcomment>Label to indicate that current account has reached storage limit.</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>L’espace de stockage est saturé</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3682,7 +3682,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Transférer</translation>
+        <translation>Avancer</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4269,11 +4269,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Redémarrer</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Désactiver le versionnage des fichiers</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Un dossier local contenant une sauvegarde des fichiers supprimés dans MEGA</translation>
@@ -4531,7 +4526,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
         <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
-        <translation>Votre compte MEGA est plein. Les téléversements sont désactivés et la synchronisation des dossiers a été mise en pause.</translation>
+        <translation>Votre compte MEGA est saturé. Les téléversements sont désactivés et la synchronisation des dossiers a été mise en pause.</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -5160,7 +5155,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account full</source>
         <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>Le compte est saturé</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -5478,7 +5473,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Storage full</source>
         <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>L’espace de stockage est plein</translation>
+        <translation>L’espace de stockage est saturé</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
@@ -5488,7 +5483,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>L’espace de stockage de votre compte MEGA est plein.</translation>
+        <translation>Votre compte MEGA est saturé.</translation>
     </message>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>

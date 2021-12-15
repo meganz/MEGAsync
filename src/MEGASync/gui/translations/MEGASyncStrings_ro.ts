@@ -2056,7 +2056,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Se va aplica o actualizare în timpul următoarei reporniri a aplicației.</translation>
+        <translation>Se va aplica o actualizare în timpul următoarei reporniri a aplicației</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -2138,7 +2138,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Fișierul config este corupt, te rugăm să o iei de la început</translation>
+        <translation>Config-ul tău este corupt, te rugăm să o iei de la început</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -2148,7 +2148,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation>MEGAsync nu se poate conecta. Te rugăm să verifici conectivitatea la internet și configurația firewall-ului local. Ține minte că majoritatea software-urilor antivirus includ un firewall.</translation>
+        <translation>MEGAsync nu se poate conecta. Te rugăm să verifici conectivitatea la internet și configurația firewallului local. Reține că majoritatea software-urilor antivirus includ un firewall.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -4266,11 +4266,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>Repornește</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Dezactivează versionarea fișierelor</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>

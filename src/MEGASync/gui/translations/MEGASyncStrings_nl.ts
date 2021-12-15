@@ -3684,7 +3684,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Doorversturen</translation>
+        <translation>Doorgaan</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4269,11 +4269,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>Herstarten</translation>
-    </message>
-    <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Bestandsversies uitschakelen</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>

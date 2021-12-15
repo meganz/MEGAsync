@@ -1427,7 +1427,7 @@ margin-right: 32px;</string>
                   </size>
                  </property>
                  <property name="text">
-                  <string>Disable file versioning</string>
+                  <string>Enable file versioning</string>
                  </property>
                 </widget>
                </item>

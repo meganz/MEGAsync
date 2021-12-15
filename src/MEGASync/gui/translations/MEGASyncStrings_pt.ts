@@ -471,7 +471,7 @@
     <message>
         <source>Auto</source>
         <translatorcomment>Radio button text to indicate automatic rate limit.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automático</translation>
     </message>
     <message>
         <source>(Max. 90% of available bandwidth)</source>
@@ -2294,7 +2294,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation>Upload</translation>
+        <translation>Fazer upload</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3683,7 +3683,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Encaminhar</translation>
+        <translation>Continuar</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -4120,7 +4120,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automático</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -4270,11 +4270,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Reiniciar</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>Desativar o controle das versões de arquivos</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Pasta local com um backup dos arquivos deletados da pasta sincronizada remota (no MEGA)</translation>
@@ -4327,7 +4322,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Sync</source>
         <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Sincronizar</translation>
+        <translation>Sincronização</translation>
     </message>
     <message>
         <source>Security</source>
