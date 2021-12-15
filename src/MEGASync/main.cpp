@@ -41,32 +41,36 @@ struct LogMessage
 std::vector<LogMessage> logMessages;
 
 int getLogLevel(const QtMsgType type)
-{
-    if (type == QtDebugMsg)
-        return MegaApi::LOG_LEVEL_DEBUG;
-    else if (type == QtWarningMsg)
-        return MegaApi::LOG_LEVEL_WARNING;
-    else if (type == QtCriticalMsg)
-        return MegaApi::LOG_LEVEL_ERROR;
-    else //if (type == QtFatalMsg)
-        return MegaApi::LOG_LEVEL_FATAL;
+{    
+    switch (type)
+    {
+        case QtDebugMsg : return MegaApi::LOG_LEVEL_DEBUG;
+        case QtWarningMsg : return MegaApi::LOG_LEVEL_WARNING;
+        case QtCriticalMsg : return MegaApi::LOG_LEVEL_ERROR;
+        case QtFatalMsg : return MegaApi::LOG_LEVEL_FATAL;
+        default : return -1;
+    }
 }
 
 QString getLogMessageBody(const QtMsgType type)
 {
-    if (type == QtDebugMsg)
-        return QString::fromUtf8("QT Debug: %1");
-    else if (type == QtWarningMsg)
-        return QString::fromUtf8("QT Warning: %1");
-    else if (type == QtCriticalMsg)
-        return QString::fromUtf8("QT Critical: %1");
-    else //if (type == QtFatalMsg)
-        return QString::fromUtf8("QT FATAL ERROR: %1");
+    switch (type)
+    {
+        case QtDebugMsg : return QString::fromUtf8("QT Debug: %1");
+        case QtWarningMsg : return QString::fromUtf8("QT Warning: %1");
+        case QtCriticalMsg : return QString::fromUtf8("QT Critical: %1");
+        case QtFatalMsg : return QString::fromUtf8("QT FATAL ERROR: %1");
+        default : return QString();
+    }
 }
 
 void msgHandler(QtMsgType type, const char *msg)
 {
-    MegaApi::log(getLogLevel(type), getLogMessageBody(type).arg(QString::fromUtf8(msg)).toUtf8().constData());
+    const int logLevel = getLogLevel(type);
+    if (logLevel > -1)
+    {
+        MegaApi::log(getLogLevel(type), getLogMessageBody(type).arg(QString::fromUtf8(msg)).toUtf8().constData());
+    }
 }
 
 
@@ -106,13 +110,16 @@ void LinuxSignalHandler(int signum)
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
     {
         const int logLevel = getLogLevel(type);
-        MegaApi::log(logLevel, getLogMessageBody(type).arg(msg).toUtf8().constData());
-        MegaApi::log(logLevel, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
-                     .arg(QString::fromUtf8(context.category))
-                     .arg(QString::fromUtf8(context.file))
-                     .arg(QString::fromUtf8(context.function))
-                     .arg(QString::fromUtf8(context.file))
-                     .arg(context.version).toUtf8().constData());
+        if (logLevel > -1)
+        {
+            MegaApi::log(logLevel, getLogMessageBody(type).arg(msg).toUtf8().constData());
+            MegaApi::log(logLevel, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                         .arg(QString::fromUtf8(context.category))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(QString::fromUtf8(context.function))
+                         .arg(QString::fromUtf8(context.file))
+                         .arg(context.version).toUtf8().constData());
+        }
     }
 
 void removeSyncData(const QString &localFolder, const QString & name, const QString &syncID)
