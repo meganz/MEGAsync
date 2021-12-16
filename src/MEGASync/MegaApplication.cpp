@@ -121,59 +121,30 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setApplicationVersion(QString::number(Preferences::VERSION_CODE));
 
 #ifdef _WIN32
-    setStyleSheet(QString::fromUtf8("QMessageBox QLabel {"
-                                        "font-size: 13px;}"
-                                    "QMessageBox QPushButton {"
-                                        "font-size: 13px;"
-                                        "padding-right: 12px;"
-                                        "padding-left: 12px;}"
-                                    "QMenu {"
-                                        "font-size: 13px;}"
-                                    "QToolTip {"
-                                        "font-size: 13px;}"
-                                    "QFileDialog QPushButton {"
-                                        "font-size: 13px;"
-                                        "padding-right: 12px;"
-                                        "padding-left: 12px;}"
-                                    "QFileDialog QWidget {"
-                                        "font-size: 13px;}"
-
-                                    "QCheckBox::indicator {width: 13px, height: 13px;}"
-                                    "QCheckBox::indicator::unchecked {"
-                                        "image: url(:/images/cb_unchecked.svg);}"
-                                    "QCheckBox::indicator:unchecked:hover {"
-                                        "image: url(:/images/cb_unchecked_hover.svg);}"
-                                    "QCheckBox::indicator:unchecked:pressed {"
-                                        "image: url(:/images/cb_unchecked_pressed.svg);}"
-                                    "QCheckBox::indicator:unchecked:disabled {"
-                                        "image: url(:/images/cb_unchecked_disabled.svg);}"
-                                    "QCheckBox::indicator::checked {"
-                                        "image: url(:/images/cb_checked.svg);}"
-                                    "QCheckBox::indicator:checked:hover {"
-                                        "image: url(:/images/cb_checked_hover.svg);}"
-                                    "QCheckBox::indicator:checked:pressed {"
-                                        "image: url(:/images/cb_checked_pressed.svg);}"
-                                    "QCheckBox::indicator:checked:disabled {"
-                                        "image: url(:/images/cb_checked_disabled.svg);}"
-
-                                    "QRadioButton::indicator {width: 13px, height: 13px;}"
-                                    "QRadioButton::indicator::unchecked {"
-                                        "image: url(:/images/rb_unchecked.svg);}"
-                                    "QRadioButton::indicator:unchecked:hover {"
-                                        "image: url(:/images/rb_unchecked_hover.svg);}"
-                                    "QRadioButton::indicator:unchecked:pressed {"
-                                        "image: url(:/images/rb_unchecked_pressed.svg);}"
-                                    "QRadioButton::indicator:unchecked:disabled {"
-                                        "image: url(:/images/rb_unchecked_disabled.svg);}"
-                                    "QRadioButton::indicator::checked {"
-                                        "image: url(:/images/rb_checked.svg);}"
-                                    "QRadioButton::indicator:checked:hover {"
-                                        "image: url(:/images/rb_checked_hover.svg);}"
-                                    "QRadioButton::indicator:checked:pressed {"
-                                        "image: url(:/images/rb_checked_pressed.svg);}"
-                                    "QRadioButton::indicator:checked:disabled {"
-                                        "image: url(:/images/rb_checked_disabled.svg);}"
-                                    ));
+    setStyleSheet(QString::fromUtf8("QCheckBox::indicator {width: 13px;height: 13px;}"
+    "QCheckBox::indicator:checked {image: url(:/images/cb_checked.svg);}"
+    "QCheckBox::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
+    "QCheckBox::indicator:checked:pressed {image: url(:/images/cb_checked_pressed.svg);}"
+    "QCheckBox::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
+    "QCheckBox::indicator:unchecked {image: url(:/images/cb_unchecked.svg);}"
+    "QCheckBox::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
+    "QCheckBox::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
+    "QCheckBox::indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
+    "QMessageBox QLabel {font-size: 13px;}"
+    "QMessageBox QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
+    "QMenu {font-size: 13px;}"
+    "QToolTip {font-size: 13px;}"
+    "QFileDialog QPushButton {font-size: 13px;padding-right: 12px;padding-left: 12px;}"
+    "QFileDialog QWidget {font-size: 13px;}"
+    "QRadioButton::indicator {width: 13px; height: 13px;}"
+    "QRadioButton::indicator:unchecked {image: url(:/images/rb_unchecked.svg);}"
+    "QRadioButton::indicator:unchecked:hover {image: url(:/images/rb_unchecked_hover.svg);}"
+    "QRadioButton::indicator:unchecked:pressed {image: url(:/images/rb_unchecked_pressed.svg);}"
+    "QRadioButton::indicator:unchecked:disabled {image: url(:/images/rb_unchecked_disabled.svg);}"
+    "QRadioButton::indicator:checked {image: url(:/images/rb_checked.svg);}"
+    "QRadioButton::indicator:checked:hover {image: url(:/images/rb_checked_hover.svg);}"
+    "QRadioButton::indicator:checked:pressed {image: url(:/images/rb_checked_pressed.svg);}"
+    "QRadioButton::indicator:checked:disabled {image: url(:/images/rb_checked_disabled.svg);}"));
 #endif
 
     QPalette palette = QToolTip::palette();
@@ -6418,12 +6389,16 @@ void MegaApplication::createInfoDialogMenus()
     infoDialogMenu->addAction(settingsAction);
     infoDialogMenu->addSeparator();
     infoDialogMenu->addAction(exitAction);
-#ifdef _WIN32
-    // Disable drop shadow (appears squared in Windows)
+
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
+    // Make widget transparent (otherwise it shows a white background in its corners)
     infoDialogMenu->setAttribute(Qt::WA_TranslucentBackground);
+    // Disable drop shadow (does not take into account curved corners)
     infoDialogMenu->setWindowFlags(infoDialogMenu->windowFlags()
                                    | Qt::FramelessWindowHint
                                    | Qt::NoDropShadowWindowHint);
+#endif
+#ifdef Q_OS_WINDOWS
     //The following should not be required, but
     //prevents it from being truncated on the first display
     infoDialogMenu->show();

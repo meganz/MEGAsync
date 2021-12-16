@@ -135,7 +135,6 @@ public slots:
    void setBandwidthOverquotaState(QuotaState state);
 
 private slots:
-    void on_bRemoveBackups_clicked();
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
     void on_bUpgradeOverDiskQuota_clicked();
