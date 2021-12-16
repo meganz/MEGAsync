@@ -48,6 +48,7 @@ int getLogLevel(const QtMsgType type)
         case QtWarningMsg : return MegaApi::LOG_LEVEL_WARNING;
         case QtCriticalMsg : return MegaApi::LOG_LEVEL_ERROR;
         case QtFatalMsg : return MegaApi::LOG_LEVEL_FATAL;
+        case QtInfoMsg : return MegaApi::LOG_LEVEL_INFO;
         default : return -1;
     }
 }
@@ -60,6 +61,7 @@ QString getLogMessageBody(const QtMsgType type)
         case QtWarningMsg : return QString::fromUtf8("QT Warning: %1");
         case QtCriticalMsg : return QString::fromUtf8("QT Critical: %1");
         case QtFatalMsg : return QString::fromUtf8("QT FATAL ERROR: %1");
+        case QtInfoMsg : return QString::fromUtf8("QT Info: %1");
         default : return QString();
     }
 }
