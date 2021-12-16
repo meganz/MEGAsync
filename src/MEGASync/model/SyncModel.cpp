@@ -447,7 +447,11 @@ void SyncModel::setUnattendedDisabledSyncs(QSet<MegaHandle> tags)
 {
     for (auto tag : tags)
     {
-        unattendedDisabledSyncs[configuredSyncsMap[tag]->getType()].insert(tag);
+        auto sync (configuredSyncsMap[tag]);
+        if (sync)
+        {
+            unattendedDisabledSyncs[sync->getType()].insert(tag);
+        }
     }
     saveUnattendedDisabledSyncs();
     emit syncDisabledListUpdated();
