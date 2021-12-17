@@ -40,41 +40,26 @@ struct LogMessage
 };
 std::vector<LogMessage> logMessages;
 
-int getLogLevel(const QtMsgType type)
-{    
-    switch (type)
-    {
-        case QtDebugMsg : return MegaApi::LOG_LEVEL_DEBUG;
-        case QtWarningMsg : return MegaApi::LOG_LEVEL_WARNING;
-        case QtCriticalMsg : return MegaApi::LOG_LEVEL_ERROR;
-        case QtFatalMsg : return MegaApi::LOG_LEVEL_FATAL;
-        case QtInfoMsg : return MegaApi::LOG_LEVEL_INFO;
-        default : return -1;
-    }
-}
-
-QString getLogMessageBody(const QtMsgType type)
-{
-    switch (type)
-    {
-        case QtDebugMsg : return QString::fromUtf8("QT Debug: %1");
-        case QtWarningMsg : return QString::fromUtf8("QT Warning: %1");
-        case QtCriticalMsg : return QString::fromUtf8("QT Critical: %1");
-        case QtFatalMsg : return QString::fromUtf8("QT FATAL ERROR: %1");
-        case QtInfoMsg : return QString::fromUtf8("QT Info: %1");
-        default : return QString();
-    }
-}
-
 void msgHandler(QtMsgType type, const char *msg)
 {
-    const int logLevel = getLogLevel(type);
-    if (logLevel > -1)
+    switch (type)
     {
-        MegaApi::log(getLogLevel(type), getLogMessageBody(type).arg(QString::fromUtf8(msg)).toUtf8().constData());
+        case QtDebugMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Debug: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            break;
+        case QtWarningMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Warning: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            break;
+        case QtCriticalMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Critical: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            break;
+        case QtFatalMsg:
+            MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT FATAL ERROR: %1").arg(QString::fromUtf8(msg)).toUtf8().constData());
+            break;
+        default:
+            break;
     }
 }
-
 
 #ifdef Q_OS_LINUX
 MegaApplication *theapp = NULL;
@@ -110,17 +95,46 @@ void LinuxSignalHandler(int signum)
 #endif
 
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
-    {
-        const int logLevel = getLogLevel(type);
-        if (logLevel > -1)
+    {       
+        switch (type)
         {
-            MegaApi::log(logLevel, getLogMessageBody(type).arg(msg).toUtf8().constData());
-            MegaApi::log(logLevel, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
-                         .arg(QString::fromUtf8(context.category))
-                         .arg(QString::fromUtf8(context.file))
-                         .arg(QString::fromUtf8(context.function))
-                         .arg(QString::fromUtf8(context.file))
-                         .arg(context.version).toUtf8().constData());
+            case QtDebugMsg:
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Debug: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                             .arg(QString::fromUtf8(context.category))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(QString::fromUtf8(context.function))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(context.version).toUtf8().constData());
+                break;
+            case QtWarningMsg:
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Warning: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                             .arg(QString::fromUtf8(context.category))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(QString::fromUtf8(context.function))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(context.version).toUtf8().constData());
+                break;
+            case QtCriticalMsg:
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Critical: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                             .arg(QString::fromUtf8(context.category))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(QString::fromUtf8(context.function))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(context.version).toUtf8().constData());
+                break;
+            case QtFatalMsg:
+                MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT FATAL ERROR: %1").arg(msg).toUtf8().constData());
+                MegaApi::log(MegaApi::LOG_LEVEL_FATAL, QString::fromUtf8("QT Context: %1 %2 %3 %4 %5")
+                             .arg(QString::fromUtf8(context.category))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(QString::fromUtf8(context.function))
+                             .arg(QString::fromUtf8(context.file))
+                             .arg(context.version).toUtf8().constData());
+           default:
+                break;
         }
     }
 
