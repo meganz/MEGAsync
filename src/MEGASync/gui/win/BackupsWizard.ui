@@ -419,7 +419,7 @@ border-bottom: 1px solid #e5e5e5;
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Resources_win.qrc">:/images/mimes/devices - mono/devices-medium/pc-win.png</pixmap>
+                <pixmap resource="../Resources_win.qrc">:/images/icons/pc/pc-win_48.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>false</bool>
@@ -809,7 +809,7 @@ border-bottom: 1px solid #e5e5e5;
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Resources_win.qrc">:/images/mimes/devices - mono/device-small/pc-win.png</pixmap>
+                <pixmap resource="../Resources_win.qrc">:/images/icons/pc/pc-win_24.png</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

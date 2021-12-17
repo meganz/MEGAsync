@@ -420,7 +420,7 @@ border-bottom: 1px solid #e5e5e5;
                 <string notr="true"/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Resources_linux.qrc">:/images/mimes/devices - mono/devices-medium/pc-linux.png</pixmap>
+                <pixmap resource="../Resources_linux.qrc">:/images/icons/pc/pc-linux_48.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -810,7 +810,7 @@ border-bottom: 1px solid #e5e5e5;
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../Resources_linux.qrc">:/images/mimes/devices - mono/device-small/pc-linux.png</pixmap>
+                <pixmap resource="../Resources_linux.qrc">:/images/icons/pc/pc-linux_24.png</pixmap>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

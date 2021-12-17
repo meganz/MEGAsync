@@ -902,6 +902,9 @@
         <file>images/icons/pc/pc-linux_24.png</file>
         <file>images/icons/pc/pc-linux_24@2x.png</file>
         <file>images/icons/pc/pc-linux_24@3x.png</file>
+        <file>images/icons/pc/pc-linux_48.png</file>
+        <file>images/icons/pc/pc-linux_48@2x.png</file>
+        <file>images/icons/pc/pc-linux_48@3x.png</file>
         <file>images/folder_icon.png</file>
         <file>images/folder_icon@2x.png</file>
         <file>images/folder_icon@3x.png</file>
