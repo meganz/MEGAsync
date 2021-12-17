@@ -10,6 +10,7 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "QMegaModel.h"
+#include "control/SyncController.h"
 
 namespace Ui {
 class NodeSelector;
@@ -23,9 +24,15 @@ class NodeSelector : public QDialog, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    enum { UPLOAD_SELECT = 0, DOWNLOAD_SELECT, SYNC_SELECT, STREAM_SELECT};
+    enum SelectMode
+    {
+        UPLOAD_SELECT   = 0,
+        DOWNLOAD_SELECT = 1,
+        SYNC_SELECT     = 2,
+        STREAM_SELECT   = 3,
+    };
 
-    explicit NodeSelector(mega::MegaApi *megaApi,  int selectMode, QWidget *parent = 0);
+    explicit NodeSelector(mega::MegaApi* megaApi,  SelectMode selectMode, QWidget* parent = nullptr);
 
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
@@ -35,33 +42,35 @@ public:
     bool getDefaultUploadOption();
 
 public slots:
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
-    void onCustomContextMenu(const QPoint &);
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e);
+    void onCustomContextMenu(const QPoint& point);
     void onDeleteClicked();
     void onGenMEGALinkClicked();
 
 protected:
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent* event);
     void nodesReady();
-    mega::QTMegaRequestListener *delegateListener;
+    std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
 private slots:
-    void onSelectionChanged(QItemSelection,QItemSelection);
+    void onSelectionChanged(QItemSelection selectedIndexes, QItemSelection);
     void on_bNewFolder_clicked();
     void on_bOk_clicked();
+    void onMyBackupsRootDir(mega::MegaHandle handle);
 
 private:
-    Ui::NodeSelector *ui;
-    Ui::NewFolderDialog *newFolderUi;
-    QDialog *newFolder;
-    QTimer newFolderErrorTimer;
+    Ui::NodeSelector* mNodeSelectorUi;
+    Ui::NewFolderDialog* mNewFolderUi;
+    QDialog* mNewFolderDialog;
+    QTimer mNewFolderErrorTimer;
 
-    mega::MegaApi *megaApi;
-    QIcon folderIcon;
-    unsigned long long selectedFolder;
-    QModelIndex selectedItem;
-    int selectMode;
-    QMegaModel *model;
+    mega::MegaApi* mMegaApi;
+    mega::MegaHandle mSelectedFolder;
+    QModelIndex mSelectedItemIndex;
+    SelectMode mSelectMode;
+    std::shared_ptr<QMegaModel> mRemoteTreeModel;
+    mega::MegaHandle mMyBackupsRootDirHandle;
+    SyncController mSyncController;
 
     void setupNewFolderDialog();
 };

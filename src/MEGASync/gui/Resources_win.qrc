@@ -914,12 +914,12 @@
         <file>images/icons/ico_backup.png</file>
         <file>images/icons/ico_backup@2x.png</file>
         <file>images/icons/ico_backup@3x.png</file>
-        <file>images/mimes/devices - mono/device-small/pc-win.png</file>
-        <file>images/mimes/devices - mono/device-small/pc-win@2x.png</file>
-        <file>images/mimes/devices - mono/device-small/pc-win@3x.png</file>
-        <file>images/mimes/devices - mono/devices-medium/pc-win.png</file>
-        <file>images/mimes/devices - mono/devices-medium/pc-win@2x.png</file>
-        <file>images/mimes/devices - mono/devices-medium/pc-win@3x.png</file>
+        <file>images/icons/pc/pc-win_24.png</file>
+        <file>images/icons/pc/pc-win_24@2x.png</file>
+        <file>images/icons/pc/pc-win_24@3x.png</file>
+        <file>images/icons/pc/pc-win_48.png</file>
+        <file>images/icons/pc/pc-win_48@2x.png</file>
+        <file>images/icons/pc/pc-win_48@3x.png</file>
         <file>images/folder_icon.png</file>
         <file>images/folder_icon@2x.png</file>
         <file>images/folder_icon@3x.png</file>
@@ -941,9 +941,15 @@
         <file>images/icons/pc/PC_ico_hover.png</file>
         <file>images/icons/pc/PC_ico_hover@3x.png</file>
         <file>images/icons/pc/PC_ico_hover@2x.png</file>
+        <file>images/icons/pc/pc_24.png</file>
+        <file>images/icons/pc/pc_24@2x.png</file>
+        <file>images/icons/pc/pc_24@3x.png</file>
         <file>images/Illustration/rewind/Rewind.png</file>
         <file>images/Illustration/rewind/Rewind@2x.png</file>
         <file>images/Illustration/rewind/Rewind@3x.png</file>
+        <file>images/backup_mono.png</file>
+        <file>images/backup_mono@2x.png</file>
+        <file>images/backup_mono@3x.png</file>
         <file>images/icons/infodialog/warning-disabled-backups.png</file>
         <file>images/icons/infodialog/warning-disabled-backups@2x.png</file>
         <file>images/icons/infodialog/warning-disabled-backups@3x.png</file>

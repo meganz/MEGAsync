@@ -17,11 +17,11 @@ const QLatin1String MENU_STYLESHEET ("QMenu {"
                                      "background: rgba(0,0,0,0.1);}");
 
 #ifdef WIN32
-const QLatin1String DEVICE_ICON ("://images/mimes/devices - mono/device-small/pc-win.png");
+const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-win_24.png");
 #elif defined(__APPLE__)
-const QLatin1String DEVICE_ICON ("://images/mimes/devices - mono/device-small/pc-mac.png");
+const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-mac_24.png");
 #elif defined(Q_OS_LINUX)
-const QLatin1String DEVICE_ICON ("://images/mimes/devices - mono/device-small/pc-linux.png");
+const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-linux_24.png");
 #endif
 
 SyncsMenu::SyncsMenu(mega::MegaSync::SyncType type, QObject *parent) : QObject(parent),

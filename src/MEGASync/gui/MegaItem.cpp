@@ -2,68 +2,66 @@
 
 #include <QByteArray>
 
-using namespace mega;
-
-MegaItem::MegaItem(MegaNode *node, MegaItem *parentItem, bool showFiles)
+MegaItem::MegaItem(std::shared_ptr<mega::MegaNode> node, MegaItem* parentItem, bool showFiles) :
+    mShowFiles (showFiles),
+    mParentItem (parentItem),
+    mNode (node),
+    mAreChildrenSet (false)
 {
-    this->node = node;
-    this->children = NULL;
-    this->parent = parentItem;
-    this->showFiles = showFiles;
 }
 
-mega::MegaNode *MegaItem::getNode()
+std::shared_ptr<mega::MegaNode> MegaItem::getNode()
 {
-    return node;
+    return mNode;
 }
 
-void MegaItem::setChildren(MegaNodeList *children)
+void MegaItem::setChildren(std::shared_ptr<mega::MegaNodeList> children)
 {
-    this->children = children;
     for (int i = 0; i < children->size(); i++)
     {
-        MegaNode *node = children->get(i);
-        if (!showFiles && node->getType() == MegaNode::TYPE_FILE)
+        std::shared_ptr<mega::MegaNode> node (children->get(i)->copy());
+        if (!mShowFiles && node->getType() == mega::MegaNode::TYPE_FILE)
         {
             break;
         }
-        childItems.append(new MegaItem(children->get(i), this, showFiles));
+        mChildItems.append(new MegaItem(node, this, mShowFiles));
     }
+    mAreChildrenSet = true;
 }
 
 bool MegaItem::areChildrenSet()
 {
-    return children != NULL;
+    return mAreChildrenSet;
 }
 
 MegaItem *MegaItem::getParent()
 {
-    return parent;
+    return mParentItem;
 }
 
-MegaItem *MegaItem::getChild(int i)
+MegaItem* MegaItem::getChild(int i)
 {
-    return childItems.at(i);
+    return mChildItems.at(i);
 }
 
 int MegaItem::getNumChildren()
 {
-    return childItems.size();
+    return mChildItems.size();
 }
 
-int MegaItem::indexOf(MegaItem *item)
+int MegaItem::indexOf(MegaItem* item)
 {
-    return childItems.indexOf(item);
+    return mChildItems.indexOf(item);
 }
 
-int MegaItem::insertPosition(MegaNode *node)
+int MegaItem::insertPosition(std::shared_ptr<mega::MegaNode> node)
 {
     int type = node->getType();
 
     int i;
-    for (i = 0; i < childItems.size(); i++)
+    for (i = 0; i < mChildItems.size(); i++)
     {
-        MegaNode *n = childItems.at(i)->getNode();
+        std::shared_ptr<mega::MegaNode> n (mChildItems.at(i)->getNode());
         int nodeType = n->getType();
         if (type < nodeType)
         {
@@ -79,35 +77,34 @@ int MegaItem::insertPosition(MegaNode *node)
     return i;
 }
 
-void MegaItem::insertNode(MegaNode *node, int index)
+void MegaItem::insertNode(std::shared_ptr<mega::MegaNode> node, int index)
 {
-    childItems.insert(index, new MegaItem(node, this, showFiles));
-    insertedNodes.append(node);
+    mChildItems.insert(index, new MegaItem(node, this, mShowFiles));
+    mInsertedNodes.append(node);
 }
 
-void MegaItem::removeNode(MegaNode *node)
+void MegaItem::removeNode(std::shared_ptr<mega::MegaNode> node)
 {
     if (!node)
     {
         return;
     }
 
-    for (int i = 0; i < childItems.size(); i++)
+    for (int i = 0; i < mChildItems.size(); i++)
     {
-        if (childItems[i]->getNode()->getHandle() == node->getHandle())
+        if (mChildItems[i]->getNode()->getHandle() == node->getHandle())
         {
-            delete childItems[i];
-            childItems.removeAt(i);
+            delete mChildItems[i];
+            mChildItems.removeAt(i);
             break;
         }
     }
 
-    for (int i = 0; i < insertedNodes.size(); i++)
+    for (int i = 0; i < mInsertedNodes.size(); i++)
     {
-        if (insertedNodes[i]->getHandle() == node->getHandle())
+        if (mInsertedNodes[i]->getHandle() == node->getHandle())
         {
-            delete insertedNodes[i];
-            insertedNodes.removeAt(i);
+            mInsertedNodes.removeAt(i);
             break;
         }
     }
@@ -115,13 +112,11 @@ void MegaItem::removeNode(MegaNode *node)
 
 void MegaItem::displayFiles(bool enable)
 {
-    this->showFiles = enable;
+    this->mShowFiles = enable;
 }
 
 MegaItem::~MegaItem()
 {
-    delete children;
-    qDeleteAll(childItems);
-    qDeleteAll(insertedNodes);
+    qDeleteAll(mChildItems);
 }
 

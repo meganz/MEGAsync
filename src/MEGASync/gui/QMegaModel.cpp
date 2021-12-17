@@ -1,54 +1,57 @@
 #include "QMegaModel.h"
 #include "MegaApplication.h"
+#include "control/Utilities.h"
+#include "control/SyncController.h"
 
 #include <QBrush>
 #include <QApplication>
-#include "control/Utilities.h"
 
-using namespace mega;
+#include <memory>
 
 QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
-    QAbstractItemModel(parent)
+    QAbstractItemModel(parent),
+    mMegaApi (megaApi),
+    mRootNode (MegaSyncApp->getRootNode()),
+    mRootItem (new MegaItem(mRootNode)),
+    mRequiredRights (mega::MegaShare::ACCESS_READ),
+    mDisplayFiles (false),
+    mDisableFolders (false),
+    mDisableBackups (false),
+    mMyBackupsRootDirHandle (mega::INVALID_HANDLE),
+    mDeviceId (QString::fromUtf8(mMegaApi->getDeviceId()))
 {
-    this->megaApi = megaApi;
-    this->root = ((MegaApplication*)qApp)->getRootNode();
-    this->rootItem = new MegaItem(root.get());
-    this->folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
-
-    MegaUserList *contacts = megaApi->getContacts();
+    std::unique_ptr<mega::MegaUserList> contacts (megaApi->getContacts());
     for (int i = 0; i < contacts->size(); i++)
     {
-        MegaUser *contact = contacts->get(i);
-        MegaNodeList *folders = megaApi->getInShares(contact);
+        mega::MegaUser* contact (contacts->get(i));
+        std::unique_ptr<mega::MegaNodeList> folders (megaApi->getInShares(contact));
         for (int j = 0; j < folders->size(); j++)
         {
-            MegaNode *folder = folders->get(j)->copy();
-            ownNodes.append(folder);
-            inshareItems.append(new MegaItem(folder));
-            inshareOwners.append(QString::fromUtf8(contact->getEmail()));
+            std::shared_ptr<mega::MegaNode> folder (folders->get(j)->copy());
+            mOwnNodes.append(folder);
+            mInshareItems.append(new MegaItem(folder));
+            mInshareOwners.append(QString::fromUtf8(contact->getEmail()));
         }
-        delete folders;
     }
-    delete contacts;
 
-    this->requiredRights = MegaShare::ACCESS_READ;
-    this->displayFiles = false;
-    this->disableFolders = false;
+    connect(&mSyncController, &SyncController::backupsRootDirHandle,
+            this, &QMegaModel::onMyBackupsRootDir);
+    mSyncController.getBackupsRootDirHandle();
 }
 
-int QMegaModel::columnCount(const QModelIndex &) const
+int QMegaModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }
 
-QVariant QMegaModel::data(const QModelIndex &index, int role) const
+QVariant QMegaModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
     {
         return QVariant();
     }
 
-    MegaItem *item = (MegaItem *)index.internalPointer();
+    MegaItem* item = static_cast<MegaItem*>(index.internalPointer());
     if (!item->getNode())
     {
         return QVariant();
@@ -58,31 +61,74 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
     {
         case Qt::DecorationRole:
         {
-            MegaNode *node = item->getNode();
-            if (node->getType() >= MegaNode::TYPE_FOLDER)
+            auto node (item->getNode());
+            if (node->getType() >= mega::MegaNode::TYPE_FOLDER)
             {
                 if (node->isInShare())
                 {
-                    return QIcon(QString::fromAscii("://images/small_folder_incoming.png"));;
+                    static const QIcon incomingFolderIcon (QIcon(QLatin1String("://images/small_folder_incoming.png")));
+                    return incomingFolderIcon;
                 }
                 else if (node->isOutShare())
                 {
-                    return QIcon(QString::fromAscii("://images/small_folder_outgoing.png"));;
+                    static const QIcon outgoingFolderIcon (QIcon(QLatin1String("://images/small_folder_outgoing.png")));
+                    return outgoingFolderIcon;
                 }
-
-                return folderIcon;
+                else if (node->getHandle() == mMyBackupsRootDirHandle)
+                {
+                    static const QIcon myBackupsRootIcon (QIcon(QLatin1String("://images/backup_mono.png")));
+                    return myBackupsRootIcon;
+                }
+                else
+                {
+                    QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
+                    if (!nodeDeviceId.isEmpty())
+                    {
+                        std::unique_ptr<mega::MegaNode> parent (mMegaApi->getNodeByHandle(node->getParentHandle()));
+                        if (parent)
+                        {
+                            QString parentDeviceId (QString::fromUtf8(parent->getDeviceId()));
+                            if (parentDeviceId.isEmpty())
+                            {
+                                // TODO, future: choose icon according to host OS
+                                if (nodeDeviceId == mDeviceId)
+                                {
+#ifdef Q_OS_WINDOWS
+static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc-win_24.png")));
+#elif defined(Q_OS_MACOS)
+static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc-mac_24.png")));
+#elif defined(Q_OS_LINUX)
+static const QIcon thisDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc-linux_24.png")));
+#endif
+                                    return thisDeviceIcon;
+                                }
+                                else
+                                {
+                                    static const QIcon otherDeviceIcon (QIcon(QLatin1String("://images/icons/pc/pc_24.png")));
+                                    return otherDeviceIcon;
+                                }
+                            }
+                        }
+                    }
+                }
+                static const QIcon defaultFolderIcon (QIcon(QLatin1String("://images/small_folder.png")));
+                return defaultFolderIcon;
             }
 
             return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
         }
         case Qt::ForegroundRole:
         {
-            int access = megaApi->getAccess(item->getNode());
-            if (access < requiredRights || (disableFolders && item->getNode()->isFolder()))
+            auto node (item->getNode());
+            QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
+            int access = mMegaApi->getAccess(node.get());
+            if (access < mRequiredRights || (mDisableFolders && node->isFolder())
+                    || (mDisableBackups && (!nodeDeviceId.isEmpty()
+                                            || node->getHandle() == mMyBackupsRootDirHandle)))
             {
-                return QVariant(QBrush(QColor(170,170,170, 127)));
+                static const QBrush disabledBrush (QBrush(QColor(170, 170, 170, 127)));
+                return QVariant(disabledBrush);
             }
-
             return QVariant();
         }
         case Qt::DisplayRole:
@@ -91,27 +137,40 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
             {
                 return QVariant(QString::fromUtf8(item->getNode()->getName()));
             }
-            else if (item->getNode()->getType() == MegaNode::TYPE_ROOT)
+            else if (item->getNode()->getType() == mega::MegaNode::TYPE_ROOT)
             {
-                return QVariant(QCoreApplication::translate("MegaNodeNames",item->getNode()->getName()));
+                return QVariant(QCoreApplication::translate("MegaNodeNames",
+                                                            item->getNode()->getName()));
             }
 
             int inshareIndex = index.row() - 1;
-            return QVariant(QString::fromUtf8("%1 (%2)")
-                            .arg(QString::fromUtf8(inshareItems.at(inshareIndex)->getNode()->getName()))
-                            .arg(inshareOwners.at(inshareIndex)));
+            return QVariant(QString::fromUtf8("%1 (%2)").arg(
+                                QString::fromUtf8(mInshareItems.at(inshareIndex)->getNode()->getName()),
+                                mInshareOwners.at(inshareIndex)));
+        }
+        case Qt::UserRole:
+        {
+            auto node (item->getNode());
+            QString nodeDeviceId (QString::fromUtf8(node->getDeviceId()));
+            int access = mMegaApi->getAccess(node.get());
+            if (access < mRequiredRights || (mDisableFolders && node->isFolder())
+                    || (mDisableBackups && (!nodeDeviceId.isEmpty()
+                                            || node->getHandle() == mMyBackupsRootDirHandle)))
+            {
+                return false;
+            }
+            return true;
         }
         default:
         {
             return QVariant();
         }
     }
-#ifndef WIN32
-    return QVariant(); // warning C4702: unreachable code
-#endif
+    Q_UNREACHABLE();
+    return QVariant();
 }
 
-QModelIndex QMegaModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex QMegaModel::index(int row, int column, const QModelIndex& parent) const
 {
     if (!hasIndex(row, column, parent))
     {
@@ -120,12 +179,12 @@ QModelIndex QMegaModel::index(int row, int column, const QModelIndex &parent) co
 
     if (parent.isValid())
     {
-        MegaItem * item = NULL;
-        item = (MegaItem *)parent.internalPointer();
+        MegaItem* item = nullptr;
+        item = static_cast<MegaItem*>(parent.internalPointer());
 
         if (!item->areChildrenSet())
         {
-            item->setChildren(megaApi->getChildren(item->getNode()));
+            item->setChildren(std::shared_ptr<mega::MegaNodeList>(mMegaApi->getChildren(item->getNode().get())));
         }
 
         return createIndex(row, column, item->getChild(row));
@@ -133,116 +192,124 @@ QModelIndex QMegaModel::index(int row, int column, const QModelIndex &parent) co
 
     if (row == 0)
     {
-        return createIndex(row, column, rootItem);
+        return createIndex(row, column, mRootItem.get());
     }
 
-    return createIndex(row, column, inshareItems.at(row - 1));
+    return createIndex(row, column, mInshareItems.at(row - 1));
 }
 
-QModelIndex QMegaModel::parent(const QModelIndex &index) const
+QModelIndex QMegaModel::parent(const QModelIndex& index) const
 {
-    MegaItem *item = (MegaItem *)index.internalPointer();
+    MegaItem* item = static_cast<MegaItem*>(index.internalPointer());
     if (!item)
     {
         return QModelIndex();
     }
 
-    MegaItem *parent = item->getParent();
+    MegaItem* parent = item->getParent();
     if (!parent)
     {
         return QModelIndex();
     }
 
-    MegaItem *grandparent = parent->getParent();
+    MegaItem* grandparent = parent->getParent();
     if (!grandparent)
     {
-        if (parent == rootItem)
+        if (parent == mRootItem.get())
         {
             return createIndex(0, 0, parent);
         }
 
-        return createIndex(1 + inshareItems.indexOf(parent), 0, parent);
+        return createIndex(1 + mInshareItems.indexOf(parent), 0, parent);
     }
 
     return createIndex(grandparent->indexOf(parent), 0, parent);
 }
 
-int QMegaModel::rowCount(const QModelIndex &parent) const
+int QMegaModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid())
     {
-        MegaItem *item = (MegaItem *)parent.internalPointer();
+        MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
         if (!item->areChildrenSet())
         {
-            item->setChildren(megaApi->getChildren(item->getNode()));
+            item->setChildren(std::shared_ptr<mega::MegaNodeList>(mMegaApi->getChildren(item->getNode().get())));
         }
 
         return item->getNumChildren();
     }
 
-    return inshareItems.size() + 1;
+    return mInshareItems.size() + 1;
 }
 
 void QMegaModel::setRequiredRights(int requiredRights)
 {
-    this->requiredRights = requiredRights;
+    mRequiredRights = requiredRights;
 }
 
 void QMegaModel::setDisableFolders(bool option)
 {
-    this->disableFolders = option;
+    mDisableFolders = option;
+}
+
+void QMegaModel::setDisableBackups(bool option)
+{
+    mDisableBackups = option;
 }
 
 void QMegaModel::showFiles(bool show)
 {
-    this->displayFiles = show;
-    this->rootItem->displayFiles(show);
-    for (int i = 0; i < inshareItems.size(); i++)
+    mDisplayFiles = show;
+    mRootItem->displayFiles(show);
+    for (int i = 0; i < mInshareItems.size(); i++)
     {
-        inshareItems.at(i)->displayFiles(show);
+        mInshareItems.at(i)->displayFiles(show);
     }
 }
 
-QModelIndex QMegaModel::insertNode(MegaNode *node, const QModelIndex &parent)
+QModelIndex QMegaModel::insertNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent)
 {
-    MegaItem *item = (MegaItem *)parent.internalPointer();
-    int index = item->insertPosition(node);
+    MegaItem* item = static_cast<MegaItem*>(parent.internalPointer());
+    int idx = item->insertPosition(node);
 
-    beginInsertRows(parent, index, index);
-    item->insertNode(node, index);
+    beginInsertRows(parent, idx, idx);
+    item->insertNode(node, idx);
     endInsertRows();
 
-    return this->index(index, 0, parent);
+    return index(idx, 0, parent);
 }
 
-void QMegaModel::removeNode(QModelIndex &item)
+void QMegaModel::removeNode(QModelIndex& item)
 {
-    MegaNode *node = ((MegaItem *)item.internalPointer())->getNode();
-    MegaItem *parent = (MegaItem *)item.parent().internalPointer();
+    auto node = (static_cast<MegaItem*>(item.internalPointer()))->getNode();
+    MegaItem* parent = static_cast<MegaItem*>(item.parent().internalPointer());
     if (!node || !parent)
     {
         return;
     }
-    int index = parent->indexOf((MegaItem *)item.internalPointer());
+    int index = parent->indexOf(static_cast<MegaItem*>(item.internalPointer()));
 
     beginRemoveRows(item.parent(), index, index);
     parent->removeNode(node);
     endRemoveRows();
 }
 
-MegaNode *QMegaModel::getNode(const QModelIndex &index)
+std::shared_ptr<mega::MegaNode> QMegaModel::getNode(const QModelIndex& index)
 {
-    MegaItem *item = (MegaItem *)index.internalPointer();
+    MegaItem* item = static_cast<MegaItem*>(index.internalPointer());
     if (!item)
     {
-        return NULL;
+        return nullptr;
     }
     return item->getNode();
 }
 
 QMegaModel::~QMegaModel()
 {
-    delete rootItem;
-    qDeleteAll(inshareItems);
-    qDeleteAll(ownNodes);
+    qDeleteAll(mInshareItems);
+}
+
+void QMegaModel::onMyBackupsRootDir(mega::MegaHandle handle)
+{
+    mMyBackupsRootDirHandle = handle;
 }

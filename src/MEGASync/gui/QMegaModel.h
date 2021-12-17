@@ -1,46 +1,55 @@
 #ifndef QMEGAMODEL_H
 #define QMEGAMODEL_H
 
+#include "MegaItem.h"
+#include "control/SyncController.h"
+#include <megaapi.h>
+
 #include <QAbstractItemModel>
 #include <QList>
-#include <QIcon>
-#include "MegaItem.h"
-#include <megaapi.h>
+
 #include <memory>
 
 class QMegaModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit QMegaModel(mega::MegaApi *megaApi, QObject *parent = 0);
+    explicit QMegaModel(mega::MegaApi* megaApi, QObject* parent = nullptr);
 
-    virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
-    virtual QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-    virtual QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const;
-    virtual QModelIndex parent(const QModelIndex & index) const;
-    virtual int rowCount(const QModelIndex & parent = QModelIndex()) const;
+    virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+    virtual QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+    virtual QModelIndex parent(const QModelIndex& index) const;
+    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
 
     void setRequiredRights(int requiredRights);
     void setDisableFolders(bool option);
+    void setDisableBackups(bool option);
     void showFiles(bool show);
-    QModelIndex insertNode(mega::MegaNode *node, const QModelIndex &parent);
-    void removeNode(QModelIndex &item);
+    QModelIndex insertNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
+    void removeNode(QModelIndex& item);
 
-    mega::MegaNode *getNode(const QModelIndex &index);
+    std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);
 
     virtual ~QMegaModel();
 
 protected:
-    mega::MegaApi *megaApi;
-    std::shared_ptr<mega::MegaNode> root;
-    MegaItem *rootItem;
-    QList<MegaItem *> inshareItems;
-    QStringList inshareOwners;
-    QList<mega::MegaNode *> ownNodes;
-    QIcon folderIcon;
-    int requiredRights;
-    bool displayFiles;
-    bool disableFolders;
+    mega::MegaApi* mMegaApi;
+    std::shared_ptr<mega::MegaNode> mRootNode;
+    std::unique_ptr<MegaItem> mRootItem;
+    QList<MegaItem*> mInshareItems;
+    QStringList mInshareOwners;
+    QList<std::shared_ptr<mega::MegaNode>> mOwnNodes;
+    int mRequiredRights;
+    bool mDisplayFiles;
+    bool mDisableFolders;
+    bool mDisableBackups;
+    mega::MegaHandle mMyBackupsRootDirHandle;
+    QString mDeviceId;
+    SyncController mSyncController;
+
+private slots:
+    void onMyBackupsRootDir(mega::MegaHandle handle);
 };
 
 #endif // QMEGAMODEL_H
