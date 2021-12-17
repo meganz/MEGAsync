@@ -66,7 +66,6 @@ NodeSelector::NodeSelector(mega::MegaApi*megaApi, SelectMode selectMode, QWidget
 NodeSelector::~NodeSelector()
 {
     delete mNodeSelectorUi;
-    mNewFolderDialog->deleteLater();
     delete mNewFolderUi;
 }
 
