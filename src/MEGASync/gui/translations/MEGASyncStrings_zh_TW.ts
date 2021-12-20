@@ -4270,11 +4270,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>重新啟動</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature.</translatorcomment>
-        <translation>停用檔案版本功能</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>一個含有檔案備份的本機資料夾在MEGA上被刪除</translation>
