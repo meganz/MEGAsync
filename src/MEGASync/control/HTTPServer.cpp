@@ -560,7 +560,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                 QString file = request.data.mid(start, end - start);
                 start = end + 1;
 
-                int type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
+                long long type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
                 if (type < 0)
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without type in webclient request");
@@ -777,7 +777,7 @@ void HTTPServer::externalFolderSyncCheck(QString &response, const HTTPRequest& r
 void HTTPServer::externalOpenTransferManager(QString &response, const HTTPRequest& request)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Open Transfer Manager command received from the webclient");
-    int tab = Utilities::extractJSONNumber(request.data, QString::fromUtf8("t"));
+    int tab = static_cast<int>(Utilities::extractJSONNumber(request.data, QString::fromUtf8("t")));
     if (tab < 0 || tab > 3) //Not valid number tab (all, downloads, uploads, completed)
     {
         response = QString::number(MegaError::API_EARGS);
