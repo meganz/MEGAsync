@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>BackupSetupSuccessDialog</class>
  <widget class="QDialog" name="BackupSetupSuccessDialog">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,8 +35,10 @@ padding: 16px;
 
 #bDismiss
 {
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #FCFCFC);
 border: 1px solid #e5e5e5;
-background: #FEFEFE;
+background: #FCFCFC;
 color: #333333;
 }
 
@@ -43,6 +48,9 @@ border: 1px solid #00AC94;
 background-color: #00BFA5;
 color: #FFFFFF;
 }</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -76,7 +84,7 @@ color: #FFFFFF;
       <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../Resources_linux.qrc">:/images/Illustration/rewind/Rewind.png</pixmap>
+      <pixmap resource="../Resources_linux.qrc">:/images/illustration/rewind.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -94,6 +102,19 @@ color: #FFFFFF;
      <property name="rightMargin">
       <number>131</number>
      </property>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
      <item>
       <widget class="QPushButton" name="bDismiss">
        <property name="sizePolicy">
@@ -131,6 +152,19 @@ color: #FFFFFF;
         <string>View in backup center</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>

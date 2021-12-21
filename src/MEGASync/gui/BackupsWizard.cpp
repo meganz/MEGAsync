@@ -7,9 +7,15 @@
 
 #include <QStandardPaths>
 #include <QtConcurrent/QtConcurrent>
-//constexpr int HEIGHT_S1 (412);
-//constexpr int HEIGHT_MIN_S2 (296);
-//constexpr int HEIGHT_MAX_S2 (465);
+
+constexpr int HEIGHT_ROW_S1 (40);
+constexpr int MAX_ROWS_S1 (3);
+constexpr int HEIGHT_MAX_S1 (412);
+constexpr int HEIGHT_MIN_S1 (HEIGHT_MAX_S1 - HEIGHT_ROW_S1 * MAX_ROWS_S1);
+constexpr int HEIGHT_ROW_S2 (32);
+constexpr int MAX_ROWS_S2 (5);
+constexpr int HEIGHT_MIN_S2 (296);
+constexpr int HEIGHT_MAX_S2 (HEIGHT_MIN_S2 + HEIGHT_ROW_S2 * MAX_ROWS_S2);
 
 BackupsWizard::BackupsWizard(QWidget* parent) :
     QDialog(parent),
@@ -31,6 +37,8 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
     mSuccessDialogUi (nullptr)
 {
     mUi->setupUi(this);
+    setWindowFlags(Qt::WindowCloseButtonHint);
+
     mHighDpiResize.init(this);
 
     mUi->lvFoldersS1->setModel(mStep1FoldersModel);
@@ -53,9 +61,6 @@ BackupsWizard::BackupsWizard(QWidget* parent) :
 
     connect(&mSyncController, &SyncController::setMyBackupsDirStatus,
             this, &BackupsWizard::onSetMyBackupsDirRequestStatus);
-
-    connect(&mSyncController, &SyncController::setDeviceDirStatus,
-            this, &BackupsWizard::onSetDeviceNameRequestStatus);
 
     connect(&mSyncController, &SyncController::syncAddStatus,
             this, &BackupsWizard::onSyncAddRequestStatus);
@@ -95,13 +100,13 @@ void BackupsWizard::refreshNextButtonState()
 
 void BackupsWizard::setupStep1()
 {
-    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 1 Init", __FILE__, __LINE__);
-//    setFixedHeight(HEIGHT_S1);
+    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 1 Init");
     refreshNextButtonState();
     mUi->sSteps->setCurrentWidget(mUi->pStep1);
     mUi->bCancel->setEnabled(true);
     mUi->bNext->setText(tr("Next"));
     mUi->bBack->hide();
+    int dialogHeight (HEIGHT_MAX_S1);
 
     // Get device name
     mHaveDeviceName = false;
@@ -112,15 +117,8 @@ void BackupsWizard::setupStep1()
     {
         mUi->sMoreFolders->setCurrentWidget(mUi->pAllFoldersSynced);
         mUi->sFolders->setCurrentWidget(mUi->pNoFolders);
-        // Remove this, otherwise the height doens't go below 8x px??
+        // Remove the unused wirdget to avoid geometry interference
         mUi->sFolders->removeWidget(mUi->pFolders);
-        mUi->sMoreFolders->removeWidget(mUi->pMoreFolders);
-        mUi->pFolders->setSizePolicy(mUi->pFolders->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-        mUi->fFoldersS1->setSizePolicy(mUi->fFoldersS1->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-        mUi->sFolders->setSizePolicy(mUi->sFolders->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-        mUi->pStep1->setSizePolicy(mUi->pStep1->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-        mUi->sSteps->setSizePolicy(mUi->sSteps->sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
-        setSizePolicy(sizePolicy().horizontalPolicy(), QSizePolicy::Maximum);
     }
     else
     {
@@ -130,7 +128,7 @@ void BackupsWizard::setupStep1()
         // Check if we need to refresh the lists
         if (mStep1FoldersModel->rowCount() == 0)
         {
-            QIcon folderIcon (QIcon(QLatin1String("://images/folder_icon.png")));
+            QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
 
             for (auto type : {
                  QStandardPaths::DocumentsLocation,
@@ -150,7 +148,6 @@ void BackupsWizard::setupStep1()
                     item->setData(QDir::toNativeSeparators(dir.canonicalPath()), Qt::UserRole);
                     item->setData(folderIcon, Qt::DecorationRole);
                     item->setData(Qt::Unchecked, Qt::CheckStateRole);
-//                    item->setData(QSize(-1, 40), Qt::SizeHintRole);
 
                     mStep1FoldersModel->appendRow(item);
                 }
@@ -158,11 +155,18 @@ void BackupsWizard::setupStep1()
             // Snapshot original state
             mOriginalState = getCurrentState();
         }
-        mUi->lvFoldersS1->style()->polish(mUi->lvFoldersS1);
-        mUi->lvFoldersS1->adjustSize();
+
+        int listHeight (std::max(HEIGHT_ROW_S1,
+                                 std::min(HEIGHT_ROW_S1 * MAX_ROWS_S1,
+                                          mStep1FoldersModel->rowCount() * HEIGHT_ROW_S1)));
+        dialogHeight = std::min(HEIGHT_MAX_S1, HEIGHT_MIN_S1 + listHeight);
+        mUi->lvFoldersS1->setFixedHeight(listHeight);
     }
 
-    adjustSize();
+    // Prevent flickering when the dialog is dragged (height of lvFoldersS2 seems to be taken
+    // into account when repainting the dialog)
+    mUi->lvFoldersS2->setFixedHeight(0);
+    setFixedHeight(dialogHeight);
 
     mCurrentStep = Steps::STEP_1;
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 1");
@@ -194,7 +198,6 @@ void BackupsWizard::setupStep2()
         itemS2->setData(Qt::ToolTipRole, item[Qt::ToolTipRole]);
         itemS2->setData(Qt::UserRole, item[Qt::UserRole]);
         itemS2->setData(Qt::DecorationRole, item[Qt::DecorationRole]);
-//        itemS2->setData(Qt::SizeHintRole, QSize(-1, 32));
         mUi->lvFoldersS2->addItem(itemS2);
 
         // Hide unchecked items and count selected ones
@@ -212,20 +215,19 @@ void BackupsWizard::setupStep2()
     if (nbSelectedFolders == 1)
     {
         mUi->lFoldersNumber->setText(tr("1 folder"));
-        setProperty("S2OneItem", true);
     }
     else
     {
         mUi->lFoldersNumber->setText(tr("%1 folders").arg(nbSelectedFolders));
-        setProperty("S2OneItem", false);
     }
 
-//    setFixedHeight(std::min(HEIGHT_MAX_S2, HEIGHT_MIN_S2 + nbSelectedFolders * 32));
-    mUi->lvFoldersS2->style()->polish(mUi->lvFoldersS2);
-    mUi->lvFoldersS2->adjustSize();
-    mUi->fFoldersS2->adjustSize();
-    mUi->pStep2->adjustSize();
-    adjustSize();
+    int listHeight (std::max(HEIGHT_ROW_S2,
+                             std::min(HEIGHT_ROW_S2 * MAX_ROWS_S2,
+                                      nbSelectedFolders * HEIGHT_ROW_S2)));
+    int dialogHeight (std::min(HEIGHT_MAX_S2,
+                               HEIGHT_MIN_S2 + listHeight));
+    mUi->lvFoldersS2->setFixedHeight(listHeight);
+    setFixedHeight(dialogHeight);
 
     mCurrentStep = Steps::STEP_2;
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: step 2");
@@ -265,16 +267,10 @@ void BackupsWizard::setupMyBackupsDir(bool nameCollision)
         else
         {
             // If not, proceed to setting-up backups
-            mCurrentStep = Steps::SETUP_DEVICE_NAME;
+            mCurrentStep = Steps::SETUP_BACKUPS;
             emit nextStep();
         }
     }
-}
-
-void BackupsWizard::setupDeviceName()
-{
-    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: setup device name");
-    mSyncController.setDeviceName(mDeviceName);
 }
 
 void BackupsWizard::setupBackups()
@@ -357,41 +353,29 @@ void BackupsWizard::updateOriginalState(int index)
 // Checks if the name is already used (remote)
 // returns true if unique, false if collision
 // <displayName> is set to "" if the user cancels
-bool BackupsWizard::promptAndEnsureUniqueRemoteName(QString& displayName, bool forcePrompt)
+bool BackupsWizard::promptAndEnsureUniqueRemoteName(QString& displayName)
 {    
-    bool nameCollision (false);
     auto api (MegaSyncApp->getMegaApi());
     std::unique_ptr<mega::MegaNode> deviceDirNode;
-    bool showPromptAtLeastOnce(forcePrompt);
 
     if (mDeviceDirHandle != mega::INVALID_HANDLE)
     {
         deviceDirNode.reset(api->getNodeByHandle(mDeviceDirHandle));
     }
 
-    do
+    std::shared_ptr<mega::MegaNode> dirNode;
+    // Check for name collision
+    if (deviceDirNode)
     {
-        std::shared_ptr<mega::MegaNode> dirNode;
-        // Check for name collision
-        if (deviceDirNode)
-        {
-            dirNode.reset(api->getChildNode(deviceDirNode.get(),
-                                            displayName.toUtf8()));
-            nameCollision = dirNode.get();
-        }
-
-        if (nameCollision || showPromptAtLeastOnce)
-        {
-            displayName = remoteFolderExistsDialog(displayName,
-                                                   RenameTargetFolderDialog::TYPE_BACKUP_FOLDER,
-                                                   dirNode);
-            nameCollision = !displayName.isEmpty();
-            showPromptAtLeastOnce = false;
-        }
+        dirNode.reset(api->getChildNode(deviceDirNode.get(),
+                                        displayName.toUtf8()));
     }
-    while (nameCollision && !displayName.isEmpty());
+    if (dirNode)
+    {
+        displayName = remoteFolderExistsDialog(displayName);
+    }
 
-    return !nameCollision;
+    return true;
 }
 
 // Checks if a path belongs is in an existing sync or backup tree; and if the selected
@@ -474,13 +458,11 @@ bool BackupsWizard::isFolderAlreadySynced(const QString& path, bool displayWarni
     return (!message.isEmpty());
 }
 
-// Returns new backup name if new name set; empty string if backup canceled.
-QString BackupsWizard::remoteFolderExistsDialog(const QString& backupName,
-                                                RenameTargetFolderDialog::FolderType type,
-                                                std::shared_ptr<mega::MegaNode> node)
+// Returns new name if new name set; empty string if backup canceled.
+QString BackupsWizard::remoteFolderExistsDialog(const QString& backupName)
 {
     QString newName(QLatin1String(""));
-    RenameTargetFolderDialog dialog (backupName, type, node);
+    RenameTargetFolderDialog dialog (backupName);
 
     auto res (dialog.exec());
 
@@ -517,11 +499,6 @@ void BackupsWizard::onNextStep()
         case Steps::SETUP_MYBACKUPS:
         {
             setupMyBackupsDir();
-            break;
-        }
-        case Steps::SETUP_DEVICE_NAME:
-        {
-            setupDeviceName();
             break;
         }
         case Steps::SETUP_BACKUPS:
@@ -577,7 +554,7 @@ void BackupsWizard::on_bCancel_clicked()
         QString title (tr("Warning"));
         QString content (tr("If you cancel, all changes will be lost."));
         userWantsToCancel = QMessageBox::warning(this, title, content,
-                                                 QMessageBox::Ok|QMessageBox::Abort,
+                                                 QMessageBox::Ok | QMessageBox::Abort,
                                                  QMessageBox::Abort);
     }
 
@@ -604,72 +581,53 @@ void BackupsWizard::on_bMoreFolders_clicked()
         QString path (QDir::toNativeSeparators(dir.canonicalPath()));
         QStandardItem* existingBackup (nullptr);
         QString displayName (dir.dirName());
-        bool nameCollision (false);
-        do
+
+        // Check for path and name collision.
+        int nbBackups (mStep1FoldersModel->rowCount());
+        int idx (0);
+
+        while (existingBackup == nullptr && idx < nbBackups)
         {
-            // Check for path and name collision.
-            int nbBackups (mStep1FoldersModel->rowCount());
-            int idx (0);
-            nameCollision = false;
-
-            while ((!nameCollision || existingBackup == nullptr) && idx < nbBackups)
+            auto currItem = mStep1FoldersModel->itemData(mStep1FoldersModel->index(idx, 0));
+            QString name (currItem[Qt::DisplayRole].toString());
+            if (path == currItem[Qt::UserRole].toString())
             {
-                auto currItem = mStep1FoldersModel->itemData(mStep1FoldersModel->index(idx, 0));
-                QString name (currItem[Qt::DisplayRole].toString());
-                if (path != currItem[Qt::UserRole].toString())
-                {
-                    // Folder is not backed up, set pointer and check name collision
-                    nameCollision |= (displayName == name);
-                }
-                else
-                {
-                    // If folder is already backed up, set pointer and take existing name
-                    existingBackup = mStep1FoldersModel->item(idx);
-                    displayName = name;
-                }
-                idx++;
+                // If folder is already backed up, set pointer and take existing name
+                existingBackup = mStep1FoldersModel->item(idx);
+                displayName = name;
             }
-
-            // Prompt for new name if collision
-            // + ensure no remote collision
-            if (existingBackup == nullptr
-                    && (mDeviceDirHandle != mega::INVALID_HANDLE || nameCollision))
-            {
-                QString originalName (displayName);
-                promptAndEnsureUniqueRemoteName(displayName, nameCollision);
-                // Re-check local collision if name changed (because of remote collision)
-                if (displayName != originalName)
-                {
-                    nameCollision = true;
-                }
-            }
+            idx++;
         }
-        while (existingBackup == nullptr && nameCollision && !displayName.isEmpty());
 
-        // Add backup if the user didn't cancel
-        if (!displayName.isEmpty())
+        // Add backup
+        QStandardItem* item (nullptr);
+        if (existingBackup != nullptr)
         {
-            QStandardItem* item (nullptr);
-
-            if (existingBackup != nullptr)
-            {
-                item = existingBackup;
-            }
-            else
-            {
-                QIcon icon (QIcon(QLatin1String("://images/folder_icon.png")));
-                item = new QStandardItem(displayName);
-                item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-                item->setData(path, Qt::ToolTipRole);
-                item->setData(path, Qt::UserRole);
-                item->setData(icon, Qt::DecorationRole);
-                mStep1FoldersModel->insertRow(0, item);
-            }
-            item->setData(Qt::Checked, Qt::CheckStateRole);
-
-            // Jump to item in list
-            mUi->lvFoldersS1->scrollTo(mStep1FoldersModel->indexFromItem(item));
+            item = existingBackup;
         }
+        else
+        {
+            QIcon icon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
+            item = new QStandardItem(displayName);
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+            item->setData(path, Qt::ToolTipRole);
+            item->setData(path, Qt::UserRole);
+            item->setData(icon, Qt::DecorationRole);
+            mStep1FoldersModel->insertRow(0, item);
+        }
+        item->setData(Qt::Checked, Qt::CheckStateRole);
+
+        int listHeight (std::max(HEIGHT_ROW_S1,
+                                 std::min(HEIGHT_ROW_S1 * MAX_ROWS_S1,
+                                          mStep1FoldersModel->rowCount() * HEIGHT_ROW_S1)));
+        int dialogHeight (std::min(HEIGHT_MAX_S1,
+                                   HEIGHT_MIN_S1 + listHeight));
+        mUi->lvFoldersS1->setFixedHeight(listHeight);
+        setFixedHeight(dialogHeight);
+
+        // Jump to item in list
+        mUi->lvFoldersS1->scrollTo(mStep1FoldersModel->indexFromItem(item));
+
         refreshNextButtonState();
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
                            QString::fromUtf8("Backups Wizard: add folder \"%1\"")
@@ -761,13 +719,43 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
     {
         // We still have to check if the folder exists... try to get its pah
         auto api (MegaSyncApp->getMegaApi());
-        backupsDirPath = QString::fromUtf8(api->getNodePathByNodeHandle(backupsDirHandle));
-
-        if (!backupsDirPath.isEmpty())
+        std::unique_ptr<mega::MegaNode> backupsDirNode (api->getNodeByHandle(backupsDirHandle));
+        if (backupsDirNode)
         {
-            // If the folder exists, take note
-            mBackupsDirName = QDir(backupsDirPath).dirName();
-            mCreateBackupsDir = false;
+            backupsDirPath = QString::fromUtf8(api->getNodePath(backupsDirNode.get()));
+
+            if (!backupsDirPath.isEmpty())
+            {
+                // If the folder exists, take note
+                mBackupsDirName = QDir(backupsDirPath).dirName();
+                mCreateBackupsDir = false;
+            }
+
+            // Check that the folder has not been sent to rubbish
+            if (api->isInRubbish(backupsDirNode.get()))
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
+                                   "Backups Wizard: MyBackups dir in rubbish bin");
+                QString message (tr("The folder to store backups has been moved to the Rubbish bin. "
+                                    "Do you want to create a new one?"));
+                // Show dialog asking for user action: cancel, or create new?
+                auto choice (QMegaMessageBox::critical(nullptr, tr("Error"), message,
+                                          QMessageBox::Yes | QMessageBox::No));
+                if (choice == QMessageBox::Yes)
+                {
+                    // Reset path to force creation later on
+                    backupsDirPath.clear();
+                }
+                else
+                {
+                    // User cancelled. Exit wizard
+                    mHaveBackupsDir = false;
+                    mCreateBackupsDir = false;
+                    mUserCancelled = true;
+                    mCurrentStep = Steps::EXIT;
+                    emit nextStep();
+                }
+            }
         }
     }
 
@@ -778,6 +766,9 @@ void BackupsWizard::onBackupsDirSet(mega::MegaHandle backupsDirHandle)
         mBackupsDirName = tr("My Backups");
         backupsDirPath = QLatin1Char('/') + mBackupsDirName;
         mCreateBackupsDir = true;
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO,
+                           QString::fromLatin1("Backups Wizard: MyBackups dir: \"%1\"")
+                           .arg(backupsDirPath).toUtf8().constData());
     }
 
     // Build device backup path
@@ -794,11 +785,10 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, QString errorM
 
     if (errorCode == mega::MegaError::API_EEXIST)
     {
-        // If dir already exists, rompt for new name
+        // If dir already exists, prompt for new name
         mHaveBackupsDir = false;
         nameCollision = true;
-        mBackupsDirName = remoteFolderExistsDialog(mBackupsDirName,
-                                                   RenameTargetFolderDialog::TYPE_MYBACKUPS);
+        mBackupsDirName = remoteFolderExistsDialog(mBackupsDirName);
     }
     else if (errorCode != mega::MegaError::API_OK)
     {
@@ -807,25 +797,6 @@ void BackupsWizard::onSetMyBackupsDirRequestStatus(int errorCode, QString errorM
     }
 
     setupMyBackupsDir(nameCollision);
-}
-
-void BackupsWizard::onSetDeviceNameRequestStatus(int errorCode, QString errorMsg)
-{
-    // Only react when setting up device name.
-    if (mCurrentStep == Steps::SETUP_DEVICE_NAME)
-    {
-        if (errorCode != mega::MegaError::API_OK)
-        {
-            displayError(tr("Setting \"%1\" as device name failed.\nReason: %2")
-                         .arg(mDeviceName, errorMsg));
-            mCurrentStep = Steps::STEP_2;
-        }
-        else
-        {
-            mCurrentStep = Steps::SETUP_BACKUPS;
-        }
-        emit nextStep();
-    }
 }
 
 void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
@@ -838,7 +809,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
         // Update tooltip and icon according to result
         if (errorCode == mega::MegaError::API_OK)
         {
-            QIcon folderIcon (QIcon(QLatin1String("://images/folder_icon.png")));
+            QIcon folderIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")));
             QString tooltipMsg (itemL2->data(Qt::UserRole).toString());
             itemL2->setData(Qt::DecorationRole, folderIcon);
             itemL2->setData(Qt::ToolTipRole, tooltipMsg);
@@ -848,8 +819,7 @@ void BackupsWizard::onSyncAddRequestStatus(int errorCode, QString errorMsg)
         else
         {
             mError = true;
-            QString name (itemL1->data(Qt::DisplayRole).toString());
-            QIcon   warnIcon (QIcon(QLatin1String("://images/mimes/folder with warning/folder with warning.png")));
+            QIcon   warnIcon (QIcon(QLatin1String("://images/icons/folder/folder-mono-with-warning_24.png")));
             QString tooltipMsg (itemL2->data(Qt::UserRole).toString()
                                 + QLatin1String("\nError: ") + errorMsg);
             itemL2->setData(Qt::DecorationRole, warnIcon);
@@ -872,7 +842,7 @@ void BackupsWizard::onSuccessDialogAccepted()
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Backups Wizard: show Backup Center");
 // FIXME: Revert to live url when feature is merged
 //  QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/backups")));
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/fm/backups")));
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/dont-deploy/sandbox3.html?apipath=prod&jj=2")));
 
     emit nextStep();
 }
