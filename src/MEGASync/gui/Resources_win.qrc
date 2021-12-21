@@ -920,18 +920,21 @@
         <file>images/icons/pc/pc-win_48.png</file>
         <file>images/icons/pc/pc-win_48@2x.png</file>
         <file>images/icons/pc/pc-win_48@3x.png</file>
-        <file>images/folder_icon.png</file>
-        <file>images/folder_icon@2x.png</file>
-        <file>images/folder_icon@3x.png</file>
-        <file>images/mimes/folder with warning/folder with warning.png</file>
-        <file>images/mimes/folder with warning/folder with warning@2x.png</file>
-        <file>images/mimes/folder with warning/folder with warning@3x.png</file>
+        <file>images/icons/folder/folder-mono_24.png</file>
+        <file>images/icons/folder/folder-mono_24@2x.png</file>
+        <file>images/icons/folder/folder-mono_24@3x.png</file>
+        <file>images/icons/folder/folder-mono-with-warning_24.png</file>
+        <file>images/icons/folder/folder-mono-with-warning_24@2x.png</file>
+        <file>images/icons/folder/folder-mono-with-warning_24@3x.png</file>
         <file>images/settings-backup.png</file>
         <file>images/settings-backup@3x.png</file>
         <file>images/settings-backup@2x.png</file>
-        <file>images/Illustration/rewind/Rewind.png</file>
-        <file>images/Illustration/rewind/Rewind@2x.png</file>
-        <file>images/Illustration/rewind/Rewind@3x.png</file>
+        <file>images/icons/pc/pc_24.png</file>
+        <file>images/icons/pc/pc_24@2x.png</file>
+        <file>images/icons/pc/pc_24@3x.png</file>
+        <file>images/illustration/rewind.png</file>
+        <file>images/illustration/rewind@2x.png</file>
+        <file>images/illustration/rewind@3x.png</file>
         <file>images/backup_mono.png</file>
         <file>images/backup_mono@2x.png</file>
         <file>images/backup_mono@3x.png</file>

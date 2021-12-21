@@ -9,12 +9,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>604</width>
-    <height>390</height>
+    <width>600</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -23,12 +23,6 @@
    <size>
     <width>600</width>
     <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
-    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -113,13 +107,13 @@ background: solid #FAFAFA;
 
 #lDeviceIconS1
 {
-border: 0px;
+border: none;
 }
 
 #lDeviceIconS2
 {
-border: 0px;
-margin-left: 13px;
+border: none;
+margin-left: 12px;
 background: solid #FAFAFA;
 }
 
@@ -139,10 +133,10 @@ padding-right: 16px;
 
 #lvFoldersS1::item
 {
-border-bottom: 1px solid #e5e5e5;
-height: 39 px;
-min-height: 39 px;
-max-height: 39 px;
+height: 40 px;
+min-height: 40 px;
+max-height: 40 px;
+border: none;
 }
 
 #lvFoldersS1, #lvFoldersS2
@@ -150,17 +144,17 @@ max-height: 39 px;
 background: solid white;
 border-bottom-right-radius: 6px;
 border-bottom-left-radius: 6px;
-outline: 0;
+outline: none;
 }
 
 #lvFoldersS1
 {
-padding-left: 22px;
+padding-left: 19px;
 }
 
 #lvFoldersS2
 {
-padding-left: 15px;
+padding-left: 9px;
 }
 
 #lvFoldersS1::icon
@@ -170,19 +164,22 @@ left: 25px;
 
 #lvFoldersS1::text
 {
-left: 28px;
+left: 25px;
+font-size: 13px;
 }
 
 #lvFoldersS2::item
 {
-height: 31 px;
-min-height: 31 px;
-max-height: 31 px;
+height: 32 px;
+min-height: 32 px;
+max-height: 32 px;
+border: none;
 }
 
 #lvFoldersS2::text
 {
-left: 7px;
+left: 4px;
+font-size: 13px;
 }
 
 #lAllFoldersSynced
@@ -227,16 +224,7 @@ min-height: 0px;
 border-radius: 2px;
 margin: 4px;
 }
-
-#BackupsWizard[S2OneItem=true] #lvFoldersS2::item
-{
-border-bottom: none;
-}
-
-#BackupsWizard[S2OneItem=false] #lvFoldersS2::item
-{
-border-bottom: 1px solid #e5e5e5;
-}</string>
+</string>
   </property>
   <property name="modal">
    <bool>true</bool>
@@ -244,9 +232,6 @@ border-bottom: 1px solid #e5e5e5;
   <layout class="QVBoxLayout" name="BackupsWizardLayout">
    <property name="spacing">
     <number>32</number>
-   </property>
-   <property name="sizeConstraint">
-    <enum>QLayout::SetDefaultConstraint</enum>
    </property>
    <property name="leftMargin">
     <number>24</number>
@@ -263,17 +248,17 @@ border-bottom: 1px solid #e5e5e5;
    <item>
     <widget class="QStackedWidget" name="sSteps">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pStep1">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -283,13 +268,13 @@ border-bottom: 1px solid #e5e5e5;
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>16</number>
+        <number>19</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>16</number>
+        <number>19</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -332,7 +317,7 @@ border-bottom: 1px solid #e5e5e5;
        <item>
         <widget class="QFrame" name="fFoldersS1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -361,27 +346,9 @@ border-bottom: 1px solid #e5e5e5;
           </property>
           <item>
            <widget class="QWidget" name="wDeviceNameS1" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
-            </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
              <property name="spacing">
-              <number>8</number>
+              <number>10</number>
              </property>
              <property name="leftMargin">
               <number>16</number>
@@ -434,12 +401,6 @@ border-bottom: 1px solid #e5e5e5;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
                <property name="text">
                 <string notr="true"/>
                </property>
@@ -451,7 +412,7 @@ border-bottom: 1px solid #e5e5e5;
           <item>
            <widget class="QStackedWidget" name="sFolders">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -461,7 +422,7 @@ border-bottom: 1px solid #e5e5e5;
             </property>
             <widget class="QWidget" name="pFolders">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -485,7 +446,7 @@ border-bottom: 1px solid #e5e5e5;
               <item>
                <widget class="QListView" name="lvFoldersS1">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -519,12 +480,6 @@ border-bottom: 1px solid #e5e5e5;
                 </property>
                 <property name="verticalScrollMode">
                  <enum>QAbstractItemView::ScrollPerPixel</enum>
-                </property>
-                <property name="resizeMode">
-                 <enum>QListView::Adjust</enum>
-                </property>
-                <property name="layoutMode">
-                 <enum>QListView::Batched</enum>
                 </property>
                 <property name="spacing">
                  <number>0</number>
@@ -571,7 +526,7 @@ border-bottom: 1px solid #e5e5e5;
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>No available folder.</string>
+                 <string>No available folder</string>
                 </property>
                </widget>
               </item>
@@ -585,21 +540,15 @@ border-bottom: 1px solid #e5e5e5;
        <item>
         <widget class="QStackedWidget" name="sMoreFolders">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="pAllFoldersSynced">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
           <layout class="QHBoxLayout" name="wButtonsLayout">
            <property name="leftMargin">
             <number>66</number>
@@ -607,13 +556,19 @@ border-bottom: 1px solid #e5e5e5;
            <property name="rightMargin">
             <number>66</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignTop">
             <widget class="QLabel" name="lAllFoldersSynced">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>26</height>
+              </size>
              </property>
              <property name="text">
               <string>All folders have been synced or backed up.</string>
@@ -629,18 +584,12 @@ border-bottom: 1px solid #e5e5e5;
           </layout>
          </widget>
          <widget class="QWidget" name="pMoreFolders">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
           <layout class="QHBoxLayout" name="wButtonsLayout">
            <property name="leftMargin">
             <number>20</number>
            </property>
            <property name="topMargin">
-            <number>0</number>
+            <number>7</number>
            </property>
            <property name="rightMargin">
             <number>20</number>
@@ -648,7 +597,7 @@ border-bottom: 1px solid #e5e5e5;
            <property name="bottomMargin">
             <number>7</number>
            </property>
-           <item alignment="Qt::AlignRight">
+           <item alignment="Qt::AlignRight|Qt::AlignTop">
             <widget class="QPushButton" name="bMoreFolders">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -725,16 +674,10 @@ border-bottom: 1px solid #e5e5e5;
        <item>
         <widget class="QFrame" name="fFoldersS2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -780,7 +723,7 @@ border-bottom: 1px solid #e5e5e5;
             </property>
             <layout class="QHBoxLayout" name="deviceNameS2Layout">
              <property name="spacing">
-              <number>6</number>
+              <number>10</number>
              </property>
              <property name="sizeConstraint">
               <enum>QLayout::SetDefaultConstraint</enum>
@@ -818,6 +761,12 @@ border-bottom: 1px solid #e5e5e5;
              </item>
              <item alignment="Qt::AlignVCenter">
               <widget class="QLabel" name="lDeviceNameS2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -826,22 +775,10 @@ border-bottom: 1px solid #e5e5e5;
              <item alignment="Qt::AlignRight|Qt::AlignVCenter">
               <widget class="QLabel" name="lFoldersNumber">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>36</height>
-                </size>
-               </property>
-               <property name="sizeIncrement">
-                <size>
-                 <width>0</width>
-                 <height>36</height>
-                </size>
                </property>
                <property name="text">
                 <string/>
@@ -857,7 +794,7 @@ border-bottom: 1px solid #e5e5e5;
           <item>
            <widget class="QListWidget" name="lvFoldersS2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -891,12 +828,6 @@ border-bottom: 1px solid #e5e5e5;
             </property>
             <property name="verticalScrollMode">
              <enum>QAbstractItemView::ScrollPerPixel</enum>
-            </property>
-            <property name="resizeMode">
-             <enum>QListView::Adjust</enum>
-            </property>
-            <property name="layoutMode">
-             <enum>QListView::Batched</enum>
             </property>
             <property name="spacing">
              <number>0</number>
@@ -953,6 +884,19 @@ border-bottom: 1px solid #e5e5e5;
       </layout>
      </widget>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QWidget" name="wButtons" native="true">

@@ -16,9 +16,9 @@ const QLatin1String MENU_STYLESHEET ("QMenu {"
                                      "height: 1px;"
                                      "background: rgba(0,0,0,0.1);}");
 
-#ifdef WIN32
+#ifdef Q_OS_WINDOWS
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-win_24.png");
-#elif defined(__APPLE__)
+#elif defined(Q_OS_MAC)
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-mac_24.png");
 #elif defined(Q_OS_LINUX)
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-linux_24.png");
@@ -129,7 +129,7 @@ void SyncsMenu::refresh()
                 activeFolders++;
                 MenuItemAction* action =
                         new MenuItemAction(backupSetting->name(),
-                                           QIcon(QLatin1String("://images/small_folder.png")),
+                                           QIcon(QLatin1String("://images/icons/folder/folder-mono_24.png")),
                                            true, itemIndent);
                 connect(action, &MenuItemAction::triggered,
                         this, [backupSetting](){

@@ -26,16 +26,15 @@ class BackupsWizard : public QDialog
     public:
         enum Steps
         {
-            STEP_1_INIT = 0,
-            STEP_1      = 1,
-            STEP_2_INIT = 2,
-            STEP_2      = 3,
-            FINALIZE    = 4,
+            STEP_1_INIT     = 0,
+            STEP_1          = 1,
+            STEP_2_INIT     = 2,
+            STEP_2          = 3,
+            FINALIZE        = 4,
             SETUP_MYBACKUPS = 5,
-            SETUP_DEVICE_NAME = 6,
-            SETUP_BACKUPS   = 7,
-            DONE = 8,
-            EXIT = 9,
+            SETUP_BACKUPS   = 6,
+            DONE            = 7,
+            EXIT            = 8,
         };
         explicit BackupsWizard(QWidget* parent = nullptr);
         ~BackupsWizard();
@@ -45,16 +44,13 @@ class BackupsWizard : public QDialog
         void setupStep2();
         void setupFinalize();
         void setupMyBackupsDir(bool nameCollision = false);
-        void setupDeviceName();
         void setupBackups();
         void setupComplete();
         QString getCurrentState();
         void updateOriginalState(int index);
-        bool promptAndEnsureUniqueRemoteName(QString& displayName, bool forcePrompt = false);
+        bool promptAndEnsureUniqueRemoteName(QString& displayName);
         bool isFolderAlreadySynced(const QString& path, bool displayWarning = false);
-        QString remoteFolderExistsDialog(const QString& backupName,
-                                         RenameTargetFolderDialog::FolderType type,
-                                         std::shared_ptr<mega::MegaNode> node = std::shared_ptr<mega::MegaNode>());
+        QString remoteFolderExistsDialog(const QString& backupName);
         void refreshNextButtonState();
         void displayError(const QString& message);
 
@@ -90,7 +86,6 @@ class BackupsWizard : public QDialog
         void onDeviceNameSet(QString deviceName);
         void onBackupsDirSet(mega::MegaHandle backupsDirHandle);
         void onSetMyBackupsDirRequestStatus(int errorCode, QString errorMsg);
-        void onSetDeviceNameRequestStatus(int errorCode, QString errorMsg);
         void onSyncAddRequestStatus(int errorCode, QString errorMsg);
         void onSuccessDialogAccepted();
 };

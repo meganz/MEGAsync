@@ -1,54 +1,29 @@
 #include "RenameTargetFolderDialog.h"
 #include "ui_RenameTargetFolderDialog.h"
+#include "MegaApplication.h"
+#include "Utilities.h"
 
-RenameTargetFolderDialog::RenameTargetFolderDialog(const QString& syncName, FolderType type,
-                                                   std::shared_ptr<mega::MegaNode> existingFolderNode,
+static const char* TEXT_TEMPLATE {"MEGA creates the top-level root folder "
+                                  "for your backups. You already have a \"%1\" folder "
+                                  "in your MEGA Cloud Storage. Please name your new root "
+                                  "backup folder to something else."};
+
+RenameTargetFolderDialog::RenameTargetFolderDialog(const QString& folderName,
                                                    QWidget* parent) :
     QDialog(parent),
-    mUi(new Ui::RenameTargetFolderDialog),
-    mSyncName (syncName)
+    mUi(new Ui::RenameTargetFolderDialog)
 {
     mUi->setupUi(this);
 
     // Rename "Save" button to "Rename"
     mUi->buttonBox->button(QDialogButtonBox::Save)->setText(tr("Rename"));
 
-    // Select appropriate page
-    QWidget* page (nullptr);
-    switch (type)
-    {
-        case TYPE_MYBACKUPS:
-        {
-            mUi->leNewFolderName->setPlaceholderText(tr("Rename your backup root folder"));
-            page = mUi->pMyBackups;
-            break;
-        }
-        case TYPE_BACKUP_FOLDER:
-        default:
-        {
-            QString existingFolderUrl;
-            if (existingFolderNode)
-            {
-                const char* handle = existingFolderNode->getBase64Handle();
-                existingFolderUrl = QLatin1String("mega://#fm/") + QLatin1String(handle);
-                delete [] handle;
-            }
-            else
-            {
-                existingFolderUrl = QLatin1String("https://mega.io");
-            }
-
-            mUi->lContentBackupFolder->setText(mUi->lContentBackupFolder->text()
-                                               .arg(mSyncName, existingFolderUrl));
-            mUi->leNewFolderName->setPlaceholderText(tr("Rename your new backup folder"));
-            page = mUi->pBackupFolder;
-            break;
-        }
-    }
-    mUi->sContent->setCurrentWidget(page);
-
     // Disable "Save" button
     mUi->buttonBox->button(QDialogButtonBox::Save)->setEnabled(false);
+
+    // Set the text
+    mOriginalText = mUi->lContentMyBackups->text();
+    mUi->lContentMyBackups->setText(mOriginalText.arg(tr(TEXT_TEMPLATE).arg(folderName)));
 
     // Connect line edit to control
     connect(mUi->leNewFolderName, &QLineEdit::textEdited,
@@ -69,5 +44,15 @@ QString RenameTargetFolderDialog::getNewFolderName() const
 
 void RenameTargetFolderDialog::onFolderNameFieldChanged(const QString& text)
 {
-    mUi->buttonBox->button(QDialogButtonBox::Save)->setEnabled(!text.isEmpty());
+    static mega::MegaApi* api (MegaSyncApp->getMegaApi());
+    static std::unique_ptr<mega::MegaNode> nodeWithName;
+
+    nodeWithName.reset(api->getNodeByPath(QString(QLatin1Char('/') + text).toUtf8().constData()));
+
+    if (nodeWithName && !text.isEmpty())
+    {
+        mUi->lContentMyBackups->setText(mOriginalText.arg(tr(TEXT_TEMPLATE).arg(text)));
+    }
+
+    mUi->buttonBox->button(QDialogButtonBox::Save)->setEnabled(!(nodeWithName || text.isEmpty()));
 }
