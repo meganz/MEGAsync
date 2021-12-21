@@ -11,6 +11,9 @@
 #include "gui/ProxySettings.h"
 #include "gui/BandwidthSettings.h"
 #include "gui/BackupsWizard.h"
+#include "gui/AddBackupDialog.h"
+#include "gui/RemoveBackupDialog.h"
+#include "gui/RenameTargetFolderDialog.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -97,7 +100,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mAreSyncsDisabled (false),
     mIsSavingSyncsOnGoing (false),
     mSelectedSyncRow(-1),
-    mBackupRootHandle(mega::INVALID_HANDLE)
+    mBackupRootHandle(mega::INVALID_HANDLE),
+    mBackupRootDirName(tr("My Backups"))
 {
     mUi->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
@@ -233,22 +237,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     syncsStateInformation(SyncStateInformation::NO_SAVING_SYNCS);
 
     connectBackupHandlers();
-
-    QHeaderView *header = mUi->backupTableWidget->horizontalHeader();
-    header->setSortIndicator(-1, Qt::AscendingOrder);
-    header->resizeSection(BackupItemColumn::ENABLED, 32);
-    header->resizeSection(BackupItemColumn::MENU, 32);
-    header->setDefaultAlignment(Qt::AlignLeft);
-    header->setSectionResizeMode(BackupItemColumn::ENABLED, QHeaderView::Fixed);
-    header->setSectionResizeMode(BackupItemColumn::LNAME,QHeaderView::Stretch);
-    header->setSectionResizeMode(BackupItemColumn::MENU, QHeaderView::Fixed);
-    // Hijack the sorting on the dots MENU column and hide the sort indicator,
-    // instead of showing a bogus sort on that column;
-    connect(header, &QHeaderView::sortIndicatorChanged, this, [header](int index, Qt::SortOrder order)
-    {
-        if (index == BackupItemColumn::MENU)
-            header->setSortIndicator(-1, order);
-    });
 }
 
 SettingsDialog::~SettingsDialog()
@@ -825,6 +813,7 @@ void SettingsDialog::changeEvent(QEvent* event)
         updateBandwidthElements();
         updateAccountElements();
     }
+
     QDialog::changeEvent(event);
 }
 
@@ -2122,25 +2111,62 @@ void SettingsDialog::addSyncRow(int row, const QString& name, const QString& lPa
 // Backup ----------------------------------------------------------------------------------------
 void SettingsDialog::connectBackupHandlers()
 {
+    connect(mUi->backupTableWidget, &BackupTableWidget::removeBackup, this, &SettingsDialog::removeBackup);
+    connect(mUi->backupTableWidget, &BackupTableWidget::openInMEGA, this, &SettingsDialog::openMEGAHandleInExplorer);
 
     connect(&mSyncController, &SyncController::backupsRootDirHandle, this, [this](mega::MegaHandle backupRootHandle)
     {
-        if(backupRootHandle == mega::INVALID_HANDLE)
+        QString backupRootPath = QString();
+        if(backupRootHandle != mega::INVALID_HANDLE)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "My Backups directory not set");
-            return;
+            mBackupRootHandle = backupRootHandle;
+            backupRootPath = QString::fromUtf8(mMegaApi->getNodePathByNodeHandle(mBackupRootHandle));
+            mUi->bOpenBackupFolder->setEnabled(!backupRootPath.isEmpty());
         }
-        mBackupRootHandle = backupRootHandle;
-        mUi->lBackupFolder->setText(QString::fromUtf8(mMegaApi->getNodePathByNodeHandle(mBackupRootHandle)));
+        if (backupRootPath.isEmpty())
+        {
+            mUi->bOpenBackupFolder->setEnabled(false);
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "My Backups directory invalid or not set, using default");
+            mBackupRootHandle = mega::INVALID_HANDLE;
+            backupRootPath = QLatin1Char('/') + mBackupRootDirName;
+        }
+        mUi->lBackupFolder->setText(backupRootPath);
     });
 
-    // TODO: Re-enable when we have the add backup dialog (not wizard)
-    // Only enable before calling the dialog, disable after? Or enable when we have backups, disable otherwise?
-//    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
-//    {
-//        if (errorCode != MegaError::API_OK)
-//            QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
-//    });
+    connect(&mSyncController, &SyncController::setMyBackupsDirStatus, this, [this](int errorCode, QString errorMsg)
+    {
+        if (errorCode == mega::MegaError::API_EEXIST)
+        {
+            // If dir already exists, prompt for new name
+            RenameTargetFolderDialog dialog (mBackupRootDirName);
+            auto res (dialog.exec());
+            if (res == QDialog::Accepted)
+            {
+                MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Settings Dialog: setup MyBackups");
+                mBackupRootDirName = dialog.getNewFolderName();
+                mSyncController.createMyBackupsDir(dialog.getNewFolderName());
+            }
+        }
+        else if (errorCode != mega::MegaError::API_OK)
+        {
+            QMegaMessageBox::critical(nullptr, tr("Error"),
+                                      tr("Creating or setting the backups root folder failed.\n"
+                                         "Reason: %2")
+                                      .arg(errorMsg));
+        }
+        else
+        {
+            mSyncController.addSync(QDir::toNativeSeparators(mDirToBackup.canonicalPath()),
+                                    mBackupRootHandle, mDirToBackup.dirName(),
+                                    MegaSync::TYPE_BACKUP);
+        }
+    }, Qt::QueuedConnection);
+
+    connect(&mSyncController, &SyncController::syncAddStatus, this, [](const int errorCode, const QString errorMsg)
+    {
+        if (errorCode != MegaError::API_OK)
+            QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
+    });
 
     connect(&mSyncController, &SyncController::syncRemoveError, this, [](std::shared_ptr<SyncSetting> sync)
     {
@@ -2171,6 +2197,7 @@ void SettingsDialog::connectBackupHandlers()
 void SettingsDialog::loadBackupSettings()
 {
     mUi->backupTableWidget->setModel(new BackupItemModel(mUi->backupTableWidget));
+    mUi->backupTableWidget->customize();
     mSyncController.getBackupsRootDirHandle();
 }
 
@@ -2193,39 +2220,78 @@ void SettingsDialog::on_bBackup_clicked()
 
 void SettingsDialog::on_bAddBackup_clicked()
 {
-//    mSyncController.addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName());
+    AddBackupDialog *addBackup = new AddBackupDialog(this);
+    addBackup->setAttribute(Qt::WA_DeleteOnClose);
+    addBackup->setWindowModality(Qt::NonModal);
+    addBackup->setMyBackupsFolder(mUi->lBackupFolder->text());
+    addBackup->open();
 
-    BackupsWizard *wizard = new BackupsWizard(this);
-    wizard->setAttribute(Qt::WA_DeleteOnClose);
-    wizard->setWindowModality(Qt::WindowModal);
-    wizard->open();
+    connect(addBackup, &AddBackupDialog::accepted, this, [this, addBackup]()
+    {
+        mDirToBackup = addBackup->getSelectedFolder();
+
+        if (mBackupRootHandle == mega::INVALID_HANDLE)
+        {
+            MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Settings Dialog: setup MyBackups");
+            mSyncController.createMyBackupsDir(mBackupRootDirName);
+        }
+        else
+        {
+            mSyncController.addSync(QDir::toNativeSeparators(mDirToBackup.canonicalPath()),
+                                    mBackupRootHandle, mDirToBackup.dirName(),
+                                    MegaSync::TYPE_BACKUP);
+        }
+    });
 }
 
 void SettingsDialog::on_bDeleteBackup_clicked()
 {
-    if(mUi->backupTableWidget->selectionModel()->hasSelection())
+    if(!mUi->backupTableWidget->selectionModel()->hasSelection())
+        return;
+
+    QModelIndex index = mUi->backupTableWidget->selectionModel()->selectedRows().first();
+    std::shared_ptr<SyncSetting> backup = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
+
+    if(backup == nullptr)
+        return;
+
+    removeBackup(backup);
+}
+
+void SettingsDialog::removeBackup(std::shared_ptr<SyncSetting> backup)
+{
+    RemoveBackupDialog *dialog = new RemoveBackupDialog(backup, this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->open();
+
+    connect(dialog, &AddBackupDialog::accepted, this, [this, dialog]()
     {
-        QModelIndex index = mUi->backupTableWidget->selectionModel()->selectedRows().first();
-        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
-    }
+        mSyncController.removeSync(dialog->backupToRemove(), dialog->alsoRemoveMEGAFolder());
+    });
 }
 
 void SettingsDialog::on_bOpenBackupFolder_clicked()
 {
-    MegaNode* node = mMegaApi->getNodeByHandle(mBackupRootHandle);
+    openMEGAHandleInExplorer(mBackupRootHandle);
+}
+
+void SettingsDialog::openMEGAHandleInExplorer(MegaHandle handle)
+{
+    MegaNode* node = mMegaApi->getNodeByHandle(handle);
     if (node)
     {
         const char *handle = node->getBase64Handle();
         if(handle)
         {
-            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+            // FIXME: Revert to live url when feature is merged
+            // QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
+            QString url = QString::fromUtf8("https://13755-backup-center.developers.mega.co.nz/#fm/") + QString::fromUtf8(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
         }
         delete node;
     }
 }
-
 
 void SettingsDialog::on_bBackupCenter_clicked()
 {

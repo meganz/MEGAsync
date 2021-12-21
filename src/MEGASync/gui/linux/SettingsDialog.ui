@@ -2008,18 +2008,23 @@ background: white;
 outline: 0;
 }
 
+QTableView::item
+{
+border: none;
+}
+
+QTableView::indicator
+{
+min-height: 14px;
+min-width: 14px;
+}
+
 QHeaderView::section:horizontal
 {
 color: #4A607A;
 background: white;
 border:none;
-padding-left: 12px;
-}
-
-QTableView::item
-{
-border: none;
-padding-left: 10px;
+padding-left: 8px;
 }
 
 QMenu
@@ -2065,11 +2070,17 @@ border-radius: 8px;
             <property name="cornerButtonEnabled">
              <bool>false</bool>
             </property>
+            <attribute name="horizontalHeaderMinimumSectionSize">
+             <number>24</number>
+            </attribute>
             <attribute name="horizontalHeaderHighlightSections">
              <bool>false</bool>
             </attribute>
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
+            </attribute>
+            <attribute name="verticalHeaderDefaultSectionSize">
+             <number>30</number>
             </attribute>
            </widget>
           </item>
@@ -2140,7 +2151,7 @@ border-radius: 8px;
             <item>
              <widget class="QLineEdit" name="lBackupFolder">
               <property name="text">
-               <string/>
+               <string notr="true"/>
               </property>
               <property name="readOnly">
                <bool>true</bool>

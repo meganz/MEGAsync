@@ -26,7 +26,7 @@ public:
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
                  const QString& syncName = QString(),
                  mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
-    void removeSync(std::shared_ptr<SyncSetting> syncSetting);
+    void removeSync(std::shared_ptr<SyncSetting> syncSetting, bool removeRemote = false);
     void enableSync(std::shared_ptr<SyncSetting> syncSetting);
     void disableSync(std::shared_ptr<SyncSetting> syncSetting);
 
@@ -63,4 +63,5 @@ private:
     SyncModel* mSyncModel;
     bool mIsDeviceNameSetOnRemote;
     bool mForceSetDeviceName;
+    bool mRemoveRemote;
 };

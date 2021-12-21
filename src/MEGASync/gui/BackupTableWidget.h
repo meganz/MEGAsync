@@ -11,6 +11,12 @@ class BackupTableWidget : public QTableView
 
 public:
     BackupTableWidget(QWidget *parent = nullptr);
+    /* To call after model is set */
+    void customize();
+
+signals:
+    void removeBackup(std::shared_ptr<SyncSetting> backup);
+    void openInMEGA(mega::MegaHandle handle);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

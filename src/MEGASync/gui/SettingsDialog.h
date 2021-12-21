@@ -154,7 +154,9 @@ private slots:
     void on_bBackup_clicked();
     void on_bAddBackup_clicked();
     void on_bDeleteBackup_clicked();
+    void removeBackup(std::shared_ptr<SyncSetting> backup);
     void on_bOpenBackupFolder_clicked();
+    void openMEGAHandleInExplorer(mega::MegaHandle handle);
     void on_bBackupCenter_clicked();
 
     // Security
@@ -262,5 +264,7 @@ private:
     bool mHasDefaultDownloadOption;
     QPointer<ProxySettings> mProxySettingsDialog;
     mega::MegaHandle mBackupRootHandle;
+    QString  mBackupRootDirName;
+    QDir mDirToBackup;
 };
 #endif // SETTINGSDIALOG_H

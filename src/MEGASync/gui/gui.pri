@@ -1,10 +1,11 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
+    $$PWD/AddBackupDialog.cpp \
     $$PWD/BackupItemModel.cpp \
     $$PWD/BackupTableWidget.cpp \
-    $$PWD/BalloonToolTip.cpp \
     $$PWD/BackupsWizard.cpp \
+    $$PWD/BalloonToolTip.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/RenameTargetFolderDialog.cpp \
@@ -76,13 +77,15 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaInfoMessage.cpp \
     $$PWD/WaitingSpinnerWidget.cpp \
     $$PWD/ProxySettings.cpp \
-    $$PWD/BandwidthSettings.cpp
+    $$PWD/BandwidthSettings.cpp \
+    $$PWD/RemoveBackupDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
+    $$PWD/AddBackupDialog.h \
     $$PWD/BackupItemModel.h \
     $$PWD/BackupTableWidget.h \
-    $$PWD/BalloonToolTip.h \
     $$PWD/BackupsWizard.h \
+    $$PWD/BalloonToolTip.h \
     $$PWD/InfoDialog.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/RenameTargetFolderDialog.h \
@@ -154,7 +157,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaInfoMessage.h \
     $$PWD/WaitingSpinnerWidget.h \
     $$PWD/ProxySettings.h \
-    $$PWD/BandwidthSettings.h
+    $$PWD/BandwidthSettings.h \
+    $$PWD/RemoveBackupDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -216,7 +220,9 @@ win32 {
                 $$PWD/win/BackupsWizard.ui \
                 $$PWD/win/RenameTargetFolderDialog.ui \
                 $$PWD/win/BackupSetupSuccessDialog.ui \
-                $$PWD/win/NewFolderDialog.ui
+                $$PWD/win/NewFolderDialog.ui \
+                $$PWD/win/AddBackupDialog.ui \
+                $$PWD/win/RemoveBackupDialog.ui
 }
 
 macx {
@@ -275,7 +281,9 @@ macx {
                 $$PWD/macx/BackupsWizard.ui \
                 $$PWD/macx/RenameTargetFolderDialog.ui \
                 $$PWD/macx/BackupSetupSuccessDialog.ui \
-                $$PWD/macx/NewFolderDialog.ui
+                $$PWD/macx/NewFolderDialog.ui \
+                $$PWD/macx/AddBackupDialog.ui \
+                $$PWD/macx/RemoveBackupDialog.ui
 
     #Asset catalog need to load SF symbol images of toolbar items for custom NSToolbar
     QMAKE_ASSET_CATALOGS += $$PWD/images/Images.xcassets
@@ -356,7 +364,9 @@ unix:!macx {
                 $$PWD/linux/BandwidthSettings.ui \
                 $$PWD/linux/RenameTargetFolderDialog.ui \
                 $$PWD/linux/BackupSetupSuccessDialog.ui \
-                $$PWD/linux/NewFolderDialog.ui
+                $$PWD/linux/NewFolderDialog.ui \
+                $$PWD/linux/AddBackupDialog.ui \
+                $$PWD/linux/RemoveBackupDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
