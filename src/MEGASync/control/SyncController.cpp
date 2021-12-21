@@ -12,7 +12,8 @@ SyncController::SyncController(QObject* parent)
       mDelegateListener (new QTMegaRequestListener(mApi, this)),
       mSyncModel(SyncModel::instance()),
       mIsDeviceNameSetOnRemote(false),
-      mForceSetDeviceName(false)
+      mForceSetDeviceName(false),
+      mRemoveRemote(false)
 {
     // The controller shouldn't ever be instantiated before we have an API and a SyncModel available
     assert(mApi);
@@ -44,7 +45,7 @@ void SyncController::addSync(const QString &localFolder, const MegaHandle &remot
                      syncName.toUtf8().constData(), remoteHandle, nullptr, mDelegateListener);
 }
 
-void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting)
+void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting, bool removeRemote)
 {
     if (!syncSetting)
     {
@@ -56,7 +57,9 @@ void SyncController::removeSync(std::shared_ptr<SyncSetting> syncSetting)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync \"%1\"")
                  .arg(syncSetting->name()).toUtf8().constData());
 
-    mApi->removeSync(syncSetting->backupId());
+    std::shared_ptr<MegaNode> node(mApi->getNodeByHandle(syncSetting->getMegaHandle()));
+    mApi->removeSync(node.get(), mDelegateListener);
+    mRemoveRemote = removeRemote;
 }
 
 void SyncController::enableSync(std::shared_ptr<SyncSetting> syncSetting)
@@ -259,28 +262,17 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
     {
-        std::shared_ptr<SyncSetting> sync = mSyncModel->getSyncSettingByTag(req->getParentHandle());
-        if (req->getNumDetails() && sync)
-        {
-            QString errorMsg = QString::fromUtf8("Error removing sync \"%1\" for \"%2\" to \"%3\": %4").arg(
-                        sync->name(),
-                        sync->getLocalFolder(),
-                        sync->getMegaFolder(),
-                        QCoreApplication::translate("MegaError", MegaSync::getMegaSyncErrorCode(req->getNumDetails())));
-
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, errorMsg.toUtf8().constData());
-            emit syncRemoveError(sync);
-        }
-        else
+        if (e->getErrorCode() != MegaError::API_OK)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error removing sync (request error): %1")
                          .arg(QCoreApplication::translate("MegaError", e->getErrorString()))
                          .toUtf8().constData());
         }
-
-        if (!req->getNumDetails() && sync)
+        else if(mRemoveRemote)
         {
-            mSyncModel->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
+            std::shared_ptr<MegaNode> remoteNode(mApi->getNodeByHandle(req->getNodeHandle()));
+            mApi->moveNode(remoteNode.get(), mApi->getRubbishNode(), mDelegateListener);
+            mRemoveRemote = false;
         }
         break;
     }
@@ -330,6 +322,15 @@ void SyncController::onRequestFinish(MegaApi *api, MegaRequest *req, MegaError *
         if (!req->getNumDetails() && sync)
         {
             mSyncModel->removeUnattendedDisabledSync(sync->backupId(), sync->getType());
+        }
+        break;
+    }
+    case MegaRequest::TYPE_MOVE:
+    {
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error trashing MEGA folder (request error): %1")
+                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
         }
         break;
     }

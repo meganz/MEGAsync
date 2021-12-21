@@ -620,14 +620,6 @@
         <file>images/folder_icon@2x.png</file>
         <file>images/mimes/folder with warning/folder with warning.png</file>
         <file>images/mimes/folder with warning/folder with warning@2x.png</file>
-        <file>images/icons/pc/PC_warning_ico_rest.png</file>
-        <file>images/icons/pc/PC_warning_ico_rest@2x.png</file>
-        <file>images/icons/pc/PC_warning_ico_hover.png</file>
-        <file>images/icons/pc/PC_warning_ico_hover@2x.png</file>
-        <file>images/icons/pc/PC_ico_rest.png</file>
-        <file>images/icons/pc/PC_ico_rest@2x.png</file>
-        <file>images/icons/pc/PC_ico_hover.png</file>
-        <file>images/icons/pc/PC_ico_hover@2x.png</file>
         <file>images/settings-backup-macx.png</file>
         <file>images/settings-backup-macx@2x.png</file>
         <file>images/icons/pc/pc_24.png</file>
@@ -640,5 +632,26 @@
         <file>images/icons/infodialog/warning-disabled-backups@2x.png</file>
         <file>images/icons/infodialog/warning-disabled-syncs-and-backups.png</file>
         <file>images/icons/infodialog/warning-disabled-syncs-and-backups@2x.png</file>
+        <file>images/icons/folder/folder-warning-rest@3x.png</file>
+        <file>images/icons/folder/folder-warning-rest@2x.png</file>
+        <file>images/icons/folder/folder-warning-rest.png</file>
+        <file>images/icons/folder/folder-warning-hover@3x.png</file>
+        <file>images/icons/folder/folder-warning-hover@2x.png</file>
+        <file>images/icons/folder/folder-warning-hover.png</file>
+        <file>images/icons/folder/folder-hover@3x.png</file>
+        <file>images/icons/folder/folder-hover@2x.png</file>
+        <file>images/icons/folder/folder-hover.png</file>
+        <file>images/icons/folder/folder-rest@3x.png</file>
+        <file>images/icons/folder/folder-rest@2x.png</file>
+        <file>images/icons/folder/folder-rest.png</file>
+        <file>images/icons/options_dots/options-press@3x.png</file>
+        <file>images/icons/options_dots/options-press@2x.png</file>
+        <file>images/icons/options_dots/options-press.png</file>
+        <file>images/icons/options_dots/options-rest@3x.png</file>
+        <file>images/icons/options_dots/options-rest@2x.png</file>
+        <file>images/icons/options_dots/options-rest.png</file>
+        <file>images/icons/options_dots/options-hover@3x.png</file>
+        <file>images/icons/options_dots/options-hover@2x.png</file>
+        <file>images/icons/options_dots/options-hover.png</file>
     </qresource>
 </RCC>

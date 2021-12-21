@@ -4,6 +4,8 @@
 #include <QIcon>
 #include <QFileInfo>
 
+#define ICON_SIZE 24
+
 BackupItemModel::BackupItemModel(QObject *parent)
     : QAbstractItemModel(parent),
     mSyncModel (SyncModel::instance()),
@@ -25,8 +27,6 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
         switch(section)
         {
         case BackupItemColumn::ENABLED:
-            if(role == Qt::SizeHintRole)
-                return QSize(16, 16);
             if(role == Qt::ToolTipRole)
                 return tr("Click to sort by enabled state");
             break;
@@ -37,8 +37,6 @@ QVariant BackupItemModel::headerData(int section, Qt::Orientation orientation, i
                 return tr("Click to sort alphabetically");
             break;
         case BackupItemColumn::MENU:
-            if(role == Qt::SizeHintRole)
-                return QSize(16, 16);
             if(role == Qt::ToolTipRole)
                 return tr("Click to undo sorting");
             break;
@@ -108,7 +106,6 @@ QModelIndex BackupItemModel::index(int row, int column, const QModelIndex &paren
 QModelIndex BackupItemModel::parent(const QModelIndex &index) const
 {
     Q_UNUSED(index)
-    // NOTE: Implement me for the tree view
     return QModelIndex();
 }
 
@@ -117,7 +114,7 @@ int BackupItemModel::rowCount(const QModelIndex &parent) const
     if (parent.isValid())
         return 0;
 
-    return static_cast<int>(mOrderedList.size());
+    return mOrderedList.size();
 }
 
 int BackupItemModel::columnCount(const QModelIndex &parent) const
@@ -151,13 +148,13 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
             QIcon syncIcon;
             if(sync->getError())
             {
-                syncIcon.addFile(QLatin1String(":/images/icons/pc/PC_warning_ico_rest.png"), QSize(16, 16), QIcon::Normal);
-                syncIcon.addFile(QLatin1String(":/images/icons/pc/PC_warning_ico_hover.png"), QSize(16, 16), QIcon::Selected);
+                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-warning-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-warning-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
             }
             else
             {
-                syncIcon.addFile(QLatin1String(":/images/icons/pc/PC_ico_rest.png"), QSize(16, 16), QIcon::Normal);
-                syncIcon.addFile(QLatin1String(":/images/icons/pc/PC_ico_rest_hover.png"), QSize(16, 16), QIcon::Selected);
+                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
+                syncIcon.addFile(QLatin1String(":/images/icons/folder/folder-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
             }
             return syncIcon;
         }
@@ -175,13 +172,11 @@ QVariant BackupItemModel::data(const QModelIndex &index, int role) const
         break;
     case BackupItemColumn::MENU:
         QIcon dotsMenu;
-        dotsMenu.addFile(QLatin1String(":/images/Item_options_rest.png"), QSize(16, 16), QIcon::Normal);
-        dotsMenu.addFile(QLatin1String(":/images/Item_options_press.png"), QSize(16, 16), QIcon::Selected);
-        dotsMenu.addFile(QLatin1String(":/images/Item_options_hover.png"), QSize(16, 16), QIcon::Active);
+        dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-rest.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Normal);
+        dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-press.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Selected);
+        dotsMenu.addFile(QLatin1String("://images/icons/options_dots/options-hover.png"), QSize(ICON_SIZE, ICON_SIZE), QIcon::Active);
         if(role == Qt::DecorationRole)
             return dotsMenu;
-        else if(role == Qt::SizeHintRole)
-            return QSize(16, 16);
         else if(role == Qt::ToolTipRole)
             return tr("Click menu for more Backup actions");
         break;

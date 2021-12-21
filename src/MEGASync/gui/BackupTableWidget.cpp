@@ -10,11 +10,30 @@
 BackupTableWidget::BackupTableWidget(QWidget *parent)
     : QTableView(parent)
 {
-    setIconSize(QSize(16, 16));
+    setIconSize(QSize(24, 24));
 
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &BackupTableWidget::customContextMenuRequested, this, &BackupTableWidget::onCustomContextMenuRequested);
     connect(this, &BackupTableWidget::pressed, this, &BackupTableWidget::onCellClicked);
+}
+
+void BackupTableWidget::customize()
+{
+    horizontalHeader()->setSortIndicator(-1, Qt::AscendingOrder);
+    horizontalHeader()->resizeSection(BackupItemColumn::ENABLED, 32);
+    horizontalHeader()->resizeSection(BackupItemColumn::MENU, 32);
+    horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
+    horizontalHeader()->setSectionResizeMode(BackupItemColumn::ENABLED, QHeaderView::Fixed);
+    horizontalHeader()->setSectionResizeMode(BackupItemColumn::LNAME,QHeaderView::Stretch);
+    horizontalHeader()->setSectionResizeMode(BackupItemColumn::MENU, QHeaderView::Fixed);
+
+    // Hijack the sorting on the dots MENU column and hide the sort indicator,
+    // instead of showing a bogus sort on that column;
+    connect(horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, [this](int index, Qt::SortOrder order)
+    {
+        if (index == BackupItemColumn::MENU)
+            horizontalHeader()->setSortIndicator(-1, order);
+    });
 }
 
 void BackupTableWidget::keyPressEvent(QKeyEvent *event)
@@ -60,51 +79,48 @@ void BackupTableWidget::onCellClicked(const QModelIndex &index)
 
 void BackupTableWidget::showContextMenu(const QPoint &pos, const QModelIndex index)
 {
-    QMenu *menu(new QMenu(this));
+    auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
 
+    QMenu *menu(new QMenu(this));
     menu->setAttribute(Qt::WA_TranslucentBackground);
 #if defined(Q_OS_WINDOWS)
     menu->setWindowFlags(menu->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
 #endif
 
-    // Show in file explorer action
-    auto showLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
+    // Show in system file explorer action
+    auto openLocalAction (new MenuItemAction(QCoreApplication::translate("Platform", Platform::fileExplorerString),
                                              QIcon(QString::fromUtf8("://images/show_in_folder_ico.png"))));
-    connect(showLocalAction, &MenuItemAction::triggered, this, [index]()
+    connect(openLocalAction, &MenuItemAction::triggered, this, [sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
         QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(sync->getLocalFolder()));
     });
 
-    // Show in Mega web action
-    auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
+    // Show in MEGA Web App action
+    auto openRemoteAction (new MenuItemAction(tr("Open in MEGA"),
                                               QIcon(QString::fromUtf8("://images/ico_open_MEGA.png"))));
-    connect(showRemoteAction, &MenuItemAction::triggered, this, [index]()
+    connect(openRemoteAction, &MenuItemAction::triggered, this, [this, sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
-        QString url = QString::fromUtf8("mega://#fm/") + sync->getMegaFolder();
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+        emit openInMEGA(sync->getMegaHandle());
     });
 
-    // Remove Sync action
-    auto delAction (new MenuItemAction(tr("Remove backup"),
+    // Remove Backup action
+    auto removeAction (new MenuItemAction(tr("Remove backup"),
                                        QIcon(QString::fromUtf8("://images/ico_Delete.png"))));
-    delAction->setAccent(true);
-    connect(delAction, &MenuItemAction::triggered, this, [this, index]()
+    removeAction->setAccent(true);
+    connect(removeAction, &MenuItemAction::triggered, this, [this, sync]()
     {
-        auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>();
-        mSyncController.removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSetting>>());
+        emit removeBackup(sync);
     });
 
 
-    showLocalAction->setParent(menu);
-    showRemoteAction->setParent(menu);
-    delAction->setParent(menu);
+    openLocalAction->setParent(menu);
+    openRemoteAction->setParent(menu);
+    removeAction->setParent(menu);
 
-    menu->addAction(showLocalAction);
-    menu->addAction(showRemoteAction);
+    menu->addAction(openLocalAction);
+    menu->addAction(openRemoteAction);
     menu->addSeparator();
-    menu->addAction(delAction);
+    menu->addAction(removeAction);
 
     menu->popup(pos);
 }

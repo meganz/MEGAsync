@@ -177,6 +177,8 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/BackupsWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/RenameTargetFolderDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/BackupSetupSuccessDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/AddBackupDialog.ui
+    ${MEGAsyncDir}/gui/${UiDir}/RemoveBackupDialog.ui
     )
 
 
@@ -195,6 +197,11 @@ else()
 endif()
 
 set (MOC_INPUT
+    ${MEGAsyncDir}/platform/notificator.h
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
     ${MEGAsyncDir}/MegaApplication.h
     ${MEGAsyncDir}/DesktopNotifications.h
     ${MEGAsyncDir}/TransferQuota.h
@@ -291,11 +298,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/BackupsWizard.h
     ${MEGAsyncDir}/gui/RenameTargetFolderDialog.h
     ${MEGAsyncDir}/gui/SyncsMenu.h
-    ${MEGAsyncDir}/platform/notificator.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.h
-    ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.h
+    ${MEGAsyncDir}/gui/AddBackupDialog.h
+    ${MEGAsyncDir}/gui/RemoveBackupDialog.h
 )
 
 if (NOT CMAKE_HOST_APPLE)
@@ -435,6 +439,8 @@ set (SRCS
     ${MEGAsyncDir}/gui/BackupsWizard.cpp
     ${MEGAsyncDir}/gui/RenameTargetFolderDialog.cpp
     ${MEGAsyncDir}/gui/SyncsMenu.cpp
+    ${MEGAsyncDir}/gui/AddBackupDialog.cpp
+    ${MEGAsyncDir}/gui/RemoveBackupDialog.cpp
 
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
@@ -465,7 +471,6 @@ set (SRCS
     ${MEGAsyncDir}/platform/notificator.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
-
 )
 
 
