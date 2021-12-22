@@ -2,7 +2,6 @@
 #include "MegaApplication.h"
 #include "gui/CrashReportDialog.h"
 #include "gui/MegaProxyStyle.h"
-#include "gui/ConfirmSSLexception.h"
 #include "gui/QMegaMessageBox.h"
 #include "control/AppStatsEvents.h"
 #include "control/Utilities.h"
@@ -284,7 +283,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateTask = NULL;
     multiUploadFileDialog = NULL;
     exitDialog = NULL;
-    sslKeyPinningError = NULL;
     downloadNodeSelector = NULL;
     mPricing.reset();
     mCurrency.reset();
@@ -1649,9 +1647,6 @@ void MegaApplication::closeDialogs(bool bwoverquota)
 
     delete downloadNodeSelector;
     downloadNodeSelector = NULL;
-
-    delete sslKeyPinningError;
-    sslKeyPinningError = NULL;
 
     if(transferQuota)
     {
@@ -6816,12 +6811,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
     DeferPreferencesSyncForScope deferrer(this);
 
-    if (sslKeyPinningError && request->getType() != MegaRequest::TYPE_LOGOUT)
-    {
-        delete sslKeyPinningError;
-        sslKeyPinningError = NULL;
-    }
-
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
@@ -7026,67 +7015,15 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (errorCode == MegaError::API_EINCOMPLETE && request->getParamType() == MegaError::API_ESSL)
             {
-                if (!sslKeyPinningError)
-                {
-                    sslKeyPinningError = new QMessageBox(QMessageBox::Critical, QString::fromUtf8("MEGAsync"),
-                                                tr("MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.")
-                                                + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")),
-                                                         QMessageBox::Retry | QMessageBox::Yes | QMessageBox::Cancel);
-                    HighDpiResize hDpiResizer(sslKeyPinningError);
+                //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
+                //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
 
-            //        TO-DO: Uncomment when asset is included to the project
-            //        sslKeyPinningError->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-critical.png")
-            //                                                    : QString::fromUtf8(":/images/mbox-critical@2x.png")));
+                //In previous versions, the user was asked to continue with a warning about a MITM risk.
+                //One of the options was disabling the public key pinning to continue working as usual
+                //This option was to risky and the solution taken was silently retry reconnection
 
-                    sslKeyPinningError->setButtonText(QMessageBox::Yes, trUtf8("I don't care"));
-                    sslKeyPinningError->setButtonText(QMessageBox::Cancel, trUtf8("Logout"));
-                    sslKeyPinningError->setButtonText(QMessageBox::Retry, trUtf8("Retry"));
-                    sslKeyPinningError->setDefaultButton(QMessageBox::Retry);
-                    int result = sslKeyPinningError->exec();
-                    if (!sslKeyPinningError)
-                    {
-                        return;
-                    }
-
-                    if (result == QMessageBox::Cancel)
-                    {
-                        // Logout
-                        megaApi->localLogout();
-                        delete sslKeyPinningError;
-                        sslKeyPinningError = NULL;
-                        return;
-                    }
-                    else if (result == QMessageBox::Retry)
-                    {
-                        // Retry
-                        megaApi->retryPendingConnections();
-                        delete sslKeyPinningError;
-                        sslKeyPinningError = NULL;
-                        return;
-                    }
-
-                    // Ignore
-                    QPointer<ConfirmSSLexception> ex = new ConfirmSSLexception(sslKeyPinningError);
-                    result = ex->exec();
-                    if (!ex || !result)
-                    {
-                        megaApi->retryPendingConnections();
-                        delete sslKeyPinningError;
-                        sslKeyPinningError = NULL;
-                        return;
-                    }
-
-                    if (ex->dontAskAgain())
-                    {
-                        preferences->setSSLcertificateException(true);
-                    }
-
-                    megaApi->setPublicKeyPinning(false);
-                    megaApi->retryPendingConnections(true);
-                    delete sslKeyPinningError;
-                    sslKeyPinningError = NULL;
-                }
-
+                // Retry while enforcing key pinning silently
+                megaApi->retryPendingConnections();
                 break;
             }
 
