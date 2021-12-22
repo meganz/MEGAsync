@@ -148,7 +148,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaProgressCustomDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/ConfirmSSLexception.ui
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
@@ -232,7 +231,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
-    ${MEGAsyncDir}/gui/ConfirmSSLexception.h
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/CustomTransferItem.h
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.h
@@ -388,7 +386,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/HighDpiResize.cpp
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.cpp
-    ${MEGAsyncDir}/gui/ConfirmSSLexception.cpp
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp
     ${MEGAsyncDir}/gui/PlanWidget.cpp
     ${MEGAsyncDir}/gui/InfoWizard.cpp
