@@ -379,10 +379,10 @@ protected:
 
     QAction *guestSettingsAction;
     QAction *initialExitAction;
-    std::unique_ptr<QMenu> initialTrayMenu;
+    QPointer<QMenu> initialTrayMenu;
 
 #ifdef _WIN32
-    std::unique_ptr<QMenu> windowsMenu;
+    QPointer<QMenu> windowsMenu;
     QAction *windowsExitAction;
     QAction *windowsUpdateAction;
     QAction *windowsImportLinksAction;
@@ -394,10 +394,10 @@ protected:
 #endif
 
     std::unique_ptr<VerifyLockMessage> verifyEmail;
-    std::unique_ptr<QMenu> infoDialogMenu;
-    std::unique_ptr<QMenu> guestMenu;
+    QPointer<QMenu> infoDialogMenu;
+    QPointer<QMenu> guestMenu;
     QMenu emptyMenu;
-    std::unique_ptr<QMenu> syncsMenu;
+    QPointer<QMenu> syncsMenu;
     QSignalMapper *menuSignalMapper;
 
     MenuItemAction *exitAction;
