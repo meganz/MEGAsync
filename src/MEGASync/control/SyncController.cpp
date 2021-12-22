@@ -137,7 +137,6 @@ void SyncController::setMyBackupsDir(mega::MegaHandle handle)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Setting MyBackups dir to handle %1")
                  .arg(handle).toUtf8().constData());
-    assert(Preferences::instance()->logged());
     mApi->setMyBackupsFolder(handle, mDelegateListener);
 }
 
@@ -148,7 +147,6 @@ void SyncController::setDeviceName(const QString& name)
         MegaApi::log(MegaApi::LOG_LEVEL_INFO,
                      QString::fromUtf8("Setting device name to \"%1\" on remote")
                      .arg(name).toUtf8().constData());
-        assert(Preferences::instance()->logged());
         mApi->setDeviceName(name.toUtf8().constData(), mDelegateListener);
     }
     else
@@ -163,7 +161,6 @@ void SyncController::setDeviceName(const QString& name)
 void SyncController::getDeviceName()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Request device name");
-    assert(Preferences::instance()->logged());
     mApi->getDeviceName(mDelegateListener);
 }
 
