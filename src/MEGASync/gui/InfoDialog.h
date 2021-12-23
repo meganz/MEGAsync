@@ -19,6 +19,9 @@
 #include "FilterAlertWidget.h"
 #include "TransferQuota.h"
 #include "SyncsMenu.h"
+#include "control/SyncController.h"
+#include "AddBackupDialog.h"
+
 #include <memory>
 #ifdef _WIN32
 #include <chrono>
@@ -265,6 +268,10 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
+    std::shared_ptr<SyncController> mSyncController;
+    QPointer<AddBackupDialog> mAddBackupDialog;
+    mega::MegaHandle mBackupRootHandle;
+
 };
 
 #endif // INFODIALOG_H
