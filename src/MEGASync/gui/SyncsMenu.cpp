@@ -91,6 +91,9 @@ void SyncsMenu::refresh()
     SyncModel* model (SyncModel::instance());
     MenuItemAction* firstBackup (nullptr);
 
+    // Actions will be deleted, so reset the last hovered pointer
+    mLastHovered = nullptr;
+
     // Reset menu (leave mAddAction only)
     const auto actions (mMenu->actions());
     for (QAction* a : actions)
