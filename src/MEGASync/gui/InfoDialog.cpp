@@ -18,6 +18,7 @@
 #include "platform/Platform.h"
 #include "assert.h"
 #include "BackupsWizard.h"
+#include "QMegaMessageBox.h"
 
 // TODO: remove
 #include "control/MegaController.h"
@@ -76,7 +77,10 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
 
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
-    ui(new Ui::InfoDialog)
+    ui(new Ui::InfoDialog),
+    mSyncController (nullptr),
+    mAddBackupDialog (nullptr),
+    mBackupRootHandle (mega::INVALID_HANDLE)
 {
     ui->setupUi(this);
 
@@ -1229,25 +1233,82 @@ void InfoDialog::addSync(MegaHandle h)
 
 void InfoDialog::addBackup()
 {
-    static QPointer<BackupsWizard> dialog = nullptr;
-    if (dialog)
+    // If no backups configured: show wizard, else show single backup add
+    int nbBackups (SyncModel::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP));
+
+    if (nbBackups > 0)
     {
-        dialog->activateWindow();
-        dialog->raise();
-        dialog->setFocus();
-        return;
+        if (!mSyncController)
+        {
+            mSyncController.reset(new SyncController());
+            connect(mSyncController.get(), &SyncController::backupsRootDirHandle, this, [this](mega::MegaHandle h)
+            {
+                if (h != mega::INVALID_HANDLE)
+                {
+                    mBackupRootHandle = h;
+                    if (mAddBackupDialog)
+                    {
+                        mAddBackupDialog->setMyBackupsFolder(
+                                    QString::fromUtf8(megaApi->getNodePathByNodeHandle(mBackupRootHandle)));
+                    }
+                }
+            });
+            connect(mSyncController.get(), &SyncController::syncAddStatus, this, [this](const int errorCode, const QString errorMsg)
+            {
+                if (errorCode != MegaError::API_OK)
+                {
+                    QMegaMessageBox::critical(nullptr, tr("Error adding backup"), errorMsg);
+                }
+            });
+        }
+
+        if (mAddBackupDialog)
+        {
+            mAddBackupDialog->activateWindow();
+            mAddBackupDialog->raise();
+            mAddBackupDialog->setFocus();
+            return;
+        }
+
+        mAddBackupDialog = new AddBackupDialog();
+
+        connect(mAddBackupDialog, &AddBackupDialog::accepted, this, [this]()
+        {
+            QDir dirToBackup (mAddBackupDialog->getSelectedFolder());
+            if (mBackupRootHandle != mega::INVALID_HANDLE)
+            {
+                mSyncController->addSync(QDir::toNativeSeparators(dirToBackup.canonicalPath()),
+                                        mBackupRootHandle, dirToBackup.dirName(),
+                                        MegaSync::TYPE_BACKUP);
+            }
+        }, Qt::DirectConnection); // Use direct connection, because mAddBackupDialog gets deleted on close
+        mSyncController->getBackupsRootDirHandle();
+
+        mAddBackupDialog->setAttribute(Qt::WA_DeleteOnClose);
+        mAddBackupDialog->setWindowModality(Qt::NonModal);
+        mAddBackupDialog->open();
     }
-
-    dialog = new BackupsWizard();
-
-
-    Platform::execBackgroundWindow(dialog);
-    if (!dialog)
+    else
     {
-        return;
-    }
+        static QPointer<BackupsWizard> dialog = nullptr;
+        if (dialog)
+        {
+            dialog->activateWindow();
+            dialog->raise();
+            dialog->setFocus();
+            return;
+        }
 
-    delete dialog;
+        dialog = new BackupsWizard();
+
+        Platform::execBackgroundWindow(dialog);
+        if (!dialog)
+        {
+            return;
+        }
+
+        delete dialog;
+    }
 }
 
 #ifdef __APPLE__
