@@ -425,6 +425,7 @@ public:
     static std::chrono::milliseconds OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME;
 
     static int STATE_REFRESH_INTERVAL_MS;
+    static int NETWORK_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
 
     static long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;

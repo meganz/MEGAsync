@@ -486,6 +486,7 @@ protected:
     MegaUploader *uploader;
     MegaDownloader *downloader;
     QTimer *periodicTasksTimer;
+    QTimer *networkCheckTimer;
     QTimer *infoDialogTimer;
     QTimer *firstTransferTimer;
     std::unique_ptr<std::thread> mMutexStealerThread;
@@ -558,6 +559,26 @@ private:
     std::shared_ptr<ShellNotifier> mShellNotifier;
 #endif
     void loadSyncExclusionRules(QString email = QString());
+
+    QList<QNetworkInterface> findNewNetworkInterfaces();
+    bool checkNetworkInterfaces(const QList<QNetworkInterface>& newNetworkInterfaces) const;
+    bool checkNetworkInterface(const QNetworkInterface& newNetworkInterface) const;
+    bool checkNetworkAddresses(const QNetworkInterface& oldNetworkInterface, const QNetworkInterface &newNetworkInterface) const;
+    bool checkIpAddress(const QHostAddress& ip, const QList<QNetworkAddressEntry>& oldAddresses, const QString& newNetworkInterfaceName) const;
+    static bool isActiveNetworkInterface(const QString& interfaceName, const QNetworkInterface::InterfaceFlags flags);
+    int countActiveIps(const QList<QNetworkAddressEntry>& addresses) const;
+    static bool isLocalIpv4(const QString& address);
+    static bool isLocalIpv6(const QString& address);
+    void logIpAddress(const char *message, const QHostAddress &ipAddress) const;
+
+    QString obfuscateIfNecessary(const QHostAddress& ipAddress) const;
+    static QString obfuscateAddress(const QHostAddress& ipAddress);
+    static QString obfuscateIpv4Address(const QHostAddress& ipAddress);
+    static QString obfuscateIpv6Address(const QHostAddress& ipAddress);
+    static QStringList explodeIpv6(const QHostAddress &ipAddress);
+
+    void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
+    bool isIdleForTooLong() const;
 };
 
 class DeferPreferencesSyncForScope
