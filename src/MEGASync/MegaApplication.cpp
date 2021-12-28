@@ -638,6 +638,10 @@ void MegaApplication::initialize()
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
     connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
 
+    networkCheckTimer = new QTimer(this);
+    networkCheckTimer->start(Preferences::NETWORK_REFRESH_INTERVAL_MS);
+    connect(networkCheckTimer, SIGNAL(timeout()), this, SLOT(checkNetworkInterfaces()));
+
     // SDK locker code for testing purposes
     if (Preferences::MUTEX_STEALER_MS && Preferences::MUTEX_STEALER_PERIOD_MS)
     {
@@ -1807,86 +1811,19 @@ void MegaApplication::checkNetworkInterfaces()
     }
 
     bool disconnect = false;
-    QList<QNetworkInterface> newNetworkInterfaces;
-    QList<QNetworkInterface> configs = QNetworkInterface::allInterfaces();
-
-    //Filter interfaces (QT provides interfaces with loopback IP addresses)
-    for (int i = 0; i < configs.size(); i++)
+    const QList<QNetworkInterface> newNetworkInterfaces = findNewNetworkInterfaces();
+    if (!newNetworkInterfaces.empty() && !networkConnectivity)
     {
-        QNetworkInterface networkInterface = configs.at(i);
-        QString interfaceName = networkInterface.humanReadableName();
-        QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
-        if ((flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
-                && !(interfaceName == QString::fromUtf8("Teredo Tunneling Pseudo-Interface")))
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
-
-            int numActiveIPs = 0;
-            QList<QNetworkAddressEntry> addresses = networkInterface.addressEntries();
-            for (int i = 0; i < addresses.size(); i++)
-            {
-                QHostAddress ip = addresses.at(i).ip();
-                switch (ip.protocol())
-                {
-                case QAbstractSocket::IPv4Protocol:
-                    if (!ip.toString().startsWith(QString::fromUtf8("127."), Qt::CaseInsensitive)
-                            && !ip.toString().startsWith(QString::fromUtf8("169.254."), Qt::CaseInsensitive))
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv4: %1").arg(ip.toString()).toUtf8().constData());
-                        numActiveIPs++;
-                    }
-                    else
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IPv4: %1").arg(ip.toString()).toUtf8().constData());
-                    }
-                    break;
-                case QAbstractSocket::IPv6Protocol:
-                    if (!ip.toString().startsWith(QString::fromUtf8("FE80:"), Qt::CaseInsensitive)
-                            && !ip.toString().startsWith(QString::fromUtf8("FD00:"), Qt::CaseInsensitive)
-                            && !(ip.toString() == QString::fromUtf8("::1")))
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("IPv6: %1").arg(ip.toString()).toUtf8().constData());
-                        numActiveIPs++;
-                    }
-                    else
-                    {
-                        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IPv6: %1").arg(ip.toString()).toUtf8().constData());
-                    }
-                    break;
-                default:
-                    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored IP: %1").arg(ip.toString()).toUtf8().constData());
-                    break;
-                }
-            }
-
-            if (!numActiveIPs)
-            {
-                continue;
-            }
-
-            lastActiveTime = QDateTime::currentMSecsSinceEpoch();
-            newNetworkInterfaces.append(networkInterface);
-
-            if (!networkConnectivity)
-            {
-                disconnect = true;
-                networkConnectivity = true;
-            }
-        }
-        else
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored network interface: %1 Flags: %2")
-                         .arg(interfaceName)
-                         .arg(QString::number(flags)).toUtf8().constData());
-        }
+        disconnect = true;
+        networkConnectivity = true;
     }
 
-    if (!newNetworkInterfaces.size())
+    if (newNetworkInterfaces.empty())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "No active network interfaces found");
         networkConnectivity = false;
     }
-    else if (!activeNetworkInterfaces.size())
+    else if (activeNetworkInterfaces.empty())
     {
         activeNetworkInterfaces = newNetworkInterfaces;
     }
@@ -1897,83 +1834,10 @@ void MegaApplication::checkNetworkInterfaces()
     }
     else
     {
-        for (int i = 0; i < newNetworkInterfaces.size(); i++)
-        {
-            QNetworkInterface networkInterface = newNetworkInterfaces.at(i);
-
-            int j = 0;
-            while (j < activeNetworkInterfaces.size())
-            {
-                if (activeNetworkInterfaces.at(j).name() == networkInterface.name())
-                {
-                    break;
-                }
-                j++;
-            }
-
-            if (j == activeNetworkInterfaces.size())
-            {
-                //New interface
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New working network interface detected (%1)").arg(networkInterface.humanReadableName()).toUtf8().constData());
-                disconnect = true;
-            }
-            else
-            {
-                QNetworkInterface oldNetworkInterface = activeNetworkInterfaces.at(j);
-                QList<QNetworkAddressEntry> addresses = networkInterface.addressEntries();
-                if (addresses.size() != oldNetworkInterface.addressEntries().size())
-                {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local IP change detected");
-                    disconnect = true;
-                }
-                else
-                {
-                    for (int k = 0; k < addresses.size(); k++)
-                    {
-                        QHostAddress ip = addresses.at(k).ip();
-                        switch (ip.protocol())
-                        {
-                            case QAbstractSocket::IPv4Protocol:
-                            case QAbstractSocket::IPv6Protocol:
-                            {
-                                QList<QNetworkAddressEntry> oldAddresses = oldNetworkInterface.addressEntries();
-                                int l = 0;
-                                while (l < oldAddresses.size())
-                                {
-                                    if (oldAddresses.at(l).ip().toString() == ip.toString())
-                                    {
-                                        break;
-                                    }
-                                    l++;
-                                }
-
-                                if (l == oldAddresses.size())
-                                {
-                                    //New IP
-                                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New IP detected (%1) for interface %2").arg(ip.toString()).arg(networkInterface.name()).toUtf8().constData());
-                                    disconnect = true;
-                                }
-                            }
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-        }
+        disconnect |= checkNetworkInterfaces(newNetworkInterfaces);
     }
 
-    if (disconnect || (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Reconnecting due to local network changes");
-        megaApi->retryPendingConnections(true, true);
-        activeNetworkInterfaces = newNetworkInterfaces;
-        lastActiveTime = QDateTime::currentMSecsSinceEpoch();
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Local network adapters haven't changed");
-    }
+    reconnectIfNecessary(disconnect, newNetworkInterfaces);
 }
 
 void MegaApplication::checkMemoryUsage()
@@ -2204,7 +2068,6 @@ void MegaApplication::periodicTasks()
         updateUserStats(storage, transfer, pro, false, -1);
     }
 
-    checkNetworkInterfaces();
     initLocalServer();
 
     static int counter = 0;
@@ -2278,6 +2141,7 @@ void MegaApplication::cleanAll()
 #endif
 
     periodicTasksTimer->stop();
+    networkCheckTimer->stop();
     stopUpdateTask();
     Platform::stopShellDispatcher();
     for (int i = 0; i < model->getNumSyncedFolders(); i++)
@@ -3119,6 +2983,250 @@ void MegaApplication::loadSyncExclusionRules(QString email)
         preferences->leaveUser();
     }
 
+}
+
+QList<QNetworkInterface> MegaApplication::findNewNetworkInterfaces()
+{
+    QList<QNetworkInterface> newInterfaces;
+    const QList<QNetworkInterface> configs = QNetworkInterface::allInterfaces();
+    for (const auto& networkInterface : configs)
+    {
+        QString interfaceName = networkInterface.humanReadableName();
+        QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
+        if (isActiveNetworkInterface(interfaceName, flags))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
+
+            const int numActiveIPs = countActiveIps(networkInterface.addressEntries());
+            if (numActiveIPs > 0)
+            {
+                lastActiveTime = QDateTime::currentMSecsSinceEpoch();
+                newInterfaces.append(networkInterface);
+            }
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Ignored network interface: %1 Flags: %2")
+                         .arg(interfaceName)
+                         .arg(QString::number(flags)).toUtf8().constData());
+        }
+    }
+    return newInterfaces;
+}
+
+bool MegaApplication::checkNetworkInterfaces(const QList<QNetworkInterface> &newNetworkInterfaces) const
+{
+    bool disconnect = false;
+    for (const auto& networkInterface : newNetworkInterfaces)
+    {
+        disconnect |= checkNetworkInterface(networkInterface);
+    }
+    return disconnect;
+}
+
+bool MegaApplication::checkNetworkInterface(const QNetworkInterface &newNetworkInterface) const
+{
+    bool disconnect = false;
+    auto interfaceIt = std::find_if(activeNetworkInterfaces.begin(), activeNetworkInterfaces.end(), [&newNetworkInterface](const QNetworkInterface& currentInterface){
+        return (currentInterface.name() == newNetworkInterface.name());
+    });
+
+    if (interfaceIt == activeNetworkInterfaces.end())
+    {
+        //New interface
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New working network interface detected (%1)").arg(newNetworkInterface.humanReadableName()).toUtf8().constData());
+        disconnect = true;
+    }
+    else
+    {
+        disconnect |= checkNetworkAddresses(*interfaceIt, newNetworkInterface);
+    }
+    return disconnect;
+}
+
+bool MegaApplication::checkNetworkAddresses(const QNetworkInterface& oldNetworkInterface, const QNetworkInterface &newNetworkInterface) const
+{
+    bool disconnect = false;
+    const auto newAddresses = newNetworkInterface.addressEntries();
+    if (newAddresses.size() != oldNetworkInterface.addressEntries().size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local IP change detected");
+        disconnect = true;
+    }
+    else
+    {
+        for (const auto& newAddress : newAddresses)
+        {
+            disconnect |= checkIpAddress(newAddress.ip(), oldNetworkInterface.addressEntries(), newNetworkInterface.name());
+        }
+    }
+    return disconnect;
+}
+
+bool MegaApplication::checkIpAddress(const QHostAddress& ip, const QList<QNetworkAddressEntry>& oldAddresses, const QString& newNetworkInterfaceName) const
+{
+    bool disconnect = false;
+    switch (ip.protocol())
+    {
+        case QAbstractSocket::IPv4Protocol:
+        case QAbstractSocket::IPv6Protocol:
+        {
+            auto addressIt = std::find_if(oldAddresses.begin(), oldAddresses.end(), [&ip](const QNetworkAddressEntry& address){
+               return address.ip().toString() == ip.toString();
+            });
+
+            if (addressIt == oldAddresses.end())
+            {
+                //New IP
+                const QString addressToLog = obfuscateIfNecessary(ip);
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("New IP detected (%1) for interface %2").arg(addressToLog).arg(newNetworkInterfaceName).toUtf8().constData());
+                disconnect = true;
+            }
+        }
+        default:
+            break;
+    }
+    return disconnect;
+}
+
+bool MegaApplication::isActiveNetworkInterface(const QString& interfaceName, const QNetworkInterface::InterfaceFlags flags)
+{
+    return (flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning)) &&
+            !(interfaceName == QString::fromUtf8("Teredo Tunneling Pseudo-Interface"));
+}
+
+int MegaApplication::countActiveIps(const QList<QNetworkAddressEntry> &addresses) const
+{
+    int numActiveIPs = 0;
+    for (const auto& address : addresses)
+    {
+        QHostAddress ip = address.ip();
+        switch (ip.protocol())
+        {
+            case QAbstractSocket::IPv4Protocol:
+                if (!isLocalIpv4(ip.toString()))
+                {
+                    logIpAddress("Active IPv4", ip);
+                    numActiveIPs++;
+                }
+                else
+                {
+                    logIpAddress("Ignored IPv4", ip);
+                }
+                break;
+            case QAbstractSocket::IPv6Protocol:
+                if (!isLocalIpv6(ip.toString()))
+                {
+                    logIpAddress("Active IPv6", ip);
+                    numActiveIPs++;
+                }
+                else
+                {
+                    logIpAddress("Ignored IPv6", ip);
+                }
+                break;
+            default:
+                logIpAddress("Ignored IPv6", ip);
+                break;
+        }
+    }
+    return numActiveIPs;
+}
+
+bool MegaApplication::isLocalIpv4(const QString& address)
+{
+    return address.startsWith(QString::fromUtf8("127."), Qt::CaseInsensitive) ||
+           address.startsWith(QString::fromUtf8("169.254."), Qt::CaseInsensitive);
+}
+
+bool MegaApplication::isLocalIpv6(const QString &address)
+{
+    return address.startsWith(QString::fromUtf8("FE80:"), Qt::CaseInsensitive) ||
+           address.startsWith(QString::fromUtf8("FD00:"), Qt::CaseInsensitive) ||
+           address == QString::fromUtf8("::1");
+}
+
+void MegaApplication::logIpAddress(const char* message, const QHostAddress &ipAddress) const
+{
+    const QString logMessage = QString::fromUtf8(message) + QString::fromUtf8(": %1");
+    const QString addressToLog = obfuscateIfNecessary(ipAddress);
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, logMessage.arg(addressToLog).toUtf8().constData());
+}
+
+QString MegaApplication::obfuscateIfNecessary(const QHostAddress &ipAddress) const
+{
+    return (logger->isDebug()) ? ipAddress.toString() : obfuscateAddress(ipAddress);
+}
+
+QString MegaApplication::obfuscateAddress(const QHostAddress &ipAddress)
+{
+    if (ipAddress.protocol() == QAbstractSocket::IPv4Protocol)
+    {
+        return obfuscateIpv4Address(ipAddress);
+    }
+    else if (ipAddress.protocol() == QAbstractSocket::IPv6Protocol)
+    {
+        return obfuscateIpv6Address(ipAddress);
+    }
+    return ipAddress.toString();
+}
+
+QString MegaApplication::obfuscateIpv4Address(const QHostAddress &ipAddress)
+{
+    const QStringList addressParts = ipAddress.toString().split(QChar::fromAscii('.'));
+    if (addressParts.size() == 4)
+    {
+        auto itAddressPart = addressParts.begin()+2;
+        return QString::fromUtf8("%1.%1.%2.%3").arg(QString::fromUtf8("XXX"))
+                                               .arg(*itAddressPart++).arg(*itAddressPart);
+    }
+    return QString::fromUtf8("XXX.XXX.XXX.XXX");
+}
+
+QString MegaApplication::obfuscateIpv6Address(const QHostAddress &ipAddress)
+{
+    const QStringList addressParts = explodeIpv6(ipAddress);
+    if (addressParts.size() == 8)
+    {
+        auto itAddressPart = addressParts.begin()+4;
+        return QString::fromUtf8("%1:%1:%1:%1:%2:%3:%4:%5").arg(QString::fromUtf8("XXXX"))
+                                                           .arg(*itAddressPart++).arg(*itAddressPart++)
+                                                           .arg(*itAddressPart++).arg(*itAddressPart);
+    }
+    return QString::fromUtf8("XXXX:XXXX:XXXX:XXXX:XXXX:XXXX");
+}
+
+QStringList MegaApplication::explodeIpv6(const QHostAddress &ipAddress)
+{
+    QStringList addressParts;
+    auto ipv6 = ipAddress.toIPv6Address();
+    for (int i=0; i<8; ++i) {
+        const int baseI = i*2;
+        addressParts.push_back(QString::fromUtf8("%1%2").arg(ipv6[baseI], 0, 16, QChar::fromAscii('0'))
+                                                        .arg(ipv6[baseI+1], 0, 16, QChar::fromAscii('0')));
+    }
+    return addressParts;
+}
+
+
+void MegaApplication::reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface> &newNetworkInterfaces)
+{
+    if (disconnected || isIdleForTooLong())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Reconnecting due to local network changes");
+        megaApi->retryPendingConnections(true, true);
+        activeNetworkInterfaces = newNetworkInterfaces;
+        lastActiveTime = QDateTime::currentMSecsSinceEpoch();
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local network adapters haven't changed");
+    }
+}
+
+bool MegaApplication::isIdleForTooLong() const
+{
+    return (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS;
 }
 
 void MegaApplication::setupWizardFinished(int result)
