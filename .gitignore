@@ -78,3 +78,6 @@ src/.qmake.stash
 *.rej
 
 /contrib/cmake/cmake-build-*
+*.stash
+*.Debug
+*.Release

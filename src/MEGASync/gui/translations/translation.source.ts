@@ -3346,9 +3346,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Invalid MEGA Link</translation>
     </message>
     <message>
-        <source>Enter links</source>
+        <source>Open links</source>
         <translatorcomment>Window title for dialog to enter MEGA public links</translatorcomment>
-        <translation>Enter links</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
