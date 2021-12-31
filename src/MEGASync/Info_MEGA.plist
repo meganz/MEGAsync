@@ -21,7 +21,7 @@
     <key>NSRequiresAquaSystemAppearance</key>
     <true/>
     <key>LSMinimumSystemVersion</key>
-    <string>10.9</string>
+    <string>10.12</string>
     <key>NSHighResolutionCapable</key>
     <string>True</string>
     <key>NSUserNotificationAlertStyle</key>

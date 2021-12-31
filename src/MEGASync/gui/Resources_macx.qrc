@@ -31,8 +31,6 @@
         <file>images/bandwidth_32@2x.png</file>
         <file>images/bug_report_success.png</file>
         <file>images/bug_report_success@2x.png</file>
-        <file>images/business.png</file>
-        <file>images/business@2x.png</file>
         <file>images/bwupgrade.png</file>
         <file>images/bwupgrade@2x.png</file>
         <file>images/clear_ico.png</file>
@@ -51,8 +49,8 @@
         <file>images/color_folder@2x.png</file>
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
-        <file>images/completed_transfers.png</file>
-        <file>images/completed_transfers@2x.png</file>
+        <file>images/Completed_transfers.png</file>
+        <file>images/Completed_transfers@2x.png</file>
         <file>images/confirmation_link.png</file>
         <file>images/confirmation_link@2x.png</file>
         <file>images/contacts.png</file>
@@ -570,6 +568,8 @@
         <file>images/Small_Pro_II@2x.png</file>
         <file>images/Small_Pro_III.png</file>
         <file>images/Small_Pro_III@2x.png</file>
+        <file>images/Small_Business.png</file>
+        <file>images/Small_Business@2x.png</file>
         <file>images/megasync_logo.png</file>
         <file>images/megasync_logo@2x.png</file>
         <file>images/ico_Delete.png</file>

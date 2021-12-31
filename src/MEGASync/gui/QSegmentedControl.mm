@@ -45,8 +45,6 @@ void QSegmentedControl::configureTableSegment()
 
     //Remaining space witouth + and - buttons and borders
     CGFloat remainingSpace = [segControl widthForSegment:0] * 2 + 4;
-    [segControl setWidth:width() - remainingSpace forSegment:2];
-
     QSegmentedControlTarget *proxy = [[QSegmentedControlTarget alloc] init];
     proxy->pimpl = this;
 

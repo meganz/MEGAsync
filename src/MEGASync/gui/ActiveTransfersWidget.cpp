@@ -502,7 +502,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
     QString remainingTimeString;
 
     // "- m - s"
-    static const auto undeterminedRemainingTimeString{QString::fromUtf8(
+    static const QString undeterminedRemainingTimeString{QString::fromUtf8(
                     "- <span style=\"color:#777777; text-decoration:none;\">m</span>"
                     " - <span style=\"color:#777777; text-decoration:none;\">s</span>"
                     )};
@@ -511,10 +511,10 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
     case MegaTransfer::STATE_ACTIVE:
     {
         // The remaining time is considered infinite if remaining time value is the max possible.
-        const auto infiniteRemainingTime{td->remainingTimeSeconds.count()
+        const bool infiniteRemainingTime{td->remainingTimeSeconds.count()
                     && td->remainingTimeSeconds == td->remainingTimeSeconds.max()};
         // Test if the transfer will complete in less than 1 minute
-        const auto lowerThanMinute{td->remainingTimeSeconds.count()
+        const bool lowerThanMinute{td->remainingTimeSeconds.count()
                     && td->remainingTimeSeconds < std::chrono::minutes{1}};
 
         // Adapt time display according to remainig time
@@ -526,7 +526,7 @@ void ActiveTransfersWidget::updateTransferState(TransferData *td)
         else if(lowerThanMinute)
         {
             // If less than a minute, "1m"
-            static const auto lowerThanMinuteTimeString{QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"))};
+            static const auto lowerThanMinuteTimeString = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
             remainingTimeString = lowerThanMinuteTimeString;
         }
         else if (td->remainingTimeSeconds.count())

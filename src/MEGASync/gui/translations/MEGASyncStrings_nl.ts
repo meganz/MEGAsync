@@ -24,32 +24,24 @@
         <translation>Laden...</translation>
     </message>
     <message>
-        <source>Incoming Shares</source>
-        <translation>Binnenkomende Delingen</translation>
+        <source>Storage</source>
+        <translatorcomment>Label to indicate the section of used storage of the current account.</translatorcomment>
+        <translation>Opslag</translation>
     </message>
     <message>
-        <source>Rubbish bin</source>
+        <source>Transfer</source>
+        <translatorcomment>Label to indicate the section of transfer used of the current account.</translatorcomment>
+        <translation>Overdracht</translation>
+    </message>
+    <message>
+        <source>Bin</source>
+        <translatorcomment>Label for Bin space used. Maintain capital letter.</translatorcomment>
         <translation>Prullenbak</translation>
     </message>
     <message>
-        <source>Available</source>
-        <translation>Beschikbaar</translation>
-    </message>
-    <message>
-        <source>Total size taken up by file versions:</source>
-        <translation>Totale grootte ingenomen door bestandsversies:</translation>
-    </message>
-    <message>
-        <source>USED STORAGE %1</source>
-        <translation>GEBRUIKTE OPSLAG %1</translation>
-    </message>
-    <message>
-        <source>Data temporarily unavailable</source>
-        <translation>Gegevens tijdelijk niet beschikbaar</translation>
-    </message>
-    <message>
-        <source>%1 of %2</source>
-        <translation>%1 van de %2</translation>
+        <source>Of that, size taken up by file versions:</source>
+        <translatorcomment>Label to indicate the amount of size occupied by file versions.</translatorcomment>
+        <translation>Grootte opgenomen door bestandsversies</translation>
     </message>
 </context>
 <context>
@@ -62,7 +54,7 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation>Resterende Downloads</translation>
+        <translation>Resterende downloads</translation>
     </message>
     <message>
         <source>download speed</source>
@@ -77,7 +69,7 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation>Resterende Uploads</translation>
+        <translation>Resterende uploads</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -102,12 +94,12 @@
     <message>
         <source>Remaining Download</source>
         <translatorcomment>Label when there is only one remaining download (singular)</translatorcomment>
-        <translation>Resterende Download</translation>
+        <translation>Resterende download</translation>
     </message>
     <message>
         <source>Remaining Upload</source>
         <translatorcomment>Label when there is only one remaining upload (singular)</translatorcomment>
-        <translation>Resterende upload</translation>
+        <translation>Remaining upload</translation>
     </message>
 </context>
 <context>
@@ -216,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation>Betaling</translation>
+        <translation>Betalingen</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -450,12 +442,105 @@
     </message>
 </context>
 <context>
-    <name>BindFolderDialog</name>
+    <name>BandwidthSettings</name>
     <message>
-        <source>Add synchronized folder</source>
-        <translatorcomment>Title of the dialog displayed when an user is creating a new synchronized folder.</translatorcomment>
-        <translation>Voeg gesynchroniseerde map toe</translation>
+        <source>Bandwidth</source>
+        <translatorcomment>Title of the dialog to manage Bandwidth settings/preferences.</translatorcomment>
+        <translation>Bandbreedte</translation>
     </message>
+    <message>
+        <source>Upload rate limit</source>
+        <translatorcomment>Section title for upload rate limit details.</translatorcomment>
+        <translation>Limiet uploadsnelheid</translation>
+    </message>
+    <message>
+        <source>No limit</source>
+        <translatorcomment>Radio button text to indicate no limit for transfer rate.</translatorcomment>
+        <translation>Geen limiet</translation>
+    </message>
+    <message>
+        <source>Limit to:</source>
+        <translatorcomment>Radio button text to indicate the limit for transfer rate.</translatorcomment>
+        <translation>Limiteer tot:</translation>
+    </message>
+    <message>
+        <source>KB/s</source>
+        <translatorcomment>Rate unit of Kilo bytes per second.</translatorcomment>
+        <translation>KB/s</translation>
+    </message>
+    <message>
+        <source>Auto</source>
+        <translatorcomment>Radio button text to indicate automatic rate limit.</translatorcomment>
+        <translation>Automatisch</translation>
+    </message>
+    <message>
+        <source>(Max. 90% of available bandwidth)</source>
+        <translatorcomment>Label to indicate that auto rate option will take a maximum of 90% of the available bandwidth.</translatorcomment>
+        <translation>(Max. 90% aan beschikbare bandbreedte)</translation>
+    </message>
+    <message>
+        <source>Download rate limit</source>
+        <translatorcomment>Section title for download rate limit details.</translatorcomment>
+        <translation>Limiet downloadsnelheid</translation>
+    </message>
+    <message>
+        <source>Number of connections per transfer</source>
+        <translatorcomment>Section title for number of connections per transfer details.</translatorcomment>
+        <translation>Aantal verbindingen per overdracht</translation>
+    </message>
+    <message>
+        <source>Downloads:</source>
+        <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
+        <translation>Downloads:</translation>
+    </message>
+    <message>
+        <source>Uploads:</source>
+        <translatorcomment>Label to indicate the limit of upload connections per transfer.</translatorcomment>
+        <translation>Uploads:</translation>
+    </message>
+    <message>
+        <source>Don&apos;t use HTTP</source>
+        <translatorcomment>Checkbox label to set the option to not use http for connections.</translatorcomment>
+        <translation>Gebruik geen HTTP</translation>
+    </message>
+    <message>
+        <source>Enable this option only if your transfers don&apos;t start. Under normal circumstances, HTTP is satisfactory as all transfers are already encrypted by MEGA.</source>
+        <translatorcomment>Description label about the option &quot;Don&apos;t use HTTP&quot; checkbox.</translatorcomment>
+        <translation>Schakel deze optie alleen in als uw overboekingen niet starten. Onder normale omstandigheden voldoet HTTP omdat alle overdrachten al zijn versleuteld door MEGA.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label for cancel dialog.</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button label for apply and confirm the bandwidth changes (Windows and Linux)</translatorcomment>
+        <translation>Toepassen</translation>
+    </message>
+    <message>
+        <source>Upload rate limit:</source>
+        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
+        <translation>Limiet uploadsnelheid:</translation>
+    </message>
+    <message>
+        <source>Download rate limit:</source>
+        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
+        <translation>Limiet downloadsnelheid:</translation>
+    </message>
+    <message>
+        <source>Number of connections per transfer:</source>
+        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
+        <translation>Aantal connecties per overdracht:</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
+        <translation>Bijwerken</translation>
+    </message>
+</context>
+<context>
+    <name>BindFolderDialog</name>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
@@ -488,11 +573,6 @@ Please enter a different name to identify this synced folder:</source>
         <translation>De naam &quot;%1&quot; is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
         <translation>Annuleren</translation>
@@ -501,6 +581,26 @@ Please enter a different name to identify this synced folder:</source>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
         <translation>Fout</translation>
+    </message>
+    <message>
+        <source>Add folder</source>
+        <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
+        <translation>Map toevoegen</translation>
+    </message>
+    <message>
+        <source>Add synchronised folder</source>
+        <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
+        <translation>Gesynchroniseerde map toevoegen</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
+        <translation>Toevoegen</translation>
+    </message>
+    <message>
+        <source>Add synchronised folder:</source>
+        <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
+        <translation>Gesynchroniseerde map toevoegen:</translation>
     </message>
 </context>
 <context>
@@ -568,7 +668,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation>Uw probleem kan niet worden geüpload door een fout. Probeer nogmaals of neem contact op met ons ondersteunend team via [A]support@mega.nz[/A] als het probleem zich blijft voordoen.</translation>
+        <translation>Uw probleem kan niet worden geüpload vanwege een fout. Probeer het later opnieuw of neem contact op met ons ondersteuningsteam via [A]support@mega.nz[/A] als het probleem aanhoudt.</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -627,11 +727,6 @@ Please enter a different name to identify this synced folder:</source>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation>Credits</translation>
-    </message>
-    <message>
-        <source>Data Protection Regulation</source>
-        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
-        <translation>Verordening Gegevensbescherming</translation>
     </message>
     <message>
         <source>All rights reserved.</source>
@@ -764,8 +859,8 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Attach diagnostic log files to assist with debugging[Br](in some cases it may contain details about your data, such as file or folder names)</source>
         <translatorcomment>Checkbox to let the user attach diagnostic log files for analysis when an application crash occurs. Keep [Br] place holder.</translatorcomment>
-        <translation>Voeg diagnostische logbestanden toe om te helpen bij het opsporen van fouten
-(in sommige gevallen kan het details bevatten over uw gegevens, zoals bestands- of mapnamen)</translation>
+        <translation>Voeg diagnostische logbestanden toe om te helpen bij het opsporen van fouten.
+In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands- of mapnamen.</translation>
     </message>
 </context>
 <context>
@@ -1056,7 +1151,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Los uw betalingsprobleem op om opschorting van uw zakelijke account te voorkomen.</translation>
+        <translation>Los uw betalingsprobleem zo snel mogelijk op om te voorkomen dat uw zakelijke account wordt opgeschort</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -1133,21 +1228,8 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
-    </message>
-</context>
-<context>
-    <name>DynamicTransferQuotaPopOver</name>
-    <message>
-        <source>Dynamic transfer quota</source>
-        <translatorcomment>Title label to indicate about the dynamic transfer quota used by current account.</translatorcomment>
-        <translation>Dynamisch transfertegoed</translation>
-    </message>
-    <message>
-        <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
-        <translatorcomment>Informative label to indicate about the fact of data transfer reached, so the user needs to wait some time to reset the over transfer quota or upgrade the account.</translatorcomment>
-        <translation>[A]Het IP-adres dat u gebruikt, heeft %1 van de gegevensoverdracht in de afgelopen 6 uur gebruikt, waardoor u uw huidige limiet heeft overschreden. Om deze limiet te verwijderen, kunt u upgraden naar PRO, waarmee u uw eigen transfertegoedpakket krijgt en ook voldoende extra opslagruimte. [/A]</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1321,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>Choose</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
+        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (macOS)</translatorcomment>
         <translation>Kiezen</translation>
     </message>
     <message>
@@ -1249,7 +1331,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won't be able to download anything due to the user doesn't have writhe permissions on the local selected folder.</translatorcomment>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync is niet in staat hier te downloaden</translation>
     </message>
     <message>
@@ -1259,7 +1341,7 @@ Please enter a different name to identify this synced folder:</source>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>U heeft geen schrijf rechten voor deze lokale map</translation>
     </message>
     <message>
@@ -1278,13 +1360,18 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
         <translation>U kunt een gedeelde map niet synchroniseren zonder Volledige Toegangsrecht</translation>
     </message>
+    <message>
+        <source>Select</source>
+        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
+        <translation>Selecteren</translation>
+    </message>
 </context>
 <context>
     <name>GuestWidget</name>
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation>Login</translation>
+        <translation>Inloggen</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1498,7 +1585,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can't be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Niet gevonden</translation>
     </message>
     <message>
@@ -1644,7 +1731,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>Geen meldingen</translation>
     </message>
     <message>
@@ -1664,17 +1751,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>Geen meldingen voor contacten</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>Geen meldingen voor binnenkomende delingen</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>Geen meldingen voor betalingen</translation>
     </message>
     <message>
@@ -1832,44 +1919,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
-    <name>LocalCleanScheduler</name>
-    <message>
-        <source>Remove files older than</source>
-        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
-        <translation>Verwijder bestanden ouder dan</translation>
-    </message>
-    <message>
-        <source>days</source>
-        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
-        <translation>dagen</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for OK button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Waarschuwing</translation>
-    </message>
-    <message>
-        <source>Please enter a valid value</source>
-        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
-        <translation>Voer een geldige waarde in</translation>
-    </message>
-    <message>
-        <source>%1 clearing scheduler</source>
-        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation>%1 wis planner</translation>
-    </message>
-</context>
-<context>
     <name>LockedPopOver</name>
     <message>
         <source>[A]It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.[/A]</source>
@@ -1973,7 +2022,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Bijgewerkt</translation>
     </message>
     <message>
@@ -2199,7 +2248,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it's not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation>Kan me niet schelen</translation>
     </message>
     <message>
@@ -3037,6 +3086,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>NewFolderDialog</name>
+    <message>
+        <source>New folder</source>
+        <translatorcomment>Title of the dialog to create a folder in your cloud drive.</translatorcomment>
+        <translation>Nieuwe map</translation>
+    </message>
+    <message>
+        <source>Enter the new folder name:</source>
+        <translatorcomment>Label to inform the user about entering a new folder name because the name provided does contain forbidden characters.</translatorcomment>
+        <translation>Vul de nieuwe mapnaam in:</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed:
+%1</source>
+        <translatorcomment>Warning error shown when a user is trying to create a folder with a name that contains not allowed characters. %1 placeholder will be replaced by the list of forbidden charset.</translatorcomment>
+        <translation>De volgende karakters zijn niet toegestaan:
+%1</translation>
+    </message>
+</context>
+<context>
     <name>NodeSelector</name>
     <message>
         <source>Folder Selection</source>
@@ -3064,11 +3133,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Annuleren</translation>
     </message>
     <message>
-        <source>Enter the new folder name:</source>
-        <translatorcomment>Label to indicate the user for the name of the new folder wich will be created at the Cloud Drive.</translatorcomment>
-        <translation>Vul de nieuwe mapnaam in:</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
         <translation>Fout</translation>
@@ -3081,7 +3145,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  '\\' '/' and ':' codes.</translatorcomment>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
         <translation>Ongeldige map voor synchronisatie. Zorg ervoor dat u geen tekens zoals “\”, “/” of “:” gebruikt in uw map namen.</translation>
     </message>
     <message>
@@ -3123,13 +3187,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translation>MEGA link ophalen</translation>
-    </message>
-    <message>
-        <source>Invalid folder name.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation>Ongeldige map naam. 
-Zorg ervoor dat u geen tekens zoals “\” “/” of “:” in uw map namen gebruikt.</translation>
     </message>
 </context>
 <context>
@@ -3363,28 +3420,69 @@ Zorg ervoor dat u geen tekens zoals “\” “/” of “:” in uw map namen g
         <translation>maand</translation>
     </message>
     <message>
-        <source>Storage</source>
-        <translation>Opslag</translation>
+        <source>Great Value</source>
+        <translatorcomment>Label to inform about the great value plan, recommended one.</translatorcomment>
+        <translation>Grote Waarde</translation>
     </message>
     <message>
-        <source>UNLIMITED</source>
-        <translatorcomment>Label to indicate that business pro plan has unlimited storage and transfers quota.</translatorcomment>
-        <translation>ONBEPERKT</translation>
+        <source>Current plan</source>
+        <translatorcomment>Label that indicates the current pro plan of the user account.</translatorcomment>
+        <translation>Huidige abonnement</translation>
     </message>
     <message>
-        <source>Transfer</source>
-        <translatorcomment>Label to indicate transfer quota.</translatorcomment>
-        <translation>Overdracht</translation>
+        <source>%1 per user</source>
+        <translatorcomment>Label to indicate the price per user of business plan. %1 will be replaced with specific price.</translatorcomment>
+        <translation>%1 per gebruiker</translation>
     </message>
     <message>
-        <source>per user %1</source>
-        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation>per gebruiker %1</translation>
+        <source>minimum %1 users</source>
+        <translatorcomment>Label to inform about the minimun number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
+        <translation>minimaal %1gebruikers</translation>
     </message>
     <message>
-        <source>SCALABLE</source>
-        <translatorcomment>Label to indicate that business pro plan has scalable storage.</translatorcomment>
-        <translation>SCHAALBAAR</translation>
+        <source>storage</source>
+        <translatorcomment>Label to indicate the specific storage of a pro plan.</translatorcomment>
+        <translation>opslag</translation>
+    </message>
+    <message>
+        <source>transfer</source>
+        <translatorcomment>Label to indicate the specific transfer quota of a pro plan.</translatorcomment>
+        <translation>overdracht</translation>
+    </message>
+    <message>
+        <source>Great value for secure cloud storage, sharing and communication.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro I plan.</translatorcomment>
+        <translation>Grote waarde voor veilige cloudopslag, delen en communicatie.</translation>
+    </message>
+    <message>
+        <source>Rest easy knowing you have plenty of secure cloud storage.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro II plan.</translatorcomment>
+        <translation>Wees gerust, wetende dat u voldoende veilige cloudopslag heeft.</translation>
+    </message>
+    <message>
+        <source>Store even more with our premium secure cloud storage offering.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro III plan.</translatorcomment>
+        <translation>Sla nog meer op met ons premium veilige cloudopslagaanbod.</translation>
+    </message>
+    <message>
+        <source>With our end-to-end encryption, the way your team works has never been more secure and private.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of business plan.</translatorcomment>
+        <translation>Met onze end-to-end codering is de manier waarop uw team werkt nog nooit zo veilig en privé geweest.</translation>
+    </message>
+    <message>
+        <source>Get started with secure file storage.</source>
+        <translatorcomment>Balloon tooltip to inform users when hovering ? button about the benefits of Pro Lite plan.</translatorcomment>
+        <translation>Ga aan de slag met veilige bestandsopslag.</translation>
+    </message>
+    <message>
+        <source>Additional storage charged at %1 per %2TB.</source>
+        <translatorcomment>Balloon tooltip to inform users that additional storate for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translation>Extra opslagruimte in rekening gebracht op %1 per %2TB.</translation>
+    </message>
+    <message>
+        <source>Additional transfer quota charged at %1 per %2TB.</source>
+        <translatorcomment>Balloon tooltip to inform users that additional transfer quota for business plan will be charged at %1 price per %2 TB. %1 reflect price and %2 storage unit.</translatorcomment>
+        <translation>Extra overdrachtstegoed in rekening gebracht  op %1 per %2TB.</translation>
     </message>
 </context>
 <context>
@@ -3409,27 +3507,133 @@ Zorg ervoor dat u geen tekens zoals “\” “/” of “:” in uw map namen g
         <translatorcomment>Label to indicate the Exit option for the application (Linux and Windows) (MAX 20 characters)</translatorcomment>
         <translation>Sluiten</translation>
     </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Label to indicate the &quot;Show in folder&quot; option to open local folder of a sync (Linux)</translatorcomment>
+        <translation>Weergeven in map</translation>
+    </message>
+    <message>
+        <source>Show in Explorer</source>
+        <translatorcomment>Label to indicate the &quot;Show in Explorer&quot; option to open local folder of a sync (Windows). Keep Explorer name as it is the app name of file explorer on Windows.</translatorcomment>
+        <translation>Weergeven in Verkenner</translation>
+    </message>
+    <message>
+        <source>Show in Finder</source>
+        <translatorcomment>Label to indicate the &quot;Show in Finder&quot; option to open local folder of a sync (macOS). Keep Finder name as it is the app name of file explorer on macOS.</translatorcomment>
+        <translation>Weergeven in Finder</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New improvements for the management of the syncs.
-- Improved user experience when syncs are disabled.
-- Enhanced system notifications to notify various account events.
-- Improved user experience while working with huge number of transfers and syncs.
-- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.
-- Fixed detected crashes on Windows and Linux.
+        <source>- Full redesign of settings with a new look and feel.
+- No longer supporting macOS versions below 10.12.
+- Multi-currency support added for upgrade options.
+- High DPI support for Windows platform improved.
+- Crashes previously detected on Windows, Linux and macOS now fixed.
 - Other performance improvements and adjustments.
 - Other UI fixes and adjustments.</source>
-        <translatorcomment>Changelog for MEGAsync 4.5.0</translatorcomment>
-        <translation>- Nieuwe verbeteringen voor het beheer van synchronisaties. 
-- Verbeterde gebruikerservaring wanneer synchronisaties zijn uitgeschakeld. 
-- Verbeterde systeemmeldingen om gebruikers op de hoogte te stellen van verschillende accountgebeurtenissen. 
-- Verbeterde gebruikerservaring tijdens het werken met een groot aantal overdrachten en synchronisaties. 
-- Problemen opgelost met een hoog CPU-gebruik van de gnome-shell bij het draaien op Ubuntu. 
-- Opgeloste crashes op Windows en Linux opgelost. 
-- Andere prestatieverbeteringen en aanpassingen. 
+        <translatorcomment>Changelog notes for v4.6.0 version</translatorcomment>
+        <translation>- Volledig herontwerp van instellingen met een nieuw uiterlijk en gevoel.
+- Geen ondersteuning meer voor macOS-versies lager dan 10.12.
+- Ondersteuning voor meerdere valuta&apos;s toegevoegd voor upgrade-opties.
+- Hoge DPI-ondersteuning voor Windows-platform verbeterd.
+- Eerder gedetecteerde crashes op Windows, Linux en macOS zijn nu verholpen.
+- Andere prestatieverbeteringen en aanpassingen.
 - Andere UI-fixes en aanpassingen.</translation>
+    </message>
+</context>
+<context>
+    <name>ProxySettings</name>
+    <message>
+        <source>Proxies</source>
+        <translatorcomment>Title of dialog to set proxy settings.</translatorcomment>
+        <translation>Proxies</translation>
+    </message>
+    <message>
+        <source>Proxy</source>
+        <translatorcomment>Section title for Proxy settings.</translatorcomment>
+        <translation>Proxy</translation>
+    </message>
+    <message>
+        <source>Proxy settings:</source>
+        <translatorcomment>Label to indicate the proxy current setting. It could be no proxy or custom manual proxy.</translatorcomment>
+        <translation>Proxy instellingen:</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translatorcomment>HTTP proxy type</translatorcomment>
+        <translation>HTTP</translation>
+    </message>
+    <message>
+        <source>SOCK5H</source>
+        <translatorcomment>SOCK5H proxy type</translatorcomment>
+        <translation>SOCK5H</translation>
+    </message>
+    <message>
+        <source>Proxy server requires a password</source>
+        <translatorcomment>Checkbox to indicate if the proxy needs authentication (username and password)</translatorcomment>
+        <translation>Proxy server vereist een wachtwoord</translation>
+    </message>
+    <message>
+        <source>Username:</source>
+        <translatorcomment>Label to indicate the username of the proxy that is being configured.</translatorcomment>
+        <translation>Gebruikersnaam:</translation>
+    </message>
+    <message>
+        <source>Server:</source>
+        <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
+        <translation>Server:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translatorcomment>Label to indicate the password of the proxy that is being configured.</translatorcomment>
+        <translation>Wachtwoord:</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translatorcomment>Label to indicate the type of proxy that is being configured.</translatorcomment>
+        <translation>Proxy type:</translation>
+    </message>
+    <message>
+        <source>No Proxy</source>
+        <translatorcomment>Radio button text to not select any proxy.</translatorcomment>
+        <translation>Geen Proxy</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translatorcomment>Radio button to select manual proxy configuration.</translatorcomment>
+        <translation>Manueel</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.(Linux and Windows)</translatorcomment>
+        <translation>Toepassen</translation>
+    </message>
+    <message>
+        <source>Auto-detect</source>
+        <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
+        <translation>Automatisch detecteren</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
+        <translation>Bijwerken</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Title of warning message shown when there is any error while testing the proxy settings.</translatorcomment>
+        <translation>Fout</translation>
+    </message>
+    <message>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
+        <translation>Uw proxy instellingen zijn ongeldig of de proxy reageert niet</translation>
     </message>
 </context>
 <context>
@@ -3480,7 +3684,7 @@ Zorg ervoor dat u geen tekens zoals “\” “/” of “:” in uw map namen g
     <message>
         <source>Forward</source>
         <translatorcomment>Button for going forward in the navigating in the filesystem</translatorcomment>
-        <translation>Doorversturen</translation>
+        <translation>Doorgaan</translation>
     </message>
     <message>
         <source>Go forward</source>
@@ -3845,19 +4049,9 @@ Do you want to delete it anyway?</source>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <source>Settings - MEGAsync</source>
-        <translatorcomment>Title of the MEGAsync Settings dialog (Windows and Linux). Keep capital letters.</translatorcomment>
-        <translation>Instellingen - MEGAsync</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
         <translation>Account</translation>
-    </message>
-    <message>
-        <source>Syncs</source>
-        <translatorcomment>Tab label of Syncs dialog. Max 15 characters.</translatorcomment>
-        <translation>Synchronisaties</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -3865,29 +4059,9 @@ Do you want to delete it anyway?</source>
         <translation>Bandbreedte</translation>
     </message>
     <message>
-        <source>Advanced</source>
-        <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
-        <translation>Geavanceerd</translation>
-    </message>
-    <message>
         <source>Help</source>
-        <translatorcomment>Button label for Help.</translatorcomment>
+        <translatorcomment>Button label for Help in the lower left section of the dialog.</translatorcomment>
         <translation>Help</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Label for apply settings button.</translatorcomment>
-        <translation>Toepassen</translation>
     </message>
     <message>
         <source>Show notifications</source>
@@ -3906,28 +4080,18 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Language</source>
-        <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
+        <translatorcomment>Label to let the user select the desired language for the application using a dropdown menu.</translatorcomment>
         <translation>Taal</translation>
     </message>
     <message>
         <source>Details</source>
-        <translatorcomment>Button label to show the account usage details for the current user of the application. Strins as short as possible.</translatorcomment>
+        <translatorcomment>Button label to show the account usage details for the current user of the application. String as short as possible.</translatorcomment>
         <translation>Details</translation>
     </message>
     <message>
-        <source>FREE</source>
-        <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Gratis</translation>
-    </message>
-    <message>
         <source>Logout</source>
-        <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
+        <translatorcomment>Button label to logout of the application. String as short as possible.</translatorcomment>
         <translation>Uitloggen</translation>
-    </message>
-    <message>
-        <source>Storage space</source>
-        <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Opslagruimte</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -3936,93 +4100,28 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Delete</source>
-        <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Button label to delete a synchronization. String as short as possible.</translatorcomment>
         <translation>Verwijderen</translation>
     </message>
     <message>
         <source>Add</source>
-        <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Button label to add a synchronization. String as short as possible.</translatorcomment>
         <translation>Toevoegen</translation>
     </message>
     <message>
         <source>Local Folder</source>
-        <translatorcomment>Label to indicate the local folder for a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Label to indicate the local folder column for sync table. String as short as possible.</translatorcomment>
         <translation>Lokale Map</translation>
     </message>
     <message>
         <source>MEGA folder</source>
-        <translatorcomment>Label to indicate the MEGA folder for a synchronization. String as short as possible.</translatorcomment>
+        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
         <translation>MEGA map</translation>
-    </message>
-    <message>
-        <source>Upload rate limit</source>
-        <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
-        <translation>Limiet uploadsnelheid</translation>
-    </message>
-    <message>
-        <source>Don&apos;t limit</source>
-        <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
-        <translation>Geen limiet</translation>
-    </message>
-    <message>
-        <source>Limit to:</source>
-        <translatorcomment>Label to indicate that there is rate upload limit. Keep colon.</translatorcomment>
-        <translation>Limiteer tot:</translation>
     </message>
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
         <translation>Automatisch</translation>
-    </message>
-    <message>
-        <source>(about 90% of the available bandwidth)</source>
-        <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
-        <translation>(ongeveer 90% van de beschikbare bandbreedte)</translation>
-    </message>
-    <message>
-        <source>Proxy Settings</source>
-        <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
-        <translation>Proxy Instellingen</translation>
-    </message>
-    <message>
-        <source>No proxy</source>
-        <translatorcomment>Label to indicate MEGAsync not to use any proxy. String as short as possible.</translatorcomment>
-        <translation>Geen proxy</translation>
-    </message>
-    <message>
-        <source>Auto-detect</source>
-        <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
-        <translation>Automatisch detecteren</translation>
-    </message>
-    <message>
-        <source>Proxy</source>
-        <translatorcomment>Tab label of Proxy dialog settings. Max 15 characters.</translatorcomment>
-        <translation>Proxy</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translatorcomment>Label to indicate the proxy type to be used. String as short as possible.</translatorcomment>
-        <translation>Proxy type:</translation>
-    </message>
-    <message>
-        <source>Server:</source>
-        <translatorcomment>Label to indicate the server IP to be used. String as short as possible.</translatorcomment>
-        <translation>Server:</translation>
-    </message>
-    <message>
-        <source>Proxy server requires a password</source>
-        <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>Proxy server vereist een wachtwoord</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translatorcomment>Label to indicate the username of the proxy. String as short as possible.</translatorcomment>
-        <translation>Gebruikersnaam:</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
-        <translation>Wachtwoord:</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -4031,93 +4130,28 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>%1 (%2%) of %3 used</source>
-        <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
+        <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically.</translatorcomment>
         <translation>%1 (%2%) van de %3 gebruikt</translation>
     </message>
     <message>
-        <source>PRO I</source>
-        <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>Pro I</translation>
-    </message>
-    <message>
-        <source>PRO II</source>
-        <translatorcomment>Label to indicate that the current user has a PRO II account.</translatorcomment>
-        <translation>Pro II</translation>
-    </message>
-    <message>
-        <source>PRO III</source>
-        <translatorcomment>Label to indicate that the current user has a PRO III account.</translatorcomment>
-        <translation>Pro III</translation>
-    </message>
-    <message>
         <source>Warning</source>
-        <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title label for Warning message box. Keep capital letter.</translatorcomment>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <source>Synchronization will stop working.</source>
-        <translatorcomment>Label to indicate that the synchronizations will stop if the user logout .</translatorcomment>
-        <translation>Synchronisatie zal stoppen.</translation>
-    </message>
-    <message>
-        <source>Are you sure?</source>
-        <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Weet u het zeker?</translation>
-    </message>
-    <message>
         <source>Error</source>
-        <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
+        <translatorcomment>Title label for an Error message box. Keep capital letter.</translatorcomment>
         <translation>Fout</translation>
     </message>
     <message>
-        <source>Transfers</source>
-        <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>Overdrachten</translation>
-    </message>
-    <message>
         <source>Clear</source>
-        <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
+        <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Leegmaken</translation>
     </message>
     <message>
-        <source>HTTP</source>
-        <translatorcomment>Label to indicate a HTTP proxy.</translatorcomment>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
-        <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Uw proxy instellingen zijn ongeldig of de proxy reageert niet</translation>
-    </message>
-    <message>
-        <source>Check for updates</source>
-        <translatorcomment>Button label to let the user check for new application updates.</translatorcomment>
-        <translation>Controleer voor updates</translation>
-    </message>
-    <message>
-        <source>Disable overlay icons</source>
-        <translatorcomment>Label to let the user disable overlay icon for the specific File browser.</translatorcomment>
-        <translation>Overlay iconen uitschakelen</translation>
-    </message>
-    <message>
-        <source>Force a full scan</source>
-        <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
-        <translation>Forceer een volledige scan</translation>
-    </message>
-    <message>
         <source>Full scan</source>
-        <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
+        <translatorcomment>Title of the message dialog for Full scan operation.</translatorcomment>
         <translation>Volledige scan</translation>
-    </message>
-    <message>
-        <source>Install update</source>
-        <translatorcomment>Label to indicate the user that there is an available update downloaded to be installed.</translatorcomment>
-        <translation>Installeer update</translation>
-    </message>
-    <message>
-        <source>Preferences - MEGAsync</source>
-        <translatorcomment>Title label of the settings dialog (MacOS).</translatorcomment>
-        <translation>MEGAsync- Voorkeuren</translation>
     </message>
     <message>
         <source>Open at login</source>
@@ -4128,7 +4162,7 @@ Do you want to delete it anyway?</source>
         <source>MEGAsync will perform a full scan of your synced folders when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
+        <translatorcomment>Message displayed asking for confirmation to the user to restart the application for a Full scan operation.</translatorcomment>
         <translation>MEGAsync verricht een volledige scan van uw gesynchroniseerde mappen wanneer het opstart. Wilt u MEGAsync nu herstarten?</translation>
     </message>
     <message>
@@ -4138,23 +4172,23 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path for Uploads and Downloads.</translatorcomment>
+        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
         <translation>Standaard mappen</translation>
     </message>
     <message>
         <source>Uploads:</source>
-        <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
+        <translatorcomment>Label to indicate the default folder for uploads.</translatorcomment>
         <translation>Uploads:</translation>
     </message>
     <message>
         <source>Downloads:</source>
-        <translatorcomment>Label to indicate the default folder for downloads. String as short as possible</translatorcomment>
+        <translatorcomment>Label to indicate the default folder for downloads.</translatorcomment>
         <translation>Downloads:</translation>
     </message>
     <message>
         <source>Enable / disable</source>
-        <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Inschakelen/uitschakelen</translation>
+        <translatorcomment>Tooltip for checkbox to let the user enable/disable a specific synchronization.</translatorcomment>
+        <translation>Inschakelen / uitschakelen</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -4168,7 +4202,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Unable to write file</source>
-        <translatorcomment>Message displayed when an error occurs exporting the master key to a file.</translatorcomment>
+        <translatorcomment>Title for message box displayed when an error occurs exporting the master key to a file.</translatorcomment>
         <translation>Kan bestand niet schrijven</translation>
     </message>
     <message>
@@ -4183,42 +4217,27 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>Exclude by size</source>
-        <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
+        <translatorcomment>Section title for controls to let the user exclude files from being synced by size.</translatorcomment>
         <translation>Uitsluiten op grootte</translation>
     </message>
     <message>
-        <source>The new excluded file names will be taken into account
-when the application starts again</source>
-        <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation>De nieuwe uitgesloten bestandsnamen worden rekening mee gehouden voor wanneer de applicatie weer start.</translation>
-    </message>
-    <message>
-        <source>The new excluded file sizes will be taken into account when the application starts again.</source>
-        <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
-        <translation>Met de nieuwe, uitgesloten bestandsgroottes zal rekening worden gehouden wanneer de toepassing opnieuw begint.</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translatorcomment>Label to indicate the user if the feature of exclusion based by size is enabled/disabled.</translatorcomment>
-        <translation>Uitgezet</translation>
-    </message>
-    <message>
         <source>Excluded file and folder names</source>
-        <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
+        <translatorcomment>Section title for controls to indicate the file and folder names excluded from synchronization.</translatorcomment>
         <translation>Namen van bestanden en mappen uitgesloten</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
-        <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
+        <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
         <translation>Back-ups van de vorige versies van uw gesynchroniseerde bestanden op uw computer worden permanent verwijderd. Controleer uw back-up mappen om te zien of u iets moet redden voordat u doorgaat:</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
-        <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
+        <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
         <translation>Back-ups van de vorige versies van uw gesynchroniseerde bestanden in MEGA worden permanent verwijderd. Controleer uw map [A] in de Prullenbak van uw MEGA-account om te zien of u iets moet redden voordat u doorgaat.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
+        <translatorcomment>Message shown when clicking on restart MEGAsync button in Settings.</translatorcomment>
         <translation>Wilt u MEGAsync nu herstarten?</translation>
     </message>
     <message>
@@ -4227,196 +4246,459 @@ when the application starts again</source>
         <translation>Toestemmingen</translation>
     </message>
     <message>
-        <source>Don&apos;t use HTTP</source>
-        <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation>Gebruik geen HTTP</translation>
-    </message>
-    <message>
-        <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
-        <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation>Schakel deze optie alleen in als uw transfers niet starten. In normale omstandigheden is HTTP voldoende als alle transfers al zijn gecodeerd.</translation>
-    </message>
-    <message>
-        <source>Local backup: %1</source>
-        <translation>Lokale backup: %1</translation>
-    </message>
-    <message>
-        <source>Remote backup: %1</source>
-        <translation>Online backup: %1</translation>
-    </message>
-    <message>
         <source>Clear local backup</source>
+        <translatorcomment>Title label for the warning to the user before clearing the local backup cache. Keep as short as possible.</translatorcomment>
         <translation>Wis lokale backup</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
+        <translatorcomment>Confirmation prompt for the local sync cache clear action message box.</translatorcomment>
         <translation>Wilt u uw lokale back-ups nu verwijderen?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
+        <translatorcomment>Title label for the warning to the user before clearing the remote sync cache. Keep as short as possible.</translatorcomment>
         <translation>Wis online backup</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
+        <translatorcomment>Confirmation prompt for the remote sync cache clear action message box.</translatorcomment>
         <translation>Weet u zeker dat u uw online backup nu wilt verwijderen?</translation>
     </message>
     <message>
-        <source>Download rate limit</source>
-        <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
-        <translation>Limiet downloadsnelheid</translation>
-    </message>
-    <message>
-        <source>Number of parallel TCP connections per transfer:</source>
-        <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
-        <translation>Aantal gelijktijdige TCP verbindingen per overdracht:</translation>
-    </message>
-    <message>
-        <source>Downloads</source>
-        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
-        <translation>Downloads</translation>
-    </message>
-    <message>
-        <source>Uploads</source>
-        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
-        <translation>Uploads</translation>
-    </message>
-    <message>
-        <source>PRO Lite</source>
-        <translation>Pro Lite</translation>
-    </message>
-    <message>
-        <source>Transfer quota</source>
-        <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation>Overdracht tegoed</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
-        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation>De pictogrammen niet weergeven op het linker paneel van Windows Explorer</translation>
-    </message>
-    <message>
-        <source>Used quota for the last %1 hours: %2</source>
-        <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
-        <translation>Gebruikt tegoed in de laatste %1 uren: %2</translation>
-    </message>
-    <message>
         <source>Restart</source>
-        <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
+        <translatorcomment>Label for restart button.to relaunch MEGAsync app.</translatorcomment>
         <translation>Herstarten</translation>
     </message>
     <message>
-        <source>Disable file versioning</source>
-        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
-        <translation>Bestandsversies uitschakelen</translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
-        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translatorcomment>Tooltip shown when hovering local debris label.</translatorcomment>
         <translation>Een lokale map met een backup van bestanden die verwijderd zijn in MEGA.</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
-        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
         <translation>Een map in MEGA met een backup van bestanden die verwijderd zijn in de lokale computer</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
-        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceeding.</translatorcomment>
         <translation>Bestandsversies uitschakelen zorgt ervoor dat er geen nieuwe bestandsversies worden gemaakt of opgeslagen. Wilt u doorgaan?</translation>
     </message>
     <message>
-        <source>Remove files older than %1 days</source>
-        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
-        <translation>Verwijder bestanden ouder dan %1 dagen</translation>
-    </message>
-    <message>
-        <source>Remove files older than 1 day</source>
-        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
-        <translation>Verwijder bestanden ouder dan 1 dag</translation>
-    </message>
-    <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
-        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the current account.</translatorcomment>
         <translation>U staat op het punt alle bestandsversies permanent te verwijderen. Wilt u doorgaan?</translation>
     </message>
     <message>
-        <source>File versions: %1</source>
-        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
-        <translation>Bestand versies %1</translation>
-    </message>
-    <message>
-        <source>Change password</source>
-        <translation>Wijzig wachtwoord</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
-        <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation>Uw MEGA account is vol. Alle upload zijn uitgeschakeld, waardoor het invloed heeft op uw gesynchroniseerde mappen. [A]Koop meer ruimte[/A]</translation>
-    </message>
-    <message>
-        <source>%1 clearing scheduler</source>
-        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation>%1 wis schema</translation>
-    </message>
-    <message>
         <source>%1 used</source>
-        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translatorcomment>Label to indicate the total amount of storage/bandwidth used by the account. Keep placeholder %1.</translatorcomment>
         <translation>%1 gebruikt</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
-        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translatorcomment>File name of file exported containing the recovery key.</translatorcomment>
         <translation>MEGA-HERSTELSLEUTEL</translation>
     </message>
     <message>
-        <source>Please let us know if you find a bug</source>
-        <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
-        <translation>Laat ons weten als u een probleem vind.</translation>
-    </message>
-    <message>
-        <source>Bug report</source>
-        <translatorcomment>Button label to show the bug report form.</translatorcomment>
-        <translation>Rapporteer probleem</translation>
-    </message>
-    <message>
-        <source>KB/s</source>
-        <translatorcomment>Label to indicate kilobyte per second data transfer rate.</translatorcomment>
-        <translation>KB/s</translation>
-    </message>
-    <message>
-        <source>Backup Recovery Key</source>
-        <translatorcomment>Button label to export master key of the current user. </translatorcomment>
-        <translation>Reservekopie Herstelsleutel</translation>
-    </message>
-    <message>
-        <source>Saving syncs...</source>
-        <translatorcomment>Label shown when a sync operation is being saved (enable, disable, create a new one, etc)</translatorcomment>
-        <translation>Synchronisaties opslaan…</translation>
-    </message>
-    <message>
         <source>Unexpected error disabling sync %1</source>
-        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1</translatorcomment>
+        <translatorcomment>Error message shown when an error occurs while trying to disable a sync named %1.</translatorcomment>
         <translation>Onverwachte fout bij het uitschakelen van synchronisatie %1</translation>
     </message>
     <message>
         <source>Error enabling sync</source>
-        <translatorcomment>Error message shown when an error occurs while trying to enable a sync.</translatorcomment>
+        <translatorcomment>Title error message shown when an error occurs while trying to enable a sync.</translatorcomment>
         <translation>Fout bij inschakelen van synchronisatie</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; can&apos;t be enabled. Reason: %2</source>
-        <translatorcomment>Error message shown when an error occurs trying to enabling a sync. %1 name of sync, %2 reason of error.</translatorcomment>
+        <translatorcomment>Error message shown when an error occurs trying to enable a sync. %1 is name of sync and %2 is reason of error.</translatorcomment>
         <translation>Uw synchronisatie “%1” kan niet worden ingeschakeld. Reden: %2</translation>
     </message>
     <message>
-        <source>Saving settings</source>
-        <translatorcomment>Title of dialog shown when settings are being saved.</translatorcomment>
-        <translation>Instellingen opslaan</translation>
+        <source>General</source>
+        <translatorcomment>Title for the Settings -&gt; General pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Algemeen</translation>
     </message>
     <message>
-        <source>Some syncs have been disabled. For more information, move your mouse over the warning icon next to each disabled sync.</source>
-        <translatorcomment>Error warning string to inform the user that some syncs have been disabled due to some error. To find out the cause, the user needs to mouse the mouse over the warning icon and and tooltip will show the specific error.</translatorcomment>
-        <translation>Sommige synchronisaties zijn uitgeschakeld. Beweeg voor meer informatie de muisaanwijzer over het waarschuwingspictogram naast elke uitgeschakelde synchronisatie.</translation>
+        <source>Sync</source>
+        <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Synchroniseren</translation>
+    </message>
+    <message>
+        <source>Security</source>
+        <translatorcomment>Title for the Settings -&gt; Security pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Veiligheid</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Title for the Settings -&gt; Folders pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Mappen</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translatorcomment>Title for the Settings -&gt; Network pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Netwerk</translation>
+    </message>
+    <message>
+        <source>Enable overlay icons</source>
+        <translatorcomment>Label for checkbox to enable / disable native file explorer icons for synchronized folders.</translatorcomment>
+        <translation>Overlay-pictogrammen inschakelen</translation>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
+        <translation>Updates Controleren</translation>
+    </message>
+    <message>
+        <source>%1 (local cache)</source>
+        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris).</translatorcomment>
+        <translation>%1(locale cashe)</translation>
+    </message>
+    <message>
+        <source>Space used:</source>
+        <translatorcomment>Label used to indicate ammount of space in byte denominations for local, remote cache and file versions.</translatorcomment>
+        <translation>Ruimte gebruikt:</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Label for checkbox to remove local cache files older than a specified number of days.</translatorcomment>
+        <translation>Verwijder bestanden ouder dan</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
+        <translation>dagen</translation>
+    </message>
+    <message>
+        <source>SyncDebris (remote cache)</source>
+        <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
+        <translation>SyncDebris (externe cache)</translation>
+    </message>
+    <message>
+        <source>Enable file versioning</source>
+        <translatorcomment>Label for checkbox to enable / disable file versioning.</translatorcomment>
+        <translation>Bestandsversies inschakelen</translation>
+    </message>
+    <message>
+        <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
+        <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
+        <translation>Laat het ons weten als u problemen ondervindt. Help ons door zoveel mogelijk details te verstrekken.</translation>
+    </message>
+    <message>
+        <source>Report Issue</source>
+        <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
+        <translation>Probleem Melden</translation>
+    </message>
+    <message>
+        <source>My Account</source>
+        <translatorcomment>Button label used to open MEGA web app account overview section for current account. Keep as short as possible.</translatorcomment>
+        <translation>Mijn Account</translation>
+    </message>
+    <message>
+        <source>Storage Space</source>
+        <translatorcomment>Section title for account storage details.</translatorcomment>
+        <translation>Opslag Ruimte</translation>
+    </message>
+    <message>
+        <source>Transfer Quota</source>
+        <translatorcomment>Section title for account transfer quota details.</translatorcomment>
+        <translation>Overdrachtstegoed</translation>
+    </message>
+    <message>
+        <source>Synced folders</source>
+        <translatorcomment>Section title for Synchronized folders table view.</translatorcomment>
+        <translation>Gesynchroniseerde mappen</translation>
+    </message>
+    <message>
+        <source>Purchase more storage</source>
+        <translatorcomment>Button text inviting the user to buy more storage using MEGA online service. Opens the Web Browser. Keep text as short as possible.</translatorcomment>
+        <translation>Koop meer opslag</translation>
+    </message>
+    <message>
+        <source>Some folders have not synchronised. For more information please hover over the yellow warning icon.</source>
+        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.</translatorcomment>
+        <translation>Sommige mappen waren niet gesynchroniseerd. Plaats de muisaanwijzer op het gele waarschuwingspictogram voor meer informatie.</translation>
+    </message>
+    <message>
+        <source>Recovery Key</source>
+        <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
+        <translation>Herstelsleutel</translation>
+    </message>
+    <message>
+        <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
+        <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
+        <translation>Uw wachtwoord wordt niet opgeslagen door MEGA en we kunnen het ook niet voor u herstellen. Bewaar uw Herstelsleutel op een veilige plaats om te voorkomen dat u de toegang tot uw account verliest.</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Section title for Password change in Security pane.</translatorcomment>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>Change Password</source>
+        <translatorcomment>Button label text allowing the user to change his account password. Keep as short as possible.</translatorcomment>
+        <translation>Wijzig Wachtwoord</translation>
+    </message>
+    <message>
+        <source>Default Folders</source>
+        <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
+        <translation>Standaardmappen</translation>
+    </message>
+    <message>
+        <source>Move...</source>
+        <translatorcomment>Button label text allowing the user to change the default Uploads or Downloads folders for the app.</translatorcomment>
+        <translation>Verplaatsen...</translation>
+    </message>
+    <message>
+        <source>Exclude files smaller than</source>
+        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, smaller than the specified size.</translatorcomment>
+        <translation>Uitsluiten bestanden kleiner dan</translation>
+    </message>
+    <message>
+        <source>Exclude files bigger than</source>
+        <translatorcomment>Checkbox label text allowing the user to enable / disable file exclusion from synchronization, bigger than the specified size.</translatorcomment>
+        <translation>Uitsluiten bestanden groter dan</translation>
+    </message>
+    <message>
+        <source>Restart MEGA Desktop Application to apply changes.</source>
+        <translatorcomment>Informative text shown in Folders pane, letting the user know that an application restart is required to apply the changes he just made.</translatorcomment>
+        <translation>Herstart MEGA Desktop Applicatie om de wijzigingen toe te passen.</translation>
+    </message>
+    <message>
+        <source>Change Settings...</source>
+        <translatorcomment>Button label text for Bandwidth and Proxy settings in Network pane.</translatorcomment>
+        <translation>Instellingen Wijzigen...</translation>
+    </message>
+    <message>
+        <source>Proxies</source>
+        <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
+        <translation>Proxies</translation>
+    </message>
+    <message>
+        <source>Force a Full Scan</source>
+        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
+        <translation>Forceer een volledige scan</translation>
+    </message>
+    <message>
+        <source>Session history</source>
+        <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
+        <translation>Sessie geschiedenis</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Dialog window title for Settings on macOS. Keep as short as possible.</translatorcomment>
+        <translation>Voorkeuren</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
+        <translation>Taal:</translation>
+    </message>
+    <message>
+        <source>%1 (local cache):</source>
+        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
+        <translation>%1(lokale cache):</translation>
+    </message>
+    <message>
+        <source>SyncDebris (remote cache):</source>
+        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
+        <translation>SyncDebris (externe cache):</translation>
+    </message>
+    <message>
+        <source>File versions:</source>
+        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
+        <translation>Bestandsversies:</translation>
+    </message>
+    <message>
+        <source>Issue report:</source>
+        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
+        <translation>Rapporteer probleem:</translation>
+    </message>
+    <message>
+        <source>Storage space:</source>
+        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
+        <translation>Opslagruimte:</translation>
+    </message>
+    <message>
+        <source>Transfer quota:</source>
+        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
+        <translation>Overdracht tegoed:</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full. Uploads are disabled and folder synchronisation is paused.</source>
+        <translatorcomment>Warning text message shown in Sync pane when account storage is full.</translatorcomment>
+        <translation>Uw MEGA-account is vol. Uploads zijn uitgeschakeld en de mapsynchronisatie is gepauzeerd.</translation>
+    </message>
+    <message>
+        <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
+        <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
+        <translation>De beveiliging van uw account hangt af van de sterkte van uw wachtwoord. Wachtwoorden moeten uniek zijn en niet te raden. We raden aan om een ​​wachtwoordbeheerder te gebruiken.</translation>
+    </message>
+    <message>
+        <source>Excluded file and folder names:</source>
+        <translatorcomment>Label for controls to indicate the file and folder names excluded from synchronization.(macOS)</translatorcomment>
+        <translation>Uitgesloten bestands- en mapnamen:</translation>
+    </message>
+    <message>
+        <source>Exclude by size:</source>
+        <translatorcomment>Label for controls to let the user exclude files from being synced by size.(macOS)</translatorcomment>
+        <translation>Uitsluiten op maat:</translation>
+    </message>
+    <message>
+        <source>Download rate limit:</source>
+        <translatorcomment>Form label text indicating the active download rate limit.</translatorcomment>
+        <translation>Limiet downloadsnelheid:</translation>
+    </message>
+    <message>
+        <source>Upload rate limit:</source>
+        <translatorcomment>Form label text indicating the active upload rate limit.</translatorcomment>
+        <translation>Limiet uploadsnelheid:</translation>
+    </message>
+    <message>
+        <source>Proxy settings:</source>
+        <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
+        <translation>Proxy instellingen:</translation>
+    </message>
+    <message>
+        <source>Enable Windows Explorer integration</source>
+        <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
+        <translation>Integratie van Windows Verkenner inschakelen</translation>
+    </message>
+    <message>
+        <source>B</source>
+        <translatorcomment>Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>B</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Kilo-Bytes unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Mega-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Giga-Byte unit of measurement for file exclusion by size, displayed in a drop-down in Folders pane.</translatorcomment>
+        <translation>GB</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
+        <translation>Installeer update</translation>
+    </message>
+    <message>
+        <source>Used quota for the last %1 hours:</source>
+        <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %1 specified number of hours. Keep the %1 subsitution argument.</translatorcomment>
+        <translation>Gebruikt tegoed voor de afgelopen %1 uren:</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Gratis</translation>
+    </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro Lite</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Zakelijk</translation>
+    </message>
+    <message>
+        <source>Synchronization will stop working. Are you sure?</source>
+        <translatorcomment>Message label indicating that the synchronizations will stop if the user logs out. Ask for confirmation.</translatorcomment>
+        <translation>Synchronisatie stopt met werken. Weet u het zeker?</translation>
+    </message>
+    <message>
+        <source>Open in MEGA</source>
+        <translatorcomment>Text label for action menu item to open the selected Sync folder in MEGA web app File Manager. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
+        <translation>Openen in MEGA</translation>
+    </message>
+    <message>
+        <source>Remove synced folder</source>
+        <translatorcomment>Text label for action menu item to remove the synchronization for the selected folder. Keep string as short as possible, as this shows up in menu similar to a context menu.</translatorcomment>
+        <translation>Verwijder gesynchroniseerde map</translation>
+    </message>
+    <message>
+        <source>Saving Sync settings</source>
+        <translatorcomment>Not used currently. Might get removed in a future refactoring.</translatorcomment>
+        <translation>Synchronisatie-instellingen opslaan</translation>
+    </message>
+    <message>
+        <source>Restart MEGAsync</source>
+        <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
+        <translation>Herstart MEGAsync</translation>
+    </message>
+    <message>
+        <source>No limit</source>
+        <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
+        <translation>Geen limiet</translation>
+    </message>
+    <message>
+        <source>No Proxy</source>
+        <translatorcomment>Text label shown when there is no Proxy set in Network pane.</translatorcomment>
+        <translation>Geen Proxy</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translatorcomment>Text label shown when there is a Proxy set in Network pane.</translatorcomment>
+        <translation>Manueel</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Dialog window title for Settings on Windows &amp; Linux. Keep as short as possible.</translatorcomment>
+        <translation>Instellingen</translation>
+    </message>
+    <message>
+        <source>File versions</source>
+        <translatorcomment>Section title label for File versions settings in General pane.</translatorcomment>
+        <translation>Bestandsversies</translation>
+    </message>
+    <message>
+        <source>Issue report</source>
+        <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
+        <translation>Rapporteer probleem</translation>
+    </message>
+    <message>
+        <source>MEGA Folder</source>
+        <translatorcomment>Label to indicate the MEGA folder column for sync table. String as short as possible.</translatorcomment>
+        <translation>MEGA map</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from synchronisation.</source>
+        <translatorcomment>Informative text message encouraging the user to choose files / folders for exclusion in Folders pane.</translatorcomment>
+        <translation>Kies mappen of bestanden die u wilt uitsluiten van synchronisatie</translation>
+    </message>
+    <message>
+        <source>Saving synchronised folders…</source>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.</translatorcomment>
+        <translation>Gesynchroniseerde mappen opslaan...</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation>Pro III</translation>
+    </message>
+    <message>
+        <source>Export Key</source>
+        <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
+        <translation>Exporteer Sleutel</translation>
     </message>
 </context>
 <context>
@@ -4857,64 +5139,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
-    <name>SizeLimitDialog</name>
-    <message>
-        <source>Exclude by size</source>
-        <translatorcomment>Title of the dialog to set exclusion based on file size.</translatorcomment>
-        <translation>Uitsluiten op grootte</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Label to indicate the upper limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation>Uitsluiten bestanden groter dan</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Label to indicate the lower limit for file exclusions. Max 28 characters.</translatorcomment>
-        <translation>Uitsluiten bestanden kleiner dan</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translatorcomment>Label warning.</translatorcomment>
-        <translation>Waarschuwing</translation>
-    </message>
-    <message>
-        <source>Size limits cannot be zero</source>
-        <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation>De grootte van het limiet kan geen nul zijn</translation>
-    </message>
-    <message>
-        <source>Bytes</source>
-        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation>Bytes</translation>
-    </message>
-    <message>
-        <source>KB</source>
-        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
-        <translation>KB</translation>
-    </message>
-    <message>
-        <source>MB</source>
-        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
-        <translation>MB</translation>
-    </message>
-    <message>
-        <source>GB</source>
-        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
-        <translation>GB</translation>
-    </message>
-</context>
-<context>
     <name>StatusInfo</name>
     <message>
         <source>Starting</source>
@@ -5212,23 +5436,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
 <context>
     <name>UpgradeDialog</name>
     <message>
-        <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation>Uw download kon niet verdergaan omdat het de huidige gratis overdracht vergoeding overschrijdt voor uw IP adres.Dit limiet is dynamisch en is afhankelijk van het aantal ongebruikte bandbreedte die we beschikbaar hebben.</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translatorcomment>Label to indicate that current account has reached transfer limit and need to wait %1 time or upgrade the account to continue.</translatorcomment>
-        <translation>Upgrade uw account om meteen door te gaan, of wacht %1 om gratis door te gaan.</translation>
-    </message>
-    <message>
-        <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translatorcomment>Label to indicate that current IP has utilised %1 transfer quota and now it is over transfer quota. Need to upgrade account to remove limits.</translatorcomment>
-        <translation>Het IP-adres dat u gebruikt, heeft in de afgelopen 6 uur %1 van gegevensoverdracht gebruikt, waardoor u onze huidige limiet heeft overschreden. Om deze limiet te verwijderen, kunt u [A]uw account upgraden [/A], waarmee u uw eigen overdracht tegoed pakket krijgt en ook voldoende extra opslagruimte.</translation>
-    </message>
-    <message>
         <source>Depleted transfer quota</source>
         <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
         <translation>Uitgeput overdrachtstegoed</translation>
+    </message>
+    <message>
+        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
+        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
+        <translation>Dit limiet is variabel en afhankelijk van de ongebruikte bandbreedte die we beschikbaar hebben.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
+        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
+        <translation>Upgrade naar Pro om direct verder te gaan, of wacht %1 om gratis verder te gaan</translation>
+    </message>
+    <message>
+        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
+        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
+        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&apos;s in rekening gebracht.</translation>
+    </message>
+    <message>
+        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
+        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
+        <translation>Uw download kon niet doorgaan omdat deze uw gratis overdrachtslimiet overschrijdt.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
+        <translation>Kies voor jaarlijkse facturering en krijg 12 maanden voor de prijs van 10</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
+        <translation>Overdracht tegoed overschreden</translation>
     </message>
 </context>
 <context>
@@ -5244,24 +5484,29 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Upgrade uw account om te genieten van meer opslag ruimte (uw uploads worden automatisch hervat).</translation>
     </message>
     <message>
-        <source>Earn more storage quota with [A]Achievements[/A].</source>
-        <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
-        <translation>Krijg meer opslag tegoed met [A]Prestaties[/A].</translation>
-    </message>
-    <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
         <translation>Uw MEGA account is vol.</translation>
     </message>
     <message>
-        <source>%1 of %2</source>
-        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
-        <translation>%1 van de %2</translation>
+        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
+        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
+        <translation>Om deze limiet te verhogen, kunt u uw account upgraden, waardoor u voldoende extra opslagruimte krijgt.</translation>
     </message>
     <message>
-        <source>USED STORAGE %1</source>
-        <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
-        <translation>GEBRUIKTE OPSLAG %1</translation>
+        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
+        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
+        <translation>* De prijs in lokale valuta is slechts een schatting. Alle getoonde transacties worden in euro&apos;s in rekening gebracht.</translation>
+    </message>
+    <message>
+        <source>100% of the %1 available used on your account.</source>
+        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
+        <translation>100% van de beschikbare %1 gebruikt op uw account.</translation>
+    </message>
+    <message>
+        <source>Choose annual billing and get 12 months for the price of 10</source>
+        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
+        <translation>Kies voor jaarlijkse facturering en krijg 12 maanden voor de prijs van 10</translation>
     </message>
 </context>
 <context>
@@ -5416,6 +5661,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
         <translation>Bytes</translation>
     </message>
+    <message>
+        <source>Pro Lite</source>
+        <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
+        <translation>Pro Lite</translation>
+    </message>
+    <message>
+        <source>Pro I</source>
+        <translatorcomment>Label to refer Pro I tier</translatorcomment>
+        <translation>Pro I</translation>
+    </message>
+    <message>
+        <source>Pro II</source>
+        <translatorcomment>Label to refer Pro II tier</translatorcomment>
+        <translation>Pro II</translation>
+    </message>
+    <message>
+        <source>Pro III</source>
+        <translatorcomment>Label to refer Pro III tier</translatorcomment>
+        <translation>Pro III</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -5468,6 +5733,33 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation>Email verstuurd</translation>
+    </message>
+</context>
+<context>
+    <name>WinToastLib</name>
+    <message>
+        <source>%1 did not find a valid link in Start Menu. Not having a link may prevent the correct functioning of desktop notifications.
+
+Do you want to create one?</source>
+        <translatorcomment>Warning message shown when there is no valid link in Windows Start Menu. Explain the causes of not having it and let the user to recreate it.</translatorcomment>
+        <translation>%1vond geen geldige link in het Startmenu. Het niet hebben van een link kan de correcte werking van bureaubladmeldingen belemmeren.
+
+Wilt u er een maken?</translation>
+    </message>
+    <message>
+        <source>Yes (recommended)</source>
+        <translatorcomment>Button text for to confirm the creation of link at Start Menu (Windows only)</translatorcomment>
+        <translation>Ja (aanbevolen)</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translatorcomment>Button text to not discard warning message.</translatorcomment>
+        <translation>Nee</translation>
+    </message>
+    <message>
+        <source>No (never ask again)</source>
+        <translatorcomment>Button text to discard the option and never ask again if the problem is detected in the future.</translatorcomment>
+        <translation>Nee (niet weer vragen)</translation>
     </message>
 </context>
 <context>

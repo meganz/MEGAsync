@@ -183,7 +183,7 @@ void UpgradeDialog::clearPlans()
 
 void UpgradeDialog::configureAnimation()
 {
-    auto ratio{Utilities::getDevicePixelRatio()};
+    auto ratio = Utilities::getDevicePixelRatio();
     mAnimation.reset(new QMovie(ratio < 2 ? QLatin1String(":/animations/full-transfer.gif")
                                           : QLatin1String(":/animations/full-transfer@2x.gif")));
 

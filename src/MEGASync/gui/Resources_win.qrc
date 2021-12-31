@@ -42,9 +42,6 @@
         <file>images/bug_report_success.png</file>
         <file>images/bug_report_success@2x.png</file>
         <file>images/bug_report_success@3x.png</file>
-        <file>images/business.png</file>
-        <file>images/business@2x.png</file>
-        <file>images/business@3x.png</file>
         <file>images/bwupgrade.png</file>
         <file>images/bwupgrade@2x.png</file>
         <file>images/bwupgrade@3x.png</file>
@@ -842,6 +839,9 @@
         <file>images/Small_Pro_III.png</file>
         <file>images/Small_Pro_III@2x.png</file>
         <file>images/Small_Pro_III@3x.png</file>
+        <file>images/Small_Business.png</file>
+        <file>images/Small_Business@2x.png</file>
+        <file>images/Small_Business@3x.png</file>
         <file>images/settings-syncs.png</file>
         <file>images/settings-syncs@2x.png</file>
         <file>images/settings-syncs@3x.png</file>

@@ -71,14 +71,16 @@ BuildRequires: ffmpeg-mega
 
 #Fedora specific
 %if 0%{?fedora}
-    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel, cryptopp-devel
+    BuildRequires: openssl-devel, sqlite-devel, c-ares-devel
     BuildRequires: desktop-file-utils
     BuildRequires: bzip2-devel
     BuildRequires: systemd-devel
 
-    %if 0%{?fedora_version} >= 26
+    %if 0%{?fedora_version} < 33
+        BuildRequires: cryptopp-devel
         Requires: cryptopp >= 5.6.5
     %endif
+
     %if 0%{?fedora_version}==25
         BuildRequires: lz4-libs
     %endif
@@ -87,6 +89,11 @@ BuildRequires: ffmpeg-mega
         BuildRequires: fonts-filesystem
     %else
         BuildRequires: fontpackages-filesystem
+    %endif
+
+    # allowing for rpaths (taken as invalid, as if they were not absolute paths when they are)
+    %if 0%{?fedora_version} >= 35
+        %define __brp_check_rpaths QA_RPATHS=0x0002 /usr/lib/rpm/check-rpaths
     %endif
 
     %if 0%{?fedora_version} >= 23
@@ -147,7 +154,7 @@ BuildRequires: ffmpeg-mega
 #Build cryptopp?
 %define flag_cryptopp %{nil}
 
-%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} ||  0%{?suse_version} > 1320
+%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || 0%{?suse_version} > 1320 || 0%{?fedora_version} >= 33
     %define flag_cryptopp -q
 %endif
 
@@ -215,15 +222,22 @@ ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGAS
 ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
 
 # Fedora uses system Crypto++ header files
-%if 0%{?fedora}
+%if 0%{?fedora_version} && 0%{?fedora_version} < 33
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=31 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150000 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=32 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150000 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}
 %endif
+
+%if 0%{?fedora_version} >= 35
+    %define extraconfig CONFIG+=FFMPEG_WITH_LZMA
+%else
+    %define extraconfig %{nil}
+%endif
+
 
 %if 0%{?suse_version} != 1230
     %define fullreqs "CONFIG += FULLREQUIREMENTS"
@@ -235,18 +249,18 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
 
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
     %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
-        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt5  MEGASync/MEGASync.pro
     %else
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt4  MEGASync/MEGASync.pro
     %endif
 %else
     %if 0%{?rhel_version} || 0%{?scientificlinux_version}
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease-qt4  MEGASync/MEGASync.pro
     %else
-        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib"
+        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
         lrelease MEGASync/MEGASync.pro
     %endif
 %endif

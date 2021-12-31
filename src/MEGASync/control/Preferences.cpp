@@ -12,19 +12,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.5.3.0";
-const int Preferences::VERSION_CODE = 4503;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.6.2.0";
+const int Preferences::VERSION_CODE = 4602;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.5.3");
-QString Preferences::SDK_ID = QString::fromAscii("7c8db8f");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.6.2");
+QString Preferences::SDK_ID = QString::fromAscii("301933f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- New improvements for the management of the syncs.\n"
-    "- Improved user experience when syncs are disabled.\n"
-    "- Enhanced system notifications to notify various account events.\n"
-    "- Improved user experience while working with huge number of transfers and syncs.\n"
-    "- Fixed issues of high CPU usage of gnome-shell when running on Ubuntu.\n"
-    "- Fixed detected crashes on Windows and Linux.\n"
+    "- Full redesign of settings with a new look and feel.\n"
+    "- No longer supporting macOS versions below 10.12.\n"
+    "- Multi-currency support added for upgrade options.\n"
+    "- High DPI support for Windows platform improved.\n"
+    "- Crashes previously detected on Windows, Linux and macOS now fixed.\n"
     "- Other performance improvements and adjustments.\n"
     "- Other UI fixes and adjustments."));
 
@@ -32,6 +31,7 @@ const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translati
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
 int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
+int Preferences::NETWORK_REFRESH_INTERVAL_MS      = 30000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
@@ -3101,6 +3101,7 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("PAYWALL_NOTIFICATION_INTERVAL_MS"), Preferences::PAYWALL_NOTIFICATION_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
     overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("NETWORK_REFRESH_INTERVAL_MS"), Preferences::NETWORK_REFRESH_INTERVAL_MS);
 
     overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_DIALOG_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION);
     overridePreference(settings, QString::fromUtf8("TRANSFER_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION_MS"), Preferences::OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION);
