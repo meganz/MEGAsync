@@ -370,7 +370,10 @@ bool TransferManager::refreshStateStats()
             mNumberOfTransfersPerTab[ALL_TRANSFERS_TAB] = processedNumber;
         }
 
-        mUi->sStatus->setCurrentWidget(leftFooterWidget);
+        if(leftFooterWidget)
+        {
+            mUi->sStatus->setCurrentWidget(leftFooterWidget);
+        }
     }
     return weHaveTransfers;
 }

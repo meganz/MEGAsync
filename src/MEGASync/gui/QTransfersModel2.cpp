@@ -67,6 +67,8 @@ QTransfersModel2::QTransfersModel2(QObject *parent) :
     qRegisterMetaType<TransferData::FileType>("TransferData::FileType");
     qRegisterMetaType<TransferData::TransferState>("TransferData::TransferState");
     qRegisterMetaType<TransferData::TransferType>("TransferData::TransferState");
+
+    mListener = new QTMegaTransferListener(mMegaApi, this);
 }
 
 bool QTransfersModel2::hasChildren(const QModelIndex& parent) const
@@ -145,7 +147,7 @@ QModelIndex QTransfersModel2::index(int row, int column, const QModelIndex& pare
 QTransfersModel2::~QTransfersModel2()
 {
     // Disconect listener
-    mMegaApi->removeTransferListener(this);
+    mMegaApi->removeTransferListener(mListener);
 
     // Wait for init to return
     mInitFuture.cancel();
@@ -165,6 +167,7 @@ QTransfersModel2::~QTransfersModel2()
     }
     qDeleteAll(mFailedTransfers);
     qDeleteAll(mRemainingTimes);
+    mListener->deleteLater();
     mModelMutex->unlock();
     delete mApiLock;
 }
@@ -219,12 +222,12 @@ void QTransfersModel2::initModel()
                 // Use the actual number of items to update the rows
                 auto nbRowsInModel (mOrder.size());
 
-                Utilities::queueFunctionInAppThread([=]()
-                {
+                //Utilities::queueFunctionInAppThread([=]()
+                //{
                     beginInsertRows(DEFAULT_IDX, nbRowsInModel,
                                     nbRowsInModel + nbRowsInChunk - 1);
-                });
-                QApplication::processEvents();
+                //});
+                //QApplication::processEvents();
                 // Insert transfers
                 for (auto row (first); row < first + nbRowsInChunk; ++row)
                 {
@@ -232,11 +235,11 @@ void QTransfersModel2::initModel()
                 }
 
                 mModelMutex->unlock();
-                Utilities::queueFunctionInAppThread([=]()
-                {
+                //Utilities::queueFunctionInAppThread([=]()
+                //{
                     endInsertRows();
-                });
-                QApplication::processEvents();
+                //});
+                //QApplication::processEvents();
 
                 remainingRows -= INIT_ROWS_PER_CHUNK;
             }
@@ -249,7 +252,7 @@ void QTransfersModel2::initModel()
     });
 
     // Connect to transfer changes callbacks
-    mMegaApi->addTransferListener(this);
+    mMegaApi->addTransferListener(mListener);
 }
 
 void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer)
@@ -323,7 +326,6 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
 
     beginInsertRows(DEFAULT_IDX, insertAt, insertAt);
     insertTransfer(api, transfer, insertAt);
-    qApp->processEvents();
 
     auto state (static_cast<TransferData::TransferState>(1 << transfer->getState()));
     if (mAreAllPaused && (state & PAUSABLE_STATES))
@@ -335,7 +337,6 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
 
     endInsertRows();
 
-    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -399,7 +400,6 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
             emit dataChanged(idx, idx, DATA_ROLE);
         });
 
-        qApp->processEvents();
 
         if (state == TransferData::TRANSFER_FAILED)
         {
@@ -429,7 +429,6 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
 //        onTransferStart(api, transfer);
 //    }
     mModelMutex->unlock();
-    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -604,7 +603,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
                         mOrder.move(row, newRow);
                         endMoveRows();
                         sameRow = false;
-                        qApp->processEvents();
                     }
                 }
             }
@@ -623,7 +621,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
                     QModelIndex idx (index(row, 0, DEFAULT_IDX));
                     emit dataChanged(idx, idx, DATA_ROLE);
                 });
-                qApp->processEvents();
             }
         }
     }
@@ -632,7 +629,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
 //        onTransferStart(api, transfer);int
 //    }
     mModelMutex->unlock();
-    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -704,7 +700,6 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
 //        onTransferStart(api, transfer);
 //    }
     mModelMutex->unlock();
-    qApp->processEvents();
     delete megaApiLock;
 }
 
@@ -849,7 +844,6 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
         }
     }
     mModelMutex->unlock();
-    qApp->processEvents();
 
     // Now cancel transfers.
     if (cancel)
@@ -888,7 +882,6 @@ void QTransfersModel2::pauseTransfers(const QModelIndexList& indexes, bool pause
     {
         TransferTag tag (static_cast<TransferTag>(index.internalId()));
         pauseResumeTransferByTag(tag, pauseState);
-        qApp->processEvents();
     }
 
     if (!pauseState && mAreAllPaused)
@@ -921,7 +914,6 @@ void QTransfersModel2::pauseResumeAllTransfers()
             std::for_each(orderCopy.crbegin(), orderCopy.crend(), [this, newPauseState](TransferTag tag)
             {
                 pauseResumeTransferByTag(tag, newPauseState);
-                qApp->processEvents();
             });
         }
         else
@@ -929,7 +921,7 @@ void QTransfersModel2::pauseResumeAllTransfers()
             std::for_each(orderCopy.cbegin(), orderCopy.cend(), [this, newPauseState](TransferTag tag)
             {
                 pauseResumeTransferByTag(tag, newPauseState);
-                qApp->processEvents();
+                //qApp->processEvents();
             });
             mMegaApi->pauseTransfers(newPauseState);
         }
@@ -1002,8 +994,8 @@ void QTransfersModel2::onRetryTransfer(TransferTag tag)
         auto row (rowIt - mOrder.cbegin());
         lock.unlock();
 
-        Utilities::queueFunctionInAppThread([=](){removeRows(row, 1, DEFAULT_IDX);});
-        qApp->processEvents();
+        /*Utilities::queueFunctionInAppThread([=](){*/removeRows(row, 1, DEFAULT_IDX);//});
+        //qApp->processEvents();
     }
 }
 
@@ -1014,7 +1006,7 @@ bool QTransfersModel2::removeRows(int row, int count, const QModelIndex& parent)
         mModelMutex->lockForWrite();
 
         beginRemoveRows(DEFAULT_IDX, row, row + count - 1);
-        QApplication::processEvents();
+        //QApplication::processEvents();
 
         for (auto i (0); i < count; ++i)
         {
@@ -1294,7 +1286,7 @@ void QTransfersModel2::insertTransfer(mega::MegaApi* api, mega::MegaTransfer* tr
              mModelHasTransfers = true;
              if (signal)
              {
-                Utilities::queueFunctionInAppThread([=](){emit transfersInModelChanged(true);});
+                /*Utilities::queueFunctionInAppThread([=](){*/emit transfersInModelChanged(true);/*});*/
              }
          }
     }

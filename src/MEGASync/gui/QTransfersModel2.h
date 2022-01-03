@@ -72,6 +72,8 @@ private:
     mega::MegaApiLock* mApiLock;
     Preferences* mPreferences;
 
+    mega::QTMegaTransferListener* mListener;
+
     QMap<TransferTag, QVariant> mTransfers;
     QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
     QMap<TransferTag, TransferRemainingTime*> mRemainingTimes;
