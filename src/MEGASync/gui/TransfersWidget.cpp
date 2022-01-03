@@ -283,9 +283,8 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
     mThreadPool->push([=]
     {
         QMutexLocker lock (mFilterMutex);
-        mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
+        std::unique_ptr<mega::MegaApiLock> apiLock (app->getMegaApi()->getMegaApiLock(true));
         mProxyModel->setFilterFixedString(pattern);
-        delete apiLock;
     });
 
     ui->tvTransfers->scrollToTop();
@@ -329,20 +328,18 @@ void TransfersWidget::transferFilterApply(bool invalidate)
 {
     if (!mProxyModel->dynamicSortFilter())
     {
-        mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
+        std::unique_ptr<mega::MegaApiLock> apiLock (app->getMegaApi()->getMegaApiLock(true));
         mProxyModel->applyFilters(false);
         mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
         mProxyModel->setDynamicSortFilter(true);
-        delete apiLock;
     }
     else
     {
         mThreadPool->push([=]
         {
-            mega::MegaApiLock* apiLock (app->getMegaApi()->getMegaApiLock(true));
+            std::unique_ptr<mega::MegaApiLock> apiLock (app->getMegaApi()->getMegaApiLock(true));
             mProxyModel->resetNumberOfItems();
             mProxyModel->applyFilters(invalidate);
-            delete apiLock;
         });
     }
     ui->tvTransfers->scrollToTop();

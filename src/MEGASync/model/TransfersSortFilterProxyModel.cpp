@@ -26,7 +26,6 @@ TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
     delete mDlNumber;
 }
 
-
 void TransfersSortFilterProxyModel::setTransferTypes(TransferData::TransferTypes transferTypes)
 {
     QMutexLocker lock (mFilterMutex);

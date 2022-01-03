@@ -60,7 +60,6 @@ private:
 
     Ui::TransferManager* mUi;
     mega::MegaApi* mMegaApi;
-    mega::MegaApiLock* mApiLock;
 
     Preferences* mPreferences;
     QPoint mDragPosition;

@@ -27,8 +27,7 @@ static const TransferData::TransferStates CANCELABLE_STATES (
 
 QTransfersModel2::QTransfersModel2(QObject *parent) :
     QAbstractItemModel (parent),
-    mMegaApi (((MegaApplication *)qApp)->getMegaApi()),
-    mApiLock (mMegaApi->getMegaApiLock(false)),
+    mMegaApi (MegaSyncApp->getMegaApi()),
     mPreferences (Preferences::instance()),
     mTransfers (),
     mRemainingTimes (),
@@ -169,7 +168,6 @@ QTransfersModel2::~QTransfersModel2()
     qDeleteAll(mRemainingTimes);
     mListener->deleteLater();
     mModelMutex->unlock();
-    delete mApiLock;
 }
 
 void QTransfersModel2::initModel()
@@ -178,10 +176,10 @@ void QTransfersModel2::initModel()
 
     mInitFuture = QtConcurrent::run([=]
     {
-        mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
-        const auto transfers (mMegaApi->getTransfers());
-        const auto transferData (mMegaApi->getTransferData());
+        std::unique_ptr<mega::MegaTransferList> transfers (mMegaApi->getTransfers());
+        std::unique_ptr<mega::MegaTransferData> transferData (mMegaApi->getTransferData());
         mNotificationNumber = transferData->getNotificationNumber();
 
         // First, list all the transfers to add
@@ -244,11 +242,6 @@ void QTransfersModel2::initModel()
                 remainingRows -= INIT_ROWS_PER_CHUNK;
             }
         }
-        delete transferData;
-        delete transfers;
-
-        megaApiLock->unlockOnce();
-        delete megaApiLock;
     });
 
     // Connect to transfer changes callbacks
@@ -264,7 +257,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
         return;
     }
 
-    mega::MegaApiLock* megaApiLock (api->getMegaApiLock(true));
+    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     mModelMutex->lockForWrite();
     auto nbRows (mOrder.size());
@@ -336,8 +329,6 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
     mModelMutex->unlock();
 
     endInsertRows();
-
-    delete megaApiLock;
 }
 
 void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer,
@@ -349,7 +340,7 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
     {
         return;
     }
-    mega::MegaApiLock* megaApiLock (api->getMegaApiLock(true));
+    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     TransferTag tag (transfer->getTag());
 
@@ -394,11 +385,11 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
 
 
 
-        Utilities::queueFunctionInAppThread([=]()
-        {
+//        Utilities::queueFunctionInAppThread([=]()
+//        {
             QModelIndex idx (index(row, 0, DEFAULT_IDX));
             emit dataChanged(idx, idx, DATA_ROLE);
-        });
+//        });
 
 
         if (state == TransferData::TRANSFER_FAILED)
@@ -429,7 +420,6 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
 //        onTransferStart(api, transfer);
 //    }
     mModelMutex->unlock();
-    delete megaApiLock;
 }
 
 void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* transfer)
@@ -441,7 +431,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
     {
         return;
     }
-    mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     TransferTag tag (transfer->getTag());
 
@@ -616,11 +606,11 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
 
             if (sameRow)
             {
-                Utilities::queueFunctionInAppThread([=]()
-                {
+//                Utilities::queueFunctionInAppThread([=]()
+//                {
                     QModelIndex idx (index(row, 0, DEFAULT_IDX));
                     emit dataChanged(idx, idx, DATA_ROLE);
-                });
+//                });
             }
         }
     }
@@ -629,7 +619,6 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
 //        onTransferStart(api, transfer);int
 //    }
     mModelMutex->unlock();
-    delete megaApiLock;
 }
 
 void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTransfer *transfer,
@@ -643,7 +632,7 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
     {
         return;
     }
-    mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     TransferTag tag (transfer->getTag());
 
@@ -682,11 +671,11 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
                                                   transfer->getPriority(), state,
                                                   transferredBytes,
                                                   transfer->getPublicMegaNode());
-        Utilities::queueFunctionInAppThread([=]()
-        {
+//        Utilities::queueFunctionInAppThread([=]()
+//        {
             QModelIndex idx (index(row, 0, DEFAULT_IDX));
             emit dataChanged(idx, idx, DATA_ROLE);
-        });
+//        });
 
         // Keep statistics up to date
         if (prevState != state)
@@ -700,7 +689,6 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
 //        onTransferStart(api, transfer);
 //    }
     mModelMutex->unlock();
-    delete megaApiLock;
 }
 
 bool QTransfersModel2::areAllPaused()
@@ -772,7 +760,7 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
     QVector<int> toCancel;
     QVector<int>& rowsToCancel (clear? toCancel : rows);
 
-    mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     mModelMutex->lockForWrite();
 
@@ -869,13 +857,11 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
             }
         }
     }
-
-    delete megaApiLock;
 }
 
 void QTransfersModel2::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
 {
-    mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
     QReadLocker lock (mModelMutex);
 
     for (auto index : indexes)
@@ -890,7 +876,6 @@ void QTransfersModel2::pauseTransfers(const QModelIndexList& indexes, bool pause
         mMegaApi->pauseTransfers(false);
         emit pauseStateChanged(false);
     }
-    delete megaApiLock;
 }
 
 void QTransfersModel2::pauseResumeAllTransfers()
@@ -901,7 +886,7 @@ void QTransfersModel2::pauseResumeAllTransfers()
 //    mThreadPool->push([=]
     QtConcurrent::run([=]
     {
-        mega::MegaApiLock* megaApiLock (mMegaApi->getMegaApiLock(true));
+//        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
         QList<TransferTag> orderCopy;
         mModelMutex->lockForRead();
@@ -925,8 +910,6 @@ void QTransfersModel2::pauseResumeAllTransfers()
             });
             mMegaApi->pauseTransfers(newPauseState);
         }
-
-        delete megaApiLock;
     });
     emit pauseStateChanged(mAreAllPaused);
 }

@@ -69,7 +69,6 @@ private:
     static constexpr int INIT_ROWS_PER_CHUNK = 1000;
 
     mega::MegaApi* mMegaApi;
-    mega::MegaApiLock* mApiLock;
     Preferences* mPreferences;
 
     mega::QTMegaTransferListener* mListener;

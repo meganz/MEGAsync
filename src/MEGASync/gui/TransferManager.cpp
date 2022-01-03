@@ -48,7 +48,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     mUi(new Ui::TransferManager),
     mMegaApi(megaApi),
-    mApiLock (mMegaApi->getMegaApiLock(false)),
     mPreferences(Preferences::instance()),
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mModel(nullptr),
@@ -226,7 +225,6 @@ void TransferManager::setActiveTab(int t)
 
 TransferManager::~TransferManager()
 {
-    delete mApiLock;
     delete mUi;
 }
 
@@ -639,14 +637,11 @@ void TransferManager::on_tSearchIcon_clicked()
 
     if (pattern != QString())
     {
-        mApiLock->lockOnce();
+        std::unique_ptr<mega::MegaApiLock> apiLock (mMegaApi->getMegaApiLock(true));
         mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
                                     .elidedText(pattern,
                                                 Qt::ElideMiddle,
                                                 mUi->bSearchString->width() - 24));
-        mUi->wTransfers->transferFilterReset();
-        mUi->wTransfers->textFilterChanged(pattern);
-
         mUi->lTextSearch->setText(mUi->lTextSearch->fontMetrics()
                                   .elidedText(pattern,
                                               Qt::ElideMiddle,
@@ -661,7 +656,9 @@ void TransferManager::on_tSearchIcon_clicked()
         mUi->wSearch->show();
 
         toggleTab(SEARCH_TAB);
-        mApiLock->unlockOnce();
+
+        mUi->wTransfers->transferFilterReset();
+        mUi->wTransfers->textFilterChanged(pattern);
     }
 }
 
