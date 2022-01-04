@@ -124,26 +124,13 @@ void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appDa
     // If the node is a file (foreign or not), or a not foreign dir:
     if (node->getType() == MegaNode::TYPE_FILE || !node->isForeign())
     {
-        // Download with priority depending on the transfer's origin
-        switch (parent->getTransferOrigin()) {
-            case WrappedNode::TransferOrigin::FROM_WEBSERVER :
-            {
-                // Downloads initiated through http server get top priority
-                megaApi->startDownloadWithTopPriority(node,
-                                                      currentPathWithSep.toUtf8().constData(),
-                                                      appData.toUtf8().constData());
-                break;
-            }
-            case WrappedNode::TransferOrigin::FROM_APP :
-            case WrappedNode::TransferOrigin::FROM_UNKNOWN :
-            default:
-            {
-                // For other downloads, use normal priority call
-                megaApi->startDownloadWithData(node,
-                                               currentPathWithSep.toUtf8().constData(),
-                                               appData.toUtf8().constData());
-            }
-        }
+        const bool startFirst = hasTransferPriority(parent->getTransferOrigin());
+        const char* localPath = currentPathWithSep.toUtf8().constData();
+        const char* name = nullptr;
+        MegaCancelToken* cancelToken = nullptr; // No cancellation possible
+        MegaTransferListener* listener = nullptr;
+        megaApi->startDownload(node, localPath, name, appData.toUtf8().constData(), startFirst, cancelToken, listener);
+
     }
     // Else, the node is a foreign dir (neither a file nor a not foreign node).
     // Downloading amounts to creating the dir if it doesn't exist.
@@ -198,5 +185,24 @@ void MegaDownloader::download(WrappedNode *parent, QFileInfo info, QString appDa
 
         // Add path to pathMap
         pathMap[node->getHandle()] = destPath;
+    }
+}
+
+bool MegaDownloader::hasTransferPriority(const WrappedNode::TransferOrigin &origin)
+{
+    switch (origin)
+    {
+        case WrappedNode::TransferOrigin::FROM_WEBSERVER :
+        {
+            // Downloads initiated through http server get top priority
+            return true;
+        }
+        case WrappedNode::TransferOrigin::FROM_APP :
+        case WrappedNode::TransferOrigin::FROM_UNKNOWN :
+        default:
+        {
+            // For other downloads, use normal priority call
+            return false;
+        }
     }
 }

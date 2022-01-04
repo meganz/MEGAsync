@@ -585,6 +585,8 @@ private:
 
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
+
+    void startUpload(const QString& rawLocalPath, mega::MegaNode* target);
 };
 
 class DeferPreferencesSyncForScope

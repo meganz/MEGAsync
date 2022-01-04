@@ -3224,6 +3224,20 @@ bool MegaApplication::isIdleForTooLong() const
     return (QDateTime::currentMSecsSinceEpoch() - lastActiveTime) > Preferences::MAX_IDLE_TIME_MS;
 }
 
+void MegaApplication::startUpload(const QString& rawLocalPath, MegaNode* target)
+{
+    const char* localPath = QDir::toNativeSeparators(rawLocalPath).toUtf8().constData();
+    const char* appData = nullptr;
+    const char* fileName = nullptr;
+    const bool startFirst = false;
+    const bool isSrcTemporary = false;
+    int64_t mtime = ::mega::MegaApi::INVALID_CUSTOM_MOD_TIME;
+    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
+    MegaTransferListener* listener = nullptr;
+
+    megaApi->startUpload(localPath, target, mtime, appData, fileName, isSrcTemporary, startFirst, cancelToken, listener);
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -5552,10 +5566,10 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         QStringList paths = fileUploadSelector->selectedFiles();
         MegaNode *target = megaApi->getNodeByHandle(fileUploadTarget);
         int files = 0;
-        for (int i = 0; i < paths.size(); i++)
+        for (const auto& path : paths)
         {
             files++;
-            megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
+            startUpload(path, target);
         }
         delete target;
 
@@ -5627,10 +5641,10 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
         MegaNode *target = megaApi->getNodeByHandle(folderUploadTarget);
         int files = 0;
         int folders = 0;
-        for (int i = 0; i < paths.size(); i++)
+        for (const auto& path : paths)
         {
             folders++;
-            QDirIterator it (paths[i], QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+            QDirIterator it (path, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
             while (it.hasNext())
             {
                 it.next();
@@ -5643,7 +5657,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
                     files++;
                 }
             }
-            megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
+            startUpload(path, target);
         }
         delete target;
 

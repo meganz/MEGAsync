@@ -30,6 +30,9 @@ protected:
 
 signals:
     void finishedTransfers(unsigned long long appDataId);
+
+private:
+    static bool hasTransferPriority(const WrappedNode::TransferOrigin& origin);
 };
 
 #endif // MEGADOWNLOADER_H

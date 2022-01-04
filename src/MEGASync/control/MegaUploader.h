@@ -23,6 +23,9 @@ public:
 protected:
     void upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID);
 
+private:
+    void startUpload(const QString& localPath, mega::MegaNode* parent, const unsigned long long appDataID);
+
     mega::MegaApi *megaApi;
 };
 
