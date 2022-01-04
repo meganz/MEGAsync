@@ -185,9 +185,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
     verifyEmail = nullptr;
-    infoDialogMenu = NULL;
-    guestMenu = NULL;
-    syncsMenu = NULL;
+    infoDialogMenu = nullptr;
+    guestMenu = nullptr;
+    syncsMenu = nullptr;
     menuSignalMapper = NULL;
     megaApi = NULL;
     megaApiFolders = NULL;
@@ -221,7 +221,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     notificationsDelegate = NULL;
 
 #ifdef _WIN32
-    windowsMenu = NULL;
+    windowsMenu = nullptr;
     windowsExitAction = NULL;
     windowsUpdateAction = NULL;
     windowsImportLinksAction = NULL;
@@ -2148,12 +2148,12 @@ void MegaApplication::cleanAll()
     notificationsDelegate = NULL;
 
     // Delete menus and menu items
-    deleteMenu(initialTrayMenu.release());
-    deleteMenu(infoDialogMenu.release());
-    deleteMenu(syncsMenu.release());
-    deleteMenu(guestMenu.release());
+    deleteMenu(initialTrayMenu);
+    deleteMenu(infoDialogMenu);
+    deleteMenu(syncsMenu);
+    deleteMenu(guestMenu);
 #ifdef _WIN32
-    deleteMenu(windowsMenu.release());
+    deleteMenu(windowsMenu);
 #endif
 
     // Ensure that there aren't objects deleted with deleteLater()
@@ -2590,7 +2590,7 @@ void MegaApplication::deleteMenu(QMenu *menu)
             menu->removeAction(actions[i]);
             delete actions[i];
         }
-        delete menu;
+        menu->deleteLater();
     }
 }
 
@@ -2653,7 +2653,7 @@ void MegaApplication::initLocalServer()
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == infoDialogMenu.get())
+    if (obj == infoDialogMenu)
     {
         if (e->type() == QEvent::Leave)
         {
@@ -4371,7 +4371,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
             guestMenu->update();
             guestMenu->popup(p);
-            displayedMenu = guestMenu.get();
+            displayedMenu = guestMenu;
         }
     }
     else // logged in
@@ -4393,7 +4393,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
             infoDialogMenu->update();
             infoDialogMenu->popup(p);
-            displayedMenu = infoDialogMenu.get();
+            displayedMenu = infoDialogMenu;
 
 
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Poping up Info Dialog menu: p = %1, cursor = %2, dialog size hint = %3, displayedMenu = %4, menuWidthInitialPopup = %5")
@@ -4407,7 +4407,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
     }
 
     // Menu width might be incorrect the first time it's shown. This works around that and repositions the menu at the expected position afterwards
-    if (point)
+    if (point && displayedMenu)
     {
         QPoint pointValue= *point;
         QTimer::singleShot(1, displayedMenu, [displayedMenu, pointValue, menuWidthInitialPopup] () {
@@ -5010,7 +5010,7 @@ void MegaApplication::updateTrayIconMenu()
         }
         else
         {
-            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu.get() : &emptyMenu);
+            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu : &emptyMenu);
         }
 #else
 
@@ -5019,14 +5019,14 @@ void MegaApplication::updateTrayIconMenu()
         if (preferences && preferences->logged() && getRootNode() && !blockState)
         { //regular situation: fully logged and without any blocking status
 #ifdef _WIN32
-            trayIcon->setContextMenu(windowsMenu ? windowsMenu.get() : &emptyMenu);
+            trayIcon->setContextMenu(windowsMenu.data() ? windowsMenu.data() : &emptyMenu);
 #else
-            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu.get() : &emptyMenu);
+            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
 #endif
         }
         else
         {
-            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu.get() : &emptyMenu);
+            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
         }
 #endif
     }
@@ -6162,7 +6162,8 @@ void MegaApplication::createTrayIconMenus()
     else
 #endif
     {
-        initialTrayMenu.reset(new QMenu());
+        initialTrayMenu->deleteLater();
+        initialTrayMenu = new QMenu();
     }
 
     if (guestSettingsAction)
@@ -6220,7 +6221,8 @@ void MegaApplication::createInfoDialogMenus()
 #ifdef _WIN32
     if (!windowsMenu)
     {
-        windowsMenu.reset(new QMenu());
+        windowsMenu->deleteLater();
+        windowsMenu = new QMenu();
     }
     else
     {
@@ -6340,7 +6342,8 @@ void MegaApplication::createInfoDialogMenus()
     else
 #endif
     {
-        infoDialogMenu.reset(new QMenu());
+        infoDialogMenu->deleteLater();
+        infoDialogMenu = new QMenu();
 #ifdef __APPLE__
         infoDialogMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
@@ -6348,7 +6351,7 @@ void MegaApplication::createInfoDialogMenus()
 #endif
 
         //Highlight menu entry on mouse over
-        connect(infoDialogMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+        connect(infoDialogMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
 
         //Hide highlighted menu entry when mouse over
         infoDialogMenu->installEventFilter(this);
@@ -6411,10 +6414,9 @@ void MegaApplication::createInfoDialogMenus()
             }
 
             syncsMenu->deleteLater();
-            syncsMenu.release();
         }
 
-        syncsMenu.reset(new QMenu());
+        syncsMenu = new QMenu();
         syncsMenu->setToolTipsVisible(true);
 
 #ifdef __APPLE__
@@ -6494,7 +6496,7 @@ void MegaApplication::createInfoDialogMenus()
                 }
             }
 
-            addSyncAction->setMenu(syncsMenu.get());
+            addSyncAction->setMenu(syncsMenu);
         }
     }
 
@@ -6598,7 +6600,8 @@ void MegaApplication::createGuestMenu()
     else
 #endif
     {
-        guestMenu.reset(new QMenu());
+        guestMenu->deleteLater();
+        guestMenu = new QMenu();
 
 #ifdef __APPLE__
         guestMenu->setStyleSheet(QString::fromUtf8("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
@@ -6659,6 +6662,7 @@ void MegaApplication::createGuestMenu()
     guestMenu->show();
     guestMenu->hide();
 #endif
+
 }
 
 void MegaApplication::refreshStorageUIs()
