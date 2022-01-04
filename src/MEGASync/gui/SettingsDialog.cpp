@@ -95,10 +95,11 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mIsSavingSyncsOnGoing (false),
     mSelectedSyncRow(-1)
 {
-    mUi->setupUi(this);
-    setAttribute(Qt::WA_QuitOnClose, false);
+
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    mUi->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);

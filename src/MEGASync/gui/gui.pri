@@ -2,6 +2,7 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/BalloonToolTip.cpp \
+    $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/SetupWizard.cpp \
@@ -73,6 +74,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/BalloonToolTip.h \
+    $$PWD/EventHelper.h \
     $$PWD/InfoDialog.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/SetupWizard.h \
