@@ -282,6 +282,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/OverQuotaDialog.h
     ${MEGAsyncDir}/gui/ProxySettings.h
     ${MEGAsyncDir}/gui/BandwidthSettings.h
+    ${MEGAsyncDir}/gui/EventHelper.h
     ${MEGAsyncDir}/platform/notificator.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -422,7 +423,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/OverQuotaDialog.cpp
     ${MEGAsyncDir}/gui/ProxySettings.cpp
     ${MEGAsyncDir}/gui/BandwidthSettings.cpp
-
+    ${MEGAsyncDir}/gui/EventHelper.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
