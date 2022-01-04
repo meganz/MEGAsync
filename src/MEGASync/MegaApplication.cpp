@@ -5010,7 +5010,7 @@ void MegaApplication::updateTrayIconMenu()
         }
         else
         {
-            trayIcon->setContextMenu(initialTrayMenu ? initialTrayMenu : &emptyMenu);
+            trayIcon->setContextMenu(initialTrayMenu.data() ? initialTrayMenu.data() : &emptyMenu);
         }
 #else
 
