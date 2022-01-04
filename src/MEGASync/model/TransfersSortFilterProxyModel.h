@@ -4,7 +4,7 @@
 #include "TransferItem2.h"
 
 #include <QSortFilterProxyModel>
-#include <QSemaphore>
+#include <QReadWriteLock>
 
 class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 {
@@ -12,7 +12,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 
     public:
 
-        enum SORT_BY
+        enum SortCriterion
         {
             PRIORITY   = 0,
             TOTAL_SIZE = 1,
@@ -24,15 +24,23 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
 
         bool moveRows(const QModelIndex& sourceParent, int sourceRow, int count,
                       const QModelIndex& destinationParent, int destinationChild) override;
-
-        void setTransferTypes(TransferData::TransferTypes transferTypes);
-        void setTransferStates(TransferData::TransferStates transferStates);
-        void setFileTypes(TransferData::FileTypes fileTypes);
-        void resetAllFilters();
-        void setSortBy(SORT_BY sortCriterion);
+        void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+        void setFilterFixedString(const QString &pattern);
+        void setFilters(const TransferData::TransferTypes transferTypes,
+                        const TransferData::TransferStates transferStates,
+                        const TransferData::FileTypes fileTypes);
+        void resetAllFilters(bool invalidate = false);
+        void setSortBy(SortCriterion sortBy);
         int  getNumberOfItems(TransferData::TransferType transferType);
         void resetNumberOfItems();
         void applyFilters(bool invalidate = true);
+
+    signals:
+        void modelAboutToBeFiltered();
+        void modelFiltered();
+        void modelAboutToBeSorted();
+        void modelSorted();
+
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
@@ -45,11 +53,11 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         TransferData::TransferStates mNextTransferStates;
         TransferData::TransferTypes mNextTransferTypes;
         TransferData::FileTypes mNextFileTypes;
-        SORT_BY mSortCriterion;
+        SortCriterion mSortCriterion;
         int* mDlNumber;
         int* mUlNumber;
         QMutex* mFilterMutex;
-        QSemaphore* mNewFiltersSemaphore;
+        QMutex* mSortingMutex;
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

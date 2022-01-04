@@ -40,12 +40,16 @@ public:
     void pauseTransfers(const QModelIndexList& indexes, bool pauseState);
     void pauseResumeTransferByTag(TransferTag tag, bool pauseState);
 
+    void lockModelMutex(bool lock);
+
     long long  getNumberOfTransfersForState(TransferData::TransferState state) const;
     long long  getNumberOfTransfersForType(TransferData::TransferType type) const;
     long long  getNumberOfTransfersForFileType(TransferData::FileType fileType) const;
     long long  getNumberOfFinishedForFileType(TransferData::FileType fileType) const;
 
     void initModel();
+
+
 
     void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error);

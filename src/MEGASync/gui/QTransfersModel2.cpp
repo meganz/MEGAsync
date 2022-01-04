@@ -260,6 +260,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
     //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     mModelMutex->lockForWrite();
+
     auto nbRows (mOrder.size());
     auto insertAt (0);
     // Find place
@@ -343,8 +344,8 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
     //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     TransferTag tag (transfer->getTag());
-
     mModelMutex->lockForWrite();
+
     mNotificationNumber = transfer->getNotificationNumber();
 
     auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
@@ -436,6 +437,7 @@ void QTransfersModel2::onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* 
     TransferTag tag (transfer->getTag());
 
     mModelMutex->lockForWrite();
+
     mNotificationNumber = transfer->getNotificationNumber();
 
     auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
@@ -637,6 +639,7 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
     TransferTag tag (transfer->getTag());
 
     mModelMutex->lockForWrite();
+
     mNotificationNumber = transfer->getNotificationNumber();
 
     auto rowIt (std::find(mOrder.cbegin(), mOrder.cend(), tag));
@@ -932,6 +935,22 @@ void QTransfersModel2::cancelClearAllTransfers()
 {
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
     mMegaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+}
+
+void QTransfersModel2::lockModelMutex(bool lock)
+{
+    if (lock)
+    {
+        while (!mModelMutex->tryLockForRead())
+        {
+            std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
+            MegaSyncApp->processEvents();
+        }
+    }
+    else
+    {
+        mModelMutex->unlock();
+    }
 }
 
 long long QTransfersModel2::getNumberOfTransfersForState(TransferData::TransferState state) const

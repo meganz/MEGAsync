@@ -79,7 +79,7 @@ private:
     QMap<TM_TAB, long long> mNumberOfTransfersPerTab;
     QMap<TransferData::TransferTypes, long long> mNumberOfSearchResultsPerTypes;
 
-    void toggleTab(TM_TAB tab);
+    void toggleTab(TM_TAB newTab);
     bool refreshStateStats();
     void refreshTypeStats();
     void refreshFileTypesStats();

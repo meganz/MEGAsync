@@ -12,6 +12,7 @@
 #include "TransfersSortFilterProxyModel.h"
 
 #include <QToolButton>
+#include <QMessageBox>
 
 namespace Ui {
 class TransfersWidget;
@@ -32,10 +33,10 @@ public:
     void disableGetLink(bool disable);
 
     void textFilterChanged(const QString& pattern);
-    void fileTypeFilterChanged(const TransferData::FileTypes fileTypes);
-    void transferStateFilterChanged(const TransferData::TransferStates transferStates);
-    void transferTypeFilterChanged(const TransferData::TransferTypes transferTypes);
-    void transferFilterReset();
+    void filtersChanged(const TransferData::TransferTypes transferTypes,
+                        const TransferData::TransferStates transferStates,
+                        const TransferData::FileTypes fileTypes);
+    void transferFilterReset(bool invalidate = false);
     void transferFilterApply(bool invalidate = true);
 
     int rowCount();
@@ -55,6 +56,16 @@ signals:
     void cancelClearAllRows(bool cancel, bool clear);
 
 private:
+    static constexpr int PROXY_ACTIVITY_TIMEOUT_MS = 100;
+
+    enum HeaderState
+    {
+        SORT_DESCENDING = 0,
+        SORT_ASCENDING,
+        SORT_DEFAULT,
+        NB_STATES,
+    };
+
     Ui::TransfersWidget *ui;
     QTransfersModel *model;
     QTransfersModel2 *model2;
@@ -64,15 +75,17 @@ private:
     QTransfersModel::ModelType mType;
     bool mIsPaused;
     MegaApplication *app;
-    int mHeaderNameState;
-    int mHeaderSizeState;
-    QMutex* mFilterMutex;
+    HeaderState mHeaderNameState;
+    HeaderState mHeaderSizeState;
     ThreadPool* mThreadPool;
+
+    QTimer* mProxyActivityTimer;
+    QMessageBox* mProxyActivityMessage;
 
     void configureTransferView();
     void clearOrCancel(const QList<QExplicitlySharedDataPointer<TransferData>>& pool, int state, int firstRow);
 
-    void setHeaderState(QPushButton* header, int state);
+    void setHeaderState(QPushButton* header, HeaderState state);
 
 public slots:
     void on_pHeaderName_clicked();

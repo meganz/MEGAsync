@@ -1,9 +1,11 @@
 #include "TransfersWidget.h"
 #include "ui_TransfersWidget.h"
 #include "MegaApplication.h"
-#include <QTimer>
 
-using namespace mega;
+#include <QTimer>
+#include <QtConcurrent/QtConcurrent>
+
+const int TransfersWidget::PROXY_ACTIVITY_TIMEOUT_MS;
 
 TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),
@@ -14,15 +16,16 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     tDelegate2 (nullptr),
     mIsPaused (false),
     app (qobject_cast<MegaApplication*>(qApp)),
-    mHeaderNameState (0),
-    mHeaderSizeState (0),
-    mFilterMutex(new QMutex(QMutex::NonRecursive)),
-    mThreadPool(ThreadPoolSingleton::getInstance())
+    mHeaderNameState (SORT_DESCENDING),
+    mHeaderSizeState (SORT_DESCENDING),
+    mThreadPool(ThreadPoolSingleton::getInstance()),
+    mProxyActivityTimer (new QTimer(this)),
+    mProxyActivityMessage (new QMessageBox(this))
 {
     ui->setupUi(this);
 }
 
-void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferData, QTransfersModel::ModelType type)
+void TransfersWidget::setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, QTransfersModel::ModelType type)
 {
     mType = type;
     model = new QActiveTransfersModel(type, transferData);
@@ -32,8 +35,8 @@ void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferD
 
     configureTransferView();
 
-    if ((type == MegaTransfer::TYPE_DOWNLOAD && transferData->getNumDownloads())
-            || (type == MegaTransfer::TYPE_UPLOAD && transferData->getNumUploads()))
+    if ((type == mega::MegaTransfer::TYPE_DOWNLOAD && transferData->getNumDownloads())
+            || (type == mega::MegaTransfer::TYPE_UPLOAD && transferData->getNumUploads()))
     {
         onTransferAdded();
     }
@@ -41,9 +44,16 @@ void TransfersWidget::setupTransfers(std::shared_ptr<MegaTransferData> transferD
 
 void TransfersWidget::setupTransfers()
 {
-    model2 = new QTransfersModel2(this);
+//    auto createModelFuture (QtConcurrent::run([=]
+//    {
+        model2 = new QTransfersModel2(nullptr);
+//    }));
+
     mProxyModel = new TransfersSortFilterProxyModel(this);
     mProxyModel->setDynamicSortFilter(false);
+
+//    createModelFuture.waitForFinished();
+
     mProxyModel->setSourceModel(model2);
 
     configureTransferView();
@@ -52,7 +62,8 @@ void TransfersWidget::setupTransfers()
 //    onTransferAdded();
 }
 
-void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData, QTransfersModel::ModelType modelType)
+void TransfersWidget::setupFinishedTransfers(QList<mega::MegaTransfer*> transferData,
+                                             QTransfersModel::ModelType modelType)
 {
     mType = modelType;
     model = new QFinishedTransfersModel(transferData, modelType);
@@ -112,6 +123,38 @@ void TransfersWidget::configureTransferView()
         ui->tvTransfers->setItemDelegate(tDelegate2);
         onPauseStateChanged(model2->areAllPaused());
 
+        mProxyActivityTimer->setSingleShot(true);
+        connect(mProxyActivityTimer, &QTimer::timeout,
+                mProxyActivityMessage, &QMessageBox::exec);
+
+        connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeSorted,
+                this, [this]
+        {
+            mProxyActivityMessage->setText(tr("Sorting..."));
+            mProxyActivityTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_TIMEOUT_MS));
+        });
+
+        connect(mProxyModel, &TransfersSortFilterProxyModel::modelSorted,
+                this, [this]
+        {
+            mProxyActivityTimer->stop();
+            mProxyActivityMessage->hide();
+        });
+
+        connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeFiltered,
+                this, [this]
+        {
+            mProxyActivityMessage->setText(tr("Filtering..."));
+            mProxyActivityTimer->start(std::chrono::milliseconds(PROXY_ACTIVITY_TIMEOUT_MS));
+        });
+
+        connect(mProxyModel, &TransfersSortFilterProxyModel::modelFiltered,
+                this, [this]
+        {
+            mProxyActivityTimer->stop();
+            mProxyActivityMessage->hide();
+        });
+
 //        QObject::connect(this, &TransfersWidget::updateSearchFilter,
 ////                         mProxyModel,static_cast<void (TransfersSortFilterProxyModel::*)(const QRegularExpression&)>(&TransfersSortFilterProxyModel::setFilterRegularExpression),
 //                         mProxyModel, &TransfersSortFilterProxyModel::setFilterFixedString,
@@ -158,37 +201,45 @@ void TransfersWidget::on_pHeaderName_clicked()
 
     switch (mHeaderNameState)
     {
-        case 0:
+        case SORT_DESCENDING:
         {
             order = Qt::DescendingOrder;
             column = 0;
             break;
         }
-        case 1:
+        case SORT_ASCENDING:
         {
             order = Qt::AscendingOrder;
             column = 0;
             break;
         }
-        case 2:
-        default:
+        case SORT_DEFAULT:
+        case NB_STATES: //this never should happen
         {
             break;
         }
     }
 
-    if (mHeaderSizeState != 0)
+    if (mHeaderSizeState != SORT_DESCENDING)
     {
-        setHeaderState(ui->pHeaderSize, 2);
-        mHeaderSizeState = 0;
-        mProxyModel->sort(-1, order);
+        setHeaderState(ui->pHeaderSize, SORT_DEFAULT);
+        mHeaderSizeState = SORT_DESCENDING;
+        //    QtConcurrent::run([=]
+        mThreadPool->push([=]
+        {
+            mProxyModel->sort(-1, order);
+        });
     }
 
-    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SORT_BY::NAME);
-    mProxyModel->sort(column, order);
+    //    QtConcurrent::run([=]
+    mThreadPool->push([=]
+    {
+        mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::NAME);
+        mProxyModel->sort(column, order);
+    });
 
     setHeaderState(ui->pHeaderName, mHeaderNameState);
-    mHeaderNameState = (mHeaderNameState + 1) % 3;
+    mHeaderNameState = static_cast<HeaderState>((mHeaderNameState + 1) % NB_STATES);
 }
 
 void TransfersWidget::on_pHeaderSize_clicked()
@@ -198,37 +249,45 @@ void TransfersWidget::on_pHeaderSize_clicked()
 
     switch (mHeaderSizeState)
     {
-        case 0:
+        case SORT_DESCENDING:
         {
             order = Qt::DescendingOrder;
             column = 0;
             break;
         }
-        case 1:
+        case SORT_ASCENDING:
         {
             order = Qt::AscendingOrder;
             column = 0;
             break;
         }
-        case 2:
+        case NB_STATES: //this never should happen
         default:
         {
             break;
         }
     }
 
-    if (mHeaderNameState != 0)
+    if (mHeaderNameState != SORT_DESCENDING)
     {
-        setHeaderState(ui->pHeaderName, 2);
-        mHeaderNameState = 0;
-        mProxyModel->sort(-1, order);
+        setHeaderState(ui->pHeaderName, SORT_DEFAULT);
+        mHeaderNameState = SORT_DESCENDING;
+        //        //    QtConcurrent::run([=]
+        mThreadPool->push([=]
+        {
+            mProxyModel->sort(-1, order);
+        });
     }
 
-    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SORT_BY::TOTAL_SIZE);
-    mProxyModel->sort(column, order);
+    //    QtConcurrent::run([=]
+    mThreadPool->push([=]
+    {
+        mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::TOTAL_SIZE);
+        mProxyModel->sort(column, order);
+    });
 
     setHeaderState(ui->pHeaderSize, mHeaderSizeState);
-    mHeaderSizeState = (mHeaderSizeState + 1) % 3;
+    mHeaderSizeState = static_cast<HeaderState>((mHeaderSizeState + 1) % NB_STATES);
 }
 
 void TransfersWidget::on_tPauseResumeAll_clicked()
@@ -282,7 +341,7 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
 //    QtConcurrent::run([=]
     mThreadPool->push([=]
     {
-        QMutexLocker lock (mFilterMutex);
+//        QMutexLocker lock (mFilterMutex);
         std::unique_ptr<mega::MegaApiLock> apiLock (app->getMegaApi()->getMegaApiLock(true));
         mProxyModel->setFilterFixedString(pattern);
     });
@@ -290,37 +349,23 @@ void TransfersWidget::textFilterChanged(const QString& pattern)
     ui->tvTransfers->scrollToTop();
 }
 
-void TransfersWidget::fileTypeFilterChanged(const TransferData::FileTypes fileTypes)
+void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferTypes,
+                                     const TransferData::TransferStates transferStates,
+                                     const TransferData::FileTypes fileTypes)
 {
-    mThreadPool->push([=]
-    {
-        mProxyModel->setFileTypes(fileTypes);
-    });
+//    mThreadPool->push([=]
+//    {
+        mProxyModel->setFilters(transferTypes, transferStates, fileTypes);
+//    });
 }
 
-void TransfersWidget::transferStateFilterChanged(const TransferData::TransferStates transferStates)
+void TransfersWidget::transferFilterReset(bool invalidate)
 {
+//    mFilterMutex->lock();
     mThreadPool->push([=]
     {
-        mProxyModel->setTransferStates(transferStates);
-    });
-}
-
-void TransfersWidget::transferTypeFilterChanged(const TransferData::TransferTypes transferTypes)
-{
-    mThreadPool->push([=]
-    {
-        mProxyModel->setTransferTypes(transferTypes);
-    });
-}
-
-void TransfersWidget::transferFilterReset()
-{
-    mFilterMutex->lock();
-    mThreadPool->push([=]
-    {
-        mProxyModel->resetAllFilters();
-        mFilterMutex->unlock();
+        mProxyModel->resetAllFilters(invalidate);
+//        mFilterMutex->unlock();
     });
 }
 
@@ -359,23 +404,22 @@ void TransfersWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void TransfersWidget::setHeaderState(QPushButton* header, int state)
+void TransfersWidget::setHeaderState(QPushButton* header, HeaderState state)
 {
     QIcon icon;
     switch (state)
     {
-        case 0:
+        case SORT_DESCENDING:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_descending.png"));
             break;
         }
-        case 1:
+        case SORT_ASCENDING:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_ascending.png"));
             break;
         }
-        case 2:
-        default:
+        case SORT_DEFAULT:
         {
             icon = QIcon();
             break;

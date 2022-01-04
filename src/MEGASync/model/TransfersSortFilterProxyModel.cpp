@@ -11,38 +11,86 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mNextTransferStates (mTransferStates),
       mNextTransferTypes (mTransferTypes),
       mNextFileTypes (mFileTypes),
-      mSortCriterion (SORT_BY::PRIORITY),
+      mSortCriterion (SortCriterion::PRIORITY),
       mDlNumber (new int(0)),
       mUlNumber (new int(0)),
       mFilterMutex (new QMutex(QMutex::Recursive)),
-      mNewFiltersSemaphore (new QSemaphore(3))
+      mSortingMutex (new QMutex(QMutex::Recursive))
 {
-    mNewFiltersSemaphore->acquire(3);
+    // Allow only one thread to sort/filter at a time
+    connect(this, &TransfersSortFilterProxyModel::layoutAboutToBeChanged,
+            this, [this]
+    {
+        emit modelAboutToBeSorted();
+        mSortingMutex->lock();
+    });
+    connect(this, &TransfersSortFilterProxyModel::layoutChanged,
+            this, [this]
+    {
+        mSortingMutex->unlock();
+        emit modelSorted();
+    });
+
+//    connect(this, &TransfersSortFilterProxyModel::modelAboutToBeReset,
+//            this, [this]
+//    {
+//        mSortingMutex->lock();
+//    });
+//    connect(this, &TransfersSortFilterProxyModel::modelReset,
+//            this, [this]
+//    {
+//        mSortingMutex->unlock();
+//    });
+
+//    connect(this, &TransfersSortFilterProxyModel::modelAboutToBeFiltered,
+//            this, [this]
+//    {
+//        mSortingMutex->lock();
+//    }, Qt::QueuedConnection);
+//    connect(this, &TransfersSortFilterProxyModel::modelFiltered,
+//            this, [this]
+//    {
+//        mSortingMutex->unlock();
+//    }, Qt::QueuedConnection);
 }
 
 TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
 {
     delete mUlNumber;
     delete mDlNumber;
+    delete mFilterMutex;
+    delete mSortingMutex;
 }
 
-void TransfersSortFilterProxyModel::setTransferTypes(TransferData::TransferTypes transferTypes)
+void TransfersSortFilterProxyModel::sort(int column, Qt::SortOrder order)
 {
-    QMutexLocker lock (mFilterMutex);
+
+    auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+    transferModel->lockModelMutex(true);
+    QMutexLocker lockSortingMutex (mSortingMutex);
+    emit modelAboutToBeSorted();
+    QSortFilterProxyModel::sort(column, order);
+    transferModel->lockModelMutex(false);
+    emit modelSorted();
+}
+
+void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
+{
+    auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+    transferModel->lockModelMutex(true);
+    QMutexLocker lockSortingMutex (mSortingMutex);
+    emit modelAboutToBeFiltered();
+    QSortFilterProxyModel::setFilterFixedString(pattern);
+    transferModel->lockModelMutex(false);
+    emit modelFiltered();
+}
+
+void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
+                                               const TransferData::TransferStates transferStates,
+                                               const TransferData::FileTypes fileTypes)
+{
     mNextTransferTypes = transferTypes ? transferTypes : TransferData::TYPE_MASK;
-    mNewFiltersSemaphore->release();
-}
-
-void TransfersSortFilterProxyModel::setTransferStates(TransferData::TransferStates transferStates)
-{
-    QMutexLocker lock (mFilterMutex);
     mNextTransferStates = transferStates ? transferStates : TransferData::STATE_MASK;
-    mNewFiltersSemaphore->release();
-}
-
-void TransfersSortFilterProxyModel::setFileTypes(TransferData::FileTypes fileTypes)
-{
-    QMutexLocker lock (mFilterMutex);
     if (fileTypes)
     {
         mNextFileTypes = fileTypes;
@@ -51,26 +99,18 @@ void TransfersSortFilterProxyModel::setFileTypes(TransferData::FileTypes fileTyp
     {
         mNextFileTypes = ~TransferData::FileTypes({});
     }
-    mNewFiltersSemaphore->release();
 }
 
-void TransfersSortFilterProxyModel::resetAllFilters()
+void TransfersSortFilterProxyModel::resetAllFilters(bool invalidate)
 {
-    QMutexLocker lock (mFilterMutex);
-    mTransferStates = TransferData::STATE_MASK;
-    mTransferTypes = TransferData::TYPE_MASK;
-    mFileTypes = ~TransferData::FileTypes();
-    mNextTransferStates = mTransferStates;
-    mNextTransferTypes = mTransferTypes;
-    mNextFileTypes = mFileTypes;
-    *mDlNumber = 0;
-    *mUlNumber = 0;
-    mNewFiltersSemaphore->release(3);
+    resetNumberOfItems();
+    setFilters({}, {}, {});
+    applyFilters(invalidate);
 }
 
-void TransfersSortFilterProxyModel::setSortBy(SORT_BY sortCriterion)
+void TransfersSortFilterProxyModel::setSortBy(SortCriterion sortBy)
 {
-    mSortCriterion = sortCriterion;
+    mSortCriterion = sortBy;
 }
 
 int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)
@@ -130,46 +170,45 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
 
 void TransfersSortFilterProxyModel::resetNumberOfItems()
 {
-    QMutexLocker lock (mFilterMutex);
     *mDlNumber = 0;
     *mUlNumber = 0;
 }
 
 void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
 {
-    mNewFiltersSemaphore->acquire(3);
-    QMutexLocker lock (mFilterMutex);
+    QMutexLocker lockFilterMutex (mFilterMutex);
+    auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+    transferModel->lockModelMutex(true);
 
+    QMutexLocker lockSortingMutex (mSortingMutex);
     mTransferStates = mNextTransferStates;
     mTransferTypes = mNextTransferTypes;
     mFileTypes = mNextFileTypes;
     if (invalidate)
     {
+        emit modelAboutToBeFiltered();
         invalidateFilter();
+        transferModel->lockModelMutex(false);
+        emit modelFiltered();
     }
 }
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QMutexLocker lock (mFilterMutex);
+    QMutexLocker lockSortingMutex (mSortingMutex);
     bool accept (false);
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     const auto d (qvariant_cast<TransferItem2>(index.data()).getTransferData());
 
-    if (filterRegExp().isEmpty())
+    accept = (d->mState & mTransferStates)
+             && (d->mType & mTransferTypes)
+             && (d->mFileType & mFileTypes);
+
+    if (accept && !filterRegExp().isEmpty())
     {
-        accept = (d->mState & mTransferStates)
-                 && (d->mType & mTransferTypes)
-                 && (d->mFileType & mFileTypes);
-    }
-    else
-    {
-        accept = (d->mState & mTransferStates)
-                 && (d->mType & mTransferTypes)
-                 && (d->mFileType & mFileTypes)
-                 && d->mFilename.contains(filterRegExp());
+        accept = d->mFilename.contains(filterRegExp());
 
         if (accept)
         {
@@ -183,29 +222,29 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
             }
         }
     }
-
     return accept;
 }
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
+    QMutexLocker lockSortingMutex (mSortingMutex);
     bool lessThan (false);
     const auto leftItem (qvariant_cast<TransferItem2>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem2>(right.data()).getTransferData());
 
     switch (mSortCriterion)
     {
-        case SORT_BY::PRIORITY:
+        case SortCriterion::PRIORITY:
         {
             lessThan = leftItem->mPriority < rightItem->mPriority;
             break;
         }
-        case SORT_BY::TOTAL_SIZE:
+        case SortCriterion::TOTAL_SIZE:
         {
             lessThan = leftItem->mTotalSize < rightItem->mTotalSize;
             break;
         }
-        case SORT_BY::NAME:
+        case SortCriterion::NAME:
         {
             lessThan = leftItem->mFilename < rightItem->mFilename;
             break;
@@ -222,6 +261,7 @@ bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, in
 {
     bool moveOk(true);
     int row(sourceRow);
+    QMutexLocker lockFilterMutex (mSortingMutex);
     while (moveOk && row < (sourceRow+count))
     {
         auto sourceIndex(mapToSource(index(sourceRow, 0, sourceParent)));

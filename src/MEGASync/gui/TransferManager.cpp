@@ -233,9 +233,7 @@ void TransferManager::on_tCompleted_clicked()
     if (mCurrentTab != COMPLETED_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->transferStateFilterChanged(FINISHED_STATES_MASK);
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({});
+        mUi->wTransfers->filtersChanged({}, FINISHED_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Finished"));
         toggleTab(COMPLETED_TAB);
     }
@@ -246,10 +244,9 @@ void TransferManager::on_tDownloads_clicked()
     if (mCurrentTab != DOWNLOADS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-        mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_DOWNLOAD
-                                                   | TransferData::TRANSFER_LTCPDOWNLOAD);
-        mUi->wTransfers->fileTypeFilterChanged({});
+        mUi->wTransfers->filtersChanged((TransferData::TRANSFER_DOWNLOAD
+                                         | TransferData::TRANSFER_LTCPDOWNLOAD),
+                                        ACTIVE_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Downloads"));
         toggleTab(DOWNLOADS_TAB);
     }
@@ -260,9 +257,7 @@ void TransferManager::on_tUploads_clicked()
     if (mCurrentTab != UPLOADS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-        mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_UPLOAD);
-        mUi->wTransfers->fileTypeFilterChanged({});
+        mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, ACTIVE_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("Uploads"));
         toggleTab(UPLOADS_TAB);
     }
@@ -273,9 +268,7 @@ void TransferManager::on_tAllTransfers_clicked()
     if (mCurrentTab != ALL_TRANSFERS_TAB)
     {
         emit userActivity();
-        mUi->wTransfers->transferStateFilterChanged(ACTIVE_STATES_MASK);
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({});
+        mUi->wTransfers->filtersChanged({}, ACTIVE_STATES_MASK, {});
         mUi->lCurrentContent->setText(tr("All Transfers"));
         toggleTab(ALL_TRANSFERS_TAB);
     }
@@ -681,26 +674,20 @@ void TransferManager::on_tClearSearchResult_clicked()
 
 void TransferManager::on_tAllResults_clicked()
 {
-    mUi->wTransfers->transferTypeFilterChanged({});
-    mUi->wTransfers->fileTypeFilterChanged({});
-    mUi->wTransfers->transferStateFilterChanged({});
+    mUi->wTransfers->filtersChanged({}, {}, {});
     mUi->wTransfers->transferFilterApply();
 }
 
 void TransferManager::on_tDlResults_clicked()
 {
-    mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_DOWNLOAD
-                                               | TransferData::TRANSFER_LTCPDOWNLOAD);
-    mUi->wTransfers->fileTypeFilterChanged({});
-    mUi->wTransfers->transferStateFilterChanged({});
+    mUi->wTransfers->filtersChanged(TransferData::TRANSFER_DOWNLOAD
+                                    | TransferData::TRANSFER_LTCPDOWNLOAD, {}, {});
     mUi->wTransfers->transferFilterApply();
 }
 
 void TransferManager::on_tUlResults_clicked()
 {
-    mUi->wTransfers->transferTypeFilterChanged(TransferData::TRANSFER_UPLOAD);
-    mUi->wTransfers->fileTypeFilterChanged({});
-    mUi->wTransfers->transferStateFilterChanged({});
+    mUi->wTransfers->filtersChanged(TransferData::TRANSFER_UPLOAD, {}, {});
     mUi->wTransfers->transferFilterApply();
 }
 
@@ -708,9 +695,7 @@ void TransferManager::on_bArchives_clicked()
 {
     if (mCurrentTab != TYPE_ARCHIVE_TAB)
     {
-        mUi->wTransfers->transferStateFilterChanged({});
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_ARCHIVE});
+        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_ARCHIVE});
         mUi->lCurrentContent->setText(tr("Archives"));
         toggleTab(TYPE_ARCHIVE_TAB);
     }
@@ -720,9 +705,7 @@ void TransferManager::on_bDocuments_clicked()
 {
     if (mCurrentTab != TYPE_DOCUMENT_TAB)
     {
-        mUi->wTransfers->transferStateFilterChanged({});
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_DOCUMENT});
+        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_DOCUMENT});
         mUi->lCurrentContent->setText(tr("Documents"));
         toggleTab(TYPE_DOCUMENT_TAB);
     }
@@ -732,9 +715,7 @@ void TransferManager::on_bImages_clicked()
 {
     if (mCurrentTab != TYPE_IMAGE_TAB)
     {
-        mUi->wTransfers->transferStateFilterChanged({});
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_IMAGE});
+        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_IMAGE});
         mUi->lCurrentContent->setText(tr("Images"));
         toggleTab(TYPE_IMAGE_TAB);
     }
@@ -744,9 +725,7 @@ void TransferManager::on_bMusic_clicked()
 {
     if (mCurrentTab != TYPE_AUDIO_TAB)
     {
-        mUi->wTransfers->transferStateFilterChanged({});
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_AUDIO});
+        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_AUDIO});
         mUi->lCurrentContent->setText(tr("Music"));
         toggleTab(TYPE_AUDIO_TAB);
     }
@@ -756,9 +735,7 @@ void TransferManager::on_bVideos_clicked()
 {
     if (mCurrentTab != TYPE_VIDEO_TAB)
     {
-        mUi->wTransfers->transferStateFilterChanged({});
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_VIDEO});
+        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_VIDEO});
         mUi->lCurrentContent->setText(tr("Videos"));
         toggleTab(TYPE_VIDEO_TAB);
     }
@@ -768,9 +745,7 @@ void TransferManager::on_bOther_clicked()
 {
     if (mCurrentTab != TYPE_OTHER_TAB)
     {
-        mUi->wTransfers->transferStateFilterChanged({});
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_OTHER});
+        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_OTHER});
         mUi->lCurrentContent->setText(tr("Other"));
         toggleTab(TYPE_OTHER_TAB);
     }
@@ -780,9 +755,7 @@ void TransferManager::on_bText_clicked()
 {
     if (mCurrentTab != TYPE_TEXT_TAB)
     {
-        mUi->wTransfers->transferStateFilterChanged({});
-        mUi->wTransfers->transferTypeFilterChanged({});
-        mUi->wTransfers->fileTypeFilterChanged({TransferData::TYPE_TEXT});
+        mUi->wTransfers->filtersChanged({}, {}, {TransferData::TYPE_TEXT});
         mUi->lCurrentContent->setText(tr("Text"));
         toggleTab(TYPE_TEXT_TAB);
     }
@@ -813,9 +786,9 @@ void TransferManager::on_leSearchField_returnPressed()
     emit mUi->tSearchIcon->clicked();
 }
 
-void TransferManager::toggleTab(TM_TAB tab)
+void TransferManager::toggleTab(TM_TAB newTab)
 {
-    if (mCurrentTab != tab)
+    if (mCurrentTab != newTab)
     {
         // De-activate old tab frame
         if (mCurrentTab != NO_TAB)
@@ -824,13 +797,13 @@ void TransferManager::toggleTab(TM_TAB tab)
         }
 
         // Activate new tab frame
-        mTabFramesToggleGroup[tab]->setProperty("itsOn", true);
-        mTabFramesToggleGroup[tab]->setGraphicsEffect(mShadowTab);
+        mTabFramesToggleGroup[newTab]->setProperty("itsOn", true);
+        mTabFramesToggleGroup[newTab]->setGraphicsEffect(mShadowTab);
 
         // Show pause button on tab except completed tab,
         // and set Clear All button string,
         // Emit wether we are showing completed or not
-        if (tab == COMPLETED_TAB)
+        if (newTab == COMPLETED_TAB)
         {
             mUi->tClearCompleted->setText(tr("Clear All"));
             mUi->bPause->hide();
@@ -844,7 +817,7 @@ void TransferManager::toggleTab(TM_TAB tab)
         }
 
         // Set current header widget: search or not
-        if (tab == SEARCH_TAB)
+        if (newTab == SEARCH_TAB)
         {
             mUi->sCurrentContent->setCurrentWidget(mUi->pSearchHeader);
         }
@@ -859,7 +832,7 @@ void TransferManager::toggleTab(TM_TAB tab)
             mUi->wTransfers->transferFilterApply();
         }
 
-        mCurrentTab = tab;
+        mCurrentTab = newTab;
 
         refreshStats();
 
