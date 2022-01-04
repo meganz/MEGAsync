@@ -49,11 +49,16 @@ public:
 
     void initModel();
 
-    void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
+    void startTransfer(mega::MegaTransfer* transfer);
+    void updateTransfer(mega::MegaTransfer* transfer);
+    void finishTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer,
+                        mega::MegaError* error);
+    void transferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *error);
+
+    void onTransferStart(mega::MegaApi*, mega::MegaTransfer* transfer);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error);
-    void onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* transfer);
-    void onTransferTemporaryError(mega::MegaApi* api,mega::MegaTransfer* transfer,
-                                  mega::MegaError* error);
+    void onTransferUpdate(mega::MegaApi*, mega::MegaTransfer* transfer);
+    void onTransferTemporaryError(mega::MegaApi* api,mega::MegaTransfer* transfer,mega::MegaError* error);
 
 signals:
     void transfersInModelChanged(bool weHaveTransfers);
@@ -66,14 +71,14 @@ public slots:
 
 private slots:
     void onPauseStateChanged();
+    void onTimerTransfers();
 
 private:
+
     static constexpr int INIT_ROWS_PER_CHUNK = 1000;
 
     mega::MegaApi* mMegaApi;
     Preferences* mPreferences;
-
-    mega::QTMegaTransferListener* mListener;
 
     QMap<TransferTag, QVariant> mTransfers;
     QMap<TransferTag, mega::MegaTransfer*> mFailedTransfers;
@@ -98,6 +103,14 @@ private:
     QMap<TransferData::TransferState, long long> mNbTransfersPerState;
 
     void insertTransfer(mega::MegaApi* api, mega::MegaTransfer* transfer, int row, bool signal = true);
+    void addTransfers(int rows);
+
+    mega::QTMegaTransferListener* mListener;
+
+    QMap<TransferTag,mega::MegaTransfer*> mCacheStartTransfers;
+    QMap<TransferTag,mega::MegaTransfer*> mCacheUpdateTransfers;
+    QMap<TransferTag,mega::MegaTransfer*> mCacheFinishTransfers;
+    QTimer timer;
 };
 
 #endif // QTRANSFERSMODEL2_H
