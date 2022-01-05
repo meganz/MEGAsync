@@ -120,56 +120,63 @@ void TransfersSortFilterProxyModel::setSortBy(SortCriterion sortBy)
 
 int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType transferType)
 {
-    auto nbRows (rowCount());
-    if (mTransferTypes == (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
+    int nb (0);
+    // Do not count if sort or filtering in course
+    if (mActivityMutex->tryLock())
     {
-        *mDlNumber = nbRows;
-        *mUlNumber = 0;
-    }
-    else if (mTransferTypes == TransferData::TRANSFER_UPLOAD)
-    {
-        *mDlNumber = 0;
-        *mUlNumber = nbRows;
-    }
-    else
-    {
-        if (*mDlNumber + *mUlNumber != nbRows)
+        auto nbRows (rowCount());
+        if (mTransferTypes == (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
         {
-            // Case where only one type: easy!
-            if (*mDlNumber == 0)
+            *mDlNumber = nbRows;
+            *mUlNumber = 0;
+        }
+        else if (mTransferTypes == TransferData::TRANSFER_UPLOAD)
+        {
+            *mDlNumber = 0;
+            *mUlNumber = nbRows;
+        }
+        else
+        {
+            if (*mDlNumber + *mUlNumber != nbRows)
             {
-                *mUlNumber = nbRows;
-            }
-            else if (*mUlNumber == 0)
-            {
-                *mDlNumber = nbRows;
-            }
-            // Mixed... we have to count :(
-            else
-            {
-                *mUlNumber = 0;
-                for (int i = 0; i < nbRows; ++i)
+                // Case where only one type: easy!
+                if (*mDlNumber == 0)
                 {
-                    QModelIndex idx (index(i, 0));
-                    const auto d (qvariant_cast<TransferItem2>(idx.data()).getTransferData());
-                    if (d->mType & TransferData::TRANSFER_UPLOAD)
-                    {
-                        (*mUlNumber)++;
-                    }
+                    *mUlNumber = nbRows;
                 }
-                *mDlNumber = nbRows - *mUlNumber;
+                else if (*mUlNumber == 0)
+                {
+                    *mDlNumber = nbRows;
+                }
+                // Mixed... we have to count :(
+                else
+                {
+                    *mUlNumber = 0;
+                    for (int i = 0; i < nbRows; ++i)
+                    {
+                        QModelIndex idx (index(i, 0));
+                        const auto d (qvariant_cast<TransferItem2>(idx.data()).getTransferData());
+                        if (d->mType & TransferData::TRANSFER_UPLOAD)
+                        {
+                            (*mUlNumber)++;
+                        }
+                    }
+                    *mDlNumber = nbRows - *mUlNumber;
+                }
             }
         }
-    }
 
-    if (transferType & (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
-    {
-        return *mDlNumber;
+        if (transferType & (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
+        {
+            nb = *mDlNumber;
+        }
+        else
+        {
+            nb = *mUlNumber;
+        }
+        mActivityMutex->unlock();
     }
-    else
-    {
-        return *mUlNumber;
-    }
+    return nb;
 }
 
 void TransfersSortFilterProxyModel::resetNumberOfItems()
