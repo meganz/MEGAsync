@@ -25,8 +25,8 @@ class TransfersWidget : public QWidget
 
 public:
     explicit TransfersWidget(QWidget *parent = 0);
-    void setupFinishedTransfers(QList<mega::MegaTransfer* > transferData, QTransfersModel::ModelType modelType = QTransfersModel::TYPE_FINISHED);
-    void setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, QTransfersModel::ModelType type);
+//    void setupFinishedTransfers(QList<mega::MegaTransfer* > transferData, QTransfersModel::ModelType modelType = QTransfersModel::TYPE_FINISHED);
+//    void setupTransfers(std::shared_ptr<mega::MegaTransferData> transferData, QTransfersModel::ModelType type);
     void setupTransfers();
     void refreshTransferItems();
     void pausedTransfers(bool paused);
@@ -67,10 +67,10 @@ private:
     };
 
     Ui::TransfersWidget *ui;
-    QTransfersModel *model;
+//    QTransfersModel *model;
     QTransfersModel2 *model2;
     TransfersSortFilterProxyModel *mProxyModel;
-    MegaTransferDelegate *tDelegate;
+//    MegaTransferDelegate *tDelegate;
     MegaTransferDelegate2 *tDelegate2;
     QTransfersModel::ModelType mType;
     bool mIsPaused;
