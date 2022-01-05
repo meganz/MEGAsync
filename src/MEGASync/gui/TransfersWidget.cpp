@@ -16,8 +16,8 @@ TransfersWidget::TransfersWidget(QWidget* parent) :
     tDelegate2 (nullptr),
     mIsPaused (false),
     app (qobject_cast<MegaApplication*>(qApp)),
-    mHeaderNameState (SORT_DESCENDING),
-    mHeaderSizeState (SORT_DESCENDING),
+    mHeaderNameState (HS_SORT_DESCENDING),
+    mHeaderSizeState (HS_SORT_DESCENDING),
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mProxyActivityTimer (new QTimer(this)),
     mProxyActivityMessage (new QMessageBox(this))
@@ -201,29 +201,29 @@ void TransfersWidget::on_pHeaderName_clicked()
 
     switch (mHeaderNameState)
     {
-        case SORT_DESCENDING:
+        case HS_SORT_DESCENDING:
         {
             order = Qt::DescendingOrder;
             column = 0;
             break;
         }
-        case SORT_ASCENDING:
+        case HS_SORT_ASCENDING:
         {
             order = Qt::AscendingOrder;
             column = 0;
             break;
         }
-        case SORT_DEFAULT:
-        case NB_STATES: //this never should happen
+        case HS_SORT_NOSORT:
+        case HS_NB_STATES: //this never should happen
         {
             break;
         }
     }
 
-    if (mHeaderSizeState != SORT_DESCENDING)
+    if (mHeaderSizeState != HS_SORT_DESCENDING)
     {
-        setHeaderState(ui->pHeaderSize, SORT_DEFAULT);
-        mHeaderSizeState = SORT_DESCENDING;
+        setHeaderState(ui->pHeaderSize, HS_SORT_NOSORT);
+        mHeaderSizeState = HS_SORT_DESCENDING;
         //    QtConcurrent::run([=]
         mThreadPool->push([=]
         {
@@ -239,7 +239,7 @@ void TransfersWidget::on_pHeaderName_clicked()
     });
 
     setHeaderState(ui->pHeaderName, mHeaderNameState);
-    mHeaderNameState = static_cast<HeaderState>((mHeaderNameState + 1) % NB_STATES);
+    mHeaderNameState = static_cast<HeaderState>((mHeaderNameState + 1) % HS_NB_STATES);
 }
 
 void TransfersWidget::on_pHeaderSize_clicked()
@@ -249,29 +249,29 @@ void TransfersWidget::on_pHeaderSize_clicked()
 
     switch (mHeaderSizeState)
     {
-        case SORT_DESCENDING:
+        case HS_SORT_DESCENDING:
         {
             order = Qt::DescendingOrder;
             column = 0;
             break;
         }
-        case SORT_ASCENDING:
+        case HS_SORT_ASCENDING:
         {
             order = Qt::AscendingOrder;
             column = 0;
             break;
         }
-        case NB_STATES: //this never should happen
-        default:
+        case HS_SORT_NOSORT:
+        case HS_NB_STATES: //this never should happen
         {
             break;
         }
     }
 
-    if (mHeaderNameState != SORT_DESCENDING)
+    if (mHeaderNameState != HS_SORT_DESCENDING)
     {
-        setHeaderState(ui->pHeaderName, SORT_DEFAULT);
-        mHeaderNameState = SORT_DESCENDING;
+        setHeaderState(ui->pHeaderName, HS_SORT_NOSORT);
+        mHeaderNameState = HS_SORT_DESCENDING;
         //        //    QtConcurrent::run([=]
         mThreadPool->push([=]
         {
@@ -287,7 +287,7 @@ void TransfersWidget::on_pHeaderSize_clicked()
     });
 
     setHeaderState(ui->pHeaderSize, mHeaderSizeState);
-    mHeaderSizeState = static_cast<HeaderState>((mHeaderSizeState + 1) % NB_STATES);
+    mHeaderSizeState = static_cast<HeaderState>((mHeaderSizeState + 1) % HS_NB_STATES);
 }
 
 void TransfersWidget::on_tPauseResumeAll_clicked()
@@ -409,17 +409,18 @@ void TransfersWidget::setHeaderState(QPushButton* header, HeaderState state)
     QIcon icon;
     switch (state)
     {
-        case SORT_DESCENDING:
+        case HS_SORT_DESCENDING:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_descending.png"));
             break;
         }
-        case SORT_ASCENDING:
+        case HS_SORT_ASCENDING:
         {
             icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/sort_ascending.png"));
             break;
         }
-        case SORT_DEFAULT:
+        case HS_SORT_NOSORT:
+        default:
         {
             icon = QIcon();
             break;

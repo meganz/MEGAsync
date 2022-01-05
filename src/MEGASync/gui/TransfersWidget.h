@@ -60,10 +60,10 @@ private:
 
     enum HeaderState
     {
-        SORT_DESCENDING = 0,
-        SORT_ASCENDING,
-        SORT_DEFAULT,
-        NB_STATES,
+        HS_SORT_DESCENDING = 0,
+        HS_SORT_ASCENDING,
+        HS_SORT_NOSORT,
+        HS_NB_STATES,
     };
 
     Ui::TransfersWidget *ui;
