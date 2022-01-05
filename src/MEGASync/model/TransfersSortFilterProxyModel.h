@@ -29,18 +29,17 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         void setFilters(const TransferData::TransferTypes transferTypes,
                         const TransferData::TransferStates transferStates,
                         const TransferData::FileTypes fileTypes);
+        void applyFilters(bool invalidate = true);
         void resetAllFilters(bool invalidate = false);
         void setSortBy(SortCriterion sortBy);
         int  getNumberOfItems(TransferData::TransferType transferType);
         void resetNumberOfItems();
-        void applyFilters(bool invalidate = true);
 
     signals:
         void modelAboutToBeFiltered();
         void modelFiltered();
         void modelAboutToBeSorted();
         void modelSorted();
-
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
@@ -57,7 +56,7 @@ class TransfersSortFilterProxyModel : public QSortFilterProxyModel
         int* mDlNumber;
         int* mUlNumber;
         QMutex* mFilterMutex;
-        QMutex* mSortingMutex;
+        QMutex* mActivityMutex;
 };
 
 #endif // TRANSFERSSORTFILTERPROXYMODEL_H

@@ -15,19 +15,19 @@ TransfersSortFilterProxyModel::TransfersSortFilterProxyModel(QObject* parent)
       mDlNumber (new int(0)),
       mUlNumber (new int(0)),
       mFilterMutex (new QMutex(QMutex::Recursive)),
-      mSortingMutex (new QMutex(QMutex::Recursive))
+      mActivityMutex (new QMutex(QMutex::Recursive))
 {
     // Allow only one thread to sort/filter at a time
     connect(this, &TransfersSortFilterProxyModel::layoutAboutToBeChanged,
             this, [this]
     {
         emit modelAboutToBeSorted();
-        mSortingMutex->lock();
+        mActivityMutex->lock();
     });
     connect(this, &TransfersSortFilterProxyModel::layoutChanged,
             this, [this]
     {
-        mSortingMutex->unlock();
+        mActivityMutex->unlock();
         emit modelSorted();
     });
 
@@ -59,30 +59,35 @@ TransfersSortFilterProxyModel::~TransfersSortFilterProxyModel()
     delete mUlNumber;
     delete mDlNumber;
     delete mFilterMutex;
-    delete mSortingMutex;
+    delete mActivityMutex;
 }
 
 void TransfersSortFilterProxyModel::sort(int column, Qt::SortOrder order)
 {
-
-    auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
-    transferModel->lockModelMutex(true);
-    QMutexLocker lockSortingMutex (mSortingMutex);
-    emit modelAboutToBeSorted();
-    QSortFilterProxyModel::sort(column, order);
-    transferModel->lockModelMutex(false);
-    emit modelSorted();
+    QtConcurrent::run([=]
+    {
+        auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+        transferModel->lockModelMutex(true);
+        QMutexLocker lockSortingMutex (mActivityMutex);
+        emit modelAboutToBeSorted();
+        QSortFilterProxyModel::sort(column, order);
+        transferModel->lockModelMutex(false);
+        emit modelSorted();
+    });
 }
 
 void TransfersSortFilterProxyModel::setFilterFixedString(const QString& pattern)
 {
-    auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
-    transferModel->lockModelMutex(true);
-    QMutexLocker lockSortingMutex (mSortingMutex);
-    emit modelAboutToBeFiltered();
-    QSortFilterProxyModel::setFilterFixedString(pattern);
-    transferModel->lockModelMutex(false);
-    emit modelFiltered();
+    QtConcurrent::run([=]
+    {
+        auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+        transferModel->lockModelMutex(true);
+        QMutexLocker lockSortingMutex (mActivityMutex);
+        emit modelAboutToBeFiltered();
+        QSortFilterProxyModel::setFilterFixedString(pattern);
+        transferModel->lockModelMutex(false);
+        emit modelFiltered();
+    });
 }
 
 void TransfersSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
@@ -157,7 +162,6 @@ int  TransfersSortFilterProxyModel::getNumberOfItems(TransferData::TransferType 
         }
     }
 
-
     if (transferType & (TransferData::TRANSFER_DOWNLOAD | TransferData::TRANSFER_LTCPDOWNLOAD))
     {
         return *mDlNumber;
@@ -176,26 +180,27 @@ void TransfersSortFilterProxyModel::resetNumberOfItems()
 
 void TransfersSortFilterProxyModel::applyFilters(bool invalidate)
 {
-    QMutexLocker lockFilterMutex (mFilterMutex);
-    auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
-    transferModel->lockModelMutex(true);
-
-    QMutexLocker lockSortingMutex (mSortingMutex);
-    mTransferStates = mNextTransferStates;
-    mTransferTypes = mNextTransferTypes;
-    mFileTypes = mNextFileTypes;
-    if (invalidate)
+    QtConcurrent::run([=]
     {
-        emit modelAboutToBeFiltered();
-        invalidateFilter();
-        transferModel->lockModelMutex(false);
-        emit modelFiltered();
-    }
+        QMutexLocker lockCallingThread (mActivityMutex);
+        mTransferStates = mNextTransferStates;
+        mTransferTypes = mNextTransferTypes;
+        mFileTypes = mNextFileTypes;
+        if (invalidate)
+        {
+            auto transferModel (static_cast<QTransfersModel2*> (sourceModel()));
+            emit modelAboutToBeFiltered();
+            transferModel->lockModelMutex(true);
+            invalidateFilter();
+            transferModel->lockModelMutex(false);
+            emit modelFiltered();
+        }
+    });
 }
 
 bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QMutexLocker lockSortingMutex (mSortingMutex);
+    QMutexLocker lock (mActivityMutex);
     bool accept (false);
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
@@ -227,7 +232,7 @@ bool TransfersSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModel
 
 bool TransfersSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    QMutexLocker lockSortingMutex (mSortingMutex);
+    QMutexLocker lock (mActivityMutex);
     bool lessThan (false);
     const auto leftItem (qvariant_cast<TransferItem2>(left.data()).getTransferData());
     const auto rightItem (qvariant_cast<TransferItem2>(right.data()).getTransferData());
@@ -261,7 +266,7 @@ bool TransfersSortFilterProxyModel::moveRows(const QModelIndex &sourceParent, in
 {
     bool moveOk(true);
     int row(sourceRow);
-    QMutexLocker lockFilterMutex (mSortingMutex);
+    QMutexLocker lock (mActivityMutex);
     while (moveOk && row < (sourceRow+count))
     {
         auto sourceIndex(mapToSource(index(sourceRow, 0, sourceParent)));

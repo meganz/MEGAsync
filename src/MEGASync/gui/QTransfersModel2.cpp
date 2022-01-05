@@ -886,15 +886,19 @@ void QTransfersModel2::pauseResumeAllTransfers()
     bool newPauseState (!mAreAllPaused);
     mAreAllPaused = newPauseState;
 
-//    mThreadPool->push([=]
-    QtConcurrent::run([=]
+    mThreadPool->push([=]
+//    QtConcurrent::run([=]
     {
-//        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
+        // First lock the sdk to avoid new callbacks
+        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
+       // Process remaining events
+        qApp->processEvents();
 
         QList<TransferTag> orderCopy;
         mModelMutex->lockForRead();
         orderCopy = mOrder;
         mModelMutex->unlock();
+        megaApiLock->unlockOnce();
 
         if (newPauseState)
         {
@@ -902,6 +906,7 @@ void QTransfersModel2::pauseResumeAllTransfers()
             std::for_each(orderCopy.crbegin(), orderCopy.crend(), [this, newPauseState](TransferTag tag)
             {
                 pauseResumeTransferByTag(tag, newPauseState);
+                qApp->processEvents();
             });
         }
         else
@@ -909,7 +914,7 @@ void QTransfersModel2::pauseResumeAllTransfers()
             std::for_each(orderCopy.cbegin(), orderCopy.cend(), [this, newPauseState](TransferTag tag)
             {
                 pauseResumeTransferByTag(tag, newPauseState);
-                //qApp->processEvents();
+                qApp->processEvents();
             });
             mMegaApi->pauseTransfers(newPauseState);
         }
@@ -939,17 +944,20 @@ void QTransfersModel2::cancelClearAllTransfers()
 
 void QTransfersModel2::lockModelMutex(bool lock)
 {
+    static std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(false));
+
     if (lock)
     {
+        megaApiLock->lockOnce();
         while (!mModelMutex->tryLockForRead())
         {
-            std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
             MegaSyncApp->processEvents();
         }
     }
     else
     {
         mModelMutex->unlock();
+        megaApiLock->unlockOnce();
     }
 }
 

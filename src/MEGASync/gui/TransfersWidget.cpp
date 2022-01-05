@@ -224,19 +224,11 @@ void TransfersWidget::on_pHeaderName_clicked()
     {
         setHeaderState(ui->pHeaderSize, HS_SORT_NOSORT);
         mHeaderSizeState = HS_SORT_DESCENDING;
-        //    QtConcurrent::run([=]
-        mThreadPool->push([=]
-        {
-            mProxyModel->sort(-1, order);
-        });
+        mProxyModel->sort(-1, order);
     }
 
-    //    QtConcurrent::run([=]
-    mThreadPool->push([=]
-    {
-        mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::NAME);
-        mProxyModel->sort(column, order);
-    });
+    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::NAME);
+    mProxyModel->sort(column, order);
 
     setHeaderState(ui->pHeaderName, mHeaderNameState);
     mHeaderNameState = static_cast<HeaderState>((mHeaderNameState + 1) % HS_NB_STATES);
@@ -272,19 +264,10 @@ void TransfersWidget::on_pHeaderSize_clicked()
     {
         setHeaderState(ui->pHeaderName, HS_SORT_NOSORT);
         mHeaderNameState = HS_SORT_DESCENDING;
-        //        //    QtConcurrent::run([=]
-        mThreadPool->push([=]
-        {
-            mProxyModel->sort(-1, order);
-        });
+        mProxyModel->sort(-1, order);
     }
-
-    //    QtConcurrent::run([=]
-    mThreadPool->push([=]
-    {
-        mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::TOTAL_SIZE);
-        mProxyModel->sort(column, order);
-    });
+    mProxyModel->setSortBy(TransfersSortFilterProxyModel::SortCriterion::TOTAL_SIZE);
+    mProxyModel->sort(column, order);
 
     setHeaderState(ui->pHeaderSize, mHeaderSizeState);
     mHeaderSizeState = static_cast<HeaderState>((mHeaderSizeState + 1) % HS_NB_STATES);
@@ -338,14 +321,7 @@ void TransfersWidget::onPauseStateChanged(bool pauseState)
 
 void TransfersWidget::textFilterChanged(const QString& pattern)
 {
-//    QtConcurrent::run([=]
-    mThreadPool->push([=]
-    {
-//        QMutexLocker lock (mFilterMutex);
-        std::unique_ptr<mega::MegaApiLock> apiLock (app->getMegaApi()->getMegaApiLock(true));
-        mProxyModel->setFilterFixedString(pattern);
-    });
-
+    mProxyModel->setFilterFixedString(pattern);
     ui->tvTransfers->scrollToTop();
 }
 
@@ -353,39 +329,26 @@ void TransfersWidget::filtersChanged(const TransferData::TransferTypes transferT
                                      const TransferData::TransferStates transferStates,
                                      const TransferData::FileTypes fileTypes)
 {
-//    mThreadPool->push([=]
-//    {
-        mProxyModel->setFilters(transferTypes, transferStates, fileTypes);
-//    });
+    mProxyModel->setFilters(transferTypes, transferStates, fileTypes);
 }
 
 void TransfersWidget::transferFilterReset(bool invalidate)
 {
-//    mFilterMutex->lock();
-    mThreadPool->push([=]
-    {
-        mProxyModel->resetAllFilters(invalidate);
-//        mFilterMutex->unlock();
-    });
+    mProxyModel->resetAllFilters(invalidate);
 }
 
 void TransfersWidget::transferFilterApply(bool invalidate)
 {
     if (!mProxyModel->dynamicSortFilter())
     {
-        std::unique_ptr<mega::MegaApiLock> apiLock (app->getMegaApi()->getMegaApiLock(true));
         mProxyModel->applyFilters(false);
         mProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
         mProxyModel->setDynamicSortFilter(true);
     }
     else
     {
-        mThreadPool->push([=]
-        {
-            std::unique_ptr<mega::MegaApiLock> apiLock (app->getMegaApi()->getMegaApiLock(true));
-            mProxyModel->resetNumberOfItems();
-            mProxyModel->applyFilters(invalidate);
-        });
+        mProxyModel->resetNumberOfItems();
+        mProxyModel->applyFilters(invalidate);
     }
     ui->tvTransfers->scrollToTop();
 }

@@ -49,8 +49,6 @@ public:
 
     void initModel();
 
-
-
     void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error);
     void onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* transfer);
