@@ -139,6 +139,7 @@ void TransfersWidget::configureTransferView()
         {
             mProxyActivityTimer->stop();
             mProxyActivityMessage->hide();
+            mProxyActivityMessage->setText(tr("..."));
         });
 
         connect(mProxyModel, &TransfersSortFilterProxyModel::modelAboutToBeFiltered,
@@ -153,6 +154,7 @@ void TransfersWidget::configureTransferView()
         {
             mProxyActivityTimer->stop();
             mProxyActivityMessage->hide();
+            mProxyActivityMessage->setText(tr("..."));
         });
 
 //        QObject::connect(this, &TransfersWidget::updateSearchFilter,

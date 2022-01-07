@@ -630,7 +630,6 @@ void TransferManager::on_tSearchIcon_clicked()
 
     if (pattern != QString())
     {
-        std::unique_ptr<mega::MegaApiLock> apiLock (mMegaApi->getMegaApiLock(true));
         mUi->bSearchString->setText(mUi->bSearchString->fontMetrics()
                                     .elidedText(pattern,
                                                 Qt::ElideMiddle,

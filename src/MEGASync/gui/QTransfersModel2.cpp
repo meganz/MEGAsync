@@ -2,8 +2,6 @@
 #include "MegaApplication.h"
 #include "Utilities.h"
 
-
-
 using namespace mega;
 
 const int QTransfersModel2::INIT_ROWS_PER_CHUNK;
@@ -173,11 +171,9 @@ QTransfersModel2::~QTransfersModel2()
 void QTransfersModel2::initModel()
 {
     emit pauseStateChanged(mAreAllPaused);
-
     mInitFuture = QtConcurrent::run([=]
     {
         std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
-
         std::unique_ptr<mega::MegaTransferList> transfers (mMegaApi->getTransfers());
         std::unique_ptr<mega::MegaTransferData> transferData (mMegaApi->getTransferData());
         mNotificationNumber = transferData->getNotificationNumber();
@@ -220,11 +216,11 @@ void QTransfersModel2::initModel()
                 // Use the actual number of items to update the rows
                 auto nbRowsInModel (mOrder.size());
 
-                //Utilities::queueFunctionInAppThread([=]()
-                //{
+                Utilities::queueFunctionInAppThread([=]()
+                {
                     beginInsertRows(DEFAULT_IDX, nbRowsInModel,
                                     nbRowsInModel + nbRowsInChunk - 1);
-                //});
+                });
                 //QApplication::processEvents();
                 // Insert transfers
                 for (auto row (first); row < first + nbRowsInChunk; ++row)
@@ -233,19 +229,19 @@ void QTransfersModel2::initModel()
                 }
 
                 mModelMutex->unlock();
-                //Utilities::queueFunctionInAppThread([=]()
-                //{
+                Utilities::queueFunctionInAppThread([=]()
+                {
                     endInsertRows();
-                //});
+                });
                 //QApplication::processEvents();
 
                 remainingRows -= INIT_ROWS_PER_CHUNK;
             }
         }
-    });
 
-    // Connect to transfer changes callbacks
-    mMegaApi->addTransferListener(mListener);
+        // Connect to transfer changes callbacks
+        mMegaApi->addTransferListener(mListener);
+    });
 }
 
 void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer)
@@ -257,9 +253,7 @@ void QTransfersModel2::onTransferStart(mega::MegaApi* api, mega::MegaTransfer* t
         return;
     }
 
-    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
-
-    mModelMutex->lockForWrite();
+    mModelMutex->lockForRead();
 
     auto nbRows (mOrder.size());
     auto insertAt (0);
@@ -341,7 +335,6 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
     {
         return;
     }
-    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     TransferTag tag (transfer->getTag());
     mModelMutex->lockForWrite();
@@ -383,8 +376,6 @@ void QTransfersModel2::onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* 
                                                     transfer->getNodeHandle(),
                                                     transfer->getPublicMegaNode());
         v = QVariant::fromValue(transferItem);
-
-
 
 //        Utilities::queueFunctionInAppThread([=]()
 //        {
@@ -634,7 +625,6 @@ void QTransfersModel2::onTransferTemporaryError(mega::MegaApi *api,mega::MegaTra
     {
         return;
     }
-    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
 
     TransferTag tag (transfer->getTag());
 
@@ -763,8 +753,6 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
     QVector<int> toCancel;
     QVector<int>& rowsToCancel (clear? toCancel : rows);
 
-    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
-
     mModelMutex->lockForWrite();
 
     // Get rows from the indexes.
@@ -864,7 +852,6 @@ void QTransfersModel2::cancelClearTransfers(const QModelIndexList& indexes, bool
 
 void QTransfersModel2::pauseTransfers(const QModelIndexList& indexes, bool pauseState)
 {
-    //        std::unique_ptr<mega::MegaApiLock> megaApiLock (mMegaApi->getMegaApiLock(true));
     QReadLocker lock (mModelMutex);
 
     for (auto index : indexes)
@@ -949,10 +936,12 @@ void QTransfersModel2::lockModelMutex(bool lock)
     if (lock)
     {
         megaApiLock->lockOnce();
-        while (!mModelMutex->tryLockForRead())
-        {
-            MegaSyncApp->processEvents();
-        }
+        MegaSyncApp->processEvents();
+//        while (!mModelMutex->tryLockForRead())
+//        {
+//            MegaSyncApp->processEvents();
+//        }
+        mModelMutex->lockForRead();
     }
     else
     {
